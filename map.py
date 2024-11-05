@@ -3,9 +3,16 @@ from setting import *
 # Fonction heuristique : on utilise la distance de Manhattan
 def astar(grid, start, goal):
     vector = [goal[0] - start[0], goal[1] - start[1]]
-    print(vector)
-    ratio = round(vector[1] / vector[0])
-    print(ratio)
+    # print(vector)
+    
+    # Vérification pour éviter la division par zéro
+    if vector[0] == 0:
+        ratio = float('inf')  # On peut aussi gérer ce cas différemment
+    else:
+        ratio = round(vector[1] / vector[0])
+    print("vector", vector)    
+    print("ratio", ratio)
+    # print(ratio)
 
     absoluteRatio = abs(ratio)
 
@@ -13,17 +20,46 @@ def astar(grid, start, goal):
     compteury = start[1]
 
     POS = []
-    while compteury + absoluteRatio <= vector[1]:
-        for i in range(2):
-            compteury+= 1
+    
+    # Gérer le cas où on se déplace uniquement verticalement
+    if ratio == float('inf'):
+        while compteury <= goal[1]:
+            POS.append([compteury, compteurx])
+            compteury += 1
+        return POS
+
+    # gros du travail deplacment
+    while compteury + absoluteRatio <= goal[1]:
+        POS.append([compteury, compteurx])
+        for i in range(absoluteRatio):
+            compteury += 1
             POS.append([compteury, compteurx])
 
-        if ratio > 0:    
-            compteurx+=1
-        else:
-            compteurx-=1
         POS.append([compteury, compteurx])
-
+        if ratio > 0:
+            compteurx += 1
+            POS.append([compteury, compteurx])
+        elif ratio < 0:
+            compteurx -= 1
+            POS.append([compteury, compteurx])
+    
+    # finition
+    while compteury < goal[1] and compteurx < goal[0]:
+        POS.append([compteury, compteurx])
+        if compteury <= goal[1]:
+            compteury += 1
+            POS.append([compteury, compteurx])
+            
+        
+        if compteurx <= goal[0]:
+            POS.append([compteury, compteurx])
+            if ratio > 0:    
+                compteurx += 1
+                POS.append([compteury, compteurx])
+            elif ratio < 0:
+                compteurx -= 1
+                POS.append([compteury, compteurx])
+    print(POS)
     return POS
 
 
@@ -67,6 +103,7 @@ for i in range(2):
     print(listePointRepere)    
     
     for i in range(len(listePointRepere)-1):
+        Map[listePointRepere[i][1]][listePointRepere[i][0]] = "#"
         start = [listePointRepere[i][0], listePointRepere[i][1]]
         goal = [listePointRepere[i+1][0], listePointRepere[i+1][1]]
         path = astar(Map, start, goal)
@@ -85,8 +122,8 @@ for i in range(len(Map)):
 
 
 # Place des pnj
-for i in PNJ:
-    Map[i[0]][i[1]] = "P"
+# for i in PNJ:
+#     Map[i[0]][i[1]] = "P"
 
 
 # for i in range(len(Map)):
