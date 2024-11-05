@@ -1,4 +1,3 @@
-from setting import *
 import heapq
 import math
 
@@ -37,7 +36,7 @@ def astar(grid, start, goal):
             neighbor = (current[0] + dx, current[1] + dy)
             
             # Vérifier que le voisin est dans les limites et n'est pas un obstacle
-            if 0 <= neighbor[0] < rows and 0 <= neighbor[1] < cols and grid[neighbor[0]][neighbor[1]] == "-":
+            if 0 <= neighbor[0] < rows and 0 <= neighbor[1] < cols and grid[neighbor[0]][neighbor[1]] == 0:
                 # Calcul du coût pour le mouvement (1 pour horizontal/vertical, 1.41 pour diagonal)
                 move_cost = 1 if dx == 0 or dy == 0 else math.sqrt(2)
                 tentative_g_score = g_score[current] + move_cost
@@ -51,79 +50,27 @@ def astar(grid, start, goal):
     
     return None  # Pas de chemin trouvé
 
+# Exemple de grille
+# 0 = cellule traversable, 1 = obstacle
+grid = [
+    ["-", 1, "-", "-", "-"],
+    ["-", 1, "-", 1, "-"],
+    ["-", "-", "-", 1, "-"],
+    ["-", 1, 1, 1, "-"],
+    ["-", "-", "-", "-", "-"],
+]
 
+start = (0, 0)  # point de départ
+goal = (4, 4)   # point d'arrivée
 
-L = 150
-l = 75
+# Exécution de l'algorithme
+path = astar(grid, start, goal)
+if path:
+    for i in path:
+        grid[i[0]][i[1]] = "#"
 
-PNJ = [[randint(0+3, l-3), randint(1+5,((L//3) -5))], 
-       [randint(0+3, l-3), randint(((L//3)+5), (L//3)*2 -5)], 
-       [randint(0+3, l-3), randint(((L//3)*2 +5), L)]
-    ]
+    for i in range(len(grid)):
+        print(*grid[i], sep=" ")
 
-
-OBSTACLES = 200
-OBSTACLES = 200
-CASCADE = (0,10)
-Map = []
-
-
-for i in range(l):
-    m = []
-    for j in range(L):
-        m.append("-")
-    Map.append(m)
-
-
-# Place de la rivière
-# ligne avec pts de reference tout les 15pts
-# couloir de 9 point
-
-for i in range(2):
-    listePointRepere = []
-    for j in range(l//15):
- 
-        # Tout les autres pts de repère
-        coords = [j*15, randint(((i+1)*50 -4),((i+1)*50 +4))]
-        listePointRepere.append(coords)
-    
-    # Point du bas (dernier element)
-    listePointRepere.append([l-1, randint(((i+1)*50 -4),((i+1)*50 +4))])
-
-    print(listePointRepere)    
-    
-    for i in range(len(listePointRepere)-1):
-        start = (listePointRepere[i][0], listePointRepere[i][1])
-        goal = (listePointRepere[i+1][0], listePointRepere[i+1][1])
-        path = astar(Map, start, goal)
-    
-        if path:
-            for i in path:
-                Map[i[0]][i[1]] = "#"
-
-for i in range(len(Map)):
-    print(*Map[i], sep=" ")
-
-
-# Script A* à reprendre 
-
-
-
-
-# Place des pnj
-for i in PNJ:
-    Map[i[0]][i[1]] = "P"
-
-
-# for i in range(len(Map)):
-#         print(*Map[i], sep=" ")
-
-# pnj 
-# arbre à couper / pont tronc d'abre 
-# rivière
-# pont
-# herbe (alt 1 2 3)
-# obstacles
-# montagnes 
-# cascade
-# passage niveau suivant (cailloux)
+else:
+    print("Aucun chemin trouvé.")
