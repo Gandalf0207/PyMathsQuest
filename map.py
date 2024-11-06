@@ -170,11 +170,23 @@ for i in PNJ:
     Map[i[0]][i[1]] = "P"
 f.write(f""" "PNJ Coords" : {PNJ}, \n """)
 
+listeObstacle = []
+for i in range(OBSTACLES):
+    pos = [randint(4, largeur-4), randint(4, Longueur-4)]
+    while Map[pos[0]][pos[1]] != '-':
+        pos = [randint(4, largeur-4), randint(4, Longueur-4)]
+    Map[pos[0]][pos[1]] = "O"
+    listeObstacle.append(pos)
+
+f.write(f""""Obstacle Pos" : {listeObstacle}, \n """)
+
+
+
+
+
 # On affiche la map pour verif
 for i in range(len(Map)):
     print(*Map[i], sep=" ")
-
-
 
 
 # arbre à couper / pont tronc d'abre 
