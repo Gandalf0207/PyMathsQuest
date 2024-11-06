@@ -137,9 +137,9 @@ for i in range(2):
         Map[j[1]][j[0]] = "#"
         listeCheminRiviere.append([j[1],j[0]])
 
-    for j in range(0,4):
-        Map[largeur-4 +j][listePointRepere[-1][0]] = "#"
-        listeCheminRiviere.append([largeur-4 +j,listePointRepere[-1][0]])
+    for j in range(0,5):
+        Map[largeur-5 +j][listePointRepere[-1][0]] = "#"
+        listeCheminRiviere.append([largeur-5 +j,listePointRepere[-1][0]])
 
 
     
