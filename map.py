@@ -1,8 +1,8 @@
 from setting import *
 
 # Ouvrir le fichier en mode écriture pour le vider
-f = open("Value.json", "w")
-f.write("{\n")
+with open("Value.json", "w") as valueFileJson:
+    json.dump({}, valueFileJson)
 
 
 # Fonction de création de rivière en suivant les diagonales entre un point A et B avec déplacement haut bas gauche droite
@@ -37,24 +37,24 @@ def MastodonRiviere(start, goal):
     # Gérer le cas où on se déplace uniquement verticalement
     if ratio == float('inf'):
         while compteury <= goal[1]:
-            POS.append([compteury, compteurx])
+            POS.append([compteury,compteurx])
             compteury += 1
         return POS
 
     # gros du travail deplacment
     while compteury + absoluteRatio <= goal[1]:
-        POS.append([compteury, compteurx])
+        POS.append([compteury,compteurx])
         for i in range(absoluteRatio):
             compteury += 1
-            POS.append([compteury, compteurx])
+            POS.append([compteury,compteurx])
 
-        POS.append([compteury, compteurx])
+        POS.append([compteury,compteurx])
         if ratio > 0:
             compteurx += 1
-            POS.append([compteury, compteurx])
+            POS.append([compteury,compteurx])
         elif ratio < 0:
             compteurx -= 1
-            POS.append([compteury, compteurx])
+            POS.append([compteury,compteurx])
     
     # finition
     if checkValueRatio(ratio) == "Positif":
@@ -63,25 +63,68 @@ def MastodonRiviere(start, goal):
             POS.append([compteury, compteurx])
             if compteury <= goal[1]:
                 compteury += 1
-                POS.append([compteury, compteurx])
+                POS.append([compteury,compteurx])
                 
             if compteurx <= goal[0]:
-                POS.append([compteury, compteurx])    
+                POS.append([compteury,compteurx])    
                 compteurx += 1
-                POS.append([compteury, compteurx])
+                POS.append([compteury,compteurx])
     else:
         while compteury + 1 <= goal[1] or compteurx >= goal[0]:
             POS.append([compteury, compteurx])
             if compteury <= goal[1]:
                 compteury += 1
-                POS.append([compteury, compteurx])
+                POS.append([compteury,compteurx])
                 
             if compteurx >= goal[0]:
-                POS.append([compteury, compteurx])    
+                POS.append([compteury,compteurx])    
                 compteurx -= 1
-                POS.append([compteury, compteurx])
+                POS.append([compteury,compteurx])
     return POS
 
+def PlacementPNJSpeciaux(Map):
+    def checkPos(indice):
+        print(indice, " element list")
+        if Map[indice[0]][indice[1]-1] == "-":
+            if ((Map[indice[0]][indice[1]-2] == "-" )and( Map[indice[0]][indice[1]+1] == "-") and (indice[0] >=10) and (indice[0] <= 65)):
+                return True
+            else:
+                return False
+        else:
+            return False
+        
+    with open("Value.json", "r") as f:
+        loadElementJson = json.load(f)
+    Riviere1 = loadElementJson.get("Riviere1", None)
+
+    Go = True
+    while Go:
+        indice = randint(0, largeur-1)
+        print(indice, " numéro")
+        if checkPos(Riviere1[indice]):
+            Go = False
+    aaa = Riviere1[indice]
+    Map[aaa[0]][aaa[1]-1] = "P"
+
+    return [aaa[0],aaa[1]-1]
+
+
+
+def writeJsonValue(liste, nomVariable):
+        # Chargement des données JSON si elles existent, sinon crée un dictionnaire vide
+    try:
+        with open("Value.json", "r") as f:
+            donnees = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        donnees = {}
+
+    # Ajouter la rivière dans les données
+    donnees[f"{nomVariable}"] = liste
+
+    # Sauvegarder les données dans le fichier JSON avec une indentation pour un format lisible
+    with open("Value.json", "w") as f:
+        json.dump(donnees, f, ensure_ascii=False)
+ 
 
 
 # settings map
@@ -93,11 +136,6 @@ OBSTACLES = 200
 OBSTACLES = 200
 CASCADE = (0,10)
 
-# placement pnj (ne tombre jamais sur les coords de la rivière)
-PNJ = [[randint(5, largeur-5), randint(1+5,((Longueur//3) -5))], 
-       [randint(5, largeur-5), randint(((Longueur//3)+5), (Longueur//3)*2 -5)], 
-       [randint(5, largeur-5), randint(((Longueur//3)*2 +5), Longueur-5)]
-    ]
 
 # creation map base
 Map = []
@@ -115,23 +153,23 @@ for i in range(2):
     listePointRepere = [] # initialisation de la list des pts repères
 
     # Point du haut (premier element)
-    listePointRepere.append([randint(((i+1)*50 -4),((i+1)*50 +4)), 4])
+    listePointRepere.append([randint(((i+1)*50 -4),((i+1)*50 +4)),4])
 
     # Point du haut en bas
     for j in range(1, largeur//15):
 
         # Tout les autres pts de repère
-        coords = [randint(((i+1)*50 -4),((i+1)*50 +4)), j*15]
+        coords = [randint(((i+1)*50 -4),((i+1)*50 +4)),j*15]
         listePointRepere.append(coords)
     
     
     # Point du bas (dernier element)
-    listePointRepere.append([randint(((i+1)*50 -4),((i+1)*50 +4)), largeur-4])
+    listePointRepere.append([randint(((i+1)*50 -4),((i+1)*50 +4)),largeur-4])
 
     # On ajoute les pts repère sur la map + les point spéciaux (haut et bas ) directement car collision avec montagne, donc il faut une ligne de 4 droite minimum
     for j in range(1,5):
         Map[4 -j][listePointRepere[0][0]] = "#"
-        listeCheminRiviere.append([4 -j,listePointRepere[0][0]])
+        listeCheminRiviere.append([4-j,listePointRepere[0][0]])
 
     for j in listePointRepere:
         Map[j[1]][j[0]] = "#"
@@ -156,29 +194,117 @@ for i in range(2):
             Map[coords[0]][coords[1]] = "#"
             listeCheminRiviere.append([coords[0],coords[1]])
 
+    writeJsonValue(listeCheminRiviere, f"Riviere{i}")
 
-
-    # Ajouter la rivière dans les données
-    donnees = listeCheminRiviere
-    # Sauvegarder les données dans le fichier JSON     
-    f.write(f""" "Riviere{i}" : {donnees}, \n""")
-        
-
-
-# placement des pnj sur la map 
-for i in PNJ:
-    Map[i[0]][i[1]] = "P"
-f.write(f""" "PNJ Coords" : {PNJ}, \n """)
-
+#placement des obstacle sur la map
 listeObstacle = []
 for i in range(OBSTACLES):
     pos = [randint(4, largeur-4), randint(4, Longueur-4)]
-    while Map[pos[0]][pos[1]] != '-':
+    while Map[pos[0]][pos[1]] != '-': # check de s'il y a déjà des éléments sur la map.
         pos = [randint(4, largeur-4), randint(4, Longueur-4)]
     Map[pos[0]][pos[1]] = "O"
     listeObstacle.append(pos)
 
-f.write(f""""Obstacle Pos" : {listeObstacle}, \n """)
+writeJsonValue(listeObstacle, "Obstacle Pos")
+
+
+# positions des chaines de montagnes : 
+listeMontagne = []
+for i in range(2):
+    for j in range(Longueur):
+        Map[i*(largeur-1)][j] = "M"
+        listeMontagne.append([i*(largeur-1), j])
+    for j in range(largeur):
+        Map[j][i*(Longueur-1)] = "M"
+        listeMontagne.append([j, i*(Longueur-1)])
+
+writeJsonValue(listeMontagne, "Montagnes Coords")
+
+
+
+
+
+
+# arbre à couper / pont tronc d'abre 
+
+# pont
+# herbe (alt 1 2 3)
+# cascade
+# passage niveau suivant (cailloux)
+
+
+
+# placement pnj (ne tombre jamais sur les coords de la rivière)
+PNJ = [[randint(5, largeur-5), randint(1+5,((Longueur//3) -5))], 
+      None, #pnj à deplacer 
+       [randint(5, largeur-5), randint(((Longueur//3)*2 +5), Longueur-5)]
+    ]
+
+# placement des pnj sur la map 
+for i in PNJ:
+    if i != None:
+        Map[i[0]][i[1]] = "P"
+
+PNJ[1] = PlacementPNJSpeciaux(Map) 
+writeJsonValue(PNJ, "PNJ Coords")
+print(PNJ)
+
+
+
+
+
+
+
+
+
+
+
+# set up fichier json basique
+# modifier chaque variable quand nécessaire
+
+# ==> avoir un fichier json clair et beau :sparkles:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -187,17 +313,3 @@ f.write(f""""Obstacle Pos" : {listeObstacle}, \n """)
 # On affiche la map pour verif
 for i in range(len(Map)):
     print(*Map[i], sep=" ")
-
-
-# arbre à couper / pont tronc d'abre 
-
-# pont
-# herbe (alt 1 2 3)
-# obstacles
-# montagnes 
-# cascade
-# passage niveau suivant (cailloux)
-
-f.write(f""""EndValue" : null""")
-
-f.write("\n}")
