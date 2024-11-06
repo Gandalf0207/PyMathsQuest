@@ -161,18 +161,14 @@ for i in range(2):
     # Ajouter la rivière dans les données
     donnees = listeCheminRiviere
     # Sauvegarder les données dans le fichier JSON     
-    f.write(f""" "Riviere{i}" : {donnees}""") if i == 1 else f.write(f""" "Riviere{i}" : {donnees}, \n""")
+    f.write(f""" "Riviere{i}" : {donnees}, \n""")
         
-
-
-
 
 
 # placement des pnj sur la map 
 for i in PNJ:
     Map[i[0]][i[1]] = "P"
-
-
+f.write(f""" "PNJ Coords" : {PNJ}, \n """)
 
 # On affiche la map pour verif
 for i in range(len(Map)):
@@ -190,5 +186,6 @@ for i in range(len(Map)):
 # cascade
 # passage niveau suivant (cailloux)
 
+f.write(f""""EndValue" : null""")
 
 f.write("\n}")
