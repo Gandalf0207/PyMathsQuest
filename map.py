@@ -1,5 +1,10 @@
 from setting import *
 
+# Ouvrir le fichier en mode écriture pour le vider
+f = open("Value.json", "w")
+f.write("{\n")
+
+
 # Fonction de création de rivière en suivant les diagonales entre un point A et B avec déplacement haut bas gauche droite
 def MastodonRiviere(start, goal):
 
@@ -78,20 +83,21 @@ def MastodonRiviere(start, goal):
     return POS
 
 
+
 # settings map
 Longueur = 150
 largeur = 75
-
-# placement pnj
-PNJ = [[randint(0+3, largeur-3), randint(1+5,((Longueur//3) -5))], 
-       [randint(0+3, largeur-3), randint(((Longueur//3)+5), (Longueur//3)*2 -5)], 
-       [randint(0+3, largeur-3), randint(((Longueur//3)*2 +5), Longueur)]
-    ]
 
 # infos items
 OBSTACLES = 200
 OBSTACLES = 200
 CASCADE = (0,10)
+
+# placement pnj (ne tombre jamais sur les coords de la rivière)
+PNJ = [[randint(5, largeur-5), randint(1+5,((Longueur//3) -5))], 
+       [randint(5, largeur-5), randint(((Longueur//3)+5), (Longueur//3)*2 -5)], 
+       [randint(5, largeur-5), randint(((Longueur//3)*2 +5), Longueur-5)]
+    ]
 
 # creation map base
 Map = []
@@ -105,6 +111,7 @@ for i in range(largeur):
 
 # création 2 rivières--------------------------------
 for i in range(2):
+    listeCheminRiviere = []
     listePointRepere = [] # initialisation de la list des pts repères
 
     # Point du haut (premier element)
@@ -122,32 +129,48 @@ for i in range(2):
     listePointRepere.append([randint(((i+1)*50 -4),((i+1)*50 +4)), largeur-4])
 
     # On ajoute les pts repère sur la map + les point spéciaux (haut et bas ) directement car collision avec montagne, donc il faut une ligne de 4 droite minimum
-    for i in range(1,5):
-        Map[4 -i][listePointRepere[0][0]] = "#"
+    for j in range(1,5):
+        Map[4 -j][listePointRepere[0][0]] = "#"
+        listeCheminRiviere.append([4 -j,listePointRepere[0][0]])
 
-    for i in listePointRepere:
-        Map[i[1]][i[0]] = "#"
+    for j in listePointRepere:
+        Map[j[1]][j[0]] = "#"
+        listeCheminRiviere.append([j[1],j[0]])
 
-    for i in range(0,4):
-        Map[largeur-4 +i][listePointRepere[-1][0]] = "#"
+    for j in range(0,4):
+        Map[largeur-4 +j][listePointRepere[-1][0]] = "#"
+        listeCheminRiviere.append([largeur-4 +j,listePointRepere[-1][0]])
+
 
     
     # Pour tout les points repère, on lie des point A et B entre eux avec le script crée pour l'occasion
-    for i in range(len(listePointRepere)-1):
-        Map[listePointRepere[i][1]][listePointRepere[i][0]] = "#"
-        start = [listePointRepere[i][0], listePointRepere[i][1]]
-        goal = [listePointRepere[i+1][0], listePointRepere[i+1][1]]
+    for j in range(len(listePointRepere)-1):
+        Map[listePointRepere[j][1]][listePointRepere[j][0]] = "#"
+        start = [listePointRepere[j][0], listePointRepere[j][1]]
+        goal = [listePointRepere[j+1][0], listePointRepere[j+1][1]]
         path = MastodonRiviere(start, goal)
 
+
         # On recup la list de déplcement et on ajoute la rivière à la map
-        for i in path:
-            Map[i[0]][i[1]] = "#"
+        for coords in path:
+            Map[coords[0]][coords[1]] = "#"
+            listeCheminRiviere.append([coords[0],coords[1]])
+
+
+
+    # Ajouter la rivière dans les données
+    donnees = listeCheminRiviere
+    # Sauvegarder les données dans le fichier JSON     
+    f.write(f""" "Riviere{i}" : {donnees}""") if i == 1 else f.write(f""" "Riviere{i}" : {donnees}, \n""")
+        
 
 
 
 
 
-
+# placement des pnj sur la map 
+for i in PNJ:
+    Map[i[0]][i[1]] = "P"
 
 
 
@@ -158,20 +181,14 @@ for i in range(len(Map)):
 
 
 
-# Place des pnj
-# for i in PNJ:
-#     Map[i[0]][i[1]] = "P"
-
-
-# for i in range(len(Map)):
-#         print(*Map[i], sep=" ")
-
-# pnj 
 # arbre à couper / pont tronc d'abre 
-# rivière
+
 # pont
 # herbe (alt 1 2 3)
 # obstacles
 # montagnes 
 # cascade
 # passage niveau suivant (cailloux)
+
+
+f.write("\n}")
