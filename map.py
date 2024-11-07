@@ -166,7 +166,11 @@ for i in range(2):
     listePointRepere.append([randint(((i+1)*50 -4),((i+1)*50 +4)),4])
 
     # Point du haut en bas
-    for j in range(1, largeur//15):
+    nbPts = largeur // 15       # ADD ligne de 5 pour etre sur d'avoir une position pour le pnj et l'arbre (secu) ##################################################################
+    # if dans la boucle pour placer les 5 pts et get le premier et derniers ptsz
+    # pour pouvoir terminer la liaison et commencer la suivante 
+    verifLigne5 = choice(1,(nbPts-1))   
+    for j in range(1, nbPts):
 
         # Tout les autres pts de repère
         coords = [randint(((i+1)*50 -4),((i+1)*50 +4)),j*15]
