@@ -82,7 +82,7 @@ def MastodonRiviere(start, goal):
                 POS.append([compteury,compteurx])
     return POS
 
-def PlacementPNJSpeciaux(Map):
+def PlacementSpeciauxRiviere(Map, nomListe, element):
     def checkPos(indice):
         print(indice, " element list")
         if Map[indice[0]][indice[1]-1] == "-":
@@ -95,18 +95,18 @@ def PlacementPNJSpeciaux(Map):
         
     with open("Value.json", "r") as f:
         loadElementJson = json.load(f)
-    Riviere1 = loadElementJson.get("Riviere1", None)
+    listeCoords = loadElementJson.get(nomListe, None)
 
     Go = True
     while Go:
         indice = randint(0, largeur-1)
         print(indice, " numéro")
-        if checkPos(Riviere1[indice]):
+        if checkPos(listeCoords[indice]):
             Go = False
-    aaa = Riviere1[indice]
-    Map[aaa[0]][aaa[1]-1] = "P"
+    itemCoords = listeCoords[indice]
+    Map[itemCoords[0]][itemCoords[1]-1] = element
 
-    return [aaa[0],aaa[1]-1]
+    return [itemCoords[0],itemCoords[1]-1]
 
 
 
@@ -145,7 +145,17 @@ for i in range(largeur):
         mapTempo.append("-")
     Map.append(mapTempo)
 
+# positions des chaines de montagnes : 
+listeMontagne = []
+for i in range(2):
+    for j in range(Longueur):
+        Map[i*(largeur-1)][j] = "M"
+        listeMontagne.append([i*(largeur-1), j])
+    for j in range(largeur):
+        Map[j][i*(Longueur-1)] = "M"
+        listeMontagne.append([j, i*(Longueur-1)])
 
+writeJsonValue(listeMontagne, "Montagnes Coords")
 
 # création 2 rivières--------------------------------
 for i in range(2):
@@ -168,8 +178,8 @@ for i in range(2):
 
     # On ajoute les pts repère sur la map + les point spéciaux (haut et bas ) directement car collision avec montagne, donc il faut une ligne de 4 droite minimum
     for j in range(1,5):
-        Map[4 -j][listePointRepere[0][0]] = "#"
-        listeCheminRiviere.append([4-j,listePointRepere[0][0]])
+        Map[5 -j][listePointRepere[0][0]] = "#"
+        listeCheminRiviere.append([5-j,listePointRepere[0][0]])
 
     for j in listePointRepere:
         Map[j[1]][j[0]] = "#"
@@ -208,19 +218,6 @@ for i in range(OBSTACLES):
 writeJsonValue(listeObstacle, "Obstacle Pos")
 
 
-# positions des chaines de montagnes : 
-listeMontagne = []
-for i in range(2):
-    for j in range(Longueur):
-        Map[i*(largeur-1)][j] = "M"
-        listeMontagne.append([i*(largeur-1), j])
-    for j in range(largeur):
-        Map[j][i*(Longueur-1)] = "M"
-        listeMontagne.append([j, i*(Longueur-1)])
-
-writeJsonValue(listeMontagne, "Montagnes Coords")
-
-
 
 
 
@@ -229,7 +226,6 @@ writeJsonValue(listeMontagne, "Montagnes Coords")
 
 # pont
 # herbe (alt 1 2 3)
-# cascade
 # passage niveau suivant (cailloux)
 
 
@@ -245,9 +241,13 @@ for i in PNJ:
     if i != None:
         Map[i[0]][i[1]] = "P"
 
-PNJ[1] = PlacementPNJSpeciaux(Map) 
+PNJ[1] = PlacementSpeciauxRiviere(Map, "Riviere1", "P") 
 writeJsonValue(PNJ, "PNJ Coords")
-print(PNJ)
+
+# placement arbre spécial 
+arbreSpecial = PlacementSpeciauxRiviere(Map, "Riviere0", "A") 
+writeJsonValue(arbreSpecial, "Abre Special Coords")
+
 
 
 
