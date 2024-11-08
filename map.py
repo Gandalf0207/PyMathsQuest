@@ -1,8 +1,26 @@
 from setting import *
+from jeuDeLaVie import *
+
+import json
+data = {
+    "coordsMapBase" : {
+        "Montagnes Coords": "null",
+        "Riviere0 Coords" : "null",
+        "Riviere1 Coords" : "null",
+        "Flowers Coords" : "null",
+        "AllMap" : "null"
+    },
+
+    "coordsMapObject" : {
+        "Obstacles Coords" : "null",
+        "PNJ Coords" : "null",
+        "ArbreSpecial Coords" : "null"
+    }
+}
 
 # Ouvrir le fichier en mode écriture pour le vider
 with open("Value.json", "w") as valueFileJson:
-    json.dump({}, valueFileJson)
+    json.dump(data, valueFileJson, indent=4)
 
 
 # Fonction de création de rivière en suivant les diagonales entre un point A et B avec déplacement haut bas gauche droite
@@ -82,11 +100,12 @@ def MastodonRiviere(start, goal):
                 POS.append([compteury,compteurx])
     return POS
 
-def PlacementSpeciauxRiviere(Map, nomListe, element):
+def PlacementSpeciauxRiviere(Map, index1, index2, element):
     def checkPos(indice):
         print(indice, " element list")
-        if Map[indice[0]][indice[1]-1] == "-":
-            if ((Map[indice[0]][indice[1]-2] == "-" )and( Map[indice[0]][indice[1]+1] == "-") and (indice[0] >=10) and (indice[0] <= 65)):
+        listElementTerrain = ["-", "H"]
+        if Map[indice[0]][indice[1]-1] in listElementTerrain:
+            if ((Map[indice[0]][indice[1]-2] in listElementTerrain )and( Map[indice[0]][indice[1]+1] in listElementTerrain) and (indice[0] >=10) and (indice[0] <= 65)):
                 return True
             else:
                 return False
@@ -95,35 +114,35 @@ def PlacementSpeciauxRiviere(Map, nomListe, element):
         
     with open("Value.json", "r") as f:
         loadElementJson = json.load(f)
-    listeCoords = loadElementJson.get(nomListe, None)
+    listeCoordsElement = loadElementJson[index1].get(index2, None)
 
     Go = True
     while Go:
         indice = randint(0, largeur-1)
         print(indice, " numéro")
-        if checkPos(listeCoords[indice]):
+        if checkPos(listeCoordsElement[indice]):
             Go = False
-    itemCoords = listeCoords[indice]
+    itemCoords = listeCoordsElement[indice]
     Map[itemCoords[0]][itemCoords[1]-1] = element
 
     return [itemCoords[0],itemCoords[1]-1]
 
 
 
-def writeJsonValue(liste, nomVariable):
+def writeJsonValue(liste, index1, index2):
         # Chargement des données JSON si elles existent, sinon crée un dictionnaire vide
     try:
         with open("Value.json", "r") as f:
             donnees = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
-        donnees = {}
+        assert ValueError("Error load JSON file")
 
     # Ajouter la rivière dans les données
-    donnees[f"{nomVariable}"] = liste
+    donnees[f"{index1}"][f"{index2}"] = liste
 
     # Sauvegarder les données dans le fichier JSON avec une indentation pour un format lisible
     with open("Value.json", "w") as f:
-        json.dump(donnees, f, ensure_ascii=False)
+        json.dump(donnees, f, indent=4)
  
 
 
@@ -145,6 +164,8 @@ for i in range(largeur):
         mapTempo.append("-")
     Map.append(mapTempo)
 
+# --------------------------Element map de base-----------------------------------------------# 
+
 # positions des chaines de montagnes : 
 listeMontagne = []
 for i in range(2):
@@ -155,7 +176,7 @@ for i in range(2):
         Map[j][i*(Longueur-1)] = "M"
         listeMontagne.append([j, i*(Longueur-1)])
 
-writeJsonValue(listeMontagne, "Montagnes Coords")
+writeJsonValue(listeMontagne, "coordsMapBase", "Montagnes Coords")
 
 # création 2 rivières--------------------------------
 for i in range(2):
@@ -166,15 +187,20 @@ for i in range(2):
     listePointRepere.append([randint(((i+1)*50 -4),((i+1)*50 +4)),4])
 
     # Point du haut en bas
-    nbPts = largeur // 15       # ADD ligne de 5 pour etre sur d'avoir une position pour le pnj et l'arbre (secu) ##################################################################
-    # if dans la boucle pour placer les 5 pts et get le premier et derniers ptsz
-    # pour pouvoir terminer la liaison et commencer la suivante 
-    verifLigne5 = choice(1,(nbPts-1))   
-    for j in range(1, nbPts):
+    nbPts = largeur // 15      
+    verifLigne5 = randint(1,(nbPts-1)) # choix du lieu pour la ligne de 5 droite pour sécu 
 
-        # Tout les autres pts de repère
-        coords = [randint(((i+1)*50 -4),((i+1)*50 +4)),j*15]
-        listePointRepere.append(coords)
+    for j in range(1, nbPts):
+        if verifLigne5 == j: # ajout du pts A et B pour une ligne de 5 toute droite pour sécu placement des pnj autour de la riviere
+            pACoordsligne5 = [randint(((i+1)*50 -4),((i+1)*50 +4)),j*15]
+            listePointRepere.append(pACoordsligne5)
+            pBcoordsligne5 = [pACoordsligne5[0], j*15 + 5]
+            listePointRepere.append(pBcoordsligne5)
+
+        else:
+            # Tout les autres pts de repère
+            coords = [randint(((i+1)*50 -4),((i+1)*50 +4)),j*15]
+            listePointRepere.append(coords)
     
     
     # Point du bas (dernier element)
@@ -208,7 +234,25 @@ for i in range(2):
             Map[coords[0]][coords[1]] = "#"
             listeCheminRiviere.append([coords[0],coords[1]])
 
-    writeJsonValue(listeCheminRiviere, f"Riviere{i}")
+    writeJsonValue(listeCheminRiviere, "coordsMapBase", f"Riviere{i} Coords")
+
+# placement de l'herbe (Alt 1 et 2 et 3) avec jeu de la vie
+jeuDeLaVie= JeuDeLaVie()
+jeuDeLaVie.Base()
+getPosFlower = jeuDeLaVie.Update()
+listeFlowerCoords = []
+for i in getPosFlower:
+    if Map[i[0]][i[1]] =="-":
+        Map[i[0]][i[1]] = "H"
+        listeFlowerCoords.append([i[0], i[1]])
+
+writeJsonValue(listeFlowerCoords, "coordsMapBase", "Flowers Coords")
+
+
+
+writeJsonValue(Map, "coordsMapBase", "AllMap")
+
+# --------------------------Element rajouté sur la map-----------------------------------------------# 
 
 #placement des obstacle sur la map
 listeObstacle = []
@@ -219,18 +263,7 @@ for i in range(OBSTACLES):
     Map[pos[0]][pos[1]] = "O"
     listeObstacle.append(pos)
 
-writeJsonValue(listeObstacle, "Obstacle Pos")
-
-
-
-
-
-
-# arbre à couper / pont tronc d'abre 
-
-# pont
-# herbe (alt 1 2 3)
-# passage niveau suivant (cailloux)
+writeJsonValue(listeObstacle, "coordsMapObject", "Obstacles Coords")
 
 
 
@@ -245,12 +278,12 @@ for i in PNJ:
     if i != None:
         Map[i[0]][i[1]] = "P"
 
-PNJ[1] = PlacementSpeciauxRiviere(Map, "Riviere1", "P") 
-writeJsonValue(PNJ, "PNJ Coords")
+PNJ[1] = PlacementSpeciauxRiviere(Map, "coordsMapBase", "Riviere1 Coords", "P") 
+writeJsonValue(PNJ, "coordsMapObject", "PNJ Coords")
 
 # placement arbre spécial 
-arbreSpecial = PlacementSpeciauxRiviere(Map, "Riviere0", "A") 
-writeJsonValue(arbreSpecial, "Abre Special Coords")
+arbreSpecial = PlacementSpeciauxRiviere(Map,"coordsMapBase", "Riviere0 Coords", "A") 
+writeJsonValue(arbreSpecial, "coordsMapObject", "AbreSpecial Coords")
 
 
 
@@ -261,6 +294,7 @@ writeJsonValue(arbreSpecial, "Abre Special Coords")
 
 
 
+# passage niveau suivant (cailloux)
 
 
 # set up fichier json basique
