@@ -8,12 +8,11 @@
 
 # ---------------------------------------------- PyMathsQuest ---------------------------------------------- #
 
-from setting import *
+from settings import *
 import random
 
 class JeuDeLaVie(object):
-    """
-    Return une map avec les cases vivantes et mortes (jeu de la vie de Conway)"""
+    """Return une map avec les cases vivantes et mortes (jeu de la vie de Conway)"""
 
     def __init__(self) -> None:
         self.longueur, self.largeur = 150, 75
@@ -28,9 +27,8 @@ class JeuDeLaVie(object):
                 m.append("-")
             self.Map.append(m)
 
-    # Génération de plusieurs configurations de motifs pour le jeu de la vie
+        # Génération de plusieurs configurations de motifs pour le jeu de la vie
         coords = [self.GetCoordsPatterns(self.largeur, self.longueur) for _ in range(5)]
-        print(coords)
         for partern in coords:
             for coordsPatern in partern:
                 self.Map[coordsPatern[0]][coordsPatern[1]] = "#"
@@ -120,7 +118,8 @@ class JeuDeLaVie(object):
 
 
 
-    def Update(self): 
+    def GetPos(self): 
+        self.Base()
         for i in range(1000):
             self.Calcul()
             self.MajMap()

@@ -1,5 +1,5 @@
-from setting import *
-from jeuDeLaVie import *
+from settings import *
+from ScriptAlgo.jeuDeLaVie import *
 
 import json
 data = {
