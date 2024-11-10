@@ -17,6 +17,7 @@ class GestionNiveauMap(object):
         self.longueur = longueur # longueur de la map
         self.largeur = largeur # largeur de la map
         self.map = [] # map (double liste python)
+        self.baseMap = [] # map pour seulement le sol
 
     def BaseMap(self):
         """Création de la double liste avec les bordures de la map(map)"""
@@ -26,16 +27,24 @@ class GestionNiveauMap(object):
             for _ in range(self.longueur): # longueur de la map (x)
                 creationMap.append("-") # ajout des valeurs (x)
             self.map.append(creationMap) # ajout de la ligne entière
+            
+        for _ in range(self.largeur): # largeur de la map (y)
+            creationMap = [] # liste pour stocker les valeurs des colonnes (x)
+            for _ in range(self.longueur): # longueur de la map (x)
+                creationMap.append("-") # ajout des valeurs (x)                        
+            self.baseMap.append(creationMap)
         
         # position des bordure sur la map : 
         listeBordures = []
         for i in range(2):
             for j in range(self.longueur): # position des bordures haut et bas
                 self.map[i*(self.largeur-1)][j] = "B"
+                self.baseMap[i*(self.largeur-1)][j] = "B" 
                 listeBordures.append([i*(self.largeur-1), j])
 
             for j in range(self.largeur): # position des bordures gauche et droites
                 self.map[j][i*(self.longueur-1)] = "B"
+                self.baseMap[j][i*(self.longueur-1)] = "B"
                 listeBordures.append([j, i*(self.longueur-1)])
 
         # on stock les coordonnées des bordures, ça peut toujours servir
@@ -87,7 +96,8 @@ class NiveauPlaineRiviere(GestionNiveauMap):
                         "Riviere0 Coords" : "null",
                         "Riviere1 Coords" : "null",
                         "Flowers Coords" : "null",
-                        "AllMap" : "null"
+                        "AllMapInfo" : "null",
+                        "AllMapBase" : "null"
                     },
 
                     "coordsMapObject" : {
@@ -99,7 +109,8 @@ class NiveauPlaineRiviere(GestionNiveauMap):
 
     def __CheckPos__(self, indice):
         # verification si la position du pnj est possible autour de la riviere (rivière large de 1 uniquement) + eviter de la placer trop haut / bas
-        if (self.map[indice[1]][indice[0]-1] =="-") and (self.map[indice[1]][indice[0]-2] =="-" )and( self.map[indice[1]][indice[0]+1] =="-") and (indice[1] >=5) and (indice[1] <= 70):
+        listePosPossible = ["-", "F"]
+        if (self.map[indice[1]][indice[0]-1] in listePosPossible) and (self.map[indice[1]][indice[0]-2] in listePosPossible )and( self.map[indice[1]][indice[0]+1] in listePosPossible) and (indice[1] >=5) and (indice[1] <= 70):
             return True
         else:
             return False
@@ -110,6 +121,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         listeFlowerCoords = []
         for posFleur in getPosFleur:
             if self.map[posFleur[1]][posFleur[0]] =="-":
+                self.baseMap[posFleur[1]][posFleur[0]] = "F"
                 listeFlowerCoords.append(posFleur) ####
 
         super().AjoutJsonMapValue(listeFlowerCoords, "coordsMapBase", "Flowers Coords")
@@ -160,14 +172,17 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             # On ajoute les pts repère sur la map + les point spéciaux (haut et bas ) directement car collision avec montagne, donc il faut une ligne de 4 droite minimum
             for ordonnees in range(1,5): # premiere ligne de 5 partant du haut de la map
                 self.map[5 -ordonnees][listePointRepere[0][0]] = "#" # y pour changer de ligne, x pour se positionner sur la meme colone que le premier point repère de la rivire
+                self.baseMap[5 -ordonnees][listePointRepere[0][0]] = "#"
                 listeCheminRiviere.append([listePointRepere[0][0], 5-ordonnees]) # forme [x,y]
 
             for coordsPointRepere in listePointRepere: # positions de tout les points repère de la riviere
                 self.map[coordsPointRepere[1]][coordsPointRepere[0]] = "#" 
+                self.baseMap[coordsPointRepere[1]][coordsPointRepere[0]] = "#" 
                 listeCheminRiviere.append([coordsPointRepere[0],coordsPointRepere[1]]) # forme [x,y]
 
             for ordonnees in range(0,5): # derniere ligne de 5 pour arrivr sur le bas de la map
                 self.map[self.largeur-5 +ordonnees][listePointRepere[-1][0]] = "#" #   y pour changer de ligne, x pour se positionner sur la meme colone que le dernier point repère de la rivire
+                self.baseMap[self.largeur-5 +ordonnees][listePointRepere[-1][0]] = "#"
                 listeCheminRiviere.append([listePointRepere[-1][0], self.largeur-5 + ordonnees])  # forme [x,y]
 
 
@@ -182,6 +197,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
                 # On recup la list de déplacement et on ajoute la rivière à la map
                 for coords in path:
                     self.map[coords[1]][coords[0]] = "#"
+                    self.baseMap[coords[1]][coords[0]] = "#"
                     listeCheminRiviere.append([coords[0],coords[1]]) # forme [x,y]
 
             super().AjoutJsonMapValue(listeCheminRiviere, "coordsMapBase", f"Riviere{nombreRiviere} Coords") # add value to json file 
@@ -200,7 +216,9 @@ class NiveauPlaineRiviere(GestionNiveauMap):
 
         super().AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords")
 
-
+    def PlacementSortie(self): # A implémenter
+        listeSortie = []
+        pass
 
     def Update(self):
         super().BaseJson(self.data)
@@ -215,11 +233,21 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         coordsAbre = self.PlacementSpecial("coordsMapBase", "Riviere0 Coords", "A")
         super().AjoutJsonMapValue(coordsAbre, "coordsMapObject", "ArbreSpecial Coords")
 
+        # Implémenter la position de la sortie
                 
-        
+        # On charche la map de base pour pouvoir refresh tout les x tics
+        super().AjoutJsonMapValue(self.map, "coordsMapBase", "AllMapInfo")
+
+        super().AjoutJsonMapValue(self.baseMap, "coordsMapBase", "AllMapBase")
+
         # On affiche la map pour verif
         for i in range(len(self.map)):
             print(*self.map[i], sep=" ")
+        
+        for j in range(len(self.baseMap)):
+            print(*self.baseMap[j], sep=" ")
+
+        
             
            #
            # 
@@ -231,10 +259,6 @@ NiveauPlaineRiviere(150,75,200).Update()
 
 
 
-
-        
-
-# passage niveau suivant (cailloux)
 
 
 
