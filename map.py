@@ -226,7 +226,7 @@ for i in range(2):
         Map[listePointRepere[j][1]][listePointRepere[j][0]] = "#"
         start = [listePointRepere[j][0], listePointRepere[j][1]]
         goal = [listePointRepere[j+1][0], listePointRepere[j+1][1]]
-        path = MastodonRiviere(start, goal)
+        path = MastodonRiviere(start, goal) ######
 
 
         # On recup la list de déplcement et on ajoute la rivière à la map

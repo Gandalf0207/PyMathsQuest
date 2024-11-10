@@ -21,3 +21,9 @@
 Niveau plaine et rivière : 
 -  passage niveau suivant (cailloux)
 - ajouter un chekc sur le placement des obstacle pour pas que les pnj / arbre spécial ne soint pas inaccessible
+
+
+
+
+
+def BaseMap(self): check le append des coords
