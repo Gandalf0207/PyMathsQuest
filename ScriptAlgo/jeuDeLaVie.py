@@ -9,7 +9,6 @@
 # ---------------------------------------------- PyMathsQuest ---------------------------------------------- #
 
 from settings import *
-from random import randint
 
 class JeuDeLaVie(object):
     """Return une map avec les cases vivantes et mortes (jeu de la vie de Conway)"""
@@ -31,7 +30,7 @@ class JeuDeLaVie(object):
         coords = [self.GetCoordsPatterns() for _ in range(5)]
         for partern in coords:
             for coordsPatern in partern:
-                self.Map[coordsPatern[0]][coordsPatern[1]] = "#"
+                self.Map[coordsPatern[1]][coordsPatern[0]] = "#"
 
     # Fonction pour générer une configuration aléatoire avec des motifs multiples
     def GetCoordsPatterns(self):
@@ -39,8 +38,8 @@ class JeuDeLaVie(object):
         
         # Coordonnées de motifs aléatoires (R-pentomino)
         for _ in range(3):  # 3 occurrences de R-pentomino
-            x = random.randint(0, self.longueur - 5)
-            y = random.randint(0, self.largeur - 5)
+            x = randint(0, self.longueur - 5)
+            y = randint(0, self.largeur - 5)
             r_pentomino_coords = [(x, y + 1), (x, y + 2),
                                 (x + 1, y), (x + 1, y + 1),
                                 (x + 2, y + 1)]
@@ -48,8 +47,8 @@ class JeuDeLaVie(object):
         
         # Coordonnées de motifs aléatoires (Acorn)
         for _ in range(2):  # 2 occurrences d'Acorn
-            x = random.randint(0, self.longueur - 5)
-            y = random.randint(0, self.largeur - 9)
+            x = randint(0, self.longueur - 5)
+            y = randint(0, self.largeur - 9)
             acorn_coords = [(x, y + 1), (x, y + 4),
                             (x + 1, y + 3),
                             (x + 2, y), (x + 2, y + 1), (x + 2, y + 3), (x + 2, y + 4), (x + 2, y + 5)]
@@ -57,8 +56,8 @@ class JeuDeLaVie(object):
 
         # Coordonnées de motifs aléatoires (Diehard)
         for _ in range(2):  # 2 occurrences de Diehard
-            x = random.randint(0, self.longueur - 5)
-            y = random.randint(0, self.largeur - 9)
+            x = randint(0, self.longueur - 5)
+            y = randint(0, self.largeur - 9)
             diehard_coords = [(x, y + 6),
                             (x + 1, y), (x + 1, y + 1),
                             (x + 2, y + 1), (x + 2, y + 5), (x + 2, y + 6), (x + 2, y + 7)]
@@ -66,8 +65,8 @@ class JeuDeLaVie(object):
 
         # Coordonnées de motifs aléatoires (Phoenix)
         for _ in range(4):  # 4 occurrences de Phoenix
-            x = random.randint(0, self.longueur - 5)
-            y = random.randint(0, self.largeur - 5)
+            x = randint(0, self.longueur - 5)
+            y = randint(0, self.largeur - 5)
             phoenix_coords = [(x, y + 1), (x, y + 3),
                             (x + 1, y), (x + 1, y + 2), (x + 1, y + 4),
                             (x + 2, y + 1), (x + 2, y + 3)]

@@ -186,6 +186,8 @@ class NiveauPlaineRiviere(GestionNiveauMap):
 
             super().AjoutJsonMapValue(listeCheminRiviere, "coordsMapBase", f"Riviere{nombreRiviere} Coords") # add value to json file 
 
+
+    # ADD VERIF POUR ETRE SUR QUE L4ELEMENT SOIT ACCESSIBLE ---------------------------------------------
     def PlacementObstacle(self):
         #placement des obstacle sur la map
         listeObstacle = []
@@ -206,12 +208,12 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         self.PlacementRiviere()
         self.PlacementFleur()
         self.PlacementObstacle()
-        coordsPNJ = [[randint(5, self.largeur-5), randint(1+5,((self.longueur//3) -5))], 
+        coordsPNJ = [[randint(1+5,((self.longueur//3) -5)), randint(5, self.largeur-5)], # forme [x,y]
                     self.PlacementSpecial("coordsMapBase", "Riviere1 Coords", "P"), # placement pnj (ne tombre jamais sur les coords de la rivière)
-                    [randint(5, self.largeur-5), randint(((self.longueur//3)*2 +5), self.longueur-5)]]           
+                    [randint(((self.longueur//3)*2 +5), self.longueur-5), randint(5, self.largeur-5)]]      # forme [x,y]       
         super().PlacementPNJ(coordsPNJ)
         coordsAbre = self.PlacementSpecial("coordsMapBase", "Riviere0 Coords", "A")
-        super().AjoutJsonMapValue(coordsAbre, "coordsMapObject", "AbreSpecial Coords")
+        super().AjoutJsonMapValue(coordsAbre, "coordsMapObject", "ArbreSpecial Coords")
 
                 
         
