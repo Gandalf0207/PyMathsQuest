@@ -1,4 +1,4 @@
-# from settings import *
+from settings import *
 
 class LiaisonAtoB(object):
     """class permettant de relier dans une double liste, un point A à un point B. 
@@ -34,7 +34,7 @@ class LiaisonAtoB(object):
         
     def __getValueSide__(self):
         # Fonction pour connaitre la valeur du ratio (et agir en fonction)
-        return "X" if self.vector[0] > self.vector[1] else "Y"
+        return "X" if abs(self.vector[0]) > abs(self.vector[1]) else "Y"
 
     def __Deplacement__(self):  
         # Gérer le cas où on se déplace uniquement verticalement
@@ -67,31 +67,101 @@ class LiaisonAtoB(object):
         
         elif self.directionRatioX == "DirectionGauche": # On decend / monte    # script optimisable largement
             if self.directionRatioY == "DirectionBas":
+   
+
                 # gros du travail deplacment
+                if self.sidePrincipal == "X":
+                    while self.compteurX + self.ratio >= self.goal[0]:
+                        for ratio in range(abs(self.ratio)):
+                            self.compteurX -= 1
+                            self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]
+
+                        if self.compteurY < self.goal[1]:
+                            self.compteurY += 1
+                            self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]  
+                
+                else:
+                    while self.compteurY + abs(self.ratio) <= self.goal[1]:
+                        for ratio in range(abs(self.ratio)):
+                            self.compteurY += 1
+                            self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]  
+
+                        if self.compteurX > self.goal[0]:
+                            self.compteurX -= 1
+                            self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]  
+
+                # finition
+                while self.compteurX != self.goal[0] or self.compteurY != self.goal[1]:
+                    if self.compteurX > self.goal[0]:
+                        self.compteurX -= 1
+                        self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]  
+
+                    if self.compteurY < self.goal[1]:
+                        self.compteurY += 1
+                        self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]  
+
+            else:
+                # gros du travail deplacment
+                if self.sidePrincipal == "X":
+                    while self.compteurX - self.ratio >= self.goal[0]: # on soustrait le ratio car il sont tout les deux en négatif (- / - = + ....)
+                        for ratio in range(abs(self.ratio)):
+                            self.compteurX -= 1
+                            self.pos.append([self.compteurX,self.compteurY])
+                        
+                        if self.compteurY > self.goal[1]:
+                            self.compteurY -= 1
+                            self.pos.append([self.compteurX,self.compteurY]) # forme [x,y] 
+                else:
+                    while self.compteurY - self.ratio >= self.goal[1]:
+                        for ratio in range(abs(self.ratio)):
+                            self.compteurY -= 1
+                            self.pos.append([self.compteurX,self.compteurY])
+
+                        if self.compteurX > self.goal[0]:
+                            self.compteurX -= 1
+                            self.pos.append([self.compteurX,self.compteurY])
+
+                # finition
+                while self.compteurX != self.goal[0] or self.compteurY != self.goal[1]:
+                    if self.compteurX > self.goal[0]:
+                        self.compteurX -= 1
+                        self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]  
+
+                    if self.compteurY > self.goal[1]:
+                        self.compteurY -= 1
+                        self.pos.append([self.compteurX,self.compteurY]) # forme [x,y] 
+
+
+        elif self.directionRatioX == "DirectionDroite":
+            if self.directionRatioY == "DirectionBas":
+
+             # gros du travail deplacment
                 if self.sidePrincipal =="X":
                     while self.compteurX + self.ratio <= self.goal[0]:
                         for ratio in range(abs(self.ratio)):
                             self.compteurX += 1
                             self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]
 
-                        self.compteurY += 1
-                        self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]
+                        if self.compteurY < self.goal[1]:
+                            self.compteurY += 1
+                            self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]
                 else:
                     while self.compteurY + self.ratio <= self.goal[1]:
                         for ratio in range(abs(self.ratio)):
                             self.compteurY += 1
                             self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]
 
-                        self.compteurX += 1
-                        self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]  
+                        if self.compteurX < self.goal[0]:
+                            self.compteurX += 1
+                            self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]  
 
                 # finition
                 while self.compteurX != self.goal[0] or self.compteurY != self.goal[1]:
-                    if self.compteurX <= self.goal[0]:
+                    if self.compteurX < self.goal[0]:
                         self.compteurX += 1
                         self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]  
 
-                    if self.compteurY <= self.goal[1]:
+                    if self.compteurY < self.goal[1]:
                         self.compteurY += 1
                         self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]  
 
@@ -105,87 +175,30 @@ class LiaisonAtoB(object):
                             self.compteurX += 1
                             self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]
 
-                        self.compteurY -= 1
-                        self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]
+                        if self.compteurY > self.goal[1]:
+                            self.compteurY -= 1
+                            self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]
+                        
                 else:
                      while self.compteurY + self.ratio >= self.goal[1]: # le ratio est normalement négatif car on monte dans la liste
                         for ration in range(abs(self.ratio)):
                             self.compteurY -= 1
                             self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]
                         
-                        self.compteurX += 1
-                        self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]
-
-                # finition
-                while self.compteurX != self.goal[0] or self.compteurY != self.goal[1]:
-                    if self.compteurX <= self.goal[0]:
-                        self.compteurX += 1
-                        self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]  
-
-                    if self.compteurY >= self.goal[1]:
-                        self.compteurY -= 1
-                        self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]  
-
-
-        elif self.directionRatioX == "DirectionDroite":
-            if self.directionRatioY == "DirectionBas":
-                # gros du travail deplacment
-                if self.sidePrincipal == "X":
-                    while self.compteurX + self.ratio >= self.goal[0]:
-                        for ratio in range(abs(self.ratio)):
-                            self.compteurX -= 1
+                        if self.compteurX < self.goal[0]:
+                            self.compteurX += 1
                             self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]
 
-                        self.compteurY += 1
-                        self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]  
-                
-                else:
-                    while self.compteurY + abs(self.ratio) <= self.goal[1]:
-                        for ratio in range(abs(self.ratio)):
-                            self.compteurY += 1
-                            self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]  
-
-                        self.compteurX -= 1
-                        self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]  
-
                 # finition
                 while self.compteurX != self.goal[0] or self.compteurY != self.goal[1]:
-                    if self.compteurX >= self.goal[0]:
-                        self.compteurX -= 1
+                    if self.compteurX < self.goal[0]:
+                        self.compteurX += 1
                         self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]  
 
-                    if self.compteurY <= self.goal[1]:
-                        self.compteurY += 1
-                        self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]  
-
-            else:
-                # gros du travail deplacment
-                if self.sidePrincipal == "X":
-                    while self.compteurX - self.ratio >= self.goal[0]: # on soustrait le ratio car il sont tout les deux en négatif (- / - = + ....)
-                        for ratio in range(abs(self.ratio)):
-                            self.compteurX -= 1
-                            self.pos.append([self.compteurX,self.compteurY])
-                        
+                    if self.compteurY > self.goal[1]:
                         self.compteurY -= 1
-                        self.pos.append([self.compteurX,self.compteurY]) # forme [x,y] 
-                else:
-                    while self.compteurY - self.ratio >= self.goal[1]:
-                        for ratio in range(abs(self.ratio)):
-                            self.compteurY -= 1
-                            self.pos.append([self.compteurX,self.compteurY])
-       
-                        self.compteurX -= 1
-                        self.pos.append([self.compteurX,self.compteurY])
-
-                # finition
-                while self.compteurX != self.goal[0] or self.compteurY != self.goal[1]:
-                    if self.compteurX >= self.goal[0]:
-                        self.compteurX -= 1
                         self.pos.append([self.compteurX,self.compteurY]) # forme [x,y]  
 
-                    if self.compteurY >= self.goal[1]:
-                        self.compteurY -= 1
-                        self.pos.append([self.compteurX,self.compteurY]) # forme [x,y] 
 
     
     def GetPos(self):
@@ -194,29 +207,29 @@ class LiaisonAtoB(object):
     
 
 
-coordsA = [[5,12],[30,20],[10,10],[5,20],[45,5],[20,12],[15,8],[0,24]]
-coordsB = [[45,12],[30,5],[40,20],[35,5],[10,20],[25,12],[15,15],[49,0]]
+# coordsA = [[5,12],[30,20],[10,10],[5,20],[45,5],[20,12],[15,8],[0,24]]
+# coordsB = [[45,12],[30,5],[40,20],[35,5],[10,20],[25,12],[15,15],[49,0]]
 
-for i in range(len(coordsA)):
+# for i in range(len(coordsA)):
 
-    map = []
+#     map = []
 
-    for _ in range(25): # largeur de la map (y)
-        creationMap = [] # liste pour stocker les valeurs des colonnes (x)
-        for _ in range(50): # longueur de la map (x)
-            creationMap.append("-") # ajout des valeurs (x)
-        map.append(creationMap) # ajout de la ligne entière
+#     for _ in range(25): # largeur de la map (y)
+#         creationMap = [] # liste pour stocker les valeurs des colonnes (x)
+#         for _ in range(50): # longueur de la map (x)
+#             creationMap.append("-") # ajout des valeurs (x)
+#         map.append(creationMap) # ajout de la ligne entière
 
 
 
-    call = LiaisonAtoB(coordsA[i], coordsB[i]).GetPos()
+#     call = LiaisonAtoB(coordsA[i], coordsB[i]).GetPos()
 
-    for coords in call:
-        map[coords[1]][coords[0]] = "#"
+#     for coords in call:
+#         map[coords[1]][coords[0]] = "#"
 
-    for affiche in range(len(map)):
-        print(*map[affiche], sep=" ")
+#     for affiche in range(len(map)):
+#         print(*map[affiche], sep=" ")
 
-    print(end="\n")
-    print("---------------------------")
-    print(end="\n")
+#     print(end="\n")
+#     print("---------------------------")
+#     print(end="\n")

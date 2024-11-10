@@ -176,25 +176,25 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             for nbPointRepereRiviere in range(len(listePointRepere)-1):
                 start = [listePointRepere[nbPointRepereRiviere][0], listePointRepere[nbPointRepereRiviere][1]] # fomre [x,y]
                 goal = [listePointRepere[nbPointRepereRiviere+1][0], listePointRepere[nbPointRepereRiviere+1][1]] # fomre [x,y]   
-                path = LiaisonAtoB(start, goal).GetPos()     ########
+                path = LiaisonAtoB(start, goal).GetPos()     # path de coords en [x,y]
 
 
                 # On recup la list de déplacement et on ajoute la rivière à la map
                 for coords in path:
-                    self.map[coords[0]][coords[1]] = "#"
-                    listeCheminRiviere.append([coords[0],coords[1]])
+                    self.map[coords[1]][coords[0]] = "#"
+                    listeCheminRiviere.append([coords[0],coords[1]]) # forme [x,y]
 
-            super().AjoutJsonMapValue(listeCheminRiviere, "coordsMapBase", f"Riviere{i} Coords") # add value to json file
+            super().AjoutJsonMapValue(listeCheminRiviere, "coordsMapBase", f"Riviere{nombreRiviere} Coords") # add value to json file 
 
     def PlacementObstacle(self):
         #placement des obstacle sur la map
         listeObstacle = []
-        for i in range(self.obstacle):
-            pos = [randint(4, self.largeur-4), randint(4, self.longueur-4)]
-            while self.map[pos[0]][pos[1]] != '-': # check de s'il y a déjà des éléments sur la map.
-                pos = [randint(4, self.largeur-4), randint(4, self.longueur-4)]
-            self.map[pos[0]][pos[1]] = "O"
-            listeObstacle.append(pos)
+        for obstacle in range(self.obstacle):
+            obstaclePos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y]
+            while self.map[obstaclePos[1]][obstaclePos[0]] != '-': # check de s'il y a déjà des éléments sur la map.
+                obstaclePos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y]
+            self.map[obstaclePos[1]][obstaclePos[0]] = "O"
+            listeObstacle.append(obstaclePos) # forme  [x,y]
 
         super().AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords")
 
