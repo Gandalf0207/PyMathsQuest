@@ -1,6 +1,7 @@
 from settings import *
 from ScriptAlgo.jeuDeLaVie import *
-from ScriptAlgo.LiaisonAtoB import *
+from ScriptAlgo.liaisonAtoB import *
+from ScriptAlgo.astar import *
 
 # RAPPEL : les coordonnées sont stocké sous forme de liste
 # coords = [x, y]
@@ -89,6 +90,8 @@ class NiveauPlaineRiviere(GestionNiveauMap):
     def __init__(self, longueur, largeur, obstacle) -> None:
         super().__init__(longueur, largeur)
         self.obstacle = obstacle
+        self.coordsPNJ = None # None car la valeurs est modifier par la suite car il est placé en fonction des infops sur la map
+        self.mapCheckDeplacementPossible = []
         self.pnj = []
         self.data = {
                     "coordsMapBase" : {
@@ -103,7 +106,9 @@ class NiveauPlaineRiviere(GestionNiveauMap):
                     "coordsMapObject" : {
                         "Obstacles Coords" : "null",
                         "PNJ Coords" : "null",
-                        "ArbreSpecial Coords" : "null"
+                        "ArbreSpecial Coords" : "null",
+                        "CampSpawn Coords" : "null",
+                        "ZoneSortie Coords" : "null"
                     }
                 }
 
@@ -114,7 +119,21 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             return True
         else:
             return False
-        
+
+    def __CheckNiveauPossible__(self, listOrdrePointCle, pathAccessible):
+        for pointCle in range(len(listOrdrePointCle)-1):
+            if Astar(listOrdrePointCle[pointCle], listOrdrePointCle[pointCle+1],self.mapCheckDeplacementPossible, pathAccessible).a_star():
+                pass
+            else:
+                return False
+        return True
+
+    def PlacementSpawn(self):
+        coordsSpawnElement = [[1,1,"S"], [4,2,"b"], [2,4,"b"], [6,4,"b"], [4,6,"b"], [4,4,"C"]]
+        for coordsPlacement in coordsSpawnElement:
+            self.map[coordsPlacement[1]][coordsPlacement[0]] = coordsPlacement[2]
+        super().AjoutJsonMapValue(coordsSpawnElement, "coordsMapObject", "CampSpawn Coords")
+
     def PlacementFleur(self):
         # placement de l'herbe (Alt 1 et 2 et 3) avec jeu de la vie
         getPosFleur = JeuDeLaVie().GetPos()
@@ -206,34 +225,68 @@ class NiveauPlaineRiviere(GestionNiveauMap):
     # ADD VERIF POUR ETRE SUR QUE L4ELEMENT SOIT ACCESSIBLE ---------------------------------------------
     def PlacementObstacle(self):
         #placement des obstacle sur la map
-        listeObstacle = []
-        for obstacle in range(self.obstacle):
-            obstaclePos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y]
-            while self.map[obstaclePos[1]][obstaclePos[0]] != '-': # check de s'il y a déjà des éléments sur la map.
-                obstaclePos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y]
-            self.map[obstaclePos[1]][obstaclePos[0]] = "O"
-            listeObstacle.append(obstaclePos) # forme  [x,y]
+        checkDeplacementPasPossible = True
+        while checkDeplacementPasPossible:
+            
+            # copie de la map
+            self.mapCheckDeplacementPossible = []
+            self.mapCheckDeplacementPossible = copy.deepcopy(self.map)   
 
-        super().AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords")
+            listeObstacle = []
+            for obstacle in range(self.obstacle):
+                obstaclePos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y]
+                while self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] != '-': # check de s'il y a déjà des éléments sur la map.
+                    obstaclePos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y]
+                self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] = "O"
+                listeObstacle.append(obstaclePos) # forme  [x,y]
+
+            # base check : 
+            # spawn, pnj1, arbre spécial, pnj2, pnj3, sortie
+            listeOrdrePointCle1 = [ # partie gauche map (avant riviere)
+                                [1,1], 
+                                self.coordsPNJ[0], 
+                                super().LoadJsonMapValue("coordsMapObject", "ArbreSpecial Coords")
+                                ]
+            
+            listeOrdrePointCle2 = [ # partie middle (entre les deux riviere donc on a passé la premiere riviere (indice + 2))
+                                [self.coordsPNJ[1][0] + 2,self.coordsPNJ[1][1]],
+                                self.coordsPNJ[2]
+                                ]
+            
+            listeOrdrePointCle3 = [ # meme chose
+                                [self.coordsPNJ[2][0] + 2,self.coordsPNJ[2][1]],
+                                super().LoadJsonMapValue("coordsMapObject", "ZoneSortie Coords")
+                                ]
+            
+            if self.__CheckNiveauPossible__(listeOrdrePointCle1, ["-", "A", "P", "S"]):
+                if self.__CheckNiveauPossible__(listeOrdrePointCle2,  ["-", "A", "P", "S"] ):
+                    if self.__CheckNiveauPossible__(listeOrdrePointCle3,  ["-", "A", "P", "S"] ):
+                        super().AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords")
+                        checkDeplacementPasPossible = False
+                        for coords in listeObstacle:
+                            self.map[coords[1]][coords[0]] = "O"
+
 
     def PlacementSortie(self): # A implémenter
-        listeSortie = []
-        pass
+        coordsSortie = [149, 50]
+        self.map[coordsSortie[1]][coordsSortie[0]] = "S"
+        super().AjoutJsonMapValue(coordsSortie, "coordsMapObject", "ZoneSortie Coords")
 
     def Update(self):
         super().BaseJson(self.data)
         super().BaseMap()  
         self.PlacementRiviere()
+        self.PlacementSpawn() 
+        self.PlacementSortie() # # A implmenter
         self.PlacementFleur()
-        self.PlacementObstacle()
-        coordsPNJ = [[randint(1+5,((self.longueur//3) -5)), randint(5, self.largeur-5)], # forme [x,y]
+        self.coordsPNJ = [[randint(8,((self.longueur//3) -5)), randint(5, self.largeur-5)], # forme [x,y]   # longuer de 8 de base pour éviter de rentrer en collision avec le camp de base
                     self.PlacementSpecial("coordsMapBase", "Riviere1 Coords", "P"), # placement pnj (ne tombre jamais sur les coords de la rivière)
                     [randint(((self.longueur//3)*2 +5), self.longueur-5), randint(5, self.largeur-5)]]      # forme [x,y]       
-        super().PlacementPNJ(coordsPNJ)
+        super().PlacementPNJ(self.coordsPNJ)
         coordsAbre = self.PlacementSpecial("coordsMapBase", "Riviere0 Coords", "A")
         super().AjoutJsonMapValue(coordsAbre, "coordsMapObject", "ArbreSpecial Coords")
+        self.PlacementObstacle()
 
-        # Implémenter la position de la sortie
                 
         # On charche la map de base pour pouvoir refresh tout les x tics
         super().AjoutJsonMapValue(self.map, "coordsMapBase", "AllMapInfo")
