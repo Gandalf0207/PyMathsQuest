@@ -15,10 +15,11 @@
 
 
 - Opti code jeu de la vie de conway
+
 - commentaire + docstring des script pour la génération des maps (niveau)
 
 
 Niveau plaine et rivière : 
--  passage niveau suivant (cailloux) (a implémenter)
+-  passage niveau suivant (cailloux) a revoir postion des coords  (actuellement statique)
 
 

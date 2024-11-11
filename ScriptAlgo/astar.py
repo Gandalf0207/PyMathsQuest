@@ -1,4 +1,4 @@
-import heapq
+from settings import *
 
 class Astar(object):
     def __init__(self, start, goal, mapCalcul, pathAccessible) -> None:

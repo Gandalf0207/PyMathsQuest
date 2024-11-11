@@ -222,7 +222,6 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             super().AjoutJsonMapValue(listeCheminRiviere, "coordsMapBase", f"Riviere{nombreRiviere} Coords") # add value to json file 
 
 
-    # ADD VERIF POUR ETRE SUR QUE L4ELEMENT SOIT ACCESSIBLE ---------------------------------------------
     def PlacementObstacle(self):
         #placement des obstacle sur la map
         checkDeplacementPasPossible = True
@@ -240,7 +239,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
                 self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] = "O"
                 listeObstacle.append(obstaclePos) # forme  [x,y]
 
-            # base check : 
+            # base check # GROSSE VERIF : 
             # spawn, pnj1, arbre spécial, pnj2, pnj3, sortie
             listeOrdrePointCle1 = [ # partie gauche map (avant riviere)
                                 [1,1], 
@@ -267,7 +266,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
                             self.map[coords[1]][coords[0]] = "O"
 
 
-    def PlacementSortie(self): # A implémenter
+    def PlacementSortie(self): 
         coordsSortie = [149, 50]
         self.map[coordsSortie[1]][coordsSortie[0]] = "S"
         super().AjoutJsonMapValue(coordsSortie, "coordsMapObject", "ZoneSortie Coords")
@@ -277,7 +276,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         super().BaseMap()  
         self.PlacementRiviere()
         self.PlacementSpawn() 
-        self.PlacementSortie() # # A implmenter
+        self.PlacementSortie() 
         self.PlacementFleur()
         self.coordsPNJ = [[randint(8,((self.longueur//3) -5)), randint(5, self.largeur-5)], # forme [x,y]   # longuer de 8 de base pour éviter de rentrer en collision avec le camp de base
                     self.PlacementSpecial("coordsMapBase", "Riviere1 Coords", "P"), # placement pnj (ne tombre jamais sur les coords de la rivière)
@@ -300,18 +299,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         for j in range(len(self.baseMap)):
             print(*self.baseMap[j], sep=" ")
 
-        
-            
-           #
-           # 
-           #      writeJsonValue(Map, "coordsMapBase", "AllMap")
 
         
 
 NiveauPlaineRiviere(150,75,200).Update()
-
-
-
-
-
-
