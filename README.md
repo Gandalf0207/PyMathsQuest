@@ -23,3 +23,10 @@ Niveau plaine et rivière :
 -  passage niveau suivant (cailloux) a revoir postion des coords  (actuellement statique)
 
 
+
+
+# RAPPEL : les coordonnées sont stocké sous forme de liste
+# coords = [x, y]
+# il faut donc inverser l'ordre lors des placements: 
+# Map[coords[1]][coords[0]]
+

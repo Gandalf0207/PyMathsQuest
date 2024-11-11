@@ -5,3 +5,8 @@ import time
 import json
 import heapq
 import copy
+from typing import Union
+
+
+LONGUEUR = 150
+LARGEUR = 75

@@ -1,3 +1,5 @@
+### Script conçu avec IA 
+
 from settings import *
 
 class Astar(object):
