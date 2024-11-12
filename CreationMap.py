@@ -235,7 +235,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             # permet de créer une ligne pour éviter les collisions avec les bordures
             coordsPts3Riviere = [randint(((nombreRiviere+1)*50 -4),((nombreRiviere+1)*50 +4)),self.largeur-5] # on crée l'avant dernier point
             listePointRepere.append(coordsPts3Riviere) # forme [x,y]  on ajoute l'avant dernier point repère
-            coordsPts4Riviere = [coordsPts3Riviere[0], coordsPts3Riviere[1]+4] # on crée le dernier point avec une huteur de +4
+            coordsPts4Riviere = [coordsPts3Riviere[0], coordsPts3Riviere[1]+3] # on crée le dernier point avec une huteur de +4
             listePointRepere.append(coordsPts4Riviere) # forme [x,y] on ajoute le dernier point repère de la riviere
 
             # On ajoute les pts repère sur la map + les point spéciaux (haut et bas ) directement car collision avec montagne, donc il faut une ligne de 4 droite minimum
@@ -348,5 +348,4 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         return self.map, self.baseMap # return des deux map pour pouvoir charger et mettre à jours les valeurs de la map
 
 
-a = NiveauPlaineRiviere(LONGUEUR, LARGEUR, 200).Update()
-# print(a)
+# NiveauPlaineRiviere(150,75,200).Update()
