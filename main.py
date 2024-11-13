@@ -36,27 +36,21 @@ class Game(object):
                     if self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
                         stateFormat = "RiverAngularN-Ex128"
                         River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
-                        print(1)
                     elif self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees+1][abscisses] =="#":
                         stateFormat = "RiverAngularE-Sx128"
                         River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
-                        print(1)
-                    elif self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
-                        stateFormat = "RiverAngularW-Sx128"
-                        River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
-                        print(1)
                     elif self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
                         stateFormat = "RiverAngularN-Wx128"
                         River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
-                        print(1)
+                    elif self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees+1][abscisses] =="#":
+                        stateFormat = "RiverAngularW-Sx128"
+                        River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
                     elif self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees][abscisses-1] =="#":
                         stateFormat = "RiverStraightW-Ex128"
                         River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
-                        print(1)
                     elif self.mapBase[ordonnees+1][abscisses] =="#" and self.mapBase[ordonnees-1][abscisses] =="#": 
                         stateFormat = "RiverStraightN-Sx128"
                         River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
-                        print(1)
                     
                 
                 Sprites(pos, self.grass, self.allSprites) 

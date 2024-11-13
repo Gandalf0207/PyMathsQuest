@@ -39,16 +39,10 @@ class River(pygame.sprite.Sprite):
         for state in self.frames.keys():
             for folder_path, sub_folders, file_names in walk(join("Images","Sol", "Riviere", state)):
                 if file_names:
-                    print(f"Loading images for state: {state}")
                     for file_name in sorted(file_names, key=lambda name: int(name.split('.')[0])):
                         full_path = join(folder_path, file_name)
                         surf = pygame.image.load(full_path).convert_alpha()
                         self.frames[state].append(surf)
-
-            # Vérification si la liste d'images est vide
-            if not self.frames[state]:
-                print(f"Warning: No images loaded for state: {state}")
-
 
     def update(self, dt):
         # Animation des frames
