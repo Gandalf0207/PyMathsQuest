@@ -115,6 +115,8 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         """Initialisation des attributs de la class enfant"""
         super().__init__(longueur, largeur) # on récupère / initialise les valeurs dans la class parent (c'est à ce moment là que la class parent est initialisé)
         self.obstacle = obstacle # on stock le nombre d'obstacle 
+        self.mud = 200
+        self.rock = 300
         self.coordsPNJ = None # None car la valeurs est modifier par la suite car il est placé en fonction des infops sur la map
         self.mapCheckDeplacementPossible = [] # initialisation de la map de test pour savoir si un niveau est possible
         self.pnj = [] # initialisation de la liste des coords des pnj (placement de certains pnj plus tard en fonction de l'apparence de la map)
@@ -124,6 +126,8 @@ class NiveauPlaineRiviere(GestionNiveauMap):
                         "Riviere0 Coords" : "null",
                         "Riviere1 Coords" : "null",
                         "Flowers Coords" : "null",
+                        "Mud Coords" : "null",
+                        "Rock Coords" : "null",
                         "AllMapInfo" : "null",
                         "AllMapBase" : "null"
                     },
@@ -260,6 +264,35 @@ class NiveauPlaineRiviere(GestionNiveauMap):
 
             super().AjoutJsonMapValue(listeCheminRiviere, "coordsMapBase", f"Riviere{nombreRiviere} Coords") # stockage des valeurs dans le fichier json
 
+
+    def __PlacementMud__(self):
+        """
+        """
+        listeMud = [] # liste qui va stocker toutes les coords des obstacles
+        for mudElement in range(self.mud): # boucle pour le nombre d'obstacle différents
+            mudPos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y] pos random sur la map, en éviant les bordure
+            while self.map[mudPos[1]][mudPos[0]] != '-' and self.baseMap [mudPos[1]][mudPos[0]] != '-': # check de s'il y a déjà des éléments pour ne pas avoir de visuel nul
+                mudPos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y] # on replace si jamais il y a un element
+            self.baseMap[mudPos[1]][mudPos[0]] = "M" # on ajoute sur la map de test l'object
+            listeMud.append(mudPos) # forme  [x,y] # on ajoute les coords de l'obstacle dans la liste de stockage
+
+        super().AjoutJsonMapValue(listeMud, "coordsMapBase", "Mud Coords") # on ajoute au fichier json, la vrai liste de coordonnée des mud
+
+
+    def __PlacementRock__(self):
+        """
+        """
+        listeRock = [] # liste qui va stocker toutes les coords des obstacles
+        for rockElement in range(self.rock): # boucle pour le nombre d'obstacle différents
+            rockPos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y] pos random sur la map, en éviant les bordure
+            while self.map[rockPos[1]][rockPos[0]] != '-' and self.baseMap [rockPos[1]][rockPos[0]] != '-': # check de s'il y a déjà des éléments pour ne pas avoir de visuel nul
+                rockPos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y] # on replace si jamais il y a un element
+            self.baseMap[rockPos[1]][rockPos[0]] = "R" # on ajoute sur la map de test l'object
+            listeRock.append(rockPos) # forme  [x,y] # on ajoute les coords de l'obstacle dans la liste de stockage
+
+        super().AjoutJsonMapValue(listeRock, "coordsMapBase", "Rock Coords") # on ajoute au fichier json, la vrai liste de coordonnée des rock
+
+
     def __PlacementObstacle__(self) -> None:
         """Méthode permettant de placer aléatoirement les obstacles sur la map. Cette méthode contient également un systhème de vérification vis à vis de la possibilit de réalise le niveau.
         Grâce à un script reprenant l'algo A*, tout les points importants de la map dans l'ordre de déroulement, sont relier un par un, si tout les points ont pu etre relier, alors la map et faisable, sinon non.
@@ -319,7 +352,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         super().BaseJson(self.data) # setup du fichier json
         super().BaseMap()  # setup de la base des deux map (vide)
         self.__PlacementRiviere__() # placement des rivière
-        super().PlacementSpawn([[1,1,"S"], [4,2,"b"], [2,4,"b"], [6,4,"b"], [4,6,"b"], [4,4,"C"]]) # coords de tout les élément du spawn evec une lettre indiquant à quoi ils font référence : b = banc, C = feu de camp, S = spawn du joueur) # placement du spawn
+        super().PlacementSpawn([[1,1,"S"], [4,2,"b"], [2,4,"b"], [6,4,"b"], [4,6,"b"], [4,4,"C"]]) # coords de tout les éléments du spawn evec une lettre indiquant à quoi ils font référence : b = banc, C = feu de camp, S = spawn du joueur) # placement du spawn
         super().PlacementSortie([149, 50]) # coords de la sortie de la map, forme [x,y]) # placement de la sortie
         self.__PlacementFleur__() # placement des varientes d'herbe (fleurs..)
         # Création des cordonnées des pnj (le pnj 2 utilise les information de la map pour pouvoir ce placer. )
@@ -330,7 +363,8 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         coordsAbre = self.__PlacementSpecial__("coordsMapBase", "Riviere0 Coords", "A") # placement spécial de l'arbre spécial
         super().AjoutJsonMapValue(coordsAbre, "coordsMapObject", "ArbreSpecial Coords") # ajout des coords de l'arbre spécial dans le fichier json
         self.__PlacementObstacle__() # placement des obstacles
-
+        self.__PlacementMud__() # placement des marres de boue sur la map
+        self.__PlacementRock__() # placement des petits cailloux sur la map
                 
         # On charge la map de base pour pouvoir refresh tout les x tics et gérer les collisions
         super().AjoutJsonMapValue(self.map, "coordsMapBase", "AllMapInfo")
