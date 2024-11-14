@@ -22,7 +22,7 @@ class River(pygame.sprite.Sprite):
         self.image = pygame.image.load(join("Images","Sol","Riviere", "RiverStraightN-Sx128", "0.gif")).convert_alpha() # Image initiale
         self.rect = self.image.get_rect(topleft=pos)
         self.current_frame = 0
-        self.animation_speed = 0.1  # Vitesse de l'animation
+        self.animation_speed = 0.3  # Vitesse de l'animation
         self.collisionSprites = collisionSprites
         self.time_last_update = pygame.time.get_ticks()
 
@@ -47,7 +47,7 @@ class River(pygame.sprite.Sprite):
     def update(self, dt):
         # Animation des frames
         current_time = pygame.time.get_ticks()
-        if current_time - self.time_last_update > 100:  # Changer de frame toutes les 100 ms
+        if current_time - self.time_last_update > 300:  # Changer de frame toutes les 100 ms
             self.current_frame = (self.current_frame + 1) % len(self.frames["RiverStraightN-Sx128"])
             self.image = self.frames[self.state][self.current_frame]
             self.time_last_update = current_time

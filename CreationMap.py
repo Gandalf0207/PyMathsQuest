@@ -268,10 +268,14 @@ class NiveauPlaineRiviere(GestionNiveauMap):
     def __PlacementMud__(self):
         """
         """
+        for i in range(len(self.map)):
+            print(*self.map[i], sep=" ")
+        
         listeMud = [] # liste qui va stocker toutes les coords des obstacles
-        for mudElement in range(self.mud): # boucle pour le nombre d'obstacle différents
+        for _ in range(self.mud): # boucle pour le nombre d'obstacle différents
             mudPos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y] pos random sur la map, en éviant les bordure
-            while self.map[mudPos[1]][mudPos[0]] != '-' and self.baseMap [mudPos[1]][mudPos[0]] != '-': # check de s'il y a déjà des éléments pour ne pas avoir de visuel nul
+
+            while ((self.baseMap[mudPos[1]][mudPos[0]] != '-') or (self.map[mudPos[1]][mudPos[0]] != '-') or (self.map[mudPos[1]-1][mudPos[0]] == 'O') ): # check de s'il y a déjà des éléments pour ne pas avoir de visuel nul  # dernier element pour checl pour savoir s'il y a un arbre au dessus, car pas beau cr arbre plusieurs cases
                 mudPos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y] # on replace si jamais il y a un element
             self.baseMap[mudPos[1]][mudPos[0]] = "M" # on ajoute sur la map de test l'object
             listeMud.append(mudPos) # forme  [x,y] # on ajoute les coords de l'obstacle dans la liste de stockage
@@ -283,9 +287,9 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         """
         """
         listeRock = [] # liste qui va stocker toutes les coords des obstacles
-        for rockElement in range(self.rock): # boucle pour le nombre d'obstacle différents
+        for _ in range(self.rock): # boucle pour le nombre d'obstacle différents
             rockPos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y] pos random sur la map, en éviant les bordure
-            while self.map[rockPos[1]][rockPos[0]] != '-' and self.baseMap [rockPos[1]][rockPos[0]] != '-': # check de s'il y a déjà des éléments pour ne pas avoir de visuel nul
+            while ((self.baseMap[rockPos[1]][rockPos[0]] != '-') or (self.map[rockPos[1]][rockPos[0]] != '-') or (self.map[rockPos[1]-1][rockPos[0]] == 'O')): # check de s'il y a déjà des éléments pour ne pas avoir de visuel nul
                 rockPos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y] # on replace si jamais il y a un element
             self.baseMap[rockPos[1]][rockPos[0]] = "R" # on ajoute sur la map de test l'object
             listeRock.append(rockPos) # forme  [x,y] # on ajoute les coords de l'obstacle dans la liste de stockage
@@ -309,7 +313,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             listeObstacle = [] # liste qui va stocker toutes les coords des obstacles
             for obstacle in range(self.obstacle): # boucle pour le nombre d'obstacle différents
                 obstaclePos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y] pos random sur la map, en éviant les bordure
-                while self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] != '-': # check de s'il y a déjà des éléments sur la map de test (map).
+                while self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] != '-' or self.mapCheckDeplacementPossible[obstaclePos[1]+1][obstaclePos[0]] != '-': # check de s'il y a déjà des éléments sur la map de test (map).
                     obstaclePos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y] # on replace si jamais il y a un element
                 self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] = "O" # on ajoute sur la map de test l'object
                 listeObstacle.append(obstaclePos) # forme  [x,y] # on ajoute les coords de l'obstacle dans la liste de stockage
