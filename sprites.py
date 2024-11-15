@@ -33,7 +33,8 @@ class River(pygame.sprite.Sprite):
             "RiverAngularN-Wx128": [],
             "RiverAngularW-Sx128": [],
             "RiverStraightN-Sx128": [],
-            "RiverStraightW-Ex128": []
+            "RiverStraightW-Ex128": [],
+            "RiverMontainConflictx128": []
         }
 
         for state in self.frames.keys():
@@ -43,6 +44,7 @@ class River(pygame.sprite.Sprite):
                         full_path = join(folder_path, file_name)
                         surf = pygame.image.load(full_path).convert_alpha()
                         self.frames[state].append(surf)
+
 
     def update(self, dt):
         # Animation des frames
