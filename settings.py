@@ -10,3 +10,4 @@ from typing import Union
 
 LONGUEUR = 150
 LARGEUR = 75
+EspacementPointRepereRiviere = 15
