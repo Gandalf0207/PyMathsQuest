@@ -135,10 +135,13 @@ class NiveauPlaineRiviere(GestionNiveauMap):
     def __CheckPos__(self, indice : list) -> bool:
         """Méthode permettant de regarder et de valider la position d'un element par raport à la riviere (pnj / arbre spécial)"""
         # verification si la position du pnj est possible autour de la riviere (rivière large de 1 uniquement) + eviter de la placer trop haut / bas
-        listePosPossible = ["-", "F"] # liste pour indiquer que si la position check est dans la liste alors c'est bon (= fleurs / herbe donc pas de colision)
+        listePosPossible = ["-", "F", "M", "R"] # liste pour indiquer que si la position check est dans la liste alors c'est bon (= fleurs / herbe donc pas de colision)
         # vérification autour de la case rivière sélectionnée, si le placement / déplacement sont possible
         # deux dernière vérif du if :  pour éviter de placer le pnj trop haut / trop bas
-        if (self.map[indice[1]][indice[0]-1] in listePosPossible) and (self.map[indice[1]][indice[0]-2] in listePosPossible )and( self.map[indice[1]][indice[0]+1] in listePosPossible) and (indice[1] >=5) and (indice[1] <= 70): 
+        if indice[1] == 149: # position de la sortir sur la bordure de map (donc condition de check diférentes)
+            if (self.map[indice[1]][indice[0]-1] in listePosPossible) and (self.map[indice[1]][indice[0]-2] in listePosPossible )and (indice[1] >=5) and (indice[1] <= 70): 
+                return True # on valide le placement
+        elif (self.map[indice[1]][indice[0]-1] in listePosPossible) and (self.map[indice[1]][indice[0]-2] in listePosPossible )and(self.map[indice[1]][indice[0]+1] in listePosPossible) and (indice[1] >=5) and (indice[1] <= 70): 
             return True # on valide le placement
         else:
             return False # on invalide le placement
@@ -259,7 +262,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             # Point du bas (dernier element)
             # permet de créer une ligne pour éviter les collisions avec les bordures
             listePointRepere.append(coordsPts3Riviere) # forme [x,y]  on ajoute l'avant dernier point repère
-            coordsPts4Riviere = [coordsPts3Riviere[0], coordsPts3Riviere[1]+3] # on crée le dernier point avec une huteur de +4
+            coordsPts4Riviere = [coordsPts3Riviere[0], coordsPts3Riviere[1]+4] # on crée le dernier point avec une huteur de +4
             listePointRepere.append(coordsPts4Riviere) # forme [x,y] on ajoute le dernier point repère de la riviere
 
 
@@ -337,7 +340,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             # 3 liste, 3 verif car quand il y az ue rivire il faut d'écaler le point de départ, car un pont sera poser pour permettre au joueur de traverser la riviere
             # spawn, pnj1, arbre spécial, pnj2, pnj3, sortie
             listeOrdrePointCle1 = [ # partie gauche map (avant riviere)
-                                [8,1], 
+                                [8,2], 
                                 self.coordsPNJ[0], 
                                 super().LoadJsonMapValue("coordsMapObject", "ArbreSpecial Coords")
                                 ]
@@ -371,7 +374,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         super().BaseJson(self.data) # setup du fichier json
         super().BaseMap()  # setup de la base des deux map (vide)
         self.__PlacementRiviere__() # placement des rivière
-        super().PlacementSpawn([[8,1,"S"], [11,2,"b"], [9,4,"b"], [13,4,"b"], [11,6,"b"], [11,4,"C"]]) # coords de tout les éléments du spawn evec une lettre indiquant à quoi ils font référence : b = banc, C = feu de camp, S = spawn du joueur) # placement du spawn
+        super().PlacementSpawn([[8,2,"S"], [11,2,"b"], [9,4,"b"], [13,4,"b"], [11,6,"b"], [11,4,"C"]]) # coords de tout les éléments du spawn evec une lettre indiquant à quoi ils font référence : b = banc, C = feu de camp, S = spawn du joueur) # placement du spawn
         coordSortie = self.__PlacementSpecial__("coordsMapBase", "Riviere3 Coords", "S")
         self.AjoutJsonMapValue(coordSortie, "coordsMapObject", "ZoneSortie Coords") # stockage dans le json des coords de la sortie de la map
 
