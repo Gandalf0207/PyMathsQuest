@@ -100,12 +100,12 @@ class NiveauPlaineRiviere(GestionNiveauMap):
     La gestion de la création est faite dans la méthode update de cette class et les valeurs (map) sont stokcé dans la class parent.
     Cette class contient donc les valeurs spécifique à ce niveau et les méthode spécifique également."""
 
-    def __init__(self, longueur :int, largeur :int, obstacle :int) -> None:
+    def __init__(self, longueur :int, largeur :int, obstacle :int, mud: int, rock : int) -> None:
         """Initialisation des attributs de la class enfant"""
         super().__init__(longueur, largeur) # on récupère / initialise les valeurs dans la class parent (c'est à ce moment là que la class parent est initialisé)
         self.obstacle = obstacle # on stock le nombre d'obstacle 
-        self.mud = 200
-        self.rock = 300
+        self.mud = mud
+        self.rock = rock
         self.coordsPNJ = None # None car la valeurs est modifier par la suite car il est placé en fonction des infops sur la map
         self.mapCheckDeplacementPossible = [] # initialisation de la map de test pour savoir si un niveau est possible
         self.pnj = [] # initialisation de la liste des coords des pnj (placement de certains pnj plus tard en fonction de l'apparence de la map)
@@ -208,7 +208,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             # Points du haut (premier element)
             # permet de créer une ligne pour éviter les collision avec les bordures
             if nombreRiviere != 0 and nombreRiviere != 3: 
-                coordsPts1Riviere = [randint(((nombreRiviere)*50 -4),((nombreRiviere)*50 +4)),0] # on créer le point 1 de la map
+                coordsPts1Riviere = [randint(((nombreRiviere)*CoupageMapRiviere - CouloirRiviere),((nombreRiviere)*CoupageMapRiviere + CouloirRiviere)),0] # on créer le point 1 de la map
             else:
                 if nombreRiviere == 0:
                     coordsPts1Riviere = [randint(0,6),0] # on créer le point 1 de la map pour les rivière de bordure
@@ -226,7 +226,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             for nbPointRepere in range(1, nbPts): # placement de tout les point repère
                 if verifLigne5 == nbPointRepere: # ajout du pts A et B pour une ligne de 5 toute droite pour sécu placement des pnj autour de la riviere
                     if nombreRiviere != 0 and nombreRiviere != 3: 
-                        pACoordsligne5 = [randint(((nombreRiviere)*50 -4),((nombreRiviere)*50 +4)),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map
+                        pACoordsligne5 = [randint(((nombreRiviere)*CoupageMapRiviere - CouloirRiviere),((nombreRiviere)*CoupageMapRiviere + CouloirRiviere)),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map
                     else:
                         if nombreRiviere == 0:
                             pACoordsligne5 = [randint(0,6),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map pour les rivière de bordure
@@ -239,7 +239,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
 
                 else:
                     if nombreRiviere != 0 and nombreRiviere != 3: 
-                        coords = [randint(((nombreRiviere)*50 -4),((nombreRiviere)*50 +4)),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map
+                        coords = [randint(((nombreRiviere)*CoupageMapRiviere - CouloirRiviere),((nombreRiviere)*CoupageMapRiviere + CouloirRiviere)),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map
                     else:
                         if nombreRiviere == 0:
                             coords = [randint(0,6),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map pour les rivière de bordure
@@ -252,7 +252,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
 
             # on crée l'avant dernier point
             if nombreRiviere != 0 and nombreRiviere != 3: 
-                coordsPts3Riviere = [randint(((nombreRiviere)*50 -4),((nombreRiviere)*50 +4)),self.largeur-5] # on créer le point 1 de la map
+                coordsPts3Riviere = [randint(((nombreRiviere)*CoupageMapRiviere - CouloirRiviere),((nombreRiviere)*CoupageMapRiviere + CouloirRiviere)),self.largeur-5] # on créer le point 1 de la map
             else:
                 if nombreRiviere == 0:
                     coordsPts3Riviere = [randint(0,6),self.largeur-5] # on créer le point 1 de la map pour les rivière de bordure
@@ -292,10 +292,10 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         """ Méthode permettant de placer la boue sur la map de base"""
         listeMud = [] # liste qui va stocker toutes les coords des obstacles
         for _ in range(self.mud): # boucle pour le nombre d'obstacle différents
-            mudPos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y] pos random sur la map, en éviant les bordure
+            mudPos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] pos random sur la map, en éviant les bordure
 
             while ((self.baseMap[mudPos[1]][mudPos[0]] != '-') or (self.map[mudPos[1]][mudPos[0]] != '-') or (self.map[mudPos[1]-1][mudPos[0]] == 'O') ): # check de s'il y a déjà des éléments pour ne pas avoir de visuel nul  # dernier element pour checl pour savoir s'il y a un arbre au dessus, car pas beau cr arbre plusieurs cases
-                mudPos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y] # on replace si jamais il y a un element
+                mudPos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] # on replace si jamais il y a un element
             self.baseMap[mudPos[1]][mudPos[0]] = "M" # on ajoute sur la map de test l'object
             listeMud.append(mudPos) # forme  [x,y] # on ajoute les coords de l'obstacle dans la liste de stockage
 
@@ -306,9 +306,9 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         """Méthode permettant de placer les petits rochers sur la map de base"""
         listeRock = [] # liste qui va stocker toutes les coords des obstacles
         for _ in range(self.rock): # boucle pour le nombre d'obstacle différents
-            rockPos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y] pos random sur la map, en éviant les bordure
+            rockPos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] pos random sur la map, en éviant les bordure
             while ((self.baseMap[rockPos[1]][rockPos[0]] != '-') or (self.map[rockPos[1]][rockPos[0]] != '-') or (self.map[rockPos[1]-1][rockPos[0]] == 'O')): # check de s'il y a déjà des éléments pour ne pas avoir de visuel nul
-                rockPos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y] # on replace si jamais il y a un element
+                rockPos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] # on replace si jamais il y a un element
             self.baseMap[rockPos[1]][rockPos[0]] = "R" # on ajoute sur la map de test l'object
             listeRock.append(rockPos) # forme  [x,y] # on ajoute les coords de l'obstacle dans la liste de stockage
 
@@ -330,9 +330,9 @@ class NiveauPlaineRiviere(GestionNiveauMap):
 
             listeObstacle = [] # liste qui va stocker toutes les coords des obstacles
             for obstacle in range(self.obstacle): # boucle pour le nombre d'obstacle différents
-                obstaclePos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y] pos random sur la map, en éviant les bordure
+                obstaclePos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] pos random sur la map, en éviant les bordure
                 while self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] != '-' or self.mapCheckDeplacementPossible[obstaclePos[1]+1][obstaclePos[0]] != '-': # check de s'il y a déjà des éléments sur la map de test (map).
-                    obstaclePos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y] # on replace si jamais il y a un element
+                    obstaclePos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] # on replace si jamais il y a un element
                 self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] = "O" # on ajoute sur la map de test l'object
                 listeObstacle.append(obstaclePos) # forme  [x,y] # on ajoute les coords de l'obstacle dans la liste de stockage
 

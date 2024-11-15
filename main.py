@@ -14,6 +14,9 @@ class Game(object):
         self.running = True # stop de la fenetre
         self.clock = pygame.time.Clock() # dt
 
+        self.checkLoadingDone = False
+        self.LoadImages()
+
         # groups
         self.allSprites = AllSprites()
         self.collisionSprites = pygame.sprite.Group()
@@ -25,11 +28,11 @@ class Game(object):
         self.tree2 = pygame.image.load(join("Images", "Obstacle", "Arbre2.png")).convert_alpha()
         self.rock = pygame.image.load(join("Images", "Sol","Rock", "Rock.png")).convert_alpha()
         self.mud = pygame.image.load(join("Images", "Sol","Mud", "Mud.png")).convert_alpha()
-        self.montainWE = pygame.image.load(join("Images", "Border", "MountainStraighW-Ex128.png")).convert_alpha()
-        self.montainWE1 = pygame.image.load(join("Images", "Border", "MountainStraighW-Ealt1x128.png")).convert_alpha()
+        self.montainWE = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ex128.png")).convert_alpha()
+        self.montainWE1 = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ealt1x128.png")).convert_alpha()
 
     def Setup(self):
-        self.map, self.mapBase = NiveauPlaineRiviere(LONGUEUR, LARGEUR, 650).Update()
+        self.map, self.mapBase = NiveauPlaineRiviere(LONGUEUR, LARGEUR, 650,200,300).Update()
 
         for ordonnees in range(len(self.mapBase)):
             for abscisses in range(len(self.mapBase[ordonnees])):
@@ -65,6 +68,26 @@ class Game(object):
                         if ordonnees in [0, LARGEUR-1]: 
                             stateFormat = "RiverMontainConflictx128"
                             River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
+                        elif abscisses ==0:
+                            if self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
+                                stateFormat = "RiverAngularN-Ex128"
+                                River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
+                            elif self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees+1][abscisses] =="#":
+                                stateFormat = "RiverAngularE-Sx128"
+                                River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
+                            elif self.mapBase[ordonnees+1][abscisses] =="#" and self.mapBase[ordonnees-1][abscisses] =="#": 
+                                stateFormat = "RiverStraightN-Sx128"
+                                River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
+                        elif abscisses == LARGEUR-1:
+                            if self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
+                                stateFormat = "RiverAngularN-Wx128"
+                                River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
+                            elif self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees+1][abscisses] =="#":
+                                stateFormat = "RiverAngularW-Sx128"
+                                River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
+                            elif self.mapBase[ordonnees+1][abscisses] =="#" and self.mapBase[ordonnees-1][abscisses] =="#": 
+                                stateFormat = "RiverStraightN-Sx128"
+                                River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
                 
                 elif self.mapBase[ordonnees][abscisses] == "B":
                     if (ordonnees == 0 or ordonnees == (LARGEUR-1) ):
@@ -85,22 +108,69 @@ class Game(object):
 
 
         self.player = Player((8*CASEMAP,2*CASEMAP), self.allSprites, self.collisionSprites) 
-        # self.gun = Gun(self.player, self.all_sprites)
+
+        self.checkLoadingDone = True
 
     # Fonction pour dessiner l'écran de chargement
     def ChargementEcran(self):
-        self.displaySurface.fill((50, 50, 50))  # Remplir avec une couleur grise
         font = pygame.font.Font(None, 74)
-        text = font.render("Chargement...", True, (255, 255, 255))
-        self.displaySurface.blit(text, (WINDOW_WIDTH,WINDOW_HEIGHT))
-        pygame.display.flip()
+        loading_step = 0
+        while not self.checkLoadingDone:
+            self.displaySurface.fill((0,0,0))  # Remplir avec une couleur grise
+
+            # Animation de texte dynamique avec des points qui défilent
+            loading_text = f"Chargement{'.' * (loading_step % 4)}"
+            loading_step += 1
+            text = font.render(loading_text, True, (255, 255, 255))
+            text_rect = text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
+            self.displaySurface.blit(text, text_rect.topleft)
+
+            pygame.display.flip()
+            pygame.time.delay(200)  # Temps de mise à jour de l'écran de chargement
+
+        self.fondu_au_noir()
+        self.ouverture_du_noir()
+
+    def fondu_au_noir(self):
+        fade_surface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))
+        fade_surface.fill((0, 0, 0))
+        alpha = 0
+
+        while alpha < 255:
+            fade_surface.set_alpha(alpha)
+            self.displaySurface.blit(fade_surface, (0, 0))
+            alpha += 5
+            pygame.display.flip()
+            self.clock.tick(30)  # Limite de rafraîchissement
+
+    def ouverture_du_noir(self):
+        # Crée une surface noire avec un canal alpha (transparence)
+        fade_surface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
+        fade_surface.fill((0, 0, 0))
+
+        # Alpha initial pour la surface noire (complètement opaque)
+        alpha = 255
+
+        while alpha > 0:
+            self.allSprites.draw(self.player.rect.center)
+            # Ici, ne redessinez pas le fond du jeu, car il est déjà chargé et affiché
+            # simplement superposez la surface noire pour l'effet de transparence.
+
+            # Appliquer la surface noire avec alpha dégressif
+            fade_surface.set_alpha(alpha)
+            self.displaySurface.blit(fade_surface, (0, 0))
+
+            # Réduire progressivement l'opacité pour rendre la surface noire plus transparente
+            alpha -= 5
+            pygame.display.flip()
+            self.clock.tick(30)  # Limite de rafraîchissement
 
 
     def run(self):
         # Affichage initial de l'écran de chargement
+        
+        threading.Thread(target=self.Setup).start()
         self.ChargementEcran()
-        self.LoadImages()
-        self.Setup()
 
         while self.running:
             dt = self.clock.tick() / 1000
