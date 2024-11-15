@@ -51,11 +51,6 @@ class GestionNiveauMap(object):
                 self.baseMap[i*(self.largeur-1)][j] = "B"  # on ajoute les bordures sur la map de base
                 listeBordures.append([i*(self.largeur-1), j]) # ajout des vaeurs dans la liste de stockage
 
-            for j in range(self.largeur): # position des bordures gauche et droites
-                self.map[j][i*(self.longueur-1)] = "B" # on ajoute les bordures sur la map
-                self.baseMap[j][i*(self.longueur-1)] = "B" # on ajoute les bordures sur la map de base
-                listeBordures.append([j, i*(self.longueur-1)]) # ajout des vaeurs dans la liste de stockage
-
         # on stock les coordonnées des bordures (la liste) dans le json
         self.AjoutJsonMapValue(listeBordures, "coordsMapBase", "Bordures Coords")
 
@@ -76,12 +71,6 @@ class GestionNiveauMap(object):
         for coordsPlacement in coordsSpawnElement: # on parcourt toute la liste de coords
             self.map[coordsPlacement[1]][coordsPlacement[0]] = coordsPlacement[2] # on place les element aux coordonnées sur la map (avec la lettre)
         self.AjoutJsonMapValue(coordsSpawnElement, "coordsMapObject", "CampSpawn Coords") # on ajoute les coordonnées du spawn au fichier json
-
-    def PlacementSortie(self, coordsSortie): 
-        """Méthode permettant de placer la sortie sur la map"""
-
-        self.map[coordsSortie[1]][coordsSortie[0]] = "S" # placement de la sortie sur la map
-        self.AjoutJsonMapValue(coordsSortie, "coordsMapObject", "ZoneSortie Coords") # stockage dans le json des coords de la sortie de la map
 
     def AjoutJsonMapValue(self, value :list, index1 :str, index2 :str) -> None:
         """Chargement des données JSON aux index indiqués pour pouvoir les stocker"""
@@ -111,10 +100,12 @@ class NiveauPlaineRiviere(GestionNiveauMap):
     La gestion de la création est faite dans la méthode update de cette class et les valeurs (map) sont stokcé dans la class parent.
     Cette class contient donc les valeurs spécifique à ce niveau et les méthode spécifique également."""
 
-    def __init__(self, longueur :int, largeur :int, obstacle :int) -> None:
+    def __init__(self, longueur :int, largeur :int, obstacle :int, mud: int, rock : int) -> None:
         """Initialisation des attributs de la class enfant"""
         super().__init__(longueur, largeur) # on récupère / initialise les valeurs dans la class parent (c'est à ce moment là que la class parent est initialisé)
         self.obstacle = obstacle # on stock le nombre d'obstacle 
+        self.mud = mud
+        self.rock = rock
         self.coordsPNJ = None # None car la valeurs est modifier par la suite car il est placé en fonction des infops sur la map
         self.mapCheckDeplacementPossible = [] # initialisation de la map de test pour savoir si un niveau est possible
         self.pnj = [] # initialisation de la liste des coords des pnj (placement de certains pnj plus tard en fonction de l'apparence de la map)
@@ -123,7 +114,11 @@ class NiveauPlaineRiviere(GestionNiveauMap):
                         "Bordures Coords": "null",
                         "Riviere0 Coords" : "null",
                         "Riviere1 Coords" : "null",
+                        "Riviere2 Coords" : "null",
+                        "Riviere3 Coords" : "null",
                         "Flowers Coords" : "null",
+                        "Mud Coords" : "null",
+                        "Rock Coords" : "null",
                         "AllMapInfo" : "null",
                         "AllMapBase" : "null"
                     },
@@ -140,10 +135,13 @@ class NiveauPlaineRiviere(GestionNiveauMap):
     def __CheckPos__(self, indice : list) -> bool:
         """Méthode permettant de regarder et de valider la position d'un element par raport à la riviere (pnj / arbre spécial)"""
         # verification si la position du pnj est possible autour de la riviere (rivière large de 1 uniquement) + eviter de la placer trop haut / bas
-        listePosPossible = ["-", "F"] # liste pour indiquer que si la position check est dans la liste alors c'est bon (= fleurs / herbe donc pas de colision)
+        listePosPossible = ["-", "F", "M", "R"] # liste pour indiquer que si la position check est dans la liste alors c'est bon (= fleurs / herbe donc pas de colision)
         # vérification autour de la case rivière sélectionnée, si le placement / déplacement sont possible
         # deux dernière vérif du if :  pour éviter de placer le pnj trop haut / trop bas
-        if (self.map[indice[1]][indice[0]-1] in listePosPossible) and (self.map[indice[1]][indice[0]-2] in listePosPossible )and( self.map[indice[1]][indice[0]+1] in listePosPossible) and (indice[1] >=5) and (indice[1] <= 70): 
+        if indice[1] == 149: # position de la sortir sur la bordure de map (donc condition de check diférentes)
+            if (self.map[indice[1]][indice[0]-1] in listePosPossible) and (self.map[indice[1]][indice[0]-2] in listePosPossible )and (indice[1] >=5) and (indice[1] <= 70): 
+                return True # on valide le placement
+        elif (self.map[indice[1]][indice[0]-1] in listePosPossible) and (self.map[indice[1]][indice[0]-2] in listePosPossible )and(self.map[indice[1]][indice[0]+1] in listePosPossible) and (indice[1] >=5) and (indice[1] <= 70): 
             return True # on valide le placement
         else:
             return False # on invalide le placement
@@ -203,40 +201,70 @@ class NiveauPlaineRiviere(GestionNiveauMap):
 
 
         # création 2 rivières génération alétoire controlé
-        for nombreRiviere in range(2): # 2 tours car 2 riviere
+        for nombreRiviere in range(4): # 4 tours car 4 riviere
             listeCheminRiviere = [] # initialisation de la liste qui contiendra toutes les coordonnées de la riviere
             listePointRepere = [] # initialisation de la liste des pts repères
 
             # Points du haut (premier element)
             # permet de créer une ligne pour éviter les collision avec les bordures
-            coordsPts1Riviere = [randint(((nombreRiviere+1)*50 -4),((nombreRiviere+1)*50 +4)),1] # on créer le point 1 de la map
+            if nombreRiviere != 0 and nombreRiviere != 3: 
+                coordsPts1Riviere = [randint(((nombreRiviere)*CoupageMapRiviere - CouloirRiviere),((nombreRiviere)*CoupageMapRiviere + CouloirRiviere)),0] # on créer le point 1 de la map
+            else:
+                if nombreRiviere == 0:
+                    coordsPts1Riviere = [randint(0,6),0] # on créer le point 1 de la map pour les rivière de bordure
+                else:
+                    coordsPts1Riviere = [randint(LONGUEUR-7, LONGUEUR-1),0] # on créer le point 1 de la map
+
             listePointRepere.append(coordsPts1Riviere) # forme [x,y] on ajoute le premier point à la liste
             coordsPts2Riviere = [coordsPts1Riviere[0], coordsPts1Riviere[1]+4] # on crée le second point avec une hauteur de + 4
             listePointRepere.append(coordsPts2Riviere) # forme [x,y] on ajoute le second point dans la liste
 
             # Point de haut en bas
-            nbPts = self.largeur // 15    # placement tout les 15 de hauteur ...   
+            nbPts = self.largeur // EspacementPointRepereRiviere    # placement tout les 15 de hauteur ...   
             verifLigne5 = randint(1,(nbPts-1)) # choix du lieu pour la ligne de 5 droite pour sécu pos de pnj spécial et arbre spécial
 
             for nbPointRepere in range(1, nbPts): # placement de tout les point repère
                 if verifLigne5 == nbPointRepere: # ajout du pts A et B pour une ligne de 5 toute droite pour sécu placement des pnj autour de la riviere
-                    pACoordsligne5 = [randint(((nombreRiviere+1)*50 -4),((nombreRiviere+1)*50 +4)), nbPointRepere*15] # forme [x,y]
+                    if nombreRiviere != 0 and nombreRiviere != 3: 
+                        pACoordsligne5 = [randint(((nombreRiviere)*CoupageMapRiviere - CouloirRiviere),((nombreRiviere)*CoupageMapRiviere + CouloirRiviere)),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map
+                    else:
+                        if nombreRiviere == 0:
+                            pACoordsligne5 = [randint(0,6),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map pour les rivière de bordure
+                        else:
+                            pACoordsligne5 = [randint(LONGUEUR-7, LONGUEUR-1),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map
+                    
                     listePointRepere.append(pACoordsligne5) # Ajout du point A car il devient un point repère à relier
-                    pBcoordsligne5 = [pACoordsligne5[0], nbPointRepere*15 + 5] # forme [x, y]
+                    pBcoordsligne5 = [pACoordsligne5[0], nbPointRepere*EspacementPointRepereRiviere + 5] # forme [x, y]
                     listePointRepere.append(pBcoordsligne5) # Ajout du point B car il devient un point repère à relier
 
                 else:
+                    if nombreRiviere != 0 and nombreRiviere != 3: 
+                        coords = [randint(((nombreRiviere)*CoupageMapRiviere - CouloirRiviere),((nombreRiviere)*CoupageMapRiviere + CouloirRiviere)),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map
+                    else:
+                        if nombreRiviere == 0:
+                            coords = [randint(0,6),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map pour les rivière de bordure
+                        else:
+                            coords = [randint(LONGUEUR-7, LONGUEUR-1),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map
+                    
                     # Tout les autres pts de repère
-                    coords = [randint(((nombreRiviere+1)*50 -4),((nombreRiviere+1)*50 +4)),nbPointRepere*15] # forme [x,y]
                     listePointRepere.append(coords) # on ajoute ces points dans la liste des points à relier
             
-            
+
+            # on crée l'avant dernier point
+            if nombreRiviere != 0 and nombreRiviere != 3: 
+                coordsPts3Riviere = [randint(((nombreRiviere)*CoupageMapRiviere - CouloirRiviere),((nombreRiviere)*CoupageMapRiviere + CouloirRiviere)),self.largeur-5] # on créer le point 1 de la map
+            else:
+                if nombreRiviere == 0:
+                    coordsPts3Riviere = [randint(0,6),self.largeur-5] # on créer le point 1 de la map pour les rivière de bordure
+                else:
+                    coordsPts3Riviere = [randint(LONGUEUR-7, LONGUEUR-1),self.largeur-5] # on créer le point 1 de la map
+                     
             # Point du bas (dernier element)
             # permet de créer une ligne pour éviter les collisions avec les bordures
-            coordsPts3Riviere = [randint(((nombreRiviere+1)*50 -4),((nombreRiviere+1)*50 +4)),self.largeur-5] # on crée l'avant dernier point
             listePointRepere.append(coordsPts3Riviere) # forme [x,y]  on ajoute l'avant dernier point repère
             coordsPts4Riviere = [coordsPts3Riviere[0], coordsPts3Riviere[1]+4] # on crée le dernier point avec une huteur de +4
             listePointRepere.append(coordsPts4Riviere) # forme [x,y] on ajoute le dernier point repère de la riviere
+
 
             # On ajoute les pts repère sur la map + les point spéciaux (haut et bas ) directement car collision avec montagne, donc il faut une ligne de 4 droite minimum
             for coordsPointRepere in listePointRepere: # positions de tout les points repère de la riviere
@@ -260,6 +288,33 @@ class NiveauPlaineRiviere(GestionNiveauMap):
 
             super().AjoutJsonMapValue(listeCheminRiviere, "coordsMapBase", f"Riviere{nombreRiviere} Coords") # stockage des valeurs dans le fichier json
 
+    def __PlacementMud__(self):
+        """ Méthode permettant de placer la boue sur la map de base"""
+        listeMud = [] # liste qui va stocker toutes les coords des obstacles
+        for _ in range(self.mud): # boucle pour le nombre d'obstacle différents
+            mudPos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] pos random sur la map, en éviant les bordure
+
+            while ((self.baseMap[mudPos[1]][mudPos[0]] != '-') or (self.map[mudPos[1]][mudPos[0]] != '-') or (self.map[mudPos[1]-1][mudPos[0]] == 'O') ): # check de s'il y a déjà des éléments pour ne pas avoir de visuel nul  # dernier element pour checl pour savoir s'il y a un arbre au dessus, car pas beau cr arbre plusieurs cases
+                mudPos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] # on replace si jamais il y a un element
+            self.baseMap[mudPos[1]][mudPos[0]] = "M" # on ajoute sur la map de test l'object
+            listeMud.append(mudPos) # forme  [x,y] # on ajoute les coords de l'obstacle dans la liste de stockage
+
+        super().AjoutJsonMapValue(listeMud, "coordsMapBase", "Mud Coords") # on ajoute au fichier json, la vrai liste de coordonnée des mud
+
+
+    def __PlacementRock__(self):
+        """Méthode permettant de placer les petits rochers sur la map de base"""
+        listeRock = [] # liste qui va stocker toutes les coords des obstacles
+        for _ in range(self.rock): # boucle pour le nombre d'obstacle différents
+            rockPos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] pos random sur la map, en éviant les bordure
+            while ((self.baseMap[rockPos[1]][rockPos[0]] != '-') or (self.map[rockPos[1]][rockPos[0]] != '-') or (self.map[rockPos[1]-1][rockPos[0]] == 'O')): # check de s'il y a déjà des éléments pour ne pas avoir de visuel nul
+                rockPos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] # on replace si jamais il y a un element
+            self.baseMap[rockPos[1]][rockPos[0]] = "R" # on ajoute sur la map de test l'object
+            listeRock.append(rockPos) # forme  [x,y] # on ajoute les coords de l'obstacle dans la liste de stockage
+
+        super().AjoutJsonMapValue(listeRock, "coordsMapBase", "Rock Coords") # on ajoute au fichier json, la vrai liste de coordonnée des rock
+
+
     def __PlacementObstacle__(self) -> None:
         """Méthode permettant de placer aléatoirement les obstacles sur la map. Cette méthode contient également un systhème de vérification vis à vis de la possibilit de réalise le niveau.
         Grâce à un script reprenant l'algo A*, tout les points importants de la map dans l'ordre de déroulement, sont relier un par un, si tout les points ont pu etre relier, alors la map et faisable, sinon non.
@@ -275,9 +330,9 @@ class NiveauPlaineRiviere(GestionNiveauMap):
 
             listeObstacle = [] # liste qui va stocker toutes les coords des obstacles
             for obstacle in range(self.obstacle): # boucle pour le nombre d'obstacle différents
-                obstaclePos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y] pos random sur la map, en éviant les bordure
-                while self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] != '-': # check de s'il y a déjà des éléments sur la map de test (map).
-                    obstaclePos = [randint(4, self.longueur-4), randint(4, self.largeur-4)] # forme [x,y] # on replace si jamais il y a un element
+                obstaclePos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] pos random sur la map, en éviant les bordure
+                while self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] != '-' or self.mapCheckDeplacementPossible[obstaclePos[1]+1][obstaclePos[0]] != '-': # check de s'il y a déjà des éléments sur la map de test (map).
+                    obstaclePos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] # on replace si jamais il y a un element
                 self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] = "O" # on ajoute sur la map de test l'object
                 listeObstacle.append(obstaclePos) # forme  [x,y] # on ajoute les coords de l'obstacle dans la liste de stockage
 
@@ -285,7 +340,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             # 3 liste, 3 verif car quand il y az ue rivire il faut d'écaler le point de départ, car un pont sera poser pour permettre au joueur de traverser la riviere
             # spawn, pnj1, arbre spécial, pnj2, pnj3, sortie
             listeOrdrePointCle1 = [ # partie gauche map (avant riviere)
-                                [1,1], 
+                                [8,2], 
                                 self.coordsPNJ[0], 
                                 super().LoadJsonMapValue("coordsMapObject", "ArbreSpecial Coords")
                                 ]
@@ -319,18 +374,22 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         super().BaseJson(self.data) # setup du fichier json
         super().BaseMap()  # setup de la base des deux map (vide)
         self.__PlacementRiviere__() # placement des rivière
-        super().PlacementSpawn([[1,1,"S"], [4,2,"b"], [2,4,"b"], [6,4,"b"], [4,6,"b"], [4,4,"C"]]) # coords de tout les élément du spawn evec une lettre indiquant à quoi ils font référence : b = banc, C = feu de camp, S = spawn du joueur) # placement du spawn
-        super().PlacementSortie([149, 50]) # coords de la sortie de la map, forme [x,y]) # placement de la sortie
+        super().PlacementSpawn([[8,2,"S"], [11,2,"b"], [9,4,"b"], [13,4,"b"], [11,6,"b"], [11,4,"C"]]) # coords de tout les éléments du spawn evec une lettre indiquant à quoi ils font référence : b = banc, C = feu de camp, S = spawn du joueur) # placement du spawn
+        coordSortie = self.__PlacementSpecial__("coordsMapBase", "Riviere3 Coords", "S")
+        self.AjoutJsonMapValue(coordSortie, "coordsMapObject", "ZoneSortie Coords") # stockage dans le json des coords de la sortie de la map
+
         self.__PlacementFleur__() # placement des varientes d'herbe (fleurs..)
         # Création des cordonnées des pnj (le pnj 2 utilise les information de la map pour pouvoir ce placer. )
         self.coordsPNJ = [[randint(8,((self.longueur//3) -5)), randint(5, self.largeur-5)], # forme [x,y]   # longueur de 8 de base pour éviter de rentrer en collision avec le camp de base
-                    self.__PlacementSpecial__("coordsMapBase", "Riviere1 Coords", "P"), # placement pnj (ne tombe jamais sur les coords de la rivière), mais collé à un point de la riviere
-                    [randint(((self.longueur//3)*2 +5), self.longueur-5), randint(5, self.largeur-5)]]  # forme [x,y] coords du dernier pnj      
+                    self.__PlacementSpecial__("coordsMapBase", "Riviere2 Coords", "P"), # placement pnj (ne tombe jamais sur les coords de la rivière), mais collé à un point de la riviere
+                    [randint(((self.longueur//3)*2 +5), self.longueur-5), randint(5, self.largeur-8)]]  # forme [x,y] coords du dernier pnj      
         super().PlacementPNJ(self.coordsPNJ) # placement des pnj sur la map 
-        coordsAbre = self.__PlacementSpecial__("coordsMapBase", "Riviere0 Coords", "A") # placement spécial de l'arbre spécial
+        coordsAbre = self.__PlacementSpecial__("coordsMapBase", "Riviere1 Coords", "A") # placement spécial de l'arbre spécial
         super().AjoutJsonMapValue(coordsAbre, "coordsMapObject", "ArbreSpecial Coords") # ajout des coords de l'arbre spécial dans le fichier json
-        self.__PlacementObstacle__() # placement des obstacles
 
+        self.__PlacementObstacle__() # placement des obstacles
+        self.__PlacementMud__() # placement des marres de boue sur la map
+        self.__PlacementRock__() # placement des petits cailloux sur la map
                 
         # On charge la map de base pour pouvoir refresh tout les x tics et gérer les collisions
         super().AjoutJsonMapValue(self.map, "coordsMapBase", "AllMapInfo")
@@ -348,5 +407,4 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         return self.map, self.baseMap # return des deux map pour pouvoir charger et mettre à jours les valeurs de la map
 
 
-a = NiveauPlaineRiviere(LONGUEUR, LARGEUR, 200).Update()
-# print(a)
+# NiveauPlaineRiviere(150,75,200).Update()
