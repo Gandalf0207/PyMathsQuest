@@ -42,27 +42,32 @@ class Game(object):
 
                 elif self.mapBase[ordonnees][abscisses] == "#":   # pos rivière à revoire
                     stateFormat = ""
-                    if self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
-                        stateFormat = "RiverAngularN-Ex128"
-                        River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
-                    elif self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees+1][abscisses] =="#":
-                        stateFormat = "RiverAngularE-Sx128"
-                        River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
-                    elif self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
-                        stateFormat = "RiverAngularN-Wx128"
-                        River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
-                    elif self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees+1][abscisses] =="#":
-                        stateFormat = "RiverAngularW-Sx128"
-                        River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
-                    elif self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees][abscisses-1] =="#":
-                        stateFormat = "RiverStraightW-Ex128"
-                        River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
-                    elif self.mapBase[ordonnees+1][abscisses] =="#" and self.mapBase[ordonnees-1][abscisses] =="#": 
-                        stateFormat = "RiverStraightN-Sx128"
-                        River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
+                    if  ordonnees not in [0, LARGEUR-1] and abscisses not in [0,149]:
+                        if self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
+                            stateFormat = "RiverAngularN-Ex128"
+                            River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
+                        elif self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees+1][abscisses] =="#":
+                            stateFormat = "RiverAngularE-Sx128"
+                            River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
+                        elif self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
+                            stateFormat = "RiverAngularN-Wx128"
+                            River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
+                        elif self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees+1][abscisses] =="#":
+                            stateFormat = "RiverAngularW-Sx128"
+                            River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
+                        elif self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees][abscisses-1] =="#":
+                            stateFormat = "RiverStraightW-Ex128"
+                            River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
+                        elif self.mapBase[ordonnees+1][abscisses] =="#" and self.mapBase[ordonnees-1][abscisses] =="#": 
+                            stateFormat = "RiverStraightN-Sx128"
+                            River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
+                    else:
+                        if ordonnees in [0, LARGEUR-1]: 
+                            stateFormat = "RiverMontainConflictx128"
+                            River(pos, (self.allSprites, self.collisionSprites), self.collisionSprites, stateFormat)
                 
                 elif self.mapBase[ordonnees][abscisses] == "B":
-                    if (ordonnees == 0 or ordonnees == (LARGEUR-1) ) and (abscisses != 0 and abscisses != (LONGUEUR-1)):
+                    if (ordonnees == 0 or ordonnees == (LARGEUR-1) ):
                         if choice([True, False]):
                             CollisionSprites(pos, self.montainWE, (self.allSprites, self.collisionSprites))
                         else:
@@ -79,7 +84,7 @@ class Game(object):
                     Sprites(pos, self.grass, self.allSprites) 
 
 
-        self.player = Player((0,0), self.allSprites, self.collisionSprites) 
+        self.player = Player((8*CASEMAP,2*CASEMAP), self.allSprites, self.collisionSprites) 
         # self.gun = Gun(self.player, self.all_sprites)
 
     # Fonction pour dessiner l'écran de chargement
