@@ -8,7 +8,7 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.image.load(join("Images","Player", "down", "0.png")).convert_alpha() 
         self.rect = self.image.get_frect(center = pos)
         
-        self.hitbox_rect = self.rect.inflate(-60,-90)
+        self.hitbox_rect = self.rect.inflate(-60,0)
 
         #movement
         self.direction = pygame.Vector2(0,0)
@@ -41,13 +41,13 @@ class Player(pygame.sprite.Sprite):
 
     def collision(self, direction):
         for sprite in self.collision_sprites:
-            if sprite.rect.colliderect(self.hitbox_rect):
+            if sprite.hitbox.colliderect(self.hitbox_rect):  # Utiliser la hitbox ici
                 if direction == 'horizontal':
-                    if self.direction.x > 0: self.hitbox_rect.right = sprite.rect.left
-                    if self.direction.x < 0: self.hitbox_rect.left = sprite.rect.right
+                    if self.direction.x > 0: self.hitbox_rect.right = sprite.hitbox.left
+                    if self.direction.x < 0: self.hitbox_rect.left = sprite.hitbox.right
                 else:
-                    if self.direction.y < 0: self.hitbox_rect.top = sprite.rect.bottom
-                    if self.direction.y > 0: self.hitbox_rect.bottom = sprite.rect.top
+                    if self.direction.y < 0: self.hitbox_rect.top = sprite.hitbox.bottom
+                    if self.direction.y > 0: self.hitbox_rect.bottom = sprite.hitbox.top
 
     def animate(self, dt):
         # get state

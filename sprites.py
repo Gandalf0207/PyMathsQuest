@@ -9,22 +9,34 @@ class Sprites(pygame.sprite.Sprite):
         self.ground = True
 
 class CollisionSprites(pygame.sprite.Sprite):
-    def __init__(self,pos, surf, groups) -> None:
+    def __init__(self,pos, surf,typeCollision, groups) -> None:
         super().__init__(groups)
         self.image = surf
         self.rect = self.image.get_frect(topleft=pos)
+        if typeCollision == "BorderTop":
+            self.hitbox = self.rect.inflate(0,-90)
+        elif typeCollision == "BorderBottom":
+            self.hitbox = self.rect.inflate(0,0)
+        else:
+            # Créer une hitbox plus petite (réduire la largeur et la hauteur)
+            self.hitbox = self.rect.inflate(-70,-140)  # Réduit la largeur et la hauteur de 10 pixels chacun
+        # Centrer la hitbox par rapport à l'image
+        self.hitbox.center = self.rect.center
+
 
 class River(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, collisionSprites, stateFormat) -> None:
+    def __init__(self, pos, groups, stateFormat) -> None:
         super().__init__(groups)
         self.LoadImages()
         self.state, self.frame_index = stateFormat, 0
         self.image = pygame.image.load(join("Images","Sol","Riviere", "RiverStraightN-Sx128", "0.gif")).convert_alpha() # Image initiale
         self.rect = self.image.get_rect(topleft=pos)
+        self.hitbox = self.rect.inflate(0,0)
+        self.hitbox.center = self.rect.center
         self.current_frame = 0
         self.animation_speed = 0.3  # Vitesse de l'animation
-        self.collisionSprites = collisionSprites
         self.time_last_update = pygame.time.get_ticks()
+
 
     def LoadImages(self):
         self.frames = {
