@@ -139,7 +139,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         # vérification autour de la case rivière sélectionnée, si le placement / déplacement sont possible
         # deux dernière vérif du if :  pour éviter de placer le pnj trop haut / trop bas
         print(indice)
-        if indice[1] == 149: # position de la sortir sur la bordure de map (donc condition de check diférentes)
+        if indice[0] == 149: # position de la sortir sur la bordure de map (donc condition de check diférentes)
             if (self.map[indice[1]][indice[0]-1] in listePosPossible) and (self.map[indice[1]][indice[0]-2] in listePosPossible )and (indice[1] >=5) and (indice[1] <= 70): 
                 return True # on valide le placement
         elif (self.map[indice[1]][indice[0]-1] in listePosPossible) and (self.map[indice[1]][indice[0]-2] in listePosPossible )and(self.map[indice[1]][indice[0]+1] in listePosPossible) and (indice[1] >=5) and (indice[1] <= 70): 
