@@ -1,8 +1,6 @@
 from settings import *
-from CreationMap import *
-from sprites import *
-from player import *
 from groups import *
+from loadMap import *
 
 
 class Game(object):
@@ -15,110 +13,24 @@ class Game(object):
         self.clock = pygame.time.Clock() # dt
 
         self.checkLoadingDone = False
-        self.LoadImages()
+
+        # niveau
+        self.niveau = 0
 
         # groups
         self.allSprites = AllSprites()
         self.collisionSprites = pygame.sprite.Group()
 
-    def LoadImages(self):
-        self.grass = pygame.image.load(join("Images", "Sol", "Grass", "Grass.png")).convert_alpha()
-        self.flowers = pygame.image.load(join("Images", "Sol", "Flower", "Flower.png")).convert_alpha()
-        self.tree = pygame.image.load(join("Images", "Obstacle", "Arbre.png")).convert_alpha()
-        self.tree2 = pygame.image.load(join("Images", "Obstacle", "Arbre2.png")).convert_alpha()
-        self.rock = pygame.image.load(join("Images", "Sol","Rock", "Rock.png")).convert_alpha()
-        self.mud = pygame.image.load(join("Images", "Sol","Mud", "Mud.png")).convert_alpha()
-        self.montainWE = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ex128.png")).convert_alpha()
-        self.montainWE1 = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ealt1x128.png")).convert_alpha()
-
-    def Setup(self):
-        self.map, self.mapBase = NiveauPlaineRiviere(LONGUEUR, LARGEUR, 650,200,300).Update()
-
-        for ordonnees in range(len(self.mapBase)):
-            for abscisses in range(len(self.mapBase[ordonnees])):
-                pos = (abscisses * CASEMAP, ordonnees * CASEMAP)  # Coordonnées de la case sur la carte
-                if self.map[ordonnees][abscisses] == "O":
-                    if randint(0,3) > 2:
-                        CollisionSprites(pos, self.tree2,"Abre", (self.allSprites, self.collisionSprites))
-                    else:
-                        CollisionSprites(pos, self.tree,"Abre", (self.allSprites, self.collisionSprites))
-
-                elif self.mapBase[ordonnees][abscisses] == "#":   # pos rivière à revoire
-                    stateFormat = ""
-                    if  ordonnees not in [0, LARGEUR-1] and abscisses not in [0,149]:
-                        if self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
-                            stateFormat = "RiverAngularN-Ex128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees+1][abscisses] =="#":
-                            stateFormat = "RiverAngularE-Sx128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
-                            stateFormat = "RiverAngularN-Wx128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees+1][abscisses] =="#":
-                            stateFormat = "RiverAngularW-Sx128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees][abscisses-1] =="#":
-                            stateFormat = "RiverStraightW-Ex128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees+1][abscisses] =="#" and self.mapBase[ordonnees-1][abscisses] =="#": 
-                            stateFormat = "RiverStraightN-Sx128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                    else:
-                        if ordonnees in [0, LARGEUR-1]: 
-                            stateFormat = "RiverMontainConflictx128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif abscisses ==0:
-                            if self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
-                                stateFormat = "RiverAngularN-Ex128"
-                                River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                            elif self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees+1][abscisses] =="#":
-                                stateFormat = "RiverAngularE-Sx128"
-                                River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                            elif self.mapBase[ordonnees+1][abscisses] =="#" and self.mapBase[ordonnees-1][abscisses] =="#": 
-                                stateFormat = "RiverStraightN-Sx128"
-                                River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif abscisses == LARGEUR-1:
-                            if self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
-                                stateFormat = "RiverAngularN-Wx128"
-                                River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                            elif self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees+1][abscisses] =="#":
-                                stateFormat = "RiverAngularW-Sx128"
-                                River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                            elif self.mapBase[ordonnees+1][abscisses] =="#" and self.mapBase[ordonnees-1][abscisses] =="#": 
-                                stateFormat = "RiverStraightN-Sx128"
-                                River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                
-                elif self.mapBase[ordonnees][abscisses] == "B":
-                    if (ordonnees == 0 or ordonnees == (LARGEUR-1) ):
-                        
-                        if ordonnees == 0:
-                            if choice([True, False]):
-                                CollisionSprites(pos, self.montainWE,"BorderTop",  (self.allSprites, self.collisionSprites))
-                            else:
-                                CollisionSprites(pos, self.montainWE1, "BorderTop", (self.allSprites, self.collisionSprites))
-
-                        else:
-                            if choice([True, False]):
-                                CollisionSprites(pos, self.montainWE, "BorderBottom", (self.allSprites, self.collisionSprites))
-                            else:
-                                CollisionSprites(pos, self.montainWE1,"BorderBottom",  (self.allSprites, self.collisionSprites))
-
-
-
-                if self.mapBase[ordonnees][abscisses] == "F":
-                    Sprites(pos, self.flowers, self.allSprites)
-                elif self.mapBase[ordonnees][abscisses] == "M":
-                    Sprites(pos, self.mud, self.allSprites) 
-                elif self.mapBase[ordonnees][abscisses] == "R":
-                    Sprites(pos, self.rock, self.allSprites) 
-                else:
-                    Sprites(pos, self.grass, self.allSprites) 
-
-
+    def SetupAllMap(self):
         self.player = Player((8*CASEMAP,2*CASEMAP), self.allSprites, self.collisionSprites) 
 
-        self.checkLoadingDone = True
+
+        if self.niveau ==0:
+            LoadMapPlaineRiviere(self.niveau, self.allSprites, self.collisionSprites)
+            self.checkLoadingDone = True
+        else : 
+            pass
+
 
     # Fonction pour dessiner l'écran de chargement
     def ChargementEcran(self):
@@ -177,8 +89,10 @@ class Game(object):
 
     def run(self):
         # Affichage initial de l'écran de chargement
+        threading.Thread(target=self.SetupAllMap).start()
+        # self.checkLoadingDone = True
         
-        threading.Thread(target=self.Setup).start()
+        
         self.ChargementEcran()
 
         while self.running:
@@ -194,6 +108,8 @@ class Game(object):
             pygame.display.update()
 
         pygame.quit()
+
+
 
 
 if __name__ == "__main__":
