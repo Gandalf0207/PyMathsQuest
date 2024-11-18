@@ -24,19 +24,28 @@ class LoadMapPlaineRiviere(): # nv 0
         self.mud = pygame.image.load(join("Images", "Sol","Mud", "Mud.png")).convert_alpha()
         self.montainWE = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ex128.png")).convert_alpha()
         self.montainWE1 = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ealt1x128.png")).convert_alpha()
+        self.souche = pygame.image.load(join("Images", "Obstacle", "Souche.png")).convert_alpha()
+        self.hugeRock = pygame.image.load(join("Images", "Obstacle", "HugeRock.png")).convert_alpha()
      
 
     def Setup(self):
-        self.map, self.mapBase = NiveauPlaineRiviere(LONGUEUR, LARGEUR, 650,200,300).Update()
+        self.map, self.mapBase = NiveauPlaineRiviere(LONGUEUR, LARGEUR, 1000,200,300).Update()
 
         for ordonnees in range(len(self.mapBase)):
             for abscisses in range(len(self.mapBase[ordonnees])):
                 pos = (abscisses * CASEMAP, ordonnees * CASEMAP)  # Coordonnées de la case sur la carte
                 if self.map[ordonnees][abscisses] == "O":
-                    if randint(0,3) > 2:
-                        CollisionSprites(pos, self.tree2,"Abre", (self.allSprites, self.collisionSprites))
-                    else:
-                        CollisionSprites(pos, self.tree,"Abre", (self.allSprites, self.collisionSprites))
+                    choixObstacle = randint(0,100)
+                    if choixObstacle <= 65:
+                            if randint(0,3) > 2:
+                                CollisionSprites(pos, self.tree2,"Abre", (self.allSprites, self.collisionSprites))
+                            else:
+                                CollisionSprites(pos, self.tree,"Abre", (self.allSprites, self.collisionSprites))
+                    elif 65 < choixObstacle <= 85:
+                        CollisionSprites(pos, self.hugeRock, "HugeRock", (self.allSprites, self.collisionSprites))
+                    elif 85 < choixObstacle <= 100:
+                        CollisionSprites(pos, self.souche, "Souche", (self.allSprites, self.collisionSprites))
+
 
                 elif self.mapBase[ordonnees][abscisses] == "#":   # pos rivière à revoire
                     stateFormat = ""

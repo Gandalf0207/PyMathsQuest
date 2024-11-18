@@ -13,10 +13,15 @@ class CollisionSprites(pygame.sprite.Sprite):
         super().__init__(groups)
         self.image = surf
         self.rect = self.image.get_frect(topleft=pos)
+
         if typeCollision == "BorderTop":
             self.hitbox = self.rect.inflate(0,-90)
         elif typeCollision == "BorderBottom":
             self.hitbox = self.rect.inflate(0,0)
+        elif typeCollision == "Souche":
+            self.hitbox = self.rect.inflate(-120,-110)
+        elif typeCollision == "HugeRock":
+            self.hitbox = self.rect.inflate(-70,-90)
         else:
             # Créer une hitbox plus petite (réduire la largeur et la hauteur)
             self.hitbox = self.rect.inflate(-70,-140)  # Réduit la largeur et la hauteur de 10 pixels chacun

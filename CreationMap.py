@@ -172,7 +172,6 @@ class NiveauPlaineRiviere(GestionNiveauMap):
 
         super().AjoutJsonMapValue(listeFlowerCoords, "coordsMapBase", "Flowers Coords") # on ajoute au fichier json, la vrai liste de coordonnée des fleurs
 
-
     def __PlacementSpecial__(self, index1 : str, index2 : str, element : str) -> list:
         """Méthode permetant de placer spécialement une element sous certaines condition.
         On récupère les coordonnées d'un elelment (ici la riviere), on génère aléatoirement un indice qui sera appliqué à cette liste de coordonnées
@@ -302,7 +301,6 @@ class NiveauPlaineRiviere(GestionNiveauMap):
 
         super().AjoutJsonMapValue(listeMud, "coordsMapBase", "Mud Coords") # on ajoute au fichier json, la vrai liste de coordonnée des mud
 
-
     def __PlacementRock__(self):
         """Méthode permettant de placer les petits rochers sur la map de base"""
         listeRock = [] # liste qui va stocker toutes les coords des obstacles
@@ -314,7 +312,6 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             listeRock.append(rockPos) # forme  [x,y] # on ajoute les coords de l'obstacle dans la liste de stockage
 
         super().AjoutJsonMapValue(listeRock, "coordsMapBase", "Rock Coords") # on ajoute au fichier json, la vrai liste de coordonnée des rock
-
 
     def __PlacementObstacle__(self) -> None:
         """Méthode permettant de placer aléatoirement les obstacles sur la map. Cette méthode contient également un systhème de vérification vis à vis de la possibilit de réalise le niveau.
@@ -335,6 +332,8 @@ class NiveauPlaineRiviere(GestionNiveauMap):
                 while self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] != '-' or self.mapCheckDeplacementPossible[obstaclePos[1]+1][obstaclePos[0]] != '-': # check de s'il y a déjà des éléments sur la map de test (map).
                     obstaclePos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] # on replace si jamais il y a un element
                 self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] = "O" # on ajoute sur la map de test l'object
+
+
                 listeObstacle.append(obstaclePos) # forme  [x,y] # on ajoute les coords de l'obstacle dans la liste de stockage
 
             # base check # GROSSE VERIF : 
