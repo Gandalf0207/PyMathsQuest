@@ -1,113 +1,67 @@
-from settings import *
+from settings import *  # Assurez-vous que les constantes sont bien définies dans settings.py
 
 class MiniMap:
-    def __init__(self, main_map, map_base):
+    def __init__(self, game_map, screen, minimap_size=(200, 100)):
         """
-        Initialise la minimap.
+        :param game_map: La carte principale (double liste).
+        :param screen: L'écran Pygame sur lequel afficher la minimap.
+        :param minimap_size: Taille de la minimap à afficher (en pixels).
         """
-        self.main_map = main_map
-        self.map_base = map_base
+        self.game_map = game_map
+        self.screen = screen
+        self.minimap_size = minimap_size
 
-        self.offset = pygame.Vector2(0, 0)
-        self.minimap_size = 200  # Taille de la minimap
-        self.minimap_surface = pygame.Surface((200, 100))  # Surface de la minimap
+        self.map_width = len(game_map[0])  # Largeur de la carte
+        self.map_height = len(game_map)    # Hauteur de la carte
 
-        self.minimap_pos = (10, 10)  # Position de la minimap sur l'écran
+        # Calcul du facteur de réduction pour la minimap
+        self.cell_width = self.minimap_size[0] // self.map_width
+        self.cell_height = self.minimap_size[1] // self.map_height
 
-        # Calcul de l'échelle de réduction de la carte vers la minimap
-        map_width, map_height = len(self.map_base[0]) /5, len(self.map_base) /5
-        self.scale = self.minimap_size / max(map_width, map_height)
+        # Créer une surface pour la minimap complète
+        self.minimap_surface = pygame.Surface(self.minimap_size)
 
-        # Chargement des sprites
-        self.sprite_images = self.load_sprite_images()
+        # Remplir la minimap avec les éléments de la carte
+        self._generate_full_minimap()
 
-        # Zone de verrouillage de la minimap
-        self.lock_margin = self.minimap_size // 4  # Zone où la minimap est verrouillée (1/4 de la taille)
-
-    def load_sprite_images(self):
+    def _generate_full_minimap(self):
         """
-        Charge les surfaces ou définit les couleurs pour représenter les types de cellules.
+        Génère toute la minimap en réduisant la carte complète.
         """
-        return {
-            "O": (0, 255, 0),  # Vert (obstacles)
-            "B": (128, 128, 128),  # Gris (bordures)
-            "F": (255, 255, 0),  # Jaune (fleurs)
-            "M": (139, 69, 19),  # Marron (boue)
-            "R": (100, 100, 100),  # Gris foncé (rocher)
-            "-": (0, 200, 0),  # Vert foncé (herbe)
-            "P": (0, 255, 255),  # Bleu
-            "S": (0, 0, 0),  # Noir
-            "#": (0, 255, 255),  # Cyan
-        }
+        for y in range(self.map_height):
+            for x in range(self.map_width):
+                # Calculer la couleur à partir de la case
+                if self.game_map[y][x] == "O":
+                    color = (0, 255, 0)  # Vert
+                elif self.game_map[y][x] == "#":
+                    color = (0, 0, 0)  # Noir
+                else:
+                    color = (200, 200, 200)  # Gris clair
 
-    def draw_minimap(self, player_pos):
+                # Calculer la position sur la minimap
+                minimap_x = x * self.cell_width
+                minimap_y = y * self.cell_height
+
+                # Dessiner la case sur la minimap
+                pygame.draw.rect(self.minimap_surface, color, (minimap_x, minimap_y, self.cell_width, self.cell_height))
+
+    def update(self, player_pos):
         """
-        Dessine la carte sur la minimap avec un déplacement lié à l'offset.
+        Déplace le focus de la minimap autour du joueur.
         """
-        self.minimap_surface.fill((50, 50, 50))  # Fond gris foncé
+        map_x, map_y = player_pos
 
-        # Si la minimap est verrouillée (proche du joueur), on garde la caméra centrée sur lui
-        if self.is_locked(player_pos):
-            camera_x = -(player_pos[0] - self.minimap_size / 2)
-            camera_y = -(player_pos[1] - self.minimap_size / 2)
-        else:
-            # Sinon on déverrouille la caméra et on permet un déplacement libre
-            camera_x = -(self.offset.x)
-            camera_y = -(self.offset.y)
+        # Calculer les bords de la portion visible de la minimap (focus autour du joueur)
+        focus_width = self.minimap_size[0] // 4  # Par exemple, afficher un quart de la minimap autour du joueur
+        focus_height = self.minimap_size[1] // 4
 
-        # Limiter l'offset pour ne pas dépasser la taille de la carte
-        camera_x = min(0, max(camera_x, self.minimap_size - len(self.map_base[0]) * self.scale)) 
-        camera_y = min(0, max(camera_y, self.minimap_size - len(self.map_base) * self.scale))
+        focus_x = (map_x - focus_width // 2) * self.cell_width
+        focus_y = (map_y - focus_height // 2) * self.cell_height
 
-        self.offset.x = camera_x
-        self.offset.y = camera_y
+        # Limiter le focus à l'intérieur de la minimap
+        focus_x = max(0, min(focus_x, self.minimap_size[0] - focus_width))
+        focus_y = max(0, min(focus_y, self.minimap_size[1] - focus_height))
 
-        # Dessiner les éléments de la carte
-        for y, row in enumerate(self.map_base):
-            for x, cell in enumerate(row):
-                if cell in self.sprite_images:
-                    color = self.sprite_images[cell]
-
-                    # Calcul des dimensions et position de la cellule sur la minimap
-                    cell_x = int(x * self.scale) - int(self.offset.x)
-                    cell_y = int(y * self.scale) - int(self.offset.y)
-                    cell_size = int(self.scale)
-
-                    # Dessiner la cellule sur la minimap
-                    pygame.draw.rect(self.minimap_surface, color, (cell_x, cell_y, cell_size, cell_size))
-
-    def draw_player_position(self, player_pos):
-        """
-        Dessine la position du joueur sur la minimap.
-        """
-        player_x = int(player_pos[0] * self.scale) - self.offset.x
-        player_y = int(player_pos[1] * self.scale) - self.offset.y
-        pygame.draw.circle(self.minimap_surface, (255, 0, 0), (player_x, player_y), 3)
-
-    def is_locked(self, player_pos):
-        """
-        Détermine si la minimap est verrouillée autour du joueur.
-        """
-        # Calcul de la zone de verrouillage
-        player_x, player_y = player_pos
-        map_width, map_height = len(self.map_base[0]), len(self.map_base)
-
-        # Vérifie si le joueur est suffisamment loin des bords
-        if player_x > self.lock_margin and player_x < map_width - self.lock_margin and player_y > self.lock_margin and player_y < map_height - self.lock_margin:
-            return True
-        else:
-            return False
-
-    def Update(self, player_pos, screen):
-        """
-        Met à jour et dessine la minimap sur l'écran.
-        """
-        # Dessiner les cellules de la minimap
-        self.draw_minimap(player_pos)
-
-        # Dessiner la position du joueur sur la minimap
-        self.draw_player_position(player_pos)
-
-        # Afficher la minimap sur l'écran
-        screen.blit(self.minimap_surface, self.minimap_pos)
-
+        # Afficher la minimap
+        self.screen.blit(self.minimap_surface, (10, 10))
+        pygame.draw.rect(self.screen, (255, 0, 0), (10 + focus_x, 10 + focus_y, focus_width, focus_height), 2)  # Focus rouge
