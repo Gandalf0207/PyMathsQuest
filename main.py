@@ -19,6 +19,11 @@ class Game(object):
         self.niveau = 0
 
         # groups
+        self.MiniMapSurface = pygame.Surface((200,100))
+
+        self.allSpriteMiniMap = AllSpritesMiniMap(self.MiniMapSurface)
+
+
         self.allSprites = AllSprites()
         self.collisionSprites = pygame.sprite.Group()
 
@@ -29,8 +34,8 @@ class Game(object):
         if self.niveau ==0:
             self.map, self.mapBase = LoadMapPlaineRiviere(self.niveau, self.allSprites, self.collisionSprites).Update()
             # Initialisation dans votre setup
-            self.miniMap = MiniMap(self.mapBase, self.displaySurface)
-            self.miniMap.update(self.player.rect.center)
+            self.miniMap = MiniMap(self.mapBase, self.map,self.MiniMapSurface, self.allSpriteMiniMap)
+            self.miniMap.MakeMiniMap() 
         else : 
             pass
 
@@ -115,10 +120,11 @@ class Game(object):
             self.allSprites.update(dt)
             self.displaySurface.fill("#000000")
             self.allSprites.draw(self.player.rect.center)
-
             
-            self.miniMap.update(self.player.rect.center)
-
+            
+            self.allSpriteMiniMap.update(dt)
+            self.allSpriteMiniMap.draw(self.player.rect.center)
+            self.displaySurface.blit(self.MiniMapSurface, (10,10)) 
 
             pygame.display.update()
 
