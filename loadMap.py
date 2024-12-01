@@ -12,8 +12,6 @@ class LoadMapPlaineRiviere(): # nv 0
         self.allSprites = allSprites
         self.collisionSprites = collisionSprites
 
-        self.Update()
-
 
     def LoadImages(self):
         self.grass = pygame.image.load(join("Images", "Sol", "Grass", "Grass.png")).convert_alpha()
