@@ -121,3 +121,5 @@ class LoadMapPlaineRiviere(): # nv 0
     def Update(self):
         self.LoadImages()
         self.Setup()
+        return self.map, self.mapBase
+

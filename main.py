@@ -1,6 +1,7 @@
 from settings import *
 from groups import *
 from loadMap import *
+from miniMap import *
 
 
 class Game(object):
@@ -26,7 +27,8 @@ class Game(object):
 
 
         if self.niveau ==0:
-            LoadMapPlaineRiviere(self.niveau, self.allSprites, self.collisionSprites)
+            self.map, self.mapBase = LoadMapPlaineRiviere(self.niveau, self.allSprites, self.collisionSprites)
+            MiniMap(self.map, self.mapBase, 200, (WINDOW_WIDTH, WINDOW_HEIGHT), self.allSprites)
             self.checkLoadingDone = True
         else : 
             pass
