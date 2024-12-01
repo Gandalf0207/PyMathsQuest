@@ -25,8 +25,8 @@ class Game(object):
         self.player = Player((8*CASEMAP,2*CASEMAP), self.allSprites, self.collisionSprites) 
 
 
-        if self.niveau ==0:
-            LoadMapPlaineRiviere(self.niveau, self.allSprites, self.collisionSprites)
+        if self.niveau == 0:
+            LoadMapPlaineRiviere(self.niveau, self.allSprites, self.collisionSprites).Update()
             self.checkLoadingDone = True
         else : 
             pass
