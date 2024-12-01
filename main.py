@@ -29,9 +29,8 @@ class Game(object):
         if self.niveau ==0:
             self.map, self.mapBase = LoadMapPlaineRiviere(self.niveau, self.allSprites, self.collisionSprites).Update()
             # Initialisation dans votre setup
-            self.minimap = MiniMap(self.map, self.mapBase, 200, (WINDOW_WIDTH, WINDOW_HEIGHT))
-            # Dans votre boucle principale
-            self.minimap.Update(self.player.rect.center, CASEMAP, self.displaySurface)
+            self.minimap = MiniMap(self.map, self.mapBase)
+            self.minimap.Update(self.player.rect.center, self.displaySurface)
 
         else : 
             pass
@@ -60,6 +59,7 @@ class Game(object):
 
             pygame.display.flip()
             pygame.time.delay(200)  # Temps de mise à jour de l'écran de chargement
+
 
         self.fondu_au_noir()
         self.ouverture_du_noir()
@@ -103,9 +103,9 @@ class Game(object):
         # Affichage initial de l'écran de chargement
         threading.Thread(target=self.SetupAllMap).start()
         # self.checkLoadingDone = True
-        
-        
+
         self.ChargementEcran()
+
 
         while self.running:
             dt = self.clock.tick() / 1000
@@ -117,7 +117,9 @@ class Game(object):
             self.displaySurface.fill("#000000")
             self.allSprites.draw(self.player.rect.center)
 
-            self.minimap.Update(self.player.rect.center, CASEMAP, self.displaySurface)
+            
+            self.minimap.Update(self.player.rect.center, self.displaySurface)
+
 
             pygame.display.update()
 
