@@ -18,13 +18,13 @@ class Game(object):
         # niveau
         self.niveau = 0
 
-        # groups
-        self.MiniMapSurface = pygame.Surface((200,100))
-        self.allSpriteMiniMap = AllSpritesMiniMap(self.MiniMapSurface)
-
 
         self.allSprites = AllSprites()
         self.collisionSprites = pygame.sprite.Group()
+
+        self.minimap_surface = pygame.Surface((300, 150))
+        self.minimap = None
+        
 
     def SetupAllMap(self):
         self.player = Player((8*CASEMAP,2*CASEMAP), self.allSprites, self.collisionSprites) 
@@ -33,7 +33,7 @@ class Game(object):
         if self.niveau ==0:
             self.map, self.mapBase = LoadMapPlaineRiviere(self.niveau, self.allSprites, self.collisionSprites).Update()
             # Initialisation dans votre setup
-            self.miniMap = MiniMap(self.mapBase, self.map,self.MiniMapSurface, self.allSpriteMiniMap).Update()
+            self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
         else : 
             pass
 
@@ -116,19 +116,22 @@ class Game(object):
                     self.running = False
             
 
+            print(self.player.rect.center)
             self.allSprites.update(dt)
-
-            # self.displaySurface.fill("#000000")
-
-            self.MiniMapSurface.fill("#000000")
+            self.displaySurface.fill("#000000")
             self.allSprites.draw(self.player.rect.center)
-            self.allSpriteMiniMap.draw(self.player.rect.center)
+
+            self.minimap.Update(self.player.rect.center)
+
             
+            
+            
+            
+            self.displaySurface.blit(self.minimap_surface, (10, 10))
 
             # Afficher la minimap sur l'écran principal
-            self.displaySurface.blit(self.MiniMapSurface, (10, 10))
 
-            pygame.display.update()
+            pygame.display.flip()
 
         pygame.quit()
 
