@@ -12,18 +12,7 @@ class LoadMapPlaineRiviere(): # nv 0
         self.niveau = niveau
         self.allSprites = allSprites
         self.collisionSprites = collisionSprites
-        
-        # map du niveau
-        self.map, self.mapBase = NiveauPlaineRiviere(LONGUEUR, LARGEUR, 1000,200,300).Update()
-        # load des imgs
-        self.LoadImages()
 
-    def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
-        """Récupération des valeur stockées dans le fichier json pour les renvoyer quand nécéssaire à l'aide des indices données pour les récupérer"""
-        
-        with open("AllMapValue.json", "r") as f: # ouvrir le fichier json en mode e lecture
-            loadElementJson = json.load(f) # chargement des valeurs
-        return loadElementJson[index1].get(index2, None) # on retourne les valeurs aux indices de liste quisont données
 
     def LoadImages(self):
         self.grass = pygame.image.load(join("Images", "Sol", "Grass", "Grass.png")).convert_alpha()
@@ -157,6 +146,5 @@ class LoadMapPlaineRiviere(): # nv 0
 
 
     def Update(self):
-        self.SetupMapBase()
-        self.SetupPNJ()
-        self.SetupSpawn()
+        self.LoadImages()
+        self.Setup()

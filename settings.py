@@ -14,6 +14,7 @@ import threading
 LONGUEUR = 150
 LARGEUR = 75
 CASEMAP = 128
+CELL_SIZE = 2
 WINDOW_WIDTH, WINDOW_HEIGHT = 1280,720 
 
 EspacementPointRepereRiviere = 15
