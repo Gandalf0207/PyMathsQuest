@@ -10,6 +10,7 @@ import pygame
 from os.path import join 
 from os import walk
 import threading
+from math import *
 
 LONGUEUR = 150
 LARGEUR = 75
