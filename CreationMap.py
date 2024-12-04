@@ -172,7 +172,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
 
         super().AjoutJsonMapValue(listeFlowerCoords, "coordsMapBase", "Flowers Coords") # on ajoute au fichier json, la vrai liste de coordonnée des fleurs
 
-    def __PlacementSpecial__(self, index1 : str, index2 : str, element : str) -> list:
+    def __PlacementSpecial__(self, index1 : str, index2 : str, element : str, *args) -> list:
         """Méthode permetant de placer spécialement une element sous certaines condition.
         On récupère les coordonnées d'un elelment (ici la riviere), on génère aléatoirement un indice qui sera appliqué à cette liste de coordonnées
         On vérifier si à cet indice le placement (devant gauche) de l'element est possible (__checkPos__)
@@ -190,7 +190,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         itemCoords = listeCoordsElement[indice] # on crée un copie des coords dans la variable
         self.map[itemCoords[1]][itemCoords[0]-1] = element # on ajoute l'element sur la map (collision)
 
-        return [itemCoords[0]-1,itemCoords[1]] # return [x,y ) coord de l'element
+        return [itemCoords[0]-1,itemCoords[1], *args] # return [x,y ) coord de l'element
     
     def __PlacementRiviere__(self) -> None:
         """Méthode permettant de créer les deux rivières de la map. Création de points de repère tout les 15 de distance en hauteur dans un couleurs d'une largeur de 9
@@ -380,9 +380,9 @@ class NiveauPlaineRiviere(GestionNiveauMap):
 
         self.__PlacementFleur__() # placement des varientes d'herbe (fleurs..)
         # Création des cordonnées des pnj (le pnj 2 utilise les information de la map pour pouvoir ce placer. )
-        self.coordsPNJ = [[randint(8,((self.longueur//3) -5)), randint(5, self.largeur-5)], # forme [x,y]   # longueur de 8 de base pour éviter de rentrer en collision avec le camp de base
-                    self.__PlacementSpecial__("coordsMapBase", "Riviere2 Coords", "P"), # placement pnj (ne tombe jamais sur les coords de la rivière), mais collé à un point de la riviere
-                    [randint(((self.longueur//3)*2 +5), self.longueur-5), randint(5, self.largeur-8)]]  # forme [x,y] coords du dernier pnj      
+        self.coordsPNJ = [[randint(8,((self.longueur//3) -5)), randint(5, self.largeur-5), 1], # forme [x,y]   # longueur de 8 de base pour éviter de rentrer en collision avec le camp de base
+                    self.__PlacementSpecial__("coordsMapBase", "Riviere2 Coords", "P", 2), # placement pnj (ne tombe jamais sur les coords de la rivière), mais collé à un point de la riviere
+                    [randint(((self.longueur//3)*2 +5), self.longueur-5), randint(5, self.largeur-8), 3]]  # forme [x,y] coords du dernier pnj      
         super().PlacementPNJ(self.coordsPNJ) # placement des pnj sur la map 
         coordsAbre = self.__PlacementSpecial__("coordsMapBase", "Riviere1 Coords", "A") # placement spécial de l'arbre spécial
         super().AjoutJsonMapValue(coordsAbre, "coordsMapObject", "ArbreSpecial Coords") # ajout des coords de l'arbre spécial dans le fichier json

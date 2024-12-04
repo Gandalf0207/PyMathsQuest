@@ -1,6 +1,7 @@
 from settings import *
 from groups import *
 from loadMap import *
+from miniMap import *
 
 
 class Game(object):
@@ -17,19 +18,31 @@ class Game(object):
         # niveau
         self.niveau = 0
 
-        # groups
+
         self.allSprites = AllSprites()
         self.collisionSprites = pygame.sprite.Group()
+
+        self.minimap_surface = pygame.Surface((300, 150))
+        self.minimap = None
+        
 
     def SetupAllMap(self):
         self.player = Player((8*CASEMAP,2*CASEMAP), self.allSprites, self.collisionSprites) 
 
 
         if self.niveau ==0:
-            LoadMapPlaineRiviere(self.niveau, self.allSprites, self.collisionSprites)
-            self.checkLoadingDone = True
+            self.map, self.mapBase = LoadMapPlaineRiviere(self.niveau, self.allSprites, self.collisionSprites).Update()
+            # Initialisation dans votre setup
+            self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
         else : 
             pass
+
+        self.checkLoadingDone = True
+
+
+
+
+
 
 
     # Fonction pour dessiner l'écran de chargement
@@ -48,6 +61,7 @@ class Game(object):
 
             pygame.display.flip()
             pygame.time.delay(200)  # Temps de mise à jour de l'écran de chargement
+
 
         self.fondu_au_noir()
         self.ouverture_du_noir()
@@ -91,9 +105,9 @@ class Game(object):
         # Affichage initial de l'écran de chargement
         threading.Thread(target=self.SetupAllMap).start()
         # self.checkLoadingDone = True
-        
-        
+
         self.ChargementEcran()
+
 
         while self.running:
             dt = self.clock.tick() / 1000
@@ -101,11 +115,23 @@ class Game(object):
                 if event.type == pygame.QUIT:
                     self.running = False
             
-            self.allSprites.update(dt)
 
+            print(self.player.rect.center)
+            self.allSprites.update(dt)
             self.displaySurface.fill("#000000")
             self.allSprites.draw(self.player.rect.center)
-            pygame.display.update()
+
+            self.minimap.Update(self.player.rect.center)
+
+            
+            
+            
+            
+            self.displaySurface.blit(self.minimap_surface, (10, 10))
+
+            # Afficher la minimap sur l'écran principal
+
+            pygame.display.flip()
 
         pygame.quit()
 
