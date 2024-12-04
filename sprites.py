@@ -22,7 +22,12 @@ class CollisionSprites(pygame.sprite.Sprite):
             self.hitbox = self.rect.inflate(-120,-110)
         elif typeCollision == "HugeRock":
             self.hitbox = self.rect.inflate(-70,-90)
+        elif typeCollision == "campFire":
+            self.hitbox = self.rect.inflate(-70,-70)
+        elif typeCollision == "banc":
+            self.hitbox = self.rect.inflate(-70,-70)
         else:
+
             # Créer une hitbox plus petite (réduire la largeur et la hauteur)
             self.hitbox = self.rect.inflate(-70,-140)  # Réduit la largeur et la hauteur de 10 pixels chacun
         # Centrer la hitbox par rapport à l'image
