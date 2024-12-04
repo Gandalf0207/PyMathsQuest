@@ -11,4 +11,3 @@ class PNJ(pygame.sprite.Sprite):
         # Centrer la hitbox par rapport à l'image
         self.hitbox.center = self.rect.center
 
-

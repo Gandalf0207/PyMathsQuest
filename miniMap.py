@@ -1,6 +1,5 @@
 from settings import *  # Assurez-vous que les constantes sont bien définies dans settings.py
 
-
 class MiniMap:
     def __init__(self, mapBase, mapData, screen):
 
@@ -31,9 +30,7 @@ class MiniMap:
         for y, row in enumerate(self.mapBase):
             for x, cell in enumerate(row):
                 pos = (x * CELL_SIZE, y * CELL_SIZE)  # Coordonnées des cellules
-                if self.mapData[y][x] == "O":
-                    self.static_surface.blit(self.carre2, pos)
-                elif self.mapData[y][x] == "P":
+                if self.mapData[y][x] == "P":
                     self.static_surface.blit(self.carre6, pos)
                 elif cell == "#":
                     self.static_surface.blit(self.carre3, pos)

@@ -13,6 +13,13 @@ class LoadMapPlaineRiviere(): # nv 0
         self.allSprites = allSprites
         self.collisionSprites = collisionSprites
 
+    def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
+        """Récupération des valeur stockées dans le fichier json pour les renvoyer quand nécéssaire à l'aide des indices données pour les récupérer"""
+        
+        with open("AllMapValue.json", "r") as f: # ouvrir le fichier json en mode e lecture
+            loadElementJson = json.load(f) # chargement des valeurs
+        return loadElementJson[index1].get(index2, None) # on retourne les valeurs aux indices de liste quisont données
+
 
     def LoadImages(self):
         self.grass = pygame.image.load(join("Images", "Sol", "Grass", "Grass.png")).convert_alpha()
@@ -27,8 +34,10 @@ class LoadMapPlaineRiviere(): # nv 0
         self.hugeRock = pygame.image.load(join("Images", "Obstacle", "HugeRock.png")).convert_alpha()
         self.campFire = pygame.image.load(join("Images", "Obstacle", "Spawn", "campFire.png"))
         self.banc = pygame.image.load(join("Images", "Obstacle", "Spawn", "banc.png"))
+     
 
-    def SetupMapBase(self):
+    def Setup(self):
+        self.map, self.mapBase = NiveauPlaineRiviere(LONGUEUR, LARGEUR, 1000,200,300).Update()
 
         for ordonnees in range(len(self.mapBase)):
             for abscisses in range(len(self.mapBase[ordonnees])):
@@ -141,10 +150,13 @@ class LoadMapPlaineRiviere(): # nv 0
                 PNJ(pos ,("PNJ1", "pnj1.png"),(self.allSprites, self.collisionSprites))
             if coordsPNJ[2] == 2 : 
                 PNJ(pos ,("PNJ2", "pnj2.png"),(self.allSprites, self.collisionSprites))
-            if coordsPNJ[2] == 3 : 
-                PNJ(pos ,("PNJ3", "pnj3.png"),(self.allSprites, self.collisionSprites))
+            if coordsPNJ[2] == 3 :
+                PNJ(pos ,("PNJ3", "pnj3.png"),(self.allSprites, self.collisionSprites)) 
 
 
     def Update(self):
         self.LoadImages()
         self.Setup()
+        self.SetupSpawn()
+        self.SetupPNJ()
+        return self.map, self.mapBase
