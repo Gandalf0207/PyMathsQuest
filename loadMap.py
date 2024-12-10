@@ -8,8 +8,9 @@ from pnj import *
 
 
 class LoadMapPlaineRiviere(): # nv 0
-    def __init__(self, niveau, allSprites, collisionSprites) -> None:
+    def __init__(self, niveau, allSprites, collisionSprites, allpnj) -> None:
         self.niveau = niveau
+        self.allPNJ = allpnj
         self.allSprites = allSprites
         self.collisionSprites = collisionSprites
 
@@ -145,13 +146,13 @@ class LoadMapPlaineRiviere(): # nv 0
     def SetupPNJ(self):
         coordsPNJList = self.LoadJsonMapValue("coordsMapObject","PNJ Coords")
         for coordsPNJ in coordsPNJList:
+            pos = (coordsPNJ[0]*CASEMAP, coordsPNJ[1]*CASEMAP)
             if coordsPNJ[2] == 1 : 
-                pos = (coordsPNJ[0]*CASEMAP, coordsPNJ[1]*CASEMAP)
-                PNJ(pos ,("PNJ1", "pnj1.png"),(self.allSprites, self.collisionSprites))
+                PNJ(pos ,("PNJ1", "pnj1.png"), "pnj1", (self.allPNJ, self.allSprites, self.collisionSprites))
             if coordsPNJ[2] == 2 : 
-                PNJ(pos ,("PNJ2", "pnj2.png"),(self.allSprites, self.collisionSprites))
+                PNJ(pos ,("PNJ2", "pnj2.png"), "pnj2", (self.allPNJ, self.allSprites, self.collisionSprites))
             if coordsPNJ[2] == 3 :
-                PNJ(pos ,("PNJ3", "pnj3.png"),(self.allSprites, self.collisionSprites)) 
+                PNJ(pos ,("PNJ3", "pnj3.png"), "pnh3", (self.allPNJ, self.allSprites, self.collisionSprites)) 
 
 
     def Update(self):
