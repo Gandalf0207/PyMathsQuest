@@ -27,12 +27,7 @@ class GestionPNJ(object):
         self.camera_offset = [0,0]
         self.npc_screen_pos = [0,0]
         self.openInterface = False
-
-    def input(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_e] and not self.openInterface:
-            self.Interface = GestionInterfacePNJ(self)
-
+        self.interface = None
 
     def isClose(self, playerPos):
 
@@ -67,27 +62,66 @@ class GestionPNJ(object):
     def update(self, playerPos):
         check = self.isClose(playerPos)
         if check: 
-            self.input()
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_e] and not self.openInterface:
+                self.openInterface = True
+                self.Interface = GestionInterfacePNJ(self)
+
+            if keys[pygame.K_ESCAPE] and self.openInterface:
+                self.openInterface = False
+        else:
+            self.openInterface = False
+
         if self.openInterface:
             self.Interface.Update()
 
-
 class GestionInterfacePNJ(object):
     def __init__(self, gestionnaire):
-        print("bonjour")
         self.gestionnaire = gestionnaire
+        self.displaySurface = pygame.display.get_surface()
 
-    def GetText(self):
-        pass
+        # Surface de l'interface de dialogue (transparent et couvrant tout l'écran)
+        self.interfaceSurface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))
+        self.interfaceSurface.set_alpha(220)  # Transparence de 220
 
-    def OpenInterface(self):
-        pass
+        # Initialisation des polices
+        self.font = pygame.font.Font(None, 36)
+
+        # Position du PNJ
+        self.pnj_position = (100, 100)  # Position du PNJ (à gauche)
+
+        # Texte pour le PNJ
+        self.pnj_text = "Bonjour, comment vas-tu ? Je suis très content de te voir ici ! Nous avons beaucoup à discuter, il y a plein de choses à faire ici !"
+
+        # Variables pour l'effet de texte
+        self.pnj_displayed_text = ""  # Texte affiché du PNJ
+        self.pnj_index = 0  # Index pour le texte du PNJ
+
+    def BuildInterface(self):
+        # Ajouter progressivement les caractères du texte
+        if self.pnj_index < len(self.pnj_text):
+            self.pnj_displayed_text += self.pnj_text[self.pnj_index]
+            self.pnj_index += 1
+
+        # Rendre le texte à afficher
+        pnj_surface = self.font.render(self.pnj_displayed_text, True, (255, 255, 255))
+        # Placer le texte du PNJ à la position spécifiée
+        self.interfaceSurface.blit(pnj_surface, (200,500),450)
 
     def CloseInterface(self):
         self.gestionnaire.openInterface = False
 
     def Update(self):
-        pass
+        # Mettre à jour l'interface
+        self.interfaceSurface.fill((50, 50, 50))  # Fond gris de l'interface
+        self.BuildInterface()  # Construire l'interface avec texte
+        self.displaySurface.blit(self.interfaceSurface, (0, 0))  # Afficher l'interface
+        
+        # Fermer l'interface avec ESC
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_ESCAPE]:  # Fermer avec ESC
+            self.CloseInterface()
+
 
 class DeplacementPNJ(object):
     def __init__(self):

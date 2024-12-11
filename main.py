@@ -117,6 +117,15 @@ class Game(object):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
+                
+                if event.type == pygame.KEYDOWN: # TP : ne pas oublier de retirer
+                    if event.key == pygame.K_t:
+                        first_sprite = next(iter(self.allPNJ))  # Premier objet du groupe
+                        self.player.rect.center = (first_sprite.pos[0]*CASEMAP, first_sprite.pos[1]*CASEMAP)
+                        self.player.hitbox_rect.center = (first_sprite.pos[0]*CASEMAP, first_sprite.pos[1]*CASEMAP)
+
+                        print(f"tp : {first_sprite.pos}")
+                        print(self.player.rect.center)
             
             
 
