@@ -27,17 +27,21 @@ class MiniMap:
         """
         Génère une fois pour toutes la minimap statique avec le terrain et les objets.
         """
+        listpnj = []
         for y, row in enumerate(self.mapBase):
             for x, cell in enumerate(row):
                 pos = (x * CELL_SIZE, y * CELL_SIZE)  # Coordonnées des cellules
                 if self.mapData[y][x] == "P":
-                    self.static_surface.blit(self.carre6, pos)
+                    listpnj.append(pos)
                 elif cell == "#":
                     self.static_surface.blit(self.carre3, pos)
                 elif cell == "B":
                     self.static_surface.blit(self.carre7, pos)
                 else:
                     self.static_surface.blit(self.carre1, pos)
+        
+        for pos in listpnj:
+            self.static_surface.blit(self.carre6,pos)
 
     def Update(self, player_pos):
         """
@@ -51,4 +55,4 @@ class MiniMap:
         player_rect = pygame.Rect(
             player_x * CELL_SIZE * self.ratioImage, player_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE*2
         )
-        pygame.draw.rect(self.MiniMapSurface, (255, 0, 0), player_rect)
+        pygame.draw.rect(self.MiniMapSurface, (255, 21, 4), player_rect)
