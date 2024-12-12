@@ -82,7 +82,7 @@ class GestionInterfacePNJ(object):
 
         # Surface de l'interface de dialogue (transparent et couvrant tout l'écran)
         self.interfaceSurface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))
-        self.interfaceSurface.set_alpha(220)  # Transparence de 220
+        self.interfaceSurface.set_alpha(200)  # Transparence de 220
 
         # Initialisation des polices
         self.font = pygame.font.Font(None, 36)
@@ -98,15 +98,39 @@ class GestionInterfacePNJ(object):
         self.pnj_index = 0  # Index pour le texte du PNJ
 
     def BuildInterface(self):
-        # Ajouter progressivement les caractères du texte
+        # Ajouter progressivement les caractères
         if self.pnj_index < len(self.pnj_text):
             self.pnj_displayed_text += self.pnj_text[self.pnj_index]
             self.pnj_index += 1
 
-        # Rendre le texte à afficher
-        pnj_surface = self.font.render(self.pnj_displayed_text, True, (255, 255, 255))
-        # Placer le texte du PNJ à la position spécifiée
-        self.interfaceSurface.blit(pnj_surface, (200,500),450)
+        # Fonction simple pour découper le texte
+        def wrap_text(text, font, max_width):
+            words = text.split(' ')
+            lines = []
+            current_line = ''
+
+            for word in words:
+                test_line = f"{current_line} {word}".strip()
+                if font.size(test_line)[0] <= max_width:
+                    current_line = test_line
+                else:
+                    lines.append(current_line)
+                    current_line = word
+            if current_line:
+                lines.append(current_line)
+            return lines
+
+        # Largeur maximale de la boîte de texte
+        max_width = 500
+        wrapped_lines = wrap_text(self.pnj_displayed_text, self.font, max_width)
+
+        # Affichage des lignes
+        y_offset = 500  # Position Y de départ
+        line_height = self.font.size("Tg")[1]  # Hauteur d'une ligne
+        for i, line in enumerate(wrapped_lines):
+            line_surface = self.font.render(line, True, (255, 255, 255))
+            self.interfaceSurface.blit(line_surface, (200, y_offset + i * line_height))
+
 
     def CloseInterface(self):
         self.gestionnaire.openInterface = False
