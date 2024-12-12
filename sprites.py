@@ -21,7 +21,7 @@ class CollisionSprites(pygame.sprite.Sprite):
         elif typeCollision == "Souche":
             self.hitbox = self.rect.inflate(-120,-110)
         elif typeCollision == "HugeRock":
-            self.hitbox = self.rect.inflate(-70,-90)
+            self.hitbox = self.rect.inflate(-90,-100)
         elif typeCollision == "campFire":
             self.hitbox = self.rect.inflate(-70,-70)
         elif typeCollision == "banc":
