@@ -1,8 +1,9 @@
-from settings import *  # Assurez-vous que les constantes sont bien définies dans settings.py
+from settings import *
+
 
 class MiniMap:
-    def __init__(self, mapBase, mapData, screen):
 
+    def __init__(self, mapBase, mapData, screen):
         self.mapBase = mapBase
         self.mapData = mapData
         self.MiniMapSurface = screen
@@ -56,3 +57,14 @@ class MiniMap:
             player_x * CELL_SIZE * self.ratioImage, player_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE*2
         )
         pygame.draw.rect(self.MiniMapSurface, (255, 21, 4), player_rect)
+
+
+class SettingsAll:
+    def __init__(self):
+        pass
+
+    def loadImage(self):
+        pass
+
+    def Update(self):
+        pass
