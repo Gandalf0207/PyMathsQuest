@@ -34,7 +34,7 @@ class Game(object):
 
         if self.niveau ==0:
             self.map, self.mapBase = LoadMapPlaineRiviere(self.niveau, self.allSprites, self.collisionSprites, self.allPNJ).Update()
-            self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.niveau)
+            self.pnj = GestionPNJ(self.displaySurface, self.niveau, self.allPNJ)
             # Initialisation dans votre setup
             self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
         else : 

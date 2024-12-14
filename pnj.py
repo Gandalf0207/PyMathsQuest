@@ -16,22 +16,35 @@ class PNJ(pygame.sprite.Sprite):
         self.hitbox.center = self.rect.center
 
 class GestionPNJ(object):
-    def __init__(self, displaySurface, allpnj, niveau) -> None:
-        self.coordsPNJList = [pnj.pos for pnj in allpnj]
-        self.coordsPNJActuel = None
-        self.displaySurface = displaySurface
+    def __init__(self, displaySurface, niveau, allpnjGroup) -> None:
+        # Initialisation valeur de main
+        self.displaySurface = displaySurface        
+        self.allPNJ = allpnjGroup
         self.niveau = niveau
+
+        # Initialisation value de base
+        self.npc_screen_pos = [0,0]
+        self.camera_offset = [0,0]
         self.distanceMax = 200
+
+        # infos de la map 
         self.map_width = LONGUEUR * CASEMAP
         self.map_height = LARGEUR * CASEMAP
-        self.camera_offset = [0,0]
-        self.npc_screen_pos = [0,0]
+
+        # state interface de base
         self.openInterface = False
+        
+        # stockage des valeurs du pnj actuel
+        self.pnjActuel = None
+        self.coordsPNJActuel = None
         self.interface = None
 
     def isClose(self, playerPos):
 
-        for coordPNJ in self.coordsPNJList:
+        for pnjObject in self.allPNJ:
+            coordPNJ = pnjObject.pos
+            pnjActuel = pnjObject.numPNJ 
+
             # Calculer la distance entre le joueur et le PNJ
             distance = sqrt((playerPos[0] - coordPNJ[0] * CASEMAP)**2 + (playerPos[1] - coordPNJ[1] * CASEMAP)**2)
             
@@ -42,6 +55,7 @@ class GestionPNJ(object):
             self.npc_screen_pos = [coordPNJ[0] * CASEMAP - self.camera_offset[0], coordPNJ[1]*CASEMAP - self.camera_offset[1]]
 
             if distance <= self.distanceMax:
+                self.pnjActuel = pnjActuel
                 self.coordsPNJActuel = coordPNJ
                 # Dessiner la boîte
                 font = pygame.font.Font(None, 24)
@@ -80,12 +94,20 @@ class GestionInterfacePNJ(object):
         self.gestionnaire = gestionnaire
         self.displaySurface = pygame.display.get_surface()
 
-        # Surface de l'interface de dialogue (transparent et couvrant tout l'écran)
-        self.interfaceSurface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))
-        self.interfaceSurface.set_alpha(200)  # Transparence de 220
+        # Surface pour le fond transparent
+        self.backgroundSurface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
+        self.backgroundSurface.fill((50, 50, 50, 200))  # Fond gris avec alpha (200)
+
+        # Surface principale pour les éléments de l'interface
+        self.interfaceSurface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
+        self.interfaceSurface.fill((0, 0, 0, 0))  # Transparent par défaut
+
 
         # Initialisation des polices
-        self.font = pygame.font.Font(None, 36)
+        self.font1 = pygame.font.Font(None, 36)
+        self.font1.set_bold(True)
+
+        self.font2 = pygame.font.Font(None, 36)
 
         # Position du PNJ
         self.pnj_position = (100, 100)  # Position du PNJ (à gauche)
@@ -97,11 +119,38 @@ class GestionInterfacePNJ(object):
         self.pnj_displayed_text = ""  # Texte affiché du PNJ
         self.pnj_index = 0  # Index pour le texte du PNJ
 
+        self.loadPNG()
+
+    def loadPNG(self):
+        self.pnjImage = pygame.image.load(join("Images", "PNJ", "Discussion", f"Grand{self.gestionnaire.pnjActuel}.png"))
+        self.playerImage = pygame.image.load(join("Images", "Player", "Discussion", "GrandPlayer.png"))
+
+
+
     def BuildInterface(self):
-        # Ajouter progressivement les caractères
+        self.interfaceSurface.fill((0, 0, 0, 0))  # Réinitialiser la surface avec une transparence complète
+
+
+        # load element png
+        self.interfaceSurface.blit(self.pnjImage, (50,360))
+        self.interfaceSurface.blit(self.playerImage, (WINDOW_WIDTH-178, 360))
+
+        # load nom pnj
+        match self.gestionnaire.pnjActuel:
+            case "PNJ1":
+                self.pnjName = "NameToDefined" 
+
+        pnjName = self.font1.render(self.pnjName, True, (255,255,255))
+        self.interfaceSurface.blit(pnjName, (200, 400))
+
+        # bloc gestion texte 
+
+
         if self.pnj_index < len(self.pnj_text):
-            self.pnj_displayed_text += self.pnj_text[self.pnj_index]
             self.pnj_index += 1
+        # Mettre à jour le texte affiché
+        self.pnj_displayed_text = self.pnj_text[:self.pnj_index]
+
 
         # Fonction simple pour découper le texte
         def wrap_text(text, font, max_width):
@@ -122,29 +171,33 @@ class GestionInterfacePNJ(object):
 
         # Largeur maximale de la boîte de texte
         max_width = 500
-        wrapped_lines = wrap_text(self.pnj_displayed_text, self.font, max_width)
+        wrapped_lines = wrap_text(self.pnj_displayed_text, self.font2, max_width)
 
         # Affichage des lignes
-        y_offset = 500  # Position Y de départ
-        line_height = self.font.size("Tg")[1]  # Hauteur d'une ligne
+        y_offset = 420  # Position Y de départ
+        line_height = self.font2.size("Tg")[1]  # Hauteur d'une ligne
         for i, line in enumerate(wrapped_lines):
-            line_surface = self.font.render(line, True, (255, 255, 255))
+            line_surface = self.font2.render(line, True, (255, 255, 255))
             self.interfaceSurface.blit(line_surface, (200, y_offset + i * line_height))
-
 
     def CloseInterface(self):
         self.gestionnaire.openInterface = False
 
     def Update(self):
-        # Mettre à jour l'interface
-        self.interfaceSurface.fill((50, 50, 50))  # Fond gris de l'interface
-        self.BuildInterface()  # Construire l'interface avec texte
-        self.displaySurface.blit(self.interfaceSurface, (0, 0))  # Afficher l'interface
-        
+        # Dessiner le fond transparent
+        self.displaySurface.blit(self.backgroundSurface, (0, 0))
+
+        # Construire et afficher l'interface avec le texte
+        self.BuildInterface()
+        self.displaySurface.blit(self.interfaceSurface, (0, 0))
+
         # Fermer l'interface avec ESC
         keys = pygame.key.get_pressed()
         if keys[pygame.K_ESCAPE]:  # Fermer avec ESC
             self.CloseInterface()
+
+
+
 
 
 class DeplacementPNJ(object):
