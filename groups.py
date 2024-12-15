@@ -6,7 +6,7 @@ class AllSprites(pygame.sprite.Group):
         self.display_surface = pygame.display.get_surface()
         self.offset = pygame.Vector2(0, 0)
         self.map_width = LONGUEUR * CASEMAP
-        self.map_height = LARGEUR * CASEMAP
+        self.map_height = LARGEUR * CASEMAP + 160 #  +160 = hauteur hotbar
 
     def draw(self, target_pos):
         # Calcul de l'offset pour centrer la caméra sur le joueur

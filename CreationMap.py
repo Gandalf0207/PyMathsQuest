@@ -187,6 +187,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             # Si true, on arreter la boucle
             if self.__CheckPos__(listeCoordsElement[indice]): # check si à les coords de la liste  l'indice respect les conditions pour poser l'element
                 Go = False # Arret de la boucle
+                
         itemCoords = listeCoordsElement[indice] # on crée un copie des coords dans la variable
         self.map[itemCoords[1]][itemCoords[0]-1] = element # on ajoute l'element sur la map (collision)
 

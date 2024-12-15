@@ -25,7 +25,7 @@ class Game(object):
         self.allPNJ = pygame.sprite.Group()
 
         self.minimap_surface = pygame.Surface((300, 150))
-        self.minimap = None
+        self.allSettings_surface = pygame.Surface((426, 150))
         
 
     def SetupAllMap(self):
@@ -38,7 +38,7 @@ class Game(object):
             # Initialisation dans votre setup
             
             self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
-            # self.settingsAll = 
+            self.settingsAll = SettingsAll(self.allSettings_surface)
         else : 
             pass
 
@@ -128,6 +128,10 @@ class Game(object):
 
                         print(f"tp : {first_sprite.pos}")
                         print(self.player.rect.center)
+
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    print("hello")
+                    self.settingsAll.OpenInterfaceElement(event)
             
             
 
@@ -135,13 +139,14 @@ class Game(object):
             self.displaySurface.fill("#000000")
             self.allSprites.draw(self.player.rect.center)
 
-            self.minimap.Update(self.player.rect.center)
-
-            
-            
-            self.displaySurface.blit(self.minimap_surface, (10, 10))
-
             # Afficher la minimap sur l'écran principal
+            self.minimap.Update(self.player.rect.center)
+            self.settingsAll.Update()
+
+            
+            
+            self.displaySurface.blit(self.minimap_surface, (10, WINDOW_HEIGHT-160))
+            self.displaySurface.blit(self.allSettings_surface, COORS_BOX_ALL_SETTINGS)
             self.pnj.update(self.player.rect.center)
 
 

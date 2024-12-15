@@ -1,4 +1,5 @@
 from settings import *
+from interface import *
 
 
 class MiniMap:
@@ -49,7 +50,7 @@ class MiniMap:
         Met à jour uniquement le joueur sur la minimap.
         """
         # Copier la surface statique dans la surface d'affichage
-        self.MiniMapSurface.blit(self.static_surface, (0, 0))
+        self.MiniMapSurface.blit(self.static_surface, (0,0))
 
         # Dessiner le joueur (en rouge par exemple)
         player_x, player_y = player_pos
@@ -60,11 +61,81 @@ class MiniMap:
 
 
 class SettingsAll:
-    def __init__(self):
-        pass
+    def __init__(self, screen):
+        self.allSettingsSurface = screen
+        self.loadImage()
+        self.ButtonSize()
+
+    def ButtonSize(self):
+        # Dimensions des boutons (100x100) et positionnement précis
+        self.surfaceButtonWheel = pygame.Surface((100, 100))
+        self.surfaceButtonSound = pygame.Surface((100, 100))
+        self.surfaceButtonBundle = pygame.Surface((100, 100))
+        self.surfaceButtonBook = pygame.Surface((100, 100))
+
+        # Positions des boutons, espacés de 10 pixels, centrés verticalement
+        self.ButtonRectWheel =pygame.Rect(0, 25, 100, 100) 
+        self.ButtonRectSound = pygame.Rect(106, 25, 100, 100)
+        self.ButtonRectBundle = pygame.Rect(212, 25, 100, 100)
+        self.ButtonRectBook = pygame.Rect(318, 25, 100, 100)
+        
+
 
     def loadImage(self):
-        pass
+        # Load images for the buttons
+        self.wheel = pygame.image.load(join("Images", "HotBar", "AllSettings", "Wheel.png")).convert_alpha()
+        self.sound = pygame.image.load(join("Images", "HotBar", "AllSettings", "Sound.png")).convert_alpha()
+        self.bundle = pygame.image.load(join("Images", "HotBar", "AllSettings", "Bundle.png")).convert_alpha()
+        self.book = pygame.image.load(join("Images", "HotBar", "AllSettings", "Book.png")).convert_alpha()
+
+    def OpenInterfaceElement(self, event):
+        # Obtenez les coordonnées globales de l'événement
+        global_pos = event.pos  # Coordonnées relatives à la fenêtre
+
+        # Déterminez où la surface `allSettings_surface` est affichée
+        surface_rect = self.allSettingsSurface.get_rect(topleft=COORS_BOX_ALL_SETTINGS)  # `x, y` est la position de la surface dans la fenêtre.
+
+        # Convertissez les coordonnées globales en coordonnées locales
+        local_pos = (global_pos[0] - surface_rect.x, global_pos[1] - surface_rect.y)
+
+        # Vérifiez si le clic est dans la surface
+        if not surface_rect.collidepoint(global_pos):
+            return
+
+        # Continuez avec les coordonnées locales pour détecter les boutons
+        if self.ButtonRectWheel.collidepoint(local_pos):
+            print("Wheel button clicked!")
+        elif self.ButtonRectSound.collidepoint(local_pos):
+            print("Sound button clicked!")
+        elif self.ButtonRectBundle.collidepoint(local_pos):
+            print("Bundle button clicked!")
+        elif self.ButtonRectBook.collidepoint(local_pos):
+            print("Book button clicked!")
+        else:
+            print("No button clicked.")
+
+
+
 
     def Update(self):
-        pass
+        self.allSettingsSurface.fill((255,255,255))
+        
+        # Fill button surfaces with a background color
+        self.surfaceButtonBook.fill((200, 200, 200))  # Light gray
+        self.surfaceButtonSound.fill((200, 200, 200))
+        self.surfaceButtonBundle.fill((200, 200, 200))
+        self.surfaceButtonWheel.fill((200, 200, 200))
+
+        # Draw images on button surfaces
+        self.surfaceButtonBook.blit(self.book, (0, 0))
+        self.surfaceButtonSound.blit(self.sound, (0, 0))
+        self.surfaceButtonBundle.blit(self.bundle, (0, 0))
+        self.surfaceButtonWheel.blit(self.wheel, (0, 0))
+
+        # Draw button surfaces on the main settings surface
+        self.allSettingsSurface.blit(self.surfaceButtonBook, (self.ButtonRectBook.x, self.ButtonRectBook.y))
+        self.allSettingsSurface.blit(self.surfaceButtonSound, (self.ButtonRectSound.x, self.ButtonRectSound.y))
+        self.allSettingsSurface.blit(self.surfaceButtonBundle, (self.ButtonRectBundle.x,  self.ButtonRectBundle.y))
+        self.allSettingsSurface.blit(self.surfaceButtonWheel, (self.ButtonRectWheel.x, self.ButtonRectWheel.y))
+
+
