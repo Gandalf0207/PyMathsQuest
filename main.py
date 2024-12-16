@@ -26,6 +26,8 @@ class Game(object):
 
         self.minimap_surface = pygame.Surface((300, 150))
         self.allSettings_surface = pygame.Surface((426, 150))
+
+        self.INTERFACE_OPEN = False
         
 
     def SetupAllMap(self):
@@ -34,11 +36,11 @@ class Game(object):
 
         if self.niveau ==0:
             self.map, self.mapBase = LoadMapPlaineRiviere(self.niveau, self.allSprites, self.collisionSprites, self.allPNJ).Update()
-            self.pnj = GestionPNJ(self.displaySurface, self.niveau, self.allPNJ)
+            self.pnj = GestionPNJ(self.displaySurface, self.niveau, self.allPNJ, self.INTERFACE_OPEN)
             # Initialisation dans votre setup
             
             self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
-            self.settingsAll = SettingsAll(self.allSettings_surface)
+            self.settingsAll = SettingsAll(self.allSettings_surface, self.INTERFACE_OPEN)
         else : 
             pass
 
@@ -131,7 +133,7 @@ class Game(object):
 
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     print("hello")
-                    self.settingsAll.OpenInterfaceElement(event)
+                    self.INTERFACE_OPEN = self.settingsAll.OpenInterfaceElement(event, self.INTERFACE_OPEN)
             
             
 
@@ -141,14 +143,16 @@ class Game(object):
 
             # Afficher la minimap sur l'écran principal
             self.minimap.Update(self.player.rect.center)
-            
+
             self.settingsAll.Update()
 
             
             
             self.displaySurface.blit(self.minimap_surface, (10, WINDOW_HEIGHT-160))
             self.displaySurface.blit(self.allSettings_surface, COORS_BOX_ALL_SETTINGS)
-            self.pnj.update(self.player.rect.center)
+
+            
+            self.INTERFACE_OPEN = self.pnj.update(self.player.rect.center, self.INTERFACE_OPEN)
 
 
             pygame.display.flip()

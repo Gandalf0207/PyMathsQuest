@@ -61,8 +61,9 @@ class MiniMap:
 
 
 class SettingsAll:
-    def __init__(self, screen):
+    def __init__(self, screen, INTERFACE_OPEN):
         self.allSettingsSurface = screen
+        self.INTERFACE_OPEN = INTERFACE_OPEN    
         self.loadImage()
         self.ButtonSize()
         self.interfaceElement = None
@@ -90,7 +91,8 @@ class SettingsAll:
         self.bundle = pygame.image.load(join("Images", "HotBar", "AllSettings", "Bundle.png")).convert_alpha()
         self.book = pygame.image.load(join("Images", "HotBar", "AllSettings", "Book.png")).convert_alpha()
 
-    def OpenInterfaceElement(self, event):
+    def OpenInterfaceElement(self, event, INTERFACE_OPEN):
+        self.INTERFACE_OPEN = INTERFACE_OPEN
         # Obtenez les coordonnées globales de l'événement
         global_pos = event.pos  # Coordonnées relatives à la fenêtre
 
@@ -105,29 +107,57 @@ class SettingsAll:
             return
 
         # Continuez avec les coordonnées locales pour détecter les boutons
-        if self.ButtonRectWheel.collidepoint(local_pos) and not self.InterfaceOpen:
-            self.InterfaceOpen = True
-            self.interfaceElement = SettingsInterface(self)
-            print("Wheel button clicked!")
+        if self.ButtonRectWheel.collidepoint(local_pos) :
+            print(self.INTERFACE_OPEN)
+            if not self.INTERFACE_OPEN and not self.InterfaceOpen:
+                self.InterfaceOpen = True
+                self.INTERFACE_OPEN = True
+                self.interfaceElement = SettingsInterface(self)
+                print("Wheel button clicked!")
+            
+            elif self.InterfaceOpen:
+                self.InterfaceOpen = False
+                self.INTERFACE_OPEN = False
 
-        elif self.ButtonRectSound.collidepoint(local_pos) and not self.InterfaceOpen:
-            self.InterfaceOpen = True
-            self.interfaceElement = SoudInterface(self)
-            print("Sound button clicked!")
 
-        elif self.ButtonRectBundle.collidepoint(local_pos) and not self.InterfaceOpen:
-            self.InterfaceOpen = True
-            self.interfaceElement = BundleInterface(self)
-            print("Bundle button clicked!")
+        elif self.ButtonRectSound.collidepoint(local_pos) : 
+            if not self.INTERFACE_OPEN and not self.InterfaceOpen:
+                self.InterfaceOpen = True
+                self.INTERFACE_OPEN = True
+                self.interfaceElement = SoudInterface(self)
+                print("Sound button clicked!")
+            
+            elif self.InterfaceOpen:
+                self.InterfaceOpen = False
+                self.INTERFACE_OPEN = False
+            
 
-        elif self.ButtonRectBook.collidepoint(local_pos) and not self.InterfaceOpen:
-            self.InterfaceOpen = True
-            self.interfaceElement = BookInterface(self)
-            print("Book button clicked!")
+        elif self.ButtonRectBundle.collidepoint(local_pos):
+            if not self.INTERFACE_OPEN and not self.InterfaceOpen:
+                self.InterfaceOpen = True
+                self.INTERFACE_OPEN = True
+                self.interfaceElement = BundleInterface(self)
+                print("Bundle button clicked!")
+            
+            elif self.InterfaceOpen:
+                self.InterfaceOpen = False
+                self.INTERFACE_OPEN = False
 
-        else:
-            self.InterfaceOpen = False
-            print("No button clicked.")
+
+        elif self.ButtonRectBook.collidepoint(local_pos) : 
+            if not self.INTERFACE_OPEN and not self.InterfaceOpen:
+                self.InterfaceOpen = True
+                self.INTERFACE_OPEN = True
+                self.interfaceElement = BookInterface(self)
+                print("Book button clicked!")
+            
+            elif self.InterfaceOpen:
+                self.InterfaceOpen = False
+                self.INTERFACE_OPEN = False
+
+        return self.INTERFACE_OPEN
+
+
 
 
 
@@ -153,11 +183,10 @@ class SettingsAll:
         self.allSettingsSurface.blit(self.surfaceButtonSound, (self.ButtonRectSound.x, self.ButtonRectSound.y))
         self.allSettingsSurface.blit(self.surfaceButtonBundle, (self.ButtonRectBundle.x,  self.ButtonRectBundle.y))
         self.allSettingsSurface.blit(self.surfaceButtonWheel, (self.ButtonRectWheel.x, self.ButtonRectWheel.y))
-        
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_ESCAPE] and self.openInterface:
-            self.openInterface = False
+
 
         if self.InterfaceOpen:
             self.interfaceElement.Update()
+        
+        
 

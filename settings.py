@@ -19,6 +19,7 @@ CELL_SIZE = 2
 WINDOW_WIDTH, WINDOW_HEIGHT = 1280,720 
 COORS_BOX_ALL_SETTINGS = (WINDOW_WIDTH-436, WINDOW_HEIGHT-160)
 
+
 EspacementPointRepereRiviere = 15
 CoupageMapRiviere = 50 # 1/3 de la longueur
 CouloirRiviere = 4
