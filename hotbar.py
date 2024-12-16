@@ -91,7 +91,8 @@ class SettingsAll:
         self.bundle = pygame.image.load(join("Images", "HotBar", "AllSettings", "Bundle.png")).convert_alpha()
         self.book = pygame.image.load(join("Images", "HotBar", "AllSettings", "Book.png")).convert_alpha()
 
-    def OpenInterfaceElement(self, event, INTERFACE_OPEN):
+    def OpenInterfaceElementClic(self, event, INTERFACE_OPEN):
+
         self.INTERFACE_OPEN = INTERFACE_OPEN
         # Obtenez les coordonnées globales de l'événement
         global_pos = event.pos  # Coordonnées relatives à la fenêtre
@@ -107,56 +108,82 @@ class SettingsAll:
             return
 
         # Continuez avec les coordonnées locales pour détecter les boutons
-        if self.ButtonRectWheel.collidepoint(local_pos) :
-            print(self.INTERFACE_OPEN)
-            if not self.INTERFACE_OPEN and not self.InterfaceOpen:
-                self.InterfaceOpen = True
-                self.INTERFACE_OPEN = True
-                self.interfaceElement = SettingsInterface(self)
-                print("Wheel button clicked!")
-            
-            elif self.InterfaceOpen:
-                self.InterfaceOpen = False
-                self.INTERFACE_OPEN = False
+        if self.ButtonRectWheel.collidepoint(local_pos) or event.key == pygame.K_p :
+            self.GestionInterfaceSettings()
 
+        elif self.ButtonRectSound.collidepoint(local_pos) or event.key == pygame.K_v : 
+            self.GestionInterfaceSound()
 
-        elif self.ButtonRectSound.collidepoint(local_pos) : 
-            if not self.INTERFACE_OPEN and not self.InterfaceOpen:
-                self.InterfaceOpen = True
-                self.INTERFACE_OPEN = True
-                self.interfaceElement = SoudInterface(self)
-                print("Sound button clicked!")
-            
-            elif self.InterfaceOpen:
-                self.InterfaceOpen = False
-                self.INTERFACE_OPEN = False
-            
+        elif self.ButtonRectBundle.collidepoint(local_pos) or event.key == pygame.K_i:
+            self.GestionInterfaceBundle()
 
-        elif self.ButtonRectBundle.collidepoint(local_pos):
-            if not self.INTERFACE_OPEN and not self.InterfaceOpen:
-                self.InterfaceOpen = True
-                self.INTERFACE_OPEN = True
-                self.interfaceElement = BundleInterface(self)
-                print("Bundle button clicked!")
-            
-            elif self.InterfaceOpen:
-                self.InterfaceOpen = False
-                self.INTERFACE_OPEN = False
+        elif self.ButtonRectBook.collidepoint(local_pos) or event.key == pygame.K_b : 
+            self.GestionInterfaceBook()
 
+        return self.INTERFACE_OPEN
+    
+    def OpenInterfaceElementClavier(self, event, INTERFACE_OPEN):
+        self.INTERFACE_OPEN = INTERFACE_OPEN
 
-        elif self.ButtonRectBook.collidepoint(local_pos) : 
-            if not self.INTERFACE_OPEN and not self.InterfaceOpen:
-                self.InterfaceOpen = True
-                self.INTERFACE_OPEN = True
-                self.interfaceElement = BookInterface(self)
-                print("Book button clicked!")
-            
-            elif self.InterfaceOpen:
-                self.InterfaceOpen = False
-                self.INTERFACE_OPEN = False
+        # Continuez avec les coordonnées locales pour détecter les boutons
+        if event.key == pygame.K_p :
+            self.GestionInterfaceSettings()
+
+        elif event.key == pygame.K_v : 
+            self.GestionInterfaceSound()
+
+        elif event.key == pygame.K_i:
+            self.GestionInterfaceBundle()
+
+        elif event.key == pygame.K_b : 
+            self.GestionInterfaceBook()
 
         return self.INTERFACE_OPEN
 
+    def GestionInterfaceSettings(self):
+        if not self.INTERFACE_OPEN and not self.InterfaceOpen:
+            self.InterfaceOpen = True
+            self.INTERFACE_OPEN = True
+            self.interfaceElement = SettingsInterface(self)
+            print("Wheel button clicked!")
+        
+        elif self.InterfaceOpen:
+            self.InterfaceOpen = False
+            self.INTERFACE_OPEN = False
+
+
+    def GestionInterfaceSound(self):
+        if not self.INTERFACE_OPEN and not self.InterfaceOpen:
+            self.InterfaceOpen = True
+            self.INTERFACE_OPEN = True
+            self.interfaceElement = SoudInterface(self)
+            print("Sound button clicked!")
+        
+        elif self.InterfaceOpen:
+            self.InterfaceOpen = False
+            self.INTERFACE_OPEN = False
+
+    def GestionInterfaceBundle(self):
+        if not self.INTERFACE_OPEN and not self.InterfaceOpen:
+            self.InterfaceOpen = True
+            self.INTERFACE_OPEN = True
+            self.interfaceElement = BundleInterface(self)
+            print("Bundle button clicked!")
+        
+        elif self.InterfaceOpen:
+            self.InterfaceOpen = False
+            self.INTERFACE_OPEN = False
+
+    def GestionInterfaceBook(self):
+        if not self.INTERFACE_OPEN and not self.InterfaceOpen:
+            self.InterfaceOpen = True
+            self.INTERFACE_OPEN = True
+            self.interfaceElement = BookInterface(self)
+            print("Book button clicked!")
+        
+        elif self.InterfaceOpen:
+            self.InterfaceOpen = False
+            self.INTERFACE_OPEN = False
 
 
 

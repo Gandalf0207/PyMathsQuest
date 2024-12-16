@@ -133,7 +133,11 @@ class Game(object):
 
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     print("hello")
-                    self.INTERFACE_OPEN = self.settingsAll.OpenInterfaceElement(event, self.INTERFACE_OPEN)
+                    self.INTERFACE_OPEN = self.settingsAll.OpenInterfaceElementClic(event, self.INTERFACE_OPEN)
+                
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_p or event.key == pygame.K_v or event.key == pygame.K_i or event.key == pygame.K_b:
+                        self.INTERFACE_OPEN = self.settingsAll.OpenInterfaceElementClavier(event, self.INTERFACE_OPEN)
             
             
 
