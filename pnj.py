@@ -128,7 +128,11 @@ class GestionInterfacePNJ(object):
         self.pnj_displayed_text = ""  # Texte affiché du PNJ
         self.pnj_index = 0  # Index pour le texte du PNJ
 
+        # elemeny gestion texte : 
+        nbDialogues = 3 # get nb dialogues json file
+
         self.loadPNG()
+
 
     def loadPNG(self):
         self.pnjImage = pygame.image.load(join("Images", "PNJ", "Discussion", f"Grand{self.gestionnaire.pnjActuel}.png"))
@@ -152,9 +156,9 @@ class GestionInterfacePNJ(object):
         pnjName = self.font1.render(self.pnjName, True, (255,255,255))
         self.interfaceSurface.blit(pnjName, (200, 400))
 
+        # load btn skip / lancer
+
         # bloc gestion texte 
-
-
         if self.pnj_index < len(self.pnj_text):
             self.pnj_index += 1
         # Mettre à jour le texte affiché
