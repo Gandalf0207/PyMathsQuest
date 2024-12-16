@@ -141,6 +141,7 @@ class Game(object):
 
             # Afficher la minimap sur l'écran principal
             self.minimap.Update(self.player.rect.center)
+            
             self.settingsAll.Update()
 
             

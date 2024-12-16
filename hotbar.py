@@ -65,6 +65,8 @@ class SettingsAll:
         self.allSettingsSurface = screen
         self.loadImage()
         self.ButtonSize()
+        self.interfaceElement = None
+        self.InterfaceOpen = False
 
     def ButtonSize(self):
         # Dimensions des boutons (100x100) et positionnement précis
@@ -103,16 +105,30 @@ class SettingsAll:
             return
 
         # Continuez avec les coordonnées locales pour détecter les boutons
-        if self.ButtonRectWheel.collidepoint(local_pos):
+        if self.ButtonRectWheel.collidepoint(local_pos) and not self.InterfaceOpen:
+            self.InterfaceOpen = True
+            self.interfaceElement = SettingsInterface(self)
             print("Wheel button clicked!")
-        elif self.ButtonRectSound.collidepoint(local_pos):
+
+        elif self.ButtonRectSound.collidepoint(local_pos) and not self.InterfaceOpen:
+            self.InterfaceOpen = True
+            self.interfaceElement = SoudInterface(self)
             print("Sound button clicked!")
-        elif self.ButtonRectBundle.collidepoint(local_pos):
+
+        elif self.ButtonRectBundle.collidepoint(local_pos) and not self.InterfaceOpen:
+            self.InterfaceOpen = True
+            self.interfaceElement = BundleInterface(self)
             print("Bundle button clicked!")
-        elif self.ButtonRectBook.collidepoint(local_pos):
+
+        elif self.ButtonRectBook.collidepoint(local_pos) and not self.InterfaceOpen:
+            self.InterfaceOpen = True
+            self.interfaceElement = BookInterface(self)
             print("Book button clicked!")
+
         else:
+            self.InterfaceOpen = False
             print("No button clicked.")
+
 
 
 
@@ -137,5 +153,11 @@ class SettingsAll:
         self.allSettingsSurface.blit(self.surfaceButtonSound, (self.ButtonRectSound.x, self.ButtonRectSound.y))
         self.allSettingsSurface.blit(self.surfaceButtonBundle, (self.ButtonRectBundle.x,  self.ButtonRectBundle.y))
         self.allSettingsSurface.blit(self.surfaceButtonWheel, (self.ButtonRectWheel.x, self.ButtonRectWheel.y))
+        
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_ESCAPE] and self.openInterface:
+            self.openInterface = False
 
+        if self.InterfaceOpen:
+            self.interfaceElement.Update()
 

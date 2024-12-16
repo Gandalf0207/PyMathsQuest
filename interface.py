@@ -1,13 +1,57 @@
 from settings import *
 
 class SettingsInterface(object):
-    pass
+    def __init__(self, gestionnaire):
+        self.displaySurface = pygame.display.get_surface()
+        self.gestionnaire = gestionnaire
+
+    def BuildInterface(self):
+        pass
+
+    def CloseInterface(self):
+        self.gestionnaire.InterfaceOpen = False
+
+    def Update(self):
+        pass
 
 class SoudInterface(object):
-    pass
+    def __init__(self, gestionnaire):
+        self.displaySurface = pygame.display.get_surface()
+        self.gestionnaire = gestionnaire
+
+    def BuildInterface(self):
+        pass
+
+    def CloseInterface(self):
+        self.gestionnaire.InterfaceOpen = False
+
+    def Update(self):
+        pass
 
 class BundleInterface(object):
-    pass
+    def __init__(self, gestionnaire):
+        self.displaySurface = pygame.display.get_surface()
+        self.gestionnaire = gestionnaire
+
+    def BuildInterface(self):
+        pass
+
+    def CloseInterface(self):
+        self.gestionnaire.InterfaceOpen = False
+
+    def Update(self):
+        pass
 
 class BookInterface(object):
-    pass
+    def __init__(self, gestionnaire):
+        self.displaySurface = pygame.display.get_surface()
+        self.gestionnaire = gestionnaire
+
+    def BuildInterface(self):
+        pass
+
+    def CloseInterface(self):
+        self.gestionnaire.InterfaceOpen = False
+
+    def Update(self):
+        pass
