@@ -38,7 +38,9 @@ class GestionPNJ(object):
         # stockage des valeurs du pnj actuel
         self.pnjActuel = None
         self.coordsPNJActuel = None
-        self.interface = None
+        self.interface = False
+
+        self.check = False
 
     def isClose(self, playerPos):
 
@@ -73,30 +75,49 @@ class GestionPNJ(object):
                 self.displaySurface.blit(text_surface, text_rect)
                 return True
             return False
+        
+    def OpenInterfaceElementClavier(self, event, INTERFACE_OPEN):
+        self.INTERFACE_OPEN = INTERFACE_OPEN
+
+        if not self.INTERFACE_OPEN: # sécurité
+            self.openInterface = False 
+
+        if self.check:
+            if not self.openInterface and not self.INTERFACE_OPEN:
+                self.openInterface = True
+                self.INTERFACE_OPEN = True
+                self.Interface = GestionInterfacePNJ(self)
+        else:
+            if self.openInterface:
+                self.openInterface = False
+                self.INTERFACE_OPEN = False
+
+        return self.INTERFACE_OPEN
+
+
+        
 
     def update(self, playerPos, INTERFACE_OPEN):
         self.INTERFACE_OPEN = INTERFACE_OPEN
 
-        check = self.isClose(playerPos)
-        if check: 
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_e] and not self.openInterface and not self.INTERFACE_OPEN:
-                self.openInterface = True
-                self.INTERFACE_OPEN = True
-                self.Interface = GestionInterfacePNJ(self)
+        if not self.INTERFACE_OPEN: # sécurité
+            self.openInterface = False 
 
-            if keys[pygame.K_ESCAPE] and self.openInterface:
+        self.check = self.isClose(playerPos)
+        if not self.check:
+            if self.openInterface:
                 self.openInterface = False
-                self.INTERFACE_OPEN = False
-
-        else:
-            self.openInterface = False
-            self.INTERFACE_OPEN = False
+                self.INTERFACE_OPEN = False 
 
         if self.openInterface:
             self.Interface.Update()
-        
+
+        print(self.INTERFACE_OPEN, "dialogues")
+
         return self.INTERFACE_OPEN
+        
+    
+
 
 class GestionInterfacePNJ(object):
     def __init__(self, gestionnaire):

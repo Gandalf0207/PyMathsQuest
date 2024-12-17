@@ -94,6 +94,10 @@ class SettingsAll:
     def OpenInterfaceElementClic(self, event, INTERFACE_OPEN):
 
         self.INTERFACE_OPEN = INTERFACE_OPEN
+
+        if not self.INTERFACE_OPEN: # sécurité
+            self.openInterface = False 
+
         # Obtenez les coordonnées globales de l'événement
         global_pos = event.pos  # Coordonnées relatives à la fenêtre
 
@@ -105,25 +109,31 @@ class SettingsAll:
 
         # Vérifiez si le clic est dans la surface
         if not surface_rect.collidepoint(global_pos):
-            return
+            return self.INTERFACE_OPEN
 
         # Continuez avec les coordonnées locales pour détecter les boutons
-        if self.ButtonRectWheel.collidepoint(local_pos) or event.key == pygame.K_p :
+        if self.ButtonRectWheel.collidepoint(local_pos):
             self.GestionInterfaceSettings()
 
-        elif self.ButtonRectSound.collidepoint(local_pos) or event.key == pygame.K_v : 
+        elif self.ButtonRectSound.collidepoint(local_pos): 
             self.GestionInterfaceSound()
 
-        elif self.ButtonRectBundle.collidepoint(local_pos) or event.key == pygame.K_i:
+        elif self.ButtonRectBundle.collidepoint(local_pos):
             self.GestionInterfaceBundle()
 
-        elif self.ButtonRectBook.collidepoint(local_pos) or event.key == pygame.K_b : 
+        elif self.ButtonRectBook.collidepoint(local_pos): 
             self.GestionInterfaceBook()
+
+        print(self.INTERFACE_OPEN, "settings")
 
         return self.INTERFACE_OPEN
     
     def OpenInterfaceElementClavier(self, event, INTERFACE_OPEN):
         self.INTERFACE_OPEN = INTERFACE_OPEN
+
+        if not self.INTERFACE_OPEN: # sécurité
+            self.openInterface = False 
+
 
         # Continuez avec les coordonnées locales pour détecter les boutons
         if event.key == pygame.K_p :
@@ -137,6 +147,8 @@ class SettingsAll:
 
         elif event.key == pygame.K_b : 
             self.GestionInterfaceBook()
+
+        print(self.INTERFACE_OPEN, "settings")
 
         return self.INTERFACE_OPEN
 
@@ -191,6 +203,7 @@ class SettingsAll:
 
 
     def Update(self):
+        
         self.allSettingsSurface.fill((255,255,255))
         
         # Fill button surfaces with a background color
