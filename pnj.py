@@ -16,11 +16,12 @@ class PNJ(pygame.sprite.Sprite):
         self.hitbox.center = self.rect.center
 
 class GestionPNJ(object):
-    def __init__(self, displaySurface, niveau, allpnjGroup) -> None:
+    def __init__(self, displaySurface, niveau, allpnjGroup, INTERFACE_OPEN) -> None:
         # Initialisation valeur de main
         self.displaySurface = displaySurface        
         self.allPNJ = allpnjGroup
         self.niveau = niveau
+        self.INTERFACE_OPEN = INTERFACE_OPEN
 
         # Initialisation value de base
         self.npc_screen_pos = [0,0]
@@ -73,21 +74,29 @@ class GestionPNJ(object):
                 return True
             return False
 
-    def update(self, playerPos):
+    def update(self, playerPos, INTERFACE_OPEN):
+        self.INTERFACE_OPEN = INTERFACE_OPEN
+
         check = self.isClose(playerPos)
         if check: 
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_e] and not self.openInterface:
+            if keys[pygame.K_e] and not self.openInterface and not self.INTERFACE_OPEN:
                 self.openInterface = True
+                self.INTERFACE_OPEN = True
                 self.Interface = GestionInterfacePNJ(self)
 
             if keys[pygame.K_ESCAPE] and self.openInterface:
                 self.openInterface = False
+                self.INTERFACE_OPEN = False
+
         else:
             self.openInterface = False
+            self.INTERFACE_OPEN = False
 
         if self.openInterface:
             self.Interface.Update()
+        
+        return self.INTERFACE_OPEN
 
 class GestionInterfacePNJ(object):
     def __init__(self, gestionnaire):
@@ -182,6 +191,7 @@ class GestionInterfacePNJ(object):
 
     def CloseInterface(self):
         self.gestionnaire.openInterface = False
+        self.gestionnaire.INTERFACE_OPEN = False
 
     def Update(self):
         # Dessiner le fond transparent
