@@ -15,6 +15,8 @@ class PNJ(pygame.sprite.Sprite):
         # Centrer la hitbox par rapport à l'image
         self.hitbox.center = self.rect.center
 
+        self.discussion = False
+
 class GestionPNJ(object):
     def __init__(self, displaySurface, niveau, allpnjGroup, INTERFACE_OPEN) -> None:
         # Initialisation valeur de main
@@ -36,11 +38,22 @@ class GestionPNJ(object):
         self.openInterface = False
         
         # stockage des valeurs du pnj actuel
+        self.pnjObj = None
         self.pnjActuel = None
         self.coordsPNJActuel = None
         self.interface = False
 
         self.check = False
+
+        self.allDialogues = self.loadAllDialogues()
+    
+    def Vu(self):
+        self.pnjObj.discussion = True
+
+    def loadAllDialogues(self):
+        with open("Dialogues.json", 'r') as file:
+            data = json.load(file)
+            return data
 
     def isClose(self, playerPos):
 
@@ -58,6 +71,7 @@ class GestionPNJ(object):
             self.npc_screen_pos = [coordPNJ[0] * CASEMAP - self.camera_offset[0], coordPNJ[1]*CASEMAP - self.camera_offset[1]]
 
             if distance <= self.distanceMax:
+                self.pnjObj = pnjObject
                 self.pnjActuel = pnjActuel
                 self.coordsPNJActuel = coordPNJ
                 # Dessiner la boîte
@@ -94,10 +108,7 @@ class GestionPNJ(object):
 
         return self.INTERFACE_OPEN
 
-
-        
-
-    def update(self, playerPos, INTERFACE_OPEN):
+    def update(self, playerPos, INTERFACE_OPEN, event):
         self.INTERFACE_OPEN = INTERFACE_OPEN
 
         if not self.INTERFACE_OPEN: # sécurité
@@ -110,9 +121,8 @@ class GestionPNJ(object):
                 self.INTERFACE_OPEN = False 
 
         if self.openInterface:
-            self.Interface.Update()
+            self.Interface.Update(event)
 
-        print(self.INTERFACE_OPEN, "dialogues")
 
         return self.INTERFACE_OPEN
         
@@ -143,16 +153,44 @@ class GestionInterfacePNJ(object):
         self.pnj_position = (100, 100)  # Position du PNJ (à gauche)
 
         # Texte pour le PNJ
-        self.pnj_text = "Bonjour, comment vas-tu ? Je suis très content de te voir ici ! Nous avons beaucoup à discuter, il y a plein de choses à faire ici !"
+        self.pnj_text = None
 
         # Variables pour l'effet de texte
         self.pnj_displayed_text = ""  # Texte affiché du PNJ
         self.pnj_index = 0  # Index pour le texte du PNJ
+        self.compteurDialogue = 1
+        self.nombreDialogue = len(self.gestionnaire.allDialogues[f"Niveau{self.gestionnaire.niveau}"][self.gestionnaire.pnjActuel]["Principal"]) if not self.gestionnaire.pnjObj.discussion else len(self.gestionnaire.allDialogues[f"Niveau{self.gestionnaire.niveau}"][self.gestionnaire.pnjActuel]["Alternatif"])
 
-        # elemeny gestion texte : 
-        nbDialogues = 3 # get nb dialogues json file
+        self.last_click_time = 0
+        self.click_delay = 500    
+
 
         self.loadPNG()
+        self.loadText()
+
+
+
+    def loadText(self):
+        self.pnj_displayed_text = ""
+        self.pnj_index = 0
+
+        print(self.gestionnaire.pnjObj.discussion, "on a blablaa")
+
+        if not self.gestionnaire.pnjObj.discussion:
+            if self.compteurDialogue <= self.nombreDialogue:
+                self.pnj_text = self.gestionnaire.allDialogues[f"Niveau{self.gestionnaire.niveau}"][self.gestionnaire.pnjActuel]["Principal"][f"Dialogue{self.compteurDialogue}"]
+                self.compteurDialogue += 1
+                print(self.pnj_text)
+            else:
+                self.gestionnaire.Vu()
+                self.CloseInterface()
+        else:
+            if self.compteurDialogue <= self.nombreDialogue:
+                self.pnj_text = self.gestionnaire.allDialogues[f"Niveau{self.gestionnaire.niveau}"][self.gestionnaire.pnjActuel]["Alternatif"][f"Dialogue{self.compteurDialogue}"]
+                self.compteurDialogue += 1
+                print(self.pnj_text)
+            else:
+                self.CloseInterface()
 
 
     def loadPNG(self):
@@ -178,6 +216,13 @@ class GestionInterfacePNJ(object):
         self.interfaceSurface.blit(pnjName, (200, 400))
 
         # load btn skip / lancer
+        self.surfaceBtnSkip = pygame.Surface((100,50))
+        self.btnRectSkip = pygame.Rect(100,100,100,50)
+        self.surfaceBtnSkip.fill((255,255,255))
+        self.textS = "Suivant"
+        self.textSkip = self.font2.render(self.textS, True, (240,240,240))
+        self.surfaceBtnSkip.blit(self.textSkip, (0,0))
+        self.interfaceSurface.blit(self.surfaceBtnSkip, (self.btnRectSkip.x, self.btnRectSkip.y))
 
         # bloc gestion texte 
         if self.pnj_index < len(self.pnj_text):
@@ -218,7 +263,8 @@ class GestionInterfacePNJ(object):
         self.gestionnaire.openInterface = False
         self.gestionnaire.INTERFACE_OPEN = False
 
-    def Update(self):
+
+    def Update(self, event):
         # Dessiner le fond transparent
         self.displaySurface.blit(self.backgroundSurface, (0, 0))
 
@@ -230,6 +276,17 @@ class GestionInterfacePNJ(object):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_ESCAPE]:  # Fermer avec ESC
             self.CloseInterface()
+
+        # Vérifie si l'événement est un clic de souris
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button ==1:
+            current_time = pygame.time.get_ticks()
+            if current_time - self.last_click_time > self.click_delay:
+                self.last_click_time = current_time
+                if self.interfaceSurface.get_frect(topleft =(0,0)).collidepoint(event.pos):
+                    self.loadText()
+                    self.BuildInterface()
+
+
 
 
 

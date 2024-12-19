@@ -124,8 +124,6 @@ class SettingsAll:
         elif self.ButtonRectBook.collidepoint(local_pos): 
             self.GestionInterfaceBook()
 
-        print(self.INTERFACE_OPEN, "settings")
-
         return self.INTERFACE_OPEN
     
     def OpenInterfaceElementClavier(self, event, INTERFACE_OPEN):
@@ -148,8 +146,6 @@ class SettingsAll:
         elif event.key == pygame.K_b : 
             self.GestionInterfaceBook()
 
-        print(self.INTERFACE_OPEN, "settings")
-
         return self.INTERFACE_OPEN
 
     def GestionInterfaceSettings(self):
@@ -157,7 +153,6 @@ class SettingsAll:
             self.InterfaceOpen = True
             self.INTERFACE_OPEN = True
             self.interfaceElement = SettingsInterface(self)
-            print("Wheel button clicked!")
         
         elif self.InterfaceOpen:
             self.InterfaceOpen = False
@@ -169,7 +164,6 @@ class SettingsAll:
             self.InterfaceOpen = True
             self.INTERFACE_OPEN = True
             self.interfaceElement = SoudInterface(self)
-            print("Sound button clicked!")
         
         elif self.InterfaceOpen:
             self.InterfaceOpen = False
@@ -180,7 +174,6 @@ class SettingsAll:
             self.InterfaceOpen = True
             self.INTERFACE_OPEN = True
             self.interfaceElement = BundleInterface(self)
-            print("Bundle button clicked!")
         
         elif self.InterfaceOpen:
             self.InterfaceOpen = False
@@ -191,7 +184,6 @@ class SettingsAll:
             self.InterfaceOpen = True
             self.INTERFACE_OPEN = True
             self.interfaceElement = BookInterface(self)
-            print("Book button clicked!")
         
         elif self.InterfaceOpen:
             self.InterfaceOpen = False
