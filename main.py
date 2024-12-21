@@ -135,7 +135,6 @@ class Game(object):
                     self.INTERFACE_OPEN = self.settingsAll.OpenInterfaceElementClic(event, self.INTERFACE_OPEN)
                 
                 if event.type == pygame.KEYDOWN:
-                    print(self.INTERFACE_OPEN)
                     if event.key == pygame.K_p or event.key == pygame.K_v or event.key == pygame.K_i or event.key == pygame.K_b:
                         self.INTERFACE_OPEN = self.settingsAll.OpenInterfaceElementClavier(event, self.INTERFACE_OPEN)
                     
@@ -160,7 +159,7 @@ class Game(object):
             self.displaySurface.blit(self.minimap_surface, (10, WINDOW_HEIGHT-160))
             self.displaySurface.blit(self.allSettings_surface, COORS_BOX_ALL_SETTINGS)
 
-            self.INTERFACE_OPEN = self.pnj.update(self.player.rect.center, self.INTERFACE_OPEN)
+            self.INTERFACE_OPEN = self.pnj.update(self.player.rect.center, self.INTERFACE_OPEN, event)
 
             if self.INTERFACE_OPEN is None: # vérification : sécurité
                 self.INTERFACE_OPEN = False
