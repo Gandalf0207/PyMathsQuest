@@ -168,8 +168,6 @@ class GestionInterfacePNJ(object):
         self.loadPNG()
         self.loadText()
 
-
-
     def loadText(self):
         self.pnj_displayed_text = ""
         self.pnj_index = 0
@@ -192,12 +190,9 @@ class GestionInterfacePNJ(object):
             else:
                 self.CloseInterface()
 
-
     def loadPNG(self):
         self.pnjImage = pygame.image.load(join("Images", "PNJ", "Discussion", f"Grand{self.gestionnaire.pnjActuel}.png"))
         self.playerImage = pygame.image.load(join("Images", "Player", "Discussion", "GrandPlayer.png"))
-
-
 
     def BuildInterface(self):
         self.interfaceSurface.fill((0, 0, 0, 0))  # Réinitialiser la surface avec une transparence complète
@@ -217,10 +212,10 @@ class GestionInterfacePNJ(object):
 
         # load btn skip / lancer
         self.surfaceBtnSkip = pygame.Surface((100,50))
-        self.btnRectSkip = pygame.Rect(100,100,100,50)
+        self.btnRectSkip = pygame.Rect(750,600,100,50)
         self.surfaceBtnSkip.fill((255,255,255))
         self.textS = "Suivant"
-        self.textSkip = self.font2.render(self.textS, True, (240,240,240))
+        self.textSkip = self.font2.render(self.textS, True, (10,10,10))
         self.surfaceBtnSkip.blit(self.textSkip, (0,0))
         self.interfaceSurface.blit(self.surfaceBtnSkip, (self.btnRectSkip.x, self.btnRectSkip.y))
 
@@ -263,7 +258,6 @@ class GestionInterfacePNJ(object):
         self.gestionnaire.openInterface = False
         self.gestionnaire.INTERFACE_OPEN = False
 
-
     def Update(self, event):
         # Dessiner le fond transparent
         self.displaySurface.blit(self.backgroundSurface, (0, 0))
@@ -282,9 +276,12 @@ class GestionInterfacePNJ(object):
             current_time = pygame.time.get_ticks()
             if current_time - self.last_click_time > self.click_delay:
                 self.last_click_time = current_time
-                if self.interfaceSurface.get_frect(topleft =(0,0)).collidepoint(event.pos):
+
+                # Vérifiez si le clic est dans le rectangle du bouton
+                if self.btnRectSkip.collidepoint(event.pos):
                     self.loadText()
                     self.BuildInterface()
+
 
 
 
