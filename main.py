@@ -3,6 +3,7 @@ from groups import *
 from loadMap import *
 from hotbar import *
 from pnj import *
+from creationDialogues import *
 
 
 class Game(object):
@@ -109,6 +110,7 @@ class Game(object):
 
 
     def run(self):
+        
         # Affichage initial de l'écran de chargement
         threading.Thread(target=self.SetupAllMap).start()
         # self.checkLoadingDone = True
@@ -175,8 +177,12 @@ class Game(object):
 
 
 if __name__ == "__main__":
+    
+    creationDialogues = createDialogues()
+
     game = Game()
     game.run()
+
 
 
 
