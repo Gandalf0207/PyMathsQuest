@@ -118,5 +118,5 @@ Dialogues = {
 
 
 def createDialogues():
-    with open("Dialogues.json", "w") as file:
+    with open(join("Sources","Ressources","Dialogues.json"), "w") as file:
         json.dump(Dialogues, file, indent=4)

@@ -1,9 +1,9 @@
 from settings import *
-from groups import *
-from loadMap import *
-from hotbar import *
-from pnj import *
-from creationDialogues import *
+from Sources.Elements.groups import *
+from Sources.Map.loadMap import *
+from Sources.Elements.hotbar import *
+from Sources.Personnages.pnj import *
+from Sources.Personnages.creationDialogues import *
 
 
 class Game(object):

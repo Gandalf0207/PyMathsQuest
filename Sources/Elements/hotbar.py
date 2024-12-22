@@ -1,5 +1,5 @@
 from settings import *
-from interface import *
+from Sources.Elements.interface import *
 
 
 class MiniMap:

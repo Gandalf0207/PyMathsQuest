@@ -57,7 +57,7 @@ class GestionNiveauMap(object):
     
     def BaseJson(self, data :dict) -> None:
         """Initialisation du fichier Json avec l'arbo du fichier contenu dans la variable data de chaque niveau"""
-        with open("AllMapValue.json", "w") as valueFileJson: # Ouvrir le fichier en mode écriture
+        with open(join("Sources","Ressources","AllMapValue.json"), "w") as valueFileJson: # Ouvrir le fichier en mode écriture
             json.dump(data, valueFileJson, indent=4) # charger la configuration pour le niveau (on ajotue le dictionnaire data au fichier json)
 
     def PlacementPNJ(self, coordPNJ :list) -> None:
@@ -75,7 +75,7 @@ class GestionNiveauMap(object):
     def AjoutJsonMapValue(self, value :list, index1 :str, index2 :str) -> None:
         """Chargement des données JSON aux index indiqués pour pouvoir les stocker"""
         try: # Si le chargement est possible
-            with open("AllMapValue.json", "r") as f: # ouvrir le fichier json en mode lecture
+            with open(join("Sources","Ressources","AllMapValue.json"), "r") as f: # ouvrir le fichier json en mode lecture
                 donnees = json.load(f) # chargement des données
         except (FileNotFoundError, json.JSONDecodeError): # Sinon relève une erreur et arrêt du programme
             assert ValueError("Error load JSON file") # stop du programme avec l'assert (programmation défensive)
@@ -83,13 +83,13 @@ class GestionNiveauMap(object):
         donnees[f"{index1}"][f"{index2}"] = value # Ajout valeurs aux indexs donnés
 
         # Sauvegarde des données dans le fichier JSON avec une indentation pour un format "lisible"
-        with open("AllMapValue.json", "w") as f: # ouverture du fichier json en mode écriture
+        with open(join("Sources","Ressources","AllMapValue.json"), "w") as f: # ouverture du fichier json en mode écriture
             json.dump(donnees, f, indent=4) # chargement dans le fichier json de l'élément données (possédent les index de position et les valeurs à stocker)
 
     def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
         """Récupération des valeur stockées dans le fichier json pour les renvoyer quand nécéssaire à l'aide des indices données pour les récupérer"""
         # récupération des valeurs stocké dans le json
-        with open("AllMapValue.json", "r") as f: # ouvrir le fichier json en mode e lecture
+        with open(join("Sources","Ressources","AllMapValue.json"), "r") as f: # ouvrir le fichier json en mode e lecture
             loadElementJson = json.load(f) # chargement des valeurs
         return loadElementJson[index1].get(index2, None) # on retourne les valeurs aux indices de liste quisont données
 
@@ -183,7 +183,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         Go = True
         while Go: # tant que go = True on check 
             indice = randint(0, self.largeur-1) # génération aléatoire d'un indice
-
+            print(listeCoordsElement)
             # Si true, on arreter la boucle
             if self.__CheckPos__(listeCoordsElement[indice]): # check si à les coords de la liste  l'indice respect les conditions pour poser l'element
                 Go = False # Arret de la boucle

@@ -1,9 +1,9 @@
 from settings import *
-from CreationMap import *
-from sprites import *
-from player import *
-from groups import *
-from pnj import *
+from Sources.Map.creationMap import *
+from Sources.Elements.sprites import *
+from Sources.Personnages.player import *
+from Sources.Elements.groups import *
+from Sources.Personnages.pnj import *
 
 
 
@@ -17,7 +17,7 @@ class LoadMapPlaineRiviere(): # nv 0
     def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
         """Récupération des valeur stockées dans le fichier json pour les renvoyer quand nécéssaire à l'aide des indices données pour les récupérer"""
         
-        with open("AllMapValue.json", "r") as f: # ouvrir le fichier json en mode e lecture
+        with open(join("Sources","Ressources","AllMapValue.json"), "r") as f: # ouvrir le fichier json en mode e lecture
             loadElementJson = json.load(f) # chargement des valeurs
         return loadElementJson[index1].get(index2, None) # on retourne les valeurs aux indices de liste quisont données
 

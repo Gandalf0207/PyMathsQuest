@@ -1,6 +1,6 @@
 from settings import *
 from ScriptAlgo import astar
-from interface import *
+from Sources.Elements.interface import *
 
 class PNJ(pygame.sprite.Sprite):
     def __init__(self, pos, pathIMAGE,numpnj,  groups) -> None:
