@@ -110,5 +110,8 @@ Dialogues = {
 
 
 def createDialogues():
+    """Méthode de création du fichier de dialogue
+    Input / Output : None"""
+
     with open(join("Sources","Ressources","Dialogues.json"), "w") as file:
-        json.dump(Dialogues, file, indent=4)
+        json.dump(Dialogues, file, indent=4) # écriture du dico dans un fichier json
