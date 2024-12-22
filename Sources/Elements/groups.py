@@ -1,14 +1,19 @@
 from settings import *
 
 class AllSprites(pygame.sprite.Group):
-    def __init__(self):
+    def __init__(self) -> None:
+        """Méhode d'initialisation d'un élement sans colision sur la map. Input / Output : None"""
+
         super().__init__()
-        self.display_surface = pygame.display.get_surface()
+        self.display_surface = pygame.display.get_surface() # surface générale
         self.offset = pygame.Vector2(0, 0)
         self.map_width = LONGUEUR * CASEMAP
-        self.map_height = LARGEUR * CASEMAP + 160 #  +160 = hauteur hotbar
+        self.map_height = LARGEUR * CASEMAP + 160 #  +160 = hotbar y
 
-    def draw(self, target_pos):
+
+    def draw(self, target_pos: tuple) -> None:
+        """Méthode pour dessiner tout les éléments autour de la cible (lock cam). Input : tuple coords target, Output : None"""
+
         # Calcul de l'offset pour centrer la caméra sur le joueur
         camera_x = -(target_pos[0] - WINDOW_WIDTH / 2)
         camera_y = -(target_pos[1] - WINDOW_HEIGHT / 2)
@@ -17,6 +22,7 @@ class AllSprites(pygame.sprite.Group):
         camera_x = min(0, max(camera_x, WINDOW_WIDTH - self.map_width))
         camera_y = min(0, max(camera_y, WINDOW_HEIGHT - self.map_height))
 
+        # Affection offset
         self.offset.x = camera_x
         self.offset.y = camera_y
 
