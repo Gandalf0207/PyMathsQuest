@@ -4,94 +4,119 @@ from Sources.Elements.interface import *
 
 class MiniMap:
 
-    def __init__(self, mapBase, mapData, screen):
-        self.mapBase = mapBase
-        self.mapData = mapData
+    def __init__(self, mapBase : list, mapData : list, screen: any) -> None:
+        """Méthode d'initialisation pour la création de la minimap. 
+        Input : list *2 = map du niveau, screen = (element pygame); Output : None"""
+
+        # Initialisation 
+        self.mapBase = mapBase # sol
+        self.mapData = mapData # obstacle
         self.MiniMapSurface = screen
+
+        # Création elements
         self.static_surface = pygame.Surface((LONGUEUR * CELL_SIZE, LARGEUR * CELL_SIZE))
         self.player_position = None
         self.ratioImage = CELL_SIZE / CASEMAP / 2
 
         self.LoadImagesMiniMap()
-        self.GenerateStaticMiniMap()
+        self.GenerateStaticMiniMap() # minimap de base
 
-    def LoadImagesMiniMap(self):
-        # Chargement des images pour les différents types de terrain
+
+    def LoadImagesMiniMap(self) -> None:
+        """Méthode de chargement des images pour la minimap. Input / Output : None"""
+
         self.carre1 = pygame.image.load(join("Images", "MiniMap", "Carre1.png")).convert_alpha()
-        self.carre2 = pygame.image.load(join("Images", "MiniMap", "Carre2.png")).convert_alpha()
         self.carre3 = pygame.image.load(join("Images", "MiniMap", "Carre3.png")).convert_alpha()
-        self.carre4 = pygame.image.load(join("Images", "MiniMap", "Carre4.png")).convert_alpha()
-        self.carre5 = pygame.image.load(join("Images", "MiniMap", "Carre5.png")).convert_alpha()
         self.carre6 = pygame.image.load(join("Images", "MiniMap", "Carre6.png")).convert_alpha()
         self.carre7 = pygame.image.load(join("Images", "MiniMap", "Carre8.png")).convert_alpha()
 
-    def GenerateStaticMiniMap(self):
-        """
-        Génère une fois pour toutes la minimap statique avec le terrain et les objets.
-        """
+
+    def GenerateStaticMiniMap(self) -> None:
+        """Méthode : Génère une fois pour toute la minimap 
+        statique avec le terrain et les objets. Input / Output : None"""
+
         listpnj = []
         for y, row in enumerate(self.mapBase):
             for x, cell in enumerate(row):
                 pos = (x * CELL_SIZE, y * CELL_SIZE)  # Coordonnées des cellules
                 if self.mapData[y][x] == "P":
                     listpnj.append(pos)
-                elif cell == "#":
+                elif cell == "#": # rivière
                     self.static_surface.blit(self.carre3, pos)
-                elif cell == "B":
+                elif cell == "B": # border
                     self.static_surface.blit(self.carre7, pos)
-                else:
+                else: # reste = herbe 
                     self.static_surface.blit(self.carre1, pos)
         
+        # placemnt des pnj
         for pos in listpnj:
             self.static_surface.blit(self.carre6,pos)
 
-    def Update(self, player_pos):
-        """
-        Met à jour uniquement le joueur sur la minimap.
-        """
+
+    def Update(self, player_pos: tuple) -> None:
+        """Méthode : Met à jour uniquement le joueur sur la minimap. 
+        Input : tutple (position du joueur), Output : None """
+
         # Copier la surface statique dans la surface d'affichage
         self.MiniMapSurface.blit(self.static_surface, (0,0))
 
         # Dessiner le joueur (en rouge par exemple)
         player_x, player_y = player_pos
-        player_rect = pygame.Rect(
-            player_x * CELL_SIZE * self.ratioImage, player_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE*2
-        )
+        player_rect = pygame.Rect(player_x * CELL_SIZE * self.ratioImage, player_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE*2)
         pygame.draw.rect(self.MiniMapSurface, (255, 21, 4), player_rect)
 
 
+
+
 class SettingsAll:
-    def __init__(self, screen, INTERFACE_OPEN):
+
+    def __init__(self, screen : any, INTERFACE_OPEN : bool) -> None:
+        """Méthode initialisation de la box d'accès à tout les settings et utilitaires (bundle, settings, sound, book).
+        Input : screen = (element pygame), boolean = check interface global """
+
+        # Initialisation
         self.allSettingsSurface = screen
-        self.INTERFACE_OPEN = INTERFACE_OPEN    
+        self.INTERFACE_OPEN = INTERFACE_OPEN
+
+        # Création éléments
+        self.InterfaceOpen = False # bool de vérification
+        self.interfaceElement = None # object
+
+        # Chargement images + éléments button pygame
         self.loadImage()
         self.ButtonSize()
-        self.interfaceElement = None
-        self.InterfaceOpen = False
+        
 
-    def ButtonSize(self):
-        # Dimensions des boutons (100x100) et positionnement précis
+    def ButtonSize(self) -> None:
+        """Méthode : Création des spécifications 
+        des buttons pygame. Input / Output : None"""
+
+        # Dimensions des boutons (100x100)
         self.surfaceButtonWheel = pygame.Surface((100, 100))
         self.surfaceButtonSound = pygame.Surface((100, 100))
         self.surfaceButtonBundle = pygame.Surface((100, 100))
         self.surfaceButtonBook = pygame.Surface((100, 100))
 
-        # Positions des boutons, espacés de 10 pixels, centrés verticalement
+        # Positions des boutons, espacés de 6 pixels, centrés verticalement
         self.ButtonRectWheel =pygame.Rect(0, 25, 100, 100) 
         self.ButtonRectSound = pygame.Rect(106, 25, 100, 100)
         self.ButtonRectBundle = pygame.Rect(212, 25, 100, 100)
         self.ButtonRectBook = pygame.Rect(318, 25, 100, 100)
         
 
+    def loadImage(self) -> None:
+        """Méthode : Chargement des texture des 
+        4 button pygame. Input / Output : None"""
 
-    def loadImage(self):
-        # Load images for the buttons
         self.wheel = pygame.image.load(join("Images", "HotBar", "AllSettings", "Wheel.png")).convert_alpha()
         self.sound = pygame.image.load(join("Images", "HotBar", "AllSettings", "Sound.png")).convert_alpha()
         self.bundle = pygame.image.load(join("Images", "HotBar", "AllSettings", "Bundle.png")).convert_alpha()
         self.book = pygame.image.load(join("Images", "HotBar", "AllSettings", "Book.png")).convert_alpha()
 
-    def OpenInterfaceElementClic(self, event, INTERFACE_OPEN):
+
+    def OpenInterfaceElementClic(self, event : any, INTERFACE_OPEN : bool) -> bool:
+        """Méthode : Appel des méthode de gestion des interfaces par clic souris.
+        Input : event = (element pygame), bool = checl interface global; Output : bool"""
 
         self.INTERFACE_OPEN = INTERFACE_OPEN
 
@@ -111,7 +136,7 @@ class SettingsAll:
         if not surface_rect.collidepoint(global_pos):
             return self.INTERFACE_OPEN
 
-        # Continuez avec les coordonnées locales pour détecter les boutons
+        # Si collision au clic avec la box, alors on appel la méthode de la gestion de l'interface en question
         if self.ButtonRectWheel.collidepoint(local_pos):
             self.GestionInterfaceSettings()
 
@@ -124,16 +149,19 @@ class SettingsAll:
         elif self.ButtonRectBook.collidepoint(local_pos): 
             self.GestionInterfaceBook()
 
-        return self.INTERFACE_OPEN
+        return self.INTERFACE_OPEN # mise à jour de l'interface check général
     
-    def OpenInterfaceElementClavier(self, event, INTERFACE_OPEN):
+
+    def OpenInterfaceElementClavier(self, event : any, INTERFACE_OPEN : bool) -> bool:
+        """Méthode : Appel des méthode de gestion des interfaces par touches clavier.
+        Input : event = (element pygame), bool = checl interface global; Output : bool"""
+
         self.INTERFACE_OPEN = INTERFACE_OPEN
 
         if not self.INTERFACE_OPEN: # sécurité
             self.openInterface = False 
 
-
-        # Continuez avec les coordonnées locales pour détecter les boutons
+        # appel des méthode quand touche du clavier correspondante
         if event.key == pygame.K_p :
             self.GestionInterfaceSettings()
 
@@ -146,77 +174,89 @@ class SettingsAll:
         elif event.key == pygame.K_b : 
             self.GestionInterfaceBook()
 
-        return self.INTERFACE_OPEN
+        return self.INTERFACE_OPEN # mise à jour de l'interface check général
 
-    def GestionInterfaceSettings(self):
-        if not self.INTERFACE_OPEN and not self.InterfaceOpen:
+
+    def GestionInterfaceSettings(self) -> None:
+        """Méthode de gestion spécifique interface ouverture / fermeture
+        Input / Output : None"""
+
+        if not self.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
             self.InterfaceOpen = True
             self.INTERFACE_OPEN = True
             self.interfaceElement = SettingsInterface(self)
         
-        elif self.InterfaceOpen:
+        elif self.InterfaceOpen: # fermeture interface actuel
             self.InterfaceOpen = False
             self.INTERFACE_OPEN = False
 
 
-    def GestionInterfaceSound(self):
-        if not self.INTERFACE_OPEN and not self.InterfaceOpen:
+    def GestionInterfaceSound(self) -> None:
+        """Méthode de gestion spécifique interface ouverture / fermeture
+        Input / Output : None"""
+
+        if not self.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
             self.InterfaceOpen = True
             self.INTERFACE_OPEN = True
             self.interfaceElement = SoudInterface(self)
         
-        elif self.InterfaceOpen:
+        elif self.InterfaceOpen: # fermeture interface actuel
             self.InterfaceOpen = False
             self.INTERFACE_OPEN = False
 
-    def GestionInterfaceBundle(self):
-        if not self.INTERFACE_OPEN and not self.InterfaceOpen:
+    def GestionInterfaceBundle(self) -> None:
+        """Méthode de gestion spécifique interface ouverture / fermeture
+        Input / Output : None"""
+
+        if not self.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
             self.InterfaceOpen = True
             self.INTERFACE_OPEN = True
             self.interfaceElement = BundleInterface(self)
         
-        elif self.InterfaceOpen:
+        elif self.InterfaceOpen: # fermeture interface actuel
             self.InterfaceOpen = False
             self.INTERFACE_OPEN = False
 
-    def GestionInterfaceBook(self):
-        if not self.INTERFACE_OPEN and not self.InterfaceOpen:
+    def GestionInterfaceBook(self) -> None:
+        """Méthode de gestion spécifique interface ouverture / fermeture
+        Input / Output : None"""
+
+        if not self.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
             self.InterfaceOpen = True
             self.INTERFACE_OPEN = True
             self.interfaceElement = BookInterface(self)
         
-        elif self.InterfaceOpen:
+        elif self.InterfaceOpen: # fermeture interface actuel
             self.InterfaceOpen = False
             self.INTERFACE_OPEN = False
 
 
-
-
-
-
-    def Update(self):
+    def Update(self) -> None:
+        """Méthode de mise à jout de la box settings all + interface sur ouvert.
+        Input / Output : None"""
         
+        # fond box 
         self.allSettingsSurface.fill((255,255,255))
         
-        # Fill button surfaces with a background color
-        self.surfaceButtonBook.fill((200, 200, 200))  # Light gray
-        self.surfaceButtonSound.fill((200, 200, 200))
-        self.surfaceButtonBundle.fill((200, 200, 200))
-        self.surfaceButtonWheel.fill((200, 200, 200))
+        # Remplissage couleur
+        self.surfaceButtonBook.fill((0,0,0,0))  # blanc, transparent
+        self.surfaceButtonSound.fill((0,0,0,0))
+        self.surfaceButtonBundle.fill((0,0,0,0))
+        self.surfaceButtonWheel.fill((0,0,0,0))
 
-        # Draw images on button surfaces
+        # Dessin des images sur les boutons
         self.surfaceButtonBook.blit(self.book, (0, 0))
         self.surfaceButtonSound.blit(self.sound, (0, 0))
         self.surfaceButtonBundle.blit(self.bundle, (0, 0))
         self.surfaceButtonWheel.blit(self.wheel, (0, 0))
 
-        # Draw button surfaces on the main settings surface
+        # Affichage des bouutons sur la surface allsettings
         self.allSettingsSurface.blit(self.surfaceButtonBook, (self.ButtonRectBook.x, self.ButtonRectBook.y))
         self.allSettingsSurface.blit(self.surfaceButtonSound, (self.ButtonRectSound.x, self.ButtonRectSound.y))
         self.allSettingsSurface.blit(self.surfaceButtonBundle, (self.ButtonRectBundle.x,  self.ButtonRectBundle.y))
         self.allSettingsSurface.blit(self.surfaceButtonWheel, (self.ButtonRectWheel.x, self.ButtonRectWheel.y))
 
-
+        # Si interface, alors mise à jour de l'interface
         if self.InterfaceOpen:
             self.interfaceElement.Update()
         
