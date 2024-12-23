@@ -255,6 +255,7 @@ class PNJInterface(object):
             else:
                 self.gestionnaire.Vu() # bool de check passage
                 self.CloseInterface() # fermeture interface
+                self.gestionnaire.CinematiqueBuild() # préparation au lancement cinematique
         else:
             if self.compteurDialogue <= self.nombreDialogue:
                 self.pnj_text = self.gestionnaire.allDialogues[f"Niveau{self.gestionnaire.niveau}"][self.gestionnaire.pnjActuel]["Alternatif"][f"Dialogue{self.compteurDialogue}"]

@@ -9,6 +9,7 @@ class Sprites(pygame.sprite.Sprite):
 
         # element de base
         super().__init__(groups)
+        self.pos = pos
         self.image = surf
         self.rect = self.image.get_frect(topleft = pos)
         self.ground = True # bool dessins des sprites
@@ -24,7 +25,13 @@ class CollisionSprites(pygame.sprite.Sprite):
         # element de base
         super().__init__(groups)
         self.image = surf
-        self.rect = self.image.get_frect(topleft=pos)
+        self.pos = pos
+        if typeCollision == "Arbre" :
+            self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-68))
+        elif typeCollision == "pont1":
+            self.rect = self.image.get_frect(topleft=(pos[0]-33, pos[1]))
+        else:
+            self.rect = self.image.get_frect(topleft=pos)
 
         # collision en fonction de l'élément # Créer une hitbox plus petite (réduire la largeur et la hauteur)
         if typeCollision == "BorderTop":
@@ -39,6 +46,8 @@ class CollisionSprites(pygame.sprite.Sprite):
             self.hitbox = self.rect.inflate(-70,-70)
         elif typeCollision == "banc":
             self.hitbox = self.rect.inflate(-70,-70)
+        elif typeCollision == "pont1":
+            self.hitbox = self.rect.inflate(0,0)
         else:
             self.hitbox = self.rect.inflate(-70,-140)
 
@@ -55,6 +64,7 @@ class River(pygame.sprite.Sprite):
         # Initialisation elements
         super().__init__(groups)
         self.state, self.frame_index = stateFormat, 0
+        self.pos = pos
 
         # load all images sprites
         self.LoadImages()

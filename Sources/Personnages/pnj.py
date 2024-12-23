@@ -1,5 +1,5 @@
 from settings import *
-from ScriptAlgo import astar
+from ScriptAlgo.astar import *
 from Sources.Elements.interface import *
 
 class PNJ(pygame.sprite.Sprite):
@@ -25,15 +25,16 @@ class PNJ(pygame.sprite.Sprite):
 
 
 class GestionPNJ(object):
-    def __init__(self, displaySurface : any, niveau : int, allpnjGroup : any, INTERFACE_OPEN : bool) -> None:
+    def __init__(self, displaySurface : any, niveau : int, allpnjGroup : any, INTERFACE_OPEN : bool, mapCollision : list) -> None:
         """Méthode initialisation gestion principal pnj : proche, interface discussion...
-        Input : displaySurface / allpnGroupe : pygame element, niveau : int, INTERFACE_OPEN : bool (check all interface)"""
+        Input : displaySurface / allpnGroupe : pygame element, niveau : int, INTERFACE_OPEN : bool (check all interface), mapCollision : list (check path cinématique)"""
 
         # Initialisation valeur de main
         self.displaySurface = displaySurface        
         self.allPNJ = allpnjGroup
         self.niveau = niveau
         self.INTERFACE_OPEN = INTERFACE_OPEN
+        self.map = mapCollision # obstacle pour cinématique déplacement 
 
         # Initialisation value de base
         self.npc_screen_pos = [0,0]
@@ -56,9 +57,41 @@ class GestionPNJ(object):
         # proximité pnj player
         self.check = False
 
+        # infos cinématique
+        self.cinematique = False
+        self.cinematiqueObject = None
+
         # chagement dictionnaires des dialogues 
         self.allDialogues = self.loadAllDialogues()
-    
+
+    def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
+        """Récupération des valeur stockées dans le fichier json pour les renvoyer quand nécéssaire à l'aide des indices données pour les récupérer"""
+        # récupération des valeurs stocké dans le json
+        with open(join("Sources","Ressources","AllMapValue.json"), "r") as f: # ouvrir le fichier json en mode e lecture
+            loadElementJson = json.load(f) # chargement des valeurs
+        return loadElementJson[index1].get(index2, None) # on retourne les valeurs aux indices de liste quisont données
+
+
+    def CinematiqueBuild(self) -> None:
+        """Méthode construction cinématique object. Lancement au prochain update.
+        Input / Ouput : None"""
+
+        self.cinematique = True
+        
+        if self.niveau ==0:
+            goal = self.LoadJsonMapValue("coordsMapObject","ArbreSpecial Coords")
+            pathAcces = ["-", "A", "P", "S"]
+
+        
+        self.cinematiqueObject = CinematiquePNJ(self.coordsPNJActuel, goal, self.pnjObj, self.map, pathAcces)
+
+    def EndCinematique(self) -> None:
+        """Met fin à la cinématique.
+        Input / Output : None"""
+
+        self.cinematique = False
+        self.cinematiqueObject = None
+
 
     def Vu(self) -> None:
         """Méthode : modification état de discussion pnj (Principale -> Aternatif)
@@ -168,19 +201,91 @@ class GestionPNJ(object):
         if self.openInterface: # update de l'interface s'il existe
             self.Interface.Update(event)
 
-        # retour state interface global
-        return self.INTERFACE_OPEN
+        # retour state interface global + etat cinématique
+        return self.INTERFACE_OPEN, self.cinematique, self.cinematiqueObject
         
+class CinematiquePNJ(object):
+    def __init__(self, pos, goal, pnjObject, mapCalcul, pathAccessible) -> None:
+        # Initialisation des valeurs
+        self.pnjObject = pnjObject
+        self.pos = self.pnjObject.pos  # Position sur la double liste
+        self.goal = goal
+        print(self.goal)
+        self.mapCalcul = mapCalcul
+        self.pathAccessible = pathAccessible
 
-class DeplacementPNJ(object):
-    def __init__(self):
-        pass
+        # Récupération des attributs graphiques du PNJ
+        self.rect = self.pnjObject.rect  # Utiliser la hitbox comme référence principale
+        self.hitbox = self.pnjObject.hitbox  # Synchroniser avec la hitbox du PNJ
+        self.speed = 300
+
+        # Calcul et définition du chemin
+        self.GetPath()
+        self.SetPath()
 
     def GetPath(self):
-        pass
+        """Calcul du chemin à l'aide de l'algorithme A*"""
+        self.pathDeplacement = Astar(self.pos, self.goal, self.mapCalcul, self.pathAccessible).a_star()
+        self.pathDeplacement = [(x * CASEMAP, y * CASEMAP) for x, y in self.pathDeplacement]  # Conversion en coordonnées pygame
+        print(self.pathDeplacement)
 
-    def Move(self):
-        pass
+    def SetPath(self):
+        """Définit un nouveau chemin pour le PNJ"""
+        if self.pathDeplacement:  # Vérifier que le chemin n'est pas vide
+            self.pointSuivant = self.pathDeplacement.pop(0)  # Prendre le premier point comme cible
+        else:
+            self.pointSuivant = None  # Pas de chemin à suivre
+    
+    def Move(self, dt: int) -> None:
+        """Déplace le PNJ vers le point cible selon les coordonnées données par la cinématique.
+        Input : dt : int (delta time)
+        Output : None
+        """
+        if self.pointSuivant:  # Vérifie si un point cible existe
+            # Extraire les coordonnées cibles
+            target_x, target_y = self.pointSuivant
 
-    def Update(self):
-        pass
+            # Calcul des différences entre la position actuelle et la cible
+            dx = target_x - self.hitbox.centerx
+            dy = target_y - self.hitbox.centery
+
+            # Distance totale au point cible
+            distance = sqrt(dx**2 + dy**2)
+
+            if distance == 0:  # Si le PNJ est déjà sur la cible
+                if self.pathDeplacement:  # Passer au point suivant si disponible
+                    self.pointSuivant = self.pathDeplacement.pop(0)
+                else:
+                    self.pointSuivant = None  # Fin du chemin
+                return
+
+            # Si la distance restante est inférieure au déplacement possible
+            if distance <= self.speed * dt:
+                # Atteindre directement la cible
+                self.hitbox.center = (target_x, target_y)
+                self.rect.center = self.hitbox.center  # Synchroniser la rect
+                if self.pathDeplacement:  # Passer au prochain point
+                    self.pointSuivant = self.pathDeplacement.pop(0)
+                else:
+                    self.pointSuivant = None  # Fin du chemin
+            else:
+                # Calcul du déplacement proportionnel à la direction
+                move_x = (self.speed * dt * dx) / distance
+                move_y = (self.speed * dt * dy) / distance
+
+                # Appliquer le déplacement
+                self.hitbox.centerx += move_x
+                self.hitbox.centery += move_y
+                self.rect.center = self.hitbox.center  # Synchroniser la rect
+
+    def Replacement(self):
+        self.rect.center = (self.pnjObject.pos[0]*CASEMAP, self.pnjObject.pos[1]*CASEMAP)
+        self.hitbox.center = self.rect.center
+
+    def Update(self, dt):
+        self.Move(dt)
+        print(self.pathDeplacement)
+        if self.pathDeplacement != []:
+            return True, False
+        else:
+            return False, True
