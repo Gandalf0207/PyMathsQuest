@@ -141,7 +141,7 @@ class Game(object):
                         self.INTERFACE_OPEN = self.settingsAll.OpenInterfaceElementClavier(event, self.INTERFACE_OPEN)
                     
                     if event.key == pygame.K_e:
-                        self.INTERFACE_OPEN = self.pnj.OpenInterfaceElementClavier(event, self.INTERFACE_OPEN)
+                        self.INTERFACE_OPEN = self.pnj.OpenInterfaceElementClavier(self.INTERFACE_OPEN)
 
                     if event.key == pygame.K_ESCAPE and self.INTERFACE_OPEN: # Close général interface build
                         self.INTERFACE_OPEN = False
