@@ -239,10 +239,10 @@ class SettingsAll:
         self.allSettingsSurface.fill((255,255,255))
         
         # Remplissage couleur
-        self.surfaceButtonBook.fill((0,0,0,0))  # blanc, transparent
-        self.surfaceButtonSound.fill((0,0,0,0))
-        self.surfaceButtonBundle.fill((0,0,0,0))
-        self.surfaceButtonWheel.fill((0,0,0,0))
+        self.surfaceButtonBook.fill((50,50,50))  # blanc
+        self.surfaceButtonSound.fill((50,50,50))
+        self.surfaceButtonBundle.fill((50,50,50))
+        self.surfaceButtonWheel.fill((50,50,50))
 
         # Dessin des images sur les boutons
         self.surfaceButtonBook.blit(self.book, (0, 0))

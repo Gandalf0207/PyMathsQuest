@@ -96,9 +96,9 @@ class River(pygame.sprite.Sprite):
                         self.frames[state].append(surf)
 
 
-    def update(self) -> None:
+    def update(self, dt : int) -> None:
         """Méthode d'update des sprite de la rivière pour l'animation.
-        Input / Output : None"""
+        Input : dt : int,  Output : None"""
 
         # Animation des frames
         current_time = pygame.time.get_ticks()
