@@ -1,28 +1,40 @@
 from settings import *
-from CreationMap import *
-from sprites import *
-from player import *
-from groups import *
-from pnj import *
+from Sources.Map.creationMap import *
+from Sources.Elements.sprites import *
+from Sources.Personnages.player import *
+from Sources.Elements.groups import *
+from Sources.Personnages.pnj import *
 
 
 
 class LoadMapPlaineRiviere(): # nv 0
-    def __init__(self, niveau, allSprites, collisionSprites, allpnj) -> None:
+    def __init__(self, niveau : int, allSprites : any, collisionSprites : any, allpnj : any) -> None:
+        """Méthode initialisation chargement de la map du niveau plaine et rivière. 
+        Input : niveau : int, allSprites / collisionsSprites / allpnj : element pygame; Output : None"""
+    
+        # Initialisation des valeurs
         self.niveau = niveau
+
+        # class des éléments pygame
         self.allPNJ = allpnj
         self.allSprites = allSprites
         self.collisionSprites = collisionSprites
 
+
     def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
-        """Récupération des valeur stockées dans le fichier json pour les renvoyer quand nécéssaire à l'aide des indices données pour les récupérer"""
+        """Récupération des valeur stockées dans le fichier json pour les renvoyer quand nécéssaire 
+        à l'aide des indices données.
+        Input : index1 / index2 = str   , Output : list"""
         
-        with open("AllMapValue.json", "r") as f: # ouvrir le fichier json en mode e lecture
+        with open(join("Sources","Ressources","AllMapValue.json"), "r") as f: # ouverture lecture
             loadElementJson = json.load(f) # chargement des valeurs
-        return loadElementJson[index1].get(index2, None) # on retourne les valeurs aux indices de liste quisont données
+        return loadElementJson[index1].get(index2, None) # retour valeurs
 
 
-    def LoadImages(self):
+    def LoadImages(self) -> None:
+        """Méthode de chargement de toutes les images pour la map 
+        Input / Output : None """
+
         self.grass = pygame.image.load(join("Images", "Sol", "Grass", "Grass.png")).convert_alpha()
         self.flowers = pygame.image.load(join("Images", "Sol", "Flower", "Flower.png")).convert_alpha()
         self.tree = pygame.image.load(join("Images", "Obstacle", "Arbre.png")).convert_alpha()
@@ -37,9 +49,14 @@ class LoadMapPlaineRiviere(): # nv 0
         self.banc = pygame.image.load(join("Images", "Obstacle", "Spawn", "banc.png"))
      
 
-    def Setup(self):
+    def Setup(self) -> None:
+        """Méthode de build de tout les éléments sprites de la map jeu.
+        Input / Output : None"""
+
+        # création de la map du niveau (sectionnée en deux)
         self.map, self.mapBase = NiveauPlaineRiviere(LONGUEUR, LARGEUR, 1000,200,300).Update()
 
+        # parcours et création de chaque sprites
         for ordonnees in range(len(self.mapBase)):
             for abscisses in range(len(self.mapBase[ordonnees])):
                 pos = (abscisses * CASEMAP, ordonnees * CASEMAP)  # Coordonnées de la case sur la carte
@@ -134,19 +151,33 @@ class LoadMapPlaineRiviere(): # nv 0
                 if self.map[ordonnees][abscisses] == "A":
                     CollisionSprites(pos, self.tree,"Arbre",  (self.allSprites, self.collisionSprites))
 
-    def SetupSpawn(self):
+
+    def SetupSpawn(self) -> None:
+        """Méthode de création du spawn de la map.
+        Input / Output : None"""
+
+        # Récupération coords spawn + infos element
         coordsSpawnList = self.LoadJsonMapValue("coordsMapObject", "CampSpawn Coords")
+        
+        # parcours et création des spritess
         for coordsElementSpawn in coordsSpawnList:
-            pos = (coordsElementSpawn[0]*CASEMAP, coordsElementSpawn[1]*CASEMAP)
+            pos = (coordsElementSpawn[0]*CASEMAP, coordsElementSpawn[1]*CASEMAP) # calcul coords pygame
             if coordsElementSpawn[2] == "C":
                 CollisionSprites(pos, self.campFire, "campFire", (self.allSprites, self.collisionSprites))
             elif coordsElementSpawn[2] == "b":
                 CollisionSprites(pos, self.banc, "banc", (self.allSprites, self.collisionSprites) )
 
-    def SetupPNJ(self):
+
+    def SetupPNJ(self) -> None:
+        """Méthode de création et position des pnj.
+        Input / Output : None"""
+
+        # Récupération des coords + infos pnj
         coordsPNJList = self.LoadJsonMapValue("coordsMapObject","PNJ Coords")
+        
+        # parcours et création des sprites pnj
         for coordsPNJ in coordsPNJList:
-            pos = (coordsPNJ[0]*CASEMAP, coordsPNJ[1]*CASEMAP)
+            pos = (coordsPNJ[0]*CASEMAP, coordsPNJ[1]*CASEMAP) # calcul coords pygame
             if coordsPNJ[2] == 1 : 
                 PNJ(pos ,("PNJ1", "pnj1.png"), "PNJ1", (self.allPNJ, self.allSprites, self.collisionSprites))
             if coordsPNJ[2] == 2 : 
@@ -155,9 +186,15 @@ class LoadMapPlaineRiviere(): # nv 0
                 PNJ(pos ,("PNJ3", "pnj3.png"), "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites)) 
 
 
-    def Update(self):
+    def Update(self) -> list:
+        """Méthode de mise à jour (utilisation unique) + retour de map.
+        Input : None, Output : list"""
+
+        # Appel méthodes créations map + sprites
         self.LoadImages()
         self.Setup()
         self.SetupSpawn()
         self.SetupPNJ()
+
+        # retour des infos de map
         return self.map, self.mapBase

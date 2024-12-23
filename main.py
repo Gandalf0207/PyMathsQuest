@@ -1,8 +1,9 @@
 from settings import *
-from groups import *
-from loadMap import *
-from hotbar import *
-from pnj import *
+from Sources.Elements.groups import *
+from Sources.Map.loadMap import *
+from Sources.Elements.hotbar import *
+from Sources.Personnages.pnj import *
+from Sources.Personnages.creationDialogues import *
 
 
 class Game(object):
@@ -109,6 +110,7 @@ class Game(object):
 
 
     def run(self):
+        
         # Affichage initial de l'écran de chargement
         threading.Thread(target=self.SetupAllMap).start()
         # self.checkLoadingDone = True
@@ -139,7 +141,7 @@ class Game(object):
                         self.INTERFACE_OPEN = self.settingsAll.OpenInterfaceElementClavier(event, self.INTERFACE_OPEN)
                     
                     if event.key == pygame.K_e:
-                        self.INTERFACE_OPEN = self.pnj.OpenInterfaceElementClavier(event, self.INTERFACE_OPEN)
+                        self.INTERFACE_OPEN = self.pnj.OpenInterfaceElementClavier(self.INTERFACE_OPEN)
 
                     if event.key == pygame.K_ESCAPE and self.INTERFACE_OPEN: # Close général interface build
                         self.INTERFACE_OPEN = False
@@ -175,8 +177,12 @@ class Game(object):
 
 
 if __name__ == "__main__":
+    
+    creationDialogues = createDialogues()
+
     game = Game()
     game.run()
+
 
 
 
