@@ -241,13 +241,18 @@ class CinematiquePNJ(object):
         Input : dt : int (delta time)
         Output : None
         """
+    def Move(self, dt: int) -> None:
+        """Déplace le PNJ vers le point cible selon les coordonnées données par la cinématique.
+        Input : dt : int (delta time)
+        Output : None
+        """
         if self.pointSuivant:  # Vérifie si un point cible existe
             # Extraire les coordonnées cibles
             target_x, target_y = self.pointSuivant
 
             # Calcul des différences entre la position actuelle et la cible
-            dx = target_x - self.hitbox.centerx
-            dy = target_y - self.hitbox.centery
+            dx = target_x - self.hitbox.x
+            dy = target_y - self.hitbox.y
 
             # Distance totale au point cible
             distance = sqrt(dx**2 + dy**2)
@@ -262,8 +267,8 @@ class CinematiquePNJ(object):
             # Si la distance restante est inférieure au déplacement possible
             if distance <= self.speed * dt:
                 # Atteindre directement la cible
-                self.hitbox.center = (target_x, target_y)
-                self.rect.center = self.hitbox.center  # Synchroniser la rect
+                self.hitbox.topleft = (target_x, target_y)
+                self.rect.topleft = self.hitbox.topleft  # Synchroniser la rect
                 if self.pathDeplacement:  # Passer au prochain point
                     self.pointSuivant = self.pathDeplacement.pop(0)
                 else:
@@ -274,9 +279,9 @@ class CinematiquePNJ(object):
                 move_y = (self.speed * dt * dy) / distance
 
                 # Appliquer le déplacement
-                self.hitbox.centerx += move_x
-                self.hitbox.centery += move_y
-                self.rect.center = self.hitbox.center  # Synchroniser la rect
+                self.hitbox.x += move_x
+                self.hitbox.y += move_y
+                self.rect.topleft = self.hitbox.topleft  # Synchroniser la rect
 
     def Replacement(self):
         self.rect.center = (self.pnjObject.pos[0]*CASEMAP, self.pnjObject.pos[1]*CASEMAP)
