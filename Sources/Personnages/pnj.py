@@ -242,13 +242,13 @@ class CinematiquePNJ(object):
     def ModifSpeed(self):
         nbPoint = len(self.pathDeplacement)
         if nbPoint > 30:
-            while self.speed != 800:
+            if self.speed != 800:
                 self.speed = self.speed + 1 if self.speed < 800 else self.speed - 1
         elif nbPoint > 15 :
-            while self.speed != 500:
+            if self.speed != 500:
                 self.speed = self.speed + 1 if self.speed < 500 else self.speed - 1
         else:
-            while self.speed != 300:
+            if self.speed != 300:
                 self.speed = self.speed + 1 if self.speed < 300 else self.speed - 1
 
     def Move(self, dt: int) -> None:
