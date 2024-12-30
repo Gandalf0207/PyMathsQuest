@@ -47,7 +47,7 @@ class CollisionSprites(pygame.sprite.Sprite):
         elif typeCollision == "banc":
             self.hitbox = self.rect.inflate(-70,-70)
         elif typeCollision == "pont1":
-            self.hitbox = self.rect.inflate(0,0)
+            self.hitbox = self.rect.inflate(-100,0)
         else:
             self.hitbox = self.rect.inflate(-70,-140)
 
@@ -106,9 +106,9 @@ class River(pygame.sprite.Sprite):
                         self.frames[state].append(surf)
 
 
-    def update(self, dt : int) -> None:
+    def update(self, *args) -> None:
         """Méthode d'update des sprite de la rivière pour l'animation.
-        Input : dt : int,  Output : None"""
+        Input : *args : tout autre args,  Output : None"""
 
         # Animation des frames
         current_time = pygame.time.get_ticks()

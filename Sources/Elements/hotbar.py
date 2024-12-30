@@ -35,27 +35,20 @@ class MiniMap:
         """Méthode : Génère une fois pour toute la minimap 
         statique avec le terrain et les objets. Input / Output : None"""
 
-        listpnj = []
         for y, row in enumerate(self.mapBase):
             for x, cell in enumerate(row):
-                pos = (x * CELL_SIZE, y * CELL_SIZE)  # Coordonnées des cellules
-                if self.mapData[y][x] == "P":
-                    listpnj.append(pos)
-                elif cell == "#": # rivière
+                pos = (x * CELL_SIZE, y * CELL_SIZE)  # Coordonnées des cellules)
+                if cell == "#": # rivière
                     self.static_surface.blit(self.carre3, pos)
                 elif cell == "B": # border
                     self.static_surface.blit(self.carre7, pos)
                 else: # reste = herbe 
                     self.static_surface.blit(self.carre1, pos)
         
-        # placemnt des pnj
-        for pos in listpnj:
-            self.static_surface.blit(self.carre6,pos)
 
-
-    def Update(self, player_pos: tuple) -> None:
+    def Update(self, player_pos: tuple, pnjGroup : any) -> None:
         """Méthode : Met à jour uniquement le joueur sur la minimap. 
-        Input : tutple (position du joueur), Output : None """
+        Input : tutple (position du joueur), pnjGroup : element pygame Output : None """
 
         # Copier la surface statique dans la surface d'affichage
         self.MiniMapSurface.blit(self.static_surface, (0,0))
@@ -64,6 +57,12 @@ class MiniMap:
         player_x, player_y = player_pos
         player_rect = pygame.Rect(player_x * CELL_SIZE * self.ratioImage, player_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE*2)
         pygame.draw.rect(self.MiniMapSurface, (255, 21, 4), player_rect)
+                
+        # placemnt des pnj
+        for objectPNJ in pnjGroup:
+            pnj_x, pnj_y = objectPNJ.pos[0] * CASEMAP, objectPNJ.pos[1] *CASEMAP
+            pnj_rect = pygame.Rect(pnj_x * CELL_SIZE * self.ratioImage, pnj_y * CELL_SIZE * self.ratioImage, CELL_SIZE*1.5, CELL_SIZE * 1.5)
+            pygame.draw.rect(self.MiniMapSurface, (207, 145, 31), pnj_rect)
 
 
 

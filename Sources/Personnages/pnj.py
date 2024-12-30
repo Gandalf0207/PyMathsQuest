@@ -83,7 +83,7 @@ class GestionPNJ(object):
             pathAcces = ["-", "A", "P", "S"]
 
         
-        self.cinematiqueObject = CinematiquePNJ(self.coordsPNJActuel, goal, self.pnjObj, self.map, pathAcces)
+        self.cinematiqueObject = CinematiquePNJ(goal, self.pnjObj, self.map, pathAcces)
 
     def EndCinematique(self) -> None:
         """Met fin à la cinématique.
@@ -203,14 +203,18 @@ class GestionPNJ(object):
 
         # retour state interface global + etat cinématique
         return self.INTERFACE_OPEN, self.cinematique, self.cinematiqueObject
-        
+
+
+
+
+
+
 class CinematiquePNJ(object):
-    def __init__(self, pos, goal, pnjObject, mapCalcul, pathAccessible) -> None:
+    def __init__(self, goal, pnjObject, mapCalcul, pathAccessible) -> None:
         # Initialisation des valeurs
         self.pnjObject = pnjObject
         self.pos = self.pnjObject.pos  # Position sur la double liste
-        self.goal = goal
-        print(self.goal)
+        self.goal = (goal[0], goal[1])
         self.mapCalcul = mapCalcul
         self.pathAccessible = pathAccessible
 
@@ -227,7 +231,6 @@ class CinematiquePNJ(object):
         """Calcul du chemin à l'aide de l'algorithme A*"""
         self.pathDeplacement = Astar(self.pos, self.goal, self.mapCalcul, self.pathAccessible).a_star()
         self.pathDeplacement = [(x * CASEMAP, y * CASEMAP) for x, y in self.pathDeplacement]  # Conversion en coordonnées pygame
-        print(self.pathDeplacement)
 
     def SetPath(self):
         """Définit un nouveau chemin pour le PNJ"""
@@ -235,12 +238,19 @@ class CinematiquePNJ(object):
             self.pointSuivant = self.pathDeplacement.pop(0)  # Prendre le premier point comme cible
         else:
             self.pointSuivant = None  # Pas de chemin à suivre
-    
-    def Move(self, dt: int) -> None:
-        """Déplace le PNJ vers le point cible selon les coordonnées données par la cinématique.
-        Input : dt : int (delta time)
-        Output : None
-        """
+
+    def ModifSpeed(self):
+        nbPoint = len(self.pathDeplacement)
+        if nbPoint > 30:
+            while self.speed != 800:
+                self.speed = self.speed + 1 if self.speed < 800 else self.speed - 1
+        elif nbPoint > 15 :
+            while self.speed != 500:
+                self.speed = self.speed + 1 if self.speed < 500 else self.speed - 1
+        else:
+            while self.speed != 300:
+                self.speed = self.speed + 1 if self.speed < 300 else self.speed - 1
+
     def Move(self, dt: int) -> None:
         """Déplace le PNJ vers le point cible selon les coordonnées données par la cinématique.
         Input : dt : int (delta time)
@@ -284,12 +294,21 @@ class CinematiquePNJ(object):
                 self.rect.topleft = self.hitbox.topleft  # Synchroniser la rect
 
     def Replacement(self):
-        self.rect.center = (self.pnjObject.pos[0]*CASEMAP, self.pnjObject.pos[1]*CASEMAP)
-        self.hitbox.center = self.rect.center
+        """Replace le PNJ une case au-dessus de la position cible."""
+        # Positionner le PNJ en fonction de l'objectif
+        target_x, target_y = self.goal[0], self.goal[1] - 1  # Une case au-dessus
+
+        # Ajuster les positions de la hitbox et du rectangle
+        self.hitbox.center = (target_x * CASEMAP, target_y * CASEMAP)  # Position en pixels
+        self.rect.center = self.hitbox.center  # Synchroniser la rect avec la hitbox
+
+        # Mettre à jour la position logique de l'objet PNJ si nécessaire
+        self.pnjObject.pos = (target_x, target_y)
+
 
     def Update(self, dt):
+        self.ModifSpeed()
         self.Move(dt)
-        print(self.pathDeplacement)
         if self.pathDeplacement != []:
             return True, False
         else:

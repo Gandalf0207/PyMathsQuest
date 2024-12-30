@@ -83,6 +83,21 @@ class Game(object):
         self.fondu_au_noir()
         self.ouverture_du_noir(self.player.rect.center)
 
+    def textScreen(self, text):
+
+        font = pygame.font.Font(None, 50)
+
+        self.displaySurface.fill((0,0,0))
+        textElement = font.render(text, True, (255,255,255))
+        text_rect = textElement.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
+        self.displaySurface.blit(textElement, text_rect.topleft)
+
+        pygame.display.flip()
+        pygame.time.delay(2000)  # Temps de mise à jour de l'écran de chargement
+
+        self.fondu_au_noir()
+
+
     def fondu_au_noir(self):
         fade_surface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))
         fade_surface.fill((0, 0, 0))
@@ -160,51 +175,48 @@ class Game(object):
                 
             
 
-            self.allSprites.update(dt)
+            self.allSprites.update(dt, self.cinematique)
             self.displaySurface.fill("#000000")
+
             if not self.cinematique:
                 self.allSprites.draw(self.player.rect.center)
             else:
                 self.allSprites.draw(self.cinematiqueObject.pnjObject.rect.center) # pos pnj lockcam 
 
-            # Afficher la minimap sur l'écran principal
-            self.minimap.Update(self.player.rect.center)
+            # Afficher la minimap sur l'écran principal + menu settings all
+            if not self.cinematique:
+                self.minimap.Update(self.player.rect.center, self.allPNJ)
+                self.settingsAll.Update()
 
-            self.settingsAll.Update()
-
-            
-            
-            self.displaySurface.blit(self.minimap_surface, (10, WINDOW_HEIGHT-160))
-            self.displaySurface.blit(self.allSettings_surface, COORS_BOX_ALL_SETTINGS)
+                self.displaySurface.blit(self.minimap_surface, (10, WINDOW_HEIGHT-160))
+                self.displaySurface.blit(self.allSettings_surface, COORS_BOX_ALL_SETTINGS)
             
             if not self.cinematique:
                 self.INTERFACE_OPEN, self.cinematique, self.cinematiqueObject = self.pnj.update(self.player.rect.center, self.INTERFACE_OPEN, event)
             else:
                 self.cinematique, endCinematique = self.cinematiqueObject.Update(dt)
                 if endCinematique:
+                    
                     self.pnj.EndCinematique()
                     self.cinematiqueObject.Replacement()
+                    # écran noir + text de fin cinématique
                     self.fondu_au_noir()
+                    self.textScreen("Le bûcheron a coupé l'arbre, vous pouvez traverser la rivière !")
+
 
                     self.loadMapElement.AddPont1()
                     for object in self.collisionSprites:
-                        print(object.pos, self.cinematiqueObject.goal)
-                        if [object.pos[0] // CASEMAP, object.pos[1] // CASEMAP] == self.cinematiqueObject.goal:
+                        if (object.pos[0] // CASEMAP, object.pos[1] // CASEMAP) == self.cinematiqueObject.goal:
                             object.kill()
 
                     self.ouverture_du_noir(object.pos)
 
-                    for i in range(1000):
-                        self.allSprites.update(dt + i)
-                    
-                    
-
                     self.allSprites.draw(self.player.rect.center)
 
-                    # écran noir + text de fin cinématique
-                    # replacement pnj cinématique
+
                     # reset values cinmatique
-                    print("bonjour : ", self.cinematique)
+                    self.cinematique = False
+                    self.cinematiqueObject = None
 
                     
 
