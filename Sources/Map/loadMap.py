@@ -45,9 +45,9 @@ class LoadMapPlaineRiviere(): # nv 0
         self.montainWE1 = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ealt1x128.png")).convert_alpha()
         self.souche = pygame.image.load(join("Images", "Obstacle", "Souche.png")).convert_alpha()
         self.hugeRock = pygame.image.load(join("Images", "Obstacle", "HugeRock.png")).convert_alpha()
-        self.campFire = pygame.image.load(join("Images", "Obstacle", "Spawn", "campFire.png"))
-        self.banc = pygame.image.load(join("Images", "Obstacle", "Spawn", "banc.png"))
-     
+        self.campFire = pygame.image.load(join("Images", "Obstacle", "Spawn", "campFire.png")).convert_alpha()
+        self.banc = pygame.image.load(join("Images", "Obstacle", "Spawn", "banc.png")).convert_alpha()  
+        self.pont1 = pygame.image.load(join("Images", "Pont", "BridgeTreeW-Ex128.png")).convert_alpha()
 
     def Setup(self) -> None:
         """Méthode de build de tout les éléments sprites de la map jeu.
@@ -184,7 +184,11 @@ class LoadMapPlaineRiviere(): # nv 0
                 PNJ(pos ,("PNJ2", "pnj2.png"), "PNJ2", (self.allPNJ, self.allSprites, self.collisionSprites))
             if coordsPNJ[2] == 3 :
                 PNJ(pos ,("PNJ3", "pnj3.png"), "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites)) 
-
+    
+    def AddPont1(self) -> None:
+        coordPont1 = self.LoadJsonMapValue("coordsMapObject", "ArbreSpecial Coords")
+        coords = ((coordPont1[0] + 1)*CASEMAP, coordPont1[1]*CASEMAP) # on ajoute 1 pour etre sur la rivière
+        CollisionSprites(coords, self.pont1, "pont1", (self.allSprites, self.collisionSprites))
 
     def Update(self) -> list:
         """Méthode de mise à jour (utilisation unique) + retour de map.

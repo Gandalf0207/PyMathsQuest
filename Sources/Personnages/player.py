@@ -99,11 +99,11 @@ class Player(pygame.sprite.Sprite):
         self.image = self.frames[self.state][int(self.frame_index) % len(self.frames[self.state])] # changement frame pour animation
 
 
-    def update(self, dt : int) -> None:
+    def update(self, dt : int, cinematique : bool) -> None:
         """Méthode d'update du player sur la map.
-        Input : dt : int, Output : None"""
-
-        self.input() # get déplacements
-        self.move(dt) # effectuer les déplacements
-        self.animate(dt) # appliquer les déplacements
+        Input : dt : int, cinematique : bool ,  Output : None"""
+        if not cinematique:
+            self.input() # get déplacements
+            self.move(dt) # effectuer les déplacements
+            self.animate(dt) # appliquer les déplacements
 
