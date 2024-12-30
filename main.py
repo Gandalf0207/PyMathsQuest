@@ -1,4 +1,5 @@
 from settings import *
+from Sources.Elements.traverser import *
 from Sources.Elements.groups import *
 from Sources.Map.loadMap import *
 from Sources.Elements.hotbar import *
@@ -28,6 +29,7 @@ class Game(object):
         self.allSprites = AllSprites()
         self.collisionSprites = pygame.sprite.Group()
         self.allPNJ = pygame.sprite.Group()
+        self.allpont = pygame.sprite.Group()
 
         # all surface secondaire (hotbar)
         self.minimap_surface = pygame.Surface((300, 150))
@@ -37,6 +39,15 @@ class Game(object):
         self.INTERFACE_OPEN = False # interface secondaire ouvert
         self.cinematique = False # cinématique
         self.cinematiqueObject = None # obj de la cinematique 
+
+
+        # info pnj
+        self.PNJ1 = False
+        self.PNJ2 = False
+        self.PNJ3 = False
+
+        # infos traverser
+        self.traverserObject = Traverser(self)
 
 
     def SetupAllMap(self):
@@ -55,11 +66,6 @@ class Game(object):
             pass
 
         self.checkLoadingDone = True
-
-
-
-
-
 
 
     # Fonction pour dessiner l'écran de chargement
@@ -96,6 +102,7 @@ class Game(object):
         pygame.time.delay(2000)  # Temps de mise à jour de l'écran de chargement
 
         self.fondu_au_noir()
+
 
 
     def fondu_au_noir(self):
@@ -159,6 +166,7 @@ class Game(object):
 
                             print(f"tp : {first_sprite.pos}")
                             print(self.player.rect.center)
+                    
 
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                         self.INTERFACE_OPEN = self.settingsAll.OpenInterfaceElementClic(event, self.INTERFACE_OPEN)
@@ -172,11 +180,16 @@ class Game(object):
 
                         if event.key == pygame.K_ESCAPE and self.INTERFACE_OPEN: # Close général interface build
                             self.INTERFACE_OPEN = False
+
+                        if event.key == pygame.K_m:
+                            if self.PNJ1:
+                                self.traverserObject.MakeTraverser()
                 
             
 
             self.allSprites.update(dt, self.cinematique)
             self.displaySurface.fill("#000000")
+
 
             if not self.cinematique:
                 self.allSprites.draw(self.player.rect.center)
@@ -193,6 +206,8 @@ class Game(object):
             
             if not self.cinematique:
                 self.INTERFACE_OPEN, self.cinematique, self.cinematiqueObject = self.pnj.update(self.player.rect.center, self.INTERFACE_OPEN, event)
+                self.traverserObject.Update(self.player, self.allpont)
+            
             else:
                 self.cinematique, endCinematique = self.cinematiqueObject.Update(dt)
                 if endCinematique:
@@ -204,7 +219,7 @@ class Game(object):
                     self.textScreen("Le bûcheron a coupé l'arbre, vous pouvez traverser la rivière !")
 
 
-                    self.loadMapElement.AddPont1()
+                    self.loadMapElement.AddPont1(self.allpont)
                     for object in self.collisionSprites:
                         if (object.pos[0] // CASEMAP, object.pos[1] // CASEMAP) == self.cinematiqueObject.goal:
                             object.kill()
@@ -217,6 +232,7 @@ class Game(object):
                     # reset values cinmatique
                     self.cinematique = False
                     self.cinematiqueObject = None
+                    self.PNJ1 = True
 
                     
 
