@@ -51,9 +51,7 @@ class Traverser(object):
             # Limiter la caméra pour ne pas montrer le vide
             self.npc_screen_pos = [coordsPont[0]  - self.camera_offset[0], coordsPont[1] - self.camera_offset[1]]
 
-
-            print(coordsPont , "ccords du pont") 
-            print(playerPos, "pos player ")   
+ 
 
             if distance <= self.distanceMax:
                 # valeur importante du pnj à proximité
@@ -77,8 +75,8 @@ class Traverser(object):
                 # pnj à proximité
                 return True
             
-            # pas de pnj à proximité
-            return False
+        # pas de pnj à proximité
+        return False
 
     def Update(self, player, groupePont):
         self.player = player

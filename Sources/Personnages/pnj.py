@@ -114,13 +114,15 @@ class GestionPNJ(object):
     def isClose(self, playerPos : tuple) -> bool:
         """Méthode de vérification de proximité d'un pnj avec le joueur
         Input : tuple , Output : bool"""
-
+        
         # parcours de tout les object pnj
         for pnjObject in self.allPNJ:
+
             
             # affection des valeurs relatives au pnj
             coordPNJ = pnjObject.pos 
             pnjActuel = pnjObject.numPNJ 
+
 
             # Calculer la distance entre le joueur et le PNJ
             distance = sqrt((playerPos[0] - coordPNJ[0] * CASEMAP)**2 + (playerPos[1] - coordPNJ[1] * CASEMAP)**2)
@@ -154,8 +156,8 @@ class GestionPNJ(object):
                 # pnj à proximité
                 return True
             
-            # pas de pnj à proximité
-            return False
+        # pas de pnj à proximité
+        return False
         
 
     def OpenInterfaceElementClavier(self, INTERFACE_OPEN : bool) -> bool:

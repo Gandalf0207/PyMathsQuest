@@ -183,7 +183,8 @@ class LoadMapPlaineRiviere(): # nv 0
             if coordsPNJ[2] == 2 : 
                 PNJ(pos ,("PNJ2", "pnj2.png"), "PNJ2", (self.allPNJ, self.allSprites, self.collisionSprites))
             if coordsPNJ[2] == 3 :
-                PNJ(pos ,("PNJ3", "pnj3.png"), "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites)) 
+                PNJ(pos ,("PNJ3", "pnj3.png"), "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
+        
     
     def AddPont1(self, groupPont) -> None:
         coordPont1 = self.LoadJsonMapValue("coordsMapObject", "ArbreSpecial Coords")
