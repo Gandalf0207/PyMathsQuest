@@ -22,9 +22,6 @@ class Game(object):
         # bool de check chargement
         self.checkLoadingDone = False
 
-        # niveau
-        self.niveau = 0
-
         # all groupes
         self.allSprites = AllSprites()
         self.collisionSprites = pygame.sprite.Group()
@@ -54,10 +51,10 @@ class Game(object):
         self.player = Player((8*CASEMAP,2*CASEMAP), self.allSprites, self.collisionSprites) 
 
 
-        if self.niveau ==0:
-            self.loadMapElement = LoadMapPlaineRiviere(self.niveau, self.allSprites, self.collisionSprites, self.allPNJ)
+        if INFOS["Niveau"] ==0:
+            self.loadMapElement = LoadMapPlaineRiviere(self.allSprites, self.collisionSprites, self.allPNJ)
             self.map, self.mapBase = self.loadMapElement.Update()
-            self.pnj = GestionPNJ(self.displaySurface, self.niveau, self.allPNJ, self.INTERFACE_OPEN, self.map)
+            self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map)
             # Initialisation dans votre setup
             
             self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
@@ -215,7 +212,7 @@ class Game(object):
                     self.cinematiqueObject.Replacement()
                     self.fondu_au_noir()
                     
-                    if self.niveau == 0:
+                    if INFOS["Niveau"] == 0:
                         if  not self.PNJ1:
                             # écran noir + text de fin cinématique
                             self.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["Cinematique1End"])

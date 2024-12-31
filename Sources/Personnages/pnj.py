@@ -25,14 +25,13 @@ class PNJ(pygame.sprite.Sprite):
 
 
 class GestionPNJ(object):
-    def __init__(self, displaySurface : any, niveau : int, allpnjGroup : any, INTERFACE_OPEN : bool, mapCollision : list) -> None:
+    def __init__(self, displaySurface : any, allpnjGroup : any, INTERFACE_OPEN : bool, mapCollision : list) -> None:
         """Méthode initialisation gestion principal pnj : proche, interface discussion...
         Input : displaySurface / allpnGroupe : pygame element, niveau : int, INTERFACE_OPEN : bool (check all interface), mapCollision : list (check path cinématique)"""
 
         # Initialisation valeur de main
         self.displaySurface = displaySurface        
         self.allPNJ = allpnjGroup
-        self.niveau = niveau
         self.INTERFACE_OPEN = INTERFACE_OPEN
         self.map = mapCollision # obstacle pour cinématique déplacement 
 
@@ -76,7 +75,7 @@ class GestionPNJ(object):
 
         self.cinematique = True
         
-        if self.niveau ==0:
+        if INFOS["Niveau"] ==0:
             goal = self.LoadJsonMapValue("coordsMapObject","ArbreSpecial Coords")
             pathAcces = ["-", "A", "P", "S"]
 

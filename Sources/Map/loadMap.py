@@ -8,12 +8,11 @@ from Sources.Personnages.pnj import *
 
 
 class LoadMapPlaineRiviere(): # nv 0
-    def __init__(self, niveau : int, allSprites : any, collisionSprites : any, allpnj : any) -> None:
+    def __init__(self, allSprites : any, collisionSprites : any, allpnj : any) -> None:
         """Méthode initialisation chargement de la map du niveau plaine et rivière. 
         Input : niveau : int, allSprites / collisionsSprites / allpnj : element pygame; Output : None"""
     
-        # Initialisation des valeurs
-        self.niveau = niveau
+
 
         # class des éléments pygame
         self.allPNJ = allpnj
