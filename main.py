@@ -37,12 +37,6 @@ class Game(object):
         self.cinematique = False # cinématique
         self.cinematiqueObject = None # obj de la cinematique 
 
-
-        # info pnj
-        self.PNJ1 = False
-        self.PNJ2 = False
-        self.PNJ3 = False
-
         # infos traverser
         self.traverserObject = Traverser(self)
 
@@ -213,7 +207,7 @@ class Game(object):
                     self.fondu_au_noir()
                     
                     if INFOS["Niveau"] == 0:
-                        if  not self.PNJ1:
+                        if  not PNJ["PNJ1"]:
                             # écran noir + text de fin cinématique
                             self.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["Cinematique1End"])
                             self.loadMapElement.AddPont(self.allpont, "pont1")
@@ -224,7 +218,7 @@ class Game(object):
                                     object.kill()
                             
                             # reset valeue individuelle
-                            self.PNJ1 = True
+                            PNJ["PNJ1"] = True
 
                     # reset values cinmatique
                     self.cinematique = False
