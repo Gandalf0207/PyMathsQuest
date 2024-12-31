@@ -211,28 +211,34 @@ class Game(object):
             else:
                 self.cinematique, endCinematique = self.cinematiqueObject.Update(dt)
                 if endCinematique:
-                    
                     self.pnj.EndCinematique()
                     self.cinematiqueObject.Replacement()
-                    # écran noir + text de fin cinématique
                     self.fondu_au_noir()
-                    self.textScreen("Le bûcheron a coupé l'arbre, vous pouvez traverser la rivière !")
-
-
-                    self.loadMapElement.AddPont1(self.allpont)
-                    for object in self.collisionSprites:
-                        if (object.pos[0] // CASEMAP, object.pos[1] // CASEMAP) == self.cinematiqueObject.goal:
-                            object.kill()
-
-                    self.ouverture_du_noir(object.pos)
-
-                    self.allSprites.draw(self.player.rect.center)
-
+                    
+                    if self.niveau == 0:
+                        if  not self.PNJ1:
+                            # écran noir + text de fin cinématique
+                            self.textScreen("Le bûcheron a coupé l'arbre, vous pouvez traverser la rivière !")
+                            self.loadMapElement.AddPont(self.allpont, "pont1")
+                        
+                            # sup arbre
+                            for object in self.collisionSprites:
+                                if (object.pos[0] // CASEMAP, object.pos[1] // CASEMAP) == self.cinematiqueObject.goal:
+                                    object.kill()
+                            
+                            # reset valeue individuelle
+                            self.PNJ1 = True
 
                     # reset values cinmatique
                     self.cinematique = False
                     self.cinematiqueObject = None
-                    self.PNJ1 = True
+                    
+                 
+                    
+                    self.ouverture_du_noir(object.pos)
+                    self.allSprites.draw(self.player.rect.center)
+
+
 
                     
 
