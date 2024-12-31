@@ -4,7 +4,7 @@ from Sources.Elements.groups import *
 from Sources.Map.loadMap import *
 from Sources.Elements.hotbar import *
 from Sources.Personnages.pnj import *
-from Sources.Personnages.creationDialogues import *
+from Sources.Texte.creationTexte import *
 
 
 class Game(object):
@@ -15,7 +15,7 @@ class Game(object):
         # general setup
         pygame.init() # Initialisation de la fenetre pygame
         self.displaySurface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT)) # taille fenetre
-        self.displayCaption = pygame.display.set_caption("PyMathsQuest") # titre fenetre
+        self.displayCaption = pygame.display.set_caption(TEXTE["Elements"]["GameName"]) # titre fenetre
         self.running = True # stop de la fenetre
         self.clock = pygame.time.Clock() # dt
 
@@ -76,7 +76,7 @@ class Game(object):
             self.displaySurface.fill((0,0,0))  # Remplir avec une couleur grise
 
             # Animation de texte dynamique avec des points qui défilent
-            loading_text = f"Chargement{'.' * (loading_step % 4)}"
+            loading_text = f"{TEXTE["Elements"]["Loading"]}{'.' * (loading_step % 4)}"
             loading_step += 1
             text = font.render(loading_text, True, (255, 255, 255))
             text_rect = text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
@@ -199,7 +199,7 @@ class Game(object):
             # Afficher la minimap sur l'écran principal + menu settings all
             if not self.cinematique:
                 self.minimap.Update(self.player.rect.center, self.allPNJ)
-                self.settingsAll.Update()
+                self.settingsAll.Update(event)
 
                 self.displaySurface.blit(self.minimap_surface, (10, WINDOW_HEIGHT-160))
                 self.displaySurface.blit(self.allSettings_surface, COORS_BOX_ALL_SETTINGS)
@@ -218,7 +218,7 @@ class Game(object):
                     if self.niveau == 0:
                         if  not self.PNJ1:
                             # écran noir + text de fin cinématique
-                            self.textScreen("Le bûcheron a coupé l'arbre, vous pouvez traverser la rivière !")
+                            self.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["Cinematique1End"])
                             self.loadMapElement.AddPont(self.allpont, "pont1")
                         
                             # sup arbre
@@ -259,7 +259,7 @@ class Game(object):
 
 if __name__ == "__main__":
     
-    creationDialogues = createDialogues()
+    LoadTexte()
 
     game = Game()
     game.run()

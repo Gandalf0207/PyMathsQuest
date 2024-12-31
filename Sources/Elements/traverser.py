@@ -22,7 +22,7 @@ class Traverser(object):
     def MakeTraverser(self):
         if self.Isclose():
             self.gestionnaire.fondu_au_noir()
-            self.gestionnaire.textScreen("Vous venez de traverser le pont")
+            self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["TraverserPont"])
 
             if self.player.rect.x < self.coordPontActuel[0]:
                 self.player.rect.x += CASEMAP*2

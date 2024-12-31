@@ -61,8 +61,6 @@ class GestionPNJ(object):
         self.cinematique = False
         self.cinematiqueObject = None
 
-        # chagement dictionnaires des dialogues 
-        self.allDialogues = self.loadAllDialogues()
 
     def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
         """Récupération des valeur stockées dans le fichier json pour les renvoyer quand nécéssaire à l'aide des indices données pour les récupérer"""
@@ -99,16 +97,6 @@ class GestionPNJ(object):
 
         # modification de l'object pnj. Intermédiaire : class d'appel
         self.pnjObj.discussion = True
-
-
-    def loadAllDialogues(self) -> None:
-        """Méthode de chargement du dictionnaire des dialogues.
-        Input / Output : None"""
-
-        # ouverture fichier json
-        with open(join("Sources", "Ressources","Dialogues.json"), 'r') as file:
-            data = json.load(file)
-            return data #retour du dictionnaire de données (dialogues)
 
 
     def isClose(self, playerPos : tuple) -> bool:
@@ -183,7 +171,6 @@ class GestionPNJ(object):
 
         # retour state interface global
         return self.INTERFACE_OPEN
-
 
     def update(self, playerPos : tuple, INTERFACE_OPEN : bool, event: any) -> bool:
         """Méthode d'update de l'interface d'appel de discussion + gestion pnj / proximité.
