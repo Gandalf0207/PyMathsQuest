@@ -18,7 +18,6 @@ class SettingsInterface(object):
         # texte 
         self.font = pygame.font.Font(None, 36)
         self.font1 = pygame.font.Font(None, 20)
-        self.titreText = "Settings"
 
         self.last_click_time = 0
         self.click_delay = 500   
@@ -29,11 +28,12 @@ class SettingsInterface(object):
         """Méthode : Création de tous les éléments composant l'interface. Input / Output : None"""
 
         # texte titre
-        text = self.font.render(self.titreText, True, (0, 0, 0))
+        self.interfaceSurface.fill("#ffffff")
+        text = self.font.render(TEXTE["Elements"]["HotBar"]["Settings"]["Title"], True, (0, 0, 0))
         self.interfaceSurface.blit(text, (10, 10))
 
         # langue settings
-        textLangue = self.font1.render("Langue", True, (10, 10, 10))
+        textLangue = self.font1.render(TEXTE["Elements"]["HotBar"]["Settings"]["Language"], True, (10, 10, 10))
         self.interfaceSurface.blit(textLangue, (10, 50))
 
         # bouton langue
@@ -43,7 +43,7 @@ class SettingsInterface(object):
         pygame.draw.rect(self.interfaceSurface, (200, 200, 200), self.rectButtonLangue)
 
         # Dessiner le texte à l'intérieur du bouton
-        texteButtonLangue = self.font1.render("Français", True, (50, 50, 50))
+        texteButtonLangue = self.font1.render(TEXTE["Elements"]["HotBar"]["Settings"]["TypeLanguage"], True, (50, 50, 50))
         texte_pos = (
             self.rectButtonLangue.x + (self.rectButtonLangue.width - texteButtonLangue.get_width()) // 2,
             self.rectButtonLangue.y + (self.rectButtonLangue.height - texteButtonLangue.get_height()) // 2,
@@ -53,7 +53,6 @@ class SettingsInterface(object):
     def ChangeLangue(self):
         INFOS["Langue"] = "En" if INFOS["Langue"] == "Fr" else "Fr"
         LoadTexte()
-        print("langue changé")
 
 
     def CloseInterface(self) -> None:
@@ -121,14 +120,14 @@ class SoudInterface(object):
 
         # texte 
         self.font = pygame.font.Font(None, 36)
-        self.titreText = "Sound"
 
 
     def BuildInterface(self) -> None:
         """Méthode : Création de tout les éléments composant l'interface. Input / Output : None"""
 
         # texte titre
-        text = self.font.render(self.titreText, True, (0,0,0))
+        self.interfaceSurface.fill("#ffffff")
+        text = self.font.render(TEXTE["Elements"]["HotBar"]["Sound"]["Title"], True, (0,0,0))
         self.interfaceSurface.blit(text, (10,10))
 
 
@@ -140,7 +139,7 @@ class SoudInterface(object):
         self.gestionnaire.INTERFACE_OPEN = False
 
 
-    def Update(self) -> None:
+    def Update(self, event) -> None:
         """Méthode d'update de l'interface. Input / Output : None"""
 
         # construction d'update
@@ -169,14 +168,14 @@ class BundleInterface(object):
 
         # texte 
         self.font = pygame.font.Font(None, 36)
-        self.titreText = "Bundle"
 
 
     def BuildInterface(self) -> None:
         """Méthode : Création de tout les éléments composant l'interface. Input / Output : None"""
 
         # texte titre
-        text = self.font.render(self.titreText, True, (0,0,0))
+        self.interfaceSurface.fill("#ffffff")
+        text = self.font.render(TEXTE["Elements"]["HotBar"]["Bundle"]["Title"], True, (0,0,0))
         self.interfaceSurface.blit(text, (10,10))
 
 
@@ -188,7 +187,7 @@ class BundleInterface(object):
         self.gestionnaire.INTERFACE_OPEN = False
 
 
-    def Update(self) -> None:
+    def Update(self, event) -> None:
         """Méthode d'update de l'interface. Input / Output : None"""
 
         # construction d'update
@@ -217,14 +216,14 @@ class BookInterface(object):
 
         # texte 
         self.font = pygame.font.Font(None, 36)
-        self.titreText = "Book"
 
 
     def BuildInterface(self) -> None:
         """Méthode : Création de tout les éléments composant l'interface. Input / Output : None"""
 
         # texte titre
-        text = self.font.render(self.titreText, True, (0,0,0))
+        self.interfaceSurface.fill("#ffffff")
+        text = self.font.render(TEXTE["Elements"]["HotBar"]["Book"]["Title"], True, (0,0,0))
         self.interfaceSurface.blit(text, (10,10))
 
 
@@ -236,7 +235,7 @@ class BookInterface(object):
         self.gestionnaire.INTERFACE_OPEN = False
 
 
-    def Update(self) -> None:
+    def Update(self, event) -> None:
         """Méthode d'update de l'interface. Input / Output : None"""
 
         # construction d'update
@@ -352,7 +351,7 @@ class PNJInterface(object):
         self.surfaceBtnSkip = pygame.Surface((100,50))
         self.btnRectSkip = pygame.Rect(750,600,100,50)
         self.surfaceBtnSkip.fill((255,255,255))
-        self.textS = "Suivant"
+        self.textS = TEXTE["Elements"]["InterfacePNJ"]["SkipButton"]
         self.textSkip = self.font2.render(self.textS, True, (10,10,10))
         self.surfaceBtnSkip.blit(self.textSkip, (0,0))
         self.interfaceSurface.blit(self.surfaceBtnSkip, (self.btnRectSkip.x, self.btnRectSkip.y))
