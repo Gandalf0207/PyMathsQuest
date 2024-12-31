@@ -227,7 +227,7 @@ class PNJInterface(object):
         self.pnj_displayed_text = ""  # Texte affiché du PNJ
         self.pnj_index = 0  # Index pour le texte du PNJ
         self.compteurDialogue = 1
-        self.nombreDialogue = len(self.gestionnaire.allDialogues[f"Niveau{self.gestionnaire.niveau}"][self.gestionnaire.pnjActuel]["Principal"]) if not self.gestionnaire.pnjObj.discussion else len(self.gestionnaire.allDialogues[f"Niveau{self.gestionnaire.niveau}"][self.gestionnaire.pnjActuel]["Alternatif"])
+        self.nombreDialogue = len(TEXTE["Dialogues"][f"Niveau{self.gestionnaire.niveau}"][self.gestionnaire.pnjActuel]["Principal"]) if not self.gestionnaire.pnjObj.discussion else len(TEXTE["Dialogues"][f"Niveau{self.gestionnaire.niveau}"][self.gestionnaire.pnjActuel]["Alternatif"])
 
         # timer click skip
         self.last_click_time = 0
@@ -250,7 +250,7 @@ class PNJInterface(object):
         if not self.gestionnaire.pnjObj.discussion:
             # chargement du texte
             if self.compteurDialogue <= self.nombreDialogue:
-                self.pnj_text = self.gestionnaire.allDialogues[f"Niveau{self.gestionnaire.niveau}"][self.gestionnaire.pnjActuel]["Principal"][f"Dialogue{self.compteurDialogue}"]
+                self.pnj_text = TEXTE["Dialogues"][f"Niveau{self.gestionnaire.niveau}"][self.gestionnaire.pnjActuel]["Principal"][f"Dialogue{self.compteurDialogue}"]
                 self.compteurDialogue += 1 # passage au dialogue suivant
             else:
                 self.gestionnaire.Vu() # bool de check passage
@@ -262,7 +262,7 @@ class PNJInterface(object):
                         print("hello ")
         else:
             if self.compteurDialogue <= self.nombreDialogue:
-                self.pnj_text = self.gestionnaire.allDialogues[f"Niveau{self.gestionnaire.niveau}"][self.gestionnaire.pnjActuel]["Alternatif"][f"Dialogue{self.compteurDialogue}"]
+                self.pnj_text = TEXTE["Dialogues"][f"Niveau{self.gestionnaire.niveau}"][self.gestionnaire.pnjActuel]["Alternatif"][f"Dialogue{self.compteurDialogue}"]
                 self.compteurDialogue += 1 # passage au dialogue suivant
             else:
                 self.CloseInterface() # fermeture interface
@@ -287,7 +287,7 @@ class PNJInterface(object):
         self.interfaceSurface.blit(self.playerImage, (WINDOW_WIDTH-178, 360))
 
         # load nom pnj + creation text du nom
-        self.pnjName = self.gestionnaire.allDialogues[f"Niveau{self.gestionnaire.niveau}"][self.gestionnaire.pnjActuel]["Nom"]
+        self.pnjName = TEXTE["Dialogues"][f"Niveau{self.gestionnaire.niveau}"][self.gestionnaire.pnjActuel]["Nom"]
         pnjName = self.font1.render(self.pnjName, True, (255,255,255))
         self.interfaceSurface.blit(pnjName, (200, 400))
 

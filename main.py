@@ -4,7 +4,7 @@ from Sources.Elements.groups import *
 from Sources.Map.loadMap import *
 from Sources.Elements.hotbar import *
 from Sources.Personnages.pnj import *
-from Sources.Personnages.creationDialogues import *
+from Sources.Texte.creationTexte import *
 
 
 class Game(object):
@@ -259,7 +259,7 @@ class Game(object):
 
 if __name__ == "__main__":
     
-    creationDialogues = createDialogues()
+    LoadTexte()
 
     game = Game()
     game.run()
