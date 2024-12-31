@@ -255,7 +255,11 @@ class PNJInterface(object):
             else:
                 self.gestionnaire.Vu() # bool de check passage
                 self.CloseInterface() # fermeture interface
-                self.gestionnaire.CinematiqueBuild() # préparation au lancement cinematique
+                if self.gestionnaire.niveau ==0:
+                    if self.gestionnaire.pnjActuel == "PNJ1":
+                        self.gestionnaire.CinematiqueBuild() # préparation au lancement cinematique
+                    elif self.gestionnaire.pnjActuel == "PNJ2":
+                        print("hello ")
         else:
             if self.compteurDialogue <= self.nombreDialogue:
                 self.pnj_text = self.gestionnaire.allDialogues[f"Niveau{self.gestionnaire.niveau}"][self.gestionnaire.pnjActuel]["Alternatif"][f"Dialogue{self.compteurDialogue}"]

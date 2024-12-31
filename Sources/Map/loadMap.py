@@ -183,12 +183,14 @@ class LoadMapPlaineRiviere(): # nv 0
             if coordsPNJ[2] == 2 : 
                 PNJ(pos ,("PNJ2", "pnj2.png"), "PNJ2", (self.allPNJ, self.allSprites, self.collisionSprites))
             if coordsPNJ[2] == 3 :
-                PNJ(pos ,("PNJ3", "pnj3.png"), "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites)) 
+                PNJ(pos ,("PNJ3", "pnj3.png"), "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
+        
     
-    def AddPont1(self) -> None:
+    def AddPont(self, groupPont, element) -> None:
         coordPont1 = self.LoadJsonMapValue("coordsMapObject", "ArbreSpecial Coords")
         coords = ((coordPont1[0] + 1)*CASEMAP, coordPont1[1]*CASEMAP) # on ajoute 1 pour etre sur la rivière
-        CollisionSprites(coords, self.pont1, "pont1", (self.allSprites, self.collisionSprites))
+        CollisionSprites(coords, self.pont1, element, (self.allSprites, self.collisionSprites, groupPont))
+        
 
     def Update(self) -> list:
         """Méthode de mise à jour (utilisation unique) + retour de map.
