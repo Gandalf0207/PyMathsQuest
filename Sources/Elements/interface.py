@@ -1,4 +1,5 @@
 from settings import *
+from Sources.Texte.creationTexte import *
 
 class SettingsInterface(object):
 
@@ -16,15 +17,43 @@ class SettingsInterface(object):
 
         # texte 
         self.font = pygame.font.Font(None, 36)
+        self.font1 = pygame.font.Font(None, 20)
         self.titreText = "Settings"
+
+        self.last_click_time = 0
+        self.click_delay = 500   
+
 
 
     def BuildInterface(self) -> None:
-        """Méthode : Création de tout les éléments composant l'interface. Input / Output : None"""
+        """Méthode : Création de tous les éléments composant l'interface. Input / Output : None"""
 
         # texte titre
-        text = self.font.render(self.titreText, True, (0,0,0))
-        self.interfaceSurface.blit(text, (10,10))
+        text = self.font.render(self.titreText, True, (0, 0, 0))
+        self.interfaceSurface.blit(text, (10, 10))
+
+        # langue settings
+        textLangue = self.font1.render("Langue", True, (10, 10, 10))
+        self.interfaceSurface.blit(textLangue, (10, 50))
+
+        # bouton langue
+        self.rectButtonLangue = pygame.Rect(10, 75, 100, 50)  # Définir la taille et position du bouton
+
+        # Dessiner le rectangle du bouton sur la surface
+        pygame.draw.rect(self.interfaceSurface, (200, 200, 200), self.rectButtonLangue)
+
+        # Dessiner le texte à l'intérieur du bouton
+        texteButtonLangue = self.font1.render("Français", True, (50, 50, 50))
+        texte_pos = (
+            self.rectButtonLangue.x + (self.rectButtonLangue.width - texteButtonLangue.get_width()) // 2,
+            self.rectButtonLangue.y + (self.rectButtonLangue.height - texteButtonLangue.get_height()) // 2,
+        )
+        self.interfaceSurface.blit(texteButtonLangue, texte_pos)
+
+    def ChangeLangue(self):
+        INFOS["Langue"] = "En" if INFOS["Langue"] == "Fr" else "Fr"
+        LoadTexte()
+        print("langue changé")
 
 
     def CloseInterface(self) -> None:
@@ -35,7 +64,7 @@ class SettingsInterface(object):
         self.gestionnaire.INTERFACE_OPEN = False
 
 
-    def Update(self) -> None:
+    def Update(self, event) -> None:
         """Méthode d'update de l'interface. Input / Output : None"""
 
         # construction d'update
@@ -46,6 +75,34 @@ class SettingsInterface(object):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_ESCAPE]:  # Fermer avec ESC
             self.CloseInterface()
+
+        # Gestion des clics de souris
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            
+            # delay de click
+            current_time = pygame.time.get_ticks()
+            if current_time - self.last_click_time > self.click_delay:
+                self.last_click_time = current_time
+            
+                # Coordonnées globales de l'événement
+                global_pos = event.pos  # Coordonnées globales dans la fenêtre
+
+                # Rect global de la surface de l'interface
+                surface_rect = pygame.Rect(320, 180, self.interfaceSurface.get_width(), self.interfaceSurface.get_height())
+
+                # Vérifiez si le clic est sur l'interface
+                if surface_rect.collidepoint(global_pos):
+                    # Convertissez en coordonnées locales
+                    local_pos = (global_pos[0] - surface_rect.x, global_pos[1] - surface_rect.y)
+
+                    # Vérifiez si le clic est sur le bouton de langue
+                    if self.rectButtonLangue.collidepoint(local_pos):
+                        self.ChangeLangue()
+            
+
+
+
+        
 
 
 class SoudInterface(object):

@@ -199,7 +199,7 @@ class Game(object):
             # Afficher la minimap sur l'écran principal + menu settings all
             if not self.cinematique:
                 self.minimap.Update(self.player.rect.center, self.allPNJ)
-                self.settingsAll.Update()
+                self.settingsAll.Update(event)
 
                 self.displaySurface.blit(self.minimap_surface, (10, WINDOW_HEIGHT-160))
                 self.displaySurface.blit(self.allSettings_surface, COORS_BOX_ALL_SETTINGS)

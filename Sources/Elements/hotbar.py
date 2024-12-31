@@ -230,7 +230,7 @@ class SettingsAll:
             self.INTERFACE_OPEN = False
 
 
-    def Update(self) -> None:
+    def Update(self, event) -> None:
         """Méthode de mise à jout de la box settings all + interface sur ouvert.
         Input / Output : None"""
         
@@ -257,7 +257,7 @@ class SettingsAll:
 
         # Si interface, alors mise à jour de l'interface
         if self.InterfaceOpen:
-            self.interfaceElement.Update()
+            self.interfaceElement.Update(event)
         
         
 
