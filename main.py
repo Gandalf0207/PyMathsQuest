@@ -216,7 +216,6 @@ class Game(object):
             if not self.cinematique:
                 self.INTERFACE_OPEN, self.cinematique, self.cinematiqueObject = self.pnj.update(self.player.rect.center, self.INTERFACE_OPEN, event)
                 self.traverserObject.Update(self.player, self.allpont)
-                print(self.allpont)
             
             else:
                 self.cinematique, endCinematique = self.cinematiqueObject.Update(dt)

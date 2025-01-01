@@ -84,4 +84,3 @@ class Traverser(object):
         self.player = player
         self.allPont = groupePont
         self.Isclose()
-        print("pont update ?")
