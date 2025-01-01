@@ -9,7 +9,9 @@ class Traverser(object):
         self.gestionnaire = gestionnaire
 
         self.camera_offset = [0,0]
-        self.distanceMax = 200
+        self.npc_screen_pos = [0,0]
+
+        self.distanceMax = 100
 
         # infos de la map 
         self.map_width = LONGUEUR * CASEMAP
@@ -60,7 +62,7 @@ class Traverser(object):
 
                 # Dessiner la boîte d'indication "Press E"
                 font = pygame.font.Font(None, 24)
-                text_surface = font.render("Press M", True, (255, 255, 255))
+                text_surface = font.render("Press E", True, (255, 255, 255))
                 text_rect = text_surface.get_rect()
                 text_rect.topleft = (self.npc_screen_pos[0] - 20, self.npc_screen_pos[1] - 40)
                 

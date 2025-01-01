@@ -29,6 +29,8 @@ TEXTE = {
     "Elements" : None
 }
 
+INVENTORY = []
+
 PNJ = {
     "PNJ1" : False,
     "PNJ2" : False, 

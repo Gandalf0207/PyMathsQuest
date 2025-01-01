@@ -5,6 +5,7 @@ from Sources.Map.loadMap import *
 from Sources.Elements.hotbar import *
 from Sources.Personnages.pnj import *
 from Sources.Texte.creationTexte import *
+from Sources.Elements.construirePont import *
 
 
 class Game(object):
@@ -39,6 +40,17 @@ class Game(object):
 
         # infos traverser
         self.traverserObject = Traverser(self)
+        self.buildPont = ConstruirePont()
+
+
+    def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
+        """Récupération des valeur stockées dans le fichier json pour les renvoyer quand nécéssaire 
+        à l'aide des indices données.
+        Input : index1 / index2 = str   , Output : list"""
+        
+        with open(join("Sources","Ressources","AllMapValue.json"), "r") as f: # ouverture lecture
+            loadElementJson = json.load(f) # chargement des valeurs
+        return loadElementJson[index1].get(index2, None) # retour valeurs
 
 
     def SetupAllMap(self):
@@ -168,12 +180,13 @@ class Game(object):
                         
                         if event.key == pygame.K_e:
                             self.INTERFACE_OPEN = self.pnj.OpenInterfaceElementClavier(self.INTERFACE_OPEN)
+                            self.buildPont.BuildBridge(self.allpont, self.loadMapElement, self.player.rect.center)
 
                         if event.key == pygame.K_ESCAPE and self.INTERFACE_OPEN: # Close général interface build
                             self.INTERFACE_OPEN = False
 
-                        if event.key == pygame.K_m:
-                            if self.PNJ1:
+                        if event.key == pygame.K_e:
+                            if PNJ["PNJ1"] or PNJ["PNJ2"]:
                                 self.traverserObject.MakeTraverser()
                 
             
@@ -210,7 +223,11 @@ class Game(object):
                         if  not PNJ["PNJ1"]:
                             # écran noir + text de fin cinématique
                             self.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["Cinematique1End"])
-                            self.loadMapElement.AddPont(self.allpont, "pont1")
+                           
+                            # pont nb 1
+                            coordPont1 = self.LoadJsonMapValue("coordsMapObject", "ArbreSpecial Coords")
+                            coords = ((coordPont1[0] + 1)*CASEMAP, coordPont1[1]*CASEMAP) # on ajoute 1 pour etre sur la rivière
+                            self.loadMapElement.AddPont(self.allpont, "pont1", coords)
                         
                             # sup arbre
                             for object in self.collisionSprites:
@@ -219,6 +236,7 @@ class Game(object):
                             
                             # reset valeue individuelle
                             PNJ["PNJ1"] = True
+                
 
                     # reset values cinmatique
                     self.cinematique = False
@@ -229,6 +247,11 @@ class Game(object):
                     self.ouverture_du_noir(object.pos)
                     self.allSprites.draw(self.player.rect.center)
 
+            
+            # update jusqu'a construction du pont
+            if PNJ["PNJ2"] and INFOS["Niveau"] == 0:
+                if not self.buildPont.getConstructionStatue():
+                    self.buildPont.Update(self.player.rect.center)
 
 
                     

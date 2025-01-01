@@ -315,7 +315,8 @@ class PNJInterface(object):
                     if self.gestionnaire.pnjActuel == "PNJ1":
                         self.gestionnaire.CinematiqueBuild() # préparation au lancement cinematique
                     elif self.gestionnaire.pnjActuel == "PNJ2":
-                        print("hello ")
+                        INVENTORY.append("Planks")
+                        PNJ["PNJ2"] = True
         else:
             if self.compteurDialogue <= self.nombreDialogue:
                 self.pnj_text = TEXTE["Dialogues"][f"Niveau{INFOS["Niveau"]}"][self.gestionnaire.pnjActuel]["Alternatif"][f"Dialogue{self.compteurDialogue}"]

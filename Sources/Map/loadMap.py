@@ -185,9 +185,7 @@ class LoadMapPlaineRiviere(): # nv 0
                 PNJ(pos ,("PNJ3", "pnj3.png"), "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
         
     
-    def AddPont(self, groupPont, element) -> None:
-        coordPont1 = self.LoadJsonMapValue("coordsMapObject", "ArbreSpecial Coords")
-        coords = ((coordPont1[0] + 1)*CASEMAP, coordPont1[1]*CASEMAP) # on ajoute 1 pour etre sur la rivière
+    def AddPont(self, groupPont, element, coords) -> None:
         CollisionSprites(coords, self.pont1, element, (self.allSprites, self.collisionSprites, groupPont))
         
 
