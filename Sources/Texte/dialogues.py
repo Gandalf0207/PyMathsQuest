@@ -116,7 +116,7 @@ DialoguesFr = {
 DialoguesEn = {
     "Niveau0": {
         "PNJ1": {
-            "Nom" : "Abrakadabra",
+            "Nom" : "Lumber",
             "Principal": {
                 "Dialogue1": "Hello there! Well, you look like you're hitting a wall, huh! But don't give up, I'll help you out. This tree won't block your way for long !",
                 "Dialogue2": "Also, take this scroll, it might help you, you know. There's some gibberish written on it, so I'll leave it to you",
@@ -126,7 +126,7 @@ DialoguesEn = {
             }
         },
         "PNJ2": {
-            "Nom" : "Abrakadabra",
+            "Nom" : "Curious traveller",
             "Principal": {
                 "Dialogue1": "Hello, my friend! If you wish to cross the Anduin, you'll need to build a bridge. I don't have much except these planks, so I'll give them to you, and I hope you'll put them to good use.",
                 "Dialogue2": "I even have a manual, though I'm not sure if it will be helpful to you.",
