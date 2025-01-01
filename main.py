@@ -38,9 +38,6 @@ class Game(object):
         self.cinematique = False # cinématique
         self.cinematiqueObject = None # obj de la cinematique 
 
-        # infos traverser
-        self.traverserObject = Traverser(self)
-        self.buildPont = ConstruirePont()
 
 
     def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
@@ -65,6 +62,10 @@ class Game(object):
             
             self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
             self.settingsAll = SettingsAll(self.allSettings_surface, self.INTERFACE_OPEN)
+
+            # infos traverser
+            self.traverserObject = Traverser(self)
+            self.buildPont = ConstruirePont()
         else : 
             pass
 
@@ -180,14 +181,18 @@ class Game(object):
                         
                         if event.key == pygame.K_e:
                             self.INTERFACE_OPEN = self.pnj.OpenInterfaceElementClavier(self.INTERFACE_OPEN)
+                            
+                            # on regarde si on peut traverse / on traverse
+                            if PNJ["PNJ1"] or PNJ["PNJ2"]:
+                                self.traverserObject.MakeTraverser()
+
+                            # si pas possible, on construit le pont si possible
                             self.buildPont.BuildBridge(self.allpont, self.loadMapElement, self.player.rect.center)
 
                         if event.key == pygame.K_ESCAPE and self.INTERFACE_OPEN: # Close général interface build
                             self.INTERFACE_OPEN = False
 
-                        if event.key == pygame.K_e:
-                            if PNJ["PNJ1"] or PNJ["PNJ2"]:
-                                self.traverserObject.MakeTraverser()
+
                 
             
 
@@ -211,6 +216,7 @@ class Game(object):
             if not self.cinematique:
                 self.INTERFACE_OPEN, self.cinematique, self.cinematiqueObject = self.pnj.update(self.player.rect.center, self.INTERFACE_OPEN, event)
                 self.traverserObject.Update(self.player, self.allpont)
+                print(self.allpont)
             
             else:
                 self.cinematique, endCinematique = self.cinematiqueObject.Update(dt)

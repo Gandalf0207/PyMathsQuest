@@ -11,7 +11,7 @@ class Traverser(object):
         self.camera_offset = [0,0]
         self.npc_screen_pos = [0,0]
 
-        self.distanceMax = 100
+        self.distanceMax = 200 # pour pouvor le prendre dans les deux sens
 
         # infos de la map 
         self.map_width = LONGUEUR * CASEMAP
@@ -40,8 +40,8 @@ class Traverser(object):
 
     def Isclose(self):
         for pontObject in self.allPont:
-            coordsPont = pontObject.pos
-            playerPos = self.player.rect.center
+            coordsPont = pontObject.pos # top left coords
+            playerPos = self.player.rect.center # center player
             
 
             # Calculer la distance entre le joueur et le PNJ
@@ -84,3 +84,4 @@ class Traverser(object):
         self.player = player
         self.allPont = groupePont
         self.Isclose()
+        print("pont update ?")

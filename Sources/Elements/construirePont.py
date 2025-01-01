@@ -7,7 +7,7 @@ class ConstruirePont(object):
         self.map = self.LoadJsonMapValue("coordsMapBase", "AllMapInfo")
         self.posPossible = self.posPossibleBuild()
         self.construit = False
-        self.distanceMax = 200
+        self.distanceMax = 100
         self.npc_screen_pos = [0,0]
 
         self.camera_offset = [0,0]
@@ -39,7 +39,7 @@ class ConstruirePont(object):
 
         if self.ConstructionPossible(playerPos) and "Planks" in INVENTORY:
             INVENTORY.remove("Planks")
-            coords = self.coordsRiviere
+            coords = (self.coordsRiviere[0]*CASEMAP, self.coordsRiviere[1]*CASEMAP)
             loadMapElement.AddPont(allPont, "pont2", coords)
             self.construit = True
 
@@ -55,8 +55,9 @@ class ConstruirePont(object):
 
 
             # Calculer la distance entre le joueur et le PNJ
-            distance = sqrt((playerPos[0] - (coordRiviere[0] * CASEMAP + 64) )**2 + (playerPos[1] - (coordRiviere[1] * CASEMAP + 64))**2)
+            distance = sqrt(( (coordRiviere[0] * CASEMAP + 64) - playerPos[0])**2 + ((coordRiviere[1] * CASEMAP + 64) - playerPos[1])**2)
             
+
             self.camera_offset[0] = max(0, min(playerPos[0] - WINDOW_WIDTH // 2, self.map_width - WINDOW_WIDTH))
             self.camera_offset[1] = max(0, min(playerPos[1] - WINDOW_HEIGHT // 2, self.map_height - WINDOW_HEIGHT))
 
@@ -66,9 +67,18 @@ class ConstruirePont(object):
             print(coords, playerPos, distance)
 
             if distance <= self.distanceMax:
+
+                square_color = (255, 0, 0)  # Rouge
+                SQUARE_SIZE = 128
+                square_surface = pygame.Surface((SQUARE_SIZE, SQUARE_SIZE))
+                square_surface.fill(square_color)
+                self.displaySurface.blit(square_surface, (coords[0]*CASEMAP, coords[1]*CASEMAP))
+                
+
+
                 print("hello")
                 # valeur importante du pnj à proximité
-                self.coordsRiviere = coordRiviere
+                self.coordsRiviere = coords
 
                 # Dessiner la boîte d'indication "Press E"
                 font = pygame.font.Font(None, 24)
