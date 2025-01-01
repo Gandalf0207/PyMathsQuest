@@ -29,6 +29,16 @@ TEXTE = {
     "Elements" : None
 }
 
+INVENTORY = []
+
+PNJ = {
+    "PNJ1" : False,
+    "PNJ2" : False, 
+    "PNJ3" : False, 
+    "PNJ4" : False, 
+    "PNJ5" : False
+}
+
 EspacementPointRepereRiviere = 15
 CoupageMapRiviere = 50 # 1/3 de la longueur
 CouloirRiviere = 4

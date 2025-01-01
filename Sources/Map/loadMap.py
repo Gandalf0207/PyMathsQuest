@@ -8,12 +8,11 @@ from Sources.Personnages.pnj import *
 
 
 class LoadMapPlaineRiviere(): # nv 0
-    def __init__(self, niveau : int, allSprites : any, collisionSprites : any, allpnj : any) -> None:
+    def __init__(self, allSprites : any, collisionSprites : any, allpnj : any) -> None:
         """Méthode initialisation chargement de la map du niveau plaine et rivière. 
         Input : niveau : int, allSprites / collisionsSprites / allpnj : element pygame; Output : None"""
     
-        # Initialisation des valeurs
-        self.niveau = niveau
+
 
         # class des éléments pygame
         self.allPNJ = allpnj
@@ -48,6 +47,7 @@ class LoadMapPlaineRiviere(): # nv 0
         self.campFire = pygame.image.load(join("Images", "Obstacle", "Spawn", "campFire.png")).convert_alpha()
         self.banc = pygame.image.load(join("Images", "Obstacle", "Spawn", "banc.png")).convert_alpha()  
         self.pont1 = pygame.image.load(join("Images", "Pont", "BridgeTreeW-Ex128.png")).convert_alpha()
+        self.pont2 = pygame.image.load(join("Images", "Pont", "BridgePlanksW-Ex128.png")).convert_alpha()
 
     def Setup(self) -> None:
         """Méthode de build de tout les éléments sprites de la map jeu.
@@ -186,11 +186,12 @@ class LoadMapPlaineRiviere(): # nv 0
                 PNJ(pos ,("PNJ3", "pnj3.png"), "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
         
     
-    def AddPont(self, groupPont, element) -> None:
-        coordPont1 = self.LoadJsonMapValue("coordsMapObject", "ArbreSpecial Coords")
-        coords = ((coordPont1[0] + 1)*CASEMAP, coordPont1[1]*CASEMAP) # on ajoute 1 pour etre sur la rivière
-        CollisionSprites(coords, self.pont1, element, (self.allSprites, self.collisionSprites, groupPont))
-        
+    def AddPont(self, groupPont, element, coords) -> None:
+        if element == "pont1":
+            CollisionSprites(coords, self.pont1, element, (self.allSprites, self.collisionSprites, groupPont))
+        elif element  == "pont2":
+            CollisionSprites(coords, self.pont2, element, (self.allSprites, self.collisionSprites, groupPont))
+
 
     def Update(self) -> list:
         """Méthode de mise à jour (utilisation unique) + retour de map.
