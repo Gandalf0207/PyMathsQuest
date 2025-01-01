@@ -75,7 +75,6 @@ class ConstruirePont(object):
             # Limiter la caméra pour ne pas montrer le vide
             self.npc_screen_pos = [coordRiviere[0] * CASEMAP - self.camera_offset[0], coordRiviere[1]*CASEMAP - self.camera_offset[1]]
 
-            print(coords, playerPos, distance)
 
             if distance <= self.distanceMax:
 
@@ -85,9 +84,6 @@ class ConstruirePont(object):
                 square_surface.fill(square_color)
                 self.displaySurface.blit(square_surface, (coords[0]*CASEMAP, coords[1]*CASEMAP))
                 
-
-
-                print("hello")
                 # valeur importante du pnj à proximité
                 self.coordsRiviere = coords
 

@@ -317,6 +317,11 @@ class PNJInterface(object):
                     elif self.gestionnaire.pnjActuel == "PNJ2":
                         INVENTORY.append("Planks")
                         PNJ["PNJ2"] = True
+                    elif self.gestionnaire.pnjActuel == "PNJ3":
+                        INVENTORY.append("Pickage")
+                        PNJ["PNJ3"] = True
+                        print(INVENTORY)
+
         else:
             if self.compteurDialogue <= self.nombreDialogue:
                 self.pnj_text = TEXTE["Dialogues"][f"Niveau{INFOS["Niveau"]}"][self.gestionnaire.pnjActuel]["Alternatif"][f"Dialogue{self.compteurDialogue}"]
