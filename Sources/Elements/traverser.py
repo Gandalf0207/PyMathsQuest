@@ -9,7 +9,9 @@ class Traverser(object):
         self.gestionnaire = gestionnaire
 
         self.camera_offset = [0,0]
-        self.distanceMax = 200
+        self.npc_screen_pos = [0,0]
+
+        self.distanceMax = 200 # pour pouvor le prendre dans les deux sens
 
         # infos de la map 
         self.map_width = LONGUEUR * CASEMAP
@@ -22,7 +24,7 @@ class Traverser(object):
     def MakeTraverser(self):
         if self.Isclose():
             self.gestionnaire.fondu_au_noir()
-            self.gestionnaire.textScreen("Vous venez de traverser le pont")
+            self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["TraverserPont"])
 
             if self.player.rect.x < self.coordPontActuel[0]:
                 self.player.rect.x += CASEMAP*2
@@ -38,8 +40,8 @@ class Traverser(object):
 
     def Isclose(self):
         for pontObject in self.allPont:
-            coordsPont = pontObject.pos
-            playerPos = self.player.rect.center
+            coordsPont = pontObject.pos # top left coords
+            playerPos = self.player.rect.center # center player
             
 
             # Calculer la distance entre le joueur et le PNJ
@@ -60,7 +62,7 @@ class Traverser(object):
 
                 # Dessiner la boîte d'indication "Press E"
                 font = pygame.font.Font(None, 24)
-                text_surface = font.render("Press M", True, (255, 255, 255))
+                text_surface = font.render("Press E", True, (255, 255, 255))
                 text_rect = text_surface.get_rect()
                 text_rect.topleft = (self.npc_screen_pos[0] - 20, self.npc_screen_pos[1] - 40)
                 
@@ -82,3 +84,4 @@ class Traverser(object):
         self.player = player
         self.allPont = groupePont
         self.Isclose()
+        print("pont update ?")

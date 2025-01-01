@@ -25,14 +25,13 @@ class PNJ(pygame.sprite.Sprite):
 
 
 class GestionPNJ(object):
-    def __init__(self, displaySurface : any, niveau : int, allpnjGroup : any, INTERFACE_OPEN : bool, mapCollision : list) -> None:
+    def __init__(self, displaySurface : any, allpnjGroup : any, INTERFACE_OPEN : bool, mapCollision : list) -> None:
         """Méthode initialisation gestion principal pnj : proche, interface discussion...
         Input : displaySurface / allpnGroupe : pygame element, niveau : int, INTERFACE_OPEN : bool (check all interface), mapCollision : list (check path cinématique)"""
 
         # Initialisation valeur de main
         self.displaySurface = displaySurface        
         self.allPNJ = allpnjGroup
-        self.niveau = niveau
         self.INTERFACE_OPEN = INTERFACE_OPEN
         self.map = mapCollision # obstacle pour cinématique déplacement 
 
@@ -61,8 +60,6 @@ class GestionPNJ(object):
         self.cinematique = False
         self.cinematiqueObject = None
 
-        # chagement dictionnaires des dialogues 
-        self.allDialogues = self.loadAllDialogues()
 
     def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
         """Récupération des valeur stockées dans le fichier json pour les renvoyer quand nécéssaire à l'aide des indices données pour les récupérer"""
@@ -78,7 +75,7 @@ class GestionPNJ(object):
 
         self.cinematique = True
         
-        if self.niveau ==0:
+        if INFOS["Niveau"] ==0:
             goal = self.LoadJsonMapValue("coordsMapObject","ArbreSpecial Coords")
             pathAcces = ["-", "A", "P", "S"]
 
@@ -99,16 +96,6 @@ class GestionPNJ(object):
 
         # modification de l'object pnj. Intermédiaire : class d'appel
         self.pnjObj.discussion = True
-
-
-    def loadAllDialogues(self) -> None:
-        """Méthode de chargement du dictionnaire des dialogues.
-        Input / Output : None"""
-
-        # ouverture fichier json
-        with open(join("Sources", "Ressources","Dialogues.json"), 'r') as file:
-            data = json.load(file)
-            return data #retour du dictionnaire de données (dialogues)
 
 
     def isClose(self, playerPos : tuple) -> bool:
@@ -183,7 +170,6 @@ class GestionPNJ(object):
 
         # retour state interface global
         return self.INTERFACE_OPEN
-
 
     def update(self, playerPos : tuple, INTERFACE_OPEN : bool, event: any) -> bool:
         """Méthode d'update de l'interface d'appel de discussion + gestion pnj / proximité.

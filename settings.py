@@ -19,6 +19,25 @@ CELL_SIZE = 2
 WINDOW_WIDTH, WINDOW_HEIGHT = 1280,720 
 COORS_BOX_ALL_SETTINGS = (WINDOW_WIDTH-436, WINDOW_HEIGHT-160)
 
+INFOS = {
+    "Niveau" : 0,
+    "Langue" : "Fr"
+}
+
+TEXTE = {
+    "Dialogues" : None,
+    "Elements" : None
+}
+
+INVENTORY = []
+
+PNJ = {
+    "PNJ1" : False,
+    "PNJ2" : False, 
+    "PNJ3" : False, 
+    "PNJ4" : False, 
+    "PNJ5" : False
+}
 
 EspacementPointRepereRiviere = 15
 CoupageMapRiviere = 50 # 1/3 de la longueur
