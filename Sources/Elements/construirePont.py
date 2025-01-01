@@ -2,9 +2,12 @@ from settings import *
 
 class ConstruirePont(object):
 
-    def __init__(self):
+    def __init__(self, gestionnnaire):
+        self.gestionnaire = gestionnnaire
+
         self.riviere2 = self.LoadJsonMapValue("coordsMapBase", "Riviere2 Coords")
         self.map = self.LoadJsonMapValue("coordsMapBase", "AllMapInfo")
+
         self.posPossible = self.posPossibleBuild()
         self.construit = False
         self.distanceMax = 100
@@ -39,9 +42,17 @@ class ConstruirePont(object):
 
         if self.ConstructionPossible(playerPos) and "Planks" in INVENTORY:
             INVENTORY.remove("Planks")
+
+            self.gestionnaire.fondu_au_noir()
+            self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["BuildBridge"])
+
+
             coords = (self.coordsRiviere[0]*CASEMAP, self.coordsRiviere[1]*CASEMAP)
             loadMapElement.AddPont(allPont, "pont2", coords)
             self.construit = True
+
+            self.gestionnaire.ouverture_du_noir(playerPos)
+
 
         
     def ConstructionPossible(self, playerPos):
@@ -82,7 +93,7 @@ class ConstruirePont(object):
 
                 # Dessiner la boîte d'indication "Press E"
                 font = pygame.font.Font(None, 24)
-                text_surface = font.render(TEXTE["Elements"]["Niveau0"]["BuildBridge"], True, (255, 255, 255))
+                text_surface = font.render(TEXTE["Elements"]["Niveau0"]["CanBuildBridge"], True, (255, 255, 255))
                 text_rect = text_surface.get_rect()
                 text_rect.topleft = (self.npc_screen_pos[0] - 20, self.npc_screen_pos[1] - 40)
                 

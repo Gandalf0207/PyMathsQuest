@@ -65,7 +65,7 @@ class Game(object):
 
             # infos traverser
             self.traverserObject = Traverser(self)
-            self.buildPont = ConstruirePont()
+            self.buildPont = ConstruirePont(self)
         else : 
             pass
 
