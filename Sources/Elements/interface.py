@@ -180,7 +180,6 @@ class BundleInterface(object):
         self.planks = pygame.image.load(join("Images", "Item", "PlanksItem.png")).convert_alpha()
         self.oldAxe = pygame.image.load(join("Images", "Item", "OldAxeItem.png")).convert_alpha()
         self.pickaxe = pygame.image.load(join("Images", "Item", "Pickaxe.png")).convert_alpha()
-        self.noItem = pygame.image.load(join("Images", "Item", "noItem.png")).convert_alpha()
 
     def CreateElementRect(self):
         self.surfaceSlot1 = pygame.Surface((96,96))
@@ -209,8 +208,6 @@ class BundleInterface(object):
         text = self.font.render(TEXTE["Elements"]["HotBar"]["Bundle"]["Title"], True, (0,0,0))
         self.interfaceSurface.blit(text, (10,10))
 
-        longueur = 0
-        hauteur = 0
         indice = 0
         for key in INVENTORY:
             elementSlot = self.allSurfaceSlot[indice]
@@ -222,20 +219,14 @@ class BundleInterface(object):
             elif key == "Pickaxe" and INVENTORY["Pickaxe"] > 0: 
                 surf = self.pickaxe
             else:
-                surf = self.noItem
+                surf = None
+            
+            # si il y a un item à afficher
+            if surf != None:
+                elementSlot.blit(surf, (0,0))
+                self.interfaceSurface.blit(elementSlot, self.coordsSurface[indice])
 
-
-            elementSlot.blit(surf, (0,0))
-            self.interfaceSurface.blit(elementSlot, self.coordsSurface[indice])
-
-
-            if longueur ==4 : 
-                longueur = 0
-                hauteur += 1
-            else:
-                longueur += 1
-
-            indice += 1
+                indice += 1
 
         
     def CloseInterface(self) -> None:
