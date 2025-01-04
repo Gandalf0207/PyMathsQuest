@@ -4,9 +4,9 @@ from Sources.Elements.interface import *
 
 class PNJ(pygame.sprite.Sprite):
     
-    def __init__(self, pos : tuple, pathIMAGE : list,numpnj : str,  groups : any) -> None:
+    def __init__(self, pos : tuple ,numpnj : str,  groups : any) -> None:
         """Méthode initialisation object pnj
-        Input : pos : tuple, pathIMAGE : list, numpnj : str, groups : element pygame. Output : None"""
+        Input : pos : tuple, numpnj : str, groups : element pygame. Output : None"""
 
         # initialiation elements
         super().__init__(groups)
@@ -14,15 +14,124 @@ class PNJ(pygame.sprite.Sprite):
         self.pos = (pos[0] // CASEMAP, pos[1] // CASEMAP) # pos sur double list
 
         # images + hitbox
-        self.image = pygame.image.load(join("Images","PNJ", pathIMAGE[0], pathIMAGE[1])).convert_alpha() 
-        self.rect = self.image.get_frect(center = pos)        
-        self.hitbox = self.rect.inflate(-60,0)
+        self.direction = "down"
+        self.state, self.frame_index = self.direction, 0
+        self.image = pygame.image.load(join("Images","PNJ", numpnj,"down", "0.png")).convert_alpha() # première image 
+        self.rect = self.image.get_frect(center = pos)
+        self.hitbox = self.rect.inflate(-60,0) # collision
+
         # Centrer la hitbox par rapport à l'image
         self.hitbox.center = self.rect.center
 
         # bool de check  : double dialogues discussion
         self.discussion = False
 
+        self.load_images()
+        self.speed = 300
+
+
+    def load_images(self) -> None:
+        """Méthode de chargement de toutes les images pour l'animation
+        Input / Output : None"""
+
+        # dico stockage images
+        self.frames = {'left' : [], 'right' : [],'up' : [],'down' : []}
+
+        # parcours du folder et ajout de toutes les images
+        for state in self.frames.keys():
+            for folder_path, sub_folders, file_names in walk(join("Images","PNJ", self.numPNJ, state)):
+                if file_names:
+                    for file_name in sorted(file_names, key= lambda name: int(name.split('.')[0])):
+                        full_path = join(folder_path, file_name)
+                        surf = pygame.image.load(full_path).convert_alpha()
+                        self.frames[state].append(surf)
+
+    def Animate(self ,dt : int) -> None:
+        """Méthode animation direction sprites player
+        Intput : dt : int; Output : None"""
+
+        # get state
+        self.state = self.direction
+
+        #animation
+        self.frame_index = self.frame_index + 10*dt if self.direction else 0
+        self.image = self.frames[self.state][int(self.frame_index) % len(self.frames[self.state])] # changement frame pour animation
+
+    def ModifSpeed(self, pathDeplacement):
+        nbPoint = len(pathDeplacement)
+        if nbPoint > 30:
+            if self.speed != 800:
+                self.speed = self.speed + 1 if self.speed < 800 else self.speed - 1
+        elif nbPoint > 15 :
+            if self.speed != 500:
+                self.speed = self.speed + 1 if self.speed < 500 else self.speed - 1
+        else:
+            if self.speed != 300:
+                self.speed = self.speed + 1 if self.speed < 300 else self.speed - 1
+
+
+
+    def Move(self, dt: int, pointSuivant, pathDeplacement) -> None:
+        """Déplace le PNJ vers le point cible selon les coordonnées données par la cinématique.
+        Input : dt : int (delta time)
+        Output : None
+        """
+        if pointSuivant:  # Vérifie si un point cible existe
+
+            # Extraire les coordonnées cibles
+            target_x, target_y = pointSuivant
+
+            # Calcul des différences entre la position actuelle et la cible
+            dx = target_x - self.hitbox.x
+            dy = target_y - self.hitbox.y
+
+            # Distance totale au point cible
+            distance = sqrt(dx**2 + dy**2)
+
+            self.direction = ""
+            if dx > 0:
+                self.direction = "right"
+            elif dx < 0:
+                self.direction = "left"
+            if dy > 0:
+                self.direction = "down"
+            elif dy < 0:
+                self.direction = "up"
+
+            if distance == 0:  # Si le PNJ est déjà sur la cible
+                if pathDeplacement:  # Passer au point suivant si disponible
+                    pointSuivant = pathDeplacement.pop(0)
+                else:
+                    pointSuivant = None  # Fin du chemin
+                return
+
+            # Si la distance restante est inférieure au déplacement possible
+            if distance <= self.speed * dt:
+                # Atteindre directement la cible
+                self.hitbox.topleft = (target_x, target_y)
+                self.rect.topleft = self.hitbox.topleft  # Synchroniser la rect
+                if pathDeplacement:  # Passer au prochain point
+                    pointSuivant = pathDeplacement.pop(0)
+                else:
+                    pointSuivant = None  # Fin du chemin
+            else:
+                # Calcul du déplacement proportionnel à la direction
+                move_x = (self.speed * dt * dx) / distance
+                move_y = (self.speed * dt * dy) / distance
+
+                # Appliquer le déplacement
+                self.hitbox.x += move_x
+                self.hitbox.y += move_y
+                self.rect.topleft = self.hitbox.topleft  # Synchroniser la rect
+                
+
+        return pointSuivant, pathDeplacement
+
+    def Update(self, dt, pointSuivant, pathDeplacement):
+        self.ModifSpeed(pathDeplacement)
+        pointSuivant, pathDeplacement = self.Move(dt, pointSuivant, pathDeplacement)
+        self.Animate(dt)
+        return pointSuivant, pathDeplacement
 
 class GestionPNJ(object):
     def __init__(self, displaySurface : any, allpnjGroup : any, INTERFACE_OPEN : bool, mapCollision : list) -> None:
@@ -86,6 +195,8 @@ class GestionPNJ(object):
         """Met fin à la cinématique.
         Input / Output : None"""
 
+        self.pnjObj.direction, self.pnjObj.frame_index = "down", 0
+        self.pnjObj.Animate(0)
         self.cinematique = False
         self.cinematiqueObject = None
 
@@ -194,9 +305,6 @@ class GestionPNJ(object):
 
 
 
-
-
-
 class CinematiquePNJ(object):
     def __init__(self, goal, pnjObject, mapCalcul, pathAccessible) -> None:
         # Initialisation des valeurs
@@ -209,11 +317,12 @@ class CinematiquePNJ(object):
         # Récupération des attributs graphiques du PNJ
         self.rect = self.pnjObject.rect  # Utiliser la hitbox comme référence principale
         self.hitbox = self.pnjObject.hitbox  # Synchroniser avec la hitbox du PNJ
-        self.speed = 300
 
         # Calcul et définition du chemin
         self.GetPath()
         self.SetPath()
+
+
 
     def GetPath(self):
         """Calcul du chemin à l'aide de l'algorithme A*"""
@@ -227,59 +336,6 @@ class CinematiquePNJ(object):
         else:
             self.pointSuivant = None  # Pas de chemin à suivre
 
-    def ModifSpeed(self):
-        nbPoint = len(self.pathDeplacement)
-        if nbPoint > 30:
-            if self.speed != 800:
-                self.speed = self.speed + 1 if self.speed < 800 else self.speed - 1
-        elif nbPoint > 15 :
-            if self.speed != 500:
-                self.speed = self.speed + 1 if self.speed < 500 else self.speed - 1
-        else:
-            if self.speed != 300:
-                self.speed = self.speed + 1 if self.speed < 300 else self.speed - 1
-
-    def Move(self, dt: int) -> None:
-        """Déplace le PNJ vers le point cible selon les coordonnées données par la cinématique.
-        Input : dt : int (delta time)
-        Output : None
-        """
-        if self.pointSuivant:  # Vérifie si un point cible existe
-            # Extraire les coordonnées cibles
-            target_x, target_y = self.pointSuivant
-
-            # Calcul des différences entre la position actuelle et la cible
-            dx = target_x - self.hitbox.x
-            dy = target_y - self.hitbox.y
-
-            # Distance totale au point cible
-            distance = sqrt(dx**2 + dy**2)
-
-            if distance == 0:  # Si le PNJ est déjà sur la cible
-                if self.pathDeplacement:  # Passer au point suivant si disponible
-                    self.pointSuivant = self.pathDeplacement.pop(0)
-                else:
-                    self.pointSuivant = None  # Fin du chemin
-                return
-
-            # Si la distance restante est inférieure au déplacement possible
-            if distance <= self.speed * dt:
-                # Atteindre directement la cible
-                self.hitbox.topleft = (target_x, target_y)
-                self.rect.topleft = self.hitbox.topleft  # Synchroniser la rect
-                if self.pathDeplacement:  # Passer au prochain point
-                    self.pointSuivant = self.pathDeplacement.pop(0)
-                else:
-                    self.pointSuivant = None  # Fin du chemin
-            else:
-                # Calcul du déplacement proportionnel à la direction
-                move_x = (self.speed * dt * dx) / distance
-                move_y = (self.speed * dt * dy) / distance
-
-                # Appliquer le déplacement
-                self.hitbox.x += move_x
-                self.hitbox.y += move_y
-                self.rect.topleft = self.hitbox.topleft  # Synchroniser la rect
 
     def Replacement(self):
         """Replace le PNJ une case au-dessus de la position cible."""
@@ -295,8 +351,10 @@ class CinematiquePNJ(object):
 
 
     def Update(self, dt):
-        self.ModifSpeed()
-        self.Move(dt)
+
+
+        self.pointSuivant, self.pathDeplacement = self.pnjObject.Update(dt, self.pointSuivant, self.pathDeplacement)
+
         if self.pathDeplacement != []:
             return True, False
         else:
