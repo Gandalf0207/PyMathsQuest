@@ -18,6 +18,16 @@ ElementsFr = {
         "Book" : {
             "Title" : "Livre de cours"
             },  
+
+        "IdeaTips": {
+            "Niveau0" : {
+                "SeePNJ" : "Discuter avec le pnj sur la map. Regarder la minimap",
+                "LearnCrossBridge" : "Traverser le pont. Se rapprocher du pont qui se trouve à côté du bûcheron.",
+                "BuildBridge" : "Construire le pont. Se rapprocher de la rivière pour pouvoir construire",
+                "CrossBridge" : "Traverser le pont pour acceder à la suite.",
+                "MineRock" : "Utiliser la pioche pour casser le rocher qui bloque le pont de sortie",
+            },
+        },
     },
 
     "InterfacePNJ" : {
@@ -52,6 +62,16 @@ ElementsEn = {
         "Book" : {
             "Title" : "Course Book"
             },  
+
+        "IdeaTips": {
+            "Niveau0" : {
+                "SeePNJ" : "Discuter avec le pnj sur la map. Regarder la minimap",
+                "LearnCrossBridge" : "Traverser le pont. Se rapprocher du pont.",
+                "BuildBridge" : "Construire le pont. Se rapprocher de la rivière pour pouvoir construire",
+                "CrossBridge" : "Traverser le pont pour acceder à la suite.",
+                "MineRock" : "Utiliser la pioche pour casser le rocher qui bloque le pont de sortie",
+            },
+        },
     },
 
     "InterfacePNJ" : {

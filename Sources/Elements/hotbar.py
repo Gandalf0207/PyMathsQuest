@@ -65,6 +65,106 @@ class MiniMap:
             pygame.draw.rect(self.MiniMapSurface, (207, 145, 31), pnj_rect)
 
 
+class InfosTips:
+
+    def __init__(self, screen):
+
+        # initialisation
+        self.IdeaTipsSurface = screen
+        
+        # creation element
+        self.font = pygame.font.Font(None, 20)
+        self.text = None
+        self.indexTexte = 0
+        self.loadImage()
+        self.GetText(False)
+    
+    def loadImage(self):
+        self.idea = pygame.image.load(join("Images", "HotBar", "LightBulbIcon.png")).convert_alpha()
+
+
+    def GetText(self, infoUpate):
+        """ infoUpdate permet de déterminer si un evenement à eu lieu : ex traverser un pont. 
+        Ce bool permet de séparer deux tips qui se passent dans un meme moment"""
+        
+        self.indexTexte = 0
+
+
+        if INFOS["Niveau"] == 0:
+            if not PNJ["PNJ1"] and not PNJ["PNJ2"] and not PNJ["PNJ3"]:
+                self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"]["SeePNJ"]
+
+            elif PNJ["PNJ1"] and not PNJ["PNJ2"] and not PNJ["PNJ3"] and not infoUpate:
+                self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"]["LearnCrossBridge"]
+
+            elif PNJ["PNJ1"] and not PNJ["PNJ2"] and not PNJ["PNJ3"] and infoUpate:
+                self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"]["SeePNJ"]
+ 
+            elif PNJ["PNJ1"] and PNJ["PNJ2"] and not PNJ["PNJ3"]:
+                self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"]["BuildBridge"]
+
+            elif PNJ["PNJ1"] and PNJ["PNJ2"] and not PNJ["PNJ3"] and not infoUpate:
+                self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"]["CrossBridge"]
+
+            elif PNJ["PNJ1"] and PNJ["PNJ2"] and not PNJ["PNJ3"] and infoUpate:
+                self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"]["SeePNJ"]
+
+            elif PNJ["PNJ1"] and PNJ["PNJ2"] and PNJ["PNJ3"] and not infoUpate:
+                self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"]["MineRock"]
+
+            else:
+                self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"]["CrossBridge"]
+ 
+
+        elif INFOS["Niveau"] == 1:
+            pass
+
+
+    def BuildElement(self):
+        # image
+        self.IdeaTipsSurface.fill("#ffffff")
+        self.IdeaTipsSurface.blit(self.idea, (10,27))
+        
+        # texte
+        # bloc gestion texte 
+        if self.indexTexte < len(self.text):
+            self.indexTexte += 1
+        # Mettre à jour le texte affiché
+        self.displayed_text = self.text[:self.indexTexte]
+
+        # Fonction simple pour découper le texte
+        def wrap_text(text, font, max_width):
+            words = text.split(' ')
+            lines = []
+            current_line = ''
+
+            for word in words:
+                test_line = f"{current_line} {word}".strip()
+                if font.size(test_line)[0] <= max_width:
+                    current_line = test_line
+                else:
+                    lines.append(current_line)
+                    current_line = word
+            if current_line:
+                lines.append(current_line)
+            return lines
+
+        max_width = 400
+        wrapped_lines = wrap_text(self.displayed_text, self.font, max_width)
+
+        # Affichage des lignes
+        y_offset = 30  # Position Y de départ
+        line_height = self.font.size("Tg")[1]  # Hauteur d'une ligne
+        for i, line in enumerate(wrapped_lines):
+            line_surface = self.font.render(line, True, (0,0,0))
+            self.IdeaTipsSurface.blit(line_surface, (120, y_offset + i * line_height))
+    
+    def UpdateTexte(self, infoUpdate = False):
+        self.GetText(infoUpdate)
+
+    def Update(self):
+        self.BuildElement()
+
 
 
 class SettingsAll:
