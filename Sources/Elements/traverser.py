@@ -11,7 +11,7 @@ class Traverser(object):
         self.camera_offset = [0,0]
         self.npc_screen_pos = [0,0]
 
-        self.distanceMax = 200 # pour pouvor le prendre dans les deux sens
+        self.distanceMax = 100 # depuis centre element pont
 
         # infos de la map 
         self.map_width = LONGUEUR * CASEMAP
@@ -40,7 +40,7 @@ class Traverser(object):
 
     def Isclose(self):
         for pontObject in self.allPont:
-            coordsPont = pontObject.pos # top left coords
+            coordsPont = (pontObject.pos[0] + CASEMAP // 2, pontObject.pos[1] + CASEMAP // 2) # top left coords -> center coords
             playerPos = self.player.rect.center # center player
             
 

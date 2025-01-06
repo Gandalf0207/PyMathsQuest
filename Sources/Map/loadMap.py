@@ -179,11 +179,11 @@ class LoadMapPlaineRiviere(): # nv 0
         for coordsPNJ in coordsPNJList:
             pos = (coordsPNJ[0]*CASEMAP, coordsPNJ[1]*CASEMAP) # calcul coords pygame
             if coordsPNJ[2] == 1 : 
-                PNJ(pos ,("PNJ1", "pnj1.png"), "PNJ1", (self.allPNJ, self.allSprites, self.collisionSprites))
+                PNJ(pos , "PNJ1", (self.allPNJ, self.allSprites, self.collisionSprites))
             if coordsPNJ[2] == 2 : 
-                PNJ(pos ,("PNJ2", "pnj2.png"), "PNJ2", (self.allPNJ, self.allSprites, self.collisionSprites))
+                PNJ(pos , "PNJ2", (self.allPNJ, self.allSprites, self.collisionSprites))
             if coordsPNJ[2] == 3 :
-                PNJ(pos ,("PNJ3", "pnj3.png"), "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
+                PNJ(pos , "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
         
     
     def AddPont(self, groupPont, element, coords) -> None:

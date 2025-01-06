@@ -40,8 +40,8 @@ class ConstruirePont(object):
 
     def BuildBridge(self, allPont, loadMapElement, playerPos):
 
-        if self.ConstructionPossible(playerPos) and "Planks" in INVENTORY:
-            INVENTORY.remove("Planks")
+        if self.ConstructionPossible(playerPos) and  INVENTORY["Planks"] > 0:
+            INVENTORY["Planks"] -=1
 
             self.gestionnaire.fondu_au_noir()
             self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["BuildBridge"])

@@ -166,9 +166,39 @@ class BundleInterface(object):
         self.interfaceSurface = pygame.Surface((WINDOW_WIDTH/2, WINDOW_HEIGHT/2),  pygame.SRCALPHA)
         self.interfaceSurface.fill("#ffffff")
 
+
+
         # texte 
         self.font = pygame.font.Font(None, 36)
+        self.font1 = pygame.font.Font(None, 15)
 
+        # load image
+        self.LoadImage()
+        self.CreateElementRect()
+
+    def LoadImage(self):
+        self.planks = pygame.image.load(join("Images", "Item", "PlanksItem.png")).convert_alpha()
+        self.oldAxe = pygame.image.load(join("Images", "Item", "OldAxeItem.png")).convert_alpha()
+        self.pickaxe = pygame.image.load(join("Images", "Item", "Pickaxe.png")).convert_alpha()
+
+    def CreateElementRect(self):
+        self.surfaceSlot1 = pygame.Surface((96,96))
+        self.surfaceSlot2 = pygame.Surface((96,96))
+        self.surfaceSlot3 = pygame.Surface((96,96))
+        self.surfaceSlot4 = pygame.Surface((96,96))
+        self.surfaceSlot5 = pygame.Surface((96,96))
+        self.surfaceSlot6 = pygame.Surface((96,96))
+        self.surfaceSlot7 = pygame.Surface((96,96))
+        self.surfaceSlot8 = pygame.Surface((96,96))
+        self.surfaceSlot9 = pygame.Surface((96,96))
+        self.surfaceSlot10 = pygame.Surface((96,96))
+        self.surfaceSlot11 = pygame.Surface((96,96))
+        self.surfaceSlot12 = pygame.Surface((96,96))
+        self.allSurfaceSlot = [self.surfaceSlot1, self.surfaceSlot2, self.surfaceSlot3, self.surfaceSlot4, self.surfaceSlot5, self.surfaceSlot6, self.surfaceSlot7, self.surfaceSlot8, self.surfaceSlot9, self.surfaceSlot1, self.surfaceSlot11, self.surfaceSlot12]
+        self.coordsSurface = [
+                            (56,40), (198,40), (345,40), (492, 40), 
+                            (51, 156), (198, 156), (345, 156), (492, 156), 
+                            (51, 262), (198, 262), (345, 262), (492, 262) ]
 
     def BuildInterface(self) -> None:
         """Méthode : Création de tout les éléments composant l'interface. Input / Output : None"""
@@ -178,7 +208,27 @@ class BundleInterface(object):
         text = self.font.render(TEXTE["Elements"]["HotBar"]["Bundle"]["Title"], True, (0,0,0))
         self.interfaceSurface.blit(text, (10,10))
 
+        indice = 0
+        for key in INVENTORY:
+            elementSlot = self.allSurfaceSlot[indice]
+            elementSlot.fill((255,255,255))
+            if key == "OldAxe" and INVENTORY["OldAxe"] > 0: 
+                surf = self.oldAxe
+            elif key == "Planks" and INVENTORY["Planks"] > 0: 
+                surf = self.planks
+            elif key == "Pickaxe" and INVENTORY["Pickaxe"] > 0: 
+                surf = self.pickaxe
+            else:
+                surf = None
+            
+            # si il y a un item à afficher
+            if surf != None:
+                elementSlot.blit(surf, (0,0))
+                self.interfaceSurface.blit(elementSlot, self.coordsSurface[indice])
 
+                indice += 1
+
+        
     def CloseInterface(self) -> None:
         """Méthode de fermeture de l'interface. Input / Output : None"""
 
@@ -313,12 +363,13 @@ class PNJInterface(object):
                 self.CloseInterface() # fermeture interface
                 if INFOS["Niveau"] ==0:
                     if self.gestionnaire.pnjActuel == "PNJ1":
+                        INVENTORY["OldAxe"] += 1
                         self.gestionnaire.CinematiqueBuild() # préparation au lancement cinematique
                     elif self.gestionnaire.pnjActuel == "PNJ2":
-                        INVENTORY.append("Planks")
+                        INVENTORY["Planks"] += 1
                         PNJ["PNJ2"] = True
                     elif self.gestionnaire.pnjActuel == "PNJ3":
-                        INVENTORY.append("Pickaxe")
+                        INVENTORY["Pickaxe"] += 1
                         PNJ["PNJ3"] = True
 
         else:
