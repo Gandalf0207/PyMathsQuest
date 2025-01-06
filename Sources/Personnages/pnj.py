@@ -132,11 +132,12 @@ class PNJ(pygame.sprite.Sprite):
         return pointSuivant, pathDeplacement
 
 class GestionPNJ(object):
-    def __init__(self, displaySurface : any, allpnjGroup : any, INTERFACE_OPEN : bool, mapCollision : list) -> None:
+    def __init__(self, displaySurface : any, allpnjGroup : any, INTERFACE_OPEN : bool, mapCollision : list, gestionnaire) -> None:
         """Méthode initialisation gestion principal pnj : proche, interface discussion...
         Input : displaySurface / allpnGroupe : pygame element, niveau : int, INTERFACE_OPEN : bool (check all interface), mapCollision : list (check path cinématique)"""
 
         # Initialisation valeur de main
+        self.gestionnaire = gestionnaire
         self.displaySurface = displaySurface        
         self.allPNJ = allpnjGroup
         self.INTERFACE_OPEN = INTERFACE_OPEN
@@ -279,6 +280,10 @@ class GestionPNJ(object):
 
         # retour state interface global
         return self.INTERFACE_OPEN
+    
+    def ChangeTextInfosBox(self):
+        self.gestionnaire.ideaTips.UpdateTexte()
+
 
     def update(self, playerPos : tuple, INTERFACE_OPEN : bool, event: any) -> bool:
         """Méthode d'update de l'interface d'appel de discussion + gestion pnj / proximité.

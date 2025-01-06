@@ -4,7 +4,7 @@ from Sources.Elements.groups import *
 from Sources.Map.loadMap import *
 from Sources.Elements.hotbar import *
 from Sources.Personnages.pnj import *
-from Sources.Texte.creationTexte import *
+from Sources.Ressources.Texte.creationTexte import *
 from Sources.Elements.construirePont import *
 
 
@@ -31,6 +31,7 @@ class Game(object):
 
         # all surface secondaire (hotbar)
         self.minimap_surface = pygame.Surface((300, 150))
+        self.ideaTips_surface = pygame.Surface((514, 150))
         self.allSettings_surface = pygame.Surface((426, 150))
 
         # boolean de check 
@@ -57,10 +58,11 @@ class Game(object):
         if INFOS["Niveau"] ==0:
             self.loadMapElement = LoadMapPlaineRiviere(self.allSprites, self.collisionSprites, self.allPNJ)
             self.map, self.mapBase = self.loadMapElement.Update()
-            self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map)
+            self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
             # Initialisation dans votre setup
             
             self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
+            self.ideaTips = InfosTips(self.ideaTips_surface)
             self.settingsAll = SettingsAll(self.allSettings_surface, self.INTERFACE_OPEN)
 
             # infos traverser
@@ -210,9 +212,11 @@ class Game(object):
             # Afficher la minimap sur l'écran principal + menu settings all
             if not self.cinematique:
                 self.minimap.Update(self.player.rect.center, self.allPNJ)
+                self.ideaTips.Update()
                 self.settingsAll.Update(event)
 
                 self.displaySurface.blit(self.minimap_surface, (10, WINDOW_HEIGHT-160))
+                self.displaySurface.blit(self.ideaTips_surface, COORDS_BOX_IDEAS_TIPS)
                 self.displaySurface.blit(self.allSettings_surface, COORS_BOX_ALL_SETTINGS)
             
             if not self.cinematique:
@@ -243,6 +247,7 @@ class Game(object):
                             
                             # reset valeue individuelle
                             PNJ["PNJ1"] = True
+                            self.ideaTips.UpdateTexte()
                 
 
                     # reset values cinmatique

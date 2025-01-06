@@ -1,5 +1,5 @@
 from settings import *
-from Sources.Texte.creationTexte import *
+from Sources.Ressources.Texte.creationTexte import *
 
 class SettingsInterface(object):
 
@@ -368,9 +368,11 @@ class PNJInterface(object):
                     elif self.gestionnaire.pnjActuel == "PNJ2":
                         INVENTORY["Planks"] += 1
                         PNJ["PNJ2"] = True
+                        self.gestionnaire.ChangeTextInfosBox()
                     elif self.gestionnaire.pnjActuel == "PNJ3":
                         INVENTORY["Pickaxe"] += 1
                         PNJ["PNJ3"] = True
+                        self.gestionnaire.ChangeTextInfosBox()
 
         else:
             if self.compteurDialogue <= self.nombreDialogue:
