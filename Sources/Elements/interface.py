@@ -470,6 +470,7 @@ class PNJInterface(object):
 
         # Fermer l'interface avec ESC
         keys = pygame.key.get_pressed()
+
         if keys[pygame.K_ESCAPE]:  # Fermer avec ESC
             self.CloseInterface()
 
@@ -483,3 +484,11 @@ class PNJInterface(object):
                 if self.btnRectSkip.collidepoint(event.pos):
                     self.loadText() # pasage au dialogue suivant
                     self.BuildInterface() # build des éléments
+
+        if keys[pygame.K_SPACE] : 
+            current_time = pygame.time.get_ticks()
+            if current_time - self.last_click_time > self.click_delay:
+                self.last_click_time = current_time
+
+                self.loadText()
+                self.BuildInterface()   

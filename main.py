@@ -194,7 +194,9 @@ class Game(object):
 
 
                 
-            
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    print("hello") 
 
             self.allSprites.update(dt, self.cinematique)
             self.displaySurface.fill("#000000")
