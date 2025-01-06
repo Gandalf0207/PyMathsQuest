@@ -102,10 +102,9 @@ class PNJ(pygame.sprite.Sprite):
                     pointSuivant = pathDeplacement.pop(0)
                 else:
                     pointSuivant = None  # Fin du chemin
-                return pointSuivant, pathDeplacement
 
             # Si la distance restante est inférieure au déplacement possible
-            if distance <= self.speed * dt:
+            elif distance <= self.speed * dt:
                 # Atteindre directement la cible
                 self.hitbox.topleft = (target_x, target_y)
                 self.rect.topleft = self.hitbox.topleft  # Synchroniser la rect
