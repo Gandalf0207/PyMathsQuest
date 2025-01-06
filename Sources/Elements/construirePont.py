@@ -53,6 +53,8 @@ class ConstruirePont(object):
 
             self.gestionnaire.ouverture_du_noir(playerPos)
 
+            self.gestionnaire.ideaTips.UpdateTexte()
+
 
         
     def ConstructionPossible(self, playerPos):

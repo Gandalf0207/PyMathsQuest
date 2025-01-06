@@ -100,7 +100,7 @@ class InfosTips:
             elif PNJ["PNJ1"] and not PNJ["PNJ2"] and not PNJ["PNJ3"] and infoUpate:
                 self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"]["SeePNJ"]
  
-            elif PNJ["PNJ1"] and PNJ["PNJ2"] and not PNJ["PNJ3"]:
+            elif PNJ["PNJ1"] and PNJ["PNJ2"] and not PNJ["PNJ3"] and INVENTORY["Planks"] > 0:
                 self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"]["BuildBridge"]
 
             elif PNJ["PNJ1"] and PNJ["PNJ2"] and not PNJ["PNJ3"] and not infoUpate:
