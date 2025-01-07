@@ -212,7 +212,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
                 if nombreRiviere == 0:
                     coordsPts1Riviere = [randint(0,6),0] # on créer le point 1 de la map pour les rivière de bordure
                 else:
-                    coordsPts1Riviere = [randint(LONGUEUR-7, LONGUEUR-1),0] # on créer le point 1 de la map
+                    coordsPts1Riviere = [randint(LONGUEUR-7, LONGUEUR-2),0] # on créer le point 1 de la map
 
             listePointRepere.append(coordsPts1Riviere) # forme [x,y] on ajoute le premier point à la liste
             coordsPts2Riviere = [coordsPts1Riviere[0], coordsPts1Riviere[1]+4] # on crée le second point avec une hauteur de + 4
@@ -230,7 +230,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
                         if nombreRiviere == 0:
                             pACoordsligne5 = [randint(0,6),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map pour les rivière de bordure
                         else:
-                            pACoordsligne5 = [randint(LONGUEUR-7, LONGUEUR-1),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map
+                            pACoordsligne5 = [randint(LONGUEUR-7, LONGUEUR-2),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map
                     
                     listePointRepere.append(pACoordsligne5) # Ajout du point A car il devient un point repère à relier
                     pBcoordsligne5 = [pACoordsligne5[0], nbPointRepere*EspacementPointRepereRiviere + 5] # forme [x, y]
@@ -243,7 +243,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
                         if nombreRiviere == 0:
                             coords = [randint(0,6),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map pour les rivière de bordure
                         else:
-                            coords = [randint(LONGUEUR-7, LONGUEUR-1),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map
+                            coords = [randint(LONGUEUR-7, LONGUEUR-2),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map
                     
                     # Tout les autres pts de repère
                     listePointRepere.append(coords) # on ajoute ces points dans la liste des points à relier
@@ -256,7 +256,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
                 if nombreRiviere == 0:
                     coordsPts3Riviere = [randint(0,6),self.largeur-5] # on créer le point 1 de la map pour les rivière de bordure
                 else:
-                    coordsPts3Riviere = [randint(LONGUEUR-7, LONGUEUR-1),self.largeur-5] # on créer le point 1 de la map
+                    coordsPts3Riviere = [randint(LONGUEUR-7, LONGUEUR-2),self.largeur-5] # on créer le point 1 de la map
                      
             # Point du bas (dernier element)
             # permet de créer une ligne pour éviter les collisions avec les bordures
