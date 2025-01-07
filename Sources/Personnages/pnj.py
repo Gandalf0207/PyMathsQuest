@@ -281,10 +281,7 @@ class GestionPNJ(object):
         # retour state interface global
         return self.INTERFACE_OPEN
     
-    def ChangeTextInfosBox(self):
-        self.gestionnaire.ideaTips.UpdateTexte()
-
-
+    
     def update(self, playerPos : tuple, INTERFACE_OPEN : bool, event: any) -> bool:
         """Méthode d'update de l'interface d'appel de discussion + gestion pnj / proximité.
         Intput : playerPos : tuple, INTERFACE_OPEN : bool, event : element pygame. Output : bool"""

@@ -247,7 +247,7 @@ class Game(object):
                             
                             # reset valeue individuelle
                             PNJ["PNJ1"] = True
-                            self.ideaTips.UpdateTexte()
+                            STATE_HELP_INFOS[0] = "LearnCrossBridge"
                 
 
                     # reset values cinmatique

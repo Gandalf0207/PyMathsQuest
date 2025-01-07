@@ -28,18 +28,16 @@ class Traverser(object):
 
             if self.player.rect.x < self.coordPontActuel[0]:
                 self.player.rect.x += CASEMAP*2
-                infoUpdate = True
+                STATE_HELP_INFOS[0] = "SeePNJ"
             else:
                 self.player.rect.x -= CASEMAP*2
-                infoUpdate = False
+                STATE_HELP_INFOS[0] = "CrossBridge"
 
             self.player.hitbox_rect.center = self.player.rect.center
 
 
             self.gestionnaire.ouverture_du_noir(self.player.rect.center)
 
-            # update texte box info aide depuis le gestionnaires self class d'appel
-            self.gestionnaire.ideaTips.UpdateTexte(infoUpdate)
 
 
     def Isclose(self):

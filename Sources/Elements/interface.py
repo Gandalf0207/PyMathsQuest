@@ -368,11 +368,11 @@ class PNJInterface(object):
                     elif self.gestionnaire.pnjActuel == "PNJ2":
                         INVENTORY["Planks"] += 1
                         PNJ["PNJ2"] = True
-                        self.gestionnaire.ChangeTextInfosBox()
+                        STATE_HELP_INFOS[0] = "BuildBridge"
                     elif self.gestionnaire.pnjActuel == "PNJ3":
                         INVENTORY["Pickaxe"] += 1
                         PNJ["PNJ3"] = True
-                        self.gestionnaire.ChangeTextInfosBox()
+                        STATE_HELP_INFOS[0] = "MineRock"
 
         else:
             if self.compteurDialogue <= self.nombreDialogue:

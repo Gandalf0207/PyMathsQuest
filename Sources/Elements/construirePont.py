@@ -53,7 +53,7 @@ class ConstruirePont(object):
 
             self.gestionnaire.ouverture_du_noir(playerPos)
 
-            self.gestionnaire.ideaTips.UpdateTexte()
+            STATE_HELP_INFOS[0] = "CrossBridge"
 
 
         

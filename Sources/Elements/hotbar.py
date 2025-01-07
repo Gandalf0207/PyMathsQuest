@@ -77,47 +77,22 @@ class InfosTips:
         self.text = None
         self.indexTexte = 0
         self.loadImage()
-        self.GetText(False)
+        self.GetText()
     
     def loadImage(self):
         self.idea = pygame.image.load(join("Images", "HotBar", "LightBulbIcon.png")).convert_alpha()
 
 
-    def GetText(self, infoUpate):
+    def GetText(self):
         """ infoUpdate permet de déterminer si un evenement à eu lieu : ex traverser un pont. 
         Ce bool permet de séparer deux tips qui se passent dans un meme moment"""
         
-        self.indexTexte = 0
+        if self.text != TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"][STATE_HELP_INFOS[0]]:
+            self.indexTexte = 0
+        
+        self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"][STATE_HELP_INFOS[0]]
 
 
-        if INFOS["Niveau"] == 0:
-            if not PNJ["PNJ1"] and not PNJ["PNJ2"] and not PNJ["PNJ3"]:
-                self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"]["SeePNJ"]
-
-            elif PNJ["PNJ1"] and not PNJ["PNJ2"] and not PNJ["PNJ3"] and not infoUpate:
-                self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"]["LearnCrossBridge"]
-
-            elif PNJ["PNJ1"] and not PNJ["PNJ2"] and not PNJ["PNJ3"] and infoUpate:
-                self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"]["SeePNJ"]
- 
-            elif PNJ["PNJ1"] and PNJ["PNJ2"] and not PNJ["PNJ3"] and INVENTORY["Planks"] > 0:
-                self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"]["BuildBridge"]
-
-            elif PNJ["PNJ1"] and PNJ["PNJ2"] and not PNJ["PNJ3"] and not infoUpate:
-                self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"]["CrossBridge"]
-
-            elif PNJ["PNJ1"] and PNJ["PNJ2"] and not PNJ["PNJ3"] and infoUpate:
-                self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"]["SeePNJ"]
-
-            elif PNJ["PNJ1"] and PNJ["PNJ2"] and PNJ["PNJ3"] and not infoUpate:
-                self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"]["MineRock"]
-
-            else:
-                self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"]["CrossBridge"]
- 
-
-        elif INFOS["Niveau"] == 1:
-            pass
 
 
     def BuildElement(self):
@@ -159,10 +134,8 @@ class InfosTips:
             line_surface = self.font.render(line, True, (0,0,0))
             self.IdeaTipsSurface.blit(line_surface, (120, y_offset + i * line_height))
     
-    def UpdateTexte(self, infoUpdate = False):
-        self.GetText(infoUpdate)
-
     def Update(self):
+        self.GetText()
         self.BuildElement()
 
 
