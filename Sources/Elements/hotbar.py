@@ -61,8 +61,8 @@ class MiniMap:
         # placemnt des pnj
         for objectPNJ in pnjGroup:
             pnj_x, pnj_y = objectPNJ.pos[0] * CASEMAP, objectPNJ.pos[1] *CASEMAP
-            pnj_rect = pygame.Rect(pnj_x * CELL_SIZE * self.ratioImage, pnj_y * CELL_SIZE * self.ratioImage, CELL_SIZE*1.5, CELL_SIZE * 1.5)
-            pygame.draw.rect(self.MiniMapSurface, (207, 145, 31), pnj_rect)
+            pnj_rect = pygame.Rect(pnj_x * CELL_SIZE * self.ratioImage, pnj_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE * 2)
+            pygame.draw.rect(self.MiniMapSurface, (252, 128, 3), pnj_rect)
 
 
 class InfosTips:
