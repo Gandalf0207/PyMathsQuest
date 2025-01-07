@@ -40,6 +40,10 @@ class Game(object):
         self.cinematiqueObject = None # obj de la cinematique 
 
 
+        # surface bg hotbar
+        self.bgHotBar = pygame.Surface((WINDOW_WIDTH, 160))
+        self.bgHotBar.fill((150,150,150))
+
 
     def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
         """Récupération des valeur stockées dans le fichier json pour les renvoyer quand nécéssaire 
@@ -211,6 +215,8 @@ class Game(object):
 
             # Afficher la minimap sur l'écran principal + menu settings all
             if not self.cinematique:
+                self.displaySurface.blit(self.bgHotBar, (0, WINDOW_HEIGHT-160))
+                
                 self.minimap.Update(self.player.rect.center, self.allPNJ)
                 self.ideaTips.Update()
                 self.settingsAll.Update(event)
