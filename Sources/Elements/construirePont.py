@@ -38,7 +38,7 @@ class ConstruirePont(object):
             loadElementJson = json.load(f) # chargement des valeurs
         return loadElementJson[index1].get(index2, None) # on retourne les valeurs aux indices de liste quisont données
 
-    def BuildBridge(self, allPont, loadMapElement, playerPos):
+    def BuildBridge(self, loadMapElement, playerPos):
 
         if self.ConstructionPossible(playerPos) and  INVENTORY["Planks"] > 0:
             INVENTORY["Planks"] -=1
@@ -48,7 +48,7 @@ class ConstruirePont(object):
 
 
             coords = (self.coordsRiviere[0]*CASEMAP, self.coordsRiviere[1]*CASEMAP)
-            loadMapElement.AddPont(allPont, "pont2", coords)
+            loadMapElement.AddPont("pont2", coords)
             self.construit = True
 
             self.gestionnaire.ouverture_du_noir(playerPos)

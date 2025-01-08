@@ -11,6 +11,14 @@ from os.path import join
 from os import walk
 import threading
 from math import *
+import matplotlib.pyplot as plt
+from PIL import Image
+from io import BytesIO
+import matplotlib
+
+plt.rc('text', usetex=True)  # Active l'utilisation de LaTeX
+plt.rc('font', family='serif')  # Définit une police compatible
+matplotlib.use('Agg')
 
 LONGUEUR = 150
 LARGEUR = 75
@@ -24,7 +32,11 @@ COORDS_BOX_IDEAS_TIPS = (320, WINDOW_HEIGHT-160)
 STATE_HELP_INFOS = ["SeePNJ"] # list pour pouvoir etre modifié
 INFOS = {
     "Niveau" : 0,
-    "Langue" : "Fr"
+    "Langue" : "Fr", 
+    "Difficulte" : False,
+    "Exo" : False, 
+    "ExoPasse" : False,
+    "ChangementNiveau" : False
 }
 
 TEXTE = {
