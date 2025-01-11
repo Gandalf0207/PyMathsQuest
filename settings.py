@@ -20,6 +20,24 @@ plt.rc('text', usetex=True)  # Active l'utilisation de LaTeX
 plt.rc('font', family='serif')  # Définit une police compatible
 matplotlib.use('Agg')
 
+# Methode Utile : 
+
+def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
+    """Récupération des valeur stockées dans le fichier json pour les renvoyer quand nécéssaire à l'aide des indices données pour les récupérer"""
+    
+    # récupération des valeurs stocké dans le json
+    with open(join("Sources","Ressources","AllMapValue.json"), "r") as f: # ouvrir le fichier json en mode e lecture
+        loadElementJson = json.load(f) # chargement des valeurs
+    return loadElementJson[index1].get(index2, None) # on retourne les valeurs aux indices de liste quisont données
+
+
+
+
+
+
+
+
+
 LONGUEUR = 150
 LARGEUR = 75
 CASEMAP = 128
