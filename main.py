@@ -37,6 +37,7 @@ class Game(object):
         
         # boolean de check 
         self.INTERFACE_OPEN = False # interface secondaire ouvert
+        self.interface_exo = False
         self.cinematique = False # cinématique
         self.cinematiqueObject = None # obj de la cinematique 
 
@@ -199,14 +200,16 @@ class Game(object):
                             
                             # on regarde si on peut traverse / on traverse
                             if PNJ["PNJ1"] or PNJ["PNJ2"] or not PNJ["PNJ3"]: # verif minimum de completion
-                                self.InteractionObject.MakeTraverser()
+                                self.InteractionObject.Interagir()
 
                             # si pas possible, on construit le pont si possible
                             self.buildPont.BuildBridge(self.loadMapElement, self.player.rect.center)
 
                         if event.key == pygame.K_ESCAPE and self.INTERFACE_OPEN: # Close général interface build
+                            if self.InterfaceExo:
+                                INFOS["Exo"] = False
                             self.INTERFACE_OPEN = False
-                            INFOS["Exo"] = False
+
 
 
 
@@ -282,6 +285,7 @@ class Game(object):
             if INFOS["Exo"]:
                 if not self.INTERFACE_OPEN:
                     self.INTERFACE_OPEN = True
+                    self.interface_exo = True
 
                     self.checkLoadingDone = False
                     # Affichage initial de l'écran de chargement

@@ -25,7 +25,7 @@ class Interactions(object):
         self.interactionGroup = None
 
 
-    def MakeTraverser(self):
+    def Interagir(self):
         if self.Isclose():
             self.gestionnaire.fondu_au_noir()
 

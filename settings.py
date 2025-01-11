@@ -67,6 +67,9 @@ PNJ = {
     "PNJ5" : False
 }
 
+
+
+
 EspacementPointRepereRiviere = 15
 CoupageMapRiviere = 50 # 1/3 de la longueur
 CouloirRiviere = 4

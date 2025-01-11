@@ -125,6 +125,7 @@ class CreateExo:
 
         # changement des boolean de check
         self.gestionnaire.INTERFACE_OPEN = False
+        self.gestionnaire.interface_exo = False
         INFOS["Exo"] = False
 
 
