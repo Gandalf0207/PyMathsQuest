@@ -1,11 +1,12 @@
 from settings import *
-from Sources.Elements.traverser import *
+from Sources.Elements.interactions import *
 from Sources.Elements.groups import *
 from Sources.Map.loadMap import *
 from Sources.Elements.hotbar import *
 from Sources.Personnages.pnj import *
 from Sources.Ressources.Texte.creationTexte import *
 from Sources.Elements.construirePont import *
+from Sources.Exos.createExo import *
 
 
 class Game(object):
@@ -27,13 +28,13 @@ class Game(object):
         self.allSprites = AllSprites()
         self.collisionSprites = pygame.sprite.Group()
         self.allPNJ = pygame.sprite.Group()
-        self.allpont = pygame.sprite.Group()
+        self.interactionsGroup = pygame.sprite.Group()
 
         # all surface secondaire (hotbar)
         self.minimap_surface = pygame.Surface((300, 150))
         self.ideaTips_surface = pygame.Surface((514, 150))
         self.allSettings_surface = pygame.Surface((426, 150))
-
+        
         # boolean de check 
         self.INTERFACE_OPEN = False # interface secondaire ouvert
         self.cinematique = False # cinématique
@@ -60,7 +61,7 @@ class Game(object):
 
 
         if INFOS["Niveau"] ==0:
-            self.loadMapElement = LoadMapPlaineRiviere(self.allSprites, self.collisionSprites, self.allPNJ)
+            self.loadMapElement = LoadMapPlaineRiviere(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
             self.map, self.mapBase = self.loadMapElement.Update()
             self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
             # Initialisation dans votre setup
@@ -70,13 +71,19 @@ class Game(object):
             self.settingsAll = SettingsAll(self.allSettings_surface, self.INTERFACE_OPEN)
 
             # infos traverser
-            self.traverserObject = Traverser(self)
+            self.InteractionObject = Interactions(self)
             self.buildPont = ConstruirePont(self)
+
         else : 
             pass
 
         self.checkLoadingDone = True
 
+    def SetupExo(self):
+
+        self.InterfaceExo = CreateExo(self)
+        self.InterfaceExo.start()
+        self.checkLoadingDone = True
 
     # Fonction pour dessiner l'écran de chargement
     def ChargementEcran(self):
@@ -112,8 +119,6 @@ class Game(object):
         pygame.time.delay(2000)  # Temps de mise à jour de l'écran de chargement
 
         self.fondu_au_noir()
-
-
 
     def fondu_au_noir(self):
         fade_surface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -154,7 +159,6 @@ class Game(object):
         
         # Affichage initial de l'écran de chargement
         threading.Thread(target=self.SetupAllMap).start()
-        # self.checkLoadingDone = True
 
         self.ChargementEcran()
 
@@ -176,6 +180,11 @@ class Game(object):
 
                             print(f"tp : {first_sprite.pos}")
                             print(self.player.rect.center)
+
+
+                        if event.key == pygame.K_0:
+                            self.player.rect.center = (130*CASEMAP, 50*CASEMAP)
+                            self.player.hitbox_rect.center = (130*CASEMAP, 50*CASEMAP)
                     
 
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -189,20 +198,17 @@ class Game(object):
                             self.INTERFACE_OPEN = self.pnj.OpenInterfaceElementClavier(self.INTERFACE_OPEN)
                             
                             # on regarde si on peut traverse / on traverse
-                            if PNJ["PNJ1"] or PNJ["PNJ2"]:
-                                self.traverserObject.MakeTraverser()
+                            if PNJ["PNJ1"] or PNJ["PNJ2"] or not PNJ["PNJ3"]: # verif minimum de completion
+                                self.InteractionObject.MakeTraverser()
 
                             # si pas possible, on construit le pont si possible
-                            self.buildPont.BuildBridge(self.allpont, self.loadMapElement, self.player.rect.center)
+                            self.buildPont.BuildBridge(self.loadMapElement, self.player.rect.center)
 
                         if event.key == pygame.K_ESCAPE and self.INTERFACE_OPEN: # Close général interface build
                             self.INTERFACE_OPEN = False
+                            INFOS["Exo"] = False
 
 
-                
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    print("hello") 
 
             self.allSprites.update(dt, self.cinematique)
             self.displaySurface.fill("#000000")
@@ -227,7 +233,7 @@ class Game(object):
             
             if not self.cinematique:
                 self.INTERFACE_OPEN, self.cinematique, self.cinematiqueObject = self.pnj.update(self.player.rect.center, self.INTERFACE_OPEN, event)
-                self.traverserObject.Update(self.player, self.allpont)
+                self.InteractionObject.Update(self.player, self.interactionsGroup)
             
             else:
                 self.cinematique, endCinematique = self.cinematiqueObject.Update(dt)
@@ -244,7 +250,7 @@ class Game(object):
                             # pont nb 1
                             coordPont1 = self.LoadJsonMapValue("coordsMapObject", "ArbreSpecial Coords")
                             coords = ((coordPont1[0] + 1)*CASEMAP, coordPont1[1]*CASEMAP) # on ajoute 1 pour etre sur la rivière
-                            self.loadMapElement.AddPont(self.allpont, "pont1", coords)
+                            self.loadMapElement.AddPont("pont1", coords)
                         
                             # sup arbre
                             for object in self.collisionSprites:
@@ -271,6 +277,23 @@ class Game(object):
                 if not self.buildPont.getConstructionStatue():
                     self.buildPont.Update(self.player.rect.center)
 
+
+            # update de l'exo 
+            if INFOS["Exo"]:
+                if not self.INTERFACE_OPEN:
+                    self.INTERFACE_OPEN = True
+
+                    self.checkLoadingDone = False
+                    # Affichage initial de l'écran de chargement
+                    threading.Thread(target=self.SetupExo).start()
+
+                    self.ChargementEcran()
+
+                else:
+                    self.InterfaceExo.Update(event)
+
+            if INFOS["ExoPasse"]:
+                pass
 
                     
 

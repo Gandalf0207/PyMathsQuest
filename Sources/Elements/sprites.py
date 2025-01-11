@@ -18,7 +18,7 @@ class Sprites(pygame.sprite.Sprite):
 
 class CollisionSprites(pygame.sprite.Sprite):
     
-    def __init__(self,pos : tuple, surf : any,typeCollision : str, groups : any) -> None:
+    def __init__(self,pos : tuple, surf : any,typeCollision : str, groups : any, InfoExo = False) -> None:
         """Méthode initialisation de sprites avec une collision.
         pos : tuple, surf / groups : element pygame, typeCollision : str ; Output : None"""    
 
@@ -26,6 +26,9 @@ class CollisionSprites(pygame.sprite.Sprite):
         super().__init__(groups)
         self.image = surf
         self.pos = pos
+        self.id = typeCollision
+        self.InfoExo = InfoExo
+
         if typeCollision == "Arbre" :
             self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-68))
         elif typeCollision == "pont1" or typeCollision == "pont2":
@@ -48,6 +51,8 @@ class CollisionSprites(pygame.sprite.Sprite):
             self.hitbox = self.rect.inflate(-70,-70)
         elif typeCollision == "pont1" or typeCollision == "pont2":
             self.hitbox = self.rect.inflate(-100,0)
+        elif typeCollision == "ExitRock":
+            self.hitbox = self.rect.inflate(-60, -20)
         else:
             self.hitbox = self.rect.inflate(-70,-140)
 

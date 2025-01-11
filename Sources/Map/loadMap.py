@@ -8,7 +8,7 @@ from Sources.Personnages.pnj import *
 
 
 class LoadMapPlaineRiviere(): # nv 0
-    def __init__(self, allSprites : any, collisionSprites : any, allpnj : any) -> None:
+    def __init__(self, allSprites : any, collisionSprites : any, allpnj : any, interactions) -> None:
         """Méthode initialisation chargement de la map du niveau plaine et rivière. 
         Input : niveau : int, allSprites / collisionsSprites / allpnj : element pygame; Output : None"""
     
@@ -18,6 +18,7 @@ class LoadMapPlaineRiviere(): # nv 0
         self.allPNJ = allpnj
         self.allSprites = allSprites
         self.collisionSprites = collisionSprites
+        self.interactions = interactions
 
 
     def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
@@ -48,6 +49,7 @@ class LoadMapPlaineRiviere(): # nv 0
         self.banc = pygame.image.load(join("Images", "Obstacle", "Spawn", "banc.png")).convert_alpha()  
         self.pont1 = pygame.image.load(join("Images", "Pont", "BridgeTreeW-Ex128.png")).convert_alpha()
         self.pont2 = pygame.image.load(join("Images", "Pont", "BridgePlanksW-Ex128.png")).convert_alpha()
+        self.rockExit = pygame.image.load(join("Images", "Obstacle", "ExitRock.png")).convert_alpha()
 
     def Setup(self) -> None:
         """Méthode de build de tout les éléments sprites de la map jeu.
@@ -186,11 +188,22 @@ class LoadMapPlaineRiviere(): # nv 0
                 PNJ(pos , "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
         
     
-    def AddPont(self, groupPont, element, coords) -> None:
+    def AddPont(self, element, coords) -> None:
         if element == "pont1":
-            CollisionSprites(coords, self.pont1, element, (self.allSprites, self.collisionSprites, groupPont))
+            CollisionSprites(coords, self.pont1, element, (self.allSprites, self.collisionSprites, self.interactions))
         elif element  == "pont2":
-            CollisionSprites(coords, self.pont2, element, (self.allSprites, self.collisionSprites, groupPont))
+            CollisionSprites(coords, self.pont2, element, (self.allSprites, self.collisionSprites, self.interactions))
+
+    def SetupExit(self):
+        coords = self.LoadJsonMapValue("coordsMapObject", "ZoneSortie Coords")
+        coordsExit = (coords[0] * CASEMAP, coords[1] * CASEMAP)
+        CollisionSprites(coordsExit, self.rockExit, "ExitRock", (self.allSprites, self.interactions, self.collisionSprites))
+        
+        # pont décalé de 1
+        coordsPont = (coords[0]*CASEMAP +CASEMAP, coords[1]*CASEMAP)
+        # True = element de création exo maths
+        CollisionSprites(coordsPont, self.pont2, "pont2", (self.allSprites, self.collisionSprites, self.interactions), True) 
+        
 
 
     def Update(self) -> list:
@@ -202,6 +215,7 @@ class LoadMapPlaineRiviere(): # nv 0
         self.Setup()
         self.SetupSpawn()
         self.SetupPNJ()
+        self.SetupExit()
 
         # retour des infos de map
         return self.map, self.mapBase
