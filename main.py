@@ -198,7 +198,7 @@ class Game(object):
                             self.INTERFACE_OPEN = self.pnj.OpenInterfaceElementClavier(self.INTERFACE_OPEN)
                             
                             # on regarde si on peut traverse / on traverse
-                            if PNJ["PNJ1"] or PNJ["PNJ2"] or PNJ["PNJ3"]: # verif minimum de completion
+                            if PNJ["PNJ1"] or PNJ["PNJ2"] or not PNJ["PNJ3"]: # verif minimum de completion
                                 self.InteractionObject.MakeTraverser()
 
                             # si pas possible, on construit le pont si possible
@@ -209,10 +209,6 @@ class Game(object):
                             INFOS["Exo"] = False
 
 
-                
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    print("hello") 
 
             self.allSprites.update(dt, self.cinematique)
             self.displaySurface.fill("#000000")
@@ -294,7 +290,10 @@ class Game(object):
                     self.ChargementEcran()
 
                 else:
-                    self.InterfaceExo.Update()
+                    self.InterfaceExo.Update(event)
+
+            if INFOS["ExoPasse"]:
+                pass
 
                     
 

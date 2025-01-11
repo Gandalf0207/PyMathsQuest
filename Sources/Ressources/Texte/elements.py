@@ -43,8 +43,19 @@ ElementsFr = {
         "MakeExo" : "Pour pouvoir traverser le pont,  vous devez résoudre cet exercice.",
 
         "ExoTexte" : {
+            
             "Title" : "Exercice équation du premier degré",
-            "Consigne" : "blablablallaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+            "DifficulteTrue" : {
+                "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",
+                "QCM" : "Choisissez l'unique et bonne réponse",
+            },
+
+            "DifficulteFalse" : {
+                "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",
+                "QCM" : "Choisissez l'unique et bonne réponse",
+            },
+            
         }
     },
     
@@ -94,8 +105,20 @@ ElementsEn = {
         "MakeExo" : "Pour pouvoir traverser le pont,  vous devez résoudre cet exercice.",
 
         "ExoTexte" : {
+            
             "Title" : "Exercice équation du premier degré",
-            "Consigne" : "blablablallaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+            "DifficulteTrue" : {
+                "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",
+                "QCM" : "Choisissez l'unique et bonne réponse",
+            },
+
+            "DifficulteFalse" : {
+                "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",
+                "QCM" : "Choisissez l'unique et bonne réponse",
+            },
+            
         }
     },
+    
 }

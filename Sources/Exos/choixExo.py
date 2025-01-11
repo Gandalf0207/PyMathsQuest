@@ -53,13 +53,15 @@ class GetExo:
                 nb = nb//pgcd_frac
                 nbx = nbx//pgcd_frac
                 if nbx!=1:
-                    resultat = nb/nbx
+                    resultat = round(nb/nbx, 3)
                 else:
                     resultat = nb
             else:
                 resultat = nb
 
-            self.listeConstruction = [eqt, resultat, self.nb1, self.nb2, self.nb3, self.nb4]
+            resultat2 = nbx
+            resultat3 = nb * nbx
+            self.listeConstruction = [eqt, resultat, resultat2, resultat3]
         
         else:
             eqt = r"$ \Leftrightarrow \frac{%s}{%s}x + %s = \frac{%s}{%s} - %sx $" % (self.nb1,self.nb2,self.nb3,self.nb4,self.nb5,self.nb6)
@@ -89,9 +91,11 @@ class GetExo:
             if numx == 1:
                 resultat = num_const
             else:
-                resultat = [num_const, numx]
+                resultat = round(num_const/numx, 3)
 
-            self.listeConstruction = [eqt, resultat, self.nb1, self.nb2, self.nb3, self.nb4, self.nb5, self.nb6]
+            resultat2 = numx
+            resultat3 = num6
+            self.listeConstruction = [eqt, resultat, resultat2, resultat3]
 
     def ExoNv1(self):
         pass
