@@ -223,7 +223,7 @@ class Game(object):
             if not self.cinematique:
                 self.displaySurface.blit(self.bgHotBar, (0, WINDOW_HEIGHT-160))
                 
-                self.minimap.Update(self.player.rect.center, self.allPNJ)
+                self.minimap.Update(self.player.rect.center, self.allPNJ, self.interactionsGroup)
                 self.ideaTips.Update()
                 self.settingsAll.Update(event)
 

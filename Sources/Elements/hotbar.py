@@ -46,9 +46,9 @@ class MiniMap:
                     self.static_surface.blit(self.carre1, pos)
         
 
-    def Update(self, player_pos: tuple, pnjGroup : any) -> None:
+    def Update(self, player_pos: tuple, pnjGroup : any, interactionGroup : any) -> None:
         """Méthode : Met à jour uniquement le joueur sur la minimap. 
-        Input : tutple (position du joueur), pnjGroup : element pygame Output : None """
+        Input : tutple (position du joueur), pnjGroup / interactionGroups : element pygame Output : None """
 
         # Copier la surface statique dans la surface d'affichage
         self.MiniMapSurface.blit(self.static_surface, (0,0))
@@ -63,6 +63,12 @@ class MiniMap:
             pnj_x, pnj_y = objectPNJ.pos[0] * CASEMAP, objectPNJ.pos[1] *CASEMAP
             pnj_rect = pygame.Rect(pnj_x * CELL_SIZE * self.ratioImage, pnj_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE * 2)
             pygame.draw.rect(self.MiniMapSurface, (252, 128, 3), pnj_rect)
+
+        # placemnt des interaction object
+        for objectElement in interactionGroup:
+            element_x, element_y = objectElement.pos[0], objectElement.pos[1] # coords déja maps
+            element_rect = pygame.Rect(element_x * CELL_SIZE * self.ratioImage, element_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE * 2)
+            pygame.draw.rect(self.MiniMapSurface, (109, 3, 158), element_rect)
 
 
 class InfosTips:
