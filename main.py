@@ -182,26 +182,18 @@ class Game(object):
                             print(f"tp : {first_sprite.pos}")
                             print(self.player.rect.center)
 
-
                         if event.key == pygame.K_0:
                             self.player.rect.center = (130*CASEMAP, 50*CASEMAP)
                             self.player.hitbox_rect.center = (130*CASEMAP, 50*CASEMAP)
                     
-
-                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                        self.INTERFACE_OPEN = self.settingsAll.OpenInterfaceElementClic(event, self.INTERFACE_OPEN)
-                    
-                    if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_p or event.key == pygame.K_v or event.key == pygame.K_i or event.key == pygame.K_b:
                             self.INTERFACE_OPEN = self.settingsAll.OpenInterfaceElementClavier(event, self.INTERFACE_OPEN)
                         
                         if event.key == pygame.K_e:
+                            # pnj interface
                             self.INTERFACE_OPEN = self.pnj.OpenInterfaceElementClavier(self.INTERFACE_OPEN)
-                            
-                            # on regarde si on peut traverse / on traverse
-                            if PNJ["PNJ1"] or PNJ["PNJ2"] or not PNJ["PNJ3"]: # verif minimum de completion
-                                self.InteractionObject.Interagir()
-
+                            # element d'interaction
+                            self.InteractionObject.Interagir()
                             # si pas possible, on construit le pont si possible
                             self.buildPont.BuildBridge(self.loadMapElement, self.player.rect.center)
 
@@ -209,6 +201,10 @@ class Game(object):
                             if self.InterfaceExo:
                                 INFOS["Exo"] = False
                             self.INTERFACE_OPEN = False
+
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        self.INTERFACE_OPEN = self.settingsAll.OpenInterfaceElementClic(event, self.INTERFACE_OPEN)
+                    
 
 
 
