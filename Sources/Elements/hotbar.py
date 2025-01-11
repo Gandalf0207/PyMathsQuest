@@ -66,81 +66,74 @@ class MiniMap:
 
         # placemnt des interaction object
         for objectElement in interactionGroup:
-            element_x, element_y = objectElement.pos[0], objectElement.pos[1] # coords déja maps
+            element_x, element_y = objectElement.pos[0], objectElement.pos[1] # coords déja convertis map pyame
             element_rect = pygame.Rect(element_x * CELL_SIZE * self.ratioImage, element_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE * 2)
             pygame.draw.rect(self.MiniMapSurface, (109, 3, 158), element_rect)
 
 
 class InfosTips:
 
-    def __init__(self, screen):
+    def __init__(self, screen : any) -> None:
+        """Méthode initialisation des valeurs pour la box d'information de guidage pour le player
+        Input : screen (surface infos tips)
+        Output : None"""
 
         # initialisation
         self.IdeaTipsSurface = screen
         
         # creation element
-        self.font = pygame.font.Font(None, 20)
         self.text = None
         self.indexTexte = 0
         self.loadImage()
         self.GetText()
     
-    def loadImage(self):
+    def loadImage(self) -> None:
+        """Méthode chargement des images
+        Input / Ouput : None"""
+
         self.idea = pygame.image.load(join("Images", "HotBar", "LightBulbIcon.png")).convert_alpha()
 
 
-    def GetText(self):
-        """ infoUpdate permet de déterminer si un evenement à eu lieu : ex traverser un pont. 
-        Ce bool permet de séparer deux tips qui se passent dans un meme moment"""
+    def GetText(self) -> None:
+        """Méthode de récupération du texte en foonc de l'état de STATE_HELP_INFOS"""
         
-        if self.text != TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"][STATE_HELP_INFOS[0]]:
-            self.indexTexte = 0
+        if self.text != TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"][STATE_HELP_INFOS[0]]: # si texte différents
+            self.indexTexte = 0 # on reset l'écriture index
         
-        self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"][STATE_HELP_INFOS[0]]
+        self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"][STATE_HELP_INFOS[0]] # texte / nouveau texte
 
 
+    def BuildElement(self) -> None:
+        """Méthode de constrcution de l'interface tips (bas centre page)
+        Input / Ouput : None"""
 
-
-    def BuildElement(self):
         # image
-        self.IdeaTipsSurface.fill("#ffffff")
+        self.IdeaTipsSurface.fill("#ffffff") # clear
         self.IdeaTipsSurface.blit(self.idea, (10,27))
         
         # texte
-        # bloc gestion texte 
+            # bloc gestion texte 
         if self.indexTexte < len(self.text):
             self.indexTexte += 1
-        # Mettre à jour le texte affiché
+            # Mettre à jour le texte affiché
         self.displayed_text = self.text[:self.indexTexte]
 
-        # Fonction simple pour découper le texte
-        def wrap_text(text, font, max_width):
-            words = text.split(' ')
-            lines = []
-            current_line = ''
-
-            for word in words:
-                test_line = f"{current_line} {word}".strip()
-                if font.size(test_line)[0] <= max_width:
-                    current_line = test_line
-                else:
-                    lines.append(current_line)
-                    current_line = word
-            if current_line:
-                lines.append(current_line)
-            return lines
-
+            
+        # get lines 
         max_width = 400
-        wrapped_lines = wrap_text(self.displayed_text, self.font, max_width)
+        wrapped_lines = wrap_text(self.displayed_text, FONT20, max_width)
 
         # Affichage des lignes
         y_offset = 30  # Position Y de départ
-        line_height = self.font.size("Tg")[1]  # Hauteur d'une ligne
+        line_height = FONT20.size("Tg")[1]  # Hauteur d'une ligne
         for i, line in enumerate(wrapped_lines):
-            line_surface = self.font.render(line, True, (0,0,0))
+            line_surface = FONT20.render(line, True, (0,0,0))
             self.IdeaTipsSurface.blit(line_surface, (120, y_offset + i * line_height))
     
-    def Update(self):
+    def Update(self) -> None:
+        """Méthode update des infos tips, get du texte puis affichage de ce dernier
+        Input / Ouput : None"""
+        
         self.GetText()
         self.BuildElement()
 

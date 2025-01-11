@@ -22,6 +22,7 @@ matplotlib.use('Agg')
 
 # Methode Utile : 
 
+# get values
 def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
     """Récupération des valeur stockées dans le fichier json pour les renvoyer quand nécéssaire à l'aide des indices données pour les récupérer"""
     
@@ -30,6 +31,22 @@ def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
         loadElementJson = json.load(f) # chargement des valeurs
     return loadElementJson[index1].get(index2, None) # on retourne les valeurs aux indices de liste quisont données
 
+# texte wrap pygame
+def wrap_text(text, font, max_width):
+            words = text.split(' ')
+            lines = []
+            current_line = ''
+
+            for word in words:
+                test_line = f"{current_line} {word}".strip()
+                if font.size(test_line)[0] <= max_width:
+                    current_line = test_line
+                else:
+                    lines.append(current_line)
+                    current_line = word
+            if current_line:
+                lines.append(current_line)
+            return lines
 
 
 
@@ -45,6 +62,9 @@ CELL_SIZE = 2
 WINDOW_WIDTH, WINDOW_HEIGHT = 1280,720 
 COORS_BOX_ALL_SETTINGS = (WINDOW_WIDTH-436, WINDOW_HEIGHT-160)
 COORDS_BOX_IDEAS_TIPS = (320, WINDOW_HEIGHT-160)
+
+FONT20 = pygame.font.Font(None, 20)
+FONT30
 
 
 STATE_HELP_INFOS = ["SeePNJ"] # list pour pouvoir etre modifié
