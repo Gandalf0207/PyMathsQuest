@@ -12,24 +12,11 @@ class LoadMapPlaineRiviere(): # nv 0
         """Méthode initialisation chargement de la map du niveau plaine et rivière. 
         Input : niveau : int, allSprites / collisionsSprites / allpnj : element pygame; Output : None"""
     
-
-
         # class des éléments pygame
         self.allPNJ = allpnj
         self.allSprites = allSprites
         self.collisionSprites = collisionSprites
         self.interactions = interactions
-
-
-    def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
-        """Récupération des valeur stockées dans le fichier json pour les renvoyer quand nécéssaire 
-        à l'aide des indices données.
-        Input : index1 / index2 = str   , Output : list"""
-        
-        with open(join("Sources","Ressources","AllMapValue.json"), "r") as f: # ouverture lecture
-            loadElementJson = json.load(f) # chargement des valeurs
-        return loadElementJson[index1].get(index2, None) # retour valeurs
-
 
     def LoadImages(self) -> None:
         """Méthode de chargement de toutes les images pour la map 
@@ -159,23 +146,40 @@ class LoadMapPlaineRiviere(): # nv 0
         Input / Output : None"""
 
         # Récupération coords spawn + infos element
-        coordsSpawnList = self.LoadJsonMapValue("coordsMapObject", "CampSpawn Coords")
-        
-        # parcours et création des spritess
-        for coordsElementSpawn in coordsSpawnList:
-            pos = (coordsElementSpawn[0]*CASEMAP, coordsElementSpawn[1]*CASEMAP) # calcul coords pygame
-            if coordsElementSpawn[2] == "C":
-                CollisionSprites(pos, self.campFire, "campFire", (self.allSprites, self.collisionSprites))
-            elif coordsElementSpawn[2] == "b":
-                CollisionSprites(pos, self.banc, "banc", (self.allSprites, self.collisionSprites) )
+        coordsSpawnList = LoadJsonMapValue("coordsMapObject", "CampSpawn Coords")
 
+        match INFOS["Niveau"]:
+            case 0:
+                # parcours et création des spritess
+                for coordsElementSpawn in coordsSpawnList:
+                    pos = (coordsElementSpawn[0]*CASEMAP, coordsElementSpawn[1]*CASEMAP) # calcul coords pygame
+                    if coordsElementSpawn[2] == "C":
+                        CollisionSprites(pos, self.campFire, "campFire", (self.allSprites, self.collisionSprites))
+                    elif coordsElementSpawn[2] == "b":
+                        CollisionSprites(pos, self.banc, "banc", (self.allSprites, self.collisionSprites) )
+
+    def SetupExit(self):
+        """Méthode de placemet de la sortie
+        Input / Ouput : None"""
+
+        coords = LoadJsonMapValue("coordsMapObject", "ZoneSortie Coords")
+
+        match INFOS["Niveau"]:
+            case 0:
+                coordsExit = (coords[0] * CASEMAP, coords[1] * CASEMAP)
+                CollisionSprites(coordsExit, self.rockExit, "ExitRock", (self.allSprites, self.interactions, self.collisionSprites))
+                
+                # pont décalé de 1
+                coordsPont = (coords[0]*CASEMAP +CASEMAP, coords[1]*CASEMAP)
+                # True = element de création exo maths
+                CollisionSprites(coordsPont, self.pont2, "pont2", (self.allSprites, self.collisionSprites, self.interactions), True) 
 
     def SetupPNJ(self) -> None:
         """Méthode de création et position des pnj.
         Input / Output : None"""
 
         # Récupération des coords + infos pnj
-        coordsPNJList = self.LoadJsonMapValue("coordsMapObject","PNJ Coords")
+        coordsPNJList = LoadJsonMapValue("coordsMapObject","PNJ Coords")
         
         # parcours et création des sprites pnj
         for coordsPNJ in coordsPNJList:
@@ -188,22 +192,17 @@ class LoadMapPlaineRiviere(): # nv 0
                 PNJ(pos , "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
         
     
-    def AddPont(self, element, coords) -> None:
+    def AddPont(self, element : str, coords : tuple) -> None:
+        """Méthode placement et ajout de pont sur la map pygame
+        Input : element : str, coords : tuple
+        Output : None"""
+
         if element == "pont1":
             CollisionSprites(coords, self.pont1, element, (self.allSprites, self.collisionSprites, self.interactions))
         elif element  == "pont2":
             CollisionSprites(coords, self.pont2, element, (self.allSprites, self.collisionSprites, self.interactions))
 
-    def SetupExit(self):
-        coords = self.LoadJsonMapValue("coordsMapObject", "ZoneSortie Coords")
-        coordsExit = (coords[0] * CASEMAP, coords[1] * CASEMAP)
-        CollisionSprites(coordsExit, self.rockExit, "ExitRock", (self.allSprites, self.interactions, self.collisionSprites))
-        
-        # pont décalé de 1
-        coordsPont = (coords[0]*CASEMAP +CASEMAP, coords[1]*CASEMAP)
-        # True = element de création exo maths
-        CollisionSprites(coordsPont, self.pont2, "pont2", (self.allSprites, self.collisionSprites, self.interactions), True) 
-        
+                
 
 
     def Update(self) -> list:

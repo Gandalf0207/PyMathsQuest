@@ -18,16 +18,16 @@ class Sprites(pygame.sprite.Sprite):
 
 class CollisionSprites(pygame.sprite.Sprite):
     
-    def __init__(self,pos : tuple, surf : any,typeCollision : str, groups : any, InfoExo = False) -> None:
+    def __init__(self,pos : tuple, surf : any,typeCollision : str, groups : any, InfoExo : bool = False ) -> None:
         """Méthode initialisation de sprites avec une collision.
-        pos : tuple, surf / groups : element pygame, typeCollision : str ; Output : None"""    
+        pos : tuple, surf / groups : element pygame, typeCollision : str , InfoExo : bool ; Output : None"""    
 
         # element de base
         super().__init__(groups)
-        self.image = surf
-        self.pos = pos
-        self.id = typeCollision
-        self.InfoExo = InfoExo
+        self.image = surf # img
+        self.pos = pos # pos 
+        self.id = typeCollision # id element
+        self.InfoExo = InfoExo # si element exercice ou non (bool)
 
         if typeCollision == "Arbre" :
             self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-68))
@@ -37,24 +37,27 @@ class CollisionSprites(pygame.sprite.Sprite):
             self.rect = self.image.get_frect(topleft=pos)
 
         # collision en fonction de l'élément # Créer une hitbox plus petite (réduire la largeur et la hauteur)
-        if typeCollision == "BorderTop":
-            self.hitbox = self.rect.inflate(0,-90)
-        elif typeCollision == "BorderBottom":
-            self.hitbox = self.rect.inflate(0,0)
-        elif typeCollision == "Souche":
-            self.hitbox = self.rect.inflate(-120,-110)
-        elif typeCollision == "HugeRock":
-            self.hitbox = self.rect.inflate(-90,-100)
-        elif typeCollision == "campFire":
-            self.hitbox = self.rect.inflate(-70,-70)
-        elif typeCollision == "banc":
-            self.hitbox = self.rect.inflate(-70,-70)
-        elif typeCollision == "pont1" or typeCollision == "pont2":
-            self.hitbox = self.rect.inflate(-100,0)
-        elif typeCollision == "ExitRock":
-            self.hitbox = self.rect.inflate(-60, -20)
-        else:
-            self.hitbox = self.rect.inflate(-70,-140)
+        match typeCollision:
+            case "BorderTop":
+                self.hitbox = self.rect.inflate(0,-90)
+            case "BorderBottom":
+                self.hitbox = self.rect.inflate(0,0)
+            case "Souche":
+                self.hitbox = self.rect.inflate(-120,-110)
+            case "HugeRock":
+                self.hitbox = self.rect.inflate(-90,-100)
+            case "campFire":
+                self.hitbox = self.rect.inflate(-70,-70)
+            case "banc":
+                self.hitbox = self.rect.inflate(-70,-70)
+            case "pont1" :
+                self.hitbox = self.rect.inflate(-100,0)
+            case "pont2":
+                self.hitbox = self.rect.inflate(-100,0)
+            case "ExitRock":
+                self.hitbox = self.rect.inflate(-60, -20)
+            case _:  # par défaut
+                self.hitbox = self.rect.inflate(-70,-140)
 
         # Centrer la hitbox par rapport à l'image
         self.hitbox.center = self.rect.center

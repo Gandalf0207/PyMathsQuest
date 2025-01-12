@@ -3,6 +3,7 @@ from settings import *
 ElementsFr = {
     "GameName" : "PyMathsQuest",
     "Loading" : "Chargement",
+    "Interaction" : "Appuyer sur E",
     "HotBar" : {
         "Settings" : {
             "Title" : "Paramettres",
@@ -65,6 +66,7 @@ ElementsFr = {
 ElementsEn = {
     "GameName" : "PyMathsQuest",
     "Loading" : "Loading",
+    "Interaction" : "Press E",
     "HotBar" : {
         "Settings" : {
             "Title" : "Settings",

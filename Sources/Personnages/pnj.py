@@ -57,7 +57,11 @@ class PNJ(pygame.sprite.Sprite):
         self.frame_index = self.frame_index + 10*dt if self.direction else 0
         self.image = self.frames[self.state][int(self.frame_index) % len(self.frames[self.state])] # changement frame pour animation
 
-    def ModifSpeed(self, pathDeplacement):
+    def ModifSpeed(self, pathDeplacement : list) -> None:
+        """Méthode adaptation de la vitesse de déplacement en fonction de la distance restante lors des cinématique pnj
+        Input : list
+        Oupt : None"""
+
         nbPoint = len(pathDeplacement)
         if nbPoint > 30:
             if self.speed != 800:
@@ -71,11 +75,12 @@ class PNJ(pygame.sprite.Sprite):
 
 
 
-    def Move(self, dt: int, pointSuivant, pathDeplacement) -> None:
+    def Move(self, dt: int, pointSuivant : tuple, pathDeplacement :list) -> any:
         """Déplace le PNJ vers le point cible selon les coordonnées données par la cinématique.
-        Input : dt : int (delta time)
-        Output : None
+        Input : dt : int (delta time), list de déplacment point (path)
+        Output : any (deux éléments srvant aux calculs de directions)
         """
+
         if pointSuivant:  # Vérifie si un point cible existe
 
             # Extraire les coordonnées cibles
@@ -125,11 +130,20 @@ class PNJ(pygame.sprite.Sprite):
 
         return pointSuivant, pathDeplacement
 
-    def Update(self, dt, pointSuivant, pathDeplacement):
-        self.ModifSpeed(pathDeplacement)
-        pointSuivant, pathDeplacement = self.Move(dt, pointSuivant, pathDeplacement)
-        self.Animate(dt)
+
+    def Update(self, dt : int, pointSuivant : tuple, pathDeplacement : list) -> any:
+        """Méthode update du déplacement du pnj lors de la cinématique
+        Input : int, tuple, list
+        Ouput : tuple, list"""
+
+        self.ModifSpeed(pathDeplacement) # viteese maj
+        pointSuivant, pathDeplacement = self.Move(dt, pointSuivant, pathDeplacement) # déplacement
+        self.Animate(dt) # animation
         return pointSuivant, pathDeplacement
+
+
+
+
 
 class GestionPNJ(object):
     def __init__(self, displaySurface : any, allpnjGroup : any, INTERFACE_OPEN : bool, mapCollision : list, gestionnaire) -> None:
@@ -169,14 +183,6 @@ class GestionPNJ(object):
         self.cinematiqueObject = None
 
 
-    def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
-        """Récupération des valeur stockées dans le fichier json pour les renvoyer quand nécéssaire à l'aide des indices données pour les récupérer"""
-        # récupération des valeurs stocké dans le json
-        with open(join("Sources","Ressources","AllMapValue.json"), "r") as f: # ouvrir le fichier json en mode e lecture
-            loadElementJson = json.load(f) # chargement des valeurs
-        return loadElementJson[index1].get(index2, None) # on retourne les valeurs aux indices de liste quisont données
-
-
     def CinematiqueBuild(self) -> None:
         """Méthode construction cinématique object. Lancement au prochain update.
         Input / Ouput : None"""
@@ -184,7 +190,7 @@ class GestionPNJ(object):
         self.cinematique = True
         
         if INFOS["Niveau"] ==0:
-            goal = self.LoadJsonMapValue("coordsMapObject","ArbreSpecial Coords")
+            goal = LoadJsonMapValue("coordsMapObject","ArbreSpecial Coords")
             pathAcces = ["-", "A", "P", "S"]
 
         
@@ -194,8 +200,8 @@ class GestionPNJ(object):
         """Met fin à la cinématique.
         Input / Output : None"""
 
-        self.pnjObj.direction, self.pnjObj.frame_index = "down", 0
-        self.pnjObj.Animate(0)
+        self.pnjObj.direction, self.pnjObj.frame_index = "down", 0 # replacement correct
+        self.pnjObj.Animate(0) # frame de base
         self.cinematique = False
         self.cinematiqueObject = None
 
@@ -238,7 +244,7 @@ class GestionPNJ(object):
 
                 # Dessiner la boîte d'indication "Press E"
                 font = pygame.font.Font(None, 24)
-                text_surface = font.render("Press E", True, (255, 255, 255))
+                text_surface = font.render(TEXTE["Elements"]["Interaction"], True, (255, 255, 255))
                 text_rect = text_surface.get_rect()
                 text_rect.topleft = (self.npc_screen_pos[0] - 20, self.npc_screen_pos[1] - 40)
                 
@@ -282,7 +288,7 @@ class GestionPNJ(object):
         return self.INTERFACE_OPEN
     
     
-    def update(self, playerPos : tuple, INTERFACE_OPEN : bool, event: any) -> bool:
+    def update(self, playerPos : tuple, INTERFACE_OPEN : bool, event: any) -> any:
         """Méthode d'update de l'interface d'appel de discussion + gestion pnj / proximité.
         Intput : playerPos : tuple, INTERFACE_OPEN : bool, event : element pygame. Output : bool"""
 
@@ -306,7 +312,9 @@ class GestionPNJ(object):
 
 
 class CinematiquePNJ(object):
-    def __init__(self, goal, pnjObject, mapCalcul, pathAccessible) -> None:
+    def __init__(self, goal : list, pnjObject : any, mapCalcul : list, pathAccessible : list) -> None:
+        """Méthode initialisation des valeurs pour la cinématique"""
+
         # Initialisation des valeurs
         self.pnjObject = pnjObject
         self.pos = self.pnjObject.pos  # Position sur la double liste
@@ -324,12 +332,12 @@ class CinematiquePNJ(object):
 
 
 
-    def GetPath(self):
+    def GetPath(self) -> None:
         """Calcul du chemin à l'aide de l'algorithme A*"""
         self.pathDeplacement = Astar(self.pos, self.goal, self.mapCalcul, self.pathAccessible).a_star()
         self.pathDeplacement = [(x * CASEMAP, y * CASEMAP) for x, y in self.pathDeplacement]  # Conversion en coordonnées pygame
 
-    def SetPath(self):
+    def SetPath(self) -> None:
         """Définit un nouveau chemin pour le PNJ"""
         if self.pathDeplacement:  # Vérifier que le chemin n'est pas vide
             self.pointSuivant = self.pathDeplacement.pop(0)  # Prendre le premier point comme cible
@@ -339,6 +347,7 @@ class CinematiquePNJ(object):
 
     def Replacement(self):
         """Replace le PNJ une case au-dessus de la position cible."""
+
         # Positionner le PNJ en fonction de l'objectif
         target_x, target_y = self.goal[0], self.goal[1] - 1  # Une case au-dessus
 
@@ -351,10 +360,12 @@ class CinematiquePNJ(object):
 
 
     def Update(self, dt):
+        """Méthode update : appel class pnj update pour l'animation et les déplacements"""
 
-
+        # déplacemement + animation
         self.pointSuivant, self.pathDeplacement = self.pnjObject.Update(dt, self.pointSuivant, self.pathDeplacement)
-
+        
+        # check de fin cinématique ou non.
         if self.pathDeplacement != []:
             return True, False
         else:
