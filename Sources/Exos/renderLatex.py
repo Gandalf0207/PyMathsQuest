@@ -2,10 +2,13 @@ from settings import *
 
 class RenderLatex:
 
-    def __init__(self):
-        self.fontsize = 30
+    def __init__(self) -> None:
+        """Méthode initialisation class pour rendre des eqt latex en png
+        Input / Ouput : None"""
 
-    def Render(self, eqt):
+        pass
+
+    def Render(self, eqt : any) -> any:
         """
         Convertit un texte LaTeX en une image rendue avec matplotlib.
         :param text: Le texte en LaTeX à afficher.
@@ -39,6 +42,7 @@ class RenderLatex:
         return pygame.image.fromstring(data, size, mode)
 
 
-    def GetElement(self, eqt):
+    def GetElement(self, eqt : any) -> any:
+        """Récupérer le png de l'equation latex. Input / Output : any (element pygame image)"""
         surfaceLatex = self.Render(eqt)
         return surfaceLatex
