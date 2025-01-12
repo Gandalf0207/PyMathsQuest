@@ -63,9 +63,11 @@ WINDOW_WIDTH, WINDOW_HEIGHT = 1280,720
 COORS_BOX_ALL_SETTINGS = (WINDOW_WIDTH-436, WINDOW_HEIGHT-160)
 COORDS_BOX_IDEAS_TIPS = (320, WINDOW_HEIGHT-160)
 
+# font tool box
 FONT20 = pygame.font.Font(None, 20)
-FONT30
-
+FONT36 = pygame.font.Font(None, 36)
+FONT36B = pygame.font.Font(None, 36)
+FONT36B.set_bold(True)
 
 STATE_HELP_INFOS = ["SeePNJ"] # list pour pouvoir etre modifié
 INFOS = {

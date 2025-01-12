@@ -5,7 +5,8 @@ class SettingsInterface(object):
 
     def __init__(self, gestionnaire: any) ->None:
         """Méthode initialisation de l'interface de settings.
-        Input : gestionnaire = self méthode d'appel"""
+        Input : gestionnaire = self méthode d'appel
+        Output : None"""
         
         # Initialisation
         self.gestionnaire = gestionnaire
@@ -19,6 +20,7 @@ class SettingsInterface(object):
         self.font = pygame.font.Font(None, 36)
         self.font1 = pygame.font.Font(None, 20)
 
+        # timer click
         self.last_click_time = 0
         self.click_delay = 500   
 
@@ -29,11 +31,11 @@ class SettingsInterface(object):
 
         # texte titre
         self.interfaceSurface.fill("#ffffff")
-        text = self.font.render(TEXTE["Elements"]["HotBar"]["Settings"]["Title"], True, (0, 0, 0))
+        text = FONT36.render(TEXTE["Elements"]["HotBar"]["Settings"]["Title"], True, (0, 0, 0))
         self.interfaceSurface.blit(text, (10, 10))
 
         # langue settings
-        textLangue = self.font1.render(TEXTE["Elements"]["HotBar"]["Settings"]["Language"], True, (10, 10, 10))
+        textLangue = FONT20.render(TEXTE["Elements"]["HotBar"]["Settings"]["Language"], True, (10, 10, 10))
         self.interfaceSurface.blit(textLangue, (10, 50))
 
         # bouton langue
@@ -43,7 +45,7 @@ class SettingsInterface(object):
         pygame.draw.rect(self.interfaceSurface, (200, 200, 200), self.rectButtonLangue)
 
         # Dessiner le texte à l'intérieur du bouton
-        texteButtonLangue = self.font1.render(TEXTE["Elements"]["HotBar"]["Settings"]["TypeLanguage"], True, (50, 50, 50))
+        texteButtonLangue = FONT20.render(TEXTE["Elements"]["HotBar"]["Settings"]["TypeLanguage"], True, (50, 50, 50))
         texte_pos = (
             self.rectButtonLangue.x + (self.rectButtonLangue.width - texteButtonLangue.get_width()) // 2,
             self.rectButtonLangue.y + (self.rectButtonLangue.height - texteButtonLangue.get_height()) // 2,
@@ -51,8 +53,11 @@ class SettingsInterface(object):
         self.interfaceSurface.blit(texteButtonLangue, texte_pos)
 
     def ChangeLangue(self):
-        INFOS["Langue"] = "En" if INFOS["Langue"] == "Fr" else "Fr"
-        LoadTexte()
+        """Méthode de changement de langue dans les fichier du jeu.
+        Input / Output : None"""
+
+        INFOS["Langue"] = "En" if INFOS["Langue"] == "Fr" else "Fr" # changement variable langue
+        LoadTexte() # load nouveau texte (changement de langue)
 
 
     def CloseInterface(self) -> None:
@@ -118,16 +123,13 @@ class SoudInterface(object):
         self.interfaceSurface = pygame.Surface((WINDOW_WIDTH/2, WINDOW_HEIGHT/2),  pygame.SRCALPHA)
         self.interfaceSurface.fill("#ffffff")
 
-        # texte 
-        self.font = pygame.font.Font(None, 36)
-
 
     def BuildInterface(self) -> None:
         """Méthode : Création de tout les éléments composant l'interface. Input / Output : None"""
 
         # texte titre
         self.interfaceSurface.fill("#ffffff")
-        text = self.font.render(TEXTE["Elements"]["HotBar"]["Sound"]["Title"], True, (0,0,0))
+        text = FONT36.render(TEXTE["Elements"]["HotBar"]["Sound"]["Title"], True, (0,0,0))
         self.interfaceSurface.blit(text, (10,10))
 
 
@@ -166,22 +168,23 @@ class BundleInterface(object):
         self.interfaceSurface = pygame.Surface((WINDOW_WIDTH/2, WINDOW_HEIGHT/2),  pygame.SRCALPHA)
         self.interfaceSurface.fill("#ffffff")
 
-
-
-        # texte 
-        self.font = pygame.font.Font(None, 36)
-        self.font1 = pygame.font.Font(None, 15)
-
         # load image
         self.LoadImage()
         self.CreateElementRect()
 
-    def LoadImage(self):
+
+    def LoadImage(self) -> None:
+        """Méthode chargement des images Input / Output : None"""
+
         self.planks = pygame.image.load(join("Images", "Item", "PlanksItem.png")).convert_alpha()
         self.oldAxe = pygame.image.load(join("Images", "Item", "OldAxeItem.png")).convert_alpha()
         self.pickaxe = pygame.image.load(join("Images", "Item", "Pickaxe.png")).convert_alpha()
 
-    def CreateElementRect(self):
+    def CreateElementRect(self) -> None:
+        """Méthode de création des slots et de leurs attributs
+        Input / Output : None"""
+
+        # surface slot inventaire
         self.surfaceSlot1 = pygame.Surface((96,96))
         self.surfaceSlot2 = pygame.Surface((96,96))
         self.surfaceSlot3 = pygame.Surface((96,96))
@@ -194,7 +197,11 @@ class BundleInterface(object):
         self.surfaceSlot10 = pygame.Surface((96,96))
         self.surfaceSlot11 = pygame.Surface((96,96))
         self.surfaceSlot12 = pygame.Surface((96,96))
+
+        # all slots
         self.allSurfaceSlot = [self.surfaceSlot1, self.surfaceSlot2, self.surfaceSlot3, self.surfaceSlot4, self.surfaceSlot5, self.surfaceSlot6, self.surfaceSlot7, self.surfaceSlot8, self.surfaceSlot9, self.surfaceSlot1, self.surfaceSlot11, self.surfaceSlot12]
+        
+        #all coords slots
         self.coordsSurface = [
                             (56,40), (198,40), (345,40), (492, 40), 
                             (51, 156), (198, 156), (345, 156), (492, 156), 
@@ -205,13 +212,15 @@ class BundleInterface(object):
 
         # texte titre
         self.interfaceSurface.fill("#ffffff")
-        text = self.font.render(TEXTE["Elements"]["HotBar"]["Bundle"]["Title"], True, (0,0,0))
+        text = FONT20.render(TEXTE["Elements"]["HotBar"]["Bundle"]["Title"], True, (0,0,0))
         self.interfaceSurface.blit(text, (10,10))
 
         indice = 0
-        for key in INVENTORY:
-            elementSlot = self.allSurfaceSlot[indice]
-            elementSlot.fill((255,255,255))
+        for key in INVENTORY: # pour tout les élément dans l'inventaire
+            elementSlot = self.allSurfaceSlot[indice] # get slot
+            elementSlot.fill((255,255,255)) # clear slot
+
+            # définition de l'image en fonction de l'item de l'inventaire
             if key == "OldAxe" and INVENTORY["OldAxe"] > 0: 
                 surf = self.oldAxe
             elif key == "Planks" and INVENTORY["Planks"] > 0: 
@@ -221,12 +230,13 @@ class BundleInterface(object):
             else:
                 surf = None
             
-            # si il y a un item à afficher
+            # s'il y a un item à afficher
             if surf != None:
+                # ajout de l'item dans le slot
                 elementSlot.blit(surf, (0,0))
                 self.interfaceSurface.blit(elementSlot, self.coordsSurface[indice])
 
-                indice += 1
+                indice += 1 # on change de slot
 
         
     def CloseInterface(self) -> None:
@@ -264,16 +274,13 @@ class BookInterface(object):
         self.interfaceSurface = pygame.Surface((WINDOW_WIDTH/2, WINDOW_HEIGHT/2),  pygame.SRCALPHA)
         self.interfaceSurface.fill("#ffffff")
 
-        # texte 
-        self.font = pygame.font.Font(None, 36)
-
 
     def BuildInterface(self) -> None:
         """Méthode : Création de tout les éléments composant l'interface. Input / Output : None"""
 
         # texte titre
         self.interfaceSurface.fill("#ffffff")
-        text = self.font.render(TEXTE["Elements"]["HotBar"]["Book"]["Title"], True, (0,0,0))
+        text = FONT36.render(TEXTE["Elements"]["HotBar"]["Book"]["Title"], True, (0,0,0))
         self.interfaceSurface.blit(text, (10,10))
 
 
@@ -320,11 +327,6 @@ class PNJInterface(object):
         self.interfaceSurface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
         self.interfaceSurface.fill((0, 0, 0, 0))  # Transparent par défaut
 
-        # Initialisation des polices
-        self.font1 = pygame.font.Font(None, 36)
-        self.font1.set_bold(True)
-        self.font2 = pygame.font.Font(None, 36)
-
         # Position du PNJ
         self.pnj_position = (100, 100)  # Position du PNJ (à gauche)
 
@@ -352,7 +354,7 @@ class PNJInterface(object):
         self.pnj_displayed_text = ""
         self.pnj_index = 0
 
-        # check déjà discuter avec
+        # check déjà discuter avec pnj
         if not self.gestionnaire.pnjObj.discussion:
             # chargement du texte
             if self.compteurDialogue <= self.nombreDialogue:
@@ -361,6 +363,8 @@ class PNJInterface(object):
             else:
                 self.gestionnaire.Vu() # bool de check passage
                 self.CloseInterface() # fermeture interface
+
+                # action après discussions
                 if INFOS["Niveau"] ==0:
                     if self.gestionnaire.pnjActuel == "PNJ1":
                         INVENTORY["OldAxe"] += 1
@@ -375,6 +379,7 @@ class PNJInterface(object):
                         STATE_HELP_INFOS[0] = "MineRock"
 
         else:
+            # get dialogue deja vu
             if self.compteurDialogue <= self.nombreDialogue:
                 self.pnj_text = TEXTE["Dialogues"][f"Niveau{INFOS["Niveau"]}"][self.gestionnaire.pnjActuel]["Alternatif"][f"Dialogue{self.compteurDialogue}"]
                 self.compteurDialogue += 1 # passage au dialogue suivant
@@ -402,7 +407,7 @@ class PNJInterface(object):
 
         # load nom pnj + creation text du nom
         self.pnjName = TEXTE["Dialogues"][f"Niveau{INFOS["Niveau"]}"][self.gestionnaire.pnjActuel]["Nom"]
-        pnjName = self.font1.render(self.pnjName, True, (255,255,255))
+        pnjName = FONT36B.render(self.pnjName, True, (255,255,255))
         self.interfaceSurface.blit(pnjName, (200, 400))
 
         # load btn skip / lancer
@@ -410,7 +415,7 @@ class PNJInterface(object):
         self.btnRectSkip = pygame.Rect(750,600,100,50)
         self.surfaceBtnSkip.fill((255,255,255))
         self.textS = TEXTE["Elements"]["InterfacePNJ"]["SkipButton"]
-        self.textSkip = self.font2.render(self.textS, True, (10,10,10))
+        self.textSkip = FONT36.render(self.textS, True, (10,10,10))
         self.surfaceBtnSkip.blit(self.textSkip, (0,0))
         self.interfaceSurface.blit(self.surfaceBtnSkip, (self.btnRectSkip.x, self.btnRectSkip.y))
 
@@ -421,32 +426,15 @@ class PNJInterface(object):
         self.pnj_displayed_text = self.pnj_text[:self.pnj_index]
 
 
-        # Fonction simple pour découper le texte
-        def wrap_text(text, font, max_width):
-            words = text.split(' ')
-            lines = []
-            current_line = ''
-
-            for word in words:
-                test_line = f"{current_line} {word}".strip()
-                if font.size(test_line)[0] <= max_width:
-                    current_line = test_line
-                else:
-                    lines.append(current_line)
-                    current_line = word
-            if current_line:
-                lines.append(current_line)
-            return lines
-
         # Largeur maximale de la boîte de texte
         max_width = 500
         wrapped_lines = wrap_text(self.pnj_displayed_text, self.font2, max_width)
 
         # Affichage des lignes
         y_offset = 420  # Position Y de départ
-        line_height = self.font2.size("Tg")[1]  # Hauteur d'une ligne
+        line_height = FONT36.size("Tg")[1]  # Hauteur d'une ligne
         for i, line in enumerate(wrapped_lines):
-            line_surface = self.font2.render(line, True, (255, 255, 255))
+            line_surface = FONT36.render(line, True, (255, 255, 255))
             self.interfaceSurface.blit(line_surface, (200, y_offset + i * line_height))
 
 
@@ -487,6 +475,7 @@ class PNJInterface(object):
                     self.loadText() # pasage au dialogue suivant
                     self.BuildInterface() # build des éléments
 
+        # meme chose mais avec espace
         if keys[pygame.K_SPACE] : 
             current_time = pygame.time.get_ticks()
             if current_time - self.last_click_time > self.click_delay:
