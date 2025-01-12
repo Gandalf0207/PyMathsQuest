@@ -49,13 +49,17 @@ class Game(object):
 
     def CreateFont(self):
         FONT20 = pygame.font.Font(None, 20)
+        FONT22 = pygame.font.Font(None, 22)
         FONT24 = pygame.font.Font(None, 24)
+        FONT30 = pygame.font.Font(None, 30)
         FONT36 = pygame.font.Font(None, 36)
         FONT36B = pygame.font.Font(None, 36)
         FONT36B.set_bold(True)
 
         FONT["FONT20"] = FONT20
+        FONT["FONT22"] = FONT22
         FONT["FONT24"] = FONT24
+        FONT["FONT30"] = FONT30
         FONT["FONT36"] = FONT36
         FONT["FONT36b"] = FONT36B
 
