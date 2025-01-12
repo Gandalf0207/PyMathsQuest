@@ -22,7 +22,7 @@ class RenderLatex:
         ax.axis('off')
 
         # Rendu du texte LaTeX
-        ax.text(0, 0, eqt, fontsize=self.fontsize, ha='center', va='center', wrap=True)
+        ax.text(0, 0, eqt, fontsize=FONT["FONT30"], ha='center', va='center', wrap=True)
 
         # Sauvegarder l'image dans un buffer
         buf = BytesIO()
