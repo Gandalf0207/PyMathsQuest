@@ -9,12 +9,15 @@ class Astar(object):
         self.goal = (goal[0], goal[1])
         self.mapCalcul = mapCalcul
         self.pathAccessible = pathAccessible
+        self.parents = {}  # Nouveau dictionnaire pour suivre les parents
 
     def __heuristic__(self, a, b):
         # Distance de Manhattan entre les points a et b
         return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
     def a_star(self):
+        import heapq
+
         open_list = []
         heapq.heappush(open_list, (0, self.start))  # Initialisation de la liste ouverte avec le point de départ
         g_score = {self.start: 0}  # Coût du chemin le plus court trouvé jusqu'à chaque point
@@ -27,9 +30,14 @@ class Astar(object):
             # Choisir le noeud avec le coût le plus bas (f_score) dans la liste ouverte
             current = heapq.heappop(open_list)[1]
 
-            # Si on atteint le but, on renvoie True
+            # Si on atteint le but, on reconstruit le chemin
             if current == self.goal:
-                return True
+                path = []
+                while current in self.parents:
+                    path.append(current)
+                    current = self.parents[current]
+                path.append(self.start)
+                return path[::-1]  # Retourne le chemin dans l'ordre du départ vers le but
 
             # Exploration des voisins du point courant
             for dx, dy in directions:  # dx et dy sont utilisés directement ici
@@ -47,6 +55,10 @@ class Astar(object):
                         g_score[neighbor] = tentative_g_score
                         f_score[neighbor] = tentative_g_score + self.__heuristic__(neighbor, self.goal)
                         heapq.heappush(open_list, (f_score[neighbor], neighbor))
+                        
+                        # Mise à jour du parent
+                        self.parents[neighbor] = current
 
-        # Si on n'a pas trouvé de chemin, retourner False
+        # Si on n'a pas trouvé de chemin, retourner une liste vide
         return False
+
