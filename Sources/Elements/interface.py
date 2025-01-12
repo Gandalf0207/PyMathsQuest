@@ -16,10 +16,6 @@ class SettingsInterface(object):
         self.interfaceSurface = pygame.Surface((WINDOW_WIDTH/2, WINDOW_HEIGHT/2),  pygame.SRCALPHA)
         self.interfaceSurface.fill("#ffffff")
 
-        # texte 
-        self.font = pygame.font.Font(None, 36)
-        self.font1 = pygame.font.Font(None, 20)
-
         # timer click
         self.last_click_time = 0
         self.click_delay = 500   
@@ -31,11 +27,11 @@ class SettingsInterface(object):
 
         # texte titre
         self.interfaceSurface.fill("#ffffff")
-        text = FONT36.render(TEXTE["Elements"]["HotBar"]["Settings"]["Title"], True, (0, 0, 0))
+        text = FONT["FONT36"].render(TEXTE["Elements"]["HotBar"]["Settings"]["Title"], True, (0, 0, 0))
         self.interfaceSurface.blit(text, (10, 10))
 
         # langue settings
-        textLangue = FONT20.render(TEXTE["Elements"]["HotBar"]["Settings"]["Language"], True, (10, 10, 10))
+        textLangue = FONT["FONT20"].render(TEXTE["Elements"]["HotBar"]["Settings"]["Language"], True, (10, 10, 10))
         self.interfaceSurface.blit(textLangue, (10, 50))
 
         # bouton langue
@@ -45,7 +41,7 @@ class SettingsInterface(object):
         pygame.draw.rect(self.interfaceSurface, (200, 200, 200), self.rectButtonLangue)
 
         # Dessiner le texte à l'intérieur du bouton
-        texteButtonLangue = FONT20.render(TEXTE["Elements"]["HotBar"]["Settings"]["TypeLanguage"], True, (50, 50, 50))
+        texteButtonLangue = FONT["FONT20"].render(TEXTE["Elements"]["HotBar"]["Settings"]["TypeLanguage"], True, (50, 50, 50))
         texte_pos = (
             self.rectButtonLangue.x + (self.rectButtonLangue.width - texteButtonLangue.get_width()) // 2,
             self.rectButtonLangue.y + (self.rectButtonLangue.height - texteButtonLangue.get_height()) // 2,
@@ -129,7 +125,7 @@ class SoudInterface(object):
 
         # texte titre
         self.interfaceSurface.fill("#ffffff")
-        text = FONT36.render(TEXTE["Elements"]["HotBar"]["Sound"]["Title"], True, (0,0,0))
+        text = FONT["FONT36"].render(TEXTE["Elements"]["HotBar"]["Sound"]["Title"], True, (0,0,0))
         self.interfaceSurface.blit(text, (10,10))
 
 
@@ -212,7 +208,7 @@ class BundleInterface(object):
 
         # texte titre
         self.interfaceSurface.fill("#ffffff")
-        text = FONT20.render(TEXTE["Elements"]["HotBar"]["Bundle"]["Title"], True, (0,0,0))
+        text = FONT["FONT36"].render(TEXTE["Elements"]["HotBar"]["Bundle"]["Title"], True, (0,0,0))
         self.interfaceSurface.blit(text, (10,10))
 
         indice = 0
@@ -280,7 +276,7 @@ class BookInterface(object):
 
         # texte titre
         self.interfaceSurface.fill("#ffffff")
-        text = FONT36.render(TEXTE["Elements"]["HotBar"]["Book"]["Title"], True, (0,0,0))
+        text = FONT["FONT36"].render(TEXTE["Elements"]["HotBar"]["Book"]["Title"], True, (0,0,0))
         self.interfaceSurface.blit(text, (10,10))
 
 
@@ -407,7 +403,7 @@ class PNJInterface(object):
 
         # load nom pnj + creation text du nom
         self.pnjName = TEXTE["Dialogues"][f"Niveau{INFOS["Niveau"]}"][self.gestionnaire.pnjActuel]["Nom"]
-        pnjName = FONT36B.render(self.pnjName, True, (255,255,255))
+        pnjName = FONT["FONT36B"].render(self.pnjName, True, (255,255,255))
         self.interfaceSurface.blit(pnjName, (200, 400))
 
         # load btn skip / lancer
@@ -415,7 +411,7 @@ class PNJInterface(object):
         self.btnRectSkip = pygame.Rect(750,600,100,50)
         self.surfaceBtnSkip.fill((255,255,255))
         self.textS = TEXTE["Elements"]["InterfacePNJ"]["SkipButton"]
-        self.textSkip = FONT36.render(self.textS, True, (10,10,10))
+        self.textSkip = FONT["FONT36"].render(self.textS, True, (10,10,10))
         self.surfaceBtnSkip.blit(self.textSkip, (0,0))
         self.interfaceSurface.blit(self.surfaceBtnSkip, (self.btnRectSkip.x, self.btnRectSkip.y))
 
@@ -428,13 +424,13 @@ class PNJInterface(object):
 
         # Largeur maximale de la boîte de texte
         max_width = 500
-        wrapped_lines = wrap_text(self.pnj_displayed_text, self.font2, max_width)
+        wrapped_lines = wrap_text(self.pnj_displayed_text,FONT["FONT36"], max_width)
 
         # Affichage des lignes
         y_offset = 420  # Position Y de départ
-        line_height = FONT36.size("Tg")[1]  # Hauteur d'une ligne
+        line_height = FONT["FONT36"].size("Tg")[1]  # Hauteur d'une ligne
         for i, line in enumerate(wrapped_lines):
-            line_surface = FONT36.render(line, True, (255, 255, 255))
+            line_surface = FONT["FONT36"].render(line, True, (255, 255, 255))
             self.interfaceSurface.blit(line_surface, (200, y_offset + i * line_height))
 
 

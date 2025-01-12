@@ -121,19 +121,19 @@ class InfosTips:
             
         # get lines 
         max_width = 400
-        wrapped_lines = wrap_text(self.displayed_text, FONT20, max_width)
+        wrapped_lines = wrap_text(self.displayed_text, FONT["FONT20"], max_width)
 
         # Affichage des lignes
         y_offset = 30  # Position Y de départ
-        line_height = FONT20.size("Tg")[1]  # Hauteur d'une ligne
+        line_height = FONT["FONT20"].size("Tg")[1]  # Hauteur d'une ligne
         for i, line in enumerate(wrapped_lines):
-            line_surface = FONT20.render(line, True, (0,0,0))
+            line_surface = FONT["FONT20"].render(line, True, (0,0,0))
             self.IdeaTipsSurface.blit(line_surface, (120, y_offset + i * line_height))
     
     def Update(self) -> None:
         """Méthode update des infos tips, get du texte puis affichage de ce dernier
         Input / Ouput : None"""
-        
+
         self.GetText()
         self.BuildElement()
 

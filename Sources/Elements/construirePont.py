@@ -11,8 +11,8 @@ class ConstruirePont(object):
         self.gestionnaire = gestionnnaire
 
         if INFOS["Niveau"] == 0:
-            self.riviere2 = self.LoadJsonMapValue("coordsMapBase", "Riviere2 Coords")
-        self.map = self.LoadJsonMapValue("coordsMapBase", "AllMapInfo")
+            self.riviere2 = LoadJsonMapValue("coordsMapBase", "Riviere2 Coords")
+        self.map = LoadJsonMapValue("coordsMapBase", "AllMapInfo")
 
         self.posPossible = self.posPossibleBuild() # case construction possible
         self.construit = False # étant de la construit 
@@ -103,8 +103,7 @@ class ConstruirePont(object):
                 self.coordsRiviere = coords
 
                 # Dessiner la boîte d'indication "Press E"
-                font = pygame.font.Font(None, 24)
-                text_surface = font.render(TEXTE["Elements"]["Niveau0"]["CanBuildBridge"], True, (255, 255, 255))
+                text_surface = FONT["FONT24"].render(TEXTE["Elements"]["Niveau0"]["CanBuildBridge"], True, (255, 255, 255))
                 text_rect = text_surface.get_rect()
                 text_rect.topleft = (self.npc_screen_pos[0] - 20, self.npc_screen_pos[1] - 40)
                 

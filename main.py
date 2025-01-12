@@ -41,10 +41,24 @@ class Game(object):
         self.cinematique = False # cinématique
         self.cinematiqueObject = None # obj de la cinematique 
 
+        self.CreateFont()
 
         # surface bg hotbar
         self.bgHotBar = pygame.Surface((WINDOW_WIDTH, 160))
         self.bgHotBar.fill((150,150,150))
+
+    def CreateFont(self):
+        FONT20 = pygame.font.Font(None, 20)
+        FONT24 = pygame.font.Font(None, 24)
+        FONT36 = pygame.font.Font(None, 36)
+        FONT36B = pygame.font.Font(None, 36)
+        FONT36B.set_bold(True)
+
+        FONT["FONT20"] = FONT20
+        FONT["FONT24"] = FONT24
+        FONT["FONT36"] = FONT36
+        FONT["FONT36b"] = FONT36B
+
 
 
     def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:

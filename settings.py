@@ -23,7 +23,7 @@ matplotlib.use('Agg')
 # Methode Utile : 
 
 # get values
-def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
+def LoadJsonMapValue(index1 :str, index2 :str) -> list:
     """Récupération des valeur stockées dans le fichier json pour les renvoyer quand nécéssaire à l'aide des indices données pour les récupérer"""
     
     # récupération des valeurs stocké dans le json
@@ -64,10 +64,13 @@ COORS_BOX_ALL_SETTINGS = (WINDOW_WIDTH-436, WINDOW_HEIGHT-160)
 COORDS_BOX_IDEAS_TIPS = (320, WINDOW_HEIGHT-160)
 
 # font tool box
-FONT20 = pygame.font.Font(None, 20)
-FONT36 = pygame.font.Font(None, 36)
-FONT36B = pygame.font.Font(None, 36)
-FONT36B.set_bold(True)
+FONT = {
+    "FONT20" : None,
+    "FONT24" : None,
+    "FONT36" : None,
+    "FONT36B" : None,
+}
+
 
 STATE_HELP_INFOS = ["SeePNJ"] # list pour pouvoir etre modifié
 INFOS = {
