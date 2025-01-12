@@ -41,43 +41,31 @@ class Game(object):
         self.cinematique = False # cinématique
         self.cinematiqueObject = None # obj de la cinematique 
 
-        self.CreateFont()
+        self.GameTool = GameToolBox(self)
+        self.GameTool.CreateFont()
 
         # surface bg hotbar
         self.bgHotBar = pygame.Surface((WINDOW_WIDTH, 160))
         self.bgHotBar.fill((150,150,150))
 
-    def CreateFont(self):
-        FONT20 = pygame.font.Font(None, 20)
-        FONT22 = pygame.font.Font(None, 22)
-        FONT24 = pygame.font.Font(None, 24)
-        FONT30 = pygame.font.Font(None, 30)
-        FONT36 = pygame.font.Font(None, 36)
-        FONT36B = pygame.font.Font(None, 36)
-        FONT36B.set_bold(True)
+    def ChargementEcran(self):
+        self.GameTool.ChargementEcran()
 
-        FONT["FONT20"] = FONT20
-        FONT["FONT22"] = FONT22
-        FONT["FONT24"] = FONT24
-        FONT["FONT30"] = FONT30
-        FONT["FONT36"] = FONT36
-        FONT["FONT36b"] = FONT36B
+    def textScreen(self, text):
+        self.GameTool.textScreen(text)
 
+    def fondu_au_noir(self):
+        self.GameTool.fondu_au_noir()
 
-
-    def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
-        """Récupération des valeur stockées dans le fichier json pour les renvoyer quand nécéssaire 
-        à l'aide des indices données.
-        Input : index1 / index2 = str   , Output : list"""
-        
-        with open(join("Sources","Ressources","AllMapValue.json"), "r") as f: # ouverture lecture
-            loadElementJson = json.load(f) # chargement des valeurs
-        return loadElementJson[index1].get(index2, None) # retour valeurs
+    def ouverture_du_noir(self, targetPos):
+        self.GameTool.ouverture_du_noir(targetPos)
 
 
     def SetupAllMap(self):
-        self.player = Player((8*CASEMAP,2*CASEMAP), self.allSprites, self.collisionSprites) 
+        """Méthode de création de tout les éléments pour le niveau / map
+        Input / Output : None"""
 
+        self.player = Player((8*CASEMAP,2*CASEMAP), self.allSprites, self.collisionSprites) 
 
         if INFOS["Niveau"] ==0:
             self.loadMapElement = LoadMapPlaineRiviere(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
@@ -99,79 +87,12 @@ class Game(object):
         self.checkLoadingDone = True
 
     def SetupExo(self):
+        """Méthode de création de l'exo : setup de la class
+        Input / Output : None"""
 
         self.InterfaceExo = CreateExo(self)
         self.InterfaceExo.start()
         self.checkLoadingDone = True
-
-    # Fonction pour dessiner l'écran de chargement
-    def ChargementEcran(self):
-        font = pygame.font.Font(None, 74)
-        loading_step = 0
-        while not self.checkLoadingDone:
-            self.displaySurface.fill((0,0,0))  # Remplir avec une couleur grise
-
-            # Animation de texte dynamique avec des points qui défilent
-            loading_text = f"{TEXTE["Elements"]["Loading"]}{'.' * (loading_step % 4)}"
-            loading_step += 1
-            text = font.render(loading_text, True, (255, 255, 255))
-            text_rect = text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
-            self.displaySurface.blit(text, text_rect.topleft)
-
-            pygame.display.flip()
-            pygame.time.delay(200)  # Temps de mise à jour de l'écran de chargement
-
-
-        self.fondu_au_noir()
-        self.ouverture_du_noir(self.player.rect.center)
-
-    def textScreen(self, text):
-
-        font = pygame.font.Font(None, 50)
-
-        self.displaySurface.fill((0,0,0))
-        textElement = font.render(text, True, (255,255,255))
-        text_rect = textElement.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
-        self.displaySurface.blit(textElement, text_rect.topleft)
-
-        pygame.display.flip()
-        pygame.time.delay(2000)  # Temps de mise à jour de l'écran de chargement
-
-        self.fondu_au_noir()
-
-    def fondu_au_noir(self):
-        fade_surface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))
-        fade_surface.fill((0, 0, 0))
-        alpha = 0
-
-        while alpha < 255:
-            fade_surface.set_alpha(alpha)
-            self.displaySurface.blit(fade_surface, (0, 0))
-            alpha += 5
-            pygame.display.flip()
-            self.clock.tick(30)  # Limite de rafraîchissement
-
-    def ouverture_du_noir(self, targetPos):
-        # Crée une surface noire avec un canal alpha (transparence)
-        fade_surface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
-        fade_surface.fill((0, 0, 0))
-
-        # Alpha initial pour la surface noire (complètement opaque)
-        alpha = 255
-
-        while alpha > 0:
-            self.allSprites.draw(targetPos)
-            # Ici, ne redessinez pas le fond du jeu, car il est déjà chargé et affiché
-            # simplement superposez la surface noire pour l'effet de transparence.
-
-            # Appliquer la surface noire avec alpha dégressif
-            fade_surface.set_alpha(alpha)
-            self.displaySurface.blit(fade_surface, (0, 0))
-
-            # Réduire progressivement l'opacité pour rendre la surface noire plus transparente
-            alpha -= 5
-            pygame.display.flip()
-            self.clock.tick(30)  # Limite de rafraîchissement
 
 
     def run(self):
@@ -216,7 +137,7 @@ class Game(object):
                             self.buildPont.BuildBridge(self.loadMapElement, self.player.rect.center)
 
                         if event.key == pygame.K_ESCAPE and self.INTERFACE_OPEN: # Close général interface build
-                            if self.InterfaceExo:
+                            if self.interface_exo:
                                 INFOS["Exo"] = False
                             self.INTERFACE_OPEN = False
 
@@ -265,7 +186,7 @@ class Game(object):
                             self.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["Cinematique1End"])
                            
                             # pont nb 1
-                            coordPont1 = self.LoadJsonMapValue("coordsMapObject", "ArbreSpecial Coords")
+                            coordPont1 = LoadJsonMapValue("coordsMapObject", "ArbreSpecial Coords")
                             coords = ((coordPont1[0] + 1)*CASEMAP, coordPont1[1]*CASEMAP) # on ajoute 1 pour etre sur la rivière
                             self.loadMapElement.AddPont("pont1", coords)
                         
@@ -326,6 +247,112 @@ class Game(object):
             pygame.display.flip()
 
         pygame.quit()
+
+
+class GameToolBox(object):
+    def __init__(self, gestionnaire):
+        self.gestionnaire = gestionnaire
+        pass
+    
+    def CreateFont(self):
+        FONT20 = pygame.font.Font(None, 20)
+        FONT22 = pygame.font.Font(None, 22)
+        FONT24 = pygame.font.Font(None, 24)
+        FONT30 = pygame.font.Font(None, 30)
+        FONT36 = pygame.font.Font(None, 36)
+        FONT36B = pygame.font.Font(None, 36)
+        FONT36B.set_bold(True)
+
+        FONT["FONT20"] = FONT20
+        FONT["FONT22"] = FONT22
+        FONT["FONT24"] = FONT24
+        FONT["FONT30"] = FONT30
+        FONT["FONT36"] = FONT36
+        FONT["FONT36B"] = pygame.font.Font(None, 36)
+
+
+    # Fonction pour dessiner l'écran de chargement
+    def ChargementEcran(self):
+        font = pygame.font.Font(None, 74)
+        loading_step = 0
+        while not self.gestionnaire.checkLoadingDone:
+            self.gestionnaire.displaySurface.fill((0,0,0))  # Remplir avec une couleur grise
+
+            # Animation de texte dynamique avec des points qui défilent
+            loading_text = f"{TEXTE["Elements"]["Loading"]}{'.' * (loading_step % 4)}"
+            loading_step += 1
+            text = font.render(loading_text, True, (255, 255, 255))
+            text_rect = text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
+            self.gestionnaire.displaySurface.blit(text, text_rect.topleft)
+
+            pygame.display.flip()
+            pygame.time.delay(200)  # Temps de mise à jour de l'écran de chargement
+
+
+        self.fondu_au_noir()
+        self.ouverture_du_noir(self.gestionnaire.player.rect.center)
+
+    def textScreen(self, text):
+
+        font = pygame.font.Font(None, 50)
+
+        self.gestionnaire.displaySurface.fill((0,0,0))
+        textElement = font.render(text, True, (255,255,255))
+        text_rect = textElement.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
+        self.gestionnaire.displaySurface.blit(textElement, text_rect.topleft)
+
+        pygame.display.flip()
+        pygame.time.delay(2000)  # Temps de mise à jour de l'écran de chargement
+
+        self.fondu_au_noir()
+
+    def fondu_au_noir(self):
+        fade_surface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))
+        fade_surface.fill((0, 0, 0))
+        alpha = 0
+
+        while alpha < 255:
+            fade_surface.set_alpha(alpha)
+            self.gestionnaire.displaySurface.blit(fade_surface, (0, 0))
+            alpha += 5
+            pygame.display.flip()
+            self.gestionnaire.clock.tick(30)  # Limite de rafraîchissement
+
+    def ouverture_du_noir(self, targetPos):
+        # Crée une surface noire avec un canal alpha (transparence)
+        fade_surface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
+        fade_surface.fill((0, 0, 0))
+
+        # Alpha initial pour la surface noire (complètement opaque)
+        alpha = 255
+
+        while alpha > 0:
+            self.gestionnaire.allSprites.draw(targetPos)
+            # Ici, ne redessinez pas le fond du jeu, car il est déjà chargé et affiché
+            # simplement superposez la surface noire pour l'effet de transparence.
+
+            # Appliquer la surface noire avec alpha dégressif
+            fade_surface.set_alpha(alpha)
+            self.gestionnaire.displaySurface.blit(fade_surface, (0, 0))
+
+            # Réduire progressivement l'opacité pour rendre la surface noire plus transparente
+            alpha -= 5
+            pygame.display.flip()
+            self.gestionnaire.clock.tick(30)  # Limite de rafraîchissement
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -54,7 +54,7 @@ def wrap_text(text, font, max_width):
 
 
 
-
+# INFOS FIXES
 LONGUEUR = 150
 LARGEUR = 75
 CASEMAP = 128
@@ -74,7 +74,9 @@ FONT = {
 }
 
 
-STATE_HELP_INFOS = ["SeePNJ"] # list pour pouvoir etre modifié
+STATE_HELP_INFOS = ["SeePNJ"] # list pour pouvoir etre modifié : tips
+
+# box infos globales
 INFOS = {
     "Niveau" : 0,
     "Langue" : "Fr", 
@@ -84,11 +86,13 @@ INFOS = {
     "ChangementNiveau" : False
 }
 
+# texte : tout le texte
 TEXTE = {
     "Dialogues" : None,
     "Elements" : None
 }
 
+# inventaires 
 INVENTORY = {
     "Planks" : 0,
     "OldAxe" : 0,
@@ -104,6 +108,7 @@ INVENTORY = {
     "i" : 0,
 }
 
+# check pnj parlé ou non 
 PNJ = {
     "PNJ1" : False,
     "PNJ2" : False, 
@@ -113,8 +118,7 @@ PNJ = {
 }
 
 
-
-
+# infos map tiers
 EspacementPointRepereRiviere = 15
 CoupageMapRiviere = 50 # 1/3 de la longueur
 CouloirRiviere = 4
