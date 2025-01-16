@@ -74,7 +74,7 @@ class GestionNiveauMap(object):
 
         for coords in coordPNJ: 
             self.map[coords[1]][coords[0]] = "P" # ajout pnj map
-        AjoutJsonMapValue(coordPNJ, ) # json
+        AjoutJsonMapValue(coordPNJ, "coordsMapObject", "PNJ Coords") # json
 
 
     def PlacementElements(self, coordsElements, pathJson): 
@@ -320,18 +320,20 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             # 3 liste, 3 verif car quand il y az ue rivire il faut d'écaler le point de départ, car un pont sera poser pour permettre au joueur de traverser la riviere
             # spawn, pnj1, arbre spécial, pnj2, pnj3, sortie
             listeOrdrePointCle1 = [ # partie gauche map (avant riviere)
-                                [8,2], 
-                                self.coordsPNJ[0], 
+                                [8,2],  
+                                [self.coordsPNJ[0][0], self.coordsPNJ[0][1]],
                                 LoadJsonMapValue("coordsMapObject", "ArbreSpecial Coords")
                                 ]
             
+            coordsApresPont1 = LoadJsonMapValue("coordsMapObject", "ArbreSpecial Coords")
             listeOrdrePointCle2 = [ # partie middle (entre les deux rivieres donc on a passé la premiere riviere (indice + 2))
-                                [self.coordsPNJ[1][0] + 2,self.coordsPNJ[1][1]], # +2 car on traverse la riviere
-                                self.coordsPNJ[2]
+                                [coordsApresPont1[0] + 2, coordsApresPont1[1]],
+                                self.coordsPNJ[1], # +2 car on traverse la riviere
                                 ]
             
             listeOrdrePointCle3 = [ # meme chose
-                                [self.coordsPNJ[2][0] + 2,self.coordsPNJ[2][1]], # +2 car on traverse la riviere
+                                [self.coordsPNJ[1][0] + 2, self.coordsPNJ[1][1]],
+                                [self.coordsPNJ[2][0],self.coordsPNJ[2][1]], # +2 car on traverse la riviere
                                 LoadJsonMapValue("coordsMapObject", "Exit")
                                 ]
             
