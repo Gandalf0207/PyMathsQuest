@@ -146,7 +146,7 @@ class LoadMapPlaineRiviere(): # nv 0
         Input / Output : None"""
 
         # Récupération coords spawn + infos element
-        coordsSpawnList = LoadJsonMapValue("coordsMapObject", "CampSpawn Coords")
+        coordsSpawnList = LoadJsonMapValue("coordsMapObject", "Spawn")
 
         match INFOS["Niveau"]:
             case 0:
@@ -162,7 +162,7 @@ class LoadMapPlaineRiviere(): # nv 0
         """Méthode de placemet de la sortie
         Input / Ouput : None"""
 
-        coords = LoadJsonMapValue("coordsMapObject", "ZoneSortie Coords")
+        coords = LoadJsonMapValue("coordsMapObject", "Exit")
 
         match INFOS["Niveau"]:
             case 0:

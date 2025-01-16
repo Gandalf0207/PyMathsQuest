@@ -119,7 +119,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
 
         for pointCle in range(len(listOrdrePointCle)-1): # On parcours la liste de point donnée avec un indice inférieur de 1 car on veux envoper le point actuel et le point suivant ( n et n+1)
             if  Astar(listOrdrePointCle[pointCle], listOrdrePointCle[pointCle+1],self.mapCheckDeplacementPossible, pathAccessible).a_star(): # si true, alors le chemin est trouvé, et l'on passe au calcul du chemin suivant
-                pass
+                continue
             else: # Si on indique que le chemin n'éxiste pas et que par conséquent, la résolution du niveau est impossible
                 return False # false pour niveau impossible
         return True # les chemins entre les points données existent  
@@ -366,7 +366,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         # spawn / exit
         super().PlacementElements([[8,2,"S"]], ["coordsMapObject", "Spawn"]) 
         coordSortie = self.__PlacementSpecial__("coordsMapBase", "Riviere3 Coords", "S")
-        AjoutJsonMapValue(coordSortie, "coordsMapObject", "ZoneSortie Coords")
+        AjoutJsonMapValue(coordSortie, "coordsMapObject", "Exit")
 
         # pnj
         coordsPNJ2 = self.__PlacementSpecial__("coordsMapBase", "Riviere2 Coords", "P")
@@ -410,7 +410,7 @@ class NiveauMedievale(GestionNiveauMap):
 
 
 
-mapp, baseMap =  NiveauPlaineRiviere(150,75,200, 200, 200).Update()
+# mapp, baseMap =  NiveauPlaineRiviere(150,75,200, 200, 200).Update()
 # NiveauMedievale(150,75,200).Update()
 
 # On affiche la map pour verif
