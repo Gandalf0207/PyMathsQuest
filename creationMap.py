@@ -1,10 +1,3 @@
-# Ce scrit est celui de la génération des terrains et de ce qui les composent. Une class parent pose les bases, présentes sur chaque map,
-# par la suite, chaque niveau possède sa classe enfant lui permetant d'ajouter les élements uniques de chaque niveau.
-
-# On retrouve deux types principaux de map, la map (avec les obstacles mais sans les décors (fleurs..)); une map de base, possédent
-# les coordonnées pour afficher les variations de l'herbe par exemple.
-
-
 # ---------------------------------------------- PyMathsQuest ---------------------------------------------- #
 
 # Import des settings
@@ -17,98 +10,15 @@ from ScriptAlgo.liaisonAtoB import *
 from ScriptAlgo.astar import *
 
 class GestionNiveauMap(object):
-    """class mère permettant de créer la base commmune de la map de toutes les
-    autres class enfants pour les différents niveau du jeu."""
+    """Class parent création map, settings et méthode globales"""
 
     def __init__(self, longueur :int, largeur: int) -> None:
-        """Initialisation des attributs de la class mère"""
-        self.longueur = longueur # longueur de la map
-        self.largeur = largeur # largeur de la map
-        self.map = [] # map avec les collision, pnj et points clés, sans variation du sol (double liste python)
-        self.baseMap = [] # map pour seulement le sol
+        """Initialisation des attributs """
 
-    def BaseMap(self) -> None:
-        """Création de la double liste avec les bordures de la map(map)"""
-        # map
-        for _ in range(self.largeur): # largeur de la map (y)
-            creationMap = [] # liste pour stocker les valeurs des colonnes (x)
-            for _ in range(self.longueur): # longueur de la map (x)
-                creationMap.append("-") # ajout des valeurs (x)
-            self.map.append(creationMap) # ajout de la ligne entière
-        
-        # map base    | une copy profonde de map serait interessant pour éviter de répéter cette double boucle
-        for _ in range(self.largeur): # largeur de la map (y)
-            creationMap = [] # liste pour stocker les valeurs des colonnes (x)
-            for _ in range(self.longueur): # longueur de la map (x)
-                creationMap.append("-") # ajout des valeurs (x)                        
-            self.baseMap.append(creationMap) # ajout de la ligne entière
-        
-        # position des bordure sur la map : 
-        listeBordures = [] # stockage des coordonnées de ces bordurees
-        for i in range(2):
-            for j in range(self.longueur): # position des bordures haut et bas
-                self.map[i*(self.largeur-1)][j] = "B" # on ajoute les bordures sur la map
-                self.baseMap[i*(self.largeur-1)][j] = "B"  # on ajoute les bordures sur la map de base
-                listeBordures.append([i*(self.largeur-1), j]) # ajout des vaeurs dans la liste de stockage
-
-        # on stock les coordonnées des bordures (la liste) dans le json
-        self.AjoutJsonMapValue(listeBordures, "coordsMapBase", "Bordures Coords")
-
-    
-    def BaseJson(self, data :dict) -> None:
-        """Initialisation du fichier Json avec l'arbo du fichier contenu dans la variable data de chaque niveau"""
-        with open(join("Sources","Ressources","AllMapValue.json"), "w") as valueFileJson: # Ouvrir le fichier en mode écriture
-            json.dump(data, valueFileJson, indent=4) # charger la configuration pour le niveau (on ajotue le dictionnaire data au fichier json)
-
-    def PlacementPNJ(self, coordPNJ :list) -> None:
-        """ Selon les coordoonées données, placement des pnj sur la map, ajout de ces cordonnées au ficheir json"""
-        for coords in coordPNJ: # On parcour la liste des coordonnées
-            self.map[coords[1]][coords[0]] = "P" # On place un pnj sur la map au coordonnées sélectionnées
-        self.AjoutJsonMapValue(coordPNJ, "coordsMapObject", "PNJ Coords") # Ajout de toutes les coordonnées au fichier json
-
-    def PlacementSpawn(self, coordsSpawnElement): 
-        """Méthode permettant de placer le spawn du joueur sur la map (collision) et d'ajouter ces coordonnées dans le json"""
-        for coordsPlacement in coordsSpawnElement: # on parcourt toute la liste de coords
-            self.map[coordsPlacement[1]][coordsPlacement[0]] = coordsPlacement[2] # on place les element aux coordonnées sur la map (avec la lettre)
-        self.AjoutJsonMapValue(coordsSpawnElement, "coordsMapObject", "CampSpawn Coords") # on ajoute les coordonnées du spawn au fichier json
-
-    def AjoutJsonMapValue(self, value :list, index1 :str, index2 :str) -> None:
-        """Chargement des données JSON aux index indiqués pour pouvoir les stocker"""
-        try: # Si le chargement est possible
-            with open(join("Sources","Ressources","AllMapValue.json"), "r") as f: # ouvrir le fichier json en mode lecture
-                donnees = json.load(f) # chargement des données
-        except (FileNotFoundError, json.JSONDecodeError): # Sinon relève une erreur et arrêt du programme
-            assert ValueError("Error load JSON file") # stop du programme avec l'assert (programmation défensive)
-
-        donnees[f"{index1}"][f"{index2}"] = value # Ajout valeurs aux indexs donnés
-
-        # Sauvegarde des données dans le fichier JSON avec une indentation pour un format "lisible"
-        with open(join("Sources","Ressources","AllMapValue.json"), "w") as f: # ouverture du fichier json en mode écriture
-            json.dump(donnees, f, indent=4) # chargement dans le fichier json de l'élément données (possédent les index de position et les valeurs à stocker)
-
-    def LoadJsonMapValue(self, index1 :str, index2 :str) -> list:
-        """Récupération des valeur stockées dans le fichier json pour les renvoyer quand nécéssaire à l'aide des indices données pour les récupérer"""
-        # récupération des valeurs stocké dans le json
-        with open(join("Sources","Ressources","AllMapValue.json"), "r") as f: # ouvrir le fichier json en mode e lecture
-            loadElementJson = json.load(f) # chargement des valeurs
-        return loadElementJson[index1].get(index2, None) # on retourne les valeurs aux indices de liste quisont données
-
-
-
-class NiveauPlaineRiviere(GestionNiveauMap):
-    """class du niveau 1, permet de générer les deux map (base et obstacle) en faisant appel à aux méthode de ça class parant. 
-    La gestion de la création est faite dans la méthode update de cette class et les valeurs (map) sont stokcé dans la class parent.
-    Cette class contient donc les valeurs spécifique à ce niveau et les méthode spécifique également."""
-
-    def __init__(self, longueur :int, largeur :int, obstacle :int, mud: int, rock : int) -> None:
-        """Initialisation des attributs de la class enfant"""
-        super().__init__(longueur, largeur) # on récupère / initialise les valeurs dans la class parent (c'est à ce moment là que la class parent est initialisé)
-        self.obstacle = obstacle # on stock le nombre d'obstacle 
-        self.mud = mud
-        self.rock = rock
-        self.coordsPNJ = None # None car la valeurs est modifier par la suite car il est placé en fonction des infops sur la map
-        self.mapCheckDeplacementPossible = [] # initialisation de la map de test pour savoir si un niveau est possible
-        self.pnj = [] # initialisation de la liste des coords des pnj (placement de certains pnj plus tard en fonction de l'apparence de la map)
+        self.longueur = longueur 
+        self.largeur = largeur 
+        self.map = [] # map collision
+        self.baseMap = [] # map sol
         self.data = {
                     "coordsMapBase" : {
                         "Bordures Coords": "null",
@@ -127,12 +37,69 @@ class NiveauPlaineRiviere(GestionNiveauMap):
                         "Obstacles Coords" : "null",
                         "PNJ Coords" : "null",
                         "ArbreSpecial Coords" : "null",
-                        "CampSpawn Coords" : "null",
-                        "ZoneSortie Coords" : "null"
+                        "Spawn" : "null",
+                        "Exit" : "null"
                     }
-                }   # arborescence du fichier json qui sera ajouté par la suite 
+                }   # arborescence fichier json
+        self.BaseJson(self.data)
 
-    def __CheckPos__(self, indice : list) -> bool:
+    def BaseMap(self) -> None:
+        """Méthode création base map (sol et collision)"""
+
+        # map  (150, 75)
+        for _ in range(self.largeur): 
+            creationMap = [] 
+            for _ in range(self.longueur): 
+                creationMap.append("-") 
+            self.map.append(creationMap) 
+        
+        # map base   (150, 75)
+        for _ in range(self.largeur): 
+            creationMap = [] 
+            for _ in range(self.longueur): 
+                creationMap.append("-")            
+            self.baseMap.append(creationMap) 
+        
+
+    def BaseJson(self, data :dict) -> None:
+        """Initialisation du fichier Json"""
+
+        # ouverture en écriture
+        with open(join("Sources","Ressources","AllMapValue.json"), "w") as valueFileJson: 
+            json.dump(data, valueFileJson, indent=4) 
+
+
+    def PlacementPNJ(self, coordPNJ :list) -> None:
+        """Méthode de placement"""
+
+        for coords in coordPNJ: 
+            self.map[coords[1]][coords[0]] = "P" # ajout pnj map
+        AjoutJsonMapValue(coordPNJ, ) # json
+
+
+    def PlacementElements(self, coordsElements, pathJson): 
+        """Méthode permettant de placer le spawn du joueur sur la map (collision) et d'ajouter ces coordonnées dans le json"""
+        for coordsPlacement in coordsElements: # on parcourt toute la liste de coords
+            self.map[coordsPlacement[1]][coordsPlacement[0]] = coordsPlacement[2] # on place les element aux coordonnées sur la map (avec la lettre)
+        AjoutJsonMapValue(coordsElements, pathJson[0], pathJson[1]) # on ajoute les coordonnées du spawn au fichier json
+
+
+class NiveauPlaineRiviere(GestionNiveauMap):
+    """class du niveau 1, permet de générer les deux map (base et obstacle) en faisant appel à aux méthode de ça class parant. 
+    La gestion de la création est faite dans la méthode update de cette class et les valeurs (map) sont stokcé dans la class parent.
+    Cette class contient donc les valeurs spécifique à ce niveau et les méthode spécifique également."""
+
+    def __init__(self, longueur :int, largeur :int, obstacle :int, mud: int, rock : int) -> None:
+        """Initialisation des attributs de la class enfant"""
+        super().__init__(longueur, largeur) # on récupère / initialise les valeurs dans la class parent (c'est à ce moment là que la class parent est initialisé)
+        self.obstacle = obstacle # on stock le nombre d'obstacle 
+        self.mud = mud
+        self.rock = rock
+        self.coordsPNJ = None # None car la valeurs est modifier par la suite car il est placé en fonction des infops sur la map
+        self.mapCheckDeplacementPossible = [] # initialisation de la map de test pour savoir si un niveau est possible
+        self.pnj = [] # initialisation de la liste des coords des pnj (placement de certains pnj plus tard en fonction de l'apparence de la map)
+
+    def __CheckPosRiviere__(self, indice : list) -> bool:
         """Méthode permettant de regarder et de valider la position d'un element par raport à la riviere (pnj / arbre spécial)"""
         # verification si la position du pnj est possible autour de la riviere (rivière large de 1 uniquement) + eviter de la placer trop haut / bas
         listePosPossible = ["-", "F", "M", "R"] # liste pour indiquer que si la position check est dans la liste alors c'est bon (= fleurs / herbe donc pas de colision)
@@ -146,7 +113,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         else:
             return False # on invalide le placement
 
-    def __CheckNiveauPossible__(self, listOrdrePointCle :list, pathAccessible :list) -> bool:
+    def CheckNiveauPossible(self, listOrdrePointCle :list, pathAccessible :list) -> bool:
         """Méthode permettant de vérifier si le niveau est possible, suite à la position des obstacle. Utilisation du script A* permettant de trouver un chemin avec les déplacements ZQSD s'il exite entre un point A et B
         Ces points, donnés dans l'ordre d'évolution de la map, représente les coordonnées des éléments que le joueurs doit allé voir (pnj, arbre, entré, sortie..)"""
 
@@ -156,6 +123,20 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             else: # Si on indique que le chemin n'éxiste pas et que par conséquent, la résolution du niveau est impossible
                 return False # false pour niveau impossible
         return True # les chemins entre les points données existent  
+
+
+    def Bordure(self):
+
+        # bordure map  
+        listeBordures = [] 
+        for i in range(2):
+            for j in range(self.longueur):
+                self.map[i*(self.largeur-1)][j] = "B" 
+                self.baseMap[i*(self.largeur-1)][j] = "B"  
+                listeBordures.append([i*(self.largeur-1), j]) 
+
+        # on stock les coordonnées des bordures (la liste) dans le json
+        AjoutJsonMapValue(listeBordures, "coordsMapBase", "Bordures Coords")
 
     def __PlacementFleur__(self) -> None:
         """A partir d'une génération du jeu de la vie de conway, les cellules vivantes correspondent à l'emplacement 
@@ -169,7 +150,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
                 self.baseMap[posFleur[1]][posFleur[0]] = "F" # on ajoute aux meme coordonnées dans la map base une fleur ("F")
                 listeFlowerCoords.append(posFleur) # on stock les coordonnées de la fleur ajouté dans la liste
 
-        super().AjoutJsonMapValue(listeFlowerCoords, "coordsMapBase", "Flowers Coords") # on ajoute au fichier json, la vrai liste de coordonnée des fleurs
+        AjoutJsonMapValue(listeFlowerCoords, "coordsMapBase", "Flowers Coords") # on ajoute au fichier json, la vrai liste de coordonnée des fleurs
 
     def __PlacementSpecial__(self, index1 : str, index2 : str, element : str, *args) -> list:
         """Méthode permetant de placer spécialement une element sous certaines condition.
@@ -177,13 +158,13 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         On vérifier si à cet indice le placement (devant gauche) de l'element est possible (__checkPos__)
         Si c'est bon on placement l'element, et on renvoie les coordonnées de l'element placé sur la map (collision), sinon on génère un nouvelle indice, et on recheck jusqu'a trouver"""
         
-        listeCoordsElement = super().LoadJsonMapValue(index1, index2) # récupération de la liste de valeurs d'un element (riviere)
+        listeCoordsElement = LoadJsonMapValue(index1, index2) # récupération de la liste de valeurs d'un element (riviere)
 
         Go = True
         while Go: # tant que go = True on check 
             indice = randint(0, self.largeur-1) # génération aléatoire d'un indice
             # Si true, on arreter la boucle
-            if self.__CheckPos__(listeCoordsElement[indice]): # check si à les coords de la liste  l'indice respect les conditions pour poser l'element
+            if self.__CheckPosRiviere__(listeCoordsElement[indice]): # check si à les coords de la liste  l'indice respect les conditions pour poser l'element
                 Go = False # Arret de la boucle
                 
         itemCoords = listeCoordsElement[indice] # on crée un copie des coords dans la variable
@@ -285,7 +266,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
                     self.baseMap[coords[1]][coords[0]] = "#" # ajout de l'element rivière sur la map (base)
                     listeCheminRiviere.append([coords[0],coords[1]]) # forme [x,y]  # stock des coords de toute la riviere dans la liste des coordonnées
 
-            super().AjoutJsonMapValue(listeCheminRiviere, "coordsMapBase", f"Riviere{nombreRiviere} Coords") # stockage des valeurs dans le fichier json
+            AjoutJsonMapValue(listeCheminRiviere, "coordsMapBase", f"Riviere{nombreRiviere} Coords") # stockage des valeurs dans le fichier json
 
     def __PlacementMud__(self):
         """ Méthode permettant de placer la boue sur la map de base"""
@@ -298,7 +279,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             self.baseMap[mudPos[1]][mudPos[0]] = "M" # on ajoute sur la map de test l'object
             listeMud.append(mudPos) # forme  [x,y] # on ajoute les coords de l'obstacle dans la liste de stockage
 
-        super().AjoutJsonMapValue(listeMud, "coordsMapBase", "Mud Coords") # on ajoute au fichier json, la vrai liste de coordonnée des mud
+        AjoutJsonMapValue(listeMud, "coordsMapBase", "Mud Coords") # on ajoute au fichier json, la vrai liste de coordonnée des mud
 
     def __PlacementRock__(self):
         """Méthode permettant de placer les petits rochers sur la map de base"""
@@ -310,7 +291,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             self.baseMap[rockPos[1]][rockPos[0]] = "R" # on ajoute sur la map de test l'object
             listeRock.append(rockPos) # forme  [x,y] # on ajoute les coords de l'obstacle dans la liste de stockage
 
-        super().AjoutJsonMapValue(listeRock, "coordsMapBase", "Rock Coords") # on ajoute au fichier json, la vrai liste de coordonnée des rock
+        AjoutJsonMapValue(listeRock, "coordsMapBase", "Rock Coords") # on ajoute au fichier json, la vrai liste de coordonnée des rock
 
     def __PlacementObstacle__(self) -> None:
         """Méthode permettant de placer aléatoirement les obstacles sur la map. Cette méthode contient également un systhème de vérification vis à vis de la possibilit de réalise le niveau.
@@ -326,7 +307,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             self.mapCheckDeplacementPossible = copy.deepcopy(self.map)   # deep copy pour éviter les liaisons des cellules mémoires et donc influer sur la vrai map + eviter d'utiliser une double for
 
             listeObstacle = [] # liste qui va stocker toutes les coords des obstacles
-            for obstacle in range(self.obstacle): # boucle pour le nombre d'obstacle différents
+            for _ in range(self.obstacle): # boucle pour le nombre d'obstacle différents
                 obstaclePos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] pos random sur la map, en éviant les bordure
                 while self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] != '-' or self.mapCheckDeplacementPossible[obstaclePos[1]+1][obstaclePos[0]] != '-': # check de s'il y a déjà des éléments sur la map de test (map).
                     obstaclePos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] # on replace si jamais il y a un element
@@ -341,7 +322,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             listeOrdrePointCle1 = [ # partie gauche map (avant riviere)
                                 [8,2], 
                                 self.coordsPNJ[0], 
-                                super().LoadJsonMapValue("coordsMapObject", "ArbreSpecial Coords")
+                                LoadJsonMapValue("coordsMapObject", "ArbreSpecial Coords")
                                 ]
             
             listeOrdrePointCle2 = [ # partie middle (entre les deux rivieres donc on a passé la premiere riviere (indice + 2))
@@ -351,15 +332,15 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             
             listeOrdrePointCle3 = [ # meme chose
                                 [self.coordsPNJ[2][0] + 2,self.coordsPNJ[2][1]], # +2 car on traverse la riviere
-                                super().LoadJsonMapValue("coordsMapObject", "ZoneSortie Coords")
+                                LoadJsonMapValue("coordsMapObject", "Exit")
                                 ]
             
             # Pour chacune des listes, on check s'il existe un chemin liant les points entre deux dans l'ordre d'avancement. 
             # Check en trois niveau car la map est divisé en trois par les 2 rivières. Donc on passe les rivières pour pouvoir calculer
-            if self.__CheckNiveauPossible__(listeOrdrePointCle1, ["-", "A", "P", "S"]): # Si true (donc possible), on continue 
-                if self.__CheckNiveauPossible__(listeOrdrePointCle2,  ["-", "A", "P", "S"] ): # ///
-                    if self.__CheckNiveauPossible__(listeOrdrePointCle3,  ["-", "A", "P", "S"] ): # //
-                        super().AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords") # Si la map est possible, on stock les coords des obstacle dans le json
+            if self.CheckNiveauPossible(listeOrdrePointCle1, ["-", "A", "P", "S"]): # Si true (donc possible), on continue 
+                if self.CheckNiveauPossible(listeOrdrePointCle2,  ["-", "A", "P", "S"] ): # ///
+                    if self.CheckNiveauPossible(listeOrdrePointCle3,  ["-", "A", "P", "S"] ): # //
+                        AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords") # Si la map est possible, on stock les coords des obstacle dans le json
                         checkDeplacementPasPossible = False # on arrête la boucle
                         for coords in listeObstacle: # on met à jour la map (on place les objets dessus)
                             self.map[coords[1]][coords[0]] = "O" # placement aux différents cordonnées
@@ -370,40 +351,63 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         # Attention, l'ordre de génération est important car certaines valeurs, sont dépendantes de d'autres...
 
 
-        super().BaseJson(self.data) # setup du fichier json
-        super().BaseMap()  # setup de la base des deux map (vide)
-        self.__PlacementRiviere__() # placement des rivière
-        super().PlacementSpawn([[8,2,"S"], [11,2,"b"], [9,4,"b"], [13,4,"b"], [11,6,"b"], [11,4,"C"]]) # coords de tout les éléments du spawn evec une lettre indiquant à quoi ils font référence : b = banc, C = feu de camp, S = spawn du joueur) # placement du spawn
+        super().BaseJson(self.data) # setup json
+        super().BaseMap()  # create 2 map
+
+        # map
+        self.Bordure()
+        self.__PlacementRiviere__() 
+        self.__PlacementFleur__()
+        self.__PlacementMud__()
+        self.__PlacementRock__() # placement des petits cailloux sur la map (pas de collision)
+        
+        # spawn / exit
+        super().PlacementElements([[8,2,"S"]], ["coordsMapObject", "Spawn"]) 
         coordSortie = self.__PlacementSpecial__("coordsMapBase", "Riviere3 Coords", "S")
-        self.AjoutJsonMapValue(coordSortie, "coordsMapObject", "ZoneSortie Coords") # stockage dans le json des coords de la sortie de la map
+        AjoutJsonMapValue(coordSortie, "coordsMapObject", "ZoneSortie Coords")
 
-        self.__PlacementFleur__() # placement des varientes d'herbe (fleurs..)
-        # Création des cordonnées des pnj (le pnj 2 utilise les information de la map pour pouvoir ce placer. )
-        self.coordsPNJ = [[randint(8,((self.longueur//3) -5)), randint(5, self.largeur-5), 1], # forme [x,y]   # longueur de 8 de base pour éviter de rentrer en collision avec le camp de base
-                    self.__PlacementSpecial__("coordsMapBase", "Riviere2 Coords", "P", 2), # placement pnj (ne tombe jamais sur les coords de la rivière), mais collé à un point de la riviere
-                    [randint(((self.longueur//3)*2 +5), self.longueur-5), randint(5, self.largeur-8), 3]]  # forme [x,y] coords du dernier pnj      
-        super().PlacementPNJ(self.coordsPNJ) # placement des pnj sur la map 
+        # pnj
+        self.coordsPNJ = [[randint(8,((self.longueur//3) -5)), randint(5, self.largeur-5), 1], 
+                    self.__PlacementSpecial__("coordsMapBase", "Riviere2 Coords", "P", 2), 
+                    [randint(((self.longueur//3)*2 +5), self.longueur-5), randint(5, self.largeur-8), 3]]       
+        super().PlacementElements(self.coordsPNJ, ["coordsMapObject", "PNJ Coords"]) # placement des pnj sur la map 
+
+        # arbre interaction pnj
         coordsAbre = self.__PlacementSpecial__("coordsMapBase", "Riviere1 Coords", "A") # placement spécial de l'arbre spécial
-        super().AjoutJsonMapValue(coordsAbre, "coordsMapObject", "ArbreSpecial Coords") # ajout des coords de l'arbre spécial dans le fichier json
+        AjoutJsonMapValue(coordsAbre, "coordsMapObject", "ArbreSpecial Coords") # ajout des coords de l'arbre spécial dans le fichier json
 
+        # tout les obstacles
         self.__PlacementObstacle__() # placement des obstacles
-        self.__PlacementMud__() # placement des marres de boue sur la map
-        self.__PlacementRock__() # placement des petits cailloux sur la map
+        
                 
         # On charge la map de base pour pouvoir refresh tout les x tics et gérer les collisions
-        super().AjoutJsonMapValue(self.map, "coordsMapBase", "AllMapInfo")
+        AjoutJsonMapValue(self.map, "coordsMapBase", "AllMapInfo")
 
         # On charche la map (collision) pour pouvoir refresh tout les x tics
-        super().AjoutJsonMapValue(self.baseMap, "coordsMapBase", "AllMapBase")
+        AjoutJsonMapValue(self.baseMap, "coordsMapBase", "AllMapBase")
 
-        # On affiche la map pour verif
         for i in range(len(self.map)):
             print(*self.map[i], sep=" ")
-        
+
         for j in range(len(self.baseMap)):
             print(*self.baseMap[j], sep=" ")
 
         return self.map, self.baseMap # return des deux map pour pouvoir charger et mettre à jours les valeurs de la map
 
 
-# NiveauPlaineRiviere(150,75,200).Update()
+
+class NiveauMedievale(GestionNiveauMap):
+    def __init__(self, longueur, largeur, obj):
+        super().__init__(longueur, largeur)
+
+    def Update(self):
+        return self.map, self.baseMap
+    
+
+
+
+
+mapp, baseMap =  NiveauPlaineRiviere(150,75,200, 200, 200).Update()
+# NiveauMedievale(150,75,200).Update()
+
+# On affiche la map pour verif

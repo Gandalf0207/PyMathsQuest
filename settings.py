@@ -31,6 +31,23 @@ def LoadJsonMapValue(index1 :str, index2 :str) -> list:
         loadElementJson = json.load(f) # chargement des valeurs
     return loadElementJson[index1].get(index2, None) # on retourne les valeurs aux indices de liste quisont données
 
+# add values
+def AjoutJsonMapValue(value :list, index1 :str, index2 :str) -> None:
+    """Chargement des données JSON aux index indiqués pour pouvoir les stocker"""
+    try: # Si le chargement est possible
+        with open(join("Sources","Ressources","AllMapValue.json"), "r") as f: # ouvrir le fichier json en mode lecture
+            donnees = json.load(f) # chargement des données
+    except (FileNotFoundError, json.JSONDecodeError): # Sinon relève une erreur et arrêt du programme
+        assert ValueError("Error load JSON file") # stop du programme avec l'assert (programmation défensive)
+
+    donnees[f"{index1}"][f"{index2}"] = value # Ajout valeurs aux indexs donnés
+
+    # Sauvegarde des données dans le fichier JSON avec une indentation pour un format "lisible"
+    with open(join("Sources","Ressources","AllMapValue.json"), "w") as f: # ouverture du fichier json en mode écriture
+        json.dump(donnees, f, indent=4) # chargement dans le fichier json de l'élément données (possédent les index de position et les valeurs à stocker)
+
+
+
 # texte wrap pygame
 def wrap_text(text, font, max_width):
             words = text.split(' ')
