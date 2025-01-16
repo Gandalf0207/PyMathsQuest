@@ -170,7 +170,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         itemCoords = listeCoordsElement[indice] # on crée un copie des coords dans la variable
         self.map[itemCoords[1]][itemCoords[0]-1] = element # on ajoute l'element sur la map (collision)
 
-        return [itemCoords[0]-1,itemCoords[1], *args] # return [x,y ) coord de l'element
+        return itemCoords[0]-1,itemCoords[1] # return [x,y ) coord de l'element
     
     def __PlacementRiviere__(self) -> None:
         """Méthode permettant de créer les deux rivières de la map. Création de points de repère tout les 15 de distance en hauteur dans un couleurs d'une largeur de 9
@@ -336,12 +336,12 @@ class NiveauPlaineRiviere(GestionNiveauMap):
                                 [self.coordsPNJ[2][0],self.coordsPNJ[2][1]], # +2 car on traverse la riviere
                                 LoadJsonMapValue("coordsMapObject", "Exit")
                                 ]
-            
+
             # Pour chacune des listes, on check s'il existe un chemin liant les points entre deux dans l'ordre d'avancement. 
             # Check en trois niveau car la map est divisé en trois par les 2 rivières. Donc on passe les rivières pour pouvoir calculer
-            if self.CheckNiveauPossible(listeOrdrePointCle1, ["-", "A", "P", "S"]): # Si true (donc possible), on continue 
-                if self.CheckNiveauPossible(listeOrdrePointCle2,  ["-", "A", "P", "S"] ): # ///
-                    if self.CheckNiveauPossible(listeOrdrePointCle3,  ["-", "A", "P", "S"] ): # //
+            if self.CheckNiveauPossible(listeOrdrePointCle1, ["-", "A", "P", "S", 1, 2, 3]): # Si true (donc possible), on continue 
+                if self.CheckNiveauPossible(listeOrdrePointCle2,  ["-", "A", "P", "S", 1, 2, 3] ): # ///
+                    if self.CheckNiveauPossible(listeOrdrePointCle3,  ["-", "A", "P", "S", 1, 2, 3] ): # //
                         AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords") # Si la map est possible, on stock les coords des obstacle dans le json
                         checkDeplacementPasPossible = False # on arrête la boucle
                         for coords in listeObstacle: # on met à jour la map (on place les objets dessus)
@@ -369,8 +369,9 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         AjoutJsonMapValue(coordSortie, "coordsMapObject", "ZoneSortie Coords")
 
         # pnj
+        coordsPNJ2 = self.__PlacementSpecial__("coordsMapBase", "Riviere2 Coords", "P")
         self.coordsPNJ = [[randint(8,((self.longueur//3) -5)), randint(5, self.largeur-5), 1], 
-                    self.__PlacementSpecial__("coordsMapBase", "Riviere2 Coords", "P", 2), 
+                    [coordsPNJ2[0], coordsPNJ2[1], 2], 
                     [randint(((self.longueur//3)*2 +5), self.longueur-5), randint(5, self.largeur-8), 3]]       
         super().PlacementElements(self.coordsPNJ, ["coordsMapObject", "PNJ Coords"]) # placement des pnj sur la map 
 
