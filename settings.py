@@ -137,5 +137,6 @@ PNJ = {
 
 # infos map tiers
 EspacementPointRepereRiviere = 15
+EspacementPointRepereRiviere2 = 7
 CoupageMapRiviere = 50 # 1/3 de la longueur
 CouloirRiviere = 4

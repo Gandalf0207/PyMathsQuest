@@ -184,11 +184,11 @@ class LoadMapPlaineRiviere(): # nv 0
         # parcours et création des sprites pnj
         for coordsPNJ in coordsPNJList:
             pos = (coordsPNJ[0]*CASEMAP, coordsPNJ[1]*CASEMAP) # calcul coords pygame
-            if coordsPNJ[2] == 1 : 
+            if coordsPNJ[3] == 1 : 
                 PNJ(pos , "PNJ1", (self.allPNJ, self.allSprites, self.collisionSprites))
-            if coordsPNJ[2] == 2 : 
+            if coordsPNJ[3] == 2 : 
                 PNJ(pos , "PNJ2", (self.allPNJ, self.allSprites, self.collisionSprites))
-            if coordsPNJ[2] == 3 :
+            if coordsPNJ[3] == 3 :
                 PNJ(pos , "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
         
     
