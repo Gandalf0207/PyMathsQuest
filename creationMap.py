@@ -37,6 +37,7 @@ class GestionNiveauMap(object):
                         "Obstacles Coords" : "null",
                         "PNJ Coords" : "null",
                         "ArbreSpecial Coords" : "null",
+                        "Chateau Coords" : "null",
                         "Spawn" : "null",
                         "Exit" : "null"
                     }
@@ -583,9 +584,32 @@ class NiveauMedievale(GestionNiveauMap):
 
         AjoutJsonMapValue(listeRock, "coordsMapBase", "Rock Coords") # on ajoute au fichier json, la vrai liste de coordonnée des rock
 
-    def __PlacementChateau__():
+    def __PlacementChateau__(self):
         """"""
-        pass  
+        ## muraille extérieur
+
+            # coté gauche
+        coordsChateau = []
+        for i in range(25):
+            pos = [69, i]
+            coordsChateau.append(pos)
+
+            # coté droite
+        for i in range(25):
+            pos = [LONGUEUR -1, i]
+            coordsChateau.append(pos)
+
+            # bas
+        for i in range(81):
+            pos = [69+i, 24]
+            coordsChateau.append(pos)
+
+        # On recup la list de déplacement et on ajoute la rivière aux deux map
+        for coords in coordsChateau: # parcourt de la liste
+            self.map[coords[1]][coords[0]] = "C"  # ajout de l'element rivière sur la map (collision)
+            self.baseMap[coords[1]][coords[0]] = "C" # ajout de l'element rivière sur la map (base)
+
+        AjoutJsonMapValue(coordsChateau, "coordsMapBase", "Chateau Coords") # on ajoute au fichier json, la vrai liste de coordonnée des rock
 
 
     def __PlacementSpawn__(self):
@@ -605,7 +629,7 @@ class NiveauMedievale(GestionNiveauMap):
         self.__PlacementMud__()
         self.__PlacementRock__() # placement des petits cailloux sur la map (pas de collision)
         
-        # self.__PlacementChateau__()
+        self.__PlacementChateau__()
         # spawn / exit
         self.__PlacementSpawn__()
 
