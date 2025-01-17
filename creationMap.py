@@ -421,7 +421,7 @@ class NiveauMedievale(GestionNiveauMap):
 
             # riviere 1 vertical
             if nombreRiviere == 1: 
-                coordsPts1Riviere = [randint(((nombreRiviere)*CoupageMapRiviere - CouloirRiviere),((nombreRiviere)*CoupageMapRiviere + CouloirRiviere)),0] # on créer le point 1 de la map
+                coordsPts1Riviere = [randint(((nombreRiviere)*CoupageMapRiviere2 - CouloirRiviere),((nombreRiviere)*CoupageMapRiviere2 + CouloirRiviere)),0] # on créer le point 1 de la map
             
             # riviere 2 vertical (moitié)
             if  nombreRiviere == 2:
@@ -449,7 +449,7 @@ class NiveauMedievale(GestionNiveauMap):
                     nbPts = (self.largeur-25) // EspacementPointRepereRiviere
                     verifLigne5 = randint(1,(nbPts-1)) 
                 elif nombreRiviere == 3:
-                    nbPointRepere = (self.longueur - 50) // EspacementPointRepereRiviere
+                    nbPointRepere = (self.longueur - 75) // EspacementPointRepereRiviere
                     verifLigne5 = randint(1,(nbPts-1)) 
 
 
@@ -458,11 +458,11 @@ class NiveauMedievale(GestionNiveauMap):
                     if nombreRiviere == 0 : 
                         pACoordsligne5 = [randint(0,6),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map pour les rivière de bordure
                     if nombreRiviere == 1:
-                        pACoordsligne5 = [randint(((nombreRiviere)*CoupageMapRiviere - CouloirRiviere),((nombreRiviere)*CoupageMapRiviere + CouloirRiviere)),nbPointRepere*EspacementPointRepereRiviere ] # on créer le point 1 de la map
+                        pACoordsligne5 = [randint(((nombreRiviere)*CoupageMapRiviere2 - CouloirRiviere),((nombreRiviere)*CoupageMapRiviere2 + CouloirRiviere)),nbPointRepere*EspacementPointRepereRiviere ] # on créer le point 1 de la map
                     if nombreRiviere == 2:
                         pACoordsligne5 = [randint(LONGUEUR-7, LONGUEUR-2),nbPointRepere*EspacementPointRepereRiviere + 25] # on créer le point 1 de la map
                     if nombreRiviere == 3:
-                        pACoordsligne5 = [nbPointRepere*EspacementPointRepereRiviere + 50, randint((30 - CouloirRiviere),(30 + CouloirRiviere))] # on créer le point 1 de la map
+                        pACoordsligne5 = [nbPointRepere*EspacementPointRepereRiviere + 75, randint((30 - CouloirRiviere),(30 + CouloirRiviere))] # on créer le point 1 de la map
 
                     
                     listePointRepere.append(pACoordsligne5) # Ajout du point A car il devient un point repère à relier
@@ -473,18 +473,18 @@ class NiveauMedievale(GestionNiveauMap):
                             pBcoordsligne5 = [pACoordsligne5[0], nbPointRepere*EspacementPointRepereRiviere + 5 + 25] # forme [x, y]
 
                     else:
-                        pBcoordsligne5 = [nbPointRepere*EspacementPointRepereRiviere + 5 + 50, pACoordsligne5[1]] # forme [x, y]
+                        pBcoordsligne5 = [nbPointRepere*EspacementPointRepereRiviere + 5 + 75, pACoordsligne5[1]] # forme [x, y]
                     listePointRepere.append(pBcoordsligne5) # Ajout du point B car il devient un point repère à relier
 
                 else:
                     if nombreRiviere == 0 : 
                         coords = [randint(0,6),nbPointRepere*EspacementPointRepereRiviere] # on créer le point 1 de la map pour les rivière de bordure
                     if nombreRiviere == 1:
-                        coords = [randint(((nombreRiviere)*CoupageMapRiviere - CouloirRiviere),((nombreRiviere)*CoupageMapRiviere + CouloirRiviere)),nbPointRepere*EspacementPointRepereRiviere ] # on créer le point 1 de la map
+                        coords = [randint(((nombreRiviere)*CoupageMapRiviere2 - CouloirRiviere),((nombreRiviere)*CoupageMapRiviere2 + CouloirRiviere)),nbPointRepere*EspacementPointRepereRiviere ] # on créer le point 1 de la map
                     if nombreRiviere == 2:
                         coords = [randint(LONGUEUR-7, LONGUEUR-2),nbPointRepere*EspacementPointRepereRiviere + 25] # on créer le point 1 de la map
                     if nombreRiviere == 3:
-                        coords = [nbPointRepere*EspacementPointRepereRiviere + 50, randint((30 - CouloirRiviere),(30 + CouloirRiviere))] # on créer le point 1 de la map
+                        coords = [nbPointRepere*EspacementPointRepereRiviere + 75, randint((30 - CouloirRiviere),(30 + CouloirRiviere))] # on créer le point 1 de la map
 
                     # Tout les autres pts de repère
                     listePointRepere.append(coords) # on ajoute ces points dans la liste des points à relier
@@ -495,7 +495,7 @@ class NiveauMedievale(GestionNiveauMap):
             if nombreRiviere == 0: 
                 coordsPts3Riviere = [randint(0,6),self.largeur-5] # on créer le point 1 de la map pour les rivière de bordure
             elif nombreRiviere == 1:
-                coordsPts3Riviere = [randint(((nombreRiviere)*CoupageMapRiviere - CouloirRiviere),((nombreRiviere)*CoupageMapRiviere + CouloirRiviere)),self.largeur-5] # on créer le point 1 de la map
+                coordsPts3Riviere = [randint(((nombreRiviere)*CoupageMapRiviere2 - CouloirRiviere),((nombreRiviere)*CoupageMapRiviere2 + CouloirRiviere)),self.largeur-5] # on créer le point 1 de la map
             elif nombreRiviere == 2: 
                 coordsPts3Riviere = [randint(LONGUEUR-7, LONGUEUR-2),self.largeur-5] # on créer le point 1 de la map
             elif nombreRiviere == 3:
@@ -583,13 +583,18 @@ class NiveauMedievale(GestionNiveauMap):
 
         AjoutJsonMapValue(listeRock, "coordsMapBase", "Rock Coords") # on ajoute au fichier json, la vrai liste de coordonnée des rock
 
+    def __PlacementChateau__():
+        """"""
+        pass  
+
+
     def __PlacementSpawn__(self):
         """Méthode de placement du spawn"""
         coordsRiviere1 = LoadJsonMapValue("coordsMapBase", "Riviere0 Coords")
         coordsSpawn = choice(coordsRiviere1)
         while not (25 <= coordsSpawn[1] <= 35):
             coordsSpawn = choice(coordsRiviere1)
-        super().PlacementElements([[coordsSpawn[0]+1, coordsSpawn[1], "S"]], [["coordsMapObject", "Spawn"]])
+        super().PlacementElements([[coordsSpawn[0]+1, coordsSpawn[1], "S"]], ["coordsMapObject", "Spawn"])
 
 
     def Update(self):
@@ -600,11 +605,12 @@ class NiveauMedievale(GestionNiveauMap):
         self.__PlacementMud__()
         self.__PlacementRock__() # placement des petits cailloux sur la map (pas de collision)
         
+        # self.__PlacementChateau__()
         # spawn / exit
         self.__PlacementSpawn__()
-        super().PlacementElements([[8,2,"S"]], ["coordsMapObject", "Spawn"]) 
-        coordSortie = self.__PlacementSpecial__("coordsMapBase", "Riviere3 Coords", "S")
-        AjoutJsonMapValue(coordSortie, "coordsMapObject", "Exit")
+
+        # coordSortie = self.__PlacementSpecial__("coordsMapBase", "Riviere3 Coords", "S")
+        # AjoutJsonMapValue(coordSortie, "coordsMapObject", "Exit")
 
         for i in range(len(self.map)):
             print(*self.map[i], sep=" ")
