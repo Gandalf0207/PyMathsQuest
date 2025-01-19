@@ -628,7 +628,7 @@ class NiveauMedievale(GestionNiveauMap):
             self.map[coords[1]][coords[0]] = "C"  # ajout de l'element rivière sur la map (collision)
             self.baseMap[coords[1]][coords[0]] = "C" # ajout de l'element rivière sur la map (base)
 
-        AjoutJsonMapValue(coordsChateau, "coordsMapBase", "Chateau Coords") # on ajoute au fichier json, la vrai liste de coordonnée des rock
+        AjoutJsonMapValue(coordsChateau, "coordsMapObject", "Chateau Coords") # on ajoute au fichier json, la vrai liste de coordonnée des rock
 
     def __PlacementChamps__(self):
         
@@ -651,7 +651,7 @@ class NiveauMedievale(GestionNiveauMap):
             self.map[coords[1]][coords[0]] = "@"  # ajout de l'element rivière sur la map (collision)
             self.baseMap[coords[1]][coords[0]] = "@" # ajout de l'element rivière sur la map (base) 
         
-        AjoutJsonMapValue(coordsAllChamps, "coordsMapBase", "Champs Coords")
+        AjoutJsonMapValue(coordsAllChamps, "coordsMapObject", "Champs Coords")
 
     def __PlacementSpawn__(self):
         """Méthode de placement du spawn"""
@@ -670,11 +670,11 @@ class NiveauMedievale(GestionNiveauMap):
 
         self.Bordure()
         self.__PlacementRiviere__() 
-        # self.__PlacementFleur__()
+        self.__PlacementFleur__()
         self.__PlacementMud__()
         self.__PlacementRock__() # placement des petits cailloux sur la map (pas de collision)
         
-        # self.__PlacementChateau__()
+        self.__PlacementChateau__()
 
         # spawn / exit
         self.__PlacementSpawn__()
@@ -685,8 +685,8 @@ class NiveauMedievale(GestionNiveauMap):
 
 
 
-        # for i in range(len(self.map)):
-        #     print(*self.map[i], sep=" ")
+        for i in range(len(self.map)):
+            print(*self.map[i], sep=" ")
 
         for j in range(len(self.baseMap)):
             print(*self.baseMap[j], sep=" ")
@@ -696,8 +696,6 @@ class NiveauMedievale(GestionNiveauMap):
 
 
 
-for i in range(50):
 # mapp, baseMap =  NiveauPlaineRiviere(150,75,200, 200, 200).Update()
-    mapp, baseMap = NiveauMedievale(150,75).Update()
-    time.sleep(1)
+mapp, baseMap = NiveauMedievale(150,75).Update()
 # On affiche la map pour verif
