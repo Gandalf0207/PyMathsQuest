@@ -38,6 +38,7 @@ class GestionNiveauMap(object):
                         "PNJ Coords" : "null",
                         "ArbreSpecial Coords" : "null",
                         "Chateau Coords" : "null",
+                        "Champs Coords" : "null",
                         "Spawn" : "null",
                         "Exit" : "null"
                     }
@@ -630,8 +631,27 @@ class NiveauMedievale(GestionNiveauMap):
         AjoutJsonMapValue(coordsChateau, "coordsMapBase", "Chateau Coords") # on ajoute au fichier json, la vrai liste de coordonnée des rock
 
     def __PlacementChamps__(self):
-         
-        pass
+        
+        coordsAllChamps = []
+        for i in range(6):
+
+            long = randint(5,12)
+            larg = randint(5,12)
+
+            posX1 = randint(12, 55)
+            posY1 = randint(25, 55)
+
+            for x in range(long):
+                for y in range(larg):
+                    pos = [posX1 + x, posY1 + y]
+                    if pos not in coordsAllChamps:
+                        coordsAllChamps.append(pos)
+
+        for coords in coordsAllChamps: # parcourt de la liste
+            self.map[coords[1]][coords[0]] = "@"  # ajout de l'element rivière sur la map (collision)
+            self.baseMap[coords[1]][coords[0]] = "@" # ajout de l'element rivière sur la map (base) 
+        
+        AjoutJsonMapValue(coordsAllChamps, "coordsMapBase", "Champs Coords")
 
     def __PlacementSpawn__(self):
         """Méthode de placement du spawn"""
@@ -641,24 +661,32 @@ class NiveauMedievale(GestionNiveauMap):
             coordsSpawn = choice(coordsRiviere1)
         super().PlacementElements([[coordsSpawn[0]+1, coordsSpawn[1], "S"]], ["coordsMapObject", "Spawn"])
 
+    def __PlacementExit__(self):
+        coordsExit = (109, 1)
+        super().PlacementElements([[coordsExit[0], coordsExit[1],"S"]], ["coordsMapObject", "Exit"])
+
 
     def Update(self):
 
         self.Bordure()
         self.__PlacementRiviere__() 
-        self.__PlacementFleur__()
+        # self.__PlacementFleur__()
         self.__PlacementMud__()
         self.__PlacementRock__() # placement des petits cailloux sur la map (pas de collision)
         
-        self.__PlacementChateau__()
+        # self.__PlacementChateau__()
+
         # spawn / exit
         self.__PlacementSpawn__()
+        self.__PlacementExit__()
 
-        # coordSortie = self.__PlacementSpecial__("coordsMapBase", "Riviere3 Coords", "S")
-        # AjoutJsonMapValue(coordSortie, "coordsMapObject", "Exit")
+        # champs
+        self.__PlacementChamps__()
 
-        for i in range(len(self.map)):
-            print(*self.map[i], sep=" ")
+
+
+        # for i in range(len(self.map)):
+        #     print(*self.map[i], sep=" ")
 
         for j in range(len(self.baseMap)):
             print(*self.baseMap[j], sep=" ")
@@ -668,8 +696,8 @@ class NiveauMedievale(GestionNiveauMap):
 
 
 
-
+for i in range(50):
 # mapp, baseMap =  NiveauPlaineRiviere(150,75,200, 200, 200).Update()
-mapp, baseMap = NiveauMedievale(150,75).Update()
-
+    mapp, baseMap = NiveauMedievale(150,75).Update()
+    time.sleep(1)
 # On affiche la map pour verif
