@@ -639,7 +639,7 @@ class NiveauMedievale(GestionNiveauMap):
             larg = randint(5,12)
 
             posX1 = randint(12, 55)
-            posY1 = randint(25, 55)
+            posY1 = randint(35, 55)
 
             for x in range(long):
                 for y in range(larg):
@@ -665,28 +665,139 @@ class NiveauMedievale(GestionNiveauMap):
         coordsExit = (109, 1)
         super().PlacementElements([[coordsExit[0], coordsExit[1],"S"]], ["coordsMapObject", "Exit"])
 
+    def __PlacementMaisons__(self):
+       
+    
+        coordsAllHouse = []
+       
+        # village 1
+        nbHouseV1 = randint(8,20)
+        for i in range(nbHouseV1):
+            
+            checkCollideWhile = True
+
+            while checkCollideWhile:
+                checkCollideWhile = False
+                posX1 = randint(12, 65)
+                posY1 = randint(5, 30)
+
+                coordsSecu = [
+                    [posX1 -1, posY1 -1], [posX1, posY1 -1], [posX1+1, posY1-1],  [posX1 +2, posY1 -1],
+                    [posX1 -1, posY1],                                            [posX1 +2, posY1], 
+                    [posX1 -1, posY1 +1],                                         [posX1 +2, posY1 +1], 
+                    [posX1 -1, posY1 +2], [posX1, posY1 +2], [posX1+1, posY1 +2], [posX1 +2, posY1 +2],
+                ]
+                coordsHouse = [
+                    [posX1, posY1], [posX1 +1, posY1],
+                    [posX1, posY1 +1], [posX1 +1, posY1 +1],
+                ]
+
+                allCoorsElement = coordsSecu + coordsHouse
+                for coordsE in allCoorsElement:
+                    if coordsE in coordsAllHouse:
+                        checkCollideWhile = True
+
+                if not checkCollideWhile:
+                    for co in coordsHouse:
+                        coordsAllHouse.append(co)
+       
+        # village 2
+        nbHouseV2 = randint(25,40)
+        for i in range(nbHouseV2):
+            
+            checkCollideWhile = True
+
+            while checkCollideWhile:
+                checkCollideWhile = False
+                posX1 = randint(78, 138)
+                posY1 = randint(35, 72)
+
+                coordsSecu = [
+                    [posX1 -1, posY1 -1], [posX1, posY1 -1], [posX1+1, posY1-1],  [posX1 +2, posY1 -1],
+                    [posX1 -1, posY1],                                            [posX1 +2, posY1], 
+                    [posX1 -1, posY1 +1],                                         [posX1 +2, posY1 +1], 
+                    [posX1 -1, posY1 +2], [posX1, posY1 +2], [posX1+1, posY1 +2], [posX1 +2, posY1 +2],
+                ]
+                coordsHouse = [
+                    [posX1, posY1], [posX1 +1, posY1],
+                    [posX1, posY1 +1], [posX1 +1, posY1 +1],
+                ]
+
+                allCoorsElement = coordsSecu + coordsHouse
+                for coordsE in allCoorsElement:
+                    if coordsE in coordsAllHouse:
+                        checkCollideWhile = True
+
+                if not checkCollideWhile:
+                    for co in coordsHouse:
+                        coordsAllHouse.append(co)
+       
+        # village 3
+        nbHouseV3 = randint(5,12)
+        for i in range(nbHouseV3):
+            
+            checkCollideWhile = True
+
+            while checkCollideWhile:
+                checkCollideWhile = False
+                posX1 = randint(78, 147)
+                posY1 = randint(12, 20)
+
+                coordsSecu = [
+                    [posX1 -1, posY1 -1], [posX1, posY1 -1], [posX1+1, posY1-1],  [posX1 +2, posY1 -1],
+                    [posX1 -1, posY1],                                            [posX1 +2, posY1], 
+                    [posX1 -1, posY1 +1],                                         [posX1 +2, posY1 +1], 
+                    [posX1 -1, posY1 +2], [posX1, posY1 +2], [posX1+1, posY1 +2], [posX1 +2, posY1 +2],
+                ]
+                coordsHouse = [
+                    [posX1, posY1], [posX1 +1, posY1],
+                    [posX1, posY1 +1], [posX1 +1, posY1 +1],
+                ]
+
+                allCoorsElement = coordsSecu + coordsHouse
+                for coordsE in allCoorsElement:
+                    if coordsE in coordsAllHouse:
+                        checkCollideWhile = True
+
+                if not checkCollideWhile:
+                    for co in coordsHouse:
+                        coordsAllHouse.append(co)
+       
+       
+                    
+        for coords in coordsAllHouse: # parcourt de la liste
+            self.map[coords[1]][coords[0]] = "H"  # ajout de l'element rivière sur la map (collision)
+            self.baseMap[coords[1]][coords[0]] = "H" # ajout de l'element rivière sur la map (base) 
+        
+
+
+
 
     def Update(self):
 
         self.Bordure()
         self.__PlacementRiviere__() 
-        self.__PlacementFleur__()
-        self.__PlacementMud__()
-        self.__PlacementRock__() # placement des petits cailloux sur la map (pas de collision)
+        # self.__PlacementFleur__()
+        # self.__PlacementMud__()
+        # self.__PlacementRock__() # placement des petits cailloux sur la map (pas de collision)
         
         self.__PlacementChateau__()
 
         # spawn / exit
-        self.__PlacementSpawn__()
-        self.__PlacementExit__()
+        # self.__PlacementSpawn__()
+        # self.__PlacementExit__()
 
         # champs
         self.__PlacementChamps__()
 
+        # maisons
+        self.__PlacementMaisons__()
 
 
-        for i in range(len(self.map)):
-            print(*self.map[i], sep=" ")
+
+
+        # for i in range(len(self.map)):
+        #     print(*self.map[i], sep=" ")
 
         for j in range(len(self.baseMap)):
             print(*self.baseMap[j], sep=" ")
@@ -697,5 +808,13 @@ class NiveauMedievale(GestionNiveauMap):
 
 
 # mapp, baseMap =  NiveauPlaineRiviere(150,75,200, 200, 200).Update()
+
+
+# for i in range(50):
+#     mapp, baseMap = NiveauMedievale(150,75).Update()
+#     time.sleep(1)
+
 mapp, baseMap = NiveauMedievale(150,75).Update()
+
+
 # On affiche la map pour verif
