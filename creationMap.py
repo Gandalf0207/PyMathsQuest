@@ -39,6 +39,7 @@ class GestionNiveauMap(object):
                         "ArbreSpecial Coords" : "null",
                         "Chateau Coords" : "null",
                         "Champs Coords" : "null",
+                        "coords Villages" : "null",
                         "Spawn" : "null",
                         "Exit" : "null"
                     }
@@ -566,7 +567,7 @@ class NiveauMedievale(GestionNiveauMap):
         for _ in range(self.mud): # boucle pour le nombre d'obstacle différents
             mudPos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] pos random sur la map, en éviant les bordure
 
-            while ((self.baseMap[mudPos[1]][mudPos[0]] != '-') or (self.map[mudPos[1]][mudPos[0]] != '-') or (self.map[mudPos[1]-1][mudPos[0]] == 'O') or ( (50 <= mudPos[0] <= 149) and  (0 <= mudPos[1] <= 20)) ): # check de s'il y a déjà des éléments pour ne pas avoir de visuel nul  # dernier element pour checl pour savoir s'il y a un arbre au dessus, car pas beau cr arbre plusieurs cases
+            while ((self.baseMap[mudPos[1]][mudPos[0]] != '-') or (self.map[mudPos[1]][mudPos[0]] != '-') or (self.map[mudPos[1]-1][mudPos[0]] == 'O') or ( (75 <= mudPos[0] <= 149) and  (0 <= mudPos[1] <= 20)) ): # check de s'il y a déjà des éléments pour ne pas avoir de visuel nul  # dernier element pour checl pour savoir s'il y a un arbre au dessus, car pas beau cr arbre plusieurs cases
                 mudPos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] # on replace si jamais il y a un element
             self.baseMap[mudPos[1]][mudPos[0]] = "M" # on ajoute sur la map de test l'object
             listeMud.append(mudPos) # forme  [x,y] # on ajoute les coords de l'obstacle dans la liste de stockage
@@ -578,7 +579,7 @@ class NiveauMedievale(GestionNiveauMap):
         listeRock = [] # liste qui va stocker toutes les coords des obstacles
         for _ in range(self.rock): # boucle pour le nombre d'obstacle différents
             rockPos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] pos random sur la map, en éviant les bordure
-            while ((self.baseMap[rockPos[1]][rockPos[0]] != '-') or (self.map[rockPos[1]][rockPos[0]] != '-') or (self.map[rockPos[1]-1][rockPos[0]] == 'O') or ( (50 <= rockPos[0] <= 149) and (0 <= rockPos[1] <= 20))): # check de s'il y a déjà des éléments pour ne pas avoir de visuel nul
+            while ((self.baseMap[rockPos[1]][rockPos[0]] != '-') or (self.map[rockPos[1]][rockPos[0]] != '-') or (self.map[rockPos[1]-1][rockPos[0]] == 'O') or ( (75 <= rockPos[0] <= 149) and (0 <= rockPos[1] <= 20))): # check de s'il y a déjà des éléments pour ne pas avoir de visuel nul
                 rockPos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] # on replace si jamais il y a un element
             self.baseMap[rockPos[1]][rockPos[0]] = "R" # on ajoute sur la map de test l'object
             listeRock.append(rockPos) # forme  [x,y] # on ajoute les coords de l'obstacle dans la liste de stockage
@@ -604,8 +605,7 @@ class NiveauMedievale(GestionNiveauMap):
         for i in range(81):
             pos = [69+i, 24]
             coordsChateau.append(pos)
-
-
+        
         ## muraille interne
             # coté gauche
         for i in range(12):
@@ -623,11 +623,15 @@ class NiveauMedievale(GestionNiveauMap):
             coordsChateau.append(pos)
   
 
+        coordsPorte = [[108,24],[109,24], [109,11]]
         # On recup la list de déplacement et on ajoute la rivière aux deux map
         for coords in coordsChateau: # parcourt de la liste
-            self.map[coords[1]][coords[0]] = "C"  # ajout de l'element rivière sur la map (collision)
-            self.baseMap[coords[1]][coords[0]] = "C" # ajout de l'element rivière sur la map (base)
-
+            if coords in coordsPorte:
+                self.map[coords[1]][coords[0]] = "D"  # ajout de l'element rivière sur la map (collision)
+                self.baseMap[coords[1]][coords[0]] = "D" # ajout de l'element rivière sur la map (base)
+            else:
+                self.map[coords[1]][coords[0]] = "C"  # ajout de l'element rivière sur la map (collision)
+                self.baseMap[coords[1]][coords[0]] = "C" # ajout de l'element rivière sur la map (base)
         AjoutJsonMapValue(coordsChateau, "coordsMapObject", "Chateau Coords") # on ajoute au fichier json, la vrai liste de coordonnée des rock
 
     def __PlacementChamps__(self):
@@ -657,9 +661,10 @@ class NiveauMedievale(GestionNiveauMap):
         """Méthode de placement du spawn"""
         coordsRiviere1 = LoadJsonMapValue("coordsMapBase", "Riviere0 Coords")
         coordsSpawn = choice(coordsRiviere1)
-        while not (25 <= coordsSpawn[1] <= 35):
+        while not (25 <= coordsSpawn[1] <= 35) or self.map[coordsSpawn[1]][coordsSpawn[0]-1] == "#": # verif pont 1
             coordsSpawn = choice(coordsRiviere1)
         super().PlacementElements([[coordsSpawn[0]+1, coordsSpawn[1], "S"]], ["coordsMapObject", "Spawn"])
+        self.map[coordsSpawn[1]][coordsSpawn[0]] = "T"
 
     def __PlacementExit__(self):
         coordsExit = (109, 1)
@@ -668,7 +673,9 @@ class NiveauMedievale(GestionNiveauMap):
     def __PlacementMaisons__(self):
        
     
-        coordsAllHouse = []
+        coordsVillage1 = []
+        coordsVillage2 = []
+        coordsVillage3 = []
        
         # village 1
         nbHouseV1 = randint(8,20)
@@ -694,12 +701,12 @@ class NiveauMedievale(GestionNiveauMap):
 
                 allCoorsElement = coordsSecu + coordsHouse
                 for coordsE in allCoorsElement:
-                    if coordsE in coordsAllHouse:
+                    if coordsE in coordsVillage1:
                         checkCollideWhile = True
 
                 if not checkCollideWhile:
                     for co in coordsHouse:
-                        coordsAllHouse.append(co)
+                        coordsVillage1.append(co)
        
         # village 2
         nbHouseV2 = randint(25,40)
@@ -725,12 +732,12 @@ class NiveauMedievale(GestionNiveauMap):
 
                 allCoorsElement = coordsSecu + coordsHouse
                 for coordsE in allCoorsElement:
-                    if coordsE in coordsAllHouse:
+                    if coordsE in coordsVillage2:
                         checkCollideWhile = True
 
                 if not checkCollideWhile:
                     for co in coordsHouse:
-                        coordsAllHouse.append(co)
+                        coordsVillage2.append(co)
        
         # village 3
         nbHouseV3 = randint(5,12)
@@ -756,19 +763,44 @@ class NiveauMedievale(GestionNiveauMap):
 
                 allCoorsElement = coordsSecu + coordsHouse
                 for coordsE in allCoorsElement:
-                    if coordsE in coordsAllHouse:
+                    if coordsE in coordsVillage3:
                         checkCollideWhile = True
 
                 if not checkCollideWhile:
                     for co in coordsHouse:
-                        coordsAllHouse.append(co)
+                        coordsVillage3.append(co)
        
        
-                    
-        for coords in coordsAllHouse: # parcourt de la liste
-            self.map[coords[1]][coords[0]] = "H"  # ajout de l'element rivière sur la map (collision)
-            self.baseMap[coords[1]][coords[0]] = "H" # ajout de l'element rivière sur la map (base) 
+
+        coordsAllHouse = [coordsVillage1, coordsVillage2, coordsVillage3]              
+        for blocCoords in coordsAllHouse: # parcourt de la liste
+            for coords in blocCoords:
+                self.map[coords[1]][coords[0]] = "H"  # ajout de l'element rivière sur la map (collision)
+                self.baseMap[coords[1]][coords[0]] = "H" # ajout de l'element rivière sur la map (base) 
         
+        AjoutJsonMapValue(coordsAllHouse, "coordsMapObject", "coords Villages")
+        
+    def __PlacementPnj__(self):
+        allVillageCoords = LoadJsonMapValue("coordsMapObject", "coords Villages")
+        coordsRiviere3 = LoadJsonMapValue("coordsMapBase", "Riviere3 Coords")
+        #pnj1
+        getCoords = choice(allVillageCoords[0])
+        coordsPnj1 = [getCoords[0]-1,getCoords[1], "P", 1] if self.map[getCoords[1]][getCoords[0]-1] == "-" else [getCoords[0]-2,getCoords[1], "P", 1] 
+        
+        #pnj2
+        getCoords2 = choice(coordsRiviere3)
+        while getCoords2[0] < 85 or getCoords2[0] > 140 or self.map[getCoords2[1]-1][getCoords2[0]] != "-" or self.map[getCoords2[1]-2][getCoords2[0]] != "-" or self.map[getCoords2[1]+1][getCoords2[0]] != "-": 
+            getCoords2 = choice(coordsRiviere3)
+        coordsPnj2 = [getCoords2[0], getCoords2[1] +1, "P", 2]
+        
+        #pnj3
+        coordsPnj3 = [109, 12, "P", 3]
+
+        #pnj4
+        coordsPnj4 = [109, 2, "P", 4] 
+
+        self.coordsPNJ = [coordsPnj1, coordsPnj2, coordsPnj3, coordsPnj4]
+        super().PlacementElements(self.coordsPNJ, ["coordsMapObject", "PNJ Coords"]) # placement des pnj sur la map 
 
 
 
@@ -777,15 +809,15 @@ class NiveauMedievale(GestionNiveauMap):
 
         self.Bordure()
         self.__PlacementRiviere__() 
-        # self.__PlacementFleur__()
-        # self.__PlacementMud__()
-        # self.__PlacementRock__() # placement des petits cailloux sur la map (pas de collision)
+        self.__PlacementFleur__()
+        self.__PlacementMud__()
+        self.__PlacementRock__() # placement des petits cailloux sur la map (pas de collision)
         
         self.__PlacementChateau__()
 
         # spawn / exit
-        # self.__PlacementSpawn__()
-        # self.__PlacementExit__()
+        self.__PlacementSpawn__()
+        self.__PlacementExit__()
 
         # champs
         self.__PlacementChamps__()
@@ -793,11 +825,14 @@ class NiveauMedievale(GestionNiveauMap):
         # maisons
         self.__PlacementMaisons__()
 
+        # pnj
+        self.__PlacementPnj__()
 
 
 
-        # for i in range(len(self.map)):
-        #     print(*self.map[i], sep=" ")
+
+        for i in range(len(self.map)):
+            print(*self.map[i], sep=" ")
 
         for j in range(len(self.baseMap)):
             print(*self.baseMap[j], sep=" ")
