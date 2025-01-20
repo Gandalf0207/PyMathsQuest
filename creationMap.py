@@ -29,6 +29,7 @@ class GestionNiveauMap(object):
                         "Flowers Coords" : "null",
                         "Mud Coords" : "null",
                         "Rock Coords" : "null",
+                        "coords Path" : "null",
                         "AllMapInfo" : "null",
                         "AllMapBase" : "null"
                     },
@@ -40,6 +41,7 @@ class GestionNiveauMap(object):
                         "Chateau Coords" : "null",
                         "Champs Coords" : "null",
                         "coords Villages" : "null",
+                        "coords Puits" : "null",
                         "Spawn" : "null",
                         "Exit" : "null"
                     }
@@ -637,20 +639,44 @@ class NiveauMedievale(GestionNiveauMap):
     def __PlacementChamps__(self):
         
         coordsAllChamps = []
-        for i in range(6):
+        nbChamps = randint(8,15)
+        for i in range(nbChamps):
 
-            long = randint(5,12)
-            larg = randint(5,12)
 
-            posX1 = randint(12, 55)
-            posY1 = randint(35, 55)
+            checkCollideWhile = True
 
-            for x in range(long):
-                for y in range(larg):
-                    pos = [posX1 + x, posY1 + y]
-                    if pos not in coordsAllChamps:
-                        coordsAllChamps.append(pos)
+            while checkCollideWhile:
+                checkCollideWhile = False
+                larg = randint(5,12)
+                long = randint(5,12)
 
+                posX1 = randint(12, 55)
+                posY1 = randint(1, 60)
+
+                coordsHouse = []
+                for x in range(posX1, posX1 + larg):
+                    for y in range(posY1, posY1 + long):
+                        coordsHouse.append([x, y])
+
+
+                coordsSecu = []
+                for x in range(posX1 - 1, posX1 + larg + 1):
+                    for y in range(posY1 - 1, posY1 + long + 1):
+                        # Ajouter uniquement les coordonnées qui ne font pas partie de la maison
+                        if [x, y] not in coordsHouse:
+                            coordsSecu.append([x, y])
+
+            
+                allCoorsElement = coordsSecu + coordsHouse
+
+                for coordsE in allCoorsElement:
+                    if coordsE in coordsAllChamps or self.map[coordsE[1]][coordsE[0]] != "-":
+                        checkCollideWhile = True
+
+                if not checkCollideWhile:
+                    for co in coordsHouse:
+                        coordsAllChamps.append(co)
+       
         for coords in coordsAllChamps: # parcourt de la liste
             self.map[coords[1]][coords[0]] = "@"  # ajout de l'element rivière sur la map (collision)
             self.baseMap[coords[1]][coords[0]] = "@" # ajout de l'element rivière sur la map (base) 
@@ -678,38 +704,51 @@ class NiveauMedievale(GestionNiveauMap):
         coordsVillage3 = []
        
         # village 1
-        nbHouseV1 = randint(8,20)
-        for i in range(nbHouseV1):
+
+
+        checkCollideWhile = True
+
+        while checkCollideWhile:
+            checkCollideWhile = False
+            posY1 = randint(5, 30)
+            posX1 = randint(12, 65)
+
+            coordsSecu = [
+                        [posX1 -1, posY1 -1], [posX1, posY1 -1], [posX1+1, posY1-1],  [posX1 +2, posY1 -1],
+                        [posX1 -1, posY1],                                            [posX1 +2, posY1], 
+                        [posX1 -1, posY1 +1],                                         [posX1 +2, posY1 +1], 
+                        [posX1 -1, posY1 +2], [posX1, posY1 +2], [posX1+1, posY1 +2], [posX1 +2, posY1 +2],
+                    ]
+                    
+            coordsHouse = [
+                [posX1, posY1], [posX1 +1, posY1],
+                [posX1, posY1 +1], [posX1 +1, posY1 +1],
+            ]
+
+            allCoorsElement = coordsSecu + coordsHouse
+
+            for coordsE in allCoorsElement:
+                if coordsE in coordsVillage1 or self.map[coordsE[1]][coordsE[0]] != "-":
+                    checkCollideWhile = True
             
-            checkCollideWhile = True
-
-            while checkCollideWhile:
-                checkCollideWhile = False
-                posX1 = randint(12, 65)
-                posY1 = randint(5, 30)
-
-                coordsSecu = [
-                    [posX1 -1, posY1 -1], [posX1, posY1 -1], [posX1+1, posY1-1],  [posX1 +2, posY1 -1],
-                    [posX1 -1, posY1],                                            [posX1 +2, posY1], 
-                    [posX1 -1, posY1 +1],                                         [posX1 +2, posY1 +1], 
-                    [posX1 -1, posY1 +2], [posX1, posY1 +2], [posX1+1, posY1 +2], [posX1 +2, posY1 +2],
-                ]
-                coordsHouse = [
-                    [posX1, posY1], [posX1 +1, posY1],
-                    [posX1, posY1 +1], [posX1 +1, posY1 +1],
-                ]
-
-                allCoorsElement = coordsSecu + coordsHouse
-                for coordsE in allCoorsElement:
-                    if coordsE in coordsVillage1:
-                        checkCollideWhile = True
-
-                if not checkCollideWhile:
-                    for co in coordsHouse:
-                        coordsVillage1.append(co)
+            if not checkCollideWhile:
+                for co in coordsHouse:
+                    coordsVillage1.append(co)
        
         # village 2
         nbHouseV2 = randint(25,40)
+        x1Puits, y1Puits = randint(90, 120), randint(40, 60)
+
+        coordsPuits = [
+                [x1Puits, y1Puits], [x1Puits +1, y1Puits],
+                [x1Puits, y1Puits +1], [x1Puits +1, y1Puits +1],
+            ] 
+
+        for coords in coordsPuits:
+            self.map[coords[1]][coords[0]] = "W"  # ajout de l'element PUITS sur la map (collision)
+            self.baseMap[coords[1]][coords[0]] = "W" # ajout de l'element PUITS sur la map (base) 
+
+    
         for i in range(nbHouseV2):
             
             checkCollideWhile = True
@@ -717,7 +756,7 @@ class NiveauMedievale(GestionNiveauMap):
             while checkCollideWhile:
                 checkCollideWhile = False
                 posX1 = randint(78, 138)
-                posY1 = randint(35, 72)
+                posY1 = randint(26, 72)
 
                 coordsSecu = [
                     [posX1 -1, posY1 -1], [posX1, posY1 -1], [posX1+1, posY1-1],  [posX1 +2, posY1 -1],
@@ -732,7 +771,7 @@ class NiveauMedievale(GestionNiveauMap):
 
                 allCoorsElement = coordsSecu + coordsHouse
                 for coordsE in allCoorsElement:
-                    if coordsE in coordsVillage2:
+                    if coordsE in coordsVillage2 or self.map[coordsE[1]][coordsE[0]] != "-" or coordsE in coordsPuits:
                         checkCollideWhile = True
 
                 if not checkCollideWhile:
@@ -740,15 +779,15 @@ class NiveauMedievale(GestionNiveauMap):
                         coordsVillage2.append(co)
        
         # village 3
-        nbHouseV3 = randint(5,12)
+        nbHouseV3 = randint(35, 60)
         for i in range(nbHouseV3):
             
             checkCollideWhile = True
 
             while checkCollideWhile:
                 checkCollideWhile = False
-                posX1 = randint(78, 147)
-                posY1 = randint(12, 20)
+                posX1 = randint(68, 147)
+                posY1 = randint(1, 21)
 
                 coordsSecu = [
                     [posX1 -1, posY1 -1], [posX1, posY1 -1], [posX1+1, posY1-1],  [posX1 +2, posY1 -1],
@@ -763,7 +802,7 @@ class NiveauMedievale(GestionNiveauMap):
 
                 allCoorsElement = coordsSecu + coordsHouse
                 for coordsE in allCoorsElement:
-                    if coordsE in coordsVillage3:
+                    if coordsE in coordsVillage3 or self.map[coordsE[1]][coordsE[0]] != "-" or (1 <= coordsE[1] < 13 and 102 <= coordsE[0] <= 113):
                         checkCollideWhile = True
 
                 if not checkCollideWhile:
@@ -777,7 +816,9 @@ class NiveauMedievale(GestionNiveauMap):
             for coords in blocCoords:
                 self.map[coords[1]][coords[0]] = "H"  # ajout de l'element rivière sur la map (collision)
                 self.baseMap[coords[1]][coords[0]] = "H" # ajout de l'element rivière sur la map (base) 
-        
+
+
+        AjoutJsonMapValue(coordsPuits, "coordsMapObject", "coords Puits")
         AjoutJsonMapValue(coordsAllHouse, "coordsMapObject", "coords Villages")
         
     def __PlacementPnj__(self):
@@ -794,7 +835,7 @@ class NiveauMedievale(GestionNiveauMap):
         coordsPnj2 = [getCoords2[0], getCoords2[1] +1, "P", 2]
         
         #pnj3
-        coordsPnj3 = [109, 12, "P", 3]
+        coordsPnj3 = [108, 12, "P", 3]
 
         #pnj4
         coordsPnj4 = [109, 2, "P", 4] 
@@ -802,7 +843,63 @@ class NiveauMedievale(GestionNiveauMap):
         self.coordsPNJ = [coordsPnj1, coordsPnj2, coordsPnj3, coordsPnj4]
         super().PlacementElements(self.coordsPNJ, ["coordsMapObject", "PNJ Coords"]) # placement des pnj sur la map 
 
+    def __PlacementPath__(self):
+        
+        allPath = []
 
+
+        getCoordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
+        coordsPts1 = getCoordsSpawn[0]
+        coordsPts2 = self.coordsPNJ[0]
+
+        getAllCoordsRiver1 = LoadJsonMapValue("coordsMapBase", "Riviere1 Coords")
+        getCoordsFromRiver1 = choice(getAllCoordsRiver1)
+        while getCoordsFromRiver1[1] < 38 or self.map[getCoordsFromRiver1[1]][getCoordsFromRiver1[0]-1] == "#" or  self.map[getCoordsFromRiver1[1]][getCoordsFromRiver1[0]+1] == "#":
+            getCoordsFromRiver1 = choice(getAllCoordsRiver1)
+        coordsPts3 = [getCoordsFromRiver1[0]-1,getCoordsFromRiver1[1]] 
+
+        getAllCoordsVillage2 = LoadJsonMapValue("coordsMapObject", "coords Villages")
+        getAllCoordsVillage2 = getAllCoordsVillage2[1]
+        
+        coordsPts4 = [coordsPts3[0]+1, coordsPts3[1]]
+        getCoordPuits = LoadJsonMapValue("coordsMapObject", "coords Puits")
+        coordsPts5 = getCoordPuits[0]
+        
+        coordsToLinkHouse = []
+        nbHousePath = randint(8, 15)
+        indicesHouse = [randint(0, len(getAllCoordsVillage2) -4) for _ in range(nbHousePath)]
+        for i in range(nbHousePath):
+            side = randint(0,3)
+            coordsToLinkHouse.append(getAllCoordsVillage2[side + indicesHouse[1]])
+
+
+        
+        linkPoint1 = [coordsPts1, coordsPts2, coordsPts3]
+        pathToAdd = Astar(linkPoint1[0], linkPoint1[1], self.map, ["-", "P", "S", "A", "W"]).a_star()
+        for coords in pathToAdd:
+            allPath.append(coords)
+
+        pathToAdd = Astar(linkPoint1[1], linkPoint1[2], self.map, ["-", "P", "S", "A", "W"]).a_star()   # pb ici
+        for coords in pathToAdd:
+            allPath.append(coords)
+
+        linkPoint2 = [coordsPts4, coordsPts5]
+        pathToAdd = Astar(linkPoint2[0], linkPoint2[1], self.map, ["-", "P", "S", "A", "W"]).a_star()
+        for coords in pathToAdd:
+            allPath.append(coords)
+
+        for coordsHouse in coordsToLinkHouse:
+            pathToAdd = Astar(coordsHouse, coordsPts5, self.map, ["-", "P", "S", "A", "W"]).a_star()
+            for coords in pathToAdd:
+                allPath.append(coords)
+
+        for coords in allPath:
+            self.map[coords[1]][coords[0]] = "="  # ajout de l'element rivière sur la map (collision)
+            self.baseMap[coords[1]][coords[0]] = "=" # ajout de l'element rivière sur la map (base) 
+
+
+        AjoutJsonMapValue(allPath, "coordsMapBase", "coords Path")
+        
 
 
     def Update(self):
@@ -827,6 +924,9 @@ class NiveauMedievale(GestionNiveauMap):
 
         # pnj
         self.__PlacementPnj__()
+
+        # path
+        self.__PlacementPath__()
 
 
 
