@@ -42,6 +42,9 @@ class GestionNiveauMap(object):
                         "Champs Coords" : "null",
                         "coords Villages" : "null",
                         "coords Puits" : "null",
+                        "coords PassageRiver1" : "null",
+                        "coords CraftTable" : "null",
+                        "RiverBoatTPChateau coords" : "null",
                         "Spawn" : "null",
                         "Exit" : "null"
                     }
@@ -398,6 +401,17 @@ class NiveauMedievale(GestionNiveauMap):
         self.mud = 200 
         self.obstacle = 1000
 
+    def CheckNiveauPossible(self, listOrdrePointCle :list, pathAccessible :list) -> bool:
+        """Méthode permettant de vérifier si le niveau est possible, suite à la position des obstacle. Utilisation du script A* permettant de trouver un chemin avec les déplacements ZQSD s'il exite entre un point A et B
+        Ces points, donnés dans l'ordre d'évolution de la map, représente les coordonnées des éléments que le joueurs doit allé voir (pnj, arbre, entré, sortie..)"""
+
+        for pointCle in range(len(listOrdrePointCle)-1): #
+            if  Astar(listOrdrePointCle[pointCle], listOrdrePointCle[pointCle+1],self.mapCheckDeplacementPossible, pathAccessible).a_star(): 
+                continue
+            else: # résolution du niveau est impossible
+                return False # false pour niveau impossible
+        return True # les chemins entre les points données existent  
+
     def Bordure(self):
 
 
@@ -722,6 +736,9 @@ class NiveauMedievale(GestionNiveauMap):
         # village 2
         nbHouseV2 = randint(25,40)
         coordsPuits = LoadJsonMapValue("coordsMapObject", "coords Puits")
+        coordsTableCraft = [coordsPuits[3][0] +1, coordsPuits[3][1]]
+        self.map[coordsTableCraft[1]][coordsTableCraft[0]] = "E"
+
         for i in range(nbHouseV2):
             
             checkCollideWhile = True
@@ -796,6 +813,7 @@ class NiveauMedievale(GestionNiveauMap):
                     self.baseMap[coords[1]][coords[0]] = "H" # ajout de l'element rivière sur la map (base) 
 
 
+        AjoutJsonMapValue(coordsTableCraft, "coordsMapObject", "coords CraftTable")
         AjoutJsonMapValue(coordsAllHouse, "coordsMapObject", "coords Villages")
         
     def __PlacementPnj__(self):
@@ -852,7 +870,7 @@ class NiveauMedievale(GestionNiveauMap):
         coordsPts3 = [getCoordsFromRiver1[0]-1,getCoordsFromRiver1[1]] 
 
 
-        coordsPts4 = [coordsPts3[0]+1, coordsPts3[1]]
+        coordsPts4 = [coordsPts3[0]+2, coordsPts3[1]]
         coordsPts5 = coordsPuits[0]
 
 
@@ -877,7 +895,7 @@ class NiveauMedievale(GestionNiveauMap):
                 self.map[coords[1]][coords[0]] = "="  # ajout de l'element rivière sur la map (collision)
                 self.baseMap[coords[1]][coords[0]] = "=" # ajout de l'element rivière sur la map (base) 
             
-
+        AjoutJsonMapValue(coordsPts3, "coordsMapObject", "coords PassageRiver1")
 
         AjoutJsonMapValue(allPath, "coordsMapBase", "coords Path")
         
@@ -891,9 +909,9 @@ class NiveauMedievale(GestionNiveauMap):
         nbHousePath = randint(8, 15)
         indicesHouse = []
         for _ in range(nbHousePath):
-            rand = randint(0, len(getAllCoordsVillage2))
+            rand = randint(0, (len(getAllCoordsVillage2)-1))
             while rand in indicesHouse:
-                rand = randint(0, len(getAllCoordsVillage2) -4)
+                rand = randint(0, (len(getAllCoordsVillage2)-1))
             indicesHouse.append(rand)
         
             
@@ -916,9 +934,86 @@ class NiveauMedievale(GestionNiveauMap):
         newAllPath = allPath1 + allPath
         AjoutJsonMapValue(newAllPath, "coordsMapBase", "coords Path")
 
+    def __PlacementObstacles__(self):
+
+        #placement des obstacle sur la map
+        checkDeplacementPasPossible = True
+        while checkDeplacementPasPossible: 
+            
+            # copie de la map pour les test
+            self.mapCheckDeplacementPossible = []
+            self.mapCheckDeplacementPossible = copy.deepcopy(self.map)  
+
+            listeObstacle = [] 
+            for _ in range(self.obstacle):
+                obstaclePos = [randint(0, self.longueur-1), randint(0, self.largeur-1)]
+                while self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] != '-' or self.mapCheckDeplacementPossible[obstaclePos[1]+1][obstaclePos[0]] != '-' or (1 <= obstaclePos[1] < 13 and 102 <= obstaclePos[0] <= 113) : # check de s'il y a déjà des éléments sur la map de test (map).
+                    obstaclePos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] 
+                self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] = "O" 
+
+
+                listeObstacle.append(obstaclePos) # forme  [x,y]
+            # all coords : 
+            getCoordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
+            coordsPts1 = getCoordsSpawn[0]
+            coordsPts2 = self.coordsPNJ[0]
+            coordsPts3 = LoadJsonMapValue("coordsMapObject", "coords PassageRiver1")
+            coordsPts4 = [coordsPts3[0]+2, coordsPts3[1]]
+            coordsPts5 = LoadJsonMapValue("coordsMapObject", "coords CraftTable")
+            getAllCoordsRiver1 = LoadJsonMapValue("coordsMapBase", "Riviere1 Coords")
+            coordsPts6 = choice(getAllCoordsRiver1)
+            while coordsPts6[0] < 35:
+                coordsPts6 = choice(getAllCoordsRiver1)
+            coordsPts7 = self.coordsPNJ[1]
+            coordsPts8 = choice(getAllCoordsRiver1)
+            while coordsPts8[1] >= 24 or self.map[coordsPts8[1]][coordsPts8[0]+1] != "-":
+                coordsPts8 = choice(getAllCoordsRiver1)
+            coordsPts9 = self.coordsPNJ[2]
+
+
+            self.map[coordsPts8[1]][coordsPts8[0]] = "Z"
 
 
 
+            # # verif deplacmeent possivlze
+            listeOrdrePointCle1 = [ # partie gauche map (avant riviere)
+                                coordsPts1,  
+                                coordsPts2,
+                                coordsPts3
+                                ]
+            
+            listeOrdrePointCle2 = [ 
+                                coordsPts4,
+                                coordsPts5, # +2 car on traverse la riviere
+                                coordsPts6,
+                                coordsPts7
+                                ]
+            
+            listeOrdrePointCle3 = [ # meme chose
+                                coordsPts8,
+                                coordsPts9
+                                ]
+
+
+            for i in range(len(self.map)):
+                print(*self.map[i], sep=" ")
+
+            for j in range(len(self.baseMap)):
+                print(*self.baseMap[j], sep=" ")
+
+
+            # Pour chacune des listes, on check s'il existe un chemin liant les points entre deux dans l'ordre d'avancement. 
+            # Check en trois niveau car la map est divisé en trois par les 2 rivières. Donc on passe les rivières pour pouvoir calculer
+            if self.CheckNiveauPossible(listeOrdrePointCle1, ["-", "A", "P", "S", "=", "Z"]): # Si true (donc possible), on continue 
+                if self.CheckNiveauPossible(listeOrdrePointCle2,  ["-", "A", "P", "S", "=", "Z"] ): # ///
+                    if self.CheckNiveauPossible(listeOrdrePointCle3,  ["-", "A", "P", "S", "=", "Z"] ): # //
+                        AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords") # Si la map est possible, on stock les coords des obstacle dans le json
+                        checkDeplacementPasPossible = False # on arrête la boucle
+                        for coords in listeObstacle: # on met à jour la map (on place les objets dessus)
+                            self.map[coords[1]][coords[0]] = "O" # placement aux différents cordonnées
+
+
+        AjoutJsonMapValue(coordsPts8, "coordsMapObject", "RiverBoatTPChateau coords")
 
     def Update(self):
 
@@ -948,6 +1043,10 @@ class NiveauMedievale(GestionNiveauMap):
 
         # champs
         self.__PlacementChamps__()
+
+
+        # obstacles 
+        self.__PlacementObstacles__()
 
 
 
