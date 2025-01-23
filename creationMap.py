@@ -953,6 +953,7 @@ class NiveauMedievale(GestionNiveauMap):
 
 
                 listeObstacle.append(obstaclePos) # forme  [x,y]
+
             # all coords : 
             getCoordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
             coordsPts1 = getCoordsSpawn[0]
@@ -961,17 +962,25 @@ class NiveauMedievale(GestionNiveauMap):
             coordsPts4 = [coordsPts3[0]+2, coordsPts3[1]]
             coordsPts5 = LoadJsonMapValue("coordsMapObject", "coords CraftTable")
             getAllCoordsRiver1 = LoadJsonMapValue("coordsMapBase", "Riviere1 Coords")
-            coordsPts6 = choice(getAllCoordsRiver1)
-            while coordsPts6[0] < 35:
-                coordsPts6 = choice(getAllCoordsRiver1)
+            getCoordsRiver1Point = choice(getAllCoordsRiver1)
+            while getCoordsRiver1Point[1] < 35 and getCoordsRiver1Point[1] != coordsPts3[1]:
+                getCoordsRiver1Point= choice(getAllCoordsRiver1)
+            coordsPts6 = [getCoordsRiver1Point[0]+1, getCoordsRiver1Point[1]]
             coordsPts7 = self.coordsPNJ[1]
-            coordsPts8 = choice(getAllCoordsRiver1)
-            while coordsPts8[1] >= 24 or self.map[coordsPts8[1]][coordsPts8[0]+1] != "-":
-                coordsPts8 = choice(getAllCoordsRiver1)
+            getCoordsRiver1Point2 = choice(getAllCoordsRiver1)
+            while getCoordsRiver1Point2[1] >= 24 or self.mapCheckDeplacementPossible[getCoordsRiver1Point2[1]][getCoordsRiver1Point2[0]+1] != "-":
+                getCoordsRiver1Point2 = choice(getAllCoordsRiver1)
+            coordsPts8 =  [getCoordsRiver1Point2[0]+1, getCoordsRiver1Point2[1]]
             coordsPts9 = self.coordsPNJ[2]
 
 
-            self.map[coordsPts8[1]][coordsPts8[0]] = "Z"
+
+            # self.mapCheckDeplacementPossible[coordsPts4[1]][coordsPts4[0]] = "Z"
+            # self.mapCheckDeplacementPossible[coordsPts5[1]][coordsPts5[0]] = "Z"
+            # self.mapCheckDeplacementPossible[coordsPts6[1]][coordsPts6[0]] = "Z"
+            # self.mapCheckDeplacementPossible[coordsPts7[1]][coordsPts7[0]] = "Z"
+            # self.map[coordsPts9[1]][coordsPts9[0]] = "Z"
+            # self.map[coordsPts8[1]][coordsPts8[0]] = "Z"
 
 
 
@@ -995,11 +1004,11 @@ class NiveauMedievale(GestionNiveauMap):
                                 ]
 
 
-            for i in range(len(self.map)):
+            for i in range(len(self.mapCheckDeplacementPossible)):
                 print(*self.map[i], sep=" ")
 
-            for j in range(len(self.baseMap)):
-                print(*self.baseMap[j], sep=" ")
+            # for j in range(len(self.baseMap)):
+            #     print(*self.baseMap[j], sep=" ")
 
 
             # Pour chacune des listes, on check s'il existe un chemin liant les points entre deux dans l'ordre d'avancement. 
