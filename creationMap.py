@@ -959,8 +959,10 @@ class NiveauMedievale(GestionNiveauMap):
             coordsPts1 = getCoordsSpawn[0]
             coordsPts2 = self.coordsPNJ[0]
             coordsPts3 = LoadJsonMapValue("coordsMapObject", "coords PassageRiver1")
+            #
             coordsPts4 = [coordsPts3[0]+2, coordsPts3[1]]
             coordsPts5 = LoadJsonMapValue("coordsMapObject", "coords CraftTable")
+            #
             getAllCoordsRiver1 = LoadJsonMapValue("coordsMapBase", "Riviere1 Coords")
             getCoordsRiver1Point = choice(getAllCoordsRiver1)
             while getCoordsRiver1Point[1] < 35 and getCoordsRiver1Point[1] != coordsPts3[1]:
@@ -1013,9 +1015,9 @@ class NiveauMedievale(GestionNiveauMap):
 
             # Pour chacune des listes, on check s'il existe un chemin liant les points entre deux dans l'ordre d'avancement. 
             # Check en trois niveau car la map est divisé en trois par les 2 rivières. Donc on passe les rivières pour pouvoir calculer
-            if self.CheckNiveauPossible(listeOrdrePointCle1, ["-", "A", "P", "S", "=", "Z"]): # Si true (donc possible), on continue 
-                if self.CheckNiveauPossible(listeOrdrePointCle2,  ["-", "A", "P", "S", "=", "Z"] ): # ///
-                    if self.CheckNiveauPossible(listeOrdrePointCle3,  ["-", "A", "P", "S", "=", "Z"] ): # //
+            if self.CheckNiveauPossible(listeOrdrePointCle1, ["-", "A", "P", "S", "=", "E"]): # Si true (donc possible), on continue 
+                if self.CheckNiveauPossible(listeOrdrePointCle2,  ["-", "A", "P", "S", "=", "E"] ): # ///
+                    if self.CheckNiveauPossible(listeOrdrePointCle3,  ["-", "A", "P", "S", "=", "E"] ): # //
                         AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords") # Si la map est possible, on stock les coords des obstacle dans le json
                         checkDeplacementPasPossible = False # on arrête la boucle
                         for coords in listeObstacle: # on met à jour la map (on place les objets dessus)
