@@ -146,7 +146,7 @@ class LoadMapPlaineRiviere(): # nv 0
         Input / Output : None"""
 
         # Récupération coords spawn + infos element
-        coordsSpawnList = LoadJsonMapValue("coordsMapObject", "CampSpawn Coords")
+        coordsSpawnList = LoadJsonMapValue("coordsMapObject", "Spawn")
 
         match INFOS["Niveau"]:
             case 0:
@@ -162,7 +162,7 @@ class LoadMapPlaineRiviere(): # nv 0
         """Méthode de placemet de la sortie
         Input / Ouput : None"""
 
-        coords = LoadJsonMapValue("coordsMapObject", "ZoneSortie Coords")
+        coords = LoadJsonMapValue("coordsMapObject", "Exit")
 
         match INFOS["Niveau"]:
             case 0:
@@ -184,11 +184,11 @@ class LoadMapPlaineRiviere(): # nv 0
         # parcours et création des sprites pnj
         for coordsPNJ in coordsPNJList:
             pos = (coordsPNJ[0]*CASEMAP, coordsPNJ[1]*CASEMAP) # calcul coords pygame
-            if coordsPNJ[2] == 1 : 
+            if coordsPNJ[3] == 1 : 
                 PNJ(pos , "PNJ1", (self.allPNJ, self.allSprites, self.collisionSprites))
-            if coordsPNJ[2] == 2 : 
+            if coordsPNJ[3] == 2 : 
                 PNJ(pos , "PNJ2", (self.allPNJ, self.allSprites, self.collisionSprites))
-            if coordsPNJ[2] == 3 :
+            if coordsPNJ[3] == 3 :
                 PNJ(pos , "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
         
     
