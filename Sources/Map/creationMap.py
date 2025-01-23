@@ -1101,6 +1101,3 @@ class NiveauMedievale(GestionNiveauMap):
 #     time.sleep(1)
 
 # mapp, baseMap = NiveauMedievale(150,75).Update()
-
-
-# On affiche la map pour verif
