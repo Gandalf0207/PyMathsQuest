@@ -81,8 +81,25 @@ class Game(object):
             self.InteractionObject = Interactions(self)
             self.buildPont = ConstruirePont(self)
 
-        else : 
-            pass
+        elif INFOS["Niveau"] == 1 : 
+            self.loadMapElement = LoadMedievale(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
+            self.map, self.mapBase = self.loadMapElement.Update()
+            self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
+            # Initialisation dans votre setup
+
+            self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
+            self.ideaTips = InfosTips(self.ideaTips_surface)
+            self.settingsAll = SettingsAll(self.allSettings_surface, self.INTERFACE_OPEN)
+
+            # infos traverser
+            self.InteractionObject = Interactions(self)
+            self.buildPont = ConstruirePont(self) 
+
+
+
+
+
+
 
         self.checkLoadingDone = True
 
@@ -94,13 +111,17 @@ class Game(object):
         self.InterfaceExo.start()
         self.checkLoadingDone = True
 
-
-    def run(self):
-        
+    def StartMap(self):
         # Affichage initial de l'écran de chargement
         threading.Thread(target=self.SetupAllMap).start()
 
         self.ChargementEcran()
+
+
+
+    def run(self):
+        
+        self.StartMap()
 
 
         while self.running:
@@ -232,7 +253,8 @@ class Game(object):
                     self.InterfaceExo.Update(event)
 
             if INFOS["ExoPasse"]:
-                pass
+                INFOS["ExoPasse"] = False
+                self.GameTool.ChangementNiveau()
 
                     
 
@@ -339,6 +361,47 @@ class GameToolBox(object):
             alpha -= 5
             pygame.display.flip()
             self.gestionnaire.clock.tick(30)  # Limite de rafraîchissement
+
+    def ChangementNiveau(self):
+
+        # texte
+        self.fondu_au_noir()
+        self.textScreen(TEXTE["Elements"]["LevelSup"])
+
+        # reset valeurs
+        INFOS["Niveau"] += 1
+        PNJ["PNJ1"] = False
+        PNJ["PNJ2"] = False
+        PNJ["PNJ3"] = False
+        PNJ["PNJ4"] = False
+        PNJ["PNJ5"] = False
+
+        # clear all groups sprites...
+        for obj in self.gestionnaire.allSprites:
+            obj.kill()
+
+        for obj in self.gestionnaire.collisionSprites:
+            obj.kill()
+
+        for obj in self.gestionnaire.allPNJ:
+            obj.kill()
+
+        for obj in self.gestionnaire.interactionGroup:
+            obj.kill()
+
+        self.gestionnaire.INTERFACE_OPEN = False # interface secondaire ouvert
+        self.gestionnaire.interface_exo = False
+        self.gestionnaire.cinematique = False # cinématique
+        self.gestionnaire.cinematiqueObject = None # obj de la cinematique 
+
+
+
+
+        STATE_HELP_INFOS[0] = "SeePNJ"
+
+        # call rebuild
+        self.gestionnaire.StartMap()
+
 
 
 

@@ -29,6 +29,10 @@ class MiniMap:
         self.carre3 = pygame.image.load(join("Images", "MiniMap", "Carre3.png")).convert_alpha()
         self.carre6 = pygame.image.load(join("Images", "MiniMap", "Carre6.png")).convert_alpha()
         self.carre7 = pygame.image.load(join("Images", "MiniMap", "Carre8.png")).convert_alpha()
+        self.carre2 = pygame.image.load(join("Images", "MiniMap", "Carre2.png")).convert_alpha()
+        self.carre4 = pygame.image.load(join("Images", "MiniMap", "Carre4.png")).convert_alpha()
+        self.carre5 = pygame.image.load(join("Images", "MiniMap", "Carre5.png")).convert_alpha()
+
 
 
     def GenerateStaticMiniMap(self) -> None:
@@ -42,6 +46,12 @@ class MiniMap:
                     self.static_surface.blit(self.carre3, pos)
                 elif cell == "B": # border
                     self.static_surface.blit(self.carre7, pos)
+                elif cell == "=": # path
+                    self.static_surface.blit(self.carre2, pos)
+                elif cell == "H": # maison
+                    self.static_surface.blit(self.carre4, pos)
+                elif cell == "W": # puits
+                    self.static_surface.blit(self.carre5, pos)
                 else: # reste = herbe 
                     self.static_surface.blit(self.carre1, pos)
         

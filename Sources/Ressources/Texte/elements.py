@@ -4,6 +4,7 @@ ElementsFr = {
     "GameName" : "PyMathsQuest",
     "Loading" : "Chargement",
     "Interaction" : "Appuyer sur E",
+    "LevelSup" : "Vous passez au niveau suppérieur !",
     "HotBar" : {
         "Settings" : {
             "Title" : "Paramettres",
@@ -67,6 +68,7 @@ ElementsEn = {
     "GameName" : "PyMathsQuest",
     "Loading" : "Loading",
     "Interaction" : "Press E",
+    "LevelSup" : "Vous passez au niveau suppérieur !",
     "HotBar" : {
         "Settings" : {
             "Title" : "Settings",

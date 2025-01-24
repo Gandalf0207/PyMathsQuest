@@ -29,7 +29,7 @@ class CollisionSprites(pygame.sprite.Sprite):
         self.id = typeCollision # id element
         self.InfoExo = InfoExo # si element exercice ou non (bool)
 
-        if typeCollision == "Arbre" :
+        if typeCollision == "Arbre"  or typeCollision == "Arbre2":
             self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-68))
         elif typeCollision == "pont1" or typeCollision == "pont2":
             self.rect = self.image.get_frect(topleft=(pos[0]-33, pos[1]))
@@ -56,6 +56,12 @@ class CollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(-100,0)
             case "ExitRock":
                 self.hitbox = self.rect.inflate(-60, -20)
+            case "Champ":
+                self.hitbox = self.rect.inflate(-20,-60)
+            case "Chateau":
+                self.hitbox = self.rect.inflate(0,-40)
+            case "House":
+                self.hitbox = self.rect.inflate(-20,-60)
             case _:  # par défaut
                 self.hitbox = self.rect.inflate(-70,-140)
 
