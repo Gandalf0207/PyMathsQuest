@@ -11,7 +11,9 @@ class ConstruirePont(object):
         self.gestionnaire = gestionnnaire
 
         if INFOS["Niveau"] == 0:
-            self.riviere2 = LoadJsonMapValue("coordsMapBase", "Riviere2 Coords")
+            self.riviere = LoadJsonMapValue("coordsMapBase", "Riviere2 Coords")
+        elif INFOS["Niveau"] == 1:
+            self.riviere = LoadJsonMapValue("coordsMapBase", "Riviere1 Coords")
         self.map = LoadJsonMapValue("coordsMapBase", "AllMapInfo")
 
         self.posPossible = self.posPossibleBuild() # case construction possible
@@ -40,9 +42,15 @@ class ConstruirePont(object):
         Ouput : list"""
 
         listCoordPossible = [] # initialisation
-        for coords in self.riviere2: # parcours de chaque case de la rivière
-            if self.map[coords[1]][coords[0]-1] == "-" and  self.map[coords[1]][coords[0]+1] == "-":  # vérif devant et dérierre
-                listCoordPossible.append(coords)
+        for coords in self.riviere: # parcours de chaque case de la rivière
+            if INFOS["Niveau"] == 0:
+                if self.map[coords[1]][coords[0]-1] == "-" and  self.map[coords[1]][coords[0]+1] == "-":  # vérif devant et dérierre
+                    listCoordPossible.append(coords)
+
+            elif INFOS["Niveau"] == 1:
+                if self.map[coords[1]][coords[0]-1] == "-" and  self.map[coords[1]][coords[0]+1] == "-" and coords[1] > 35:  # vérif devant et dérierre + hauteur 
+                    listCoordPossible.append(coords)
+
         return listCoordPossible 
 
 

@@ -95,7 +95,7 @@ STATE_HELP_INFOS = ["SeePNJ"] # list pour pouvoir etre modifié : tips
 
 # box infos globales
 INFOS = {
-    "Niveau" : 0,
+    "Niveau" : 1,
     "Langue" : "Fr", 
     "Difficulte" : False,
     "Exo" : False, 

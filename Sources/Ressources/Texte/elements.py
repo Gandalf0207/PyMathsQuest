@@ -29,6 +29,13 @@ ElementsFr = {
                 "CrossBridge" : "Traverser le pont pour acceder à la suite.",
                 "MineRock" : "Utiliser la pioche pour casser le rocher qui bloque le pont de sortie",
             },
+           "Niveau1" : {
+                "SeePNJ" : "Discuter avec le pnj sur la map. Regarder la minimap",
+                "LearnCrossBridge" : "Traverser le pont. Se rapprocher du pont qui se trouve à côté du bûcheron.",
+                "BuildBridge" : "Construire le pont. Se rapprocher de la rivière pour pouvoir construire",
+                "CrossBridge" : "Traverser le pont pour acceder à la suite.",
+                "MineRock" : "Utiliser la pioche pour casser le rocher qui bloque le pont de sortie",
+            },
         },
     },
 
@@ -60,9 +67,35 @@ ElementsFr = {
             
         }
     },
+
+    "Niveau1" : {
+        "Cinematique1End" : "Le bûcheron a coupé l'arbre, vous pouvez traverser la rivière !",
+        "TraverserPont" : "Vous venez de traverser le pont",
+        "CanBuildBridge" : "E pour construire le pont",
+        "BuildBridge" : "Vous venez de construire le pont",
+        "BreakRock" : "Vous venez de casser le rocher avec votre pioche",
+        "MakeExo" : "Pour pouvoir traverser le pont,  vous devez résoudre cet exercice.",
+
+        "ExoTexte" : {
+            
+            "Title" : "Exercice équation du premier degré",
+
+            "DifficulteTrue" : {
+                "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",
+                "QCM" : "Choisissez l'unique et bonne réponse",
+            },
+
+            "DifficulteFalse" : {
+                "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",
+                "QCM" : "Choisissez l'unique et bonne réponse",
+            },
+            
+        }
+    },
     
 }
 
+## à mettre à jour plus tard
 
 ElementsEn = {
     "GameName" : "PyMathsQuest",

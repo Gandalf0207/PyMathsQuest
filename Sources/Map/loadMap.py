@@ -42,7 +42,7 @@ class LoadMapPlaineRiviere(): # nv 0
         Input / Output : None"""
 
         # création de la map du niveau (sectionnée en deux)
-        self.map, self.mapBase = NiveauPlaineRiviere(LONGUEUR, LARGEUR, 1000,200,300).Update()
+        self.map, self.mapBase = NiveauPlaineRiviere(LONGUEUR, LARGEUR).Update()
 
         # parcours et création de chaque sprites
         for ordonnees in range(len(self.mapBase)):
@@ -249,13 +249,14 @@ class LoadMedievale(): # nv1
         self.pathNS = pygame.image.load(join("Images", "Sol", "Path", "PathN-S.png")).convert_alpha()
         self.pathWE = pygame.image.load(join("Images", "Sol", "Path", "PathW-E.png")).convert_alpha()
         self.champ = pygame.image.load(join("Images", "Sol", "Champs.png")).convert_alpha()
-        self.house = pygame.image.load(join("Image", "Obstacle", "Structures", "House.png")).convert_alpha()
-        self.well = pygame.image.load(join("Image", "Obstacle", "Structures", "Chateau.png")).convert_alpha()
-        self.MuraillesWE = pygame.image.load(join("Image", "Structures", "Chateau", "chateauWE.png" )).convert_alpha()
-        self.MuraillesNS = pygame.image.load(join("Image", "Structures", "Chateau", "chateauNS.png" )).convert_alpha()
-        self.MuraillesNE = pygame.image.load(join("Image", "Structures", "Chateau", "chateauNE.png" )).convert_alpha()
-        self.MuraillesNW = pygame.image.load(join("Image", "Structures", "Chateau", "chateauNW.png" )).convert_alpha()
-        self.MuraillesEAU = pygame.image.load(join("Image", "Structures", "Chateau", "chateauEAU.png" )).convert_alpha()
+        self.house = pygame.image.load(join("Images", "Obstacle", "Structures", "House.png")).convert_alpha()
+        self.well = pygame.image.load(join("Images", "Obstacle", "Structures", "Puits.png")).convert_alpha()
+        self.chateau = pygame.image.load(join("Images", "Obstacle", "Structures", "Chateau.png")).convert_alpha()
+        self.MuraillesWE = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesWE.png" )).convert_alpha()
+        self.MuraillesNS = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesNS.png" )).convert_alpha()
+        self.MuraillesNE = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesNE.png" )).convert_alpha()
+        self.MuraillesNW = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesNW.png" )).convert_alpha()
+        self.MuraillesEAU = pygame.image.load(join("Images", "Obstacle", "Structures", "Chateau", "MuraillesEAU.png" )).convert_alpha()
 
 
 
@@ -265,7 +266,7 @@ class LoadMedievale(): # nv1
         Input / Output : None"""
 
         # création de la map du niveau (sectionnée en deux)
-        self.map, self.mapBase = NiveauPlaineRiviere(LONGUEUR, LARGEUR, 1000,200,300).Update()
+        self.map, self.mapBase = NiveauMedievale(LONGUEUR, LARGEUR).Update()
 
         # parcours et création de chaque sprites
         for ordonnees in range(len(self.mapBase)):
@@ -282,6 +283,7 @@ class LoadMedievale(): # nv1
                 elif self.mapBase[ordonnees][abscisses] == "-" :
                     Sprites(pos, self.grass, self.allSprites) 
                 elif self.mapBase[ordonnees][abscisses] == "=":
+                    Sprites(pos, self.pathWE, self.allSprites)
                    
                     # 4 cote
                     if self.mapBase[ordonnees+1][abscisses] == "=" and self.mapBase[ordonnees-1][abscisses] == "=" and self.mapBase[ordonnees][abscisses -1] == "=" and self.mapBase[ordonnees][abscisses+1] == "=":
@@ -399,34 +401,63 @@ class LoadMedievale(): # nv1
 
                 # champs
                 if self.map[ordonnees][abscisses] == "@":
-                    CollisionSprites(pos, self.champ, "champ",  (self.allSprites, self.collisionSprites))
+                    CollisionSprites(pos, self.champ, "Champs",  (self.allSprites, self.collisionSprites))
 
-                # chateau
+                # chateau  # check aide IA
                 if self.map[ordonnees][abscisses] == "C":
-                    if self.map[ordonnees - 1][abscisses] == "C" and self.map[ordonnees][abscisses +1 ] == "C":
-                        CollisionSprites(pos, self.chateauNE, "chateau", (self.allSprites, self.collisionSprites))
 
-                    elif self.map[ordonnees - 1][abscisses] == "C" and self.map[ordonnees][abscisses - 1 ] == "C":
-                        CollisionSprites(pos, self.chateauNW, "chateau", (self.allSprites, self.collisionSprites))
-                        
+                    # Vérification des limites avant chaque accès à la carte
+                    def case_valide(y, x):
+                        return 0 <= y < len(self.map) and 0 <= x < len(self.map[0])
+
+                    if case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] == "B" or \
+                    case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] == "B":
+                        # pts ref placement chateau
+                        CollisionSprites(pos, self.chateau, "Chateau", (self.allSprites, self.collisionSprites))
+
+                    elif case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "C" and \
+                        case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] == "C":
+                        CollisionSprites(pos, self.MuraillesNE, "Murailles", (self.allSprites, self.collisionSprites))
+
+                    elif case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "C" and \
+                        case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] == "C":
+                        CollisionSprites(pos, self.MuraillesNW, "Murailles", (self.allSprites, self.collisionSprites))
 
                     # passage eau
-                    elif self.map[ordonnees ][abscisses + 1] == "C" and self.map[ordonnees ][abscisses -1 ] == "C" and self.map[ordonnees -1][abscisses] == "#" and self.map[ordonnees +1][abscisses ] == "#":
-                        CollisionSprites(pos, self.chateauEAU, "chateau", (self.allSprites, self.collisionSprites))
+                    elif case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] == "C" and \
+                        case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] == "C" and \
+                        case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "#" and \
+                        case_valide(ordonnees + 1, abscisses) and self.map[ordonnees + 1][abscisses] == "#":
+                        CollisionSprites(pos, self.MuraillesEAU, "Murailles", (self.allSprites, self.collisionSprites))
 
-                    elif self.map[ordonnees ][abscisses + 1] == "C" or self.map[ordonnees][abscisses -1] == "C":
-                        CollisionSprites(pos, self.chateauWE, "chateau", (self.allSprites, self.collisionSprites))
+                    elif case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] == "C" or \
+                        case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] == "C":
+                        CollisionSprites(pos, self.MuraillesWE, "Murailles", (self.allSprites, self.collisionSprites))
 
-                    elif self.map[ordonnees +1 ][abscisses] == "C" or self.map[ordonnees -1][abscisses] == "C":
-                        CollisionSprites(pos, self.chateauNS, "chateau", (self.allSprites, self.collisionSprites))
+                    elif case_valide(ordonnees + 1, abscisses) and self.map[ordonnees + 1][abscisses] == "C" or \
+                        case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "C":
+                        CollisionSprites(pos, self.MuraillesNS, "Murailles", (self.allSprites, self.collisionSprites))
+
+
+
 
                 # maisons
-                if self.map[ordonnees][abscisses] == "H" and self.map[ordonnees-1][abscisses] == "H" and self.map[ordonnees][abscisses +1] == "H":
-                    pass
+                if self.map[ordonnees][abscisses] == "H" : 
+                    Sprites(pos, self.grass, self.allSprites) 
+                    if self.map[ordonnees+1][abscisses] == "H" and self.map[ordonnees][abscisses +1] == "H":
+                        CollisionSprites(pos, self.house, "House", (self.allSprites, self.collisionSprites))
+
 
                 # puits 
-                if self.map[ordonnees][abscisses] == "W" and self.map[ordonnees-1][abscisses] == "W" and self.map[ordonnees][abscisses +1] == "W":
-                   pass
+                if self.map[ordonnees][abscisses] == "W" :
+                    Sprites(pos, self.grass, self.allSprites) 
+                    if self.map[ordonnees-1][abscisses] == "W" and self.map[ordonnees][abscisses +1] == "W":
+                        CollisionSprites(pos, self.well, "Well", (self.allSprites, self.collisionSprites))
+
+
+
+
+
                    
 
     def SetupExit(self):
