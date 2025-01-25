@@ -26,12 +26,12 @@ class MiniMap:
         """Méthode de chargement des images pour la minimap. Input / Output : None"""
 
         self.carre1 = pygame.image.load(join("Images", "MiniMap", "Carre1.png")).convert_alpha()
-        self.carre3 = pygame.image.load(join("Images", "MiniMap", "Carre3.png")).convert_alpha()
-        self.carre6 = pygame.image.load(join("Images", "MiniMap", "Carre6.png")).convert_alpha()
-        self.carre7 = pygame.image.load(join("Images", "MiniMap", "Carre8.png")).convert_alpha()
         self.carre2 = pygame.image.load(join("Images", "MiniMap", "Carre2.png")).convert_alpha()
+        self.carre3 = pygame.image.load(join("Images", "MiniMap", "Carre3.png")).convert_alpha()
         self.carre4 = pygame.image.load(join("Images", "MiniMap", "Carre4.png")).convert_alpha()
         self.carre5 = pygame.image.load(join("Images", "MiniMap", "Carre5.png")).convert_alpha()
+        self.carre6 = pygame.image.load(join("Images", "MiniMap", "Carre6.png")).convert_alpha()
+        self.carre7 = pygame.image.load(join("Images", "MiniMap", "Carre8.png")).convert_alpha()
 
 
 
@@ -52,6 +52,8 @@ class MiniMap:
                     self.static_surface.blit(self.carre4, pos)
                 elif cell == "W": # puits
                     self.static_surface.blit(self.carre5, pos)
+                elif cell == "@":
+                    self.static_surface.blit(self.carre6, pos)
                 else: # reste = herbe 
                     self.static_surface.blit(self.carre1, pos)
         
@@ -73,13 +75,6 @@ class MiniMap:
             pnj_x, pnj_y = objectPNJ.pos[0] * CASEMAP, objectPNJ.pos[1] *CASEMAP
             pnj_rect = pygame.Rect(pnj_x * CELL_SIZE * self.ratioImage, pnj_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE * 2)
             pygame.draw.rect(self.MiniMapSurface, (252, 128, 3), pnj_rect)
-
-        # placemnt des interaction object
-        for objectElement in interactionGroup:
-            element_x, element_y = objectElement.pos[0], objectElement.pos[1] # coords déja convertis map pyame
-            element_rect = pygame.Rect(element_x * CELL_SIZE * self.ratioImage, element_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE * 2)
-            pygame.draw.rect(self.MiniMapSurface, (109, 3, 158), element_rect)
-
 
 class InfosTips:
 

@@ -65,7 +65,6 @@ class Game(object):
         """Méthode de création de tout les éléments pour le niveau / map
         Input / Output : None"""
 
-        self.player = Player((8*CASEMAP,2*CASEMAP), self.allSprites, self.collisionSprites) 
 
         if INFOS["Niveau"] ==0:
             self.loadMapElement = LoadMapPlaineRiviere(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
@@ -97,6 +96,9 @@ class Game(object):
 
 
 
+        getPlayerPosSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
+        playerPosSpawn = getPlayerPosSpawn[0] 
+        self.player = Player(((playerPosSpawn[0] + 1 )*CASEMAP,(playerPosSpawn[1] +0.5 )*CASEMAP), self.allSprites, self.collisionSprites) 
 
 
 
@@ -232,7 +234,7 @@ class Game(object):
 
             
             # update jusqu'a construction du pont
-            if PNJ["PNJ2"] and INFOS["Niveau"] == 0:
+            if (PNJ["PNJ2"] and INFOS["Niveau"] == 0) or PNJ["PNJ1"] and INFOS["Niveau"] == 1:
                 if not self.buildPont.getConstructionStatue():
                     self.buildPont.Update(self.player.rect.center)
 

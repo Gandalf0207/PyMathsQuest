@@ -696,12 +696,14 @@ class NiveauMedievale(GestionNiveauMap):
         coordsSpawn = choice(coordsRiviere1)  # Sélection d'une position aléatoire pour le spawn
 
         # Vérification que le spawn est dans une zone valide
-        while not (25 <= coordsSpawn[1] <= 35) or self.map[coordsSpawn[1]][coordsSpawn[0]-1] == "#":
+        while not (25 <= coordsSpawn[1] <= 35) or self.map[coordsSpawn[1]][coordsSpawn[0]-1] == "#" or self.map[coordsSpawn[1]][coordsSpawn[0]+1] == "#":
             coordsSpawn = choice(coordsRiviere1)  # Sélection d'une autre position si la première est invalide
 
         # Placement du spawn sur la carte
-        super().PlacementElements([[coordsSpawn[0] + 1, coordsSpawn[1], "S"]], ["coordsMapObject", "Spawn"])
+        super().PlacementElements([[coordsSpawn[0] + 1, coordsSpawn[1], "="]], ["coordsMapObject", "Spawn"]) # chemin element (on spawn dessus...)
         self.map[coordsSpawn[1]][coordsSpawn[0]] = "T"
+        self.baseMap[coordsSpawn[1]][coordsSpawn[0] +1 ] = "="
+
 
     def __PlacementExit__(self):
         """Méthode de placement de la sortie"""
@@ -872,7 +874,7 @@ class NiveauMedievale(GestionNiveauMap):
         coordsPts3 = [getCoordsFromRiver1[0]-1, getCoordsFromRiver1[1]] 
 
         # Coordonnées du dernier point du chemin
-        coordsPts4 = [coordsPts3[0]+2, coordsPts3[1]]
+        coordsPts4 = [coordsPts3[0]+1, coordsPts3[1]]
         coordsPts5 = coordsPuits[0]
 
         # Partie gauche du chemin

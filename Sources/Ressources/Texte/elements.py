@@ -69,16 +69,15 @@ ElementsFr = {
     },
 
     "Niveau1" : {
-        "Cinematique1End" : "Le bûcheron a coupé l'arbre, vous pouvez traverser la rivière !",
         "TraverserPont" : "Vous venez de traverser le pont",
         "CanBuildBridge" : "E pour construire le pont",
         "BuildBridge" : "Vous venez de construire le pont",
-        "BreakRock" : "Vous venez de casser le rocher avec votre pioche",
+        "CutTree" : "Vous venez de couper un arbre",
         "MakeExo" : "Pour pouvoir traverser le pont,  vous devez résoudre cet exercice.",
 
         "ExoTexte" : {
             
-            "Title" : "Exercice équation du premier degré",
+            "Title" : "...",
 
             "DifficulteTrue" : {
                 "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",

@@ -110,7 +110,9 @@ class River(pygame.sprite.Sprite):
             "RiverAngularW-Sx128": [],
             "RiverStraightN-Sx128": [],
             "RiverStraightW-Ex128": [],
-            "RiverMontainConflictx128": []
+            "RiverMontainConflictx128": [],
+            "RiverTN-SEx128" : [],
+            "RiverTWN-Sx128" : [],
         }
 
         # parcours dossier et get images / patch

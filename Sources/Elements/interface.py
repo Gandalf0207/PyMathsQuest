@@ -373,6 +373,12 @@ class PNJInterface(object):
                         INVENTORY["Pickaxe"] += 1
                         PNJ["PNJ3"] = True
                         STATE_HELP_INFOS[0] = "MineRock"
+                if INFOS["Niveau"] == 1: 
+                    if self.gestionnaire.pnjActuel == "PNJ1":
+                        PNJ["PNJ1"] = True
+                        STATE_HELP_INFOS[0] = "BuildBridge"
+
+
 
         else:
             # get dialogue deja vu

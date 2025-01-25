@@ -389,7 +389,7 @@ class LoadMedievale(): # nv1
                             if randint(0,3) > 2:
                                 CollisionSprites(pos, self.tree2,"Arbre", (self.allSprites, self.collisionSprites, self.interactions))
                             else:
-                                CollisionSprites(pos, self.tree,"Arbre2", (self.allSprites, self.collisionSprites))
+                                CollisionSprites(pos, self.tree,"Arbre2", (self.allSprites, self.collisionSprites, self.interactions))
                     elif 65 < choixObstacle <= 85:
                         CollisionSprites(pos, self.hugeRock, "HugeRock", (self.allSprites, self.collisionSprites))
                     elif 85 < choixObstacle <= 100:
