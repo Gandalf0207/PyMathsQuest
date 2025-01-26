@@ -16,16 +16,19 @@ class Construire(object):
         elif INFOS["Niveau"] == 1:
             riviere = LoadJsonMapValue("coordsMapBase", "Riviere1 Coords")
 
+            # river vertical / horrizontal : pas meme check
             river2 = LoadJsonMapValue("coordsMapBase", "Riviere2 Coords")
             river3 = LoadJsonMapValue("coordsMapBase", "Riviere3 Coords")
-            allCoordsRiver123 = riviere + river2 + river3
-            self.allPosPossibleBoat = self.posPossibleBuild(allCoordsRiver123)
+            allCoordsRiver12 = riviere + river2 
+            checkRiver12 = self.posPossibleBuildVertical(allCoordsRiver12)
+            checkriver3 =self.posPossibleBuildHorizontale(river3)
 
+            self.allPosPossibleBoat = checkRiver12 + checkriver3
 
-        self.posPossiblePont = self.posPossibleBuild(riviere) # case construction possible
+        self.posPossiblePont = self.posPossibleBuildVertical(riviere) # case construction possible
         self.construitPont = False # étant de la construit 
         self.placeBoat = False
-        self.distanceMax = 100 # diqstance minimal pour interaction
+        self.distanceMax = 150 # diqstance minimal pour interaction
         
         # outils 
         self.npc_screen_pos = [0,0]
@@ -49,19 +52,31 @@ class Construire(object):
 
         return self.placeBoat # etat
     
-    def posPossibleBuild(self, listCoords) -> list:
+    def posPossibleBuildVertical(self, listCoords) -> list:
         """Métode déterminant la liste des coordonnées possible pour poser le pont
         Input : / 
         Ouput : list"""
 
         listCoordPossible = [] # initialisation
+        listElementAcces = ["-","="]
         for coords in listCoords: # parcours de chaque case de la rivière
-            if INFOS["Niveau"] == 0:
-                if self.map[coords[1]][coords[0]-1] == "-" and  self.map[coords[1]][coords[0]+1] == "-":  # vérif devant et dérierre
+            if INFOS["Niveau"] == 0 or INFOS["Niveau"] == 1:
+                if self.map[coords[1]][coords[0]-1] in listElementAcces and  self.map[coords[1]][coords[0]+1] in listElementAcces:  # vérif devant et dérierre
                     listCoordPossible.append(coords)
 
-            elif INFOS["Niveau"] == 1:
-                if self.map[coords[1]][coords[0]-1] == "-" and  self.map[coords[1]][coords[0]+1] == "-" and coords[1] > 35:  # vérif devant et derriere + hauteur 
+        return listCoordPossible 
+    
+
+    def posPossibleBuildHorizontale(self, listCoords) -> list:
+        """Métode déterminant la liste des coordonnées possible pour poser le pont
+        Input : / 
+        Ouput : list"""
+
+        listCoordPossible = [] # initialisation
+        listElementAcces = ["-","="]
+        for coords in listCoords: # parcours de chaque case de la rivière
+            if INFOS["Niveau"] == 0 or INFOS["Niveau"] == 1:
+                if self.map[coords[1]-1][coords[0]] in listElementAcces and  self.map[coords[1]+1][coords[0]] in listElementAcces:  # vérif devant et dérierre
                     listCoordPossible.append(coords)
 
         return listCoordPossible 
@@ -141,7 +156,7 @@ class Construire(object):
                 self.coordsRiviere = coords
 
                 # Dessiner la boîte d'indication "Press E"
-                text_surface = FONT["FONT24"].render(TEXTE["Elements"]["Niveau0"]["CanBuildBridge"], True, (255, 255, 255))
+                text_surface = FONT["FONT24"].render(TEXTE["Elements"]["Interaction"], True, (255, 255, 255))
                 text_rect = text_surface.get_rect()
                 text_rect.topleft = (self.npc_screen_pos[0] - 20, self.npc_screen_pos[1] - 40)
                 

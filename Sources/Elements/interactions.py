@@ -14,7 +14,7 @@ class Interactions(object):
         # element interactions
         self.camera_offset = [0,0]
         self.npc_screen_pos = [0,0]
-        self.distanceMax = 100 # depuis centre element pont
+        self.distanceMax = 150 # depuis centre element pont
 
         # infos de la map 
         self.map_width = LONGUEUR * CASEMAP

@@ -224,6 +224,8 @@ class BundleInterface(object):
                 surf = self.planks
             elif key == "Pickaxe" and INVENTORY["Pickaxe"] > 0: 
                 surf = self.pickaxe
+            elif key == "Boat" and INVENTORY["Boat"] > 0: 
+                surf = self.boat
             else:
                 surf = None
             

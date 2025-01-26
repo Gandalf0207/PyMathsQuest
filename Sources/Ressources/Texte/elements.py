@@ -47,7 +47,6 @@ ElementsFr = {
     "Niveau0" : {
         "Cinematique1End" : "Le bûcheron a coupé l'arbre, vous pouvez traverser la rivière !",
         "TraverserPont" : "Vous venez de traverser le pont",
-        "CanBuildBridge" : "E pour construire le pont",
         "BuildBridge" : "Vous venez de construire le pont",
         "BreakRock" : "Vous venez de casser le rocher avec votre pioche",
         "MakeExo" : "Pour pouvoir traverser le pont,  vous devez résoudre cet exercice.",
@@ -71,7 +70,6 @@ ElementsFr = {
 
     "Niveau1" : {
         "TraverserPont" : "Vous venez de traverser le pont",
-        "CanBuildBridge" : "E pour construire le pont",
         "BuildBridge" : "Vous venez de construire le pont",
         "CutTree" : "Vous venez de couper un arbre",
         "NeedPlanks" : "Vous devez avoir 3 planches pour pouvoir construire le bateau",

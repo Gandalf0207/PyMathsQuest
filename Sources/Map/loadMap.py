@@ -517,7 +517,7 @@ class LoadMedievale(): # nv1
         Input : element : str, coords : tuple
         Output : None"""
 
-        if element  == "boat":
+        if element  == "Boat":
             CollisionSprites(coords, self.boat, element, (self.allSprites, self.collisionSprites, self.interactions))
 
 
