@@ -357,16 +357,16 @@ class LoadMedievale(): # nv1
                             stateFormat = "RiverTW-SEx128"
                             River(pos, (self.allSprites, self.collisionSprites), stateFormat)
 
-                        elif self.mapBase[ordonnees][abscisses+1] =="#" and (self.mapBase[ordonnees-1][abscisses] =="#" or self.mapBase[ordonnees-1][abscisses] =="C") and (self.mapBase[ordonnees-2][abscisses] =="#" or self.mapBase[ordonnees-1][abscisses] =="#"):
+                        elif self.mapBase[ordonnees][abscisses+1] =="#" and ((self.mapBase[ordonnees-1][abscisses] =="#" or self.mapBase[ordonnees-1][abscisses] =="C") or (self.mapBase[ordonnees-2][abscisses] =="#" or self.mapBase[ordonnees-1][abscisses] =="#")):
                             stateFormat = "RiverAngularN-Ex128"
                             River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees][abscisses+1] =="#" and (self.mapBase[ordonnees+1][abscisses] =="#" or self.mapBase[ordonnees+1][abscisses] =="C") and (self.mapBase[ordonnees+2][abscisses] =="#" or self.mapBase[ordonnees+1][abscisses] =="#"):
+                        elif self.mapBase[ordonnees][abscisses+1] =="#" and ((self.mapBase[ordonnees+1][abscisses] =="#" or self.mapBase[ordonnees+1][abscisses] =="C") or (self.mapBase[ordonnees+2][abscisses] =="#" or self.mapBase[ordonnees+1][abscisses] =="#")):
                             stateFormat = "RiverAngularE-Sx128"
                             River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees][abscisses-1] =="#" and (self.mapBase[ordonnees-1][abscisses] =="#" or self.mapBase[ordonnees-1][abscisses] =="C") and (self.mapBase[ordonnees-2][abscisses] =="#" or self.mapBase[ordonnees-1][abscisses] =="#"):
+                        elif self.mapBase[ordonnees][abscisses-1] =="#" and ((self.mapBase[ordonnees-1][abscisses] =="#" or self.mapBase[ordonnees-1][abscisses] =="C") or (self.mapBase[ordonnees-2][abscisses] =="#" or self.mapBase[ordonnees-1][abscisses] =="#")):
                             stateFormat = "RiverAngularN-Wx128"
                             River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees][abscisses-1] =="#" and (self.mapBase[ordonnees+1][abscisses] =="#" or self.mapBase[ordonnees+1][abscisses] =="C") and (self.mapBase[ordonnees+2][abscisses] =="#" or self.mapBase[ordonnees+1][abscisses] =="#"):
+                        elif self.mapBase[ordonnees][abscisses-1] =="#" and ((self.mapBase[ordonnees+1][abscisses] =="#" or self.mapBase[ordonnees+1][abscisses] =="C") or (self.mapBase[ordonnees+2][abscisses] =="#" or self.mapBase[ordonnees+1][abscisses] =="#")):
                             stateFormat = "RiverAngularW-Sx128"
                             River(pos, (self.allSprites, self.collisionSprites), stateFormat)
                         elif self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees][abscisses-1] =="#":
@@ -455,8 +455,9 @@ class LoadMedievale(): # nv1
                     def case_valide(y, x):
                         return 0 <= y < len(self.map) and 0 <= x < len(self.map[0])
 
-                    if case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] == "B" or \
-                    case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] == "B":
+                    if case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] == "B" and \
+                    case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] == "B" and \
+                    self.map[ordonnees+1][abscisses] != "C":
                         # pts ref placement chateau
                         CollisionSprites(pos, self.chateau, "Chateau", (self.allSprites, self.collisionSprites))
 

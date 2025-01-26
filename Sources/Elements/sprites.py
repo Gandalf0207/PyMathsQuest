@@ -35,8 +35,6 @@ class CollisionSprites(pygame.sprite.Sprite):
             self.rect = self.image.get_frect(topleft=(pos[0]-33, pos[1]))
         elif typeCollision == "pont3":
             self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-20))
-        elif typeCollision == "Boat":
-            self.rect = self.image.get_frect(topleft =(pos[0]+32, pos[1]+32))
         else:
             self.rect = self.image.get_frect(topleft=pos)
 

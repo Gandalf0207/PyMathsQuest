@@ -117,7 +117,7 @@ class Construire(object):
             self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["PlaceBoat"])
 
             # ajout du pont + mise à jour de l'état de construction 
-            coords = (self.coordsRiviere[0]*CASEMAP, self.coordsRiviere[1]*CASEMAP)
+            coords = (self.coordsRiviere[0]*CASEMAP +32, self.coordsRiviere[1]*CASEMAP + 32)
             loadMapElement.AddBoat("Boat", coords)
             self.placeBoat = True
 

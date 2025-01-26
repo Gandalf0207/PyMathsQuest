@@ -76,6 +76,8 @@ ElementsFr = {
         "NeedPlanks" : "Vous devez avoir 3 planches pour pouvoir construire le bateau",
         "CraftBoat" : "Vous avez fabriqué un bateau",
         "PlaceBoat" : "Vous avez placé le bateau sur la rivière",
+        "UseBoat" : "Vous naviguez sur la rivière et arrivez dans l'enceinte du château.",
+        "UseBoat2" : "Vous naviguez sur la rivière et sortez de l'enceinte du château.",
         "MakeExo" : "Pour pouvoir traverser le pont,  vous devez résoudre cet exercice.",
 
         "ExoTexte" : {

@@ -28,6 +28,9 @@ class Interactions(object):
 
         self.interactionGroup = None
 
+        # stockag value 
+        self.boatPlacementPlayerPos = []
+
 
     def Interagir(self, groups) -> None:
         """Méthode de calcul d'interaction entre chaque element en fonction des niveaux
@@ -140,6 +143,47 @@ class Interactions(object):
                         INVENTORY["Boat"] += 1
                         STATE_HELP_INFOS[0] = "PlaceBoat" # update tips player
 
+                    self.gestionnaire.ouverture_du_noir(self.player.rect.center)
+
+                
+                if self.ObjectId == "Boat":
+
+                    # check pos player et pos de référence
+                    coordsPtsRefRiverTpChateau = LoadJsonMapValue("coordsMapObject", "RiverBoatTPChateau coords")
+                    coordsBoat = [(self.Obj.pos[0] -32) // CASEMAP, (self.Obj.pos[1] -32) // CASEMAP ] #  -32 : centre place ; // CASEMAP --> obtention en coords double list
+
+                    if coordsPtsRefRiverTpChateau != coordsBoat : 
+                        # texte animation : 
+                        self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["UseBoat"])
+
+                        # sauvgarde pos
+                        self.boatPlacementPlayerPos = [self.Obj.pos, self.player.rect.center] # sauvgarde
+                        
+                        # deplacement bateau
+                        self.Obj.pos = (coordsPtsRefRiverTpChateau[0]*CASEMAP +32, coordsPtsRefRiverTpChateau[1]*CASEMAP + 32) # +32 : center case river
+                        self.Obj.hitbox.topleft = self.Obj.pos
+                        self.Obj.rect.topleft = self.Obj.hitbox.topleft
+                        
+                        # deplacement player
+                        self.player.hitbox_rect.center = ((coordsPtsRefRiverTpChateau[0]+1)*CASEMAP +64, coordsPtsRefRiverTpChateau[1]*CASEMAP +64 ) # +64 center case à coté
+                        self.player.rect.center = self.player.hitbox_rect.center
+                    else:
+                        # texte animation : 
+                        self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["UseBoat2"])
+
+                        # deplacement bateau
+                        self.Obj.pos = self.boatPlacementPlayerPos[0]
+                        self.Obj.hitbox.topleft = self.Obj.pos
+                        self.Obj.rect.topleft = self.Obj.hitbox.topleft
+                        
+                        # deplacement player
+                        self.player.hitbox_rect.center = self.boatPlacementPlayerPos[1] 
+                        self.player.rect.center = self.player.hitbox_rect.center
+
+                        print(self.Obj.pos)
+                        print(self.player.rect.center)
+
+                        
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center)
 
 

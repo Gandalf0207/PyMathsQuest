@@ -1001,14 +1001,14 @@ class NiveauMedievale(GestionNiveauMap):
             getCoordsRiver1Point2 = choice(getAllCoordsRiver1)
             while getCoordsRiver1Point2[1] >= 24 or self.mapCheckDeplacementPossible[getCoordsRiver1Point2[1]][getCoordsRiver1Point2[0]+1] != "-":
                 getCoordsRiver1Point2 = choice(getAllCoordsRiver1)
-            coordsPts8 =  [getCoordsRiver1Point2[0]+1, getCoordsRiver1Point2[1]]
+            coordsPts8 =  [getCoordsRiver1Point2[0], getCoordsRiver1Point2[1]] # case river
             coordsPts9 = self.coordsPNJ[2]
 
 
             # Liste des points à vérifier pour les déplacements possibles
             listeOrdrePointCle1 = [coordsPts1, coordsPts2, coordsPts3]
             listeOrdrePointCle2 = [coordsPts4, coordsPts5, coordsPts6, coordsPts7]
-            listeOrdrePointCle3 = [coordsPts8, coordsPts9]
+            listeOrdrePointCle3 = [[coordsPts8[0] + 1, coordsPts8[1]], coordsPts9] # coords pts8 formaté pour ne pas etre sur la river
 
             # Vérifie la possibilité de déplacements pour chaque liste de points clés
             # Le parcours se fait en trois étapes, en passant par les rivières pour s'assurer que les chemins sont valides
