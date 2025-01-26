@@ -247,8 +247,14 @@ class LoadMedievale(): # nv1
         self.pont2 = pygame.image.load(join("Images", "Pont", "BridgePlanksW-Ex128.png")).convert_alpha()
         self.pont3 = pygame.image.load(join("Images", "Pont","BridgePlanksN-S-x128.png" )).convert_alpha()
         self.rockExit = pygame.image.load(join("Images", "Obstacle", "ExitRock.png")).convert_alpha()
+
+        self.pathAngularNE = pygame.image.load(join("Images", "Sol", "Path", "PathN-Ex128.png")).convert_alpha()
+        self.pathAngularNW = pygame.image.load(join("Images", "Sol", "Path", "PathN-Wx128.png")).convert_alpha()
+        # self.pathAngularSE = pygame.image.load(join("Images", "Sol", "Path", ".png")).convert_alpha()
+        # self.pathAngularSW = pygame.image.load(join("Images", "Sol", "Path", ".png")).convert_alpha()
         self.pathNS = pygame.image.load(join("Images", "Sol", "Path", "PathN-S.png")).convert_alpha()
         self.pathWE = pygame.image.load(join("Images", "Sol", "Path", "PathW-E.png")).convert_alpha()
+
         self.champ = pygame.image.load(join("Images", "Sol", "Champs.png")).convert_alpha()
         self.house = pygame.image.load(join("Images", "Obstacle", "Structures", "House.png")).convert_alpha()
         self.well = pygame.image.load(join("Images", "Obstacle", "Structures", "Puits.png")).convert_alpha()
@@ -286,7 +292,7 @@ class LoadMedievale(): # nv1
                 elif self.mapBase[ordonnees][abscisses] == "-" :
                     Sprites(pos, self.grass, self.allSprites) 
                 elif self.mapBase[ordonnees][abscisses] == "=":
-                    Sprites(pos, self.pathWE, self.allSprites)
+                    Sprites(pos, self.pathWE, self.allSprites) # // state base à enlever quand all path good
                    
                     # 4 cote
                     if self.mapBase[ordonnees+1][abscisses] == "=" and self.mapBase[ordonnees-1][abscisses] == "=" and self.mapBase[ordonnees][abscisses -1] == "=" and self.mapBase[ordonnees][abscisses+1] == "=":
@@ -307,6 +313,19 @@ class LoadMedievale(): # nv1
                     # tshape
                     elif not self.mapBase[ordonnees+1][abscisses] == "="and self.mapBase[ordonnees-1][abscisses] == "="and self.mapBase[ordonnees][abscisses -1] == "="and self.mapBase[ordonnees][abscisses+1] == "=":
                         Sprites(pos, self.pathNS, self.allSprites)
+
+                    # angular
+                    elif self.mapBase[ordonnees-1][abscisses] == "=" and (self.mapBase[ordonnees][abscisses+1] == "="  or self.mapBase[ordonnees][abscisses + 1]== "#"):
+                        Sprites(pos, self.pathAngularNE, self.allSprites)
+                    # angular
+                    elif self.mapBase[ordonnees+1][abscisses] == "=" and (self.mapBase[ordonnees][abscisses+1] == "="  or self.mapBase[ordonnees][abscisses + 1]== "#"):
+                        Sprites(pos, self.tableCraft, self.allSprites) # // SE
+                    # angular
+                    elif self.mapBase[ordonnees +1 ][abscisses] == "=" and (self.mapBase[ordonnees][abscisses -1] == "=" or self.mapBase[ordonnees][abscisses - 1] == "#"):
+                        Sprites(pos, self.tableCraft, self.allSprites) # // SW
+                    # angular
+                    elif self.mapBase[ordonnees -1][abscisses] == "=" and (self.mapBase[ordonnees][abscisses -1] == "=" or self.mapBase[ordonnees][abscisses - 1] == "#"):
+                        Sprites(pos, self.pathAngularNW, self.allSprites)
                     
                     # NS
                     elif self.mapBase[ordonnees+1][abscisses] == "="and self.mapBase[ordonnees-1][abscisses] == "="and not self.mapBase[ordonnees][abscisses -1] == "="and not self.mapBase[ordonnees][abscisses+1] == "=":
