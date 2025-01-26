@@ -40,6 +40,7 @@ class Game(object):
         self.interface_exo = False
         self.cinematique = False # cinématique
         self.cinematiqueObject = None # obj de la cinematique 
+        self.hideHotbar = False
 
         self.GameTool = GameToolBox(self)
         self.GameTool.CreateFont()
@@ -162,6 +163,11 @@ class Game(object):
                                 self.buildElements.BuildBridge(self.loadMapElement, self.player.rect.center)
                             elif not self.buildElements.getPlaceStatueBoat():
                                 self.buildElements.PlaceBoat(self.loadMapElement, self.player.rect.center)
+                        
+                        # affichge ou non de la hotbar
+                        if event.key == pygame.K_m:
+                            self.hideHotbar = True if not self.hideHotbar else False
+                        
 
 
                         if event.key == pygame.K_ESCAPE and self.INTERFACE_OPEN: # Close général interface build
@@ -181,22 +187,23 @@ class Game(object):
 
 
             if not self.cinematique:
-                self.allSprites.draw(self.player.rect.center)
+                self.allSprites.draw(self.player.rect.center, self.hideHotbar)
             else:
-                self.allSprites.draw(self.cinematiqueObject.pnjObject.rect.center) # pos pnj lockcam 
+                self.allSprites.draw(self.cinematiqueObject.pnjObject.rect.center, self.hideHotbar) # pos pnj lockcam 
 
             # Afficher la minimap sur l'écran principal + menu settings all
-            if not self.cinematique:
-                self.displaySurface.blit(self.bgHotBar, (0, WINDOW_HEIGHT-160))
+            if not self.cinematique :
                 
                 self.minimap.Update(self.player.rect.center, self.allPNJ, self.interactionsGroup)
                 self.ideaTips.Update()
                 self.settingsAll.Update(event)
 
-                self.displaySurface.blit(self.minimap_surface, (10, WINDOW_HEIGHT-160))
-                self.displaySurface.blit(self.ideaTips_surface, COORDS_BOX_IDEAS_TIPS)
-                self.displaySurface.blit(self.allSettings_surface, COORS_BOX_ALL_SETTINGS)
-            
+                if not self.hideHotbar: # check hide bool
+                    self.displaySurface.blit(self.bgHotBar, (0, WINDOW_HEIGHT-160))
+                    self.displaySurface.blit(self.minimap_surface, (10, WINDOW_HEIGHT-160))
+                    self.displaySurface.blit(self.ideaTips_surface, COORDS_BOX_IDEAS_TIPS)
+                    self.displaySurface.blit(self.allSettings_surface, COORS_BOX_ALL_SETTINGS)
+                
             if not self.cinematique:
                 self.INTERFACE_OPEN, self.cinematique, self.cinematiqueObject = self.pnj.update(self.player.rect.center, self.INTERFACE_OPEN, event)
                 self.InteractionObject.Update(self.player, self.interactionsGroup)
@@ -235,7 +242,7 @@ class Game(object):
                  
                     
                     self.ouverture_du_noir(object.pos)
-                    self.allSprites.draw(self.player.rect.center)
+                    self.allSprites.draw(self.player.rect.center, self.hideHotbar)
 
             
             # update jusqu'a construction du pont / placement bateau
@@ -357,7 +364,7 @@ class GameToolBox(object):
         alpha = 255
 
         while alpha > 0:
-            self.gestionnaire.allSprites.draw(targetPos)
+            self.gestionnaire.allSprites.draw(targetPos, self.gestionnaire.hideHotbar)
             # Ici, ne redessinez pas le fond du jeu, car il est déjà chargé et affiché
             # simplement superposez la surface noire pour l'effet de transparence.
 
