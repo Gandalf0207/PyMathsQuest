@@ -114,7 +114,7 @@ INVENTORY = {
     "Planks" : 0,
     "OldAxe" : 0,
     "Pickaxe" : 0,
-    "a" : 0,
+    "Boat" : 0,
     "b" : 0,
     "c" : 0,
     "d" : 0,

@@ -257,6 +257,7 @@ class LoadMedievale(): # nv1
         self.MuraillesNE = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesNE.png" )).convert_alpha()
         self.MuraillesNW = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesNW.png" )).convert_alpha()
         self.MuraillesEAU = pygame.image.load(join("Images", "Obstacle", "Structures", "Chateau", "MuraillesEAU.png" )).convert_alpha()
+        self.tableCraft = pygame.image.load(join("Images", "Obstacle", "TableCraft.png")).convert_alpha()
 
 
 
@@ -460,6 +461,9 @@ class LoadMedievale(): # nv1
                     Sprites(pos, self.grass, self.allSprites) 
                     if self.map[ordonnees-1][abscisses] == "W" and self.map[ordonnees][abscisses +1] == "W":
                         CollisionSprites(pos, self.well, "Well", (self.allSprites, self.collisionSprites))
+
+                if self.map[ordonnees][abscisses] == "E" :
+                    CollisionSprites(pos, self.tableCraft, "TableCraft", (self.allSprites, self.collisionSprites, self.interactions))
 
 
 

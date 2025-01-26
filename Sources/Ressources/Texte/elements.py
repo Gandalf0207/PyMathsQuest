@@ -34,7 +34,7 @@ ElementsFr = {
                 "LearnCrossBridge" : "Traverser le pont. Se rapprocher du pont qui se trouve à côté du bûcheron.",
                 "BuildBridge" : "Construire le pont. Se rapprocher de la rivière pour pouvoir construire",
                 "CrossBridge" : "Traverser le pont pour acceder à la suite.",
-                "MineRock" : "Utiliser la pioche pour casser le rocher qui bloque le pont de sortie",
+                "PlaceBoat" : "Vous devez placer le bateau dans la rivière."
             },
         },
     },
@@ -73,6 +73,8 @@ ElementsFr = {
         "CanBuildBridge" : "E pour construire le pont",
         "BuildBridge" : "Vous venez de construire le pont",
         "CutTree" : "Vous venez de couper un arbre",
+        "NeedPlanks" : "Vous devez avoir 3 planches pour pouvoir construire le bateau",
+        "CraftBoat" : "Vous avec fabriqué un bateau",
         "MakeExo" : "Pour pouvoir traverser le pont,  vous devez résoudre cet exercice.",
 
         "ExoTexte" : {

@@ -104,6 +104,21 @@ class Interactions(object):
                         
                         # fin animation
                         self.gestionnaire.ouverture_du_noir(self.player.rect.center)
+
+
+                if self.ObjectId == "TableCraft":
+                    if INVENTORY["Planks"] < 3:
+                        self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["NeedPlanks"])
+                    else:
+                        self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["CraftBoat"])
+                        INVENTORY["Planks"] -= 3
+                        INVENTORY["Boat"] += 1
+                        STATE_HELP_INFOS[0] = "PlaceBoat" # update tips player
+
+                    self.gestionnaire.ouverture_du_noir(self.player.rect.center)
+
+
+
                         
 
     def Isclose(self) -> bool :

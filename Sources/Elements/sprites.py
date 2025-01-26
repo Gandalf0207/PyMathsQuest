@@ -66,6 +66,8 @@ class CollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(-20,-60)
             case "Chateau":
                 self.hitbox = self.rect.inflate(-20,-60)
+            case "TableCraft":
+                self.hitbox = self.rect.inflate(0,0)
             case _:  # par défaut
                 self.hitbox = self.rect.inflate(-70,-140)
 
