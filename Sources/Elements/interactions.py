@@ -14,7 +14,7 @@ class Interactions(object):
         # element interactions
         self.camera_offset = [0,0]
         self.npc_screen_pos = [0,0]
-        self.distanceMax = 100 # depuis centre element pont
+        self.distanceMax = 150 # depuis centre element pont
 
         # infos de la map 
         self.map_width = LONGUEUR * CASEMAP
@@ -74,7 +74,72 @@ class Interactions(object):
 
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center) # fin animation
 
+            elif INFOS["Niveau"] == 1:
+                if self.ObjectId == "Arbre" or self.ObjectId == "Arbre2" :
+                        # texte animation
+                        self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["CutTree"])
+                        self.Obj.kill()
+                        INVENTORY["Planks"] += 1
 
+                        # réouverture
+                        self.gestionnaire.ouverture_du_noir(self.player.rect.center)
+                
+                # action si c'est un pont 
+                if self.ObjectId == "pont1" or self.ObjectId == "pont2" :
+
+                    if not self.Obj.InfoExo: # si c'est pas le pont d'exo
+
+                        # text animation
+                        self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["TraverserPont"])
+
+                        # deplacement player
+                        if self.player.rect.x < self.coordObjActuel[0]:
+                            self.player.rect.x += CASEMAP*2
+                            STATE_HELP_INFOS[0] = "SeePNJ" # update tips player
+                        else:
+                            self.player.rect.x -= CASEMAP*2
+                            STATE_HELP_INFOS[0] = "CrossBridge" # update tips player
+
+                        self.player.hitbox_rect.center = self.player.rect.center
+                        
+                        # fin animation
+                        self.gestionnaire.ouverture_du_noir(self.player.rect.center)
+
+                if self.ObjectId == "pont3":
+                        
+
+                        # deplacement player
+                        if self.player.rect.y < self.coordObjActuel[1]:
+                            # text animation
+                            self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["TraverserPont"])
+
+                            # action pour traverser
+                            self.player.rect.y += CASEMAP*3
+                            STATE_HELP_INFOS[0] = "SeePNJ" # update tips player
+                        else:
+                            self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["CantTraverserPont"])
+
+
+                        self.player.hitbox_rect.center = self.player.rect.center
+                        
+                        # fin animation
+                        self.gestionnaire.ouverture_du_noir(self.player.rect.center)  
+
+
+                if self.ObjectId == "TableCraft":
+                    if INVENTORY["Planks"] < 3:
+                        self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["NeedPlanks"])
+                    else:
+                        self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["CraftBoat"])
+                        INVENTORY["Planks"] -= 3
+                        INVENTORY["Boat"] += 1
+                        STATE_HELP_INFOS[0] = "PlaceBoat" # update tips player
+
+                    self.gestionnaire.ouverture_du_noir(self.player.rect.center)
+
+
+
+                        
 
     def Isclose(self) -> bool :
         """Méthode calcul de proximité entre le player et les obj interactions

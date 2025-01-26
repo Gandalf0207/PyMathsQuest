@@ -5,7 +5,7 @@ from Sources.Map.loadMap import *
 from Sources.Elements.hotbar import *
 from Sources.Personnages.pnj import *
 from Sources.Ressources.Texte.creationTexte import *
-from Sources.Elements.construirePont import *
+from Sources.Elements.construire import *
 from Sources.Exos.createExo import *
 
 
@@ -65,7 +65,6 @@ class Game(object):
         """Méthode de création de tout les éléments pour le niveau / map
         Input / Output : None"""
 
-        self.player = Player((8*CASEMAP,2*CASEMAP), self.allSprites, self.collisionSprites) 
 
         if INFOS["Niveau"] ==0:
             self.loadMapElement = LoadMapPlaineRiviere(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
@@ -79,10 +78,30 @@ class Game(object):
 
             # infos traverser
             self.InteractionObject = Interactions(self)
-            self.buildPont = ConstruirePont(self)
+            self.buildElements = Construire(self)
 
-        else : 
-            pass
+        elif INFOS["Niveau"] == 1 : 
+            self.loadMapElement = LoadMedievale(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
+            self.map, self.mapBase = self.loadMapElement.Update()
+            self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
+            # Initialisation dans votre setup
+
+            self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
+            self.ideaTips = InfosTips(self.ideaTips_surface)
+            self.settingsAll = SettingsAll(self.allSettings_surface, self.INTERFACE_OPEN)
+
+            # infos traverser
+            self.InteractionObject = Interactions(self)
+            self.buildElements = Construire(self) 
+
+
+
+        getPlayerPosSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
+        playerPosSpawn = getPlayerPosSpawn[0] 
+        self.player = Player(((playerPosSpawn[0] + 1 )*CASEMAP,(playerPosSpawn[1] +0.5 )*CASEMAP), self.allSprites, self.collisionSprites) 
+
+
+
 
         self.checkLoadingDone = True
 
@@ -94,13 +113,17 @@ class Game(object):
         self.InterfaceExo.start()
         self.checkLoadingDone = True
 
-
-    def run(self):
-        
+    def StartMap(self):
         # Affichage initial de l'écran de chargement
         threading.Thread(target=self.SetupAllMap).start()
 
         self.ChargementEcran()
+
+
+
+    def run(self):
+        
+        self.StartMap()
 
 
         while self.running:
@@ -133,8 +156,13 @@ class Game(object):
                             self.INTERFACE_OPEN = self.pnj.OpenInterfaceElementClavier(self.INTERFACE_OPEN)
                             # element d'interaction
                             self.InteractionObject.Interagir()
+
                             # si pas possible, on construit le pont si possible
-                            self.buildPont.BuildBridge(self.loadMapElement, self.player.rect.center)
+                            if not self.buildElements.getConstructionStatuePont():
+                                self.buildElements.BuildBridge(self.loadMapElement, self.player.rect.center)
+                            elif not self.buildElements.getPlaceStatueBoat():
+                                self.buildElements.PlaceBoat(self.loadMapElement, self.player.rect.center)
+
 
                         if event.key == pygame.K_ESCAPE and self.INTERFACE_OPEN: # Close général interface build
                             if self.interface_exo:
@@ -210,10 +238,11 @@ class Game(object):
                     self.allSprites.draw(self.player.rect.center)
 
             
-            # update jusqu'a construction du pont
-            if PNJ["PNJ2"] and INFOS["Niveau"] == 0:
-                if not self.buildPont.getConstructionStatue():
-                    self.buildPont.Update(self.player.rect.center)
+            # update jusqu'a construction du pont / placement bateau
+            if (PNJ["PNJ2"] and INFOS["Niveau"] == 0) or (PNJ["PNJ1"] and INFOS["Niveau"] == 1):
+                if not self.buildElements.getConstructionStatuePont() or not self.buildElements.getPlaceStatueBoat() :
+                    self.buildElements.Update(self.player.rect.center)
+
 
 
             # update de l'exo 
@@ -232,7 +261,8 @@ class Game(object):
                     self.InterfaceExo.Update(event)
 
             if INFOS["ExoPasse"]:
-                pass
+                INFOS["ExoPasse"] = False
+                self.GameTool.ChangementNiveau()
 
                     
 
@@ -339,6 +369,47 @@ class GameToolBox(object):
             alpha -= 5
             pygame.display.flip()
             self.gestionnaire.clock.tick(30)  # Limite de rafraîchissement
+
+    def ChangementNiveau(self):
+
+        # texte
+        self.fondu_au_noir()
+        self.textScreen(TEXTE["Elements"]["LevelSup"])
+
+        # reset valeurs
+        INFOS["Niveau"] += 1
+        PNJ["PNJ1"] = False
+        PNJ["PNJ2"] = False
+        PNJ["PNJ3"] = False
+        PNJ["PNJ4"] = False
+        PNJ["PNJ5"] = False
+
+        # clear all groups sprites...
+        for obj in self.gestionnaire.allSprites:
+            obj.kill()
+
+        for obj in self.gestionnaire.collisionSprites:
+            obj.kill()
+
+        for obj in self.gestionnaire.allPNJ:
+            obj.kill()
+
+        for obj in self.gestionnaire.interactionGroup:
+            obj.kill()
+
+        self.gestionnaire.INTERFACE_OPEN = False # interface secondaire ouvert
+        self.gestionnaire.interface_exo = False
+        self.gestionnaire.cinematique = False # cinématique
+        self.gestionnaire.cinematiqueObject = None # obj de la cinematique 
+
+
+
+
+        STATE_HELP_INFOS[0] = "SeePNJ"
+
+        # call rebuild
+        self.gestionnaire.StartMap()
+
 
 
 

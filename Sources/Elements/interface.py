@@ -175,6 +175,7 @@ class BundleInterface(object):
         self.planks = pygame.image.load(join("Images", "Item", "PlanksItem.png")).convert_alpha()
         self.oldAxe = pygame.image.load(join("Images", "Item", "OldAxeItem.png")).convert_alpha()
         self.pickaxe = pygame.image.load(join("Images", "Item", "Pickaxe.png")).convert_alpha()
+        self.boat = pygame.image.load(join("Images", "Item", "Boat.png")).convert_alpha()
 
     def CreateElementRect(self) -> None:
         """Méthode de création des slots et de leurs attributs
@@ -223,6 +224,8 @@ class BundleInterface(object):
                 surf = self.planks
             elif key == "Pickaxe" and INVENTORY["Pickaxe"] > 0: 
                 surf = self.pickaxe
+            elif key == "Boat" and INVENTORY["Boat"] > 0: 
+                surf = self.boat
             else:
                 surf = None
             
@@ -373,6 +376,12 @@ class PNJInterface(object):
                         INVENTORY["Pickaxe"] += 1
                         PNJ["PNJ3"] = True
                         STATE_HELP_INFOS[0] = "MineRock"
+                if INFOS["Niveau"] == 1: 
+                    if self.gestionnaire.pnjActuel == "PNJ1":
+                        PNJ["PNJ1"] = True
+                        STATE_HELP_INFOS[0] = "BuildBridge"
+
+
 
         else:
             # get dialogue deja vu

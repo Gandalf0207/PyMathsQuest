@@ -95,7 +95,7 @@ STATE_HELP_INFOS = ["SeePNJ"] # list pour pouvoir etre modifié : tips
 
 # box infos globales
 INFOS = {
-    "Niveau" : 0,
+    "Niveau" : 1,
     "Langue" : "Fr", 
     "Difficulte" : False,
     "Exo" : False, 
@@ -114,7 +114,7 @@ INVENTORY = {
     "Planks" : 0,
     "OldAxe" : 0,
     "Pickaxe" : 0,
-    "a" : 0,
+    "Boat" : 0,
     "b" : 0,
     "c" : 0,
     "d" : 0,
