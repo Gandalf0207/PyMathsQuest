@@ -899,7 +899,7 @@ class NiveauMedievale(GestionNiveauMap):
 
         # Marque les cases du chemin avec "=" pour la rivière et les ajoute à la carte
         for coords in allPath:
-            if self.map[coords[1]][coords[0]] == "-":
+            if self.map[coords[1]][coords[0]] in ["-", "F", "M", 'R']:
                 self.map[coords[1]][coords[0]] = "="  # Ajout de la rivière sur la carte (collision)
                 self.baseMap[coords[1]][coords[0]] = "="  # Ajout de la rivière sur la carte de base
 

@@ -1,4 +1,5 @@
 from settings import *
+from Sources.Elements.sprites import *
 
 class Interactions(object):
 
@@ -28,7 +29,7 @@ class Interactions(object):
         self.interactionGroup = None
 
 
-    def Interagir(self) -> None:
+    def Interagir(self, groups) -> None:
         """Méthode de calcul d'interaction entre chaque element en fonction des niveaux
         Input / Output : None"""
 
@@ -78,6 +79,10 @@ class Interactions(object):
                 if self.ObjectId == "Arbre" or self.ObjectId == "Arbre2" :
                         # texte animation
                         self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["CutTree"])
+                        #creation souche
+                        soucheIMH = pygame.image.load(join("Images", "Obstacle", "Souche.png")).convert_alpha()
+                        CollisionSprites(self.Obj.pos, soucheIMH,  "Souche", groups)
+                        #gestion arbre
                         self.Obj.kill()
                         INVENTORY["Planks"] += 1
 
