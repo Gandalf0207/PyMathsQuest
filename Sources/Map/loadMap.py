@@ -320,7 +320,14 @@ class LoadMedievale(): # nv1
                 elif self.mapBase[ordonnees][abscisses] == "#":
                     stateFormat = ""
                     if  ordonnees not in [0, LARGEUR-1] and abscisses not in [0,149]:
-                        if self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
+                        
+                        if (self.mapBase[ordonnees + 1][abscisses] =="#" or self.mapBase[ordonnees+1][abscisses] =="C") and self.mapBase[ordonnees-1][abscisses] =="#" and self.mapBase[ordonnees][abscisses -1] =="#" :
+                            stateFormat = "RiverTWN-Sx128"
+                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+                        elif self.mapBase[ordonnees + 1][abscisses] =="#" and self.mapBase[ordonnees-1][abscisses] =="#" and self.mapBase[ordonnees][abscisses +1] =="#" :
+                            stateFormat = "RiverTN-SEx128"
+                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+                        elif self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
                             stateFormat = "RiverAngularN-Ex128"
                             River(pos, (self.allSprites, self.collisionSprites), stateFormat)
                         elif self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees+1][abscisses] =="#":
@@ -335,7 +342,7 @@ class LoadMedievale(): # nv1
                         elif self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees][abscisses-1] =="#":
                             stateFormat = "RiverStraightW-Ex128"
                             River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees+1][abscisses] =="#" and self.mapBase[ordonnees-1][abscisses] =="#": 
+                        elif self.mapBase[ordonnees+1][abscisses] =="#" and (self.mapBase[ordonnees-1][abscisses] or self.mapBase[ordonnees-1][abscisses] =="C"): 
                             stateFormat = "RiverStraightN-Sx128"
                             River(pos, (self.allSprites, self.collisionSprites), stateFormat)
                         elif self.mapBase[ordonnees+1][abscisses] =="#" and self.mapBase[ordonnees-1][abscisses] =="C": # chateau collision
