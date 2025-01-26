@@ -175,6 +175,7 @@ class BundleInterface(object):
         self.planks = pygame.image.load(join("Images", "Item", "PlanksItem.png")).convert_alpha()
         self.oldAxe = pygame.image.load(join("Images", "Item", "OldAxeItem.png")).convert_alpha()
         self.pickaxe = pygame.image.load(join("Images", "Item", "Pickaxe.png")).convert_alpha()
+        self.boat = pygame.image.load(join("Images", "Item", "Boat.png")).convert_alpha()
 
     def CreateElementRect(self) -> None:
         """Méthode de création des slots et de leurs attributs

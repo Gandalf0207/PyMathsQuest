@@ -258,6 +258,7 @@ class LoadMedievale(): # nv1
         self.MuraillesNW = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesNW.png" )).convert_alpha()
         self.MuraillesEAU = pygame.image.load(join("Images", "Obstacle", "Structures", "Chateau", "MuraillesEAU.png" )).convert_alpha()
         self.tableCraft = pygame.image.load(join("Images", "Obstacle", "TableCraft.png")).convert_alpha()
+        self.boat = pygame.image.load(join("Images", "Obstacle", "Boat.png")).convert_alpha()
 
 
 
@@ -510,7 +511,15 @@ class LoadMedievale(): # nv1
         if element  == "pont2":
             CollisionSprites(coords, self.pont2, element, (self.allSprites, self.collisionSprites, self.interactions))
 
-                
+
+    def AddBoat(self, element : str, coords : tuple) -> None:
+        """Méthode placement et ajout de pont sur la map pygame
+        Input : element : str, coords : tuple
+        Output : None"""
+
+        if element  == "boat":
+            CollisionSprites(coords, self.boat, element, (self.allSprites, self.collisionSprites, self.interactions))
+
 
 
     def Update(self) -> list:

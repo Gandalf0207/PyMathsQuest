@@ -34,7 +34,8 @@ ElementsFr = {
                 "LearnCrossBridge" : "Traverser le pont. Se rapprocher du pont qui se trouve à côté du bûcheron.",
                 "BuildBridge" : "Construire le pont. Se rapprocher de la rivière pour pouvoir construire",
                 "CrossBridge" : "Traverser le pont pour acceder à la suite.",
-                "PlaceBoat" : "Vous devez placer le bateau dans la rivière."
+                "PlaceBoat" : "Vous devez placer le bateau dans la rivière.",
+                "NavigateBoat" : "Vous devez rentrer dans le bateau pour pouvoir acceder au chateau.",
             },
         },
     },
@@ -74,7 +75,8 @@ ElementsFr = {
         "BuildBridge" : "Vous venez de construire le pont",
         "CutTree" : "Vous venez de couper un arbre",
         "NeedPlanks" : "Vous devez avoir 3 planches pour pouvoir construire le bateau",
-        "CraftBoat" : "Vous avec fabriqué un bateau",
+        "CraftBoat" : "Vous avez fabriqué un bateau",
+        "PlaceBoat" : "Vous avez placé le bateau sur la rivière",
         "MakeExo" : "Pour pouvoir traverser le pont,  vous devez résoudre cet exercice.",
 
         "ExoTexte" : {

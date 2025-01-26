@@ -5,7 +5,7 @@ from Sources.Map.loadMap import *
 from Sources.Elements.hotbar import *
 from Sources.Personnages.pnj import *
 from Sources.Ressources.Texte.creationTexte import *
-from Sources.Elements.construirePont import *
+from Sources.Elements.construire import *
 from Sources.Exos.createExo import *
 
 
@@ -78,7 +78,7 @@ class Game(object):
 
             # infos traverser
             self.InteractionObject = Interactions(self)
-            self.buildPont = ConstruirePont(self)
+            self.buildElements = Construire(self)
 
         elif INFOS["Niveau"] == 1 : 
             self.loadMapElement = LoadMedievale(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
@@ -92,7 +92,7 @@ class Game(object):
 
             # infos traverser
             self.InteractionObject = Interactions(self)
-            self.buildPont = ConstruirePont(self) 
+            self.buildElements = Construire(self) 
 
 
 
@@ -156,8 +156,13 @@ class Game(object):
                             self.INTERFACE_OPEN = self.pnj.OpenInterfaceElementClavier(self.INTERFACE_OPEN)
                             # element d'interaction
                             self.InteractionObject.Interagir()
+
                             # si pas possible, on construit le pont si possible
-                            self.buildPont.BuildBridge(self.loadMapElement, self.player.rect.center)
+                            if not self.buildElements.getConstructionStatuePont():
+                                self.buildElements.BuildBridge(self.loadMapElement, self.player.rect.center)
+                            elif not self.buildElements.getPlaceStatueBoat():
+                                self.buildElements.PlaceBoat(self.loadMapElement, self.player.rect.center)
+
 
                         if event.key == pygame.K_ESCAPE and self.INTERFACE_OPEN: # Close général interface build
                             if self.interface_exo:
@@ -233,10 +238,11 @@ class Game(object):
                     self.allSprites.draw(self.player.rect.center)
 
             
-            # update jusqu'a construction du pont
-            if (PNJ["PNJ2"] and INFOS["Niveau"] == 0) or PNJ["PNJ1"] and INFOS["Niveau"] == 1:
-                if not self.buildPont.getConstructionStatue():
-                    self.buildPont.Update(self.player.rect.center)
+            # update jusqu'a construction du pont / placement bateau
+            if (PNJ["PNJ2"] and INFOS["Niveau"] == 0) or (PNJ["PNJ1"] and INFOS["Niveau"] == 1):
+                if not self.buildElements.getConstructionStatuePont() or not self.buildElements.getPlaceStatueBoat() :
+                    self.buildElements.Update(self.player.rect.center)
+
 
 
             # update de l'exo 
