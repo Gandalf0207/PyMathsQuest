@@ -33,6 +33,8 @@ class CollisionSprites(pygame.sprite.Sprite):
             self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-68))
         elif typeCollision == "pont1" or typeCollision == "pont2":
             self.rect = self.image.get_frect(topleft=(pos[0]-33, pos[1]))
+        elif typeCollision == "pont3":
+            self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-20))
         elif typeCollision == "Boat":
             self.rect = self.image.get_frect(topleft =(pos[0]+32, pos[1]+32))
         else:
@@ -56,6 +58,8 @@ class CollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(-100,0)
             case "pont2":
                 self.hitbox = self.rect.inflate(-100,0)
+            case "pont3":
+                self.hitbox = self.rect.inflate(0, -100)
             case "ExitRock":
                 self.hitbox = self.rect.inflate(-60, -20)
             case "Champs":

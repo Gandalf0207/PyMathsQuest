@@ -70,6 +70,7 @@ ElementsFr = {
 
     "Niveau1" : {
         "TraverserPont" : "Vous venez de traverser le pont",
+        "CantTraverserPont" : "Le garde est devant le pont, vous ne pouvez pas le traverser.",
         "BuildBridge" : "Vous venez de construire le pont",
         "CutTree" : "Vous venez de couper un arbre",
         "NeedPlanks" : "Vous devez avoir 3 planches pour pouvoir construire le bateau",

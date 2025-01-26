@@ -821,6 +821,8 @@ class NiveauMedievale(GestionNiveauMap):
             getCoords2 = choice(coordsRiviere3)
         # Assigne la position du deuxième PNJ
         coordsPnj2 = [getCoords2[0], getCoords2[1] +1, "P", 2]
+        # placement pont du garde
+        self.map[coordsPnj2[1]-1][coordsPnj2[0]] = "X"
         
         # Placement fixe du troisième PNJ
         coordsPnj3 = [108, 12, "P", 3]

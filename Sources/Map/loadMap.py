@@ -245,6 +245,7 @@ class LoadMedievale(): # nv1
         self.hugeRock = pygame.image.load(join("Images", "Obstacle", "HugeRock.png")).convert_alpha()
         self.pont1 = pygame.image.load(join("Images", "Pont", "BridgeTreeW-Ex128.png")).convert_alpha()
         self.pont2 = pygame.image.load(join("Images", "Pont", "BridgePlanksW-Ex128.png")).convert_alpha()
+        self.pont3 = pygame.image.load(join("Images", "Pont","BridgePlanksN-S-x128.png" )).convert_alpha()
         self.rockExit = pygame.image.load(join("Images", "Obstacle", "ExitRock.png")).convert_alpha()
         self.pathNS = pygame.image.load(join("Images", "Sol", "Path", "PathN-S.png")).convert_alpha()
         self.pathWE = pygame.image.load(join("Images", "Sol", "Path", "PathW-E.png")).convert_alpha()
@@ -407,6 +408,11 @@ class LoadMedievale(): # nv1
                 # Pont placé
                 if self.map[ordonnees][abscisses] == "T":
                     CollisionSprites(pos, self.pont2, "pont2",  (self.allSprites, self.collisionSprites))
+                    print(self.allSprites)
+
+                if self.map[ordonnees][abscisses] == "X":
+                    CollisionSprites(pos, self.pont3, "pont3",  (self.allSprites, self.collisionSprites, self.interactions))
+                    print(self.allSprites)
 
                 # champs
                 if self.map[ordonnees][abscisses] == "@":
@@ -467,11 +473,6 @@ class LoadMedievale(): # nv1
                     CollisionSprites(pos, self.tableCraft, "TableCraft", (self.allSprites, self.collisionSprites, self.interactions))
 
 
-
-
-
-                   
-
     def SetupExit(self):
         """Méthode de placemet de la sortie
         Input / Ouput : None"""
@@ -496,6 +497,7 @@ class LoadMedievale(): # nv1
             if coordsPNJ[3] == 1 : 
                 PNJ(pos , "PNJ1", (self.allPNJ, self.allSprites, self.collisionSprites))
             if coordsPNJ[3] == 2 : 
+                pos = (pos[0]+64, pos[1]+64)
                 PNJ(pos , "PNJ2", (self.allPNJ, self.allSprites, self.collisionSprites))
             if coordsPNJ[3] == 3 :
                 PNJ(pos , "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
@@ -508,7 +510,7 @@ class LoadMedievale(): # nv1
         Input : element : str, coords : tuple
         Output : None"""
 
-        if element  == "pont2":
+        if element  == "pont2" or element == "pont3":
             CollisionSprites(coords, self.pont2, element, (self.allSprites, self.collisionSprites, self.interactions))
 
 
