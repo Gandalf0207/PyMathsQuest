@@ -137,7 +137,7 @@ class Game(object):
 
 
             self.allSprites = self.allSprites
-            print(self.allSprites)
+
 
 
             dt = self.clock.tick() / 1000

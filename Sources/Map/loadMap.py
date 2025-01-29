@@ -250,13 +250,17 @@ class LoadMedievale(): # nv1
         self.pathTshapeWES = pygame.image.load(join("Images", "Sol", "Path", "PathW-ESx128.png")).convert_alpha()
         self.pathTshapeWNS = pygame.image.load(join("Images", "Sol", "Path", "PathWN-Sx128.png")).convert_alpha()
         self.pathTshapeNEW = pygame.image.load(join("Images", "Sol", "Path", "PathN-EWx128.png")).convert_alpha()
-        
         self.pathAngularNE = pygame.image.load(join("Images", "Sol", "Path", "PathN-Ex128.png")).convert_alpha()
         self.pathAngularNW = pygame.image.load(join("Images", "Sol", "Path", "PathN-Wx128.png")).convert_alpha()
         self.pathAngularSE = pygame.image.load(join("Images", "Sol", "Path", "PathE-Sx128.png")).convert_alpha()
         self.pathAngularSW = pygame.image.load(join("Images", "Sol", "Path", "PathW-Sx128.png")).convert_alpha()
         self.pathNS = pygame.image.load(join("Images", "Sol", "Path", "PathN-S.png")).convert_alpha()
         self.pathWE = pygame.image.load(join("Images", "Sol", "Path", "PathW-E.png")).convert_alpha()
+        self.pathEndN = pygame.image.load(join("Images", "Sol", "Path", "PathNx128.png")).convert_alpha()
+        self.pathEndS = pygame.image.load(join("Images", "Sol", "Path", "PathSx128.png")).convert_alpha()
+        self.pathEndE = pygame.image.load(join("Images", "Sol", "Path", "PathEx128.png")).convert_alpha()
+        self.pathEndW = pygame.image.load(join("Images", "Sol", "Path", "PathWx128.png")).convert_alpha()
+
 
         self.champ = pygame.image.load(join("Images", "Sol", "Champs.png")).convert_alpha()
         self.house = pygame.image.load(join("Images", "Obstacle", "Structures", "House.png")).convert_alpha()
@@ -317,7 +321,6 @@ class LoadMedievale(): # nv1
                     water_left = is_water(self, ordonnees, abscisses - 1)
                     water_right = is_water(self, ordonnees, abscisses + 1)
 
-                    print(f"({ordonnees}, {abscisses}) -> up: {up}, down: {down}, left: {left}, right: {right}")
 
                     # === 1. Intersection à 4 branches ===
                     if up and down and left and right:
@@ -383,15 +386,15 @@ class LoadMedievale(): # nv1
                     #         Sprites(pos, self.pathEndW, self.allSprites)  # Fin droite ouest
 
 
-                    # # === 6. Fin de chemin SANS contact avec l'eau ===
-                    # elif not up and not down and not left and right:
-                    #     Sprites(pos, self.pathEndW, self.allSprites)  # Fin Ouest
-                    # elif not up and not down and left and not right:
-                    #     Sprites(pos, self.pathEndE, self.allSprites)  # Fin Est
-                    # elif not left and not right and up and not down:
-                    #     Sprites(pos, self.pathEndS, self.allSprites)  # Fin Sud
-                    # elif not left and not right and not up and down:
-                    #     Sprites(pos, self.pathEndN, self.allSprites)  # Fin Nord
+                    # === 6. Fin de chemin SANS contact avec l'eau ===
+                    elif not up and not down and not left and right:
+                        Sprites(pos, self.pathEndE, self.allSprites)  # Fin Ouest
+                    elif not up and not down and left and not right:
+                        Sprites(pos, self.pathEndW, self.allSprites)  # Fin Est
+                    elif not left and not right and up and not down:
+                        Sprites(pos, self.pathEndN, self.allSprites)  # Fin Sud
+                    elif not left and not right and not up and down:
+                        Sprites(pos, self.pathEndS, self.allSprites)  # Fin Nord
 
                         
 
