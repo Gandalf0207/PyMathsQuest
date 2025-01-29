@@ -835,6 +835,7 @@ class NiveauMedievale(GestionNiveauMap):
         
         # Appelle la méthode PlacementElements pour ajouter les PNJ sur la carte
         super().PlacementElements(self.coordsPNJ, ["coordsMapObject", "PNJ Coords"])
+        self.baseMap[coordsPnj1[1]][coordsPnj1[0]] = "=" # pathsous les pieds du pnj 1
 
     def __PlacementPath1__(self):
         # Génère une position aléatoire pour le puits
