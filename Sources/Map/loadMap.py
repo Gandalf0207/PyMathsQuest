@@ -147,13 +147,11 @@ class LoadMapPlaineRiviere(): # nv 0
         # Récupération coords spawn + infos element
         coordsSpawnList = LoadJsonMapValue("coordsMapObject", "Spawn")
 
-        match INFOS["Niveau"]:
-            case 0:
-                # parcours et création des spritess
-                for coordsElementSpawn in coordsSpawnList:
-                    pos = (coordsElementSpawn[0]*CASEMAP, coordsElementSpawn[1]*CASEMAP) # calcul coords pygame
-                    if coordsElementSpawn[2] == "C":
-                        CollisionSprites(pos, self.campFire, "campFire", (self.allSprites, self.collisionSprites))
+        # parcours et création des spritess
+        for coordsElementSpawn in coordsSpawnList:
+            pos = (coordsElementSpawn[0]*CASEMAP, coordsElementSpawn[1]*CASEMAP) # calcul coords pygame
+            if coordsElementSpawn[2] == "C":
+                CollisionSprites(pos, self.campFire, "campFire", (self.allSprites, self.collisionSprites))
 
 
     def SetupExit(self):
@@ -162,15 +160,13 @@ class LoadMapPlaineRiviere(): # nv 0
 
         coords = LoadJsonMapValue("coordsMapObject", "Exit")
 
-        match INFOS["Niveau"]:
-            case 0:
-                coordsExit = (coords[0] * CASEMAP, coords[1] * CASEMAP)
-                CollisionSprites(coordsExit, self.rockExit, "ExitRock", (self.allSprites, self.interactions, self.collisionSprites))
-                
-                # pont décalé de 1
-                coordsPont = (coords[0]*CASEMAP +CASEMAP, coords[1]*CASEMAP)
-                # True = element de création exo maths
-                CollisionSprites(coordsPont, self.pont2, "pont2", (self.allSprites, self.collisionSprites, self.interactions), True) 
+        coordsExit = (coords[0] * CASEMAP, coords[1] * CASEMAP)
+        CollisionSprites(coordsExit, self.rockExit, "ExitRock", (self.allSprites, self.interactions, self.collisionSprites))
+        
+        # pont décalé de 1
+        coordsPont = (coords[0]*CASEMAP +CASEMAP, coords[1]*CASEMAP)
+        # True = element de création exo maths
+        CollisionSprites(coordsPont, self.pont2, "pont2", (self.allSprites, self.collisionSprites, self.interactions), True) 
 
     def SetupPNJ(self) -> None:
         """Méthode de création et position des pnj.
@@ -570,10 +566,6 @@ class LoadMedievale(): # nv1
         Input / Ouput : None"""
 
         coords = LoadJsonMapValue("coordsMapObject", "Exit")
-
-        match INFOS["Niveau"]:
-            case 1:
-                pass
 
 
     def SetupPNJ(self) -> None:

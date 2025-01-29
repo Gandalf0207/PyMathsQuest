@@ -102,10 +102,10 @@ class InfosTips:
     def GetText(self) -> None:
         """Méthode de récupération du texte en foonc de l'état de STATE_HELP_INFOS"""
         
-        if self.text != TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"][STATE_HELP_INFOS[0]]: # si texte différents
+        if self.text != TEXTE["Elements"]["HotBar"]["IdeaTips"][NIVEAU["Map"]][STATE_HELP_INFOS[0]]: # si texte différents
             self.indexTexte = 0 # on reset l'écriture index
         
-        self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"][STATE_HELP_INFOS[0]] # texte / nouveau texte
+        self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][NIVEAU["Map"]][STATE_HELP_INFOS[0]] # texte / nouveau texte
 
 
     def BuildElement(self) -> None:

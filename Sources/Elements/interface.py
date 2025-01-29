@@ -341,7 +341,7 @@ class PNJInterface(object):
         self.pnj_displayed_text = ""  # Texte affiché du PNJ
         self.pnj_index = 0  # Index pour le texte du PNJ
         self.compteurDialogue = 1
-        self.nombreDialogue = len(TEXTE["Dialogues"][f"Niveau{INFOS["Niveau"]}"][self.gestionnaire.pnjActuel]["Principal"]) if not self.gestionnaire.pnjObj.discussion else len(TEXTE["Dialogues"][f"Niveau{INFOS["Niveau"]}"][self.gestionnaire.pnjActuel]["Alternatif"])
+        self.nombreDialogue = len(TEXTE["Dialogues"][NIVEAU["Map"]][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"][self.gestionnaire.pnjActuel]["Principal"]) if not self.gestionnaire.pnjObj.discussion else len(TEXTE["Dialogues"][NIVEAU["Map"]][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"][self.gestionnaire.pnjActuel]["Alternatif"])
 
         # timer click skip
         self.last_click_time = 0
@@ -364,14 +364,14 @@ class PNJInterface(object):
         if not self.gestionnaire.pnjObj.discussion:
             # chargement du texte
             if self.compteurDialogue <= self.nombreDialogue:
-                self.pnj_text = TEXTE["Dialogues"][f"Niveau{INFOS["Niveau"]}"][self.gestionnaire.pnjActuel]["Principal"][f"Dialogue{self.compteurDialogue}"]
+                self.pnj_text = TEXTE["Dialogues"][NIVEAU["Map"]][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"][self.gestionnaire.pnjActuel]["Principal"][f"Dialogue{self.compteurDialogue}"]
                 self.compteurDialogue += 1 # passage au dialogue suivant
             else:
                 self.gestionnaire.Vu() # bool de check passage
                 self.CloseInterface() # fermeture interface
 
                 # action après discussions
-                if INFOS["Niveau"] ==0:
+                if NIVEAU["Map"] == "NiveauPlaineRiviere":
                     if self.gestionnaire.pnjActuel == "PNJ1":
                         INVENTORY["OldAxe"] += 1
                         self.gestionnaire.CinematiqueBuild() # préparation au lancement cinematique
@@ -383,7 +383,7 @@ class PNJInterface(object):
                         INVENTORY["Pickaxe"] += 1
                         PNJ["PNJ3"] = True
                         STATE_HELP_INFOS[0] = "MineRock"
-                if INFOS["Niveau"] == 1: 
+                if NIVEAU["Map"] == "NiveauMedievale": 
                     if self.gestionnaire.pnjActuel == "PNJ1":
                         PNJ["PNJ1"] = True
                         STATE_HELP_INFOS[0] = "BuildBridge"
@@ -393,7 +393,7 @@ class PNJInterface(object):
         else:
             # get dialogue deja vu
             if self.compteurDialogue <= self.nombreDialogue:
-                self.pnj_text = TEXTE["Dialogues"][f"Niveau{INFOS["Niveau"]}"][self.gestionnaire.pnjActuel]["Alternatif"][f"Dialogue{self.compteurDialogue}"]
+                self.pnj_text = TEXTE["Dialogues"][NIVEAU["Map"]][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"][self.gestionnaire.pnjActuel]["Alternatif"][f"Dialogue{self.compteurDialogue}"]
                 self.compteurDialogue += 1 # passage au dialogue suivant
             else:
                 self.CloseInterface() # fermeture interface
@@ -418,7 +418,7 @@ class PNJInterface(object):
         self.interfaceSurface.blit(self.playerImage, (WINDOW_WIDTH-178, 360))
 
         # load nom pnj + creation text du nom
-        self.pnjName = TEXTE["Dialogues"][f"Niveau{INFOS["Niveau"]}"][self.gestionnaire.pnjActuel]["Nom"]
+        self.pnjName = TEXTE["Dialogues"][NIVEAU["Map"]][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"][self.gestionnaire.pnjActuel]["Nom"]
         pnjName = FONT["FONT36B"].render(self.pnjName, True, (255,255,255))
         self.interfaceSurface.blit(pnjName, (200, 400))
 

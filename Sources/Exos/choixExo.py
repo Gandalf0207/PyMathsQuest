@@ -182,36 +182,39 @@ class GetExo:
         Input : None
         Ouput : list"""
         
-        match INFOS["Niveau"] : # appel de la bonne méthode
-            case 0:
-                self.ExoNv0()
-            case 1:
-                self.ExoNv1()
-            case 2:
-                self.ExoNv2()
-            case 3:
-                self.ExoNv3()
-            case 4:
-                self.ExoNv4()
-            case 5:
-                self.ExoNv5()
-            case 6:
-                self.ExoNv6()
-            case 7:
-                self.ExoNv7()
-            case 8:
-                self.ExoNv8()
-            case 9:
-                self.ExoNv9()
-            case 10:
-                self.ExoNv10()
-            case 11:
-                self.ExoNv11()
-            case 12:
-                self.ExoNv12()
-            case 13:
-                self.ExoNv13()
-            case 14:
-                self.ExoNv14()
+        if NIVEAU["Niveau"] == "Seconde": # appel de la bonne méthode
+            if NIVEAU["Map"] == "NiveauPlaineRiviere":
+                if NIVEAU["Numero"] == 0:
+                    self.ExoNv0()
+            elif NIVEAU["Map"] == "NiveauMedievale":
+                if NIVEAU["Numero"] == 0:
+                    self.ExoNv1()
+
+            # case 2:
+            #     self.ExoNv2()
+            # case 3:
+            #     self.ExoNv3()
+            # case 4:
+            #     self.ExoNv4()
+            # case 5:
+            #     self.ExoNv5()
+            # case 6:
+            #     self.ExoNv6()
+            # case 7:
+            #     self.ExoNv7()
+            # case 8:
+            #     self.ExoNv8()
+            # case 9:
+            #     self.ExoNv9()
+            # case 10:
+            #     self.ExoNv10()
+            # case 11:
+            #     self.ExoNv11()
+            # case 12:
+            #     self.ExoNv12()
+            # case 13:
+            #     self.ExoNv13()
+            # case 14:
+            #     self.ExoNv14()
 
         return self.listeConstruction

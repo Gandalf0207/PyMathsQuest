@@ -67,7 +67,7 @@ class Game(object):
         Input / Output : None"""
 
 
-        if INFOS["Niveau"] ==0:
+        if NIVEAU["Map"] == "NiveauPlaineRiviere":
             self.loadMapElement = LoadMapPlaineRiviere(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
             self.map, self.mapBase = self.loadMapElement.Update()
             self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
@@ -81,7 +81,7 @@ class Game(object):
             self.InteractionObject = Interactions(self)
             self.buildElements = Construire(self)
 
-        elif INFOS["Niveau"] == 1 : 
+        elif NIVEAU["Map"] == "NiveauMedievale" : 
             self.loadMapElement = LoadMedievale(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
             self.map, self.mapBase = self.loadMapElement.Update()
             self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
@@ -115,6 +115,8 @@ class Game(object):
         self.checkLoadingDone = True
 
     def StartMap(self):
+        self.checkLoadingDone = False
+
         # Affichage initial de l'écran de chargement
         threading.Thread(target=self.SetupAllMap).start()
 
@@ -128,6 +130,16 @@ class Game(object):
 
 
         while self.running:
+
+            if INFOS["ExoPasse"]:
+                INFOS["ExoPasse"] = False
+                self.GameTool.ChangementNiveau()
+
+
+            self.allSprites = self.allSprites
+            print(self.allSprites)
+
+
             dt = self.clock.tick() / 1000
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -161,7 +173,7 @@ class Game(object):
                             # si pas possible, on construit le pont si possible
                             if not self.buildElements.getConstructionStatuePont():
                                 self.buildElements.BuildBridge(self.loadMapElement, self.player.rect.center)
-                            elif not self.buildElements.getPlaceStatueBoat():
+                            elif NIVEAU["Map"] == "NiveauMedievale" and not self.buildElements.getPlaceStatueBoat():
                                 self.buildElements.PlaceBoat(self.loadMapElement, self.player.rect.center)
                         
                         # affichge ou non de la hotbar
@@ -215,10 +227,10 @@ class Game(object):
                     self.cinematiqueObject.Replacement()
                     self.fondu_au_noir()
                     
-                    if INFOS["Niveau"] == 0:
+                    if NIVEAU["Map"] == "NiveauPlaineRiviere":
                         if  not PNJ["PNJ1"]:
                             # écran noir + text de fin cinématique
-                            self.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["Cinematique1End"])
+                            self.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["Cinematique1End"])
                            
                             # pont nb 1
                             coordPont1 = LoadJsonMapValue("coordsMapObject", "ArbreSpecial Coords")
@@ -246,7 +258,7 @@ class Game(object):
 
             
             # update jusqu'a construction du pont / placement bateau
-            if (PNJ["PNJ2"] and INFOS["Niveau"] == 0) or (PNJ["PNJ1"] and INFOS["Niveau"] == 1):
+            if (PNJ["PNJ2"] and NIVEAU["Map"] == "NiveauPlaineRiviere") or (PNJ["PNJ1"] and NIVEAU["Map"] == "NiveauMedievale"):
                 if not self.buildElements.getConstructionStatuePont() or not self.buildElements.getPlaceStatueBoat() :
                     self.buildElements.Update(self.player.rect.center)
 
@@ -267,18 +279,9 @@ class Game(object):
                 else:
                     self.InterfaceExo.Update(event)
 
-            if INFOS["ExoPasse"]:
-                INFOS["ExoPasse"] = False
-                self.GameTool.ChangementNiveau()
-
-                    
-
-
 
             if self.INTERFACE_OPEN is None: # vérification : sécurité
                 self.INTERFACE_OPEN = False
-
-
 
 
             pygame.display.flip()
@@ -377,42 +380,54 @@ class GameToolBox(object):
             pygame.display.flip()
             self.gestionnaire.clock.tick(30)  # Limite de rafraîchissement
 
-    def ChangementNiveau(self):
+    def ResetValues(self):
+        match NIVEAU["Niveau"]:
+            case "Seconde":
 
-        # texte
-        self.fondu_au_noir()
-        self.textScreen(TEXTE["Elements"]["LevelSup"])
+                match NIVEAU["Map"]:
+                    case "NiveauPlaineRiviere":
+                        if not INFOS["ChangementAnnee"]:
+                            NIVEAU["Map"] = "NiveauMedievale"
+                        else:
+                            NIVEAU["Niveau"] = "Premiere"
+
+                    case "NiveauMedievale":
+                        NIVEAU["Map"] = "NiveauSup"
+
+                    case "NiveauSup":
+                        pass
+
+            case "Premiere":
+                pass
+            case "Terminale" : 
+                pass
 
         # reset valeurs
-        INFOS["Niveau"] += 1
         PNJ["PNJ1"] = False
         PNJ["PNJ2"] = False
         PNJ["PNJ3"] = False
         PNJ["PNJ4"] = False
         PNJ["PNJ5"] = False
 
-        # clear all groups sprites...
-        for obj in self.gestionnaire.allSprites:
-            obj.kill()
-
-        for obj in self.gestionnaire.collisionSprites:
-            obj.kill()
-
-        for obj in self.gestionnaire.allPNJ:
-            obj.kill()
-
-        for obj in self.gestionnaire.interactionGroup:
-            obj.kill()
+        # Réinitialiser les groupes
+        self.gestionnaire.allSprites.empty()  # Vide le groupe, supprime les sprites.
+        self.gestionnaire.collisionSprites.empty()
+        self.gestionnaire.allPNJ.empty()
+        self.gestionnaire.interactionsGroup.empty()
 
         self.gestionnaire.INTERFACE_OPEN = False # interface secondaire ouvert
         self.gestionnaire.interface_exo = False
         self.gestionnaire.cinematique = False # cinématique
         self.gestionnaire.cinematiqueObject = None # obj de la cinematique 
 
-
-
-
         STATE_HELP_INFOS[0] = "SeePNJ"
+
+    def ChangementNiveau(self):
+
+        # texte
+        self.fondu_au_noir()
+        self.textScreen(TEXTE["Elements"]["LevelSup"])
+        self.ResetValues()
 
         # call rebuild
         self.gestionnaire.StartMap()

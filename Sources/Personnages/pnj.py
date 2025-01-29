@@ -189,7 +189,7 @@ class GestionPNJ(object):
 
         self.cinematique = True
         
-        if INFOS["Niveau"] ==0:
+        if NIVEAU["Map"] == "NiveauPlaineRiviere" :
             goal = LoadJsonMapValue("coordsMapObject","ArbreSpecial Coords")
             pathAcces = ["-", "A", "P", "S", "="]
         

@@ -49,11 +49,11 @@ class CreateExo:
         self.interfaceExoSurface.fill("#ffffff")
 
         # titre
-        textTitre = FONT["FONT30"].render(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["ExoTexte"]["Title"], True, (0, 0, 0))
+        textTitre = FONT["FONT30"].render(TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"]["Title"], True, (0, 0, 0))
         self.interfaceExoSurface.blit(textTitre, (10, 10))
 
         # consigne
-        self.textConsigne = TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["ExoTexte"][f"Difficulte{INFOS["Difficulte"]}"]["Consigne"]
+        self.textConsigne = TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"][f"Difficulte{INFOS["Difficulte"]}"]["Consigne"]
 
         # Mettre à jour le texte affiché si nécessaire
         if self.indexTexte < len(self.textConsigne):
@@ -76,7 +76,7 @@ class CreateExo:
         self.interfaceExoSurface.blit(self.latexSurface, (10, 100))
 
         # réponse titre
-        self.textQCM = FONT["FONT22"].render(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["ExoTexte"]["DifficulteTrue"]["QCM"], True, (0, 0, 0))
+        self.textQCM = FONT["FONT22"].render(TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"][f"Difficulte{INFOS["Difficulte"]}"]["QCM"], True, (0, 0, 0))
         self.interfaceExoSurface.blit(self.textQCM, (10, WINDOW_HEIGHT/2 - 150))
 
         # réponse button

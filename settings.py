@@ -93,14 +93,24 @@ FONT = {
 
 STATE_HELP_INFOS = ["SeePNJ"] # list pour pouvoir etre modifié : tips
 
+NIVEAU = {
+     # niveau
+    "Niveau" : "Seconde",
+
+    # map
+    "Map" : "NiveauPlaineRiviere",
+
+    # numero
+    "Numero" : 0,
+}
 # box infos globales
 INFOS = {
-    "Niveau" : 1,
     "Langue" : "Fr", 
     "Difficulte" : False,
     "Exo" : False, 
     "ExoPasse" : False,
-    "ChangementNiveau" : False
+    "ChangementNiveau" : False,
+    "ChangementAnnee" : False,
 }
 
 # texte : tout le texte

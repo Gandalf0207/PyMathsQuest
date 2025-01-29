@@ -5,6 +5,11 @@ ElementsFr = {
     "Loading" : "Chargement",
     "Interaction" : "Appuyer sur E",
     "LevelSup" : "Vous passez au niveau suppérieur !",
+
+    "InterfacePNJ" : {
+        "SkipButton" : "Suivant"
+    },
+
     "HotBar" : {
         "Settings" : {
             "Title" : "Paramettres",
@@ -22,14 +27,15 @@ ElementsFr = {
             },  
 
         "IdeaTips": {
-            "Niveau0" : {
+            "NiveauPlaineRiviere" : {
                 "SeePNJ" : "Discuter avec le pnj sur la map. Regarder la minimap",
                 "LearnCrossBridge" : "Traverser le pont. Se rapprocher du pont qui se trouve à côté du bûcheron.",
                 "BuildBridge" : "Construire le pont. Se rapprocher de la rivière pour pouvoir construire",
                 "CrossBridge" : "Traverser le pont pour acceder à la suite.",
                 "MineRock" : "Utiliser la pioche pour casser le rocher qui bloque le pont de sortie",
             },
-           "Niveau1" : {
+
+           "NiveauMedievale" : {
                 "SeePNJ" : "Discuter avec le pnj sur la map. Regarder la minimap",
                 "LearnCrossBridge" : "Traverser le pont. Se rapprocher du pont qui se trouve à côté du bûcheron.",
                 "BuildBridge" : "Construire le pont. Se rapprocher de la rivière pour pouvoir construire",
@@ -40,11 +46,7 @@ ElementsFr = {
         },
     },
 
-    "InterfacePNJ" : {
-        "SkipButton" : "Suivant"
-    },
-
-    "Niveau0" : {
+    "NiveauPlaineRiviere" : {
         "Cinematique1End" : "Le bûcheron a coupé l'arbre, vous pouvez traverser la rivière !",
         "TraverserPont" : "Vous venez de traverser le pont",
         "BuildBridge" : "Vous venez de construire le pont",
@@ -52,23 +54,35 @@ ElementsFr = {
         "MakeExo" : "Pour pouvoir traverser le pont,  vous devez résoudre cet exercice.",
 
         "ExoTexte" : {
-            
-            "Title" : "Exercice équation du premier degré",
+            "Seconde" :{
+                "Numero0" :{
+                    "Title" : "Exercice équation du premier degré",
 
-            "DifficulteTrue" : {
-                "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",
-                "QCM" : "Choisissez l'unique et bonne réponse",
+                    "DifficulteTrue" : {
+                        "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",
+                        "QCM" : "Choisissez l'unique et bonne réponse",
+                    },
+
+                    "DifficulteFalse" : {
+                        "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",
+                        "QCM" : "Choisissez l'unique et bonne réponse",
+                    },
+                }
+
+            },         
+            "Premiere" :{
+                
             },
 
-            "DifficulteFalse" : {
-                "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",
-                "QCM" : "Choisissez l'unique et bonne réponse",
+            "Terminale" : {
+
             },
+
             
         }
     },
 
-    "Niveau1" : {
+    "NiveauMedievale" : {
         "TraverserPont" : "Vous venez de traverser le pont",
         "CantTraverserPont" : "Le garde est devant le pont, vous ne pouvez pas le traverser.",
         "BuildBridge" : "Vous venez de construire le pont",
@@ -81,23 +95,62 @@ ElementsFr = {
         "MakeExo" : "Pour pouvoir traverser le pont,  vous devez résoudre cet exercice.",
 
         "ExoTexte" : {
-            
-            "Title" : "...",
+            "Seconde" :{
+                "Numero0" :{
+                    "Title" : "...",
 
-            "DifficulteTrue" : {
-                "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",
-                "QCM" : "Choisissez l'unique et bonne réponse",
+                    "DifficulteTrue" : {
+                        "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",
+                        "QCM" : "Choisissez l'unique et bonne réponse",
+                    },
+
+                    "DifficulteFalse" : {
+                        "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",
+                        "QCM" : "Choisissez l'unique et bonne réponse",
+                    },
+                },
+
+            },         
+            "Premiere" :{
+                
             },
 
-            "DifficulteFalse" : {
-                "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",
-                "QCM" : "Choisissez l'unique et bonne réponse",
+            "Terminale" : {
+
             },
-            
         }
+
     },
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## à mettre à jour plus tard
 
