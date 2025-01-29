@@ -87,7 +87,7 @@ class Interactions(object):
                         CollisionSprites(self.Obj.pos, soucheIMH,  "Souche", groups)
                         #gestion arbre
                         self.Obj.kill()
-                        INVENTORY["Planks"] += 1
+                        INVENTORY["Planks"] += 1 if self.ObjectId == "Arbre" else 2 # add 1 or 2 planks
 
                         # réouverture
                         self.gestionnaire.ouverture_du_noir(self.player.rect.center)
