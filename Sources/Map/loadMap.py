@@ -248,10 +248,17 @@ class LoadMedievale(): # nv1
         self.pont3 = pygame.image.load(join("Images", "Pont","BridgePlanksN-S-x128.png" )).convert_alpha()
         self.rockExit = pygame.image.load(join("Images", "Obstacle", "ExitRock.png")).convert_alpha()
 
+
+
+        self.pathTshapeNSE = pygame.image.load(join("Images", "Sol", "Path", "PathN-SEx128.png")).convert_alpha()
+        self.pathTshapeWES = pygame.image.load(join("Images", "Sol", "Path", "PathW-ESx128.png")).convert_alpha()
+        self.pathTshapeWNS = pygame.image.load(join("Images", "Sol", "Path", "PathWN-Sx128.png")).convert_alpha()
+        self.pathTshapeNEW = pygame.image.load(join("Images", "Sol", "Path", "PathN-EWx128.png")).convert_alpha()
+        
         self.pathAngularNE = pygame.image.load(join("Images", "Sol", "Path", "PathN-Ex128.png")).convert_alpha()
         self.pathAngularNW = pygame.image.load(join("Images", "Sol", "Path", "PathN-Wx128.png")).convert_alpha()
-        # self.pathAngularSE = pygame.image.load(join("Images", "Sol", "Path", ".png")).convert_alpha()
-        # self.pathAngularSW = pygame.image.load(join("Images", "Sol", "Path", ".png")).convert_alpha()
+        self.pathAngularSE = pygame.image.load(join("Images", "Sol", "Path", "PathE-Sx128.png")).convert_alpha()
+        self.pathAngularSW = pygame.image.load(join("Images", "Sol", "Path", "PathW-Sx128.png")).convert_alpha()
         self.pathNS = pygame.image.load(join("Images", "Sol", "Path", "PathN-S.png")).convert_alpha()
         self.pathWE = pygame.image.load(join("Images", "Sol", "Path", "PathW-E.png")).convert_alpha()
 
@@ -291,50 +298,104 @@ class LoadMedievale(): # nv1
                     Sprites(pos, self.rock, self.allSprites) 
                 elif self.mapBase[ordonnees][abscisses] == "-" :
                     Sprites(pos, self.grass, self.allSprites) 
-                elif self.mapBase[ordonnees][abscisses] == "=":
-                    Sprites(pos, self.pathWE, self.allSprites) # // state base à enlever quand all path good
-                   
-                    # 4 cote
-                    if self.mapBase[ordonnees+1][abscisses] == "=" and self.mapBase[ordonnees-1][abscisses] == "=" and self.mapBase[ordonnees][abscisses -1] == "=" and self.mapBase[ordonnees][abscisses+1] == "=":
-                        Sprites(pos, self.pathNS, self.allSprites)
-                   
-                    # tshape
-                    elif self.mapBase[ordonnees+1][abscisses] == "="and self.mapBase[ordonnees-1][abscisses] == "="and self.mapBase[ordonnees][abscisses -1] == "="and not self.mapBase[ordonnees][abscisses+1] == "=":
-                        Sprites(pos, self.pathNS, self.allSprites)
-                   
-                    # tshape
-                    elif self.mapBase[ordonnees+1][abscisses] == "="and self.mapBase[ordonnees-1][abscisses] == "="and not self.mapBase[ordonnees][abscisses -1] == "="and self.mapBase[ordonnees][abscisses+1] == "=":
-                        Sprites(pos, self.pathNS, self.allSprites)
-                   
-                    # tshape
-                    elif self.mapBase[ordonnees+1][abscisses] == "="and not self.mapBase[ordonnees-1][abscisses] == "="and self.mapBase[ordonnees][abscisses -1] == "="and self.mapBase[ordonnees][abscisses+1] == "=":
-                        Sprites(pos, self.pathNS, self.allSprites)
-                    
-                    # tshape
-                    elif not self.mapBase[ordonnees+1][abscisses] == "="and self.mapBase[ordonnees-1][abscisses] == "="and self.mapBase[ordonnees][abscisses -1] == "="and self.mapBase[ordonnees][abscisses+1] == "=":
-                        Sprites(pos, self.pathNS, self.allSprites)
 
-                    # angular
-                    elif self.mapBase[ordonnees-1][abscisses] == "=" and (self.mapBase[ordonnees][abscisses+1] == "="  or self.mapBase[ordonnees][abscisses + 1]== "#"):
+                # === Vérification du type de chemin === aide IA
+                elif self.mapBase[ordonnees][abscisses] == "=":
+
+                    def is_path(self, x, y):
+                        """ Vérifie si une case est un chemin tout en évitant les erreurs d'index. """
+                        return 0 <= x < len(self.mapBase) and 0 <= y < len(self.mapBase[0]) and self.mapBase[x][y] == "="
+
+                    def is_water(self, x, y):
+                        """ Vérifie si une case est une rivière. """
+                        return 0 <= x < len(self.mapBase) and 0 <= y < len(self.mapBase[0]) and self.mapBase[x][y] == "#"
+
+                    # Récupération des voisins
+                    up = is_path(self, ordonnees - 1, abscisses)
+                    down = is_path(self, ordonnees + 1, abscisses)
+                    left = is_path(self, ordonnees, abscisses - 1)
+                    right = is_path(self, ordonnees, abscisses + 1)
+
+                    water_up = is_water(self, ordonnees - 1, abscisses)
+                    water_down = is_water(self, ordonnees + 1, abscisses)
+                    water_left = is_water(self, ordonnees, abscisses - 1)
+                    water_right = is_water(self, ordonnees, abscisses + 1)
+
+                    print(f"({ordonnees}, {abscisses}) -> up: {up}, down: {down}, left: {left}, right: {right}")
+
+                    # === 1. Intersection à 4 branches ===
+                    if up and down and left and right:
+                        Sprites(pos, self.pathTshapeNEW, self.allSprites)
+
+                    # === 2. Formes en "T" ===
+                    elif up and down and left:
+                        Sprites(pos, self.pathTshapeWNS, self.allSprites)
+                    elif up and down and right:
+                        Sprites(pos, self.pathTshapeNSE, self.allSprites)
+                    elif up and right and left:
+                        Sprites(pos, self.pathTshapeNEW, self.allSprites)
+                    elif down and right and left:
+                        Sprites(pos, self.pathTshapeWES, self.allSprites)
+
+                    # === 3. Virages (angles) ===
+                    elif up and right:
                         Sprites(pos, self.pathAngularNE, self.allSprites)
-                    # angular
-                    elif self.mapBase[ordonnees+1][abscisses] == "=" and (self.mapBase[ordonnees][abscisses+1] == "="  or self.mapBase[ordonnees][abscisses + 1]== "#"):
-                        Sprites(pos, self.tableCraft, self.allSprites) # // SE
-                    # angular
-                    elif self.mapBase[ordonnees +1 ][abscisses] == "=" and (self.mapBase[ordonnees][abscisses -1] == "=" or self.mapBase[ordonnees][abscisses - 1] == "#"):
-                        Sprites(pos, self.tableCraft, self.allSprites) # // SW
-                    # angular
-                    elif self.mapBase[ordonnees -1][abscisses] == "=" and (self.mapBase[ordonnees][abscisses -1] == "=" or self.mapBase[ordonnees][abscisses - 1] == "#"):
+                    elif up and left:
                         Sprites(pos, self.pathAngularNW, self.allSprites)
-                    
-                    # NS
-                    elif self.mapBase[ordonnees+1][abscisses] == "="and self.mapBase[ordonnees-1][abscisses] == "="and not self.mapBase[ordonnees][abscisses -1] == "="and not self.mapBase[ordonnees][abscisses+1] == "=":
+                    elif down and right:
+                        Sprites(pos, self.pathAngularSE, self.allSprites)
+                    elif down and left:
+                        Sprites(pos, self.pathAngularSW, self.allSprites)
+
+                    # === 4. Lignes droites ===
+                    elif up and down:
                         Sprites(pos, self.pathNS, self.allSprites)
-                    
-                    # WE
-                    elif not self.mapBase[ordonnees+1][abscisses] == "="and not self.mapBase[ordonnees-1][abscisses] == "=" and self.mapBase[ordonnees][abscisses -1] == "="and self.mapBase[ordonnees][abscisses -1] == "=":
+                    elif left and right:
                         Sprites(pos, self.pathWE, self.allSprites)
 
+                    # # === 5. Fin de chemin au contact de l'eau ===
+                    # elif water_up and not down:
+                    #     if left:
+                    #         Sprites(pos, self.pathEndSW, self.allSprites)  # Courbe sud-ouest
+                    #     elif right:
+                    #         Sprites(pos, self.pathEndSE, self.allSprites)  # Courbe sud-est
+                    #     else:
+                    #         Sprites(pos, self.pathEndS, self.allSprites)  # Fin droite sud
+
+                    # elif water_down and not up:
+                    #     if left:
+                    #         Sprites(pos, self.pathEndNW, self.allSprites)  # Courbe nord-ouest
+                    #     elif right:
+                    #         Sprites(pos, self.pathEndNE, self.allSprites)  # Courbe nord-est
+                    #     else:
+                    #         Sprites(pos, self.pathEndN, self.allSprites)  # Fin droite nord
+
+                    # elif water_left and not right:
+                    #     if up:
+                    #         Sprites(pos, self.pathEndNE, self.allSprites)  # Courbe nord-est
+                    #     elif down:
+                    #         Sprites(pos, self.pathEndSE, self.allSprites)  # Courbe sud-est
+                    #     else:
+                    #         Sprites(pos, self.pathEndE, self.allSprites)  # Fin droite est
+
+                    # elif water_right and not left:
+                    #     if up:
+                    #         Sprites(pos, self.pathEndNW, self.allSprites)  # Courbe nord-ouest
+                    #     elif down:
+                    #         Sprites(pos, self.pathEndSW, self.allSprites)  # Courbe sud-ouest
+                    #     else:
+                    #         Sprites(pos, self.pathEndW, self.allSprites)  # Fin droite ouest
+
+
+                    # # === 6. Fin de chemin SANS contact avec l'eau ===
+                    # elif not up and not down and not left and right:
+                    #     Sprites(pos, self.pathEndW, self.allSprites)  # Fin Ouest
+                    # elif not up and not down and left and not right:
+                    #     Sprites(pos, self.pathEndE, self.allSprites)  # Fin Est
+                    # elif not left and not right and up and not down:
+                    #     Sprites(pos, self.pathEndS, self.allSprites)  # Fin Sud
+                    # elif not left and not right and not up and down:
+                    #     Sprites(pos, self.pathEndN, self.allSprites)  # Fin Nord
 
                         
 
