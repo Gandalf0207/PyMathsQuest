@@ -233,7 +233,14 @@ class BundleInterface(object):
             if surf != None:
                 # ajout de l'item dans le slot
                 elementSlot.blit(surf, (0,0))
+
+                # text nombre items
+                textCount = FONT["FONT20"].render(f"{INVENTORY[key]}", True, (50,50,50))
+                elementSlot.blit(textCount, (70,70))
+
+                # affichage slot
                 self.interfaceSurface.blit(elementSlot, self.coordsSurface[indice])
+
 
                 indice += 1 # on change de slot
 

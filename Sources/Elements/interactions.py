@@ -82,13 +82,20 @@ class Interactions(object):
                 if self.ObjectId == "Arbre" or self.ObjectId == "Arbre2" :
                         # texte animation
                         self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["CutTree"])
-                        #creation souche
-                        soucheIMH = pygame.image.load(join("Images", "Obstacle", "Souche.png")).convert_alpha()
-                        CollisionSprites(self.Obj.pos, soucheIMH,  "Souche", groups)
+
+                        if self.ObjectId == "Arbre":
+                            #creation souche
+                            soucheArbre = pygame.image.load(join("Images", "Obstacle", "Souche.png")).convert_alpha()
+                            CollisionSprites(self.Obj.pos, soucheArbre,  "Souche", groups)
+                            INVENTORY["Planks"] += 1
+
+                        else: 
+                            soucheArbre2 = pygame.image.load(join("Images", "Obstacle", "Souche.png")).convert_alpha()
+                            CollisionSprites(self.Obj.pos, soucheArbre2,  "Souche2", groups)
+                            INVENTORY["Planks"] += 2
+
                         #gestion arbre
                         self.Obj.kill()
-                        INVENTORY["Planks"] += 1 if self.ObjectId == "Arbre" else 2 # add 1 or 2 planks
-
                         # réouverture
                         self.gestionnaire.ouverture_du_noir(self.player.rect.center)
                 
@@ -115,7 +122,6 @@ class Interactions(object):
 
                 if self.ObjectId == "pont3":
                         
-
                         # deplacement player
                         if self.player.rect.y < self.coordObjActuel[1]:
                             # text animation
