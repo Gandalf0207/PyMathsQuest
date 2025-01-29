@@ -245,7 +245,7 @@ class LoadMedievale(): # nv1
         self.rockExit = pygame.image.load(join("Images", "Obstacle", "ExitRock.png")).convert_alpha()
 
 
-
+        self.pathX = pygame.image.load(join("Images", "Sol", "Path", "PathXx128.png")).convert_alpha()
         self.pathTshapeNSE = pygame.image.load(join("Images", "Sol", "Path", "PathN-SEx128.png")).convert_alpha()
         self.pathTshapeWES = pygame.image.load(join("Images", "Sol", "Path", "PathW-ESx128.png")).convert_alpha()
         self.pathTshapeWNS = pygame.image.load(join("Images", "Sol", "Path", "PathWN-Sx128.png")).convert_alpha()
@@ -324,7 +324,7 @@ class LoadMedievale(): # nv1
 
                     # === 1. Intersection à 4 branches ===
                     if up and down and left and right:
-                        Sprites(pos, self.pathTshapeNEW, self.allSprites)
+                        Sprites(pos, self.pathX, self.allSprites)
 
                     # === 2. Formes en "T" ===
                     elif up and down and left:
