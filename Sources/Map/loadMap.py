@@ -316,12 +316,6 @@ class LoadMedievale(): # nv1
                     left = is_path(self, ordonnees, abscisses - 1)
                     right = is_path(self, ordonnees, abscisses + 1)
 
-                    water_up = is_water(self, ordonnees - 1, abscisses)
-                    water_down = is_water(self, ordonnees + 1, abscisses)
-                    water_left = is_water(self, ordonnees, abscisses - 1)
-                    water_right = is_water(self, ordonnees, abscisses + 1)
-
-
                     # === 1. Intersection à 4 branches ===
                     if up and down and left and right:
                         Sprites(pos, self.pathX, self.allSprites)
@@ -352,40 +346,6 @@ class LoadMedievale(): # nv1
                     elif left and right:
                         Sprites(pos, self.pathWE, self.allSprites)
 
-                    # # === 5. Fin de chemin au contact de l'eau ===
-                    # elif water_up and not down:
-                    #     if left:
-                    #         Sprites(pos, self.pathEndSW, self.allSprites)  # Courbe sud-ouest
-                    #     elif right:
-                    #         Sprites(pos, self.pathEndSE, self.allSprites)  # Courbe sud-est
-                    #     else:
-                    #         Sprites(pos, self.pathEndS, self.allSprites)  # Fin droite sud
-
-                    # elif water_down and not up:
-                    #     if left:
-                    #         Sprites(pos, self.pathEndNW, self.allSprites)  # Courbe nord-ouest
-                    #     elif right:
-                    #         Sprites(pos, self.pathEndNE, self.allSprites)  # Courbe nord-est
-                    #     else:
-                    #         Sprites(pos, self.pathEndN, self.allSprites)  # Fin droite nord
-
-                    # elif water_left and not right:
-                    #     if up:
-                    #         Sprites(pos, self.pathEndNE, self.allSprites)  # Courbe nord-est
-                    #     elif down:
-                    #         Sprites(pos, self.pathEndSE, self.allSprites)  # Courbe sud-est
-                    #     else:
-                    #         Sprites(pos, self.pathEndE, self.allSprites)  # Fin droite est
-
-                    # elif water_right and not left:
-                    #     if up:
-                    #         Sprites(pos, self.pathEndNW, self.allSprites)  # Courbe nord-ouest
-                    #     elif down:
-                    #         Sprites(pos, self.pathEndSW, self.allSprites)  # Courbe sud-ouest
-                    #     else:
-                    #         Sprites(pos, self.pathEndW, self.allSprites)  # Fin droite ouest
-
-
                     # === 6. Fin de chemin SANS contact avec l'eau ===
                     elif not up and not down and not left and right:
                         Sprites(pos, self.pathEndE, self.allSprites)  # Fin Ouest
@@ -400,71 +360,119 @@ class LoadMedievale(): # nv1
 
                 # Toutes les cases rivières
                 elif self.mapBase[ordonnees][abscisses] == "#":
-                    stateFormat = ""
-                    if  ordonnees not in [0, LARGEUR-1] and abscisses not in [0,149]:
-                        
-                        # tshape
-                        if (self.mapBase[ordonnees - 1][abscisses] =="#" or self.mapBase[ordonnees- 1][abscisses] =="C") and self.mapBase[ordonnees+ 1][abscisses] =="#" and self.mapBase[ordonnees][abscisses -1] =="#" and (self.mapBase[ordonnees-2][abscisses] =="#" or self.mapBase[ordonnees-1][abscisses] =="#"):
-                            stateFormat = "RiverTWN-Sx128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif (self.mapBase[ordonnees - 1][abscisses] =="#" or self.mapBase[ordonnees - 1][abscisses] =="C")  and self.mapBase[ordonnees+1][abscisses] =="#" and self.mapBase[ordonnees][abscisses +1] =="#" and (self.mapBase[ordonnees-2][abscisses] =="#" or self.mapBase[ordonnees-1][abscisses] =="#"):
-                            stateFormat = "RiverTN-SEx128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif (self.mapBase[ordonnees - 1][abscisses] =="#" or self.mapBase[ordonnees- 1][abscisses] =="C")  and self.mapBase[ordonnees][abscisses- 1] =="#" and self.mapBase[ordonnees][abscisses +1] =="#" and (self.mapBase[ordonnees-2][abscisses] =="#" or self.mapBase[ordonnees-1][abscisses] =="#"):
-                            stateFormat = "RiverTWN-Ex128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees +1][abscisses] =="#"  and self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees][abscisses +1] =="#" :
-                            stateFormat = "RiverTW-SEx128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
 
-                        elif self.mapBase[ordonnees][abscisses+1] =="#" and ((self.mapBase[ordonnees-1][abscisses] =="#" or self.mapBase[ordonnees-1][abscisses] =="C") or (self.mapBase[ordonnees-2][abscisses] =="#" or self.mapBase[ordonnees-1][abscisses] =="#")):
-                            stateFormat = "RiverAngularN-Ex128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees][abscisses+1] =="#" and ((self.mapBase[ordonnees+1][abscisses] =="#" or self.mapBase[ordonnees+1][abscisses] =="C") or (self.mapBase[ordonnees+2][abscisses] =="#" or self.mapBase[ordonnees+1][abscisses] =="#")):
-                            stateFormat = "RiverAngularE-Sx128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees][abscisses-1] =="#" and ((self.mapBase[ordonnees-1][abscisses] =="#" or self.mapBase[ordonnees-1][abscisses] =="C") or (self.mapBase[ordonnees-2][abscisses] =="#" or self.mapBase[ordonnees-1][abscisses] =="#")):
-                            stateFormat = "RiverAngularN-Wx128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees][abscisses-1] =="#" and ((self.mapBase[ordonnees+1][abscisses] =="#" or self.mapBase[ordonnees+1][abscisses] =="C") or (self.mapBase[ordonnees+2][abscisses] =="#" or self.mapBase[ordonnees+1][abscisses] =="#")):
-                            stateFormat = "RiverAngularW-Sx128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees][abscisses-1] =="#":
-                            stateFormat = "RiverStraightW-Ex128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees-1][abscisses] =="#" and (self.mapBase[ordonnees+1][abscisses] or self.mapBase[ordonnees+1][abscisses] =="C"): 
-                            stateFormat = "RiverStraightN-Sx128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees+1][abscisses] =="#" and self.mapBase[ordonnees-1][abscisses] =="C": # chateau collision
-                            stateFormat = "RiverStraightN-Sx128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                    else:
-                        if ordonnees in [0, LARGEUR-1]: 
-                            stateFormat = "RiverMontainConflictx128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif abscisses ==0:
-                            if self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
-                                stateFormat = "RiverAngularN-Ex128"
-                                River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                            elif self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees+1][abscisses] =="#":
-                                stateFormat = "RiverAngularE-Sx128"
-                                River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                            elif self.mapBase[ordonnees+1][abscisses] =="#" and self.mapBase[ordonnees-1][abscisses] =="#": 
-                                stateFormat = "RiverStraightN-Sx128"
-                                River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif abscisses == LARGEUR-1:
-                            if self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees+1][abscisses] !="#" and self.mapBase[ordonnees-1][abscisses] =="C":
-                                stateFormat = "RiverStraightW-Ex128"
-                                River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                            elif self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
-                                stateFormat = "RiverAngularN-Wx128"
-                                River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                            elif self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees+1][abscisses] =="#":
-                                stateFormat = "RiverAngularW-Sx128"
-                                River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                            elif self.mapBase[ordonnees+1][abscisses] =="#" and self.mapBase[ordonnees-1][abscisses] =="#": 
-                                stateFormat = "RiverStraightN-Sx128"
-                                River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+                    # Vérification des bords pour éviter les erreurs d'index
+                    can_go_up = ordonnees > 0
+                    can_go_down = ordonnees < LARGEUR - 1
+                    can_go_left = abscisses > 0
+                    can_go_right = abscisses < 149
+
+                    def checkBuildUp(can_go_up, can_go_left, can_go_right):
+                        if can_go_up:
+                            if self.mapBase[ordonnees -1][abscisses] == "#":
+                                return True
+                            if self.mapBase[ordonnees -1][abscisses] == "C":
+                                if can_go_right and can_go_left:
+                                    if self.mapBase[ordonnees -2][abscisses-1] == "#" or self.mapBase[ordonnees -2][abscisses] == "#" or self.mapBase[ordonnees -2][abscisses +1] == "#":
+                                        return True
+                                if can_go_left:
+                                    if self.mapBase[ordonnees -2][abscisses-1] == "#" or self.mapBase[ordonnees -2][abscisses] == "#":   
+                                        return True
+                                if can_go_right:
+                                    if self.mapBase[ordonnees -2][abscisses] == "#" or self.mapBase[ordonnees -2][abscisses +1] == "#":   
+                                        return True     
+                        return False   
+                    
+                    def checkBuildDown(can_go_down, can_go_left, can_go_right): 
+                        if can_go_down:
+                            if self.mapBase[ordonnees +1][abscisses] == "#":
+                                return True
+                            if self.mapBase[ordonnees +1][abscisses] == "C":
+                                if can_go_right and can_go_left:
+                                    if self.mapBase[ordonnees +2][abscisses-1] == "#" or self.mapBase[ordonnees +2][abscisses] == "#" or self.mapBase[ordonnees +2][abscisses +1] == "#":
+                                        return True
+                                if can_go_left:
+                                    if self.mapBase[ordonnees +2][abscisses-1] == "#" or self.mapBase[ordonnees +2][abscisses] == "#":   
+                                        return True
+                                if can_go_right:
+                                    if self.mapBase[ordonnees +2][abscisses] == "#" or self.mapBase[ordonnees +2][abscisses +1] == "#":   
+                                        return True        
+                        return False
+
+                    def checkBuildLeft(can_go_left):
+                        if can_go_left:
+                            if self.mapBase[ordonnees][abscisses - 1] == "#":
+                                return True
+                        return False
+                    
+                    def checkBuildRight(can_go_right):
+                        if can_go_right:
+                            if self.mapBase[ordonnees][abscisses + 1] == "#":
+                                return True
+                        return False       
+
+                    def checkBuildConflict(can_go_left, can_go_right):
+                        if can_go_left and can_go_right:
+                            if self.mapBase[ordonnees][abscisses-1] == "B" or self.mapBase[ordonnees][abscisses+1] == "B": 
+                                return True
+                        if can_go_left:  
+                            if self.mapBase[ordonnees][abscisses-1] == "B":
+                                return True
+                        if can_go_right:  
+                            if self.mapBase[ordonnees][abscisses+1] == "B":
+                                return True
+
+                        return False
+
+                    can_build_up = checkBuildUp(can_go_up, can_go_left, can_go_right)
+                    can_build_down = checkBuildDown(can_go_down,  can_go_left, can_go_right)
+                    can_build_left = checkBuildLeft(can_go_left)
+                    can_build_right = checkBuildRight(can_go_right)
+                    mountainConflict = checkBuildConflict(can_go_left, can_go_right)
+
+
+                    stateFormat = ""
+                    # conflif montain
+                    if mountainConflict:
+                        stateFormat = "RiverMontainConflictx128"
+                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+
+                    # Tshape
+                    elif can_build_right and can_build_left and can_build_up:
+                        stateFormat = "RiverTWN-Ex128"
+                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)   
+                    elif can_build_right and can_build_left and can_build_down:
+                        stateFormat = "RiverTW-SEx128"
+                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+                    elif can_build_down and can_build_up and can_build_left:
+                        stateFormat = "RiverTWN-Sx128"
+                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+                    elif can_build_down and can_build_up and can_build_right:
+                        stateFormat = "RiverTN-SEx128"
+                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+
+                    # angular
+                    elif can_build_right and can_build_down:
+                        stateFormat = "RiverAngularE-Sx128"
+                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+                    elif can_build_right and can_build_up:
+                        stateFormat = "RiverAngularN-Ex128"
+                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+                    elif can_build_left and can_build_down:
+                        stateFormat = "RiverAngularW-Sx128"
+                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+                    elif can_build_left and can_build_up:
+                        stateFormat = "RiverAngularN-Wx128"
+                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+
+                    # line
+                    elif can_build_up or can_build_down:
+                        stateFormat = "RiverStraightN-Sx128"
+                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+                    elif can_build_right or can_build_left:
+                        stateFormat = "RiverStraightW-Ex128"
+                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+
                 
                 # Bordure Montagne
                 elif self.mapBase[ordonnees][abscisses] == "B":
