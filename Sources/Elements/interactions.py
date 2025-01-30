@@ -202,6 +202,8 @@ class Interactions(object):
         Ouput : bool"""
 
         for Object in self.interactionGroup: # parcours all obj 
+            if Object.id in ["Arbre", "Abre2"] and NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ1"]:
+                return False
 
             coordsObj = (Object.pos[0] + CASEMAP // 2, Object.pos[1] + CASEMAP // 2) # top left coords -> center coords
             playerPos = self.player.rect.center # center player
