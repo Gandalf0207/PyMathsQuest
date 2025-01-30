@@ -874,10 +874,11 @@ class NiveauMedievale(GestionNiveauMap):
             getCoordsFromRiver1 = choice(getAllCoordsRiver1)
         
         # Définit les coordonnées du point de la rivière pour le chemin
-        coordsPts3 = [getCoordsFromRiver1[0]-1, getCoordsFromRiver1[1]] 
+        coordsPassageRiver1 = [getCoordsFromRiver1[0]-1, getCoordsFromRiver1[1]] 
+        coordsPts3 = [getCoordsFromRiver1[0]-3, getCoordsFromRiver1[1]] 
 
         # Coordonnées du dernier point du chemin
-        coordsPts4 = [coordsPts3[0]+1, coordsPts3[1]]
+        coordsPts4 = [coordsPassageRiver1[0]+3, coordsPassageRiver1[1]]
         coordsPts5 = coordsPuits[0]
 
         # Partie gauche du chemin
@@ -904,8 +905,13 @@ class NiveauMedievale(GestionNiveauMap):
                 self.map[coords[1]][coords[0]] = "="  # Ajout de la rivière sur la carte (collision)
                 self.baseMap[coords[1]][coords[0]] = "="  # Ajout de la rivière sur la carte de base
 
+        for element in range(6):
+            if self.map[coordsPts3[1]][coordsPts3[0] + element] in ["-", "F", "M", 'R']:
+                self.map[coordsPts3[1]][coordsPts3[0] + element] = "="  # Ajout de la rivière sur la carte (collision)
+                self.baseMap[coordsPts3[1]][coordsPts3[0] + element] = "="  # Ajout de la rivière sur la carte de base
+                allPath.append([coordsPts3[0] + element, coordsPts3[1]])
         # Sauvegarde les coordonnées du passage de la rivière dans un fichier JSON
-        AjoutJsonMapValue(coordsPts3, "coordsMapObject", "coords PassageRiver1")
+        AjoutJsonMapValue(coordsPassageRiver1, "coordsMapObject", "coords PassageRiver1")
         
         # Sauvegarde toutes les coordonnées du chemin dans un fichier JSON
         AjoutJsonMapValue(allPath, "coordsMapBase", "coords Path")
