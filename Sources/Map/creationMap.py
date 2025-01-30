@@ -732,7 +732,7 @@ class NiveauMedievale(GestionNiveauMap):
             checkCollideWhile = True
             while checkCollideWhile:
                 checkCollideWhile = False
-                posX1, posY1 = randint(78, 138), randint(26, 72)  # Position aléatoire pour la maison
+                posX1, posY1 = randint(78, 138), randint(36, 72)  # Position aléatoire pour la maison
 
                 # Calcul des coordonnées de la maison et des zones de sécurité autour
                 coordsSecu = [
