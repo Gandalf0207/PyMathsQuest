@@ -380,6 +380,8 @@ class GameToolBox(object):
             pygame.display.flip()
             self.gestionnaire.clock.tick(30)  # Limite de rafraîchissement
 
+        pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])
+        
     def ResetValues(self):
         match NIVEAU["Niveau"]:
             case "Seconde":
