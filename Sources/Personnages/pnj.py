@@ -192,7 +192,7 @@ class GestionPNJ(object):
         if NIVEAU["Map"] == "NiveauPlaineRiviere" :
             goal = LoadJsonMapValue("coordsMapObject","ArbreSpecial Coords")
             pathAcces = ["-", "A", "P", "S", "="]
-        
+
         self.cinematiqueObject = CinematiquePNJ(goal, self.pnjObj, self.map, pathAcces)
 
     def EndCinematique(self) -> None:
@@ -203,6 +203,8 @@ class GestionPNJ(object):
         self.pnjObj.Animate(0) # frame de base
         self.cinematique = False
         self.cinematiqueObject = None
+        goal = LoadJsonMapValue("coordsMapObject","ArbreSpecial Coords")
+
 
 
     def Vu(self) -> None:

@@ -193,8 +193,10 @@ class LoadMapPlaineRiviere(): # nv 0
 
         if element == "pont1":
             CollisionSprites(coords, self.pont1, element, (self.allSprites, self.collisionSprites, self.interactions))
+            ChangeValuesMap((coords[0] //CASEMAP, coords[1] // CASEMAP), "t")
         elif element  == "pont2":
             CollisionSprites(coords, self.pont2, element, (self.allSprites, self.collisionSprites, self.interactions))
+            ChangeValuesMap((coords[0] //CASEMAP, coords[1] // CASEMAP), "T")
 
                 
 
@@ -607,6 +609,7 @@ class LoadMedievale(): # nv1
 
         if element  == "pont2" or element == "pont3":
             CollisionSprites(coords, self.pont2, element, (self.allSprites, self.collisionSprites, self.interactions))
+            ChangeValuesMap((coords[0] //CASEMAP, coords[1] // CASEMAP), "T")
 
 
     def AddBoat(self, element : str, coords : tuple) -> None:
@@ -616,6 +619,7 @@ class LoadMedievale(): # nv1
 
         if element  == "Boat":
             CollisionSprites(coords, self.boat, element, (self.allSprites, self.collisionSprites, self.interactions))
+            ChangeValuesMap((coords[0] //CASEMAP, coords[1] // CASEMAP), "K")
 
 
 

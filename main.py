@@ -244,6 +244,11 @@ class Game(object):
                             
                             # reset valeue individuelle
                             PNJ["PNJ1"] = True
+
+                            pnjCoords = LoadJsonMapValue("coordsMapObject", "PNJ Coords")
+                            goal = LoadJsonMapValue("coordsMapObject","ArbreSpecial Coords")
+                            ChangeValuesMap(pnjCoords[0], "-")
+                            ChangeValuesMap(goal, "P")
                             STATE_HELP_INFOS[0] = "LearnCrossBridge"
                 
 
