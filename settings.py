@@ -50,7 +50,7 @@ def ChangeValuesMap(elementList):
     for element in elementList:
         print(element)
         map = LoadJsonMapValue("coordsMapBase", "AllMapInfo")
-        map[element[1]][coords[0]] = element
+        map[element[0][1]][element[0][0]] = element[1]
         AjoutJsonMapValue(map, "coordsMapBase", "AllMapInfo")
 
 

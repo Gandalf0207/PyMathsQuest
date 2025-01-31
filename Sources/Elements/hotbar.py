@@ -31,7 +31,8 @@ class MiniMap:
         self.carre4 = pygame.image.load(join("Images", "MiniMap", "Carre4.png")).convert_alpha()
         self.carre5 = pygame.image.load(join("Images", "MiniMap", "Carre5.png")).convert_alpha()
         self.carre6 = pygame.image.load(join("Images", "MiniMap", "Carre6.png")).convert_alpha()
-        self.carre7 = pygame.image.load(join("Images", "MiniMap", "Carre8.png")).convert_alpha()
+        self.carre7 = pygame.image.load(join("Images", "MiniMap", "Carre7.png")).convert_alpha()
+        self.carre8 = pygame.image.load(join("Images", "MiniMap", "Carre8.png")).convert_alpha()
 
 
 
@@ -45,7 +46,7 @@ class MiniMap:
                 if cell == "#": # rivière
                     self.static_surface.blit(self.carre3, pos)
                 elif cell == "B": # border
-                    self.static_surface.blit(self.carre7, pos)
+                    self.static_surface.blit(self.carre8, pos)
                 elif cell == "=": # path
                     self.static_surface.blit(self.carre2, pos)
                 elif cell == "H": # maison
@@ -54,6 +55,8 @@ class MiniMap:
                     self.static_surface.blit(self.carre5, pos)
                 elif cell == "@":
                     self.static_surface.blit(self.carre6, pos)
+                elif cell in ["t", "T", "K"]:
+                    self.static_surface.blit(self.carre7, pos)
                 else: # reste = herbe 
                     self.static_surface.blit(self.carre1, pos)
         
@@ -75,6 +78,12 @@ class MiniMap:
             pnj_x, pnj_y = objectPNJ.pos[0] * CASEMAP, objectPNJ.pos[1] *CASEMAP
             pnj_rect = pygame.Rect(pnj_x * CELL_SIZE * self.ratioImage, pnj_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE * 2)
             pygame.draw.rect(self.MiniMapSurface, (252, 128, 3), pnj_rect)
+
+        for objectIntrac in interactionGroup:
+            if objectIntrac.id not in [ "Arbre", "Arbre2"] :
+                element_x, element_y = objectIntrac.pos[0], objectIntrac.pos[1]
+                element_rect = pygame.Rect(element_x * CELL_SIZE * self.ratioImage, element_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE * 2)
+                pygame.draw.rect(self.MiniMapSurface, (34, 5, 71), element_rect)      
 
 class InfosTips:
 

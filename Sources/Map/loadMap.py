@@ -631,7 +631,7 @@ class LoadMedievale(): # nv1
 
         if element  == "Boat":
             CollisionSprites(coords, self.boat, element, (self.allSprites, self.collisionSprites, self.interactions))
-            threading.Thread(target=ChangeValuesMap, args=[((coords[0] //CASEMAP, coords[1] // CASEMAP), "K")])
+            threading.Thread(target=ChangeValuesMap, args=[((coords[0] //CASEMAP, coords[1] // CASEMAP), "N")])
 
 
 
