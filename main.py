@@ -115,7 +115,6 @@ class Game(object):
         self.checkLoadingDone = True
 
     def StartMap(self):
-        self.checkLoadingDone = False
 
         # Affichage initial de l'écran de chargement
         threading.Thread(target=self.SetupAllMap).start()
@@ -247,8 +246,8 @@ class Game(object):
 
                             pnjCoords = LoadJsonMapValue("coordsMapObject", "PNJ Coords")
                             goal = LoadJsonMapValue("coordsMapObject","ArbreSpecial Coords")
-                            ChangeValuesMap(pnjCoords[0], "-")
-                            ChangeValuesMap(goal, "P")
+                            
+                            threading.Thread(target=ChangeValuesMap, args=[(pnjCoords[0], "-"), (goal, "P")])
                             STATE_HELP_INFOS[0] = "LearnCrossBridge"
                 
 
@@ -320,6 +319,7 @@ class GameToolBox(object):
     def ChargementEcran(self):
         font = pygame.font.Font(None, 74)
         loading_step = 0
+        self.gestionnaire.checkLoadingDone = False
         while not self.gestionnaire.checkLoadingDone:
             self.gestionnaire.displaySurface.fill((0,0,0))  # Remplir avec une couleur grise
 

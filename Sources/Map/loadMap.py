@@ -31,6 +31,7 @@ class LoadMapPlaineRiviere(): # nv 0
         self.montainWE = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ex128.png")).convert_alpha()
         self.montainWE1 = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ealt1x128.png")).convert_alpha()
         self.souche = pygame.image.load(join("Images", "Obstacle", "Souche.png")).convert_alpha()
+        self.souche2 = pygame.image.load(join("Images", "Obstacle", "Souche2.png")).convert_alpha()
         self.hugeRock = pygame.image.load(join("Images", "Obstacle", "HugeRock.png")).convert_alpha()
         self.campFire = pygame.image.load(join("Images", "Obstacle", "Spawn", "campFire.png")).convert_alpha()
         self.pont1 = pygame.image.load(join("Images", "Pont", "BridgeTreeW-Ex128.png")).convert_alpha()
@@ -133,7 +134,12 @@ class LoadMapPlaineRiviere(): # nv 0
                     elif 65 < choixObstacle <= 85:
                         CollisionSprites(pos, self.hugeRock, "HugeRock", (self.allSprites, self.collisionSprites))
                     elif 85 < choixObstacle <= 100:
-                        CollisionSprites(pos, self.souche, "Souche", (self.allSprites, self.collisionSprites))
+                        choixSouche = randint(0,11)
+                        if choixSouche < 7:
+                            CollisionSprites(pos, self.souche, "Souche", (self.allSprites, self.collisionSprites))
+                        else:
+                            CollisionSprites(pos, self.souche2, "Souche2", (self.allSprites, self.collisionSprites))
+
 
                 # Abre spécial
                 if self.map[ordonnees][abscisses] == "A":
@@ -193,10 +199,10 @@ class LoadMapPlaineRiviere(): # nv 0
 
         if element == "pont1":
             CollisionSprites(coords, self.pont1, element, (self.allSprites, self.collisionSprites, self.interactions))
-            ChangeValuesMap((coords[0] //CASEMAP, coords[1] // CASEMAP), "t")
+            threading.Thread(target=ChangeValuesMap, args=[((coords[0] //CASEMAP, coords[1] // CASEMAP), "t")])
         elif element  == "pont2":
             CollisionSprites(coords, self.pont2, element, (self.allSprites, self.collisionSprites, self.interactions))
-            ChangeValuesMap((coords[0] //CASEMAP, coords[1] // CASEMAP), "T")
+            threading.Thread(target=ChangeValuesMap, args=[((coords[0] //CASEMAP, coords[1] // CASEMAP), "T")])
 
                 
 
@@ -240,6 +246,8 @@ class LoadMedievale(): # nv1
         self.montainWE = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ex128.png")).convert_alpha()
         self.montainWE1 = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ealt1x128.png")).convert_alpha()
         self.souche = pygame.image.load(join("Images", "Obstacle", "Souche.png")).convert_alpha()
+        self.souche2 = pygame.image.load(join("Images", "Obstacle", "Souche2.png")).convert_alpha()
+
         self.hugeRock = pygame.image.load(join("Images", "Obstacle", "HugeRock.png")).convert_alpha()
         self.pont1 = pygame.image.load(join("Images", "Pont", "BridgeTreeW-Ex128.png")).convert_alpha()
         self.pont2 = pygame.image.load(join("Images", "Pont", "BridgePlanksW-Ex128.png")).convert_alpha()
@@ -503,7 +511,11 @@ class LoadMedievale(): # nv1
                     elif 65 < choixObstacle <= 85:
                         CollisionSprites(pos, self.hugeRock, "HugeRock", (self.allSprites, self.collisionSprites))
                     elif 85 < choixObstacle <= 100:
-                        CollisionSprites(pos, self.souche, "Souche", (self.allSprites, self.collisionSprites))
+                        choixSouche = randint(0,11)
+                        if choixSouche < 7:
+                            CollisionSprites(pos, self.souche, "Souche", (self.allSprites, self.collisionSprites))
+                        else:
+                            CollisionSprites(pos, self.souche2, "Souche2", (self.allSprites, self.collisionSprites))
 
                 # Pont placé
                 if self.map[ordonnees][abscisses] == "T":
@@ -609,7 +621,7 @@ class LoadMedievale(): # nv1
 
         if element  == "pont2" or element == "pont3":
             CollisionSprites(coords, self.pont2, element, (self.allSprites, self.collisionSprites, self.interactions))
-            ChangeValuesMap((coords[0] //CASEMAP, coords[1] // CASEMAP), "T")
+            threading.Thread(target=ChangeValuesMap, args=[((coords[0] //CASEMAP, coords[1] // CASEMAP), "T")])
 
 
     def AddBoat(self, element : str, coords : tuple) -> None:
@@ -619,7 +631,7 @@ class LoadMedievale(): # nv1
 
         if element  == "Boat":
             CollisionSprites(coords, self.boat, element, (self.allSprites, self.collisionSprites, self.interactions))
-            ChangeValuesMap((coords[0] //CASEMAP, coords[1] // CASEMAP), "K")
+            threading.Thread(target=ChangeValuesMap, args=[((coords[0] //CASEMAP, coords[1] // CASEMAP), "K")])
 
 
 

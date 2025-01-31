@@ -74,7 +74,8 @@ class Interactions(object):
                 # si c'est le rocher qui est destructible
                 elif self.ObjectId == "ExitRock":
                     self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["BreakRock"]) # text 
-                    ChangeValuesMap((self.Obj.pos[0] //CASEMAP, self.Obj.pos[1] // CASEMAP), "-")
+                    threading.Thread(target=ChangeValuesMap, args=[((self.Obj.pos[0] //CASEMAP, self.Obj.pos[1] // CASEMAP), "-")])
+
                     self.Obj.kill() # destrcution rocher
 
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center) # fin animation
@@ -89,13 +90,13 @@ class Interactions(object):
                             soucheArbre = pygame.image.load(join("Images", "Obstacle", "Souche.png")).convert_alpha()
                             CollisionSprites(self.Obj.pos, soucheArbre,  "Souche", groups)
                             INVENTORY["Planks"] += 1
-                            ChangeValuesMap((self.Obj.pos[0] // CASEMAP, self.Obj.pos[1] //CASEMAP), "S")
+                            threading.Thread(target=ChangeValuesMap, args=[((self.Obj.pos[0] // CASEMAP, self.Obj.pos[1] //CASEMAP), "S")])
 
                         else: 
-                            soucheArbre2 = pygame.image.load(join("Images", "Obstacle", "Souche.png")).convert_alpha()
+                            soucheArbre2 = pygame.image.load(join("Images", "Obstacle", "Souche2.png")).convert_alpha()
                             CollisionSprites(self.Obj.pos, soucheArbre2,  "Souche2", groups)
                             INVENTORY["Planks"] += 2
-                            ChangeValuesMap((self.Obj.pos[0] // CASEMAP, self.Obj.pos[1] //CASEMAP), "s")
+                            threading.Thread(target=ChangeValuesMap, args=[((self.Obj.pos[0] // CASEMAP, self.Obj.pos[1] //CASEMAP), "s")])
 
                         #gestion arbre
                         self.Obj.kill()
@@ -176,9 +177,10 @@ class Interactions(object):
                         # deplacement player
                         self.player.hitbox_rect.center = ((coordsPtsRefRiverTpChateau[0]+1)*CASEMAP +64, coordsPtsRefRiverTpChateau[1]*CASEMAP +64 ) # +64 center case à coté
                         self.player.rect.center = self.player.hitbox_rect.center
+                        
 
-                        ChangeValuesMap(coordsBoat, "#")
-                        ChangeValuesMap(coordsPtsRefRiverTpChateau, "N")
+                        threading.Thread(target=ChangeValuesMap, args=[(coordsBoat, "#"), (coordsPtsRefRiverTpChateau, "N")])
+
                     else:
                         # texte animation : 
                         self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["UseBoat2"])
@@ -192,9 +194,8 @@ class Interactions(object):
                         self.player.hitbox_rect.center = self.boatPlacementPlayerPos[1] 
                         self.player.rect.center = self.player.hitbox_rect.center
 
+                        threading.Thread(target=ChangeValuesMap, args=[(coordsBoat, "N"), (coordsPtsRefRiverTpChateau, "#")])
 
-                        ChangeValuesMap(coordsBoat, "N")
-                        ChangeValuesMap(coordsPtsRefRiverTpChateau, "#")
                         
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center)
 
