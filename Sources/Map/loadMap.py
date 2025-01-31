@@ -36,7 +36,6 @@ class LoadMapPlaineRiviere(): # nv 0
         self.campFire = pygame.image.load(join("Images", "Obstacle", "Spawn", "campFire.png")).convert_alpha()
         self.pont1 = pygame.image.load(join("Images", "Pont", "BridgeTreeW-Ex128.png")).convert_alpha()
         self.pont2 = pygame.image.load(join("Images", "Pont", "BridgePlanksW-Ex128.png")).convert_alpha()
-        self.rockExit = pygame.image.load(join("Images", "Obstacle", "ExitRock.png")).convert_alpha()
 
     def Setup(self) -> None:
         """Méthode de build de tout les éléments sprites de la map jeu.
@@ -167,7 +166,7 @@ class LoadMapPlaineRiviere(): # nv 0
         coords = LoadJsonMapValue("coordsMapObject", "Exit")
 
         coordsExit = (coords[0] * CASEMAP, coords[1] * CASEMAP)
-        CollisionSprites(coordsExit, self.rockExit, "ExitRock", (self.allSprites, self.interactions, self.collisionSprites))
+        CollisionSprites(coordsExit, self.hugeRock, "ExitRock", (self.allSprites, self.interactions, self.collisionSprites))
         
         # pont décalé de 1
         coordsPont = (coords[0]*CASEMAP +CASEMAP, coords[1]*CASEMAP)
