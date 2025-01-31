@@ -251,7 +251,6 @@ class LoadMedievale(): # nv1
         self.pont1 = pygame.image.load(join("Images", "Pont", "BridgeTreeW-Ex128.png")).convert_alpha()
         self.pont2 = pygame.image.load(join("Images", "Pont", "BridgePlanksW-Ex128.png")).convert_alpha()
         self.pont3 = pygame.image.load(join("Images", "Pont","BridgePlanksN-S-x128.png" )).convert_alpha()
-        self.rockExit = pygame.image.load(join("Images", "Obstacle", "ExitRock.png")).convert_alpha()
 
 
         self.pathX = pygame.image.load(join("Images", "Sol", "Path", "PathXx128.png")).convert_alpha()
@@ -364,6 +363,10 @@ class LoadMedievale(): # nv1
                         Sprites(pos, self.pathEndN, self.allSprites)  # Fin Sud
                     elif not left and not right and not up and down:
                         Sprites(pos, self.pathEndS, self.allSprites)  # Fin Nord
+                    
+                    # path par défault
+                    else:
+                        Sprites(pos, self.pathWE, self.allSprites)
 
                         
 

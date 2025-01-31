@@ -366,7 +366,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         coordsPNJ2 = self.__PlacementSpecial__("coordsMapBase", "Riviere2 Coords", "P")
         self.coordsPNJ = [[randint(8,((self.longueur//3) -5)), randint(5, self.largeur-5), "P", 1], 
                     [coordsPNJ2[0], coordsPNJ2[1], "P", 2], 
-                    [randint(((self.longueur//3)*2 +5), self.longueur-5), randint(5, self.largeur-8), "P", 3]]       
+                    [randint(((self.longueur//3)*2 +5), self.longueur-9), randint(5, self.largeur-8), "P", 3]]       
         super().PlacementElements(self.coordsPNJ, ["coordsMapObject", "PNJ Coords"]) # placement des pnj sur la map 
 
         # arbre interaction pnj
