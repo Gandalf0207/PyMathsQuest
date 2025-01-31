@@ -306,18 +306,21 @@ class GameToolBox(object):
         FONT36 = pygame.font.Font(None, 36)
         FONT36B = pygame.font.Font(None, 36)
         FONT36B.set_bold(True)
+        FONT50 = pygame.font.Font(None, 50)
+        FONT74 = pygame.font.Font(None, 74)
 
         FONT["FONT20"] = FONT20
         FONT["FONT22"] = FONT22
         FONT["FONT24"] = FONT24
         FONT["FONT30"] = FONT30
         FONT["FONT36"] = FONT36
-        FONT["FONT36B"] = pygame.font.Font(None, 36)
+        FONT["FONT36B"] = FONT36B
+        FONT["FONT50"] = FONT50
+        FONT["FONT74"] = FONT74
 
 
     # Fonction pour dessiner l'écran de chargement
     def ChargementEcran(self):
-        font = pygame.font.Font(None, 74)
         loading_step = 0
         self.gestionnaire.checkLoadingDone = False
         while not self.gestionnaire.checkLoadingDone:
@@ -326,7 +329,7 @@ class GameToolBox(object):
             # Animation de texte dynamique avec des points qui défilent
             loading_text = f"{TEXTE["Elements"]["Loading"]}{'.' * (loading_step % 4)}"
             loading_step += 1
-            text = font.render(loading_text, True, (255, 255, 255))
+            text = FONT["FONT74"].render(loading_text, True, (255, 255, 255))
             text_rect = text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
             self.gestionnaire.displaySurface.blit(text, text_rect.topleft)
 
@@ -339,10 +342,9 @@ class GameToolBox(object):
 
     def textScreen(self, text):
 
-        font = pygame.font.Font(None, 50)
 
         self.gestionnaire.displaySurface.fill((0,0,0))
-        textElement = font.render(text, True, (255,255,255))
+        textElement = FONT["FONT50"].render(text, True, (255,255,255))
         text_rect = textElement.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
         self.gestionnaire.displaySurface.blit(textElement, text_rect.topleft)
 

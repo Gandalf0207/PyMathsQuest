@@ -134,7 +134,7 @@ class InfosTips:
 
             
         # get lines 
-        max_width = 400
+        max_width = 375
         wrapped_lines = wrap_text(self.displayed_text, FONT["FONT20"], max_width)
 
         # Affichage des lignes

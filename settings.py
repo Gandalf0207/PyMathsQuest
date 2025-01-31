@@ -94,6 +94,8 @@ FONT = {
     "FONT30" : None,
     "FONT36" : None,
     "FONT36B" : None,
+    "FONT50" : None,
+    "FONT74" : None,
 }
 
 
