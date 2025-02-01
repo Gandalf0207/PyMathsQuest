@@ -33,6 +33,8 @@ class MiniMap:
         self.carre6 = pygame.image.load(join("Images", "MiniMap", "Carre6.png")).convert_alpha()
         self.carre7 = pygame.image.load(join("Images", "MiniMap", "Carre7.png")).convert_alpha()
         self.carre8 = pygame.image.load(join("Images", "MiniMap", "Carre8.png")).convert_alpha()
+        self.carre10 = pygame.image.load(join("Images", "MiniMap", "Carre10.png")).convert_alpha()
+        self.carre11 = pygame.image.load(join("Images", "MiniMap", "Carre11.png")).convert_alpha()
 
 
 
@@ -53,12 +55,18 @@ class MiniMap:
                     self.static_surface.blit(self.carre4, pos)
                 elif cell == "W": # puits
                     self.static_surface.blit(self.carre5, pos)
-                elif cell == "@":
+                elif cell == "@": # champs
                     self.static_surface.blit(self.carre6, pos)
                 elif cell in ["t", "T", "K"]:
                     self.static_surface.blit(self.carre7, pos)
+                elif cell == "C": # murailles
+                    self.static_surface.blit(self.carre11, pos)
                 else: # reste = herbe 
                     self.static_surface.blit(self.carre1, pos)
+                
+        if NIVEAU["Map"] == "NiveauMedievale" : # placement chateau 
+            pos = (104*CELL_SIZE, 0 *CELL_SIZE)
+            self.static_surface.blit(self.carre10, pos)
         
 
     def Update(self, player_pos: tuple, pnjGroup : any, interactionGroup : any) -> None:
