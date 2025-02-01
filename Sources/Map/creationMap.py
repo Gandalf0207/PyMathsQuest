@@ -827,11 +827,9 @@ class NiveauMedievale(GestionNiveauMap):
         # Placement fixe du troisième PNJ
         coordsPnj3 = [108, 12, "P", 3]
 
-        # Placement fixe du quatrième PNJ
-        coordsPnj4 = [109, 2, "P", 4] 
 
         # Stocke toutes les coordonnées des PNJ dans une liste
-        self.coordsPNJ = [coordsPnj1, coordsPnj2, coordsPnj3, coordsPnj4]
+        self.coordsPNJ = [coordsPnj1, coordsPnj2, coordsPnj3]
         
         # Appelle la méthode PlacementElements pour ajouter les PNJ sur la carte
         super().PlacementElements(self.coordsPNJ, ["coordsMapObject", "PNJ Coords"])

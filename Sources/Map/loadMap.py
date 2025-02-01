@@ -588,13 +588,6 @@ class LoadMedievale(): # nv1
                     CollisionSprites(pos, self.tableCraft, "TableCraft", (self.allSprites, self.collisionSprites, self.interactions))
 
 
-    def SetupExit(self):
-        """Méthode de placemet de la sortie
-        Input / Ouput : None"""
-
-        coords = LoadJsonMapValue("coordsMapObject", "Exit")
-
-
     def SetupPNJ(self) -> None:
         """Méthode de création et position des pnj.
         Input / Output : None"""
@@ -612,10 +605,7 @@ class LoadMedievale(): # nv1
                 PNJ(pos , "PNJ2", (self.allPNJ, self.allSprites, self.collisionSprites))
             if coordsPNJ[3] == 3 :
                 PNJ(pos , "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
-            if coordsPNJ[3] == 4 :
-                PNJ(pos , "PNJ4", (self.allPNJ, self.allSprites, self.collisionSprites))
-        
-    
+
     def AddPont(self, element : str, coords : tuple) -> None:
         """Méthode placement et ajout de pont sur la map pygame
         Input : element : str, coords : tuple
@@ -645,7 +635,6 @@ class LoadMedievale(): # nv1
         self.LoadImages()
         self.Setup()
         self.SetupPNJ()
-        self.SetupExit()
 
         # retour des infos de map
         return self.map, self.mapBase
