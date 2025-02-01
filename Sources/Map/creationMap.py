@@ -704,7 +704,6 @@ class NiveauMedievale(GestionNiveauMap):
         self.map[coordsSpawn[1]][coordsSpawn[0]] = "T"
         self.baseMap[coordsSpawn[1]][coordsSpawn[0] +1 ] = "="
 
-
     def __PlacementExit__(self):
         """Méthode de placement de la sortie"""
         coordsExit = (109, 1)  # Coordonnées fixes pour la sortie
@@ -1036,7 +1035,6 @@ class NiveauMedievale(GestionNiveauMap):
         else:
             self.__PlacementObstacles__()
 
-
     def Update(self):
         # Place la bordure de la carte (bords extérieurs)
         self.Bordure()
@@ -1101,8 +1099,25 @@ class NiveauMedievale(GestionNiveauMap):
         # Retourne la carte actuelle (map) et la carte de base (baseMap)
         return self.map, self.baseMap
 
-    
 
+class NiveauMedievaleChateau(GestionNiveauMap):
+    def __init__(self, longueur, largeur):
+        super().__init__(longueur, largeur)
+
+    def __PlacementBordure__(self):
+        pass
+
+    def __PlacementPilier__(self):
+        pass
+
+    def __PlacementPNJ__(self):
+        pass
+
+    def __Placement__Portal__(self):
+        pass
+
+    def Update(self):
+        pass
 
 
 # mapp, baseMap =  NiveauPlaineRiviere(150,75,200, 200, 200).Update()

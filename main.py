@@ -82,11 +82,16 @@ class Game(object):
             self.buildElements = Construire(self)
 
         elif NIVEAU["Map"] == "NiveauMedievale" : 
-            self.loadMapElement = LoadMedievale(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
-            self.map, self.mapBase = self.loadMapElement.Update()
-            self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
+            if INFOS["DemiNiveau"]:
+                self.loadMapElement = LoadMedievale(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
+                self.map, self.mapBase = self.loadMapElement.Update2()
+                self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
+            else:
+                self.loadMapElement = LoadMedievale(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
+                self.map, self.mapBase = self.loadMapElement.Update()
+                self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
+            
             # Initialisation dans votre setup
-
             self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
             self.ideaTips = InfosTips(self.ideaTips_surface)
             self.settingsAll = SettingsAll(self.allSettings_surface, self.INTERFACE_OPEN)
@@ -133,6 +138,9 @@ class Game(object):
             if INFOS["ExoPasse"]:
                 INFOS["ExoPasse"] = False
                 self.GameTool.ChangementNiveau()
+
+            if INFOS["DemiNiveau"]:
+               self.GameTool.ChangementDemiNiveau()
 
 
             self.allSprites = self.allSprites
@@ -418,6 +426,10 @@ class GameToolBox(object):
         PNJ["PNJ4"] = False
         PNJ["PNJ5"] = False
 
+        # reset demi niveau (chateau)
+        INFOS["DemiNiveau"] = False 
+
+
         # Réinitialiser les groupes
         self.gestionnaire.allSprites.empty()  # Vide le groupe, supprime les sprites.
         self.gestionnaire.collisionSprites.empty()
@@ -437,6 +449,24 @@ class GameToolBox(object):
         self.fondu_au_noir()
         self.textScreen(TEXTE["Elements"]["LevelSup"])
         self.ResetValues()
+
+        # call rebuild
+        self.gestionnaire.StartMap()
+
+    def ChangementDemiNiveau(self):
+        self.fondu_au_noir()
+        self.textScreen(TEXTE["Elements"]["DemiNiveauTexte"])
+
+        # Réinitialiser les groupes
+        self.gestionnaire.allSprites.empty()  # Vide le groupe, supprime les sprites.
+        self.gestionnaire.collisionSprites.empty()
+        self.gestionnaire.allPNJ.empty()
+        self.gestionnaire.interactionsGroup.empty()
+
+        self.gestionnaire.INTERFACE_OPEN = False # interface secondaire ouvert
+        self.gestionnaire.interface_exo = False
+        self.gestionnaire.cinematique = False # cinématique
+        self.gestionnaire.cinematiqueObject = None # obj de la cinematique 
 
         # call rebuild
         self.gestionnaire.StartMap()

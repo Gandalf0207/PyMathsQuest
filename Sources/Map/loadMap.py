@@ -284,7 +284,6 @@ class LoadMedievale(): # nv1
 
 
 
-
     def Setup(self) -> None:
         """Méthode de build de tout les éléments sprites de la map jeu.
         Input / Output : None"""
@@ -587,6 +586,11 @@ class LoadMedievale(): # nv1
                 if self.map[ordonnees][abscisses] == "E" :
                     CollisionSprites(pos, self.tableCraft, "TableCraft", (self.allSprites, self.collisionSprites, self.interactions))
 
+    def Setup2(self):
+        self.map, self.mapBase = NiveauMedievaleChateau(11, 11).Update()
+
+
+
 
     def SetupPNJ(self) -> None:
         """Méthode de création et position des pnj.
@@ -638,3 +642,8 @@ class LoadMedievale(): # nv1
 
         # retour des infos de map
         return self.map, self.mapBase
+    
+    def Update2(self):
+        self.LoadImages()
+        self.Setup2()
+        self.SetupPNJ()

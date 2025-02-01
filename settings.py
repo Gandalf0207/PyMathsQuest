@@ -117,6 +117,7 @@ INFOS = {
     "Difficulte" : False,
     "Exo" : False, 
     "ExoPasse" : False,
+    "DemiNiveau" :False,
     "ChangementNiveau" : False,
     "ChangementAnnee" : False,
 }

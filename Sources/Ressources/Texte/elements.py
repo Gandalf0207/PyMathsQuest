@@ -5,6 +5,7 @@ ElementsFr = {
     "Loading" : "Chargement",
     "Interaction" : "Appuyer sur E",
     "LevelSup" : "Vous passez au niveau suppérieur !",
+    "DemiNiveauTexte" : "Vous entrez dans le chateau",
 
     "InterfacePNJ" : {
         "SkipButton" : "Suivant"
@@ -36,12 +37,13 @@ ElementsFr = {
             },
 
            "NiveauMedievale" : {
-                "SeePNJ" : "Discuter avec le pnj sur la map. Regarder la minimap",
-                "LearnCrossBridge" : "Traverser le pont. Se rapprocher du pont qui se trouve à côté du bûcheron.",
-                "BuildBridge" : "Construire le pont. Se rapprocher de la rivière pour pouvoir construire",
+                "SeePNJ" : "Discuter avec le pnj sur la map. Regarder la minimap et suivez le chemin !",
+                "BuildBridge" : "Construire le pont. Se rapprocher de la rivière en suivant le chemin pour pouvoir construire",
                 "CrossBridge" : "Traverser le pont pour acceder à la suite.",
+                "FindWell" : "Trouver le puits au centre du village et frabriquer un bateau.",
                 "PlaceBoat" : "Vous devez placer le bateau dans la rivière.",
                 "NavigateBoat" : "Vous devez rentrer dans le bateau pour pouvoir acceder au chateau.",
+                "OpenDoor" : "Vous devez ouvrir le chateau pour acceder à la suite."
             },
         },
     },
@@ -93,6 +95,7 @@ ElementsFr = {
         "UseBoat" : "Vous naviguez sur la rivière et arrivez dans l'enceinte du château.",
         "UseBoat2" : "Vous naviguez sur la rivière et sortez de l'enceinte du château.",
         "MakeExo" : "Pour pouvoir traverser le pont,  vous devez résoudre cet exercice.",
+        "GetCours" : "Vous obtenez un bout du parchemin de cours ! gg à toi ", 
 
         "ExoTexte" : {
             "Seconde" :{

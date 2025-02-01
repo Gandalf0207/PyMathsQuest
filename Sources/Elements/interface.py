@@ -383,10 +383,19 @@ class PNJInterface(object):
                         INVENTORY["Pickaxe"] += 1
                         PNJ["PNJ3"] = True
                         STATE_HELP_INFOS[0] = "MineRock"
+
                 if NIVEAU["Map"] == "NiveauMedievale": 
                     if self.gestionnaire.pnjActuel == "PNJ1":
                         PNJ["PNJ1"] = True
                         STATE_HELP_INFOS[0] = "BuildBridge"
+                    elif self.gestionnaire.pnjActuel == "PNJ2":
+                        PNJ["PNJ2"] = True
+                        STATE_HELP_INFOS["FindWeel"]
+                    elif self.gestionnaire.pnjActuel == "PNJ3":
+                        PNJ["PNJ3"] = True
+                        INVENTORY["Key"] += 1
+                        STATE_HELP_INFOS["OpenDoor"]
+
 
 
 
