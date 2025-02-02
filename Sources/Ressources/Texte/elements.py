@@ -7,7 +7,10 @@ ElementsFr = {
     "LevelSup" : "Vous passez au niveau suppérieur !",
 
     "InterfacePNJ" : {
-        "SkipButton" : "Suivant"
+        "SkipButton" : "Suivant",
+        "Oui" : "Oui",
+        "Non" : "Non",
+
     },
 
     "HotBar" : {

@@ -65,6 +65,9 @@ DialoguesFr = {
                     "Nom" : "Âne fuyard",
                     "Principal": {
                         "Dialogue1": "(Il semble que cet âne se soit enfui, il y a probablement une ferme à proximité. Il a laissé tomber deux objets, on dirait un parchemin et une pioche.)",
+                        "Dialogue2": "2(Il semblee cet âne se soit enui, il y a probablement une ferme à proximité. Il a laissé tomber deux objets, on dirait un parchemin et une pioche.)",
+                        "Dialogue3": "3(Il semble que cet âne se s enfui, il y a probablement une fme à proximité. Il a laissé toer deux objets, on dirait un parchemin et une pioche.)",
+                        "Dialogue4": "4(Il semble que cet  se soit enfui, il y a probablement une ferme à proximité. Il a laissé tomber deux objets, on diraitn parchemin et une pioche.)",
                     },
                     "Alternatif": {
                         "Dialogue1": "(Cet âne n’a pas l’air de vouloir rentrer chez lui)"
@@ -73,8 +76,7 @@ DialoguesFr = {
                 "PNJ4": {
                     "Nom" : "Âne fuyard",
                     "Principal": {
-                        "Dialogue1": "(Il semble que cet âne se soit enfui, il y a probablement une ferme à proximité. Il a laissé tomber deux objets, on dirait un parchemin et une pioche.)",
-                    },
+                        "Dialogue1": "1(Il semble que cet âne se soit enfui, il y a probabment une ere à proté. l  laissé tber deuobjets, dirait un paremin et une pioche.)",},
                     "Alternatif": {
                         "Dialogue1": "(Cet âne n’a pas l’air de vouloir rentrer chez lui)"
                     }

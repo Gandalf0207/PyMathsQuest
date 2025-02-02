@@ -102,8 +102,7 @@ class Game(object):
                 self.InteractionObject = Interactions(self)
                 self.buildElements = Construire(self) 
 
-            if INFOS["DemiNiveau"]:
-                INFOS["DemiNiveau"] = False
+
 
 
 
@@ -144,7 +143,7 @@ class Game(object):
                 INFOS["ExoPasse"] = False
                 self.GameTool.ChangementNiveau()
 
-            if INFOS["DemiNiveau"]:
+            if INFOS["DemiNiveau"] and not self.demiNiveau:
                self.demiNiveau = True
                self.GameTool.ChangementDemiNiveau()
 

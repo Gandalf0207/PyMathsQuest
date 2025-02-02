@@ -25,6 +25,7 @@ class PNJ(pygame.sprite.Sprite):
 
         # bool de check  : double dialogues discussion
         self.discussion = False
+        self.QuestionDone = False # si les pnj on une question
 
         self.load_images()
         self.speed = 300

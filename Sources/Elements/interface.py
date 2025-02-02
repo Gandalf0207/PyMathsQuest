@@ -352,16 +352,24 @@ class PNJInterface(object):
 
         # chargement des éléments autre
         self.loadPNG()
-        self.loadText()
+
+        if self.gestionnaire.pnjObj.QuestionDone and not self.gestionnaire.pnjObj.discussion: # add 1 : skp dialogue question
+            self.loadText(1)
+        else:
+            self.loadText()
+        
 
 
-    def loadText(self) -> None:
+    def loadText(self, skipDialogueQuestion = 0 ) -> None:
         """Méthode de chargement des dialogues en fontion du pnj et du niveau et de l'avancement de discussion. 
         Input / Output : None"""
 
         # variables de base
         self.pnj_displayed_text = ""
         self.pnj_index = 0
+
+        # chargement au dialogue suivant si on a dejé faitune qustions
+        self.compteurDialogue += skipDialogueQuestion
 
         # check déjà discuter avec pnj
         if not self.gestionnaire.pnjObj.discussion:
@@ -425,7 +433,6 @@ class PNJInterface(object):
     def BuildInterface(self) -> None:
         """Méthode de création des éléments de l'interface de discussion avec le pnj. 
         Input / Output : None"""
-
         self.interfaceSurface.fill((0, 0, 0, 0))  # Réinitialiser la surface avec une transparence complète
 
         # load element png
@@ -437,14 +444,38 @@ class PNJInterface(object):
         pnjName = FONT["FONT36B"].render(self.pnjName, True, (255,255,255))
         self.interfaceSurface.blit(pnjName, (200, 400))
 
-        # load btn skip / lancer
-        self.surfaceBtnSkip = pygame.Surface((100,50))
-        self.btnRectSkip = pygame.Rect(750,600,100,50)
-        self.surfaceBtnSkip.fill((255,255,255))
-        self.textS = TEXTE["Elements"]["InterfacePNJ"]["SkipButton"]
-        self.textSkip = FONT["FONT36"].render(self.textS, True, (10,10,10))
-        self.surfaceBtnSkip.blit(self.textSkip, (0,0))
-        self.interfaceSurface.blit(self.surfaceBtnSkip, (self.btnRectSkip.x, self.btnRectSkip.y))
+        # box petite question
+        if self.gestionnaire.pnjActuel == "PNJ3" and NIVEAU["Map"] == "NiveauMedievale" and not self.gestionnaire.pnjObj.QuestionDone:
+            self.surfaceBtnOui = pygame.Surface((75,50))
+            self.surfaceBtnNon = pygame.Surface((75,50))
+
+            self.rectBtnOui = pygame.Rect(800, 600, 75, 50)
+            self.rectBtnNon = pygame.Rect(1000, 600, 75, 50)
+
+            self.textO = TEXTE["Elements"]["InterfacePNJ"]["Oui"]
+            self.textN = TEXTE["Elements"]["InterfacePNJ"]["Non"]
+
+            self.textOui = FONT["FONT36"].render(self.textO, True, (10,10,10))
+            self.textNon = FONT["FONT36"].render(self.textN, True, (10,10,10))
+
+            self.surfaceBtnOui.blit(self.textOui, (0,0))
+            self.surfaceBtnNon.blit(self.textNon, (0,0))
+
+            self.interfaceSurface.blit(self.surfaceBtnOui, (self.rectBtnOui.x, self.rectBtnOui.y))
+            self.interfaceSurface.blit(self.surfaceBtnNon, (self.rectBtnNon.x, self.rectBtnNon.y))
+
+
+        else:
+
+            # load btn skip / lancer
+            self.surfaceBtnSkip = pygame.Surface((100,50))
+            self.btnRectSkip = pygame.Rect(750,600,100,50)
+            self.surfaceBtnSkip.fill((255,255,255))
+            self.textS = TEXTE["Elements"]["InterfacePNJ"]["SkipButton"]
+            self.textSkip = FONT["FONT36"].render(self.textS, True, (10,10,10))
+            self.surfaceBtnSkip.blit(self.textSkip, (0,0))
+            self.interfaceSurface.blit(self.surfaceBtnSkip, (self.btnRectSkip.x, self.btnRectSkip.y))
+
 
         # bloc gestion texte 
         if self.pnj_index < len(self.pnj_text):
@@ -463,6 +494,7 @@ class PNJInterface(object):
         for i, line in enumerate(wrapped_lines):
             line_surface = FONT["FONT36"].render(line, True, (255, 255, 255))
             self.interfaceSurface.blit(line_surface, (200, y_offset + i * line_height))
+
 
 
     def CloseInterface(self) -> None:
@@ -497,16 +529,29 @@ class PNJInterface(object):
             if current_time - self.last_click_time > self.click_delay:
                 self.last_click_time = current_time
 
-                # Vérifiez si le clic est dans le rectangle du bouton
-                if self.btnRectSkip.collidepoint(event.pos):
-                    self.loadText() # pasage au dialogue suivant
-                    self.BuildInterface() # build des éléments
+                if self.gestionnaire.pnjActuel == "PNJ3" and NIVEAU["Map"] == "NiveauMedievale" and not self.gestionnaire.pnjObj.QuestionDone:
+                    if self.rectBtnOui.collidepoint(event.pos):
+                        self.gestionnaire.pnjObj.QuestionDone =True
+                        self.loadText() # pasage au dialogue suivant
+                        self.BuildInterface() # build des éléments
+                    
+                    if self.rectBtnNon.collidepoint(event.pos):
+                        self.CloseInterface()
+                else:
+                    # Vérifiez si le clic est dans le rectangle du bouton
+                    if self.btnRectSkip.collidepoint(event.pos):
+                        self.loadText() # pasage au dialogue suivant
+                        self.BuildInterface() # build des éléments
 
-        # meme chose mais avec espace
+  
         if keys[pygame.K_SPACE] : 
             current_time = pygame.time.get_ticks()
             if current_time - self.last_click_time > self.click_delay:
                 self.last_click_time = current_time
-
-                self.loadText()
-                self.BuildInterface()   
+                if  self.gestionnaire.pnjActuel == "PNJ3" and NIVEAU["Map"] == "NiveauMedievale":
+                    if self.gestionnaire.pnjObj.QuestionDone: # condition spécifique
+                        self.loadText()
+                        self.BuildInterface()   
+                else:
+                    self.loadText()
+                    self.BuildInterface()   
