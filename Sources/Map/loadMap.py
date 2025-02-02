@@ -282,6 +282,7 @@ class LoadMedievale(): # nv1
         self.tableCraft = pygame.image.load(join("Images", "Obstacle", "TableCraft.png")).convert_alpha()
         self.boat = pygame.image.load(join("Images", "Obstacle", "Boat.png")).convert_alpha()
 
+        self.DoorChateau = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
 
 
     def Setup(self) -> None:
@@ -312,10 +313,6 @@ class LoadMedievale(): # nv1
                     def is_path(self, x, y):
                         """ Vérifie si une case est un chemin tout en évitant les erreurs d'index. """
                         return 0 <= x < len(self.mapBase) and 0 <= y < len(self.mapBase[0]) and self.mapBase[x][y] == "="
-
-                    def is_water(self, x, y):
-                        """ Vérifie si une case est une rivière. """
-                        return 0 <= x < len(self.mapBase) and 0 <= y < len(self.mapBase[0]) and self.mapBase[x][y] == "#"
 
                     # Récupération des voisins
                     up = is_path(self, ordonnees - 1, abscisses)
@@ -568,7 +565,8 @@ class LoadMedievale(): # nv1
                         CollisionSprites(pos, self.MuraillesNS, "Murailles", (self.allSprites, self.collisionSprites))
 
 
-
+                if self.map[ordonnees][abscisses] == "D":
+                    CollisionSprites(pos, self.DoorChateau, "Door", (self.collisionSprites, self.interactions, self.allSprites))
 
                 # maisons
                 if self.map[ordonnees][abscisses] == "H" : 
@@ -585,11 +583,6 @@ class LoadMedievale(): # nv1
 
                 if self.map[ordonnees][abscisses] == "E" :
                     CollisionSprites(pos, self.tableCraft, "TableCraft", (self.allSprites, self.collisionSprites, self.interactions))
-
-    def Setup2(self):
-        self.map, self.mapBase = NiveauMedievaleChateau(11, 11).Update()
-
-
 
 
     def SetupPNJ(self) -> None:
@@ -642,8 +635,103 @@ class LoadMedievale(): # nv1
 
         # retour des infos de map
         return self.map, self.mapBase
+
+
+class LoadMedievaleChateau():
+    def __init__(self, allSprites : any, collisionSprites : any, allpnj : any, interactions) -> None:
+        """Méthode initialisation chargement de la map du niveau médievale 
+        Input : niveau : int, allSprites / collisionsSprites / allpnj : element pygame; Output : None"""
     
-    def Update2(self):
+        # class des éléments pygame
+        self.allPNJ = allpnj
+        self.allSprites = allSprites
+        self.collisionSprites = collisionSprites
+        self.interactions = interactions
+
+    def LoadImages(self) -> None:
+        """Méthode de chargement de toutes les images pour la map 
+        Input / Output : None """
+        self.MursAngleWS = pygame.image.load(join("Images", "Chateau", "MursChateau.png")).convert_alpha()
+        # self.MursAngleWN = pygame.image.load(join("Images", "Chateau", ".png")).convert_alpha()
+        # self.MursAngleES = pygame.image.load(join("Images", "Chateau", ".png")).convert_alpha()
+        # self.MursAngleEN = pygame.image.load(join("Images", "Chateau", ".png")).convert_alpha()
+
+        # self.MursLineSN = pygame.image.load(join("Images", "Chateau", ".png")).convert_alpha()
+        # self.MursLineWE = pygame.image.load(join("Images", "Chateau", ".png")).convert_alpha()
+
+        self.Pilier = pygame.image.load(join("Images", "Chateau", "Piliers.png")).convert_alpha()
+        self.Chandelier = pygame.image.load(join("Images", "Chateau", "Chandelier.png")).convert_alpha()
+        self.Socle = pygame.image.load(join("Images", "Chateau", "Socle.png")).convert_alpha()
+        self.Door = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+        self.Portal = pygame.image.load(join("Images", "Chateau", "Portal.png")).convert_alpha()
+        self.Sol = pygame.image.load(join("Images", "Chateau", "SolChateau.png")).convert_alpha()
+
+        self.CerclePortal = pygame.image.load(join("Images", "Chateau", "SolChateau.png")).convert_alpha()
+    
+
+        pass
+
+    def Setup(self):
+        self.map, self.mapBase = NiveauMedievaleChateau().Update()
+
+        # parcours et création de chaque sprites
+        for ordonnees in range(len(self.mapBase)):
+            for abscisses in range(len(self.mapBase[ordonnees])):
+                pos = (abscisses * CASEMAP, ordonnees * CASEMAP)  # Coordonnées de la case sur la carte
+
+                # base de la map
+                if self.mapBase[ordonnees][abscisses] == "-":
+                    Sprites(pos, self.Sol, self.allSprites)
+                elif self.mapBase[ordonnees][abscisses] == "O":
+                    CollisionSprites(pos, self.MursAngleWS, "Mur", (self.collisionSprites, self.allSprites))
+                elif self.mapBase[ordonnees][abscisses] == "U":
+                    Sprites(pos, self.Socle, self.allSprites)
+                elif self.mapBase[ordonnees][abscisses] == "D":
+                    CollisionSprites(pos, self.Door, "Door", (self.collisionSprites, self.allSprites))
+
+                # obstacle de la map
+                if self.map[ordonnees][abscisses] == "u":
+                    CollisionSprites(pos, self.Portal, "Portal", (self.collisionSprites, self.allSprites))
+                elif self.map[ordonnees][abscisses] == "Y":
+                    CollisionSprites(pos, self.Pilier, "Pilier",  (self.collisionSprites, self.allSprites))
+                elif self.map[ordonnees][abscisses] == "R":
+                    CollisionSprites(pos, self.Chandelier, "Chandelier", (self.collisionSprites, self.allSprites))
+
+    def AddCerclePortal(self, element, coords):
+        CollisionSprites(coords,self.CerclePortal, element, (self.collisionSprites, self.interactions, self.allSprites))
+
+
+
+        pass
+
+    def SetupPNJ(self) -> None:
+        """Méthode de création et position des pnj.
+        Input / Output : None"""
+
+        # Récupération des coords + infos pnj
+        coordsPNJList = LoadJsonMapValue("coordsMapObject","PNJ Coords")
+        
+        # parcours et création des sprites pnj
+        for coordsPNJ in coordsPNJList:
+            pos = (coordsPNJ[0]*CASEMAP, coordsPNJ[1]*CASEMAP) # calcul coords pygame
+            if coordsPNJ[3] == 1 : 
+                PNJ(pos , "PNJ1", (self.allPNJ, self.allSprites, self.collisionSprites))
+            if coordsPNJ[3] == 2 : 
+                pos = (pos[0]+64, pos[1]+64) # placement centre cellule
+                PNJ(pos , "PNJ2", (self.allPNJ, self.allSprites, self.collisionSprites))
+            if coordsPNJ[3] == 3 :
+                PNJ(pos , "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
+            if coordsPNJ[3] == 4 :
+                PNJ(pos , "PNJ4", (self.allPNJ, self.allSprites, self.collisionSprites))
+            if coordsPNJ[3] == 5 :
+                PNJ(pos , "PNJ5", (self.allPNJ, self.allSprites, self.collisionSprites))
+
+    def Update(self):
+        # Appel méthodes créations map + sprites
         self.LoadImages()
-        self.Setup2()
+        self.Setup()
         self.SetupPNJ()
+
+        # retour des infos de map
+        return self.map, self.mapBase
+

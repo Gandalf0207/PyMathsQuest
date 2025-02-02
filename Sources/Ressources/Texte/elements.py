@@ -5,7 +5,6 @@ ElementsFr = {
     "Loading" : "Chargement",
     "Interaction" : "Appuyer sur E",
     "LevelSup" : "Vous passez au niveau suppérieur !",
-    "DemiNiveauTexte" : "Vous entrez dans le chateau",
 
     "InterfacePNJ" : {
         "SkipButton" : "Suivant"
@@ -43,7 +42,8 @@ ElementsFr = {
                 "FindWell" : "Trouver le puits au centre du village et frabriquer un bateau.",
                 "PlaceBoat" : "Vous devez placer le bateau dans la rivière.",
                 "NavigateBoat" : "Vous devez rentrer dans le bateau pour pouvoir acceder au chateau.",
-                "OpenDoor" : "Vous devez ouvrir le chateau pour acceder à la suite."
+                "OpenDoor" : "Vous devez ouvrir le chateau pour acceder à la suite.",
+                "OpenPortail" : "Vous devez réouvrir le portail",
             },
         },
     },
@@ -85,6 +85,7 @@ ElementsFr = {
     },
 
     "NiveauMedievale" : {
+        "Cinematique1End" : "Le pnj à fuis à travers le portail, vous devez le rallumer",
         "TraverserPont" : "Vous venez de traverser le pont",
         "CantTraverserPont" : "Le garde est devant le pont, vous ne pouvez pas le traverser.",
         "BuildBridge" : "Vous venez de construire le pont",
@@ -96,6 +97,8 @@ ElementsFr = {
         "UseBoat2" : "Vous naviguez sur la rivière et sortez de l'enceinte du château.",
         "MakeExo" : "Pour pouvoir traverser le pont,  vous devez résoudre cet exercice.",
         "GetCours" : "Vous obtenez un bout du parchemin de cours ! gg à toi ", 
+        "OpenChateau" : "Vous entrez dans le chateau de bobini",
+        "OpenPortail" : "Vous devez réouvvrir le portail pour acceder à la suite", 
 
         "ExoTexte" : {
             "Seconde" :{

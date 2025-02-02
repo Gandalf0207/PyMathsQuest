@@ -653,6 +653,13 @@ class NiveauMedievale(GestionNiveauMap):
             self.map[coords[1]][coords[0]] = "C"  
             self.baseMap[coords[1]][coords[0]] = "C"  
 
+        # placement porte du chateau
+        coordsDoor = [109, 10]
+        self.map[coordsDoor[1]][coordsDoor[0]] = "D"  
+        self.baseMap[coordsDoor[1]][coordsDoor[0]] = "D" 
+
+        coordsChateau.append(coordsDoor)
+
         # Sauvegarde des coordonnées du château dans un fichier JSON
         AjoutJsonMapValue(coordsChateau, "coordsMapObject", "Chateau Coords")  
 
@@ -1100,24 +1107,57 @@ class NiveauMedievale(GestionNiveauMap):
         return self.map, self.baseMap
 
 
-class NiveauMedievaleChateau(GestionNiveauMap):
-    def __init__(self, longueur, largeur):
-        super().__init__(longueur, largeur)
-
-    def __PlacementBordure__(self):
-        pass
-
-    def __PlacementPilier__(self):
-        pass
-
-    def __PlacementPNJ__(self):
-        pass
-
-    def __Placement__Portal__(self):
-        pass
+class NiveauMedievaleChateau():
+    def __init__(self):
+       pass
 
     def Update(self):
-        pass
+        """Map n'est pas généré aléatoirement pour le chateau"""
+        self.map = [
+            ["O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O"],
+            ["O", "-", "-", "-", "-", "u", "-", "-", "-", "-", "O"],
+            ["O", "-", "Y", "R", "-", "-", "-", "R", "Y", "-", "O"],
+            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
+            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
+            ["O", "-", "Y", "R", "-", "-", "-", "R", "Y", "-", "O"],
+            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
+            ["O", "-", "-", "-", "-", "P", "-", "-", "-", "-", "O"],
+            ["O", "-", "Y", "R", "-", "-", "-", "R", "Y", "-", "O"],
+            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
+            ["O", "O", "O", "O", "O", "D", "O", "O", "O", "O", "O"],
+        ]
+
+        self.baseMap = [
+            ["O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O"],
+            ["O", "-", "-", "-", "U", "U", "U", "-", "-", "-", "O"],
+            ["O", "-", "Y", "-", "U", "U", "U", "-", "Y", "-", "O"],
+            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
+            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
+            ["O", "-", "Y", "-", "-", "-", "-", "-", "Y", "-", "O"],
+            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
+            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
+            ["O", "-", "Y", "-", "-", "-", "-", "-", "Y", "-", "O"],
+            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
+            ["O", "O", "O", "O", "O", "D", "O", "O", "O", "O", "O"],
+        ]
+
+
+        AjoutJsonMapValue([[5, 9]], "coordsMapObject", "Spawn") # on ajoute les coordonnées du spawn au fichier json
+        AjoutJsonMapValue([5, 1], "coordsMapObject", "Exit") # on ajoute les coordonnées du spawn au fichier json
+        AjoutJsonMapValue([[5, 7, "P", 4]], "coordsMapObject", "PNJ Coords") # on ajoute les coordonnées du spawn au fichier json
+
+
+        # On charge la map de base
+        AjoutJsonMapValue(self.map, "coordsMapBase", "AllMapInfo")
+
+        # On charche la map (collision)
+        AjoutJsonMapValue(self.baseMap, "coordsMapBase", "AllMapBase")
+
+        return self.map, self.baseMap
+
+
+
+
 
 
 # mapp, baseMap =  NiveauPlaineRiviere(150,75,200, 200, 200).Update()

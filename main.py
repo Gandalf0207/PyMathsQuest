@@ -41,6 +41,7 @@ class Game(object):
         self.cinematique = False # cinématique
         self.cinematiqueObject = None # obj de la cinematique 
         self.hideHotbar = False
+        self.demiNiveau = False
 
         self.GameTool = GameToolBox(self)
         self.GameTool.CreateFont()
@@ -83,8 +84,8 @@ class Game(object):
 
         elif NIVEAU["Map"] == "NiveauMedievale" : 
             if INFOS["DemiNiveau"]:
-                self.loadMapElement = LoadMedievale(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
-                self.map, self.mapBase = self.loadMapElement.Update2()
+                self.loadMapElement = LoadMedievaleChateau(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
+                self.map, self.mapBase = self.loadMapElement.Update()
                 self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
             else:
                 self.loadMapElement = LoadMedievale(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
@@ -96,9 +97,13 @@ class Game(object):
             self.ideaTips = InfosTips(self.ideaTips_surface)
             self.settingsAll = SettingsAll(self.allSettings_surface, self.INTERFACE_OPEN)
 
-            # infos traverser
-            self.InteractionObject = Interactions(self)
-            self.buildElements = Construire(self) 
+            if not INFOS["DemiNiveau"]:
+                # infos traverser
+                self.InteractionObject = Interactions(self)
+                self.buildElements = Construire(self) 
+
+            if INFOS["DemiNiveau"]:
+                INFOS["DemiNiveau"] = False
 
 
 
@@ -140,10 +145,8 @@ class Game(object):
                 self.GameTool.ChangementNiveau()
 
             if INFOS["DemiNiveau"]:
+               self.demiNiveau = True
                self.GameTool.ChangementDemiNiveau()
-
-
-            self.allSprites = self.allSprites
 
 
 
@@ -165,8 +168,8 @@ class Game(object):
                             print(self.player.rect.center)
 
                         if event.key == pygame.K_0:
-                            self.player.rect.center = (130*CASEMAP, 50*CASEMAP)
-                            self.player.hitbox_rect.center = (130*CASEMAP, 50*CASEMAP)
+                            self.player.rect.center = (130*CASEMAP, 25*CASEMAP)
+                            self.player.hitbox_rect.center = (130*CASEMAP, 25*CASEMAP)
                     
                         if event.key == pygame.K_p or event.key == pygame.K_v or event.key == pygame.K_i or event.key == pygame.K_b:
                             self.INTERFACE_OPEN = self.settingsAll.OpenInterfaceElementClavier(event, self.INTERFACE_OPEN)
@@ -212,14 +215,16 @@ class Game(object):
 
             # Afficher la minimap sur l'écran principal + menu settings all
             if not self.cinematique :
-                
-                self.minimap.Update(self.player.rect.center, self.allPNJ, self.interactionsGroup)
+                if not self.demiNiveau: # pas besoin de la minimap
+                    self.minimap.Update(self.player.rect.center, self.allPNJ, self.interactionsGroup)
                 self.ideaTips.Update()
                 self.settingsAll.Update(event)
 
                 if not self.hideHotbar: # check hide bool
+
                     self.displaySurface.blit(self.bgHotBar, (0, WINDOW_HEIGHT-160))
-                    self.displaySurface.blit(self.minimap_surface, (10, WINDOW_HEIGHT-160))
+                    if not self.demiNiveau : # pas besoin de la minimap
+                        self.displaySurface.blit(self.minimap_surface, (10, WINDOW_HEIGHT-160))
                     self.displaySurface.blit(self.ideaTips_surface, COORDS_BOX_IDEAS_TIPS)
                     self.displaySurface.blit(self.allSettings_surface, COORS_BOX_ALL_SETTINGS)
                 
@@ -231,7 +236,7 @@ class Game(object):
                 self.cinematique, endCinematique = self.cinematiqueObject.Update(dt)
                 if endCinematique:
                     self.pnj.EndCinematique()
-                    self.cinematiqueObject.Replacement()
+                    self.cinematiqueObject.Replacement(self.allPNJ)
                     self.fondu_au_noir()
                     
                     if NIVEAU["Map"] == "NiveauPlaineRiviere":
@@ -252,20 +257,36 @@ class Game(object):
                             # reset valeue individuelle
                             PNJ["PNJ1"] = True
 
-                            pnjCoords = LoadJsonMapValue("coordsMapObject", "PNJ Coords")
-                            goal = LoadJsonMapValue("coordsMapObject","ArbreSpecial Coords")
-                            
-                            threading.Thread(target=ChangeValuesMap, args=[(pnjCoords[0], "-"), (goal, "P")])
                             STATE_HELP_INFOS[0] = "LearnCrossBridge"
-                
 
-                    # reset values cinmatique
-                    self.cinematique = False
-                    self.cinematiqueObject = None
+                        # reset values cinmatique
+                        self.cinematique = False
+                        self.cinematiqueObject = None
+                        
+                        self.ouverture_du_noir(object.pos)
+
+                    if NIVEAU["Map"] == "NiveauMedievale":
+                        if not PNJ["PNJ4"]:
+                            self.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["Cinematique1End"])
+
+                            for object in self.collisionSprites:
+                                if (object.pos[0] // CASEMAP, object.pos[1] // CASEMAP) == self.cinematiqueObject.goal:
+                                    object.kill()  
+
+                            portal = LoadJsonMapValue("coordsMapObject", "Exit")
+                            coords = ((portal[0])*CASEMAP, portal[1]*CASEMAP) # on ajoute 1 pour etre sur la rivière
+                            self.loadMapElement.AddCerclePortal("CerclePortal", coords)
+
+                            PNJ["PNJ4"] = True  
+
+                            STATE_HELP_INFOS[0] = "OpenPortail"
+
+
+                        # reset values cinmatique
+                        self.cinematique = False
+                        self.cinematiqueObject = None
                     
-                 
-                    
-                    self.ouverture_du_noir(object.pos)
+
                     self.allSprites.draw(self.player.rect.center, self.hideHotbar)
 
             
@@ -428,6 +449,7 @@ class GameToolBox(object):
 
         # reset demi niveau (chateau)
         INFOS["DemiNiveau"] = False 
+        self.demiNiveau = False
 
 
         # Réinitialiser les groupes
@@ -455,7 +477,8 @@ class GameToolBox(object):
 
     def ChangementDemiNiveau(self):
         self.fondu_au_noir()
-        self.textScreen(TEXTE["Elements"]["DemiNiveauTexte"])
+        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["OpenChateau"])
+
 
         # Réinitialiser les groupes
         self.gestionnaire.allSprites.empty()  # Vide le groupe, supprime les sprites.

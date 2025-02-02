@@ -140,6 +140,7 @@ class Interactions(object):
 
                 if self.ObjectId == "TableCraft":
                     if not self.GetCoursTableCraft:
+                        self.GetCoursTableCraft = True
                         self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["GetCours"])
 
                     if INVENTORY["Planks"] < 3:
@@ -200,7 +201,8 @@ class Interactions(object):
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center)
 
                 if self.ObjectId == "Door":
-                    INFOS["DemiNiveau"] = True                    
+                    INFOS["DemiNiveau"] = True      
+                    STATE_HELP_INFOS[0] = "SeePNJ"              
 
 
                         
@@ -211,14 +213,6 @@ class Interactions(object):
         Ouput : bool"""
 
         for Object in self.interactionGroup: # parcours all obj 
-            if Object.id == "ExitRock" and NIVEAU["Map"] == "NiveauPlaineRiviere" and not PNJ["PNJ3"]:
-                return False
-            if Object.id in ["Arbre", "Abre2"] and NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ1"]:
-                return False
-            if Object.id == "TableCraft" and NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ2"]:
-                return False
-            if Object.id == "Door" and NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ3"]:
-                return False
 
             coordsObj = (Object.pos[0] + CASEMAP // 2, Object.pos[1] + CASEMAP // 2) # top left coords -> center coords
             playerPos = self.player.rect.center # center player
@@ -236,6 +230,18 @@ class Interactions(object):
  
 
             if distance <= self.distanceMax:
+                # vrif de possibilité
+                if Object.id == "ExitRock" and NIVEAU["Map"] == "NiveauPlaineRiviere" and not PNJ["PNJ3"]:
+                    return False
+                if Object.id in ["Arbre", "Arbre2"] and NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ1"]:
+                    return False
+                if Object.id == "TableCraft" and NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ2"]:
+                    return False
+                if Object.id == "Door" and NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ3"]:
+                    return False
+            
+
+
 
                 # valeur importante de l'obj interactions
                 self.Obj = Object
