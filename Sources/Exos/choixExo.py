@@ -17,10 +17,16 @@ class GetExo:
         def checkUniqueValuesList(liste):
             return len(liste) == len(set(liste)) # check de si toutes les valeurs sont uniques
 
-        liste = []
-        self.a = randint(-25,25)
-        self.c = randint(-25,25)
-        self.b = randint(-25,25)
+        self.a = randint(5,25 )
+        self.b = randint(25,50) 
+        self.r = randint(4, 12) 
+        self.d = randint(6, 32)
+        self.L = randint(8, 34)
+        self.l = randint(7, 23) 
+        self.h = randint(3, 45)
+        self.e = sqrt((self.r**2)+(self.h**2)) # check valeurs correct (nb chiffres après la virgule exo volume nv2)
+
+
         self.nb1 = randint(2,50)
         self.nb2 = randint(2,50)
         self.nb3 = randint(2,50)
@@ -30,12 +36,42 @@ class GetExo:
         self.nb7 = randint(2,50)
         self.nb8 = randint(2,50)
         self.nb9 = randint(2,50)
-        self.nb12 = randint(2,50)
         self.nb10 = randint(2,50)
         self.nb11 = randint(2,50)
+        self.nb12 = randint(2,50)
+        
+    
+        liste = [self.nb1, self.nb2, self.nb3, self.nb4, self.nb5, self.nb6, 
+                 self.nb7, self.nb8, self.nb9, self.nb10, self.nb11, self.nb12]
 
-        while not checkUniqueValuesList(liste) or self.a ==0 or self.b == 0 or self.c==0:
-            self.CreateValues() # création des valeurs 
+
+        while not checkUniqueValuesList(liste):
+            self.a = randint(5,25 )
+            self.b = randint(25,50) 
+            self.r = randint(4, 12) 
+            self.d = randint(6, 32)
+            self.L = randint(8, 34)
+            self.l = randint(7, 23) 
+            self.h = randint(3, 45)
+            self.e = sqrt((self.r**2)+(self.h**2)) # check valeurs correct (nb chiffres après la virgule exo volume nv2)
+
+
+            self.nb1 = randint(2,50)
+            self.nb2 = randint(2,50)
+            self.nb3 = randint(2,50)
+            self.nb4 = randint(2,50)
+            self.nb5 = randint(2,50)
+            self.nb6 = randint(2,50)
+            self.nb7 = randint(2,50)
+            self.nb8 = randint(2,50)
+            self.nb9 = randint(2,50)
+            self.nb10 = randint(2,50)
+            self.nb11 = randint(2,50)
+            self.nb12 = randint(2,50)
+            
+        
+            liste = [self.nb1, self.nb2, self.nb3, self.nb4, self.nb5, self.nb6, 
+                    self.nb7, self.nb8, self.nb9, self.nb10, self.nb11, self.nb12]
 
 
     def pgcd(self, a: int, b : int) -> int:
@@ -109,7 +145,48 @@ class GetExo:
     def ExoNv1(self) -> None:
         """Méthode de création de l'exo 2 : deux niveaux de difficulté
         Input / Output : None"""
-        pass
+        
+        def arrondir(valeur):
+            """Arrondit à 3 chiffres après la virgule uniquement si le nombre a plus de 3 chiffres après la virgule."""
+            if isinstance(valeur, float):
+                # Multiplie la valeur par 1000, prend la partie entière, puis compare
+                if int(valeur * 1000) != valeur * 1000:
+                    return round(valeur, 3)
+            return valeur  # Si pas un float ou pas plus de 3 chiffres après la virgule
+        
+        self.c = self.b/4
+        self.d = self.a + 3
+        self.f = self.r - 1.5
+
+        
+
+        if not INFOS["Difficulte"]: # facile
+            self.VCube = arrondir(self.a**3)
+            self.VSphere = arrondir(4/3 * pi * self.r**3)
+            self.VCone = arrondir(1/3 * self.h * pi * (self.d/2)**2)
+
+            resultat = (f"VCube : {round(self.VCube)}; VSphere : {round(self.VSphere)}; VCone : {round(self.VCone)}")
+            resultat2 = (f"VCube : {round(self.VCube*self.a)}; VSphere : {round(self.VSphere*(4/3))}; VCone : {round(self.VCone/self.h)}")
+            resultat3 = (f"VCube : {round(self.VCube *pi)}; VSphere : {round(self.VSphere/pi)}; VCone : {round(self.VCone/((self.d/2)**2))}")
+            
+            self.listeConstruction = [(self.a, self.r, self.h, self.d), resultat, resultat2, resultat3]
+                                      
+        else:
+            self.baseCylindre = arrondir(self.r**2 * pi)
+            self.volumeCylindre1 = arrondir(self.r**2 * pi * self.a)
+            self.volumeCylindre2 = arrondir(self.r**2 * pi * self.b)
+            self.volumeGrandPaveDroit = self.b * self.f * self.a
+            self.volumePetitPaveDroit = self.c * self.f * (self.d - self.a)
+            self.volumeCone = arrondir((self.r**2 * pi * self.h) /3)
+            self.volumeTotalChateau = self.volumeCone*2 + self.volumeCylindre1 + self.volumeCylindre2 + self.volumePetitPaveDroit + self.volumePetitPaveDroit
+
+            resultat = f"VChateau : {round(self.volumeTotalChateau)}"
+            resultat2 = f"VChateau : {round(self.volumeTotalChateau - self.volumeCone)}"
+            resultat3 = f"VChateau : {round(self.volumeCone*3 + self.volumeCylindre2 - self.volumePetitPaveDroit)}" 
+
+            self.listeConstruction = [(self.a, self.b, self.c, self.d, round(self.e, 3), self.f, self.r), resultat, resultat2, resultat3]
+
+
 
     def ExoNv2(self) -> None:
         """Méthode de création de l'exo 3 : deux niveaux de difficulté

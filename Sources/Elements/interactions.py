@@ -65,12 +65,11 @@ class Interactions(object):
 
                     else: # si c'est le pont exo
                         INFOS["Exo"] = True # lancement exo dans main (changement variable)
-                        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["MakeExo"]) # text animation
+                        self.gestionnaire.textScreen(TEXTE["Elements"]["MakeExo"]) # text animation
                     
                 # si c'est le rocher qui est destructible
                 elif self.ObjectId == "ExitRock":
                     self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["BreakRock"]) # text 
-                    threading.Thread(target=ChangeValuesMap, args=[((self.Obj.pos[0] //CASEMAP, self.Obj.pos[1] // CASEMAP), "-")])
 
                     self.Obj.kill() # destrcution rocher
 
@@ -87,13 +86,11 @@ class Interactions(object):
                             soucheArbre = pygame.image.load(join("Images", "Obstacle", "Souche.png")).convert_alpha()
                             CollisionSprites(self.Obj.pos, soucheArbre,  "Souche", groups)
                             INVENTORY["Planks"] += 1
-                            threading.Thread(target=ChangeValuesMap, args=[((self.Obj.pos[0] // CASEMAP, self.Obj.pos[1] //CASEMAP), "S")])
 
                         else: 
                             soucheArbre2 = pygame.image.load(join("Images", "Obstacle", "Souche2.png")).convert_alpha()
                             CollisionSprites(self.Obj.pos, soucheArbre2,  "Souche2", groups)
                             INVENTORY["Planks"] += 2
-                            threading.Thread(target=ChangeValuesMap, args=[((self.Obj.pos[0] // CASEMAP, self.Obj.pos[1] //CASEMAP), "s")])
 
                         #gestion arbre
                         self.Obj.kill()
@@ -176,8 +173,6 @@ class Interactions(object):
                         self.player.rect.center = self.player.hitbox_rect.center
                         
 
-                        threading.Thread(target=ChangeValuesMap, args=[(coordsBoat, "#"), (coordsPtsRefRiverTpChateau, "N")])
-
                         STATE_HELP_INFOS[0] = "SeePNJ"
 
                     else:
@@ -192,8 +187,6 @@ class Interactions(object):
                         # deplacement player
                         self.player.hitbox_rect.center = self.boatPlacementPlayerPos[1] 
                         self.player.rect.center = self.player.hitbox_rect.center
-
-                        threading.Thread(target=ChangeValuesMap, args=[(coordsBoat, "N"), (coordsPtsRefRiverTpChateau, "#")])
                         
                         STATE_HELP_INFOS[0] = "NavigateBoat"
 
@@ -202,7 +195,11 @@ class Interactions(object):
 
                 if self.ObjectId == "Door":
                     INFOS["DemiNiveau"] = True      
-                    STATE_HELP_INFOS[0] = "SeePNJ"              
+                    STATE_HELP_INFOS[0] = "SeePNJ"   
+
+                if self.ObjectId == "CerclePortal":
+                    INFOS["Exo"] = True # lancement exo dans main (changement variable)
+                    self.gestionnaire.textScreen(TEXTE["Elements"]["MakeExo"]) # text animation
 
 
                         
