@@ -1042,6 +1042,68 @@ class NiveauMedievale(GestionNiveauMap):
         else:
             self.__PlacementObstacles__()
 
+    def __AjustementRiver__(self):
+
+
+        # Affiche la carte finale (map) dans la console ligne par ligne pour visualisation
+        for i in range(len(self.map)):
+            print(*self.map[i], sep=" ")
+
+        # Affiche également la carte de base (baseMap) pour comparaison ou débogage
+        for j in range(len(self.baseMap)):
+            print(*self.baseMap[j], sep=" ")
+
+        # parcours et création de chaque sprites
+        for ordonnees in range(len(self.baseMap)):
+            for abscisses in range(len(self.baseMap[ordonnees])):
+
+                if self.baseMap[ordonnees][abscisses] == "#":
+
+                    # Vérification des bords pour éviter les erreurs d'index
+                    can_go_up = ordonnees > 0
+                    can_go_down = ordonnees < LARGEUR - 1
+                    can_go_left = abscisses > 0
+                    can_go_right = abscisses < 149
+
+                    def checkBuildUp(can_go_up, can_go_left, can_go_right):
+                        if can_go_up:
+                            if self.baseMap[ordonnees -1][abscisses] == "C":
+                                if can_go_right and can_go_left:
+                                    if self.baseMap[ordonnees -2][abscisses-1] == "#" or self.baseMap[ordonnees -2][abscisses] == "#" or self.baseMap[ordonnees -2][abscisses +1] == "#":
+                                        self.map[ordonnees -2][abscisses] = "#"
+                                elif can_go_left:
+                                    if self.baseMap[ordonnees -2][abscisses-1] == "#" or self.baseMap[ordonnees -2][abscisses] == "#":   
+                                        self.map[ordonnees -2][abscisses] = "#"
+
+                                elif can_go_right:
+                                    if self.baseMap[ordonnees -2][abscisses] == "#" or self.baseMap[ordonnees -2][abscisses +1] == "#":   
+                                        self.map[ordonnees -2][abscisses] = "#"  
+
+                    
+                    def checkBuildDown(can_go_down, can_go_left, can_go_right): 
+                        if can_go_down:
+                            if self.baseMap[ordonnees +1][abscisses] == "C":
+                                if can_go_right and can_go_left:
+                                    if self.baseMap[ordonnees +2][abscisses-1] == "#" or self.baseMap[ordonnees +2][abscisses] == "#" or self.baseMap[ordonnees +2][abscisses +1] == "#":
+                                        self.map[ordonnees +2][abscisses] = "#" 
+                                elif can_go_left:
+                                    if self.baseMap[ordonnees +2][abscisses-1] == "#" or self.baseMap[ordonnees +2][abscisses] == "#":   
+                                        self.map[ordonnees +2][abscisses] = "#" 
+                                elif can_go_right:
+                                    if self.baseMap[ordonnees +2][abscisses] == "#" or self.baseMap[ordonnees +2][abscisses +1] == "#":   
+                                        self.map[ordonnees +2][abscisses] = "#"    
+
+                     
+                    
+                    can_build_up = checkBuildUp(can_go_up, can_go_left, can_go_right)
+                    can_build_down = checkBuildDown(can_go_down,  can_go_left, can_go_right)
+
+        # syncronisation
+        for ordonnees in range(len(self.map)):
+            for abscisses in range(len(self.map[ordonnees])):
+                if self.map[ordonnees][abscisses] == "#":
+                    self.baseMap[ordonnees][abscisses] = "#"
+
     def Update(self):
         # Place la bordure de la carte (bords extérieurs)
         self.Bordure()
@@ -1084,6 +1146,9 @@ class NiveauMedievale(GestionNiveauMap):
 
         # Place les obstacles sur la carte (objets qui bloquent les déplacements)
         self.__PlacementObstacles__()
+
+        # ajustement de la river
+        self.__AjustementRiver__()
 
 
         # On charge la map de base
