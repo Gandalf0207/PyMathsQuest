@@ -29,6 +29,7 @@ class Interactions(object):
         self.interactionGroup = None
 
         # stockag value 
+        self.GetCoursTableCraft = False 
         self.boatPlacementPlayerPos = []
 
 
@@ -42,15 +43,12 @@ class Interactions(object):
             self.gestionnaire.fondu_au_noir()
 
             # niveau 0
-            if INFOS["Niveau"] == 0:
-
+            if NIVEAU["Map"] == "NiveauPlaineRiviere":
                 # action si c'est un pont 
                 if self.ObjectId == "pont1" or self.ObjectId == "pont2" :
-
                     if not self.Obj.InfoExo: # si c'est pas le pont d'exo
-
                         # text animation
-                        self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["TraverserPont"])
+                        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["TraverserPont"])
 
                         # deplacement player
                         if self.player.rect.x < self.coordObjActuel[0]:
@@ -67,38 +65,43 @@ class Interactions(object):
 
                     else: # si c'est le pont exo
                         INFOS["Exo"] = True # lancement exo dans main (changement variable)
-                        self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["MakeExo"]) # text animation
-                    
-                    
+                        self.gestionnaire.textScreen(TEXTE["Elements"]["MakeExo"]) # text animation
                     
                 # si c'est le rocher qui est destructible
                 elif self.ObjectId == "ExitRock":
-                    self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["BreakRock"]) # text 
+                    self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["BreakRock"]) # text 
+
                     self.Obj.kill() # destrcution rocher
 
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center) # fin animation
 
-            elif INFOS["Niveau"] == 1:
+
+            elif NIVEAU["Map"] == "NiveauMedievale":
                 if self.ObjectId == "Arbre" or self.ObjectId == "Arbre2" :
                         # texte animation
-                        self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["CutTree"])
-                        #creation souche
-                        soucheIMH = pygame.image.load(join("Images", "Obstacle", "Souche.png")).convert_alpha()
-                        CollisionSprites(self.Obj.pos, soucheIMH,  "Souche", groups)
+                        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["CutTree"])
+
+                        if self.ObjectId == "Arbre":
+                            #creation souche
+                            soucheArbre = pygame.image.load(join("Images", "Obstacle", "Souche.png")).convert_alpha()
+                            CollisionSprites(self.Obj.pos, soucheArbre,  "Souche", groups)
+                            INVENTORY["Planks"] += 1
+
+                        else: 
+                            soucheArbre2 = pygame.image.load(join("Images", "Obstacle", "Souche2.png")).convert_alpha()
+                            CollisionSprites(self.Obj.pos, soucheArbre2,  "Souche2", groups)
+                            INVENTORY["Planks"] += 2
+
                         #gestion arbre
                         self.Obj.kill()
-                        INVENTORY["Planks"] += 1
-
                         # réouverture
                         self.gestionnaire.ouverture_du_noir(self.player.rect.center)
                 
                 # action si c'est un pont 
                 if self.ObjectId == "pont1" or self.ObjectId == "pont2" :
-
                     if not self.Obj.InfoExo: # si c'est pas le pont d'exo
-
                         # text animation
-                        self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["TraverserPont"])
+                        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["TraverserPont"])
 
                         # deplacement player
                         if self.player.rect.x < self.coordObjActuel[0]:
@@ -114,18 +117,16 @@ class Interactions(object):
                         self.gestionnaire.ouverture_du_noir(self.player.rect.center)
 
                 if self.ObjectId == "pont3":
-                        
-
                         # deplacement player
                         if self.player.rect.y < self.coordObjActuel[1]:
                             # text animation
-                            self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["TraverserPont"])
+                            self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["TraverserPont"])
 
                             # action pour traverser
                             self.player.rect.y += CASEMAP*3
                             STATE_HELP_INFOS[0] = "SeePNJ" # update tips player
                         else:
-                            self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["CantTraverserPont"])
+                            self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["CantTraverserPont"])
 
 
                         self.player.hitbox_rect.center = self.player.rect.center
@@ -135,10 +136,14 @@ class Interactions(object):
 
 
                 if self.ObjectId == "TableCraft":
+                    if not self.GetCoursTableCraft:
+                        self.GetCoursTableCraft = True
+                        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["GetCours"])
+
                     if INVENTORY["Planks"] < 3:
-                        self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["NeedPlanks"])
+                        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["NeedPlanks"])
                     else:
-                        self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["CraftBoat"])
+                        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["CraftBoat"])
                         INVENTORY["Planks"] -= 3
                         INVENTORY["Boat"] += 1
                         STATE_HELP_INFOS[0] = "PlaceBoat" # update tips player
@@ -147,14 +152,13 @@ class Interactions(object):
 
                 
                 if self.ObjectId == "Boat":
-
                     # check pos player et pos de référence
                     coordsPtsRefRiverTpChateau = LoadJsonMapValue("coordsMapObject", "RiverBoatTPChateau coords")
                     coordsBoat = [(self.Obj.pos[0] -32) // CASEMAP, (self.Obj.pos[1] -32) // CASEMAP ] #  -32 : centre place ; // CASEMAP --> obtention en coords double list
 
                     if coordsPtsRefRiverTpChateau != coordsBoat : 
                         # texte animation : 
-                        self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["UseBoat"])
+                        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["UseBoat"])
 
                         # sauvgarde pos
                         self.boatPlacementPlayerPos = [self.Obj.pos, self.player.rect.center] # sauvgarde
@@ -167,9 +171,13 @@ class Interactions(object):
                         # deplacement player
                         self.player.hitbox_rect.center = ((coordsPtsRefRiverTpChateau[0]+1)*CASEMAP +64, coordsPtsRefRiverTpChateau[1]*CASEMAP +64 ) # +64 center case à coté
                         self.player.rect.center = self.player.hitbox_rect.center
+                        
+
+                        STATE_HELP_INFOS[0] = "SeePNJ"
+
                     else:
                         # texte animation : 
-                        self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["UseBoat2"])
+                        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["UseBoat2"])
 
                         # deplacement bateau
                         self.Obj.pos = self.boatPlacementPlayerPos[0]
@@ -179,13 +187,19 @@ class Interactions(object):
                         # deplacement player
                         self.player.hitbox_rect.center = self.boatPlacementPlayerPos[1] 
                         self.player.rect.center = self.player.hitbox_rect.center
-
-                        print(self.Obj.pos)
-                        print(self.player.rect.center)
+                        
+                        STATE_HELP_INFOS[0] = "NavigateBoat"
 
                         
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center)
 
+                if self.ObjectId == "Door":
+                    INFOS["DemiNiveau"] = True      
+                    STATE_HELP_INFOS[0] = "SeePNJ"   
+
+                if self.ObjectId == "CerclePortal":
+                    INFOS["Exo"] = True # lancement exo dans main (changement variable)
+                    self.gestionnaire.textScreen(TEXTE["Elements"]["MakeExo"]) # text animation
 
 
                         
@@ -213,6 +227,18 @@ class Interactions(object):
  
 
             if distance <= self.distanceMax:
+                # vrif de possibilité
+                if Object.id == "ExitRock" and NIVEAU["Map"] == "NiveauPlaineRiviere" and not PNJ["PNJ3"]:
+                    return False
+                if Object.id in ["Arbre", "Arbre2"] and NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ1"]:
+                    return False
+                if Object.id == "TableCraft" and NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ2"]:
+                    return False
+                if Object.id == "Door" and NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ3"]:
+                    return False
+            
+
+
 
                 # valeur importante de l'obj interactions
                 self.Obj = Object

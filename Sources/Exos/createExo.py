@@ -37,9 +37,9 @@ class CreateExo:
         self.surfaceButton3 = pygame.Surface((100,100))
 
          # Positions des boutons : element collision rect 
-        self.ButtonRect1 =pygame.Rect(68, WINDOW_HEIGHT/2 - 120, 100, 100) 
-        self.ButtonRect2 = pygame.Rect(236, WINDOW_HEIGHT/2 - 120, 100, 100)
-        self.ButtonRect3 = pygame.Rect(404, WINDOW_HEIGHT/2 -120, 100, 100)
+        self.ButtonRect1 =pygame.Rect(68, WINDOW_HEIGHT/2 - 100, 100, 100) 
+        self.ButtonRect2 = pygame.Rect(236, WINDOW_HEIGHT/2 - 100, 100, 100)
+        self.ButtonRect3 = pygame.Rect(404, WINDOW_HEIGHT/2 -100, 100, 100)
 
     def BuildInterface(self) -> None:
         """Méthode ce construction de l'interface à chque rafraichissement
@@ -49,11 +49,11 @@ class CreateExo:
         self.interfaceExoSurface.fill("#ffffff")
 
         # titre
-        textTitre = FONT["FONT30"].render(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["ExoTexte"]["Title"], True, (0, 0, 0))
+        textTitre = FONT["FONT30"].render(TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"]["Title"], True, (0, 0, 0))
         self.interfaceExoSurface.blit(textTitre, (10, 10))
 
         # consigne
-        self.textConsigne = TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["ExoTexte"][f"Difficulte{INFOS["Difficulte"]}"]["Consigne"]
+        self.textConsigne = TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"][f"Difficulte{INFOS["Difficulte"]}"]["Consigne"]
 
         # Mettre à jour le texte affiché si nécessaire
         if self.indexTexte < len(self.textConsigne):
@@ -61,11 +61,11 @@ class CreateExo:
         self.displayed_text = self.textConsigne[:self.indexTexte]
 
         # Fonction simple pour découper le text
-        max_width = 650
+        max_width = 700
         wrapped_lines = wrap_text(self.displayed_text, FONT["FONT30"], max_width)
 
         # Affichage des lignes
-        y_offset =  60 # Position Y de départ
+        y_offset =  40 # Position Y de départ
         line_height = FONT["FONT22"].size("Tg")[1]  # Hauteur d'une ligne
         for i, line in enumerate(wrapped_lines):
             line_surface = FONT["FONT22"].render(line, True, (0,0,0))
@@ -73,24 +73,55 @@ class CreateExo:
         
 
         # équation affichage
-        self.interfaceExoSurface.blit(self.latexSurface, (10, 100))
+        if NIVEAU["Niveau"] == "Seconde": # appel de la bonne méthode
+            if NIVEAU["Map"] == "NiveauPlaineRiviere":
+                if NIVEAU["Numero"] == 0:
+                    self.interfaceExoSurface.blit(self.latexSurface, (10, 90))
+
+            elif NIVEAU["Map"] == "NiveauMedievale":
+                if NIVEAU["Numero"] == 0:
+                    if not INFOS["Difficulte"]: # facile
+                        self.volumeSimpleImg = pygame.image.load(join("Images", "Exos", "ExoVolumeSimple.png")).convert_alpha()
+                        self.interfaceExoSurface.blit(self.volumeSimpleImg, (10, 90))
+                        textInfo = f"c : {self.infosBuild[0][0]} ; r :{self.infosBuild[0][1]} ; h : {self.infosBuild[0][2]}; d : {self.infosBuild[0][3]}"
+                        text = FONT["FONT20"].render(textInfo, True, (0,0,0))
+                        self.interfaceExoSurface.blit(text, (20, 90))
+                    else:
+                        self.volumeDifficileImg = pygame.image.load(join("Images", "Exos", "ExoVolumeDifficile.png")).convert_alpha()
+                        self.interfaceExoSurface.blit(self.volumeDifficileImg, (10, 90))  
+                        textInfo = f"a = {self.infosBuild[0][0]} ; b = {self.infosBuild[0][1]} ; c = {self.infosBuild[0][2]} ; d = {self.infosBuild[0][3]} ; e = {self.infosBuild[0][4]} ; f = {self.infosBuild[0][5]} ; r = {self.infosBuild[0][6]}"
+                        text = FONT["FONT20"].render(textInfo, True, (0,0,0))
+                        self.interfaceExoSurface.blit(text, (20, 90))
+
+
 
         # réponse titre
-        self.textQCM = FONT["FONT22"].render(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["ExoTexte"]["DifficulteTrue"]["QCM"], True, (0, 0, 0))
-        self.interfaceExoSurface.blit(self.textQCM, (10, WINDOW_HEIGHT/2 - 150))
+        self.textQCM = FONT["FONT22"].render(TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"][f"Difficulte{INFOS["Difficulte"]}"]["QCM"], True, (0, 0, 0))
+        self.interfaceExoSurface.blit(self.textQCM, (10, WINDOW_HEIGHT/2 - 120))
 
         # réponse button
-        self.textR1 = FONT["FONT22"].render(str(self.listeReponse[0]), True, (0,0,0))
-        self.textR2 = FONT["FONT22"].render(str(self.listeReponse[1]), True, (0,0,0))
-        self.textR3 = FONT["FONT22"].render(str(self.listeReponse[2]), True, (0,0,0))
-
         self.surfaceButton1.fill((200,205,205))
         self.surfaceButton2.fill((200,205,205))
         self.surfaceButton3.fill((200,205,205))
 
-        self.surfaceButton1.blit(self.textR1, (0,0))
-        self.surfaceButton2.blit(self.textR2, (0,0))
-        self.surfaceButton3.blit(self.textR3, (0,0))
+        self.allReponseTexte = [str(self.listeReponse[0]),str(self.listeReponse[1]),str(self.listeReponse[2])]
+
+        for text in range(len(self.allReponseTexte)):
+            # Fonction simple pour découper le text
+            max_width = 100
+            wrapped_lines = wrap_text(self.allReponseTexte[text], FONT["FONT22"], max_width)
+
+            # Affichage des lignes
+            y_offset =  0 # Position Y de départ
+            line_height = FONT["FONT22"].size("Tg")[1]  # Hauteur d'une ligne
+            for i, line in enumerate(wrapped_lines):
+                line_surface = FONT["FONT22"].render(line, True, (0,0,0))
+                if text ==0 :
+                    self.surfaceButton1.blit(line_surface, (0, y_offset + i * line_height))
+                elif text == 1:
+                    self.surfaceButton2.blit(line_surface, (0, y_offset + i * line_height))
+                elif text == 2:
+                    self.surfaceButton3.blit(line_surface, (0, y_offset + i * line_height))
 
         self.interfaceExoSurface.blit(self.surfaceButton1, (self.ButtonRect1.x, self.ButtonRect1.y))
         self.interfaceExoSurface.blit(self.surfaceButton2, (self.ButtonRect2.x, self.ButtonRect2.y))

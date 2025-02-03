@@ -11,9 +11,9 @@ class Construire(object):
         self.gestionnaire = gestionnnaire
         self.map = LoadJsonMapValue("coordsMapBase", "AllMapInfo")
 
-        if INFOS["Niveau"] == 0:
+        if NIVEAU["Map"] == "NiveauPlaineRiviere":
             riviere = LoadJsonMapValue("coordsMapBase", "Riviere2 Coords")
-        elif INFOS["Niveau"] == 1:
+        elif NIVEAU["Map"] == "NiveauMedievale":
             riviere = LoadJsonMapValue("coordsMapBase", "Riviere1 Coords")
 
             # river vertical / horrizontal : pas meme check
@@ -60,7 +60,7 @@ class Construire(object):
         listCoordPossible = [] # initialisation
         listElementAcces = ["-","="]
         for coords in listCoords: # parcours de chaque case de la rivière
-            if INFOS["Niveau"] == 0 or INFOS["Niveau"] == 1:
+            if NIVEAU["Map"] in ["NiveauPlaineRiviere", "NiveauMedievale"]:
                 if self.map[coords[1]][coords[0]-1] in listElementAcces and  self.map[coords[1]][coords[0]+1] in listElementAcces:  # vérif devant et dérierre
                     listCoordPossible.append(coords)
 
@@ -75,7 +75,7 @@ class Construire(object):
         listCoordPossible = [] # initialisation
         listElementAcces = ["-","="]
         for coords in listCoords: # parcours de chaque case de la rivière
-            if INFOS["Niveau"] == 0 or INFOS["Niveau"] == 1:
+            if NIVEAU["Map"] == "NiveauMedievale":
                 if self.map[coords[1]-1][coords[0]] in listElementAcces and  self.map[coords[1]+1][coords[0]] in listElementAcces:  # vérif devant et dérierre
                     listCoordPossible.append(coords)
 
@@ -94,7 +94,7 @@ class Construire(object):
 
             # animation + texte
             self.gestionnaire.fondu_au_noir()
-            self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["BuildBridge"])
+            self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["BuildBridge"])
 
             # ajout du pont + mise à jour de l'état de construction 
             coords = (self.coordsRiviere[0]*CASEMAP, self.coordsRiviere[1]*CASEMAP)
@@ -114,7 +114,7 @@ class Construire(object):
 
             # animation + texte
             self.gestionnaire.fondu_au_noir()
-            self.gestionnaire.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["PlaceBoat"])
+            self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["PlaceBoat"])
 
             # ajout du pont + mise à jour de l'état de construction 
             coords = (self.coordsRiviere[0]*CASEMAP +32, self.coordsRiviere[1]*CASEMAP + 32)

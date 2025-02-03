@@ -31,7 +31,10 @@ class MiniMap:
         self.carre4 = pygame.image.load(join("Images", "MiniMap", "Carre4.png")).convert_alpha()
         self.carre5 = pygame.image.load(join("Images", "MiniMap", "Carre5.png")).convert_alpha()
         self.carre6 = pygame.image.load(join("Images", "MiniMap", "Carre6.png")).convert_alpha()
-        self.carre7 = pygame.image.load(join("Images", "MiniMap", "Carre8.png")).convert_alpha()
+        self.carre7 = pygame.image.load(join("Images", "MiniMap", "Carre7.png")).convert_alpha()
+        self.carre8 = pygame.image.load(join("Images", "MiniMap", "Carre8.png")).convert_alpha()
+        self.carre10 = pygame.image.load(join("Images", "MiniMap", "Carre10.png")).convert_alpha()
+        self.carre11 = pygame.image.load(join("Images", "MiniMap", "Carre11.png")).convert_alpha()
 
 
 
@@ -45,17 +48,25 @@ class MiniMap:
                 if cell == "#": # rivière
                     self.static_surface.blit(self.carre3, pos)
                 elif cell == "B": # border
-                    self.static_surface.blit(self.carre7, pos)
+                    self.static_surface.blit(self.carre8, pos)
                 elif cell == "=": # path
                     self.static_surface.blit(self.carre2, pos)
                 elif cell == "H": # maison
                     self.static_surface.blit(self.carre4, pos)
                 elif cell == "W": # puits
                     self.static_surface.blit(self.carre5, pos)
-                elif cell == "@":
+                elif cell == "@": # champs
                     self.static_surface.blit(self.carre6, pos)
+                elif cell in ["t", "T", "K"]:
+                    self.static_surface.blit(self.carre7, pos)
+                elif cell == "C": # murailles
+                    self.static_surface.blit(self.carre11, pos)
                 else: # reste = herbe 
                     self.static_surface.blit(self.carre1, pos)
+                
+        if NIVEAU["Map"] == "NiveauMedievale" : # placement chateau 
+            pos = (104*CELL_SIZE, 0 *CELL_SIZE)
+            self.static_surface.blit(self.carre10, pos)
         
 
     def Update(self, player_pos: tuple, pnjGroup : any, interactionGroup : any) -> None:
@@ -75,6 +86,12 @@ class MiniMap:
             pnj_x, pnj_y = objectPNJ.pos[0] * CASEMAP, objectPNJ.pos[1] *CASEMAP
             pnj_rect = pygame.Rect(pnj_x * CELL_SIZE * self.ratioImage, pnj_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE * 2)
             pygame.draw.rect(self.MiniMapSurface, (252, 128, 3), pnj_rect)
+
+        for objectIntrac in interactionGroup:
+            if objectIntrac.id not in [ "Arbre", "Arbre2"] :
+                element_x, element_y = objectIntrac.pos[0], objectIntrac.pos[1]
+                element_rect = pygame.Rect(element_x * CELL_SIZE * self.ratioImage, element_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE * 2)
+                pygame.draw.rect(self.MiniMapSurface, (34, 5, 71), element_rect)      
 
 class InfosTips:
 
@@ -102,10 +119,10 @@ class InfosTips:
     def GetText(self) -> None:
         """Méthode de récupération du texte en foonc de l'état de STATE_HELP_INFOS"""
         
-        if self.text != TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"][STATE_HELP_INFOS[0]]: # si texte différents
+        if self.text != TEXTE["Elements"]["HotBar"]["IdeaTips"][NIVEAU["Map"]][STATE_HELP_INFOS[0]]: # si texte différents
             self.indexTexte = 0 # on reset l'écriture index
         
-        self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"][STATE_HELP_INFOS[0]] # texte / nouveau texte
+        self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][NIVEAU["Map"]][STATE_HELP_INFOS[0]] # texte / nouveau texte
 
 
     def BuildElement(self) -> None:
@@ -125,7 +142,7 @@ class InfosTips:
 
             
         # get lines 
-        max_width = 400
+        max_width = 375
         wrapped_lines = wrap_text(self.displayed_text, FONT["FONT20"], max_width)
 
         # Affichage des lignes
