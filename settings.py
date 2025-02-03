@@ -122,6 +122,15 @@ INFOS = {
     "ChangementAnnee" : False,
 }
 
+KEYSBIND = {
+    "up": None,
+    "down": None,
+    "left": None,
+    "right": None,
+    "skip": None,
+    "action": None,
+}
+
 # texte : tout le texte
 TEXTE = {
     "Dialogues" : None,

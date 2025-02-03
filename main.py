@@ -1,4 +1,5 @@
 from settings import *
+from Sources.Elements.touche import *
 from Sources.Elements.interactions import *
 from Sources.Elements.groups import *
 from Sources.Map.loadMap import *
@@ -514,6 +515,8 @@ class GameToolBox(object):
 if __name__ == "__main__":
     
     LoadTexte()
+    BindKey().Update()
+
 
     game = Game()
     game.run()
