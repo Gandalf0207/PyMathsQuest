@@ -35,8 +35,6 @@ class CollisionSprites(pygame.sprite.Sprite):
             self.rect = self.image.get_frect(topleft=(pos[0]-33, pos[1]))
         elif typeCollision == "pont3":
             self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-20))
-        elif typeCollision == "Boat":
-            self.rect = self.image.get_frect(topleft =(pos[0]+32, pos[1]+32))
         else:
             self.rect = self.image.get_frect(topleft=pos)
 
@@ -47,6 +45,8 @@ class CollisionSprites(pygame.sprite.Sprite):
             case "BorderBottom":
                 self.hitbox = self.rect.inflate(0,0)
             case "Souche":
+                self.hitbox = self.rect.inflate(-120,-110)
+            case "Souche2":
                 self.hitbox = self.rect.inflate(-120,-110)
             case "HugeRock":
                 self.hitbox = self.rect.inflate(-90,-100)
@@ -76,6 +76,15 @@ class CollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(0,0)
             case "Boat":
                 self.hitbox = self.rect.inflate(0,0)
+            case "Mur":
+                self.hitbox = self.rect.inflate(0,-40)
+            case "Pilier":
+                self.hitbox = self.rect.inflate(0,-20)
+            case "Door":
+                self.hitbox = self.rect.inflate(0,-60)
+            case "CerclePortal":
+                self.hitbox = self.rect.inflate(-128,-128)
+
             case _:  # par défaut
                 self.hitbox = self.rect.inflate(-70,-140)
 
@@ -123,6 +132,9 @@ class River(pygame.sprite.Sprite):
             "RiverMontainConflictx128": [],
             "RiverTN-SEx128" : [],
             "RiverTWN-Sx128" : [],
+            "RiverTWN-Ex128" : [],
+            "RiverTW-SEx128" : [],
+
         }
 
         # parcours dossier et get images / patch

@@ -40,6 +40,8 @@ class Game(object):
         self.interface_exo = False
         self.cinematique = False # cinématique
         self.cinematiqueObject = None # obj de la cinematique 
+        self.hideHotbar = False
+        self.demiNiveau = False
 
         self.GameTool = GameToolBox(self)
         self.GameTool.CreateFont()
@@ -66,7 +68,7 @@ class Game(object):
         Input / Output : None"""
 
 
-        if INFOS["Niveau"] ==0:
+        if NIVEAU["Map"] == "NiveauPlaineRiviere":
             self.loadMapElement = LoadMapPlaineRiviere(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
             self.map, self.mapBase = self.loadMapElement.Update()
             self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
@@ -80,19 +82,27 @@ class Game(object):
             self.InteractionObject = Interactions(self)
             self.buildElements = Construire(self)
 
-        elif INFOS["Niveau"] == 1 : 
-            self.loadMapElement = LoadMedievale(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
-            self.map, self.mapBase = self.loadMapElement.Update()
-            self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
+        elif NIVEAU["Map"] == "NiveauMedievale" : 
+            if INFOS["DemiNiveau"]:
+                self.loadMapElement = LoadMedievaleChateau(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
+                self.map, self.mapBase = self.loadMapElement.Update()
+                self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
+            else:
+                self.loadMapElement = LoadMedievale(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
+                self.map, self.mapBase = self.loadMapElement.Update()
+                self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
+            
             # Initialisation dans votre setup
-
             self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
             self.ideaTips = InfosTips(self.ideaTips_surface)
             self.settingsAll = SettingsAll(self.allSettings_surface, self.INTERFACE_OPEN)
 
-            # infos traverser
-            self.InteractionObject = Interactions(self)
-            self.buildElements = Construire(self) 
+            if not INFOS["DemiNiveau"]:
+                # infos traverser
+                self.InteractionObject = Interactions(self)
+                self.buildElements = Construire(self) 
+
+
 
 
 
@@ -114,6 +124,7 @@ class Game(object):
         self.checkLoadingDone = True
 
     def StartMap(self):
+
         # Affichage initial de l'écran de chargement
         threading.Thread(target=self.SetupAllMap).start()
 
@@ -127,6 +138,17 @@ class Game(object):
 
 
         while self.running:
+
+            if INFOS["ExoPasse"]:
+                INFOS["ExoPasse"] = False
+                self.GameTool.ChangementNiveau()
+
+            if INFOS["DemiNiveau"] and not self.demiNiveau:
+               self.demiNiveau = True
+               self.GameTool.ChangementDemiNiveau()
+
+
+
             dt = self.clock.tick() / 1000
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -145,8 +167,8 @@ class Game(object):
                             print(self.player.rect.center)
 
                         if event.key == pygame.K_0:
-                            self.player.rect.center = (130*CASEMAP, 50*CASEMAP)
-                            self.player.hitbox_rect.center = (130*CASEMAP, 50*CASEMAP)
+                            self.player.rect.center = (130*CASEMAP, 25*CASEMAP)
+                            self.player.hitbox_rect.center = (130*CASEMAP, 25*CASEMAP)
                     
                         if event.key == pygame.K_p or event.key == pygame.K_v or event.key == pygame.K_i or event.key == pygame.K_b:
                             self.INTERFACE_OPEN = self.settingsAll.OpenInterfaceElementClavier(event, self.INTERFACE_OPEN)
@@ -155,13 +177,18 @@ class Game(object):
                             # pnj interface
                             self.INTERFACE_OPEN = self.pnj.OpenInterfaceElementClavier(self.INTERFACE_OPEN)
                             # element d'interaction
-                            self.InteractionObject.Interagir()
+                            self.InteractionObject.Interagir((self.allSprites, self.collisionSprites))
 
                             # si pas possible, on construit le pont si possible
                             if not self.buildElements.getConstructionStatuePont():
                                 self.buildElements.BuildBridge(self.loadMapElement, self.player.rect.center)
-                            elif not self.buildElements.getPlaceStatueBoat():
+                            elif NIVEAU["Map"] == "NiveauMedievale" and not self.buildElements.getPlaceStatueBoat():
                                 self.buildElements.PlaceBoat(self.loadMapElement, self.player.rect.center)
+                        
+                        # affichge ou non de la hotbar
+                        if event.key == pygame.K_m:
+                            self.hideHotbar = True if not self.hideHotbar else False
+                        
 
 
                         if event.key == pygame.K_ESCAPE and self.INTERFACE_OPEN: # Close général interface build
@@ -181,22 +208,25 @@ class Game(object):
 
 
             if not self.cinematique:
-                self.allSprites.draw(self.player.rect.center)
+                self.allSprites.draw(self.player.rect.center, self.hideHotbar)
             else:
-                self.allSprites.draw(self.cinematiqueObject.pnjObject.rect.center) # pos pnj lockcam 
+                self.allSprites.draw(self.cinematiqueObject.pnjObject.rect.center, self.hideHotbar) # pos pnj lockcam 
 
             # Afficher la minimap sur l'écran principal + menu settings all
-            if not self.cinematique:
-                self.displaySurface.blit(self.bgHotBar, (0, WINDOW_HEIGHT-160))
-                
-                self.minimap.Update(self.player.rect.center, self.allPNJ, self.interactionsGroup)
+            if not self.cinematique :
+                if not self.demiNiveau: # pas besoin de la minimap
+                    self.minimap.Update(self.player.rect.center, self.allPNJ, self.interactionsGroup)
                 self.ideaTips.Update()
                 self.settingsAll.Update(event)
 
-                self.displaySurface.blit(self.minimap_surface, (10, WINDOW_HEIGHT-160))
-                self.displaySurface.blit(self.ideaTips_surface, COORDS_BOX_IDEAS_TIPS)
-                self.displaySurface.blit(self.allSettings_surface, COORS_BOX_ALL_SETTINGS)
-            
+                if not self.hideHotbar: # check hide bool
+
+                    self.displaySurface.blit(self.bgHotBar, (0, WINDOW_HEIGHT-160))
+                    if not self.demiNiveau : # pas besoin de la minimap
+                        self.displaySurface.blit(self.minimap_surface, (10, WINDOW_HEIGHT-160))
+                    self.displaySurface.blit(self.ideaTips_surface, COORDS_BOX_IDEAS_TIPS)
+                    self.displaySurface.blit(self.allSettings_surface, COORS_BOX_ALL_SETTINGS)
+                
             if not self.cinematique:
                 self.INTERFACE_OPEN, self.cinematique, self.cinematiqueObject = self.pnj.update(self.player.rect.center, self.INTERFACE_OPEN, event)
                 self.InteractionObject.Update(self.player, self.interactionsGroup)
@@ -205,13 +235,13 @@ class Game(object):
                 self.cinematique, endCinematique = self.cinematiqueObject.Update(dt)
                 if endCinematique:
                     self.pnj.EndCinematique()
-                    self.cinematiqueObject.Replacement()
+                    self.cinematiqueObject.Replacement(self.allPNJ)
                     self.fondu_au_noir()
                     
-                    if INFOS["Niveau"] == 0:
+                    if NIVEAU["Map"] == "NiveauPlaineRiviere":
                         if  not PNJ["PNJ1"]:
                             # écran noir + text de fin cinématique
-                            self.textScreen(TEXTE["Elements"][f"Niveau{INFOS["Niveau"]}"]["Cinematique1End"])
+                            self.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["Cinematique1End"])
                            
                             # pont nb 1
                             coordPont1 = LoadJsonMapValue("coordsMapObject", "ArbreSpecial Coords")
@@ -225,21 +255,42 @@ class Game(object):
                             
                             # reset valeue individuelle
                             PNJ["PNJ1"] = True
-                            STATE_HELP_INFOS[0] = "LearnCrossBridge"
-                
 
-                    # reset values cinmatique
-                    self.cinematique = False
-                    self.cinematiqueObject = None
+                            STATE_HELP_INFOS[0] = "LearnCrossBridge"
+
+                        # reset values cinmatique
+                        self.cinematique = False
+                        self.cinematiqueObject = None
+                        
+                        self.ouverture_du_noir(object.pos)
+
+                    if NIVEAU["Map"] == "NiveauMedievale":
+                        if not PNJ["PNJ4"]:
+                            self.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["Cinematique1End"])
+
+                            for object in self.collisionSprites:
+                                if (object.pos[0] // CASEMAP, object.pos[1] // CASEMAP) == self.cinematiqueObject.goal:
+                                    object.kill()  
+
+                            portal = LoadJsonMapValue("coordsMapObject", "Exit")
+                            coords = ((portal[0])*CASEMAP, portal[1]*CASEMAP) # on ajoute 1 pour etre sur la rivière
+                            self.loadMapElement.AddCerclePortal("CerclePortal", coords)
+
+                            PNJ["PNJ4"] = True  
+
+                            STATE_HELP_INFOS[0] = "OpenPortail"
+
+
+                        # reset values cinmatique
+                        self.cinematique = False
+                        self.cinematiqueObject = None
                     
-                 
-                    
-                    self.ouverture_du_noir(object.pos)
-                    self.allSprites.draw(self.player.rect.center)
+
+                    self.allSprites.draw(self.player.rect.center, self.hideHotbar)
 
             
             # update jusqu'a construction du pont / placement bateau
-            if (PNJ["PNJ2"] and INFOS["Niveau"] == 0) or (PNJ["PNJ1"] and INFOS["Niveau"] == 1):
+            if (PNJ["PNJ2"] and NIVEAU["Map"] == "NiveauPlaineRiviere") or (PNJ["PNJ1"] and NIVEAU["Map"] == "NiveauMedievale"):
                 if not self.buildElements.getConstructionStatuePont() or not self.buildElements.getPlaceStatueBoat() :
                     self.buildElements.Update(self.player.rect.center)
 
@@ -260,18 +311,9 @@ class Game(object):
                 else:
                     self.InterfaceExo.Update(event)
 
-            if INFOS["ExoPasse"]:
-                INFOS["ExoPasse"] = False
-                self.GameTool.ChangementNiveau()
-
-                    
-
-
 
             if self.INTERFACE_OPEN is None: # vérification : sécurité
                 self.INTERFACE_OPEN = False
-
-
 
 
             pygame.display.flip()
@@ -292,26 +334,30 @@ class GameToolBox(object):
         FONT36 = pygame.font.Font(None, 36)
         FONT36B = pygame.font.Font(None, 36)
         FONT36B.set_bold(True)
+        FONT50 = pygame.font.Font(None, 50)
+        FONT74 = pygame.font.Font(None, 74)
 
         FONT["FONT20"] = FONT20
         FONT["FONT22"] = FONT22
         FONT["FONT24"] = FONT24
         FONT["FONT30"] = FONT30
         FONT["FONT36"] = FONT36
-        FONT["FONT36B"] = pygame.font.Font(None, 36)
+        FONT["FONT36B"] = FONT36B
+        FONT["FONT50"] = FONT50
+        FONT["FONT74"] = FONT74
 
 
     # Fonction pour dessiner l'écran de chargement
     def ChargementEcran(self):
-        font = pygame.font.Font(None, 74)
         loading_step = 0
+        self.gestionnaire.checkLoadingDone = False
         while not self.gestionnaire.checkLoadingDone:
             self.gestionnaire.displaySurface.fill((0,0,0))  # Remplir avec une couleur grise
 
             # Animation de texte dynamique avec des points qui défilent
             loading_text = f"{TEXTE["Elements"]["Loading"]}{'.' * (loading_step % 4)}"
             loading_step += 1
-            text = font.render(loading_text, True, (255, 255, 255))
+            text = FONT["FONT74"].render(loading_text, True, (255, 255, 255))
             text_rect = text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
             self.gestionnaire.displaySurface.blit(text, text_rect.topleft)
 
@@ -324,10 +370,9 @@ class GameToolBox(object):
 
     def textScreen(self, text):
 
-        font = pygame.font.Font(None, 50)
 
         self.gestionnaire.displaySurface.fill((0,0,0))
-        textElement = font.render(text, True, (255,255,255))
+        textElement = FONT["FONT50"].render(text, True, (255,255,255))
         text_rect = textElement.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
         self.gestionnaire.displaySurface.blit(textElement, text_rect.topleft)
 
@@ -357,7 +402,7 @@ class GameToolBox(object):
         alpha = 255
 
         while alpha > 0:
-            self.gestionnaire.allSprites.draw(targetPos)
+            self.gestionnaire.allSprites.draw(targetPos, self.gestionnaire.hideHotbar)
             # Ici, ne redessinez pas le fond du jeu, car il est déjà chargé et affiché
             # simplement superposez la surface noire pour l'effet de transparence.
 
@@ -370,42 +415,80 @@ class GameToolBox(object):
             pygame.display.flip()
             self.gestionnaire.clock.tick(30)  # Limite de rafraîchissement
 
-    def ChangementNiveau(self):
+        pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])
+        
+    def ResetValues(self):
+        match NIVEAU["Niveau"]:
+            case "Seconde":
 
-        # texte
-        self.fondu_au_noir()
-        self.textScreen(TEXTE["Elements"]["LevelSup"])
+                match NIVEAU["Map"]:
+                    case "NiveauPlaineRiviere":
+                        if not INFOS["ChangementAnnee"]:
+                            NIVEAU["Map"] = "NiveauMedievale"
+                        else:
+                            NIVEAU["Niveau"] = "Premiere"
+
+                    case "NiveauMedievale":
+                        NIVEAU["Map"] = "NiveauSup"
+
+                    case "NiveauSup":
+                        pass
+
+            case "Premiere":
+                pass
+            case "Terminale" : 
+                pass
 
         # reset valeurs
-        INFOS["Niveau"] += 1
         PNJ["PNJ1"] = False
         PNJ["PNJ2"] = False
         PNJ["PNJ3"] = False
         PNJ["PNJ4"] = False
         PNJ["PNJ5"] = False
 
-        # clear all groups sprites...
-        for obj in self.gestionnaire.allSprites:
-            obj.kill()
+        # reset demi niveau (chateau)
+        INFOS["DemiNiveau"] = False 
+        self.demiNiveau = False
 
-        for obj in self.gestionnaire.collisionSprites:
-            obj.kill()
 
-        for obj in self.gestionnaire.allPNJ:
-            obj.kill()
-
-        for obj in self.gestionnaire.interactionGroup:
-            obj.kill()
+        # Réinitialiser les groupes
+        self.gestionnaire.allSprites.empty()  # Vide le groupe, supprime les sprites.
+        self.gestionnaire.collisionSprites.empty()
+        self.gestionnaire.allPNJ.empty()
+        self.gestionnaire.interactionsGroup.empty()
 
         self.gestionnaire.INTERFACE_OPEN = False # interface secondaire ouvert
         self.gestionnaire.interface_exo = False
         self.gestionnaire.cinematique = False # cinématique
         self.gestionnaire.cinematiqueObject = None # obj de la cinematique 
 
-
-
-
         STATE_HELP_INFOS[0] = "SeePNJ"
+
+    def ChangementNiveau(self):
+
+        # texte
+        self.fondu_au_noir()
+        self.textScreen(TEXTE["Elements"]["LevelSup"])
+        self.ResetValues()
+
+        # call rebuild
+        self.gestionnaire.StartMap()
+
+    def ChangementDemiNiveau(self):
+        self.fondu_au_noir()
+        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["OpenChateau"])
+
+
+        # Réinitialiser les groupes
+        self.gestionnaire.allSprites.empty()  # Vide le groupe, supprime les sprites.
+        self.gestionnaire.collisionSprites.empty()
+        self.gestionnaire.allPNJ.empty()
+        self.gestionnaire.interactionsGroup.empty()
+
+        self.gestionnaire.INTERFACE_OPEN = False # interface secondaire ouvert
+        self.gestionnaire.interface_exo = False
+        self.gestionnaire.cinematique = False # cinématique
+        self.gestionnaire.cinematiqueObject = None # obj de la cinematique 
 
         # call rebuild
         self.gestionnaire.StartMap()

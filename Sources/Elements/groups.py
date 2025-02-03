@@ -11,8 +11,15 @@ class AllSprites(pygame.sprite.Group):
         self.map_height = LARGEUR * CASEMAP + 160 #  +160 = hotbar y
 
 
-    def draw(self, target_pos: tuple) -> None:
+    def draw(self, target_pos: tuple, hideHotbar) -> None:
         """Méthode pour dessiner tout les éléments autour de la cible (lock cam). Input : tuple coords target, Output : None"""
+        if hideHotbar:
+            self.map_width = LONGUEUR * CASEMAP
+            self.map_height = LARGEUR * CASEMAP 
+        else:
+            self.map_width = LONGUEUR * CASEMAP
+            self.map_height = LARGEUR * CASEMAP + 160 #  +160 = hotbar y
+
 
         # Calcul de l'offset pour centrer la caméra sur le joueur
         camera_x = -(target_pos[0] - WINDOW_WIDTH / 2)

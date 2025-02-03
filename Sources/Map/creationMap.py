@@ -366,7 +366,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         coordsPNJ2 = self.__PlacementSpecial__("coordsMapBase", "Riviere2 Coords", "P")
         self.coordsPNJ = [[randint(8,((self.longueur//3) -5)), randint(5, self.largeur-5), "P", 1], 
                     [coordsPNJ2[0], coordsPNJ2[1], "P", 2], 
-                    [randint(((self.longueur//3)*2 +5), self.longueur-5), randint(5, self.largeur-8), "P", 3]]       
+                    [randint(((self.longueur//3)*2 +5), self.longueur-9), randint(5, self.largeur-8), "P", 3]]       
         super().PlacementElements(self.coordsPNJ, ["coordsMapObject", "PNJ Coords"]) # placement des pnj sur la map 
 
         # arbre interaction pnj
@@ -653,6 +653,13 @@ class NiveauMedievale(GestionNiveauMap):
             self.map[coords[1]][coords[0]] = "C"  
             self.baseMap[coords[1]][coords[0]] = "C"  
 
+        # placement porte du chateau
+        coordsDoor = [109, 10]
+        self.map[coordsDoor[1]][coordsDoor[0]] = "D"  
+        self.baseMap[coordsDoor[1]][coordsDoor[0]] = "D" 
+
+        coordsChateau.append(coordsDoor)
+
         # Sauvegarde des coordonnées du château dans un fichier JSON
         AjoutJsonMapValue(coordsChateau, "coordsMapObject", "Chateau Coords")  
 
@@ -704,7 +711,6 @@ class NiveauMedievale(GestionNiveauMap):
         self.map[coordsSpawn[1]][coordsSpawn[0]] = "T"
         self.baseMap[coordsSpawn[1]][coordsSpawn[0] +1 ] = "="
 
-
     def __PlacementExit__(self):
         """Méthode de placement de la sortie"""
         coordsExit = (109, 1)  # Coordonnées fixes pour la sortie
@@ -732,7 +738,7 @@ class NiveauMedievale(GestionNiveauMap):
             checkCollideWhile = True
             while checkCollideWhile:
                 checkCollideWhile = False
-                posX1, posY1 = randint(78, 138), randint(26, 72)  # Position aléatoire pour la maison
+                posX1, posY1 = randint(78, 138), randint(36, 72)  # Position aléatoire pour la maison
 
                 # Calcul des coordonnées de la maison et des zones de sécurité autour
                 coordsSecu = [
@@ -827,14 +833,13 @@ class NiveauMedievale(GestionNiveauMap):
         # Placement fixe du troisième PNJ
         coordsPnj3 = [108, 12, "P", 3]
 
-        # Placement fixe du quatrième PNJ
-        coordsPnj4 = [109, 2, "P", 4] 
 
         # Stocke toutes les coordonnées des PNJ dans une liste
-        self.coordsPNJ = [coordsPnj1, coordsPnj2, coordsPnj3, coordsPnj4]
+        self.coordsPNJ = [coordsPnj1, coordsPnj2, coordsPnj3]
         
         # Appelle la méthode PlacementElements pour ajouter les PNJ sur la carte
         super().PlacementElements(self.coordsPNJ, ["coordsMapObject", "PNJ Coords"])
+        self.baseMap[coordsPnj1[1]][coordsPnj1[0]] = "=" # pathsous les pieds du pnj 1
 
     def __PlacementPath1__(self):
         # Génère une position aléatoire pour le puits
@@ -873,10 +878,11 @@ class NiveauMedievale(GestionNiveauMap):
             getCoordsFromRiver1 = choice(getAllCoordsRiver1)
         
         # Définit les coordonnées du point de la rivière pour le chemin
-        coordsPts3 = [getCoordsFromRiver1[0]-1, getCoordsFromRiver1[1]] 
+        coordsPassageRiver1 = [getCoordsFromRiver1[0]-1, getCoordsFromRiver1[1]] 
+        coordsPts3 = [getCoordsFromRiver1[0]-3, getCoordsFromRiver1[1]] 
 
         # Coordonnées du dernier point du chemin
-        coordsPts4 = [coordsPts3[0]+1, coordsPts3[1]]
+        coordsPts4 = [coordsPassageRiver1[0]+3, coordsPassageRiver1[1]]
         coordsPts5 = coordsPuits[0]
 
         # Partie gauche du chemin
@@ -899,12 +905,17 @@ class NiveauMedievale(GestionNiveauMap):
 
         # Marque les cases du chemin avec "=" pour la rivière et les ajoute à la carte
         for coords in allPath:
-            if self.map[coords[1]][coords[0]] == "-":
+            if self.map[coords[1]][coords[0]] in ["-", "F", "M", 'R']:
                 self.map[coords[1]][coords[0]] = "="  # Ajout de la rivière sur la carte (collision)
                 self.baseMap[coords[1]][coords[0]] = "="  # Ajout de la rivière sur la carte de base
 
+        for element in range(6):
+            if self.map[coordsPts3[1]][coordsPts3[0] + element] in ["-", "F", "M", 'R']:
+                self.map[coordsPts3[1]][coordsPts3[0] + element] = "="  # Ajout de la rivière sur la carte (collision)
+                self.baseMap[coordsPts3[1]][coordsPts3[0] + element] = "="  # Ajout de la rivière sur la carte de base
+                allPath.append([coordsPts3[0] + element, coordsPts3[1]])
         # Sauvegarde les coordonnées du passage de la rivière dans un fichier JSON
-        AjoutJsonMapValue(coordsPts3, "coordsMapObject", "coords PassageRiver1")
+        AjoutJsonMapValue(coordsPassageRiver1, "coordsMapObject", "coords PassageRiver1")
         
         # Sauvegarde toutes les coordonnées du chemin dans un fichier JSON
         AjoutJsonMapValue(allPath, "coordsMapBase", "coords Path")
@@ -1001,14 +1012,14 @@ class NiveauMedievale(GestionNiveauMap):
             getCoordsRiver1Point2 = choice(getAllCoordsRiver1)
             while getCoordsRiver1Point2[1] >= 24 or self.mapCheckDeplacementPossible[getCoordsRiver1Point2[1]][getCoordsRiver1Point2[0]+1] != "-":
                 getCoordsRiver1Point2 = choice(getAllCoordsRiver1)
-            coordsPts8 =  [getCoordsRiver1Point2[0]+1, getCoordsRiver1Point2[1]]
+            coordsPts8 =  [getCoordsRiver1Point2[0], getCoordsRiver1Point2[1]] # case river
             coordsPts9 = self.coordsPNJ[2]
 
 
             # Liste des points à vérifier pour les déplacements possibles
             listeOrdrePointCle1 = [coordsPts1, coordsPts2, coordsPts3]
             listeOrdrePointCle2 = [coordsPts4, coordsPts5, coordsPts6, coordsPts7]
-            listeOrdrePointCle3 = [coordsPts8, coordsPts9]
+            listeOrdrePointCle3 = [[coordsPts8[0] + 1, coordsPts8[1]], coordsPts9] # coords pts8 formaté pour ne pas etre sur la river
 
             # Vérifie la possibilité de déplacements pour chaque liste de points clés
             # Le parcours se fait en trois étapes, en passant par les rivières pour s'assurer que les chemins sont valides
@@ -1031,6 +1042,67 @@ class NiveauMedievale(GestionNiveauMap):
         else:
             self.__PlacementObstacles__()
 
+    def __AjustementRiver__(self):
+
+
+        # Affiche la carte finale (map) dans la console ligne par ligne pour visualisation
+        for i in range(len(self.map)):
+            print(*self.map[i], sep=" ")
+
+        # Affiche également la carte de base (baseMap) pour comparaison ou débogage
+        for j in range(len(self.baseMap)):
+            print(*self.baseMap[j], sep=" ")
+
+        # parcours et création de chaque sprites
+        for ordonnees in range(len(self.baseMap)):
+            for abscisses in range(len(self.baseMap[ordonnees])):
+
+                if self.baseMap[ordonnees][abscisses] == "#":
+
+                    # Vérification des bords pour éviter les erreurs d'index
+                    can_go_up = ordonnees > 0
+                    can_go_down = ordonnees < LARGEUR - 1
+                    can_go_left = abscisses > 0
+                    can_go_right = abscisses < 149
+
+                    def checkBuildUp(can_go_up, can_go_left, can_go_right):
+                        if can_go_up:
+                            if self.baseMap[ordonnees -1][abscisses] == "C":
+                                if can_go_right and can_go_left:
+                                    if self.baseMap[ordonnees -2][abscisses-1] == "#" or self.baseMap[ordonnees -2][abscisses] == "#" or self.baseMap[ordonnees -2][abscisses +1] == "#":
+                                        self.map[ordonnees -2][abscisses] = "#"
+                                elif can_go_left:
+                                    if self.baseMap[ordonnees -2][abscisses-1] == "#" or self.baseMap[ordonnees -2][abscisses] == "#":   
+                                        self.map[ordonnees -2][abscisses] = "#"
+
+                                elif can_go_right:
+                                    if self.baseMap[ordonnees -2][abscisses] == "#" or self.baseMap[ordonnees -2][abscisses +1] == "#":   
+                                        self.map[ordonnees -2][abscisses] = "#"  
+
+                    
+                    def checkBuildDown(can_go_down, can_go_left, can_go_right): 
+                        if can_go_down:
+                            if self.baseMap[ordonnees +1][abscisses] == "C":
+                                if can_go_right and can_go_left:
+                                    if self.baseMap[ordonnees +2][abscisses-1] == "#" or self.baseMap[ordonnees +2][abscisses] == "#" or self.baseMap[ordonnees +2][abscisses +1] == "#":
+                                        self.map[ordonnees +2][abscisses] = "#" 
+                                elif can_go_left:
+                                    if self.baseMap[ordonnees +2][abscisses-1] == "#" or self.baseMap[ordonnees +2][abscisses] == "#":   
+                                        self.map[ordonnees +2][abscisses] = "#" 
+                                elif can_go_right:
+                                    if self.baseMap[ordonnees +2][abscisses] == "#" or self.baseMap[ordonnees +2][abscisses +1] == "#":   
+                                        self.map[ordonnees +2][abscisses] = "#"    
+
+                     
+                    
+                    can_build_up = checkBuildUp(can_go_up, can_go_left, can_go_right)
+                    can_build_down = checkBuildDown(can_go_down,  can_go_left, can_go_right)
+
+        # syncronisation
+        for ordonnees in range(len(self.map)):
+            for abscisses in range(len(self.map[ordonnees])):
+                if self.map[ordonnees][abscisses] == "#":
+                    self.baseMap[ordonnees][abscisses] = "#"
 
     def Update(self):
         # Place la bordure de la carte (bords extérieurs)
@@ -1075,6 +1147,9 @@ class NiveauMedievale(GestionNiveauMap):
         # Place les obstacles sur la carte (objets qui bloquent les déplacements)
         self.__PlacementObstacles__()
 
+        # ajustement de la river
+        self.__AjustementRiver__()
+
 
         # On charge la map de base
         AjoutJsonMapValue(self.map, "coordsMapBase", "AllMapInfo")
@@ -1096,7 +1171,57 @@ class NiveauMedievale(GestionNiveauMap):
         # Retourne la carte actuelle (map) et la carte de base (baseMap)
         return self.map, self.baseMap
 
-    
+
+class NiveauMedievaleChateau():
+    def __init__(self):
+       pass
+
+    def Update(self):
+        """Map n'est pas généré aléatoirement pour le chateau"""
+        self.map = [
+            ["O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O"],
+            ["O", "-", "-", "-", "-", "u", "-", "-", "-", "-", "O"],
+            ["O", "-", "Y", "R", "-", "-", "-", "R", "Y", "-", "O"],
+            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
+            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
+            ["O", "-", "Y", "R", "-", "-", "-", "R", "Y", "-", "O"],
+            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
+            ["O", "-", "-", "-", "-", "P", "-", "-", "-", "-", "O"],
+            ["O", "-", "Y", "R", "-", "-", "-", "R", "Y", "-", "O"],
+            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
+            ["O", "O", "O", "O", "O", "D", "O", "O", "O", "O", "O"],
+        ]
+
+        self.baseMap = [
+            ["O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O"],
+            ["O", "-", "-", "-", "U", "U", "U", "-", "-", "-", "O"],
+            ["O", "-", "Y", "-", "U", "U", "U", "-", "Y", "-", "O"],
+            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
+            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
+            ["O", "-", "Y", "-", "-", "-", "-", "-", "Y", "-", "O"],
+            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
+            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
+            ["O", "-", "Y", "-", "-", "-", "-", "-", "Y", "-", "O"],
+            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
+            ["O", "O", "O", "O", "O", "D", "O", "O", "O", "O", "O"],
+        ]
+
+
+        AjoutJsonMapValue([[5, 9]], "coordsMapObject", "Spawn") # on ajoute les coordonnées du spawn au fichier json
+        AjoutJsonMapValue([5, 1], "coordsMapObject", "Exit") # on ajoute les coordonnées du spawn au fichier json
+        AjoutJsonMapValue([[5, 7, "P", 4]], "coordsMapObject", "PNJ Coords") # on ajoute les coordonnées du spawn au fichier json
+
+
+        # On charge la map de base
+        AjoutJsonMapValue(self.map, "coordsMapBase", "AllMapInfo")
+
+        # On charche la map (collision)
+        AjoutJsonMapValue(self.baseMap, "coordsMapBase", "AllMapBase")
+
+        return self.map, self.baseMap
+
+
+
 
 
 
