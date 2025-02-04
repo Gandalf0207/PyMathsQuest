@@ -23,18 +23,18 @@ class SettingsInterface(object):
         self.button_positions = {}  # Stocke les positions des boutons de touche
 
     def BuildInterfaceBind(self):
-        overlay = pygame.Surface((LONGUEUR*CASEMAP // 2, LARGEUR*CASEMAP // 2), pygame.SRCALPHA)
+        overlay = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
         overlay.fill((100,100,100,180))  # Fond semi-transparent
         self.interfaceSurface.blit(overlay, (0, 0))
 
         # Dessiner la boîte au centre
-        box_rect = pygame.Rect(245, 155, 200, 50)
+        box_rect = pygame.Rect(225, 140, 200, 50)
         pygame.draw.rect(self.interfaceSurface, (200,200,200), box_rect)
         pygame.draw.rect(self.interfaceSurface, (0,0,0), box_rect, 2)
 
         # Texte d'instruction
-        text_surface = FONT["FONT20"].render("Appuyez sur une touche...", True, (0,0,0))
-        self.interfaceSurface.blit(text_surface, (box_rect.x + 20, box_rect.y + 35))
+        text_surface = FONT["FONT20"].render(TEXTE["Elements"]["HotBar"]["Settings"]["PressKey"], True, (0,0,0))
+        self.interfaceSurface.blit(text_surface, (box_rect.x + 18, box_rect.y + 15))
 
 
     def BuildInterface(self) -> None:
@@ -65,10 +65,14 @@ class SettingsInterface(object):
         self.interfaceSurface.blit(texteButtonLangue, texte_pos)
 
 
-
         # BIND KEYS
+        y_offset = 50  # Position initiale en vertical
+        x_offset = 150  # Position initiale en horizontal (colonne 1)
+        column_width = 150  # Largeur de la colonne pour le décalage
+        max_height = self.interfaceSurface.get_height()  # Hauteur de l'interface
+        button_width = 60  # Largeur du bouton
+        button_height = 25  # Hauteur du bouton
 
-        y_offset = 50
         self.button_positions.clear()  # Vider les anciennes positions
         listeAllBindInt = []
         for keyElement in KEYSBIND:
@@ -77,26 +81,35 @@ class SettingsInterface(object):
         for action, key in KEYSBIND.items():
             # Affichage du libellé (non cliquable)
             text_label = FONT["FONT20"].render(f"{action.capitalize()} :", True, (0,0,0))
-            self.interfaceSurface.blit(text_label, (150, y_offset + 10))  # Position fixe du libellé
+            self.interfaceSurface.blit(text_label, (x_offset, y_offset + 5))  # Position fixe du libellé
 
             # Bouton pour la touche (cliquable)
             text_key = pygame.key.name(key)  # Nom de la touche
-            key_rect = pygame.Rect(300, y_offset, 100, 40)  # Position et taille
+            key_rect = pygame.Rect(x_offset + 75, y_offset, button_width, button_height)  # Position et taille du bouton
             nbOccurence = listeAllBindInt.count(key)
-            if nbOccurence > 1: # la key est déjà bind en rouge
-                pygame.draw.rect(self.interfaceSurface, (255, 31, 53), key_rect) # rouge clair
-                pygame.draw.rect(self.interfaceSurface, (110, 2, 2), key_rect, 2)
-                text_surface = FONT["FONT20"].render(text_key, True, (110, 2, 2))
+            
+            # Dessiner les boutons avec des couleurs selon leur état
+            if nbOccurence > 1:  # La touche est déjà liée en rouge
+                pygame.draw.rect(self.interfaceSurface, (255, 31, 53), key_rect)  # Rouge clair
+                pygame.draw.rect(self.interfaceSurface, (110, 2, 2), key_rect, 2)  # Bordure rouge
+                text_surface = FONT["FONT20"].render(text_key, True, (110, 2, 2))  # Texte en rouge foncé
             else:
-                pygame.draw.rect(self.interfaceSurface, (200,200,200), key_rect)
-                pygame.draw.rect(self.interfaceSurface, (0,0,0), key_rect, 2)
-                text_surface = FONT["FONT20"].render(text_key, True, (0,0,0))
-            self.interfaceSurface.blit(text_surface, (key_rect.x + 10, key_rect.y + 10))
+                pygame.draw.rect(self.interfaceSurface, (200, 200, 200), key_rect)  # Gris clair par défaut
+                pygame.draw.rect(self.interfaceSurface, (0, 0, 0), key_rect, 2)  # Bordure noire
+                text_surface = FONT["FONT20"].render(text_key, True, (0, 0, 0))  # Texte en noir
+
+            self.interfaceSurface.blit(text_surface, (key_rect.x + 5, key_rect.y + 5))
 
             # Sauvegarder la position du bouton de la touche
             self.button_positions[action] = key_rect
 
-            y_offset += 60  # Décalage vertical
+            # Calcul du prochain y_offset
+            y_offset += button_height + 20  # Décalage vertical pour la prochaine ligne
+
+            # Si la hauteur dépasse celle de l'interface, déplacer vers la colonne suivante
+            if y_offset + button_height > max_height:
+                y_offset = 50  # Réinitialiser le y_offset
+                x_offset += column_width  # Décaler vers la droite pour une nouvelle colonne
 
 
 
