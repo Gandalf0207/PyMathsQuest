@@ -120,6 +120,7 @@ INFOS = {
     "DemiNiveau" :False,
     "ChangementNiveau" : False,
     "ChangementAnnee" : False,
+    "RebindingKey": False
 }
 
 KEYSBIND = {

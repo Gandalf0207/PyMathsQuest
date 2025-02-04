@@ -155,8 +155,17 @@ class Game(object):
                 if event.type == pygame.QUIT:
                     self.running = False
 
+                if INFOS["RebindingKey"]:
+                    if event.type == pygame.KEYDOWN:
+                        KEYSBIND[INFOS["RebindingKey"]] = event.key
+                        INFOS["RebindingKey"] = False  # Fin du rebind
+
+                        # Sauvegarde des nouvelles touches
+                        with open("keybinds.json", "w") as f:
+                            json.dump(KEYSBIND, f)
+                
                 # s'il n'y a pas de cinématique en cours
-                if not self.cinematique:
+                elif not self.cinematique:
 
                     if event.type == pygame.KEYDOWN: # TP : ne pas oublier de retirer
                         if event.key == pygame.K_t:

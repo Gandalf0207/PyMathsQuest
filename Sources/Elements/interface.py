@@ -20,16 +20,15 @@ class SettingsInterface(object):
         self.last_click_time = 0
         self.click_delay = 500   
 
-        self.rebinding_key = None  # Stocke l'action en cours de modification
         self.button_positions = {}  # Stocke les positions des boutons de touche
 
     def BuildInterfaceBind(self):
-        overlay = pygame.Surface((LONGUEUR, LARGEUR), pygame.SRCALPHA)
+        overlay = pygame.Surface((LONGUEUR*CASEMAP // 2, LARGEUR*CASEMAP // 2), pygame.SRCALPHA)
         overlay.fill((100,100,100,180))  # Fond semi-transparent
-        self.displaySurface.blit(overlay, (0, 0))
+        self.interfaceSurface.blit(overlay, (0, 0))
 
         # Dessiner la boîte au centre
-        box_rect = pygame.Rect(LONGUEUR // 2 // 2 - 150, LARGEUR// 2 // 2 - 50, 300, 100)
+        box_rect = pygame.Rect(245, 155, 200, 50)
         pygame.draw.rect(self.interfaceSurface, (200,200,200), box_rect)
         pygame.draw.rect(self.interfaceSurface, (0,0,0), box_rect, 2)
 
@@ -71,6 +70,9 @@ class SettingsInterface(object):
 
         y_offset = 50
         self.button_positions.clear()  # Vider les anciennes positions
+        listeAllBindInt = []
+        for keyElement in KEYSBIND:
+            listeAllBindInt.append(KEYSBIND[keyElement])
 
         for action, key in KEYSBIND.items():
             # Affichage du libellé (non cliquable)
@@ -80,9 +82,15 @@ class SettingsInterface(object):
             # Bouton pour la touche (cliquable)
             text_key = pygame.key.name(key)  # Nom de la touche
             key_rect = pygame.Rect(300, y_offset, 100, 40)  # Position et taille
-            pygame.draw.rect(self.interfaceSurface, (200,200,200), key_rect)
-            pygame.draw.rect(self.interfaceSurface, (0,0,0), key_rect, 2)
-            text_surface = FONT["FONT20"].render(text_key, True, (0,0,0))
+            nbOccurence = listeAllBindInt.count(key)
+            if nbOccurence > 1: # la key est déjà bind en rouge
+                pygame.draw.rect(self.interfaceSurface, (255, 31, 53), key_rect) # rouge clair
+                pygame.draw.rect(self.interfaceSurface, (110, 2, 2), key_rect, 2)
+                text_surface = FONT["FONT20"].render(text_key, True, (110, 2, 2))
+            else:
+                pygame.draw.rect(self.interfaceSurface, (200,200,200), key_rect)
+                pygame.draw.rect(self.interfaceSurface, (0,0,0), key_rect, 2)
+                text_surface = FONT["FONT20"].render(text_key, True, (0,0,0))
             self.interfaceSurface.blit(text_surface, (key_rect.x + 10, key_rect.y + 10))
 
             # Sauvegarder la position du bouton de la touche
@@ -116,15 +124,9 @@ class SettingsInterface(object):
         self.BuildInterface()
 
         # rebinding
-        if self.rebinding_key:
+        if INFOS["RebindingKey"]:
             self.BuildInterfaceBind()
-            if event.type == pygame.KEYDOWN:
-                KEYSBIND[self.rebinding_key] = event.key
-                self.rebinding_key = None  # Fin du rebind
 
-                # Sauvegarde des nouvelles touches
-                with open("keybinds.json", "w") as f:
-                    json.dump(KEYSBIND, f)
 
         self.displaySurface.blit(self.interfaceSurface, (320,180)) # pos topleft
 
@@ -155,14 +157,14 @@ class SettingsInterface(object):
                     local_pos = (global_pos[0] - surface_rect.x, global_pos[1] - surface_rect.y)
 
                     # Vérifiez si le clic est sur le bouton de langue
-                    if self.rectButtonLangue.collidepoint(local_pos) and not self.rebinding_key:
+                    if self.rectButtonLangue.collidepoint(local_pos) and not INFOS["RebindingKey"]:
                         self.ChangeLangue()
             
         
-                    if not self.rebinding_key:  # Si on n'est PAS en mode rebind
+                    if not INFOS["RebindingKey"]:  # Si on n'est PAS en mode rebind
                         for action, rect in self.button_positions.items():
                             if rect.collidepoint(local_pos):
-                                self.rebinding_key = action  # Déclencher le mode rebind
+                                INFOS["RebindingKey"] = action  # Déclencher le mode rebind
                     
 
 
