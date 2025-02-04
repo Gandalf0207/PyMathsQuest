@@ -45,12 +45,11 @@ class Player(pygame.sprite.Sprite):
         Input / Output : None"""
 
         # get touche clavier
-        keys = pygame.key.get_pressed()
-
-        # modification vecteur déplacement
-        self.direction.x = int(keys[pygame.K_d]) - int(keys[pygame.K_q])
-        self.direction.y = int(keys[pygame.K_s]) - int(keys[pygame.K_z])
-        
+        if pygame.key.get_pressed():
+            # modification vecteur déplacement
+            self.direction.x = int(KEYSBIND["right"]) - int(KEYSBIND["left"])
+            self.direction.y = int(KEYSBIND["down"]) - int(KEYSBIND["up"])
+            
         # normalisation vecteur déplacement
         self.direction = self.direction.normalize() if self.direction else self.direction
 

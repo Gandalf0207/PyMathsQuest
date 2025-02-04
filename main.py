@@ -180,10 +180,10 @@ class Game(object):
                             self.player.rect.center = (130*CASEMAP, 25*CASEMAP)
                             self.player.hitbox_rect.center = (130*CASEMAP, 25*CASEMAP)
                     
-                        if event.key == pygame.K_p or event.key == pygame.K_v or event.key == pygame.K_i or event.key == pygame.K_b:
+                        if event.key == KEYSBIND["settings"] or event.key == KEYSBIND["sound"] or event.key == KEYSBIND["inventory"] or event.key == KEYSBIND["book"]:
                             self.INTERFACE_OPEN = self.settingsAll.OpenInterfaceElementClavier(event, self.INTERFACE_OPEN)
                         
-                        if event.key == pygame.K_e:
+                        if event.key == KEYSBIND["action"]:
                             # pnj interface
                             self.INTERFACE_OPEN = self.pnj.OpenInterfaceElementClavier(self.INTERFACE_OPEN)
                             # element d'interaction
@@ -196,12 +196,12 @@ class Game(object):
                                 self.buildElements.PlaceBoat(self.loadMapElement, self.player.rect.center)
                         
                         # affichge ou non de la hotbar
-                        if event.key == pygame.K_m:
+                        if event.key == KEYSBIND["hideHotBar"]:
                             self.hideHotbar = True if not self.hideHotbar else False
                         
 
 
-                        if event.key == pygame.K_ESCAPE and self.INTERFACE_OPEN: # Close général interface build
+                        if event.key == KEYSBIND["echap"] and self.INTERFACE_OPEN: # Close général interface build
                             if self.interface_exo:
                                 INFOS["Exo"] = False
                             self.INTERFACE_OPEN = False

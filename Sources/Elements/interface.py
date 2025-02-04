@@ -134,7 +134,7 @@ class SettingsInterface(object):
 
         # Fermer l'interface avec ESC
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_ESCAPE]:  # Fermer avec ESC
+        if keys[KEYSBIND["echap"]]:  # Fermer avec ESC
             self.CloseInterface()
 
         # Gestion des clics de souris
@@ -213,7 +213,7 @@ class SoudInterface(object):
 
         # Fermer l'interface avec ESC
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_ESCAPE]:  # Fermer avec ESC
+        if keys[KEYSBIND["echap"]]:  # Fermer avec ESC
             self.CloseInterface()
 
 
@@ -332,7 +332,7 @@ class BundleInterface(object):
 
         # Fermer l'interface avec ESC
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_ESCAPE]:  # Fermer avec ESC
+        if keys[KEYSBIND["echap"]]:  # Fermer avec ESC
             self.CloseInterface()
 
 
@@ -377,7 +377,7 @@ class BookInterface(object):
 
         # Fermer l'interface avec ESC
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_ESCAPE]:  # Fermer avec ESC
+        if keys[KEYSBIND["echap"]]:  # Fermer avec ESC
             self.CloseInterface()
 
 
@@ -587,7 +587,7 @@ class PNJInterface(object):
         # Fermer l'interface avec ESC
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_ESCAPE]:  # Fermer avec ESC
+        if keys[KEYSBIND["echap"]]:  # Fermer avec ESC
             self.CloseInterface()
 
         # Vérifie si l'événement est un clic de souris (bouton skip)
@@ -611,7 +611,7 @@ class PNJInterface(object):
                         self.BuildInterface() # build des éléments
 
   
-        if keys[pygame.K_SPACE] : 
+        if keys[KEYSBIND["skip"]] : 
             current_time = pygame.time.get_ticks()
             if current_time - self.last_click_time > self.click_delay:
                 self.last_click_time = current_time
