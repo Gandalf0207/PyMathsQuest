@@ -126,8 +126,7 @@ class SettingsInterface(object):
         """Méthode de fermeture de l'interface. Input / Output : None"""
 
         # changement des boolean de check
-        self.gestionnaire.InterfaceOpen = False
-        self.gestionnaire.INTERFACE_OPEN = False
+        self.gestionnaire.CloseInterface()
 
 
     def Update(self, event) -> None:
@@ -213,9 +212,7 @@ class SoudInterface(object):
         """Méthode de fermeture de l'interface. Input / Output : None"""
 
         # changement des boolean de check
-        self.gestionnaire.InterfaceOpen = False
-        self.gestionnaire.INTERFACE_OPEN = False
-
+        self.gestionnaire.CloseInterface()
 
     def Update(self, event) -> None:
         """Méthode d'update de l'interface. Input / Output : None"""
@@ -332,8 +329,7 @@ class BundleInterface(object):
         """Méthode de fermeture de l'interface. Input / Output : None"""
 
         # changement des boolean de check
-        self.gestionnaire.InterfaceOpen = False
-        self.gestionnaire.INTERFACE_OPEN = False
+        self.gestionnaire.CloseInterface()
 
 
     def Update(self, event) -> None:
@@ -377,8 +373,7 @@ class BookInterface(object):
         """Méthode de fermeture de l'interface. Input / Output : None"""
 
         # changement des boolean de check
-        self.gestionnaire.InterfaceOpen = False
-        self.gestionnaire.INTERFACE_OPEN = False
+        self.gestionnaire.CloseInterface()
 
 
     def Update(self, event) -> None:

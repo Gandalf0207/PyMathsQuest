@@ -77,7 +77,7 @@ class Game(object):
             
             self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
             self.ideaTips = InfosTips(self.ideaTips_surface)
-            self.settingsAll = SettingsAll(self.allSettings_surface, self.INTERFACE_OPEN)
+            self.settingsAll = SettingsAll(self.allSettings_surface, self)
 
             # infos traverser
             self.InteractionObject = Interactions(self)
@@ -96,7 +96,7 @@ class Game(object):
             # Initialisation dans votre setup
             self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
             self.ideaTips = InfosTips(self.ideaTips_surface)
-            self.settingsAll = SettingsAll(self.allSettings_surface, self.INTERFACE_OPEN)
+            self.settingsAll = SettingsAll(self.allSettings_surface, self)
 
             if not INFOS["DemiNiveau"]:
                 # infos traverser
@@ -157,10 +157,16 @@ class Game(object):
 
                 if INFOS["RebindingKey"]:
                     if event.type == pygame.KEYDOWN:
-                        KEYSBIND[INFOS["RebindingKey"]] = event.key
-                        INFOS["RebindingKey"] = False  # Fin du rebind
+                        if not INFOS["RebindingKey"] =="echap" and event.key != pygame.K_ESCAPE: # verif
+                            KEYSBIND[INFOS["RebindingKey"]] = event.key
 
+                        else:
+                            if INFOS["RebindingKey"] =="echap":
+                                KEYSBIND[INFOS["RebindingKey"]] = event.key
+                        INFOS["RebindingKey"] = False  # Fin du rebind
                         # Sauvegarde des nouvelles touches
+                        pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])
+
                         with open("keybinds.json", "w") as f:
                             json.dump(KEYSBIND, f)
                 
@@ -181,7 +187,7 @@ class Game(object):
                             self.player.hitbox_rect.center = (130*CASEMAP, 25*CASEMAP)
                     
                         if event.key == KEYSBIND["settings"] or event.key == KEYSBIND["sound"] or event.key == KEYSBIND["inventory"] or event.key == KEYSBIND["book"]:
-                            self.INTERFACE_OPEN = self.settingsAll.OpenInterfaceElementClavier(event, self.INTERFACE_OPEN)
+                            self.settingsAll.OpenInterfaceElementClavier(event)
                         
                         if event.key == KEYSBIND["action"]:
                             # pnj interface
@@ -207,7 +213,7 @@ class Game(object):
                             self.INTERFACE_OPEN = False
 
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                        self.INTERFACE_OPEN = self.settingsAll.OpenInterfaceElementClic(event, self.INTERFACE_OPEN)
+                        self.settingsAll.OpenInterfaceElementClic(event)
                     
 
 
@@ -320,7 +326,6 @@ class Game(object):
 
                 else:
                     self.InterfaceExo.Update(event)
-
 
             if self.INTERFACE_OPEN is None: # vérification : sécurité
                 self.INTERFACE_OPEN = False

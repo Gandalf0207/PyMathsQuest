@@ -129,7 +129,13 @@ KEYSBIND = {
     "left": None,
     "right": None,
     "skip": None,
+    "inventory": None,
+    "settings": None,
+    "book": None,
+    "sound": None,
     "action": None,
+    "echap": None,
+    "hideHotBar": None,
 }
 
 # texte : tout le texte
