@@ -163,13 +163,14 @@ class InfosTips:
 
 class SettingsAll:
 
-    def __init__(self, screen : any, INTERFACE_OPEN : bool) -> None:
+    def __init__(self, screen : any, gestionnaire) -> None:
         """Méthode initialisation de la box d'accès à tout les settings et utilitaires (bundle, settings, sound, book).
         Input : screen = (element pygame), boolean = check interface global """
 
         # Initialisation
         self.allSettingsSurface = screen
-        self.INTERFACE_OPEN = INTERFACE_OPEN
+
+        self.gestionnaire = gestionnaire
 
         # Création éléments
         self.InterfaceOpen = False # bool de vérification
@@ -207,13 +208,12 @@ class SettingsAll:
         self.book = pygame.image.load(join("Images", "HotBar", "AllSettings", "Book.png")).convert_alpha()
 
 
-    def OpenInterfaceElementClic(self, event : any, INTERFACE_OPEN : bool) -> bool:
+    def OpenInterfaceElementClic(self, event : any) -> bool:
         """Méthode : Appel des méthode de gestion des interfaces par clic souris.
         Input : event = (element pygame), bool = checl interface global; Output : bool"""
 
-        self.INTERFACE_OPEN = INTERFACE_OPEN
 
-        if not self.INTERFACE_OPEN: # sécurité
+        if not self.gestionnaire.INTERFACE_OPEN: # sécurité
             self.openInterface = False 
 
         # Obtenez les coordonnées globales de l'événement
@@ -227,7 +227,7 @@ class SettingsAll:
 
         # Vérifiez si le clic est dans la surface
         if not surface_rect.collidepoint(global_pos):
-            return self.INTERFACE_OPEN
+            return 
 
         # Si collision au clic avec la box, alors on appel la méthode de la gestion de l'interface en question
         if self.ButtonRectWheel.collidepoint(local_pos):
@@ -242,86 +242,92 @@ class SettingsAll:
         elif self.ButtonRectBook.collidepoint(local_pos): 
             self.GestionInterfaceBook()
 
-        return self.INTERFACE_OPEN # mise à jour de l'interface check général
     
 
-    def OpenInterfaceElementClavier(self, event : any, INTERFACE_OPEN : bool) -> bool:
+    def OpenInterfaceElementClavier(self, event : any) -> bool:
         """Méthode : Appel des méthode de gestion des interfaces par touches clavier.
         Input : event = (element pygame), bool = checl interface global; Output : bool"""
 
-        self.INTERFACE_OPEN = INTERFACE_OPEN
 
-        if not self.INTERFACE_OPEN: # sécurité
+        if self.gestionnaire.INTERFACE_OPEN: # sécurité
             self.openInterface = False 
 
         # appel des méthode quand touche du clavier correspondante
-        if event.key == pygame.K_p :
+        if event.key == KEYSBIND["settings"] :
             self.GestionInterfaceSettings()
 
-        elif event.key == pygame.K_v : 
+        elif event.key ==KEYSBIND["sound"]  : 
             self.GestionInterfaceSound()
 
-        elif event.key == pygame.K_i:
+        elif event.key == KEYSBIND["inventory"] :
             self.GestionInterfaceBundle()
 
-        elif event.key == pygame.K_b : 
+        elif event.key == KEYSBIND["book"]  : 
             self.GestionInterfaceBook()
-
-        return self.INTERFACE_OPEN # mise à jour de l'interface check général
 
 
     def GestionInterfaceSettings(self) -> None:
         """Méthode de gestion spécifique interface ouverture / fermeture
         Input / Output : None"""
 
-        if not self.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
-            self.InterfaceOpen = True
-            self.INTERFACE_OPEN = True
+        if not self.gestionnaire.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
+            self.OpenInterface()
             self.interfaceElement = SettingsInterface(self)
         
         elif self.InterfaceOpen: # fermeture interface actuel
-            self.InterfaceOpen = False
-            self.INTERFACE_OPEN = False
+            self.CloseInterface()
+
 
 
     def GestionInterfaceSound(self) -> None:
         """Méthode de gestion spécifique interface ouverture / fermeture
         Input / Output : None"""
 
-        if not self.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
-            self.InterfaceOpen = True
-            self.INTERFACE_OPEN = True
+        if not self.gestionnaire.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
+            self.OpenInterface()
             self.interfaceElement = SoudInterface(self)
         
         elif self.InterfaceOpen: # fermeture interface actuel
-            self.InterfaceOpen = False
-            self.INTERFACE_OPEN = False
+            self.CloseInterface()
+
 
     def GestionInterfaceBundle(self) -> None:
         """Méthode de gestion spécifique interface ouverture / fermeture
         Input / Output : None"""
 
-        if not self.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
-            self.InterfaceOpen = True
-            self.INTERFACE_OPEN = True
+        if not self.gestionnaire.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
+            self.OpenInterface()
             self.interfaceElement = BundleInterface(self)
         
         elif self.InterfaceOpen: # fermeture interface actuel
-            self.InterfaceOpen = False
-            self.INTERFACE_OPEN = False
+            self.CloseInterface()
+
 
     def GestionInterfaceBook(self) -> None:
         """Méthode de gestion spécifique interface ouverture / fermeture
         Input / Output : None"""
 
-        if not self.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
-            self.InterfaceOpen = True
-            self.INTERFACE_OPEN = True
+        if not self.gestionnaire.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
+            self.OpenInterface()
             self.interfaceElement = BookInterface(self)
         
         elif self.InterfaceOpen: # fermeture interface actuel
-            self.InterfaceOpen = False
-            self.INTERFACE_OPEN = False
+            self.CloseInterface()
+
+    def CloseInterface(self) -> None:
+        """Méthode de fermeture de l'interface. Input / Output : None"""
+
+        # changement des boolean de check
+        self.InterfaceOpen = False
+        self.gestionnaire.INTERFACE_OPEN = False
+
+    def OpenInterface(self) -> None:
+        """Méthode de fermeture de l'interface. Input / Output : None"""
+
+        # changement des boolean de check
+        self.InterfaceOpen = True
+        self.gestionnaire.INTERFACE_OPEN = True
+
 
 
     def Update(self, event) -> None:

@@ -276,9 +276,9 @@ class LoadMedievale(): # nv1
         self.chateau = pygame.image.load(join("Images", "Obstacle", "Structures", "Chateau.png")).convert_alpha()
         self.MuraillesWE = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesWE.png" )).convert_alpha()
         self.MuraillesNS = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesNS.png" )).convert_alpha()
-        self.MuraillesNE = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesNE.png" )).convert_alpha()
-        self.MuraillesNW = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesNW.png" )).convert_alpha()
-        self.MuraillesEAU = pygame.image.load(join("Images", "Obstacle", "Structures", "Chateau", "MuraillesEAU.png" )).convert_alpha()
+        self.MuraillesMountain = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesMountain.png" )).convert_alpha()
+        self.MuraillesAngle = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesAngle.png" )).convert_alpha()
+        
         self.tableCraft = pygame.image.load(join("Images", "Obstacle", "TableCraft.png")).convert_alpha()
         self.boat = pygame.image.load(join("Images", "Obstacle", "Boat.png")).convert_alpha()
 
@@ -541,20 +541,25 @@ class LoadMedievale(): # nv1
                         # pts ref placement chateau
                         CollisionSprites(pos, self.chateau, "Chateau", (self.allSprites, self.collisionSprites))
 
+                    elif case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] == "B" and \
+                    case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] == "B" and \
+                    self.map[ordonnees+1][abscisses] == "C":
+                        CollisionSprites(pos, self.MuraillesMountain, "Murailles", (self.allSprites, self.collisionSprites))
+                        
                     elif case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "C" and \
                         case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] == "C":
-                        CollisionSprites(pos, self.MuraillesNE, "Murailles", (self.allSprites, self.collisionSprites))
+                        CollisionSprites(pos, self.MuraillesAngle, "MuraillesAngle", (self.allSprites, self.collisionSprites))
 
                     elif case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "C" and \
                         case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] == "C":
-                        CollisionSprites(pos, self.MuraillesNW, "Murailles", (self.allSprites, self.collisionSprites))
+                        CollisionSprites(pos, self.MuraillesAngle, "MuraillesAngle", (self.allSprites, self.collisionSprites))
 
                     # passage eau
                     elif case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] == "C" and \
                         case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] == "C" and \
                         case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "#" and \
                         case_valide(ordonnees + 1, abscisses) and self.map[ordonnees + 1][abscisses] == "#":
-                        CollisionSprites(pos, self.MuraillesEAU, "Murailles", (self.allSprites, self.collisionSprites))
+                        River(pos, (self.allSprites, self.collisionSprites), "CastleWallRiverx128")
 
                     elif case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] == "C" or \
                         case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] == "C":

@@ -1,4 +1,5 @@
 from settings import *
+from Sources.Elements.touche import *
 from Sources.Elements.interactions import *
 from Sources.Elements.groups import *
 from Sources.Map.loadMap import *
@@ -76,7 +77,7 @@ class Game(object):
             
             self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
             self.ideaTips = InfosTips(self.ideaTips_surface)
-            self.settingsAll = SettingsAll(self.allSettings_surface, self.INTERFACE_OPEN)
+            self.settingsAll = SettingsAll(self.allSettings_surface, self)
 
             # infos traverser
             self.InteractionObject = Interactions(self)
@@ -95,7 +96,7 @@ class Game(object):
             # Initialisation dans votre setup
             self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
             self.ideaTips = InfosTips(self.ideaTips_surface)
-            self.settingsAll = SettingsAll(self.allSettings_surface, self.INTERFACE_OPEN)
+            self.settingsAll = SettingsAll(self.allSettings_surface, self)
 
             if not INFOS["DemiNiveau"]:
                 # infos traverser
@@ -154,8 +155,23 @@ class Game(object):
                 if event.type == pygame.QUIT:
                     self.running = False
 
+                if INFOS["RebindingKey"]:
+                    if event.type == pygame.KEYDOWN:
+                        if not INFOS["RebindingKey"] =="echap" and event.key != pygame.K_ESCAPE: # verif
+                            KEYSBIND[INFOS["RebindingKey"]] = event.key
+
+                        else:
+                            if INFOS["RebindingKey"] =="echap":
+                                KEYSBIND[INFOS["RebindingKey"]] = event.key
+                        INFOS["RebindingKey"] = False  # Fin du rebind
+                        # Sauvegarde des nouvelles touches
+                        pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])
+
+                        with open("keybinds.json", "w") as f:
+                            json.dump(KEYSBIND, f)
+                
                 # s'il n'y a pas de cinématique en cours
-                if not self.cinematique:
+                elif not self.cinematique:
 
                     if event.type == pygame.KEYDOWN: # TP : ne pas oublier de retirer
                         if event.key == pygame.K_t:
@@ -170,10 +186,10 @@ class Game(object):
                             self.player.rect.center = (130*CASEMAP, 25*CASEMAP)
                             self.player.hitbox_rect.center = (130*CASEMAP, 25*CASEMAP)
                     
-                        if event.key == pygame.K_p or event.key == pygame.K_v or event.key == pygame.K_i or event.key == pygame.K_b:
-                            self.INTERFACE_OPEN = self.settingsAll.OpenInterfaceElementClavier(event, self.INTERFACE_OPEN)
+                        if event.key == KEYSBIND["settings"] or event.key == KEYSBIND["sound"] or event.key == KEYSBIND["inventory"] or event.key == KEYSBIND["book"]:
+                            self.settingsAll.OpenInterfaceElementClavier(event)
                         
-                        if event.key == pygame.K_e:
+                        if event.key == KEYSBIND["action"]:
                             # pnj interface
                             self.INTERFACE_OPEN = self.pnj.OpenInterfaceElementClavier(self.INTERFACE_OPEN)
                             # element d'interaction
@@ -186,18 +202,18 @@ class Game(object):
                                 self.buildElements.PlaceBoat(self.loadMapElement, self.player.rect.center)
                         
                         # affichge ou non de la hotbar
-                        if event.key == pygame.K_m:
+                        if event.key == KEYSBIND["hideHotBar"]:
                             self.hideHotbar = True if not self.hideHotbar else False
                         
 
 
-                        if event.key == pygame.K_ESCAPE and self.INTERFACE_OPEN: # Close général interface build
+                        if event.key == KEYSBIND["echap"] and self.INTERFACE_OPEN: # Close général interface build
                             if self.interface_exo:
                                 INFOS["Exo"] = False
                             self.INTERFACE_OPEN = False
 
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                        self.INTERFACE_OPEN = self.settingsAll.OpenInterfaceElementClic(event, self.INTERFACE_OPEN)
+                        self.settingsAll.OpenInterfaceElementClic(event)
                     
 
 
@@ -310,7 +326,6 @@ class Game(object):
 
                 else:
                     self.InterfaceExo.Update(event)
-
 
             if self.INTERFACE_OPEN is None: # vérification : sécurité
                 self.INTERFACE_OPEN = False
@@ -514,6 +529,8 @@ class GameToolBox(object):
 if __name__ == "__main__":
     
     LoadTexte()
+    BindKey().Update()
+
 
     game = Game()
     game.run()

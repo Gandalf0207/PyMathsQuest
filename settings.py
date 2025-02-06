@@ -120,6 +120,22 @@ INFOS = {
     "DemiNiveau" :False,
     "ChangementNiveau" : False,
     "ChangementAnnee" : False,
+    "RebindingKey": False
+}
+
+KEYSBIND = {
+    "up": None,
+    "down": None,
+    "left": None,
+    "right": None,
+    "skip": None,
+    "inventory": None,
+    "settings": None,
+    "book": None,
+    "sound": None,
+    "action": None,
+    "echap": None,
+    "hideHotBar": None,
 }
 
 # texte : tout le texte

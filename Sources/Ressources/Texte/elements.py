@@ -18,7 +18,9 @@ ElementsFr = {
         "Settings" : {
             "Title" : "Paramettres",
             "Language" : "Langue",
-            "TypeLanguage" : "Français"
+            "TypeLanguage" : "Français",
+            "PressKey" : "Appuyez sur une touche...",
+
             },
         "Sound" : {
             "Title" : "Volume",
@@ -171,7 +173,7 @@ ElementsEn = {
         "Settings" : {
             "Title" : "Settings",
             "Language" : "Language",
-            "TypeLanguage" : "English"
+            "TypeLanguage" : "English",
             },
         "Sound" : {
             "Title" : "Sound",

@@ -35,6 +35,8 @@ class CollisionSprites(pygame.sprite.Sprite):
             self.rect = self.image.get_frect(topleft=(pos[0]-33, pos[1]))
         elif typeCollision == "pont3":
             self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-20))
+        elif typeCollision == "MuraillesAngle":
+            self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-64))
         else:
             self.rect = self.image.get_frect(topleft=pos)
 
@@ -65,7 +67,7 @@ class CollisionSprites(pygame.sprite.Sprite):
             case "Champs":
                 self.hitbox = self.rect.inflate(0,0)
             case "Murailles":
-                self.hitbox = self.rect.inflate(0,-40)
+                self.hitbox = self.rect.inflate(0,-20)
             case "House":
                 self.hitbox = self.rect.inflate(-20,-60)
             case "Well":
@@ -134,6 +136,7 @@ class River(pygame.sprite.Sprite):
             "RiverTWN-Sx128" : [],
             "RiverTWN-Ex128" : [],
             "RiverTW-SEx128" : [],
+            "CastleWallRiverx128" : [],
 
         }
 
