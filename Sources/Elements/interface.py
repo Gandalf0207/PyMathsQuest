@@ -59,8 +59,15 @@ class SettingsInterface(object):
             # Création du rectangle pour chaque bouton (position dynamique)
             rectButtonLangue = pygame.Rect(x_offsetLangue, y_offsetLangue, 100, 50)
             
-            # Dessiner le rectangle du bouton
-            pygame.draw.rect(self.interfaceSurface, (200, 200, 200), rectButtonLangue)
+            if key:
+                # Dessiner le rectangle du bouton
+                pygame.draw.rect(self.interfaceSurface, (112, 193, 255), rectButtonLangue)
+                #Dessiner le contour du bouton (bordure noire)
+                pygame.draw.rect(self.interfaceSurface, (0, 0, 0), rectButtonLangue, width=3)
+            else:
+                # Dessiner le rectangle du bouton
+                pygame.draw.rect(self.interfaceSurface, (200,200,200), rectButtonLangue)
+            
             
             # Dessiner le texte du bouton
             texteButtonLangue = FONT["FONT20"].render(
