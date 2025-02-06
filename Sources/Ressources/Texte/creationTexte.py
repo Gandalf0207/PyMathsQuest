@@ -19,6 +19,6 @@ def LoadTexte():
 
     for keyLangue in DICOLANGUE:
         if DICOLANGUE[keyLangue]:
-            TEXTE["Dialogue"] = DIALOGUEALL[keyLangue]
+            TEXTE["Dialogues"] = DIALOGUEALL[keyLangue]
             TEXTE["Elements"] = ELEMENTSALL[keyLangue]
 
