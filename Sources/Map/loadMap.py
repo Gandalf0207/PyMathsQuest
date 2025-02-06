@@ -155,7 +155,7 @@ class LoadMapPlaineRiviere(): # nv 0
         # parcours et création des spritess
         for coordsElementSpawn in coordsSpawnList:
             pos = (coordsElementSpawn[0]*CASEMAP, coordsElementSpawn[1]*CASEMAP) # calcul coords pygame
-            if coordsElementSpawn[2] == "C":
+            if coordsElementSpawn[2] == "J":
                 CollisionSprites(pos, self.campFire, "campFire", (self.allSprites, self.collisionSprites))
 
 

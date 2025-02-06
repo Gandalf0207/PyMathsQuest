@@ -358,7 +358,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         self.__PlacementRock__() # placement des petits cailloux sur la map (pas de collision)
         
         # spawn / exit
-        super().PlacementElements([[8,2,"S"]], ["coordsMapObject", "Spawn"]) 
+        super().PlacementElements([[8,2,"S"], [9, 3, "J"]], ["coordsMapObject", "Spawn"]) 
         coordSortie = self.__PlacementSpecial__("coordsMapBase", "Riviere3 Coords", "S")
         AjoutJsonMapValue(coordSortie, "coordsMapObject", "Exit")
 

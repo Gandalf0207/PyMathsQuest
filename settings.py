@@ -46,14 +46,6 @@ def AjoutJsonMapValue(value :list, index1 :str, index2 :str) -> None:
     with open(join("Sources","Ressources","AllMapValue.json"), "w") as f: # ouverture du fichier json en mode écriture
         json.dump(donnees, f, indent=4) # chargement dans le fichier json de l'élément données (possédent les index de position et les valeurs à stocker)
 
-def ChangeValuesMap(elementList):
-    for element in elementList:
-        print(element)
-        map = LoadJsonMapValue("coordsMapBase", "AllMapInfo")
-        map[element[0][1]][element[0][0]] = element[1]
-        AjoutJsonMapValue(map, "coordsMapBase", "AllMapInfo")
-
-
 # texte wrap pygame
 def wrap_text(text, font, max_width):
             words = text.split(' ')
@@ -106,7 +98,7 @@ NIVEAU = {
     "Niveau" : "Seconde",
 
     # map
-    "Map" : "NiveauMedievale",
+    "Map" : "NiveauPlaineRiviere",
 
     # numero
     "Numero" : 0,
