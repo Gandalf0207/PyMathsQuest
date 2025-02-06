@@ -4,6 +4,21 @@ from Sources.Ressources.Texte.elements import *
 def LoadTexte():
     """Méthode de création du fichier de dialogue
     Input / Output : None"""
+    DIALOGUEALL = {
+        "Fr" : DialoguesFr,
+        "En" : DialoguesEn,
+        "Es" : DialoguesEs, 
+    }
 
-    TEXTE["Dialogues"] = DialoguesFr if INFOS["Langue"] == "Fr" else DialoguesEn
-    TEXTE["Elements"] = ElementsFr if INFOS["Langue"] == "Fr" else ElementsEn
+    ELEMENTSALL = {
+        "Fr" : ElementsFr,
+        "En" : ElementsEn,
+        "Es" : ElementsEs,  
+    }
+
+
+    for keyLangue in DICOLANGUE:
+        if DICOLANGUE[keyLangue]:
+            TEXTE["Dialogue"] = DIALOGUEALL[keyLangue]
+            TEXTE["Elements"] = ELEMENTSALL[keyLangue]
+

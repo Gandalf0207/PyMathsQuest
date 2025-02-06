@@ -105,7 +105,6 @@ NIVEAU = {
 }
 # box infos globales
 INFOS = {
-    "Langue" : "Fr", 
     "Difficulte" : False,
     "Exo" : False, 
     "ExoPasse" : False,
@@ -113,6 +112,12 @@ INFOS = {
     "ChangementNiveau" : False,
     "ChangementAnnee" : False,
     "RebindingKey": False
+}
+
+DICOLANGUE = {
+    "Fr" : True,
+    "En" : False,
+    "Es" : False,
 }
 
 KEYSBIND = {

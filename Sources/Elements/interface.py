@@ -21,6 +21,7 @@ class SettingsInterface(object):
         self.click_delay = 500   
 
         self.button_positions = {}  # Stocke les positions des boutons de touche
+        self.buttonsLangue = {}
 
     def BuildInterfaceBind(self):
         overlay = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
@@ -50,19 +51,32 @@ class SettingsInterface(object):
         textLangue = FONT["FONT20"].render(TEXTE["Elements"]["HotBar"]["Settings"]["Language"], True, (10, 10, 10))
         self.interfaceSurface.blit(textLangue, (10, 50))
 
-        # bouton langue
-        self.rectButtonLangue = pygame.Rect(10, 75, 100, 50)  # Définir la taille et position du bouton
+        y_offsetLangue = 75  # Position initiale en vertical
+        x_offsetLangue = 10  # Position initiale en horizontal
+        self.buttonsLangue = {}  # Dictionnaire pour stocker les boutons
 
-        # Dessiner le rectangle du bouton sur la surface
-        pygame.draw.rect(self.interfaceSurface, (200, 200, 200), self.rectButtonLangue)
+        for action, key in DICOLANGUE.items():  
+            # Création du rectangle pour chaque bouton (position dynamique)
+            rectButtonLangue = pygame.Rect(x_offsetLangue, y_offsetLangue, 100, 50)
+            
+            # Dessiner le rectangle du bouton
+            pygame.draw.rect(self.interfaceSurface, (200, 200, 200), rectButtonLangue)
+            
+            # Dessiner le texte du bouton
+            texteButtonLangue = FONT["FONT20"].render(
+                TEXTE["Elements"]["HotBar"]["Settings"]["TypeLanguage"][action], True, (50, 50, 50)
+            )
+            texte_pos = (
+                rectButtonLangue.x + (rectButtonLangue.width - texteButtonLangue.get_width()) // 2,
+                rectButtonLangue.y + (rectButtonLangue.height - texteButtonLangue.get_height()) // 2,
+            )
+            self.interfaceSurface.blit(texteButtonLangue, texte_pos)
 
-        # Dessiner le texte à l'intérieur du bouton
-        texteButtonLangue = FONT["FONT20"].render(TEXTE["Elements"]["HotBar"]["Settings"]["TypeLanguage"], True, (50, 50, 50))
-        texte_pos = (
-            self.rectButtonLangue.x + (self.rectButtonLangue.width - texteButtonLangue.get_width()) // 2,
-            self.rectButtonLangue.y + (self.rectButtonLangue.height - texteButtonLangue.get_height()) // 2,
-        )
-        self.interfaceSurface.blit(texteButtonLangue, texte_pos)
+            # Ajouter le bouton au dictionnaire
+            self.buttonsLangue[action] = rectButtonLangue  
+
+            # Déplacer vers le bas pour le prochain bouton
+            y_offsetLangue += 60  # 50 de hauteur + 10 de marge
 
 
         # BIND KEYS
@@ -114,11 +128,12 @@ class SettingsInterface(object):
 
 
 
-    def ChangeLangue(self):
+    def ChangeLangue(self, action):
         """Méthode de changement de langue dans les fichier du jeu.
         Input / Output : None"""
 
-        INFOS["Langue"] = "En" if INFOS["Langue"] == "Fr" else "Fr" # changement variable langue
+        for keyLangue in DICOLANGUE:
+            DICOLANGUE[keyLangue] = False if keyLangue != action else True
         LoadTexte() # load nouveau texte (changement de langue)
 
 
@@ -168,11 +183,12 @@ class SettingsInterface(object):
                     # Convertissez en coordonnées locales
                     local_pos = (global_pos[0] - surface_rect.x, global_pos[1] - surface_rect.y)
 
-                    # Vérifiez si le clic est sur le bouton de langue
-                    if self.rectButtonLangue.collidepoint(local_pos) and not INFOS["RebindingKey"]:
-                        self.ChangeLangue()
-            
-        
+                    # Vérifier si un bouton de langue a été cliqué
+                    if not INFOS["RebindingKey"]:
+                        for action, rectButtonLangue in self.buttonsLangue.items():  # Parcourt le dictionnaire
+                            if rectButtonLangue.collidepoint(local_pos):
+                                self.ChangeLangue(action)  # Change la langue en fonction du bouton cliqué
+
                     if not INFOS["RebindingKey"]:  # Si on n'est PAS en mode rebind
                         for action, rect in self.button_positions.items():
                             if rect.collidepoint(local_pos):
