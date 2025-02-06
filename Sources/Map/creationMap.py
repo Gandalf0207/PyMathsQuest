@@ -653,6 +653,10 @@ class NiveauMedievale(GestionNiveauMap):
             self.map[coords[1]][coords[0]] = "C"  
             self.baseMap[coords[1]][coords[0]] = "C"  
 
+        coordsDoorMurailles = [109, 24]
+        self.map[coordsDoorMurailles[1]][coordsDoorMurailles[0]] = "d"  
+        self.baseMap[coordsDoorMurailles[1]][coordsDoorMurailles[0]] = "d"
+
         # placement porte du chateau
         coordsDoor = [109, 10]
         self.map[coordsDoor[1]][coordsDoor[0]] = "D"  

@@ -283,6 +283,7 @@ class LoadMedievale(): # nv1
         self.boat = pygame.image.load(join("Images", "Obstacle", "Boat.png")).convert_alpha()
 
         self.DoorChateau = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+        self.DoorMurailles =  pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
 
 
     def Setup(self) -> None:
@@ -561,8 +562,8 @@ class LoadMedievale(): # nv1
                         case_valide(ordonnees + 1, abscisses) and self.map[ordonnees + 1][abscisses] == "#":
                         River(pos, (self.allSprites, self.collisionSprites), "CastleWallRiverx128")
 
-                    elif case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] == "C" or \
-                        case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] == "C":
+                    elif case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] in ["C", "d"] or \
+                        case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] in ["C", "d"]:
                         CollisionSprites(pos, self.MuraillesWE, "Murailles", (self.allSprites, self.collisionSprites))
 
                     elif case_valide(ordonnees + 1, abscisses) and self.map[ordonnees + 1][abscisses] == "C" or \
@@ -572,6 +573,9 @@ class LoadMedievale(): # nv1
 
                 if self.map[ordonnees][abscisses] == "D":
                     CollisionSprites(pos, self.DoorChateau, "Door", (self.collisionSprites, self.interactions, self.allSprites))
+                if self.map[ordonnees][abscisses] == "d":
+                    CollisionSprites(pos, self.DoorMurailles, "Door2", (self.collisionSprites, self.allSprites))
+
 
                 # maisons
                 if self.map[ordonnees][abscisses] == "H" : 

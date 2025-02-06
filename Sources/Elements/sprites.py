@@ -84,6 +84,8 @@ class CollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(0,-20)
             case "Door":
                 self.hitbox = self.rect.inflate(0,-60)
+            case "Door2":
+                self.hitbox = self.rect.inflate(0,-60)
             case "CerclePortal":
                 self.hitbox = self.rect.inflate(-128,-128)
 
