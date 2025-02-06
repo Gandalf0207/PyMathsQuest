@@ -19,6 +19,7 @@ class GestionNiveauMap(object):
         self.largeur = largeur 
         self.map = [] # map collision
         self.baseMap = [] # map sol
+        self.ERROR_RELANCER = False
         self.data = {
                     "coordsMapBase" : {
                         "Bordures Coords": "null",
@@ -298,8 +299,11 @@ class NiveauPlaineRiviere(GestionNiveauMap):
 
         #placement des obstacle sur la map
         checkDeplacementPasPossible = True
-        while checkDeplacementPasPossible: # boucle tant que la map n'est pas finissable par le joueur 
-            
+        compteur = 0
+        while checkDeplacementPasPossible and compteur < 100: 
+            compteur += 1
+
+
             # copie de la map pour les test
             self.mapCheckDeplacementPossible = []
             self.mapCheckDeplacementPossible = copy.deepcopy(self.map)   # deep copy pour éviter les liaisons des cellules mémoires et donc influer sur la vrai map + eviter d'utiliser une double for
@@ -344,6 +348,15 @@ class NiveauPlaineRiviere(GestionNiveauMap):
                         checkDeplacementPasPossible = False # on arrête la boucle
                         for coords in listeObstacle: # on met à jour la map (on place les objets dessus)
                             self.map[coords[1]][coords[0]] = "O" # placement aux différents cordonnées
+
+        ## SECURITE
+        # verif si boucle pour relancement
+        if compteur < 100:
+            self.ERROR_RELANCER = False
+        else:
+            self.ERROR_RELANCER = True
+
+
 
     def Update(self) -> list:
         """Méthode de gestion de la créaion de la map pour le niveau plaine et riviere.
@@ -390,7 +403,13 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         for j in range(len(self.baseMap)):
             print(*self.baseMap[j], sep=" ")
 
-        return self.map, self.baseMap # return des deux map pour pouvoir charger et mettre à jours les valeurs de la map
+
+        # relancer une nouvelle map
+        if self.ERROR_RELANCER:
+            return None, None, self.ERROR_RELANCER
+        
+        # Retourne la carte actuelle (map) et la carte de base (baseMap)
+        return self.map, self.baseMap, self.ERROR_RELANCER
 
 
 
@@ -1043,8 +1062,9 @@ class NiveauMedievale(GestionNiveauMap):
         if compteur < 100:
             # Sauvegarde les coordonnées du transport de bateau vers le château dans un fichier JSON
             AjoutJsonMapValue(coordsPts8, "coordsMapObject", "RiverBoatTPChateau coords")
+            self.ERROR_RELANCER = False
         else:
-            self.__PlacementObstacles__()
+            self.ERROR_RELANCER = True
 
     def __AjustementRiver__(self):
 
@@ -1172,8 +1192,12 @@ class NiveauMedievale(GestionNiveauMap):
         for j in range(len(self.baseMap)):
             print(*self.baseMap[j], sep=" ")
 
+        # relancer une nouvelle map
+        if self.ERROR_RELANCER:
+            return None, None, self.ERROR_RELANCER
+        
         # Retourne la carte actuelle (map) et la carte de base (baseMap)
-        return self.map, self.baseMap
+        return self.map, self.baseMap, self.ERROR_RELANCER
 
 
 class NiveauMedievaleChateau():
@@ -1233,7 +1257,7 @@ class NiveauMedievaleChateau():
 
 
 # for i in range(25):
-#     mapp, baseMap = NiveauMedievale(150,75).Update(i)
+#     mapp, baseMap = NiveauMedievale(150, 75).Update()
 #     time.sleep(1)
 
 # mapp, baseMap = NiveauMedievale(150,75).Update()

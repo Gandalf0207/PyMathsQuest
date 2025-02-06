@@ -17,6 +17,7 @@ class LoadMapPlaineRiviere(): # nv 0
         self.allSprites = allSprites
         self.collisionSprites = collisionSprites
         self.interactions = interactions
+        self.ERROR_RELANCER = False
 
     def LoadImages(self) -> None:
         """Méthode de chargement de toutes les images pour la map 
@@ -42,7 +43,7 @@ class LoadMapPlaineRiviere(): # nv 0
         Input / Output : None"""
 
         # création de la map du niveau (sectionnée en deux)
-        self.map, self.mapBase = NiveauPlaineRiviere(LONGUEUR, LARGEUR).Update()
+        self.map, self.mapBase, self.ERROR_RELANCER = NiveauPlaineRiviere(LONGUEUR, LARGEUR).Update()
 
         # parcours et création de chaque sprites
         for ordonnees in range(len(self.mapBase)):
@@ -198,10 +199,8 @@ class LoadMapPlaineRiviere(): # nv 0
 
         if element == "pont1":
             CollisionSprites(coords, self.pont1, element, (self.allSprites, self.collisionSprites, self.interactions))
-            threading.Thread(target=ChangeValuesMap, args=[((coords[0] //CASEMAP, coords[1] // CASEMAP), "t")])
         elif element  == "pont2":
             CollisionSprites(coords, self.pont2, element, (self.allSprites, self.collisionSprites, self.interactions))
-            threading.Thread(target=ChangeValuesMap, args=[((coords[0] //CASEMAP, coords[1] // CASEMAP), "T")])
 
                 
 
@@ -218,7 +217,7 @@ class LoadMapPlaineRiviere(): # nv 0
         self.SetupExit()
 
         # retour des infos de map
-        return self.map, self.mapBase
+        return self.map, self.mapBase, self.ERROR_RELANCER
     
 
 class LoadMedievale(): # nv1 
@@ -291,7 +290,7 @@ class LoadMedievale(): # nv1
         Input / Output : None"""
 
         # création de la map du niveau (sectionnée en deux)
-        self.map, self.mapBase = NiveauMedievale(LONGUEUR, LARGEUR).Update()
+        self.map, self.mapBase, self.ERROR_RELANCER= NiveauMedievale(LONGUEUR, LARGEUR).Update()
 
         # parcours et création de chaque sprites
         for ordonnees in range(len(self.mapBase)):
@@ -619,7 +618,6 @@ class LoadMedievale(): # nv1
 
         if element  == "pont2" or element == "pont3":
             CollisionSprites(coords, self.pont2, element, (self.allSprites, self.collisionSprites, self.interactions))
-            threading.Thread(target=ChangeValuesMap, args=[((coords[0] //CASEMAP, coords[1] // CASEMAP), "T")])
 
 
     def AddBoat(self, element : str, coords : tuple) -> None:
@@ -629,7 +627,6 @@ class LoadMedievale(): # nv1
 
         if element  == "Boat":
             CollisionSprites(coords, self.boat, element, (self.allSprites, self.collisionSprites, self.interactions))
-            threading.Thread(target=ChangeValuesMap, args=[((coords[0] //CASEMAP, coords[1] // CASEMAP), "N")])
 
 
 
@@ -643,7 +640,7 @@ class LoadMedievale(): # nv1
         self.SetupPNJ()
 
         # retour des infos de map
-        return self.map, self.mapBase
+        return self.map, self.mapBase, self.ERROR_RELANCER
 
 
 class LoadMedievaleChateau():

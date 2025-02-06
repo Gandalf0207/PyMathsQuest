@@ -36,13 +36,16 @@ class Game(object):
         self.ideaTips_surface = pygame.Surface((514, 150))
         self.allSettings_surface = pygame.Surface((426, 150))
         
-        # boolean de check 
+        # boolean de check game
         self.INTERFACE_OPEN = False # interface secondaire ouvert
         self.interface_exo = False
         self.cinematique = False # cinématique
         self.cinematiqueObject = None # obj de la cinematique 
         self.hideHotbar = False
         self.demiNiveau = False
+
+        # bool check map : 
+        self.ERROR_RELANCER = False
 
         self.GameTool = GameToolBox(self)
         self.GameTool.CreateFont()
@@ -70,8 +73,13 @@ class Game(object):
 
 
         if NIVEAU["Map"] == "NiveauPlaineRiviere":
-            self.loadMapElement = LoadMapPlaineRiviere(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
-            self.map, self.mapBase = self.loadMapElement.Update()
+            self.ERROR_RELANCER = True
+            while self.ERROR_RELANCER:
+                self.loadMapElement = LoadMapPlaineRiviere(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
+                self.map, self.mapBase, self.ERROR_RELANCER = self.loadMapElement.Update()
+            self.ERROR_RELANCER = False
+
+
             self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
             # Initialisation dans votre setup
             
@@ -89,8 +97,13 @@ class Game(object):
                 self.map, self.mapBase = self.loadMapElement.Update()
                 self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
             else:
-                self.loadMapElement = LoadMedievale(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
-                self.map, self.mapBase = self.loadMapElement.Update()
+                self.ERROR_RELANCER = True
+                while self.ERROR_RELANCER:
+                    self.loadMapElement = LoadMedievale(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
+                    self.map, self.mapBase, self.ERROR_RELANCER = self.loadMapElement.Update()
+                self.ERROR_RELANCER = False
+
+                
                 self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
             
             # Initialisation dans votre setup
