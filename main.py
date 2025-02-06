@@ -160,9 +160,6 @@ class Game(object):
                         if not INFOS["RebindingKey"] =="echap" and event.key != pygame.K_ESCAPE: # verif
                             KEYSBIND[INFOS["RebindingKey"]] = event.key
 
-                        else:
-                            if INFOS["RebindingKey"] =="echap":
-                                KEYSBIND[INFOS["RebindingKey"]] = event.key
                         INFOS["RebindingKey"] = False  # Fin du rebind
                         # Sauvegarde des nouvelles touches
                         pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])
