@@ -7,7 +7,7 @@ from Sources.Personnages.pnj import *
 
 
 
-class LoadMapPlaineRiviere(): # nv 0
+class LoadMap():
     def __init__(self, allSprites : any, collisionSprites : any, allpnj : any, interactions) -> None:
         """Méthode initialisation chargement de la map du niveau plaine et rivière. 
         Input : niveau : int, allSprites / collisionsSprites / allpnj : element pygame; Output : None"""
@@ -23,266 +23,66 @@ class LoadMapPlaineRiviere(): # nv 0
         """Méthode de chargement de toutes les images pour la map 
         Input / Output : None """
 
-        self.grass = pygame.image.load(join("Images", "Sol", "Grass", "Grass.png")).convert_alpha()
-        self.flowers = pygame.image.load(join("Images", "Sol", "Flower", "Flower.png")).convert_alpha()
-        self.tree = pygame.image.load(join("Images", "Obstacle", "Arbre.png")).convert_alpha()
-        self.tree2 = pygame.image.load(join("Images", "Obstacle", "Arbre2.png")).convert_alpha()
-        self.rock = pygame.image.load(join("Images", "Sol","Rock", "Rock.png")).convert_alpha()
-        self.mud = pygame.image.load(join("Images", "Sol","Mud", "Mud.png")).convert_alpha()
-        self.montainWE = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ex128.png")).convert_alpha()
-        self.montainWE1 = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ealt1x128.png")).convert_alpha()
-        self.souche = pygame.image.load(join("Images", "Obstacle", "Souche.png")).convert_alpha()
-        self.souche2 = pygame.image.load(join("Images", "Obstacle", "Souche2.png")).convert_alpha()
-        self.hugeRock = pygame.image.load(join("Images", "Obstacle", "HugeRock.png")).convert_alpha()
-        self.campFire = pygame.image.load(join("Images", "Obstacle", "Spawn", "campFire.png")).convert_alpha()
-        self.pont1 = pygame.image.load(join("Images", "Pont", "BridgeTreeW-Ex128.png")).convert_alpha()
-        self.pont2 = pygame.image.load(join("Images", "Pont", "BridgePlanksW-Ex128.png")).convert_alpha()
+        # load commun
+        if NIVEAU["Map"] in ["NiveauPlaineRiviere", "NiveauMedievale"]:
+            self.grass = pygame.image.load(join("Images", "Sol", "Grass", "Grass.png")).convert_alpha()
+            self.flowers = pygame.image.load(join("Images", "Sol", "Flower", "Flower.png")).convert_alpha()
+            self.tree = pygame.image.load(join("Images", "Obstacle", "Arbre.png")).convert_alpha()
+            self.tree2 = pygame.image.load(join("Images", "Obstacle", "Arbre2.png")).convert_alpha()
+            self.rock = pygame.image.load(join("Images", "Sol","Rock", "Rock.png")).convert_alpha()
+            self.mud = pygame.image.load(join("Images", "Sol","Mud", "Mud.png")).convert_alpha()
+            self.montainWE = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ex128.png")).convert_alpha()
+            self.montainWE1 = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ealt1x128.png")).convert_alpha()
+            self.souche = pygame.image.load(join("Images", "Obstacle", "Souche.png")).convert_alpha()
+            self.souche2 = pygame.image.load(join("Images", "Obstacle", "Souche2.png")).convert_alpha()
+            self.hugeRock = pygame.image.load(join("Images", "Obstacle", "HugeRock.png")).convert_alpha()
+            self.pont2 = pygame.image.load(join("Images", "Pont", "BridgePlanksW-Ex128.png")).convert_alpha()
+            self.pont3 = pygame.image.load(join("Images", "Pont","BridgePlanksN-S-x128.png" )).convert_alpha()
 
-    def Setup(self) -> None:
-        """Méthode de build de tout les éléments sprites de la map jeu.
-        Input / Output : None"""
+        # load Spécifique 
+        if NIVEAU["Map"] == "NiveauPlaineRiviere":
+            self.campFire = pygame.image.load(join("Images", "Obstacle", "Spawn", "campFire.png")).convert_alpha()
+            self.pont1 = pygame.image.load(join("Images", "Pont", "BridgeTreeW-Ex128.png")).convert_alpha()
 
-        # création de la map du niveau (sectionnée en deux)
-        self.map, self.mapBase, self.ERROR_RELANCER = NiveauPlaineRiviere(LONGUEUR, LARGEUR).Update()
+        if NIVEAU["Map"] == "NiveauMedievale":
+            self.pathX = pygame.image.load(join("Images", "Sol", "Path", "PathXx128.png")).convert_alpha()
+            self.pathTshapeNSE = pygame.image.load(join("Images", "Sol", "Path", "PathN-SEx128.png")).convert_alpha()
+            self.pathTshapeWES = pygame.image.load(join("Images", "Sol", "Path", "PathW-ESx128.png")).convert_alpha()
+            self.pathTshapeWNS = pygame.image.load(join("Images", "Sol", "Path", "PathWN-Sx128.png")).convert_alpha()
+            self.pathTshapeNEW = pygame.image.load(join("Images", "Sol", "Path", "PathN-EWx128.png")).convert_alpha()
+            self.pathAngularNE = pygame.image.load(join("Images", "Sol", "Path", "PathN-Ex128.png")).convert_alpha()
+            self.pathAngularNW = pygame.image.load(join("Images", "Sol", "Path", "PathN-Wx128.png")).convert_alpha()
+            self.pathAngularSE = pygame.image.load(join("Images", "Sol", "Path", "PathE-Sx128.png")).convert_alpha()
+            self.pathAngularSW = pygame.image.load(join("Images", "Sol", "Path", "PathW-Sx128.png")).convert_alpha()
+            self.pathNS = pygame.image.load(join("Images", "Sol", "Path", "PathN-S.png")).convert_alpha()
+            self.pathWE = pygame.image.load(join("Images", "Sol", "Path", "PathW-E.png")).convert_alpha()
+            self.pathEndN = pygame.image.load(join("Images", "Sol", "Path", "PathNx128.png")).convert_alpha()
+            self.pathEndS = pygame.image.load(join("Images", "Sol", "Path", "PathSx128.png")).convert_alpha()
+            self.pathEndE = pygame.image.load(join("Images", "Sol", "Path", "PathEx128.png")).convert_alpha()
+            self.pathEndW = pygame.image.load(join("Images", "Sol", "Path", "PathWx128.png")).convert_alpha()
+            self.champ = pygame.image.load(join("Images", "Sol", "Champs.png")).convert_alpha()
+            self.house = pygame.image.load(join("Images", "Obstacle", "Structures", "House.png")).convert_alpha()
+            self.well = pygame.image.load(join("Images", "Obstacle", "Structures", "Puits.png")).convert_alpha()
+            self.chateau = pygame.image.load(join("Images", "Obstacle", "Structures", "Chateau.png")).convert_alpha()
+            self.MuraillesWE = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesWE.png" )).convert_alpha()
+            self.MuraillesNS = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesNS.png" )).convert_alpha()
+            self.MuraillesMountain = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesMountain.png" )).convert_alpha()
+            self.MuraillesAngle = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesAngle.png" )).convert_alpha()
+            self.tableCraft = pygame.image.load(join("Images", "Obstacle", "TableCraft.png")).convert_alpha()
+            self.boat = pygame.image.load(join("Images", "Obstacle", "Boat.png")).convert_alpha()
+            self.DoorChateau = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+            self.DoorMurailles =  pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
 
-        # parcours et création de chaque sprites
-        for ordonnees in range(len(self.mapBase)):
-            for abscisses in range(len(self.mapBase[ordonnees])):
-                pos = (abscisses * CASEMAP, ordonnees * CASEMAP)  # Coordonnées de la case sur la carte
-                
-                # Sol
-                if self.mapBase[ordonnees][abscisses] == "F":
-                    Sprites(pos, self.flowers, self.allSprites)
-                elif self.mapBase[ordonnees][abscisses] == "M":
-                    Sprites(pos, self.mud, self.allSprites) 
-                elif self.mapBase[ordonnees][abscisses] == "R":
-                    Sprites(pos, self.rock, self.allSprites) 
-                elif self.mapBase[ordonnees][abscisses] == "-" :
-                    Sprites(pos, self.grass, self.allSprites) 
-
-                # Toutes les cases rivières
-                elif self.mapBase[ordonnees][abscisses] == "#":
-                    stateFormat = ""
-                    if  ordonnees not in [0, LARGEUR-1] and abscisses not in [0,149]:
-                        if self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
-                            stateFormat = "RiverAngularN-Ex128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees+1][abscisses] =="#":
-                            stateFormat = "RiverAngularE-Sx128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
-                            stateFormat = "RiverAngularN-Wx128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees+1][abscisses] =="#":
-                            stateFormat = "RiverAngularW-Sx128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees][abscisses-1] =="#":
-                            stateFormat = "RiverStraightW-Ex128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif self.mapBase[ordonnees+1][abscisses] =="#" and self.mapBase[ordonnees-1][abscisses] =="#": 
-                            stateFormat = "RiverStraightN-Sx128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                    else:
-                        if ordonnees in [0, LARGEUR-1]: 
-                            stateFormat = "RiverMontainConflictx128"
-                            River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif abscisses ==0:
-                            if self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
-                                stateFormat = "RiverAngularN-Ex128"
-                                River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                            elif self.mapBase[ordonnees][abscisses+1] =="#" and self.mapBase[ordonnees+1][abscisses] =="#":
-                                stateFormat = "RiverAngularE-Sx128"
-                                River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                            elif self.mapBase[ordonnees+1][abscisses] =="#" and self.mapBase[ordonnees-1][abscisses] =="#": 
-                                stateFormat = "RiverStraightN-Sx128"
-                                River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                        elif abscisses == LARGEUR-1:
-                            if self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees-1][abscisses] =="#":
-                                stateFormat = "RiverAngularN-Wx128"
-                                River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                            elif self.mapBase[ordonnees][abscisses-1] =="#" and self.mapBase[ordonnees+1][abscisses] =="#":
-                                stateFormat = "RiverAngularW-Sx128"
-                                River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                            elif self.mapBase[ordonnees+1][abscisses] =="#" and self.mapBase[ordonnees-1][abscisses] =="#": 
-                                stateFormat = "RiverStraightN-Sx128"
-                                River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-                
-                # Bordure Montagne
-                elif self.mapBase[ordonnees][abscisses] == "B":
-                    if (ordonnees == 0 or ordonnees == (LARGEUR-1) ):
-                        
-                        if ordonnees == 0:
-                            if choice([True, False]):
-                                CollisionSprites(pos, self.montainWE,"BorderTop",  (self.allSprites, self.collisionSprites))
-                            else:
-                                CollisionSprites(pos, self.montainWE1, "BorderTop", (self.allSprites, self.collisionSprites))
-
-                        else:
-                            if choice([True, False]):
-                                CollisionSprites(pos, self.montainWE, "BorderBottom", (self.allSprites, self.collisionSprites))
-                            else:
-                                CollisionSprites(pos, self.montainWE1,"BorderBottom",  (self.allSprites, self.collisionSprites))
-                
-                # Tout les obstales
-                if self.map[ordonnees][abscisses] == "O":
-                    choixObstacle = randint(0,100)
-                    if choixObstacle <= 65:
-                            if randint(0,3) > 2:
-                                CollisionSprites(pos, self.tree2,"Arbre", (self.allSprites, self.collisionSprites))
-                            else:
-                                CollisionSprites(pos, self.tree,"Arbre", (self.allSprites, self.collisionSprites))
-                    elif 65 < choixObstacle <= 85:
-                        CollisionSprites(pos, self.hugeRock, "HugeRock", (self.allSprites, self.collisionSprites))
-                    elif 85 < choixObstacle <= 100:
-                        choixSouche = randint(0,11)
-                        if choixSouche < 7:
-                            CollisionSprites(pos, self.souche, "Souche", (self.allSprites, self.collisionSprites))
-                        else:
-                            CollisionSprites(pos, self.souche2, "Souche2", (self.allSprites, self.collisionSprites))
-
-
-                # Abre spécial
-                if self.map[ordonnees][abscisses] == "A":
-                    CollisionSprites(pos, self.tree,"Arbre",  (self.allSprites, self.collisionSprites))
-
-
-    def SetupSpawn(self) -> None:
-        """Méthode de création du spawn de la map.
-        Input / Output : None"""
-
-        # Récupération coords spawn + infos element
-        coordsSpawnList = LoadJsonMapValue("coordsMapObject", "Spawn")
-
-        # parcours et création des spritess
-        for coordsElementSpawn in coordsSpawnList:
-            pos = (coordsElementSpawn[0]*CASEMAP, coordsElementSpawn[1]*CASEMAP) # calcul coords pygame
-            if coordsElementSpawn[2] == "J":
-                CollisionSprites(pos, self.campFire, "campFire", (self.allSprites, self.collisionSprites))
-
-
-    def SetupExit(self):
-        """Méthode de placemet de la sortie
-        Input / Ouput : None"""
-
-        coords = LoadJsonMapValue("coordsMapObject", "Exit")
-
-        coordsExit = (coords[0] * CASEMAP, coords[1] * CASEMAP)
-        CollisionSprites(coordsExit, self.hugeRock, "ExitRock", (self.allSprites, self.interactions, self.collisionSprites))
-        
-        # pont décalé de 1
-        coordsPont = (coords[0]*CASEMAP +CASEMAP, coords[1]*CASEMAP)
-        # True = element de création exo maths
-        CollisionSprites(coordsPont, self.pont2, "pont2", (self.allSprites, self.collisionSprites, self.interactions), True) 
-
-    def SetupPNJ(self) -> None:
-        """Méthode de création et position des pnj.
-        Input / Output : None"""
-
-        # Récupération des coords + infos pnj
-        coordsPNJList = LoadJsonMapValue("coordsMapObject","PNJ Coords")
-        
-        # parcours et création des sprites pnj
-        for coordsPNJ in coordsPNJList:
-            pos = (coordsPNJ[0]*CASEMAP, coordsPNJ[1]*CASEMAP) # calcul coords pygame
-            if coordsPNJ[3] == 1 : 
-                PNJ(pos , "PNJ1", (self.allPNJ, self.allSprites, self.collisionSprites))
-            if coordsPNJ[3] == 2 : 
-                PNJ(pos , "PNJ2", (self.allPNJ, self.allSprites, self.collisionSprites))
-            if coordsPNJ[3] == 3 :
-                PNJ(pos , "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
-        
-    
-    def AddPont(self, element : str, coords : tuple) -> None:
-        """Méthode placement et ajout de pont sur la map pygame
-        Input : element : str, coords : tuple
-        Output : None"""
-
-        if element == "pont1":
-            CollisionSprites(coords, self.pont1, element, (self.allSprites, self.collisionSprites, self.interactions))
-        elif element  == "pont2":
-            CollisionSprites(coords, self.pont2, element, (self.allSprites, self.collisionSprites, self.interactions))
-
-                
-
-
-    def Update(self) -> list:
-        """Méthode de mise à jour (utilisation unique) + retour de map.
-        Input : None, Output : list"""
-
-        # Appel méthodes créations map + sprites
-        self.LoadImages()
-        self.Setup()
-        self.SetupSpawn()
-        self.SetupPNJ()
-        self.SetupExit()
-
-        # retour des infos de map
-        return self.map, self.mapBase, self.ERROR_RELANCER
-    
-
-class LoadMedievale(): # nv1 
-    def __init__(self, allSprites : any, collisionSprites : any, allpnj : any, interactions) -> None:
-        """Méthode initialisation chargement de la map du niveau médievale 
-        Input : niveau : int, allSprites / collisionsSprites / allpnj : element pygame; Output : None"""
-    
-        # class des éléments pygame
-        self.allPNJ = allpnj
-        self.allSprites = allSprites
-        self.collisionSprites = collisionSprites
-        self.interactions = interactions
-
-    def LoadImages(self) -> None:
-        """Méthode de chargement de toutes les images pour la map 
-        Input / Output : None """
-
-        self.grass = pygame.image.load(join("Images", "Sol", "Grass", "Grass.png")).convert_alpha()
-        self.flowers = pygame.image.load(join("Images", "Sol", "Flower", "Flower.png")).convert_alpha()
-        self.tree = pygame.image.load(join("Images", "Obstacle", "Arbre.png")).convert_alpha()
-        self.tree2 = pygame.image.load(join("Images", "Obstacle", "Arbre2.png")).convert_alpha()
-        self.rock = pygame.image.load(join("Images", "Sol","Rock", "Rock.png")).convert_alpha()
-        self.mud = pygame.image.load(join("Images", "Sol","Mud", "Mud.png")).convert_alpha()
-        self.montainWE = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ex128.png")).convert_alpha()
-        self.montainWE1 = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ealt1x128.png")).convert_alpha()
-        self.souche = pygame.image.load(join("Images", "Obstacle", "Souche.png")).convert_alpha()
-        self.souche2 = pygame.image.load(join("Images", "Obstacle", "Souche2.png")).convert_alpha()
-
-        self.hugeRock = pygame.image.load(join("Images", "Obstacle", "HugeRock.png")).convert_alpha()
-        self.pont1 = pygame.image.load(join("Images", "Pont", "BridgeTreeW-Ex128.png")).convert_alpha()
-        self.pont2 = pygame.image.load(join("Images", "Pont", "BridgePlanksW-Ex128.png")).convert_alpha()
-        self.pont3 = pygame.image.load(join("Images", "Pont","BridgePlanksN-S-x128.png" )).convert_alpha()
-
-
-        self.pathX = pygame.image.load(join("Images", "Sol", "Path", "PathXx128.png")).convert_alpha()
-        self.pathTshapeNSE = pygame.image.load(join("Images", "Sol", "Path", "PathN-SEx128.png")).convert_alpha()
-        self.pathTshapeWES = pygame.image.load(join("Images", "Sol", "Path", "PathW-ESx128.png")).convert_alpha()
-        self.pathTshapeWNS = pygame.image.load(join("Images", "Sol", "Path", "PathWN-Sx128.png")).convert_alpha()
-        self.pathTshapeNEW = pygame.image.load(join("Images", "Sol", "Path", "PathN-EWx128.png")).convert_alpha()
-        self.pathAngularNE = pygame.image.load(join("Images", "Sol", "Path", "PathN-Ex128.png")).convert_alpha()
-        self.pathAngularNW = pygame.image.load(join("Images", "Sol", "Path", "PathN-Wx128.png")).convert_alpha()
-        self.pathAngularSE = pygame.image.load(join("Images", "Sol", "Path", "PathE-Sx128.png")).convert_alpha()
-        self.pathAngularSW = pygame.image.load(join("Images", "Sol", "Path", "PathW-Sx128.png")).convert_alpha()
-        self.pathNS = pygame.image.load(join("Images", "Sol", "Path", "PathN-S.png")).convert_alpha()
-        self.pathWE = pygame.image.load(join("Images", "Sol", "Path", "PathW-E.png")).convert_alpha()
-        self.pathEndN = pygame.image.load(join("Images", "Sol", "Path", "PathNx128.png")).convert_alpha()
-        self.pathEndS = pygame.image.load(join("Images", "Sol", "Path", "PathSx128.png")).convert_alpha()
-        self.pathEndE = pygame.image.load(join("Images", "Sol", "Path", "PathEx128.png")).convert_alpha()
-        self.pathEndW = pygame.image.load(join("Images", "Sol", "Path", "PathWx128.png")).convert_alpha()
-
-
-        self.champ = pygame.image.load(join("Images", "Sol", "Champs.png")).convert_alpha()
-        self.house = pygame.image.load(join("Images", "Obstacle", "Structures", "House.png")).convert_alpha()
-        self.well = pygame.image.load(join("Images", "Obstacle", "Structures", "Puits.png")).convert_alpha()
-        self.chateau = pygame.image.load(join("Images", "Obstacle", "Structures", "Chateau.png")).convert_alpha()
-        self.MuraillesWE = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesWE.png" )).convert_alpha()
-        self.MuraillesNS = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesNS.png" )).convert_alpha()
-        self.MuraillesMountain = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesMountain.png" )).convert_alpha()
-        self.MuraillesAngle = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesAngle.png" )).convert_alpha()
-        
-        self.tableCraft = pygame.image.load(join("Images", "Obstacle", "TableCraft.png")).convert_alpha()
-        self.boat = pygame.image.load(join("Images", "Obstacle", "Boat.png")).convert_alpha()
-
-        self.DoorChateau = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
-        self.DoorMurailles =  pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+            if INFOS["DemiNiveau"] : 
+                self.MursAngleWS = pygame.image.load(join("Images", "Chateau", "MursChateau.png")).convert_alpha()
+                self.Pilier = pygame.image.load(join("Images", "Chateau", "Piliers.png")).convert_alpha()
+                self.Chandelier = pygame.image.load(join("Images", "Chateau", "Chandelier.png")).convert_alpha()
+                self.Socle = pygame.image.load(join("Images", "Chateau", "Socle.png")).convert_alpha()
+                self.Door = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+                self.Portal = pygame.image.load(join("Images", "Chateau", "Portal.png")).convert_alpha()
+                self.Sol = pygame.image.load(join("Images", "Chateau", "SolChateau.png")).convert_alpha()
+                self.CerclePortal = pygame.image.load(join("Images", "Chateau", "SolChateau.png")).convert_alpha()
+            
 
 
     def Setup(self) -> None:
@@ -290,7 +90,13 @@ class LoadMedievale(): # nv1
         Input / Output : None"""
 
         # création de la map du niveau (sectionnée en deux)
-        self.map, self.mapBase, self.ERROR_RELANCER= NiveauMedievale(LONGUEUR, LARGEUR).Update()
+        if NIVEAU["Map"] == "NiveauPlaineRiviere":
+            self.map, self.mapBase, self.ERROR_RELANCER = NiveauPlaineRiviere().Update()
+        if NIVEAU["Map"] == "NiveauMedievale":
+            if not INFOS["DemiNiveau"]:
+                self.map, self.mapBase, self.ERROR_RELANCER = NiveauMedievale().Update()
+            else:
+                self.map, self.mapBase, self.ERROR_RELANCER =  NiveauMedievaleChateau().Update()
 
         # parcours et création de chaque sprites
         for ordonnees in range(len(self.mapBase)):
@@ -364,8 +170,6 @@ class LoadMedievale(): # nv1
                     else:
                         Sprites(pos, self.pathWE, self.allSprites)
 
-                        
-
                 # Toutes les cases rivières
                 elif self.mapBase[ordonnees][abscisses] == "#":
 
@@ -431,7 +235,7 @@ class LoadMedievale(): # nv1
                                 return True
 
                         return False
-
+                    
                     can_build_up = checkBuildUp(can_go_up, can_go_left, can_go_right)
                     can_build_down = checkBuildDown(can_go_down,  can_go_left, can_go_right)
                     can_build_left = checkBuildLeft(can_go_left)
@@ -503,9 +307,9 @@ class LoadMedievale(): # nv1
                     choixObstacle = randint(0,100)
                     if choixObstacle <= 65:
                             if randint(0,3) > 2:
-                                CollisionSprites(pos, self.tree,"Arbre", (self.allSprites, self.collisionSprites, self.interactions))
-                            else:
                                 CollisionSprites(pos, self.tree2,"Arbre2", (self.allSprites, self.collisionSprites, self.interactions))
+                            else:
+                                CollisionSprites(pos, self.tree,"Arbre1", (self.allSprites, self.collisionSprites, self.interactions))
                     elif 65 < choixObstacle <= 85:
                         CollisionSprites(pos, self.hugeRock, "HugeRock", (self.allSprites, self.collisionSprites))
                     elif 85 < choixObstacle <= 100:
@@ -514,6 +318,11 @@ class LoadMedievale(): # nv1
                             CollisionSprites(pos, self.souche, "Souche", (self.allSprites, self.collisionSprites))
                         else:
                             CollisionSprites(pos, self.souche2, "Souche2", (self.allSprites, self.collisionSprites))
+
+
+                # Abre spécial
+                if self.map[ordonnees][abscisses] == "A":
+                    CollisionSprites(pos, self.tree,"Arbre",  (self.allSprites, self.collisionSprites))
 
                 # Pont placé
                 if self.map[ordonnees][abscisses] == "T":
@@ -528,46 +337,44 @@ class LoadMedievale(): # nv1
                 if self.map[ordonnees][abscisses] == "@":
                     CollisionSprites(pos, self.champ, "Champs",  (self.allSprites, self.collisionSprites))
 
-                # chateau  # check aide IA
+
+                # chateau
                 if self.map[ordonnees][abscisses] == "C":
-
-                    # Vérification des limites avant chaque accès à la carte
+                    
                     def case_valide(y, x):
+                        """ Vérifie si une case est valide dans la carte."""
                         return 0 <= y < len(self.map) and 0 <= x < len(self.map[0])
-
-                    if case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] == "B" and \
-                    case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] == "B" and \
-                    self.map[ordonnees+1][abscisses] != "C":
-                        # pts ref placement chateau
+                    
+                    # Vérification des voisins
+                    right = case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] in ["C", "d"]
+                    left = case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] in ["C", "d"]
+                    up = case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "C"
+                    down = case_valide(ordonnees + 1, abscisses) and self.map[ordonnees + 1][abscisses] == "C"
+                    
+                    # Placement du château
+                    if down and self.map[ordonnees][abscisses -1] == "B":
+                        CollisionSprites(pos, self.MuraillesMountain, "Murailles", (self.allSprites, self.collisionSprites))
+                    
+                    # Murailles en angle
+                    elif up and right:
+                        CollisionSprites(pos, self.MuraillesAngle, "MuraillesAngle", (self.allSprites, self.collisionSprites))
+                    elif up and left:
+                        CollisionSprites(pos, self.MuraillesAngle, "MuraillesAngle", (self.allSprites, self.collisionSprites))
+                    
+                    # Passage avec de l'eau
+                    elif right and left and case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "#" \
+                        and case_valide(ordonnees + 1, abscisses) and self.map[ordonnees + 1][abscisses] == "#":
+                        River(pos, (self.allSprites, self.collisionSprites), "CastleWallRiverx128")
+                    
+                    # Murailles droites
+                    elif right or left:
+                        CollisionSprites(pos, self.MuraillesWE, "Murailles", (self.allSprites, self.collisionSprites))
+                    elif up or down:
+                        CollisionSprites(pos, self.MuraillesNS, "Murailles", (self.allSprites, self.collisionSprites))
+                    else:
+                        # case du blit chateau
                         CollisionSprites(pos, self.chateau, "Chateau", (self.allSprites, self.collisionSprites))
 
-                    elif case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] == "B" and \
-                    case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] == "B" and \
-                    self.map[ordonnees+1][abscisses] == "C":
-                        CollisionSprites(pos, self.MuraillesMountain, "Murailles", (self.allSprites, self.collisionSprites))
-                        
-                    elif case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "C" and \
-                        case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] == "C":
-                        CollisionSprites(pos, self.MuraillesAngle, "MuraillesAngle", (self.allSprites, self.collisionSprites))
-
-                    elif case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "C" and \
-                        case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] == "C":
-                        CollisionSprites(pos, self.MuraillesAngle, "MuraillesAngle", (self.allSprites, self.collisionSprites))
-
-                    # passage eau
-                    elif case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] == "C" and \
-                        case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] == "C" and \
-                        case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "#" and \
-                        case_valide(ordonnees + 1, abscisses) and self.map[ordonnees + 1][abscisses] == "#":
-                        River(pos, (self.allSprites, self.collisionSprites), "CastleWallRiverx128")
-
-                    elif case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] in ["C", "d"] or \
-                        case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] in ["C", "d"]:
-                        CollisionSprites(pos, self.MuraillesWE, "Murailles", (self.allSprites, self.collisionSprites))
-
-                    elif case_valide(ordonnees + 1, abscisses) and self.map[ordonnees + 1][abscisses] == "C" or \
-                        case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "C":
-                        CollisionSprites(pos, self.MuraillesNS, "Murailles", (self.allSprites, self.collisionSprites))
 
 
                 if self.map[ordonnees][abscisses] == "D":
@@ -592,6 +399,55 @@ class LoadMedievale(): # nv1
                 if self.map[ordonnees][abscisses] == "E" :
                     CollisionSprites(pos, self.tableCraft, "TableCraft", (self.allSprites, self.collisionSprites, self.interactions))
 
+                # DEMI NIVEAU MEDIEVALE
+                # base de la map
+                if self.mapBase[ordonnees][abscisses] == "~":
+                    Sprites(pos, self.Sol, self.allSprites)
+                elif self.mapBase[ordonnees][abscisses] == "o":
+                    CollisionSprites(pos, self.MursAngleWS, "Mur", (self.collisionSprites, self.allSprites))
+                elif self.mapBase[ordonnees][abscisses] == "U":
+                    Sprites(pos, self.Socle, self.allSprites)
+                elif self.mapBase[ordonnees][abscisses] == "D" :
+                    if self.mapBase[ordonnees][abscisses-1] == "o" and self.mapBase[ordonnees][abscisses+ 1] =="o": # acces uniquemente pour le demi niveau
+                        CollisionSprites(pos, self.Door, "Door", (self.collisionSprites, self.allSprites))
+
+                # obstacle de la map
+                if self.map[ordonnees][abscisses] == "u":
+                    CollisionSprites(pos, self.Portal, "Portal", (self.collisionSprites, self.allSprites))
+                elif self.map[ordonnees][abscisses] == "Y":
+                    CollisionSprites(pos, self.Pilier, "Pilier",  (self.collisionSprites, self.allSprites))
+                elif self.map[ordonnees][abscisses] == "r":
+                    CollisionSprites(pos, self.Chandelier, "Chandelier", (self.collisionSprites, self.allSprites))
+
+
+    def SetupSpawn(self) -> None:
+        """Méthode de création du spawn de la map.
+        Input / Output : None"""
+
+        # Récupération coords spawn + infos element
+        coordsSpawnList = LoadJsonMapValue("coordsMapObject", "Spawn")
+
+        # parcours et création des spritess
+        for coordsElementSpawn in coordsSpawnList:
+            pos = (coordsElementSpawn[0]*CASEMAP, coordsElementSpawn[1]*CASEMAP) # calcul coords pygame
+            if coordsElementSpawn[2] == "J":
+                CollisionSprites(pos, self.campFire, "campFire", (self.allSprites, self.collisionSprites))
+
+
+    def SetupExit(self):
+        """Méthode de placemet de la sortie
+        Input / Ouput : None"""
+
+        coords = LoadJsonMapValue("coordsMapObject", "Exit")
+
+        coordsExit = (coords[0] * CASEMAP, coords[1] * CASEMAP)
+        CollisionSprites(coordsExit, self.hugeRock, "ExitRock", (self.allSprites, self.interactions, self.collisionSprites))
+        
+        # pont décalé de 1
+        coordsPont = (coords[0]*CASEMAP +CASEMAP, coords[1]*CASEMAP)
+        # True = element de création exo maths
+        CollisionSprites(coordsPont, self.pont2, "pont2", (self.allSprites, self.collisionSprites, self.interactions), True) 
+
 
     def SetupPNJ(self) -> None:
         """Méthode de création et position des pnj.
@@ -606,20 +462,27 @@ class LoadMedievale(): # nv1
             if coordsPNJ[3] == 1 : 
                 PNJ(pos , "PNJ1", (self.allPNJ, self.allSprites, self.collisionSprites))
             if coordsPNJ[3] == 2 : 
-                pos = (pos[0]+64, pos[1]+64)
                 PNJ(pos , "PNJ2", (self.allPNJ, self.allSprites, self.collisionSprites))
             if coordsPNJ[3] == 3 :
                 PNJ(pos , "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
+            if coordsPNJ[3] == 4 :
+                PNJ(pos, "PNJ4", (self.allPNJ, self.allSprites, self.collisionSprites))
+            if coordsPNJ[3] == 5 :
+                PNJ(pos , "PNJ5", (self.allPNJ, self.allSprites, self.collisionSprites))
 
+    
     def AddPont(self, element : str, coords : tuple) -> None:
         """Méthode placement et ajout de pont sur la map pygame
         Input : element : str, coords : tuple
         Output : None"""
 
-        if element  == "pont2" or element == "pont3":
+        if element == "pont1":
+            CollisionSprites(coords, self.pont1, element, (self.allSprites, self.collisionSprites, self.interactions))
+        elif element  == "pont2":
             CollisionSprites(coords, self.pont2, element, (self.allSprites, self.collisionSprites, self.interactions))
-
-
+        elif element  == "pont3":
+            CollisionSprites(coords, self.pont3, element, (self.allSprites, self.collisionSprites, self.interactions))
+    
     def AddBoat(self, element : str, coords : tuple) -> None:
         """Méthode placement et ajout de pont sur la map pygame
         Input : element : str, coords : tuple
@@ -627,7 +490,9 @@ class LoadMedievale(): # nv1
 
         if element  == "Boat":
             CollisionSprites(coords, self.boat, element, (self.allSprites, self.collisionSprites, self.interactions))
-
+    
+    def AddCerclePortal(self, element, coords):
+        CollisionSprites(coords,self.CerclePortal, element, (self.collisionSprites, self.interactions, self.allSprites))
 
 
     def Update(self) -> list:
@@ -635,109 +500,18 @@ class LoadMedievale(): # nv1
         Input : None, Output : list"""
 
         # Appel méthodes créations map + sprites
-        self.LoadImages()
-        self.Setup()
-        self.SetupPNJ()
+        if NIVEAU["Map"] == "NiveauPlaineRiviere":
+            self.LoadImages()
+            self.Setup()
+            self.SetupSpawn()
+            self.SetupPNJ()
+            self.SetupExit()
 
+        elif NIVEAU["Map"] == "NiveauMedievale":
+            self.LoadImages()
+            self.Setup()
+            self.SetupPNJ()
+        
         # retour des infos de map
         return self.map, self.mapBase, self.ERROR_RELANCER
-
-
-class LoadMedievaleChateau():
-    def __init__(self, allSprites : any, collisionSprites : any, allpnj : any, interactions) -> None:
-        """Méthode initialisation chargement de la map du niveau médievale 
-        Input : niveau : int, allSprites / collisionsSprites / allpnj : element pygame; Output : None"""
     
-        # class des éléments pygame
-        self.allPNJ = allpnj
-        self.allSprites = allSprites
-        self.collisionSprites = collisionSprites
-        self.interactions = interactions
-
-    def LoadImages(self) -> None:
-        """Méthode de chargement de toutes les images pour la map 
-        Input / Output : None """
-        self.MursAngleWS = pygame.image.load(join("Images", "Chateau", "MursChateau.png")).convert_alpha()
-        # self.MursAngleWN = pygame.image.load(join("Images", "Chateau", ".png")).convert_alpha()
-        # self.MursAngleES = pygame.image.load(join("Images", "Chateau", ".png")).convert_alpha()
-        # self.MursAngleEN = pygame.image.load(join("Images", "Chateau", ".png")).convert_alpha()
-
-        # self.MursLineSN = pygame.image.load(join("Images", "Chateau", ".png")).convert_alpha()
-        # self.MursLineWE = pygame.image.load(join("Images", "Chateau", ".png")).convert_alpha()
-
-        self.Pilier = pygame.image.load(join("Images", "Chateau", "Piliers.png")).convert_alpha()
-        self.Chandelier = pygame.image.load(join("Images", "Chateau", "Chandelier.png")).convert_alpha()
-        self.Socle = pygame.image.load(join("Images", "Chateau", "Socle.png")).convert_alpha()
-        self.Door = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
-        self.Portal = pygame.image.load(join("Images", "Chateau", "Portal.png")).convert_alpha()
-        self.Sol = pygame.image.load(join("Images", "Chateau", "SolChateau.png")).convert_alpha()
-
-        self.CerclePortal = pygame.image.load(join("Images", "Chateau", "SolChateau.png")).convert_alpha()
-    
-
-        pass
-
-    def Setup(self):
-        self.map, self.mapBase = NiveauMedievaleChateau().Update()
-
-        # parcours et création de chaque sprites
-        for ordonnees in range(len(self.mapBase)):
-            for abscisses in range(len(self.mapBase[ordonnees])):
-                pos = (abscisses * CASEMAP, ordonnees * CASEMAP)  # Coordonnées de la case sur la carte
-
-                # base de la map
-                if self.mapBase[ordonnees][abscisses] == "-":
-                    Sprites(pos, self.Sol, self.allSprites)
-                elif self.mapBase[ordonnees][abscisses] == "O":
-                    CollisionSprites(pos, self.MursAngleWS, "Mur", (self.collisionSprites, self.allSprites))
-                elif self.mapBase[ordonnees][abscisses] == "U":
-                    Sprites(pos, self.Socle, self.allSprites)
-                elif self.mapBase[ordonnees][abscisses] == "D":
-                    CollisionSprites(pos, self.Door, "Door", (self.collisionSprites, self.allSprites))
-
-                # obstacle de la map
-                if self.map[ordonnees][abscisses] == "u":
-                    CollisionSprites(pos, self.Portal, "Portal", (self.collisionSprites, self.allSprites))
-                elif self.map[ordonnees][abscisses] == "Y":
-                    CollisionSprites(pos, self.Pilier, "Pilier",  (self.collisionSprites, self.allSprites))
-                elif self.map[ordonnees][abscisses] == "R":
-                    CollisionSprites(pos, self.Chandelier, "Chandelier", (self.collisionSprites, self.allSprites))
-
-    def AddCerclePortal(self, element, coords):
-        CollisionSprites(coords,self.CerclePortal, element, (self.collisionSprites, self.interactions, self.allSprites))
-
-
-
-        pass
-
-    def SetupPNJ(self) -> None:
-        """Méthode de création et position des pnj.
-        Input / Output : None"""
-
-        # Récupération des coords + infos pnj
-        coordsPNJList = LoadJsonMapValue("coordsMapObject","PNJ Coords")
-        
-        # parcours et création des sprites pnj
-        for coordsPNJ in coordsPNJList:
-            pos = (coordsPNJ[0]*CASEMAP, coordsPNJ[1]*CASEMAP) # calcul coords pygame
-            if coordsPNJ[3] == 1 : 
-                PNJ(pos , "PNJ1", (self.allPNJ, self.allSprites, self.collisionSprites))
-            if coordsPNJ[3] == 2 : 
-                pos = (pos[0]+64, pos[1]+64) # placement centre cellule
-                PNJ(pos , "PNJ2", (self.allPNJ, self.allSprites, self.collisionSprites))
-            if coordsPNJ[3] == 3 :
-                PNJ(pos , "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
-            if coordsPNJ[3] == 4 :
-                PNJ(pos , "PNJ4", (self.allPNJ, self.allSprites, self.collisionSprites))
-            if coordsPNJ[3] == 5 :
-                PNJ(pos , "PNJ5", (self.allPNJ, self.allSprites, self.collisionSprites))
-
-    def Update(self):
-        # Appel méthodes créations map + sprites
-        self.LoadImages()
-        self.Setup()
-        self.SetupPNJ()
-
-        # retour des infos de map
-        return self.map, self.mapBase
-

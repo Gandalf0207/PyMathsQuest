@@ -72,52 +72,27 @@ class Game(object):
         Input / Output : None"""
 
 
-        if NIVEAU["Map"] == "NiveauPlaineRiviere":
-            self.ERROR_RELANCER = True
-            while self.ERROR_RELANCER:
-                self.loadMapElement = LoadMapPlaineRiviere(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
-                self.map, self.mapBase, self.ERROR_RELANCER = self.loadMapElement.Update()
-            self.ERROR_RELANCER = False
 
+        self.ERROR_RELANCER = True
+        while self.ERROR_RELANCER:
+            self.loadMapElement = LoadMap(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
+            self.map, self.mapBase, self.ERROR_RELANCER = self.loadMapElement.Update()
+        self.ERROR_RELANCER = False
 
-            self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
-            # Initialisation dans votre setup
-            
-            self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
-            self.ideaTips = InfosTips(self.ideaTips_surface)
-            self.settingsAll = SettingsAll(self.allSettings_surface, self)
+        #pnj
+        self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
+        
+        # Initialisation dans votre setup 
+        self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
+        self.ideaTips = InfosTips(self.ideaTips_surface)
+        self.settingsAll = SettingsAll(self.allSettings_surface, self)
 
-            # infos traverser
-            self.InteractionObject = Interactions(self)
+        # Interactions
+        self.InteractionObject = Interactions(self)
+
+        if not INFOS["DemiNiveau"]:
+            #construction
             self.buildElements = Construire(self)
-
-        elif NIVEAU["Map"] == "NiveauMedievale" : 
-            if INFOS["DemiNiveau"]:
-                self.loadMapElement = LoadMedievaleChateau(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
-                self.map, self.mapBase = self.loadMapElement.Update()
-                self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
-            else:
-                self.ERROR_RELANCER = True
-                while self.ERROR_RELANCER:
-                    self.loadMapElement = LoadMedievale(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
-                    self.map, self.mapBase, self.ERROR_RELANCER = self.loadMapElement.Update()
-                self.ERROR_RELANCER = False
-
-                
-                self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
-            
-            # Initialisation dans votre setup
-            self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
-            self.ideaTips = InfosTips(self.ideaTips_surface)
-            self.settingsAll = SettingsAll(self.allSettings_surface, self)
-
-            if not INFOS["DemiNiveau"]:
-                # infos traverser
-                self.InteractionObject = Interactions(self)
-                self.buildElements = Construire(self) 
-
-
-
 
 
         getPlayerPosSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")

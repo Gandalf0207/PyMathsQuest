@@ -90,9 +90,9 @@ class GestionNiveauMap(object):
 
 class NiveauPlaineRiviere(GestionNiveauMap):
 
-    def __init__(self, longueur :int, largeur :int) -> None:
+    def __init__(self) -> None:
         """Initialisation des attributs de la class enfant"""
-        super().__init__(longueur, largeur) 
+        super().__init__(150,75) 
         self.obstacle = 1000 
         self.rock = 300
         self.mud = 200
@@ -414,7 +414,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
 
 
 class NiveauMedievale(GestionNiveauMap):
-    def __init__(self, longueur, largeur):
+    def __init__(self):
         """
         Initialise une instance du niveau médiéval.
         
@@ -422,7 +422,7 @@ class NiveauMedievale(GestionNiveauMap):
             longueur (int): La longueur de la carte.
             largeur (int): La largeur de la carte.
         """
-        super().__init__(longueur, largeur)
+        super().__init__(150,75)
         self.rock = 300  # Nombre d'éléments "rock" disponibles.
         self.mud = 200   # Nombre d'éléments "mud" disponibles.
         self.obstacle = 1000  # Nombre d'obstacles disponibles.
@@ -1202,36 +1202,36 @@ class NiveauMedievale(GestionNiveauMap):
 
 class NiveauMedievaleChateau():
     def __init__(self):
-       pass
+       self.ERROR_RELANCER = False
 
     def Update(self):
         """Map n'est pas généré aléatoirement pour le chateau"""
         self.map = [
-            ["O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O"],
-            ["O", "-", "-", "-", "-", "u", "-", "-", "-", "-", "O"],
-            ["O", "-", "Y", "R", "-", "-", "-", "R", "Y", "-", "O"],
-            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
-            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
-            ["O", "-", "Y", "R", "-", "-", "-", "R", "Y", "-", "O"],
-            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
-            ["O", "-", "-", "-", "-", "P", "-", "-", "-", "-", "O"],
-            ["O", "-", "Y", "R", "-", "-", "-", "R", "Y", "-", "O"],
-            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
-            ["O", "O", "O", "O", "O", "D", "O", "O", "O", "O", "O"],
+            ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
+            ["o", "~", "~", "~", "~", "u", "~", "~", "~", "~", "o"],
+            ["o", "~", "Y", "R", "~", "~", "~", "r", "Y", "~", "o"],
+            ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
+            ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
+            ["o", "~", "Y", "r", "~", "~", "~", "r", "Y", "~", "o"],
+            ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
+            ["o", "~", "~", "~", "~", "P", "~", "~", "~", "~", "o"],
+            ["o", "~", "Y", "r", "~", "~", "~", "r", "Y", "~", "o"],
+            ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
+            ["o", "o", "o", "o", "o", "D", "o", "o", "o", "o", "o"],
         ]
 
         self.baseMap = [
-            ["O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O"],
-            ["O", "-", "-", "-", "U", "U", "U", "-", "-", "-", "O"],
-            ["O", "-", "Y", "-", "U", "U", "U", "-", "Y", "-", "O"],
-            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
-            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
-            ["O", "-", "Y", "-", "-", "-", "-", "-", "Y", "-", "O"],
-            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
-            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
-            ["O", "-", "Y", "-", "-", "-", "-", "-", "Y", "-", "O"],
-            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
-            ["O", "O", "O", "O", "O", "D", "O", "O", "O", "O", "O"],
+            ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
+            ["o", "~", "~", "~", "U", "U", "U", "~", "~", "~", "o"],
+            ["o", "~", "Y", "~", "U", "U", "U", "~", "Y", "~", "o"],
+            ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
+            ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
+            ["o", "~", "Y", "~", "~", "~", "~", "~", "Y", "~", "o"],
+            ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
+            ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
+            ["o", "~", "Y", "~", "~", "~", "~", "~", "Y", "~", "o"],
+            ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
+            ["o", "o", "o", "o", "o", "D", "o", "o", "o", "o", "o"],
         ]
 
 
@@ -1246,7 +1246,7 @@ class NiveauMedievaleChateau():
         # On charche la map (collision)
         AjoutJsonMapValue(self.baseMap, "coordsMapBase", "AllMapBase")
 
-        return self.map, self.baseMap
+        return self.map, self.baseMap, self.ERROR_RELANCER
 
 
 
