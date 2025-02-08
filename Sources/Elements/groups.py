@@ -13,6 +13,8 @@ class AllSprites(pygame.sprite.Group):
 
     def draw(self, target_pos: tuple, hideHotbar) -> None:
         """Méthode pour dessiner tout les éléments autour de la cible (lock cam). Input : tuple coords target, Output : None"""
+        
+        # aaptation de la lock cam en fonction de la taille de la map
         if hideHotbar:
             if INFOS["DemiNiveau"]:
                 if NIVEAU["Map"] == "NiveauMedievale":

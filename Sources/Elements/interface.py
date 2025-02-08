@@ -641,11 +641,14 @@ class PNJInterface(object):
                         self.loadText() # pasage au dialogue suivant
                         self.BuildInterface() # build des éléments
 
-  
+
+        # touche espace skip des dialogues
         if keys[KEYSBIND["skip"]] : 
             current_time = pygame.time.get_ticks()
             if current_time - self.last_click_time > self.click_delay:
                 self.last_click_time = current_time
+
+                # pnj question avant interaction
                 if  self.gestionnaire.pnjActuel == "PNJ3" and NIVEAU["Map"] == "NiveauMedievale":
                     if self.gestionnaire.pnjObj.QuestionDone: # condition spécifique
                         self.loadText()

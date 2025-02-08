@@ -307,9 +307,15 @@ class LoadMap():
                     choixObstacle = randint(0,100)
                     if choixObstacle <= 65:
                             if randint(0,3) > 2:
-                                CollisionSprites(pos, self.tree2,"Arbre2", (self.allSprites, self.collisionSprites, self.interactions))
+                                if NIVEAU["Map"] == "NiveauPlaineRiviere": # add interaction arbre
+                                    CollisionSprites(pos, self.tree2,"Arbre2", (self.allSprites, self.collisionSprites))
+                                else:
+                                    CollisionSprites(pos, self.tree2,"Arbre2", (self.allSprites, self.collisionSprites, self.interactions))
                             else:
-                                CollisionSprites(pos, self.tree,"Arbre1", (self.allSprites, self.collisionSprites, self.interactions))
+                                if NIVEAU["Map"] == "NiveauPlaineRiviere":
+                                    CollisionSprites(pos, self.tree,"Arbre", (self.allSprites, self.collisionSprites))
+                                else:
+                                    CollisionSprites(pos, self.tree2,"Arbre2", (self.allSprites, self.collisionSprites, self.interactions))
                     elif 65 < choixObstacle <= 85:
                         CollisionSprites(pos, self.hugeRock, "HugeRock", (self.allSprites, self.collisionSprites))
                     elif 85 < choixObstacle <= 100:

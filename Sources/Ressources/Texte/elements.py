@@ -4,7 +4,6 @@ ElementsFr = {
     "GameName" : "PyMathsQuest",
     "Loading" : "Chargement",
     "Interaction" : "Appuyer sur E",
-    "MakeExo" : "Pour pouvoir traverser le pont,  vous devez résoudre cet exercice.",
     "LevelSup" : "Vous passez au niveau suppérieur !",
 
     "InterfacePNJ" : {
@@ -63,6 +62,7 @@ ElementsFr = {
         "TraverserPont" : "Vous venez de traverser le pont",
         "BuildBridge" : "Vous venez de construire le pont",
         "BreakRock" : "Vous venez de casser le rocher avec votre pioche",
+        "MakeExo" : "Pour pouvoir traverser le pont,  vous devez résoudre cet exercice.",
 
         "ExoTexte" : {
             "Seconde" :{
@@ -107,6 +107,7 @@ ElementsFr = {
         "GetCours" : "Vous obtenez un bout du parchemin de cours ! gg à toi ", 
         "OpenChateau" : "Vous entrez dans le chateau de bobini",
         "OpenPortail" : "Vous devez réouvvrir le portail pour acceder à la suite", 
+        "MakeExo" : "Pour réouvir le portail, vous devez résoudre cet exercice",
 
         "ExoTexte" : {
             "Seconde" :{

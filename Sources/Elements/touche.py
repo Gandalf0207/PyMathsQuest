@@ -2,7 +2,10 @@ from settings import *
 
 class BindKey(object):
 
-    def __init__(self, ):
+    def __init__(self):
+        """Méthode initialisation valeurs pour la création du stup des touches"""
+
+        # ecriture dans le fichier
         with open("keybinds.json", "w") as valueFileJson: 
             self.keybinds = {
                 "up": pygame.K_z,
@@ -19,7 +22,8 @@ class BindKey(object):
                 "hideHotBar": pygame.K_m,
             }
             json.dump(self.keybinds, valueFileJson, indent=4) 
-
+    
+    # mise à jour du dictionnaire de settings des touches
     def Update(self):
         for key in self.keybinds:
             KEYSBIND[key] = self.keybinds[key]

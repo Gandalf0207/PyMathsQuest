@@ -54,7 +54,7 @@ class Construire(object):
     
     def posPossibleBuildVertical(self, listCoords) -> list:
         """Métode déterminant la liste des coordonnées possible pour poser le pont
-        Input : / 
+        Input : list / 
         Ouput : list"""
 
         listCoordPossible = [] # initialisation
@@ -69,7 +69,7 @@ class Construire(object):
 
     def posPossibleBuildHorizontale(self, listCoords) -> list:
         """Métode déterminant la liste des coordonnées possible pour poser le pont
-        Input : / 
+        Input : list / 
         Ouput : list"""
 
         listCoordPossible = [] # initialisation
@@ -179,14 +179,9 @@ class Construire(object):
         """Méthode update pour afficher texte de possibilité de construction 
         Input : tuple (player pos)
         Output : None"""
+
+        # check, update si nécessaire
         if INVENTORY["Planks"] > 0 and not self.construitPont:
             self.ConstructionPossible(playerPos, self.posPossiblePont)
         if INVENTORY["Boat"] > 0 and not self.placeBoat:
             self.ConstructionPossible(playerPos, self.allPosPossibleBoat)
-
-
-
-
-# à patch detection pos player riviere
-# à patch creation pont"
-# structure de detection

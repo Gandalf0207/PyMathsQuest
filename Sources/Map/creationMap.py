@@ -1202,6 +1202,9 @@ class NiveauMedievale(GestionNiveauMap):
 
 class NiveauMedievaleChateau():
     def __init__(self):
+       """Méhode initialisation valeur de la création de map demi niveau médievale"""
+
+       # relancer si error de generation
        self.ERROR_RELANCER = False
 
     def Update(self):
