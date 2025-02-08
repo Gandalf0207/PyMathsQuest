@@ -36,13 +36,16 @@ class Game(object):
         self.ideaTips_surface = pygame.Surface((514, 150))
         self.allSettings_surface = pygame.Surface((426, 150))
         
-        # boolean de check 
+        # boolean de check game
         self.INTERFACE_OPEN = False # interface secondaire ouvert
         self.interface_exo = False
         self.cinematique = False # cinématique
         self.cinematiqueObject = None # obj de la cinematique 
         self.hideHotbar = False
         self.demiNiveau = False
+
+        # bool check map : 
+        self.ERROR_RELANCER = False
 
         self.GameTool = GameToolBox(self)
         self.GameTool.CreateFont()
@@ -69,42 +72,27 @@ class Game(object):
         Input / Output : None"""
 
 
-        if NIVEAU["Map"] == "NiveauPlaineRiviere":
-            self.loadMapElement = LoadMapPlaineRiviere(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
-            self.map, self.mapBase = self.loadMapElement.Update()
-            self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
-            # Initialisation dans votre setup
-            
-            self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
-            self.ideaTips = InfosTips(self.ideaTips_surface)
-            self.settingsAll = SettingsAll(self.allSettings_surface, self)
 
-            # infos traverser
-            self.InteractionObject = Interactions(self)
+        self.ERROR_RELANCER = True
+        while self.ERROR_RELANCER:
+            self.loadMapElement = LoadMap(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
+            self.map, self.mapBase, self.ERROR_RELANCER = self.loadMapElement.Update()
+        self.ERROR_RELANCER = False
+
+        #pnj
+        self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
+        
+        # Initialisation dans votre setup 
+        self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
+        self.ideaTips = InfosTips(self.ideaTips_surface)
+        self.settingsAll = SettingsAll(self.allSettings_surface, self)
+
+        # Interactions
+        self.InteractionObject = Interactions(self)
+
+        if not INFOS["DemiNiveau"]:
+            #construction
             self.buildElements = Construire(self)
-
-        elif NIVEAU["Map"] == "NiveauMedievale" : 
-            if INFOS["DemiNiveau"]:
-                self.loadMapElement = LoadMedievaleChateau(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
-                self.map, self.mapBase = self.loadMapElement.Update()
-                self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
-            else:
-                self.loadMapElement = LoadMedievale(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
-                self.map, self.mapBase = self.loadMapElement.Update()
-                self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
-            
-            # Initialisation dans votre setup
-            self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
-            self.ideaTips = InfosTips(self.ideaTips_surface)
-            self.settingsAll = SettingsAll(self.allSettings_surface, self)
-
-            if not INFOS["DemiNiveau"]:
-                # infos traverser
-                self.InteractionObject = Interactions(self)
-                self.buildElements = Construire(self) 
-
-
-
 
 
         getPlayerPosSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
@@ -160,9 +148,6 @@ class Game(object):
                         if not INFOS["RebindingKey"] =="echap" and event.key != pygame.K_ESCAPE: # verif
                             KEYSBIND[INFOS["RebindingKey"]] = event.key
 
-                        else:
-                            if INFOS["RebindingKey"] =="echap":
-                                KEYSBIND[INFOS["RebindingKey"]] = event.key
                         INFOS["RebindingKey"] = False  # Fin du rebind
                         # Sauvegarde des nouvelles touches
                         pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])

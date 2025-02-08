@@ -19,6 +19,7 @@ class GestionNiveauMap(object):
         self.largeur = largeur 
         self.map = [] # map collision
         self.baseMap = [] # map sol
+        self.ERROR_RELANCER = False
         self.data = {
                     "coordsMapBase" : {
                         "Bordures Coords": "null",
@@ -89,9 +90,9 @@ class GestionNiveauMap(object):
 
 class NiveauPlaineRiviere(GestionNiveauMap):
 
-    def __init__(self, longueur :int, largeur :int) -> None:
+    def __init__(self) -> None:
         """Initialisation des attributs de la class enfant"""
-        super().__init__(longueur, largeur) 
+        super().__init__(150,75) 
         self.obstacle = 1000 
         self.rock = 300
         self.mud = 200
@@ -298,8 +299,11 @@ class NiveauPlaineRiviere(GestionNiveauMap):
 
         #placement des obstacle sur la map
         checkDeplacementPasPossible = True
-        while checkDeplacementPasPossible: # boucle tant que la map n'est pas finissable par le joueur 
-            
+        compteur = 0
+        while checkDeplacementPasPossible and compteur < 100: 
+            compteur += 1
+
+
             # copie de la map pour les test
             self.mapCheckDeplacementPossible = []
             self.mapCheckDeplacementPossible = copy.deepcopy(self.map)   # deep copy pour éviter les liaisons des cellules mémoires et donc influer sur la vrai map + eviter d'utiliser une double for
@@ -345,6 +349,15 @@ class NiveauPlaineRiviere(GestionNiveauMap):
                         for coords in listeObstacle: # on met à jour la map (on place les objets dessus)
                             self.map[coords[1]][coords[0]] = "O" # placement aux différents cordonnées
 
+        ## SECURITE
+        # verif si boucle pour relancement
+        if compteur < 100:
+            self.ERROR_RELANCER = False
+        else:
+            self.ERROR_RELANCER = True
+
+
+
     def Update(self) -> list:
         """Méthode de gestion de la créaion de la map pour le niveau plaine et riviere.
         Cette méthode est à appeler pour pouvoir build la map integralement, elle retourne la map de bas (sol) ainsi que la map avec différents objet (collisions...)"""
@@ -358,7 +371,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         self.__PlacementRock__() # placement des petits cailloux sur la map (pas de collision)
         
         # spawn / exit
-        super().PlacementElements([[8,2,"S"]], ["coordsMapObject", "Spawn"]) 
+        super().PlacementElements([[8,2,"S"], [9, 3, "J"]], ["coordsMapObject", "Spawn"]) 
         coordSortie = self.__PlacementSpecial__("coordsMapBase", "Riviere3 Coords", "S")
         AjoutJsonMapValue(coordSortie, "coordsMapObject", "Exit")
 
@@ -390,12 +403,18 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         for j in range(len(self.baseMap)):
             print(*self.baseMap[j], sep=" ")
 
-        return self.map, self.baseMap # return des deux map pour pouvoir charger et mettre à jours les valeurs de la map
+
+        # relancer une nouvelle map
+        if self.ERROR_RELANCER:
+            return None, None, self.ERROR_RELANCER
+        
+        # Retourne la carte actuelle (map) et la carte de base (baseMap)
+        return self.map, self.baseMap, self.ERROR_RELANCER
 
 
 
 class NiveauMedievale(GestionNiveauMap):
-    def __init__(self, longueur, largeur):
+    def __init__(self):
         """
         Initialise une instance du niveau médiéval.
         
@@ -403,7 +422,7 @@ class NiveauMedievale(GestionNiveauMap):
             longueur (int): La longueur de la carte.
             largeur (int): La largeur de la carte.
         """
-        super().__init__(longueur, largeur)
+        super().__init__(150,75)
         self.rock = 300  # Nombre d'éléments "rock" disponibles.
         self.mud = 200   # Nombre d'éléments "mud" disponibles.
         self.obstacle = 1000  # Nombre d'obstacles disponibles.
@@ -652,6 +671,10 @@ class NiveauMedievale(GestionNiveauMap):
         for coords in coordsChateau:
             self.map[coords[1]][coords[0]] = "C"  
             self.baseMap[coords[1]][coords[0]] = "C"  
+
+        coordsDoorMurailles = [109, 24]
+        self.map[coordsDoorMurailles[1]][coordsDoorMurailles[0]] = "d"  
+        self.baseMap[coordsDoorMurailles[1]][coordsDoorMurailles[0]] = "d"
 
         # placement porte du chateau
         coordsDoor = [109, 10]
@@ -1039,8 +1062,9 @@ class NiveauMedievale(GestionNiveauMap):
         if compteur < 100:
             # Sauvegarde les coordonnées du transport de bateau vers le château dans un fichier JSON
             AjoutJsonMapValue(coordsPts8, "coordsMapObject", "RiverBoatTPChateau coords")
+            self.ERROR_RELANCER = False
         else:
-            self.__PlacementObstacles__()
+            self.ERROR_RELANCER = True
 
     def __AjustementRiver__(self):
 
@@ -1168,42 +1192,46 @@ class NiveauMedievale(GestionNiveauMap):
         for j in range(len(self.baseMap)):
             print(*self.baseMap[j], sep=" ")
 
+        # relancer une nouvelle map
+        if self.ERROR_RELANCER:
+            return None, None, self.ERROR_RELANCER
+        
         # Retourne la carte actuelle (map) et la carte de base (baseMap)
-        return self.map, self.baseMap
+        return self.map, self.baseMap, self.ERROR_RELANCER
 
 
 class NiveauMedievaleChateau():
     def __init__(self):
-       pass
+       self.ERROR_RELANCER = False
 
     def Update(self):
         """Map n'est pas généré aléatoirement pour le chateau"""
         self.map = [
-            ["O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O"],
-            ["O", "-", "-", "-", "-", "u", "-", "-", "-", "-", "O"],
-            ["O", "-", "Y", "R", "-", "-", "-", "R", "Y", "-", "O"],
-            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
-            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
-            ["O", "-", "Y", "R", "-", "-", "-", "R", "Y", "-", "O"],
-            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
-            ["O", "-", "-", "-", "-", "P", "-", "-", "-", "-", "O"],
-            ["O", "-", "Y", "R", "-", "-", "-", "R", "Y", "-", "O"],
-            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
-            ["O", "O", "O", "O", "O", "D", "O", "O", "O", "O", "O"],
+            ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
+            ["o", "~", "~", "~", "~", "u", "~", "~", "~", "~", "o"],
+            ["o", "~", "Y", "R", "~", "~", "~", "r", "Y", "~", "o"],
+            ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
+            ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
+            ["o", "~", "Y", "r", "~", "~", "~", "r", "Y", "~", "o"],
+            ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
+            ["o", "~", "~", "~", "~", "P", "~", "~", "~", "~", "o"],
+            ["o", "~", "Y", "r", "~", "~", "~", "r", "Y", "~", "o"],
+            ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
+            ["o", "o", "o", "o", "o", "D", "o", "o", "o", "o", "o"],
         ]
 
         self.baseMap = [
-            ["O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O"],
-            ["O", "-", "-", "-", "U", "U", "U", "-", "-", "-", "O"],
-            ["O", "-", "Y", "-", "U", "U", "U", "-", "Y", "-", "O"],
-            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
-            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
-            ["O", "-", "Y", "-", "-", "-", "-", "-", "Y", "-", "O"],
-            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
-            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
-            ["O", "-", "Y", "-", "-", "-", "-", "-", "Y", "-", "O"],
-            ["O", "-", "-", "-", "-", "-", "-", "-", "-", "-", "O"],
-            ["O", "O", "O", "O", "O", "D", "O", "O", "O", "O", "O"],
+            ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
+            ["o", "~", "~", "~", "U", "U", "U", "~", "~", "~", "o"],
+            ["o", "~", "Y", "~", "U", "U", "U", "~", "Y", "~", "o"],
+            ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
+            ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
+            ["o", "~", "Y", "~", "~", "~", "~", "~", "Y", "~", "o"],
+            ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
+            ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
+            ["o", "~", "Y", "~", "~", "~", "~", "~", "Y", "~", "o"],
+            ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
+            ["o", "o", "o", "o", "o", "D", "o", "o", "o", "o", "o"],
         ]
 
 
@@ -1218,7 +1246,7 @@ class NiveauMedievaleChateau():
         # On charche la map (collision)
         AjoutJsonMapValue(self.baseMap, "coordsMapBase", "AllMapBase")
 
-        return self.map, self.baseMap
+        return self.map, self.baseMap, self.ERROR_RELANCER
 
 
 
@@ -1229,7 +1257,7 @@ class NiveauMedievaleChateau():
 
 
 # for i in range(25):
-#     mapp, baseMap = NiveauMedievale(150,75).Update(i)
+#     mapp, baseMap = NiveauMedievale(150, 75).Update()
 #     time.sleep(1)
 
 # mapp, baseMap = NiveauMedievale(150,75).Update()
