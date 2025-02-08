@@ -16,7 +16,7 @@ class PNJ(pygame.sprite.Sprite):
         # images + hitbox
         self.direction = "down"
         self.state, self.frame_index = self.direction, 0
-        self.image = pygame.image.load(join("Images","PNJ", numpnj,"down", "0.png")).convert_alpha() # première image 
+        self.image = pygame.image.load(join("Images","PNJ", NIVEAU["Map"], numpnj,"down", "0.png")).convert_alpha() # première image 
         self.rect = self.image.get_frect(center = pos)
         self.hitbox = self.rect.inflate(-60,0) # collision
 
@@ -25,6 +25,7 @@ class PNJ(pygame.sprite.Sprite):
 
         # bool de check  : double dialogues discussion
         self.discussion = False
+        self.QuestionDone = False # si les pnj on une question
 
         self.load_images()
         self.speed = 300
@@ -39,7 +40,7 @@ class PNJ(pygame.sprite.Sprite):
 
         # parcours du folder et ajout de toutes les images
         for state in self.frames.keys():
-            for folder_path, sub_folders, file_names in walk(join("Images","PNJ", self.numPNJ, state)):
+            for folder_path, sub_folders, file_names in walk(join("Images","PNJ",NIVEAU["Map"], self.numPNJ, state)):
                 if file_names:
                     for file_name in sorted(file_names, key= lambda name: int(name.split('.')[0])):
                         full_path = join(folder_path, file_name)
@@ -189,11 +190,14 @@ class GestionPNJ(object):
 
         self.cinematique = True
         
-        if INFOS["Niveau"] ==0:
+        if NIVEAU["Map"] == "NiveauPlaineRiviere" :
             goal = LoadJsonMapValue("coordsMapObject","ArbreSpecial Coords")
-            pathAcces = ["-", "A", "P", "S"]
+            pathAcces = ["-", "A", "P", "S", "="]
 
-        
+        if NIVEAU["Map"] == "NiveauMedievale":
+            goal = LoadJsonMapValue("coordsMapObject", "Exit")
+            pathAcces = ["~", "U", "u"]
+
         self.cinematiqueObject = CinematiquePNJ(goal, self.pnjObj, self.map, pathAcces)
 
     def EndCinematique(self) -> None:
@@ -318,6 +322,7 @@ class CinematiquePNJ(object):
         # Initialisation des valeurs
         self.pnjObject = pnjObject
         self.pos = self.pnjObject.pos  # Position sur la double liste
+        print(goal)
         self.goal = (goal[0], goal[1])
         self.mapCalcul = mapCalcul
         self.pathAccessible = pathAccessible
@@ -345,18 +350,26 @@ class CinematiquePNJ(object):
             self.pointSuivant = None  # Pas de chemin à suivre
 
 
-    def Replacement(self):
+    def Replacement(self, allPNJ):
         """Replace le PNJ une case au-dessus de la position cible."""
 
-        # Positionner le PNJ en fonction de l'objectif
-        target_x, target_y = self.goal[0], self.goal[1] - 1  # Une case au-dessus
+        if NIVEAU["Map"] == "NiveauPlaineRiviere":
 
-        # Ajuster les positions de la hitbox et du rectangle
-        self.hitbox.center = (target_x * CASEMAP, target_y * CASEMAP)  # Position en pixels
-        self.rect.center = self.hitbox.center  # Synchroniser la rect avec la hitbox
+            # Positionner le PNJ en fonction de l'objectif
+            target_x, target_y = self.goal[0], self.goal[1] - 1  # Une case au-dessus
 
-        # Mettre à jour la position logique de l'objet PNJ si nécessaire
-        self.pnjObject.pos = (target_x, target_y)
+            # Ajuster les positions de la hitbox et du rectangle
+            self.hitbox.center = (target_x * CASEMAP, target_y * CASEMAP)  # Position en pixels
+            self.rect.center = self.hitbox.center  # Synchroniser la rect avec la hitbox
+
+            # Mettre à jour la position logique de l'objet PNJ si nécessaire
+            self.pnjObject.pos = (target_x, target_y)
+
+        elif NIVEAU["Map"] == "NiveauMedievale":
+            for pnjObj in allPNJ:
+                pnjObj.kill()
+
+            
 
 
     def Update(self, dt):

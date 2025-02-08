@@ -20,6 +20,22 @@ class SettingsInterface(object):
         self.last_click_time = 0
         self.click_delay = 500   
 
+        self.button_positions = {}  # Stocke les positions des boutons de touche
+        self.buttonsLangue = {}
+
+    def BuildInterfaceBind(self):
+        overlay = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
+        overlay.fill((100,100,100,180))  # Fond semi-transparent
+        self.interfaceSurface.blit(overlay, (0, 0))
+
+        # Dessiner la boîte au centre
+        box_rect = pygame.Rect(225, 140, 200, 50)
+        pygame.draw.rect(self.interfaceSurface, (200,200,200), box_rect)
+        pygame.draw.rect(self.interfaceSurface, (0,0,0), box_rect, 2)
+
+        # Texte d'instruction
+        text_surface = FONT["FONT20"].render(TEXTE["Elements"]["HotBar"]["Settings"]["PressKey"], True, (0,0,0))
+        self.interfaceSurface.blit(text_surface, (box_rect.x + 18, box_rect.y + 15))
 
 
     def BuildInterface(self) -> None:
@@ -30,29 +46,101 @@ class SettingsInterface(object):
         text = FONT["FONT36"].render(TEXTE["Elements"]["HotBar"]["Settings"]["Title"], True, (0, 0, 0))
         self.interfaceSurface.blit(text, (10, 10))
 
+        # LANGUE
         # langue settings
         textLangue = FONT["FONT20"].render(TEXTE["Elements"]["HotBar"]["Settings"]["Language"], True, (10, 10, 10))
         self.interfaceSurface.blit(textLangue, (10, 50))
 
-        # bouton langue
-        self.rectButtonLangue = pygame.Rect(10, 75, 100, 50)  # Définir la taille et position du bouton
+        y_offsetLangue = 75  # Position initiale en vertical
+        x_offsetLangue = 10  # Position initiale en horizontal
+        self.buttonsLangue = {}  # Dictionnaire pour stocker les boutons
 
-        # Dessiner le rectangle du bouton sur la surface
-        pygame.draw.rect(self.interfaceSurface, (200, 200, 200), self.rectButtonLangue)
+        for action, key in DICOLANGUE.items():  
+            # Création du rectangle pour chaque bouton (position dynamique)
+            rectButtonLangue = pygame.Rect(x_offsetLangue, y_offsetLangue, 100, 50)
+            
+            if key:
+                # Dessiner le rectangle du bouton
+                pygame.draw.rect(self.interfaceSurface, (112, 193, 255), rectButtonLangue)
+                #Dessiner le contour du bouton (bordure noire)
+                pygame.draw.rect(self.interfaceSurface, (0, 0, 0), rectButtonLangue, width=3)
+            else:
+                # Dessiner le rectangle du bouton
+                pygame.draw.rect(self.interfaceSurface, (200,200,200), rectButtonLangue)
+            
+            
+            # Dessiner le texte du bouton
+            texteButtonLangue = FONT["FONT20"].render(
+                TEXTE["Elements"]["HotBar"]["Settings"]["TypeLanguage"][action], True, (50, 50, 50)
+            )
+            texte_pos = (
+                rectButtonLangue.x + (rectButtonLangue.width - texteButtonLangue.get_width()) // 2,
+                rectButtonLangue.y + (rectButtonLangue.height - texteButtonLangue.get_height()) // 2,
+            )
+            self.interfaceSurface.blit(texteButtonLangue, texte_pos)
 
-        # Dessiner le texte à l'intérieur du bouton
-        texteButtonLangue = FONT["FONT20"].render(TEXTE["Elements"]["HotBar"]["Settings"]["TypeLanguage"], True, (50, 50, 50))
-        texte_pos = (
-            self.rectButtonLangue.x + (self.rectButtonLangue.width - texteButtonLangue.get_width()) // 2,
-            self.rectButtonLangue.y + (self.rectButtonLangue.height - texteButtonLangue.get_height()) // 2,
-        )
-        self.interfaceSurface.blit(texteButtonLangue, texte_pos)
+            # Ajouter le bouton au dictionnaire
+            self.buttonsLangue[action] = rectButtonLangue  
 
-    def ChangeLangue(self):
+            # Déplacer vers le bas pour le prochain bouton
+            y_offsetLangue += 60  # 50 de hauteur + 10 de marge
+
+
+        # BIND KEYS
+        y_offset = 50  # Position initiale en vertical
+        x_offset = 150  # Position initiale en horizontal (colonne 1)
+        column_width = 150  # Largeur de la colonne pour le décalage
+        max_height = self.interfaceSurface.get_height()  # Hauteur de l'interface
+        button_width = 60  # Largeur du bouton
+        button_height = 25  # Hauteur du bouton
+
+        self.button_positions.clear()  # Vider les anciennes positions
+        listeAllBindInt = []
+        for keyElement in KEYSBIND:
+            listeAllBindInt.append(KEYSBIND[keyElement])
+
+        for action, key in KEYSBIND.items():
+            # Affichage du libellé (non cliquable)
+            text_label = FONT["FONT20"].render(f"{action.capitalize()} :", True, (0,0,0))
+            self.interfaceSurface.blit(text_label, (x_offset, y_offset + 5))  # Position fixe du libellé
+
+            # Bouton pour la touche (cliquable)
+            text_key = pygame.key.name(key)  # Nom de la touche
+            key_rect = pygame.Rect(x_offset + 75, y_offset, button_width, button_height)  # Position et taille du bouton
+            nbOccurence = listeAllBindInt.count(key)
+            
+            # Dessiner les boutons avec des couleurs selon leur état
+            if nbOccurence > 1:  # La touche est déjà liée en rouge
+                pygame.draw.rect(self.interfaceSurface, (255, 31, 53), key_rect)  # Rouge clair
+                pygame.draw.rect(self.interfaceSurface, (110, 2, 2), key_rect, 2)  # Bordure rouge
+                text_surface = FONT["FONT20"].render(text_key, True, (110, 2, 2))  # Texte en rouge foncé
+            else:
+                pygame.draw.rect(self.interfaceSurface, (200, 200, 200), key_rect)  # Gris clair par défaut
+                pygame.draw.rect(self.interfaceSurface, (0, 0, 0), key_rect, 2)  # Bordure noire
+                text_surface = FONT["FONT20"].render(text_key, True, (0, 0, 0))  # Texte en noir
+
+            self.interfaceSurface.blit(text_surface, (key_rect.x + 5, key_rect.y + 5))
+
+            # Sauvegarder la position du bouton de la touche
+            self.button_positions[action] = key_rect
+
+            # Calcul du prochain y_offset
+            y_offset += button_height + 20  # Décalage vertical pour la prochaine ligne
+
+            # Si la hauteur dépasse celle de l'interface, déplacer vers la colonne suivante
+            if y_offset + button_height > max_height:
+                y_offset = 50  # Réinitialiser le y_offset
+                x_offset += column_width  # Décaler vers la droite pour une nouvelle colonne
+
+
+
+
+    def ChangeLangue(self, action):
         """Méthode de changement de langue dans les fichier du jeu.
         Input / Output : None"""
 
-        INFOS["Langue"] = "En" if INFOS["Langue"] == "Fr" else "Fr" # changement variable langue
+        for keyLangue in DICOLANGUE:
+            DICOLANGUE[keyLangue] = False if keyLangue != action else True
         LoadTexte() # load nouveau texte (changement de langue)
 
 
@@ -60,8 +148,7 @@ class SettingsInterface(object):
         """Méthode de fermeture de l'interface. Input / Output : None"""
 
         # changement des boolean de check
-        self.gestionnaire.InterfaceOpen = False
-        self.gestionnaire.INTERFACE_OPEN = False
+        self.gestionnaire.CloseInterface()
 
 
     def Update(self, event) -> None:
@@ -69,11 +156,19 @@ class SettingsInterface(object):
 
         # construction d'update
         self.BuildInterface()
+
+        # rebinding
+        if INFOS["RebindingKey"]:
+            self.BuildInterfaceBind()
+
+
         self.displaySurface.blit(self.interfaceSurface, (320,180)) # pos topleft
+
+
 
         # Fermer l'interface avec ESC
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_ESCAPE]:  # Fermer avec ESC
+        if keys[KEYSBIND["echap"]]:  # Fermer avec ESC
             self.CloseInterface()
 
         # Gestion des clics de souris
@@ -95,10 +190,17 @@ class SettingsInterface(object):
                     # Convertissez en coordonnées locales
                     local_pos = (global_pos[0] - surface_rect.x, global_pos[1] - surface_rect.y)
 
-                    # Vérifiez si le clic est sur le bouton de langue
-                    if self.rectButtonLangue.collidepoint(local_pos):
-                        self.ChangeLangue()
-            
+                    # Vérifier si un bouton de langue a été cliqué
+                    if not INFOS["RebindingKey"]:
+                        for action, rectButtonLangue in self.buttonsLangue.items():  # Parcourt le dictionnaire
+                            if rectButtonLangue.collidepoint(local_pos):
+                                self.ChangeLangue(action)  # Change la langue en fonction du bouton cliqué
+
+                    if not INFOS["RebindingKey"]:  # Si on n'est PAS en mode rebind
+                        for action, rect in self.button_positions.items():
+                            if rect.collidepoint(local_pos):
+                                INFOS["RebindingKey"] = action  # Déclencher le mode rebind
+                    
 
 
 
@@ -133,9 +235,7 @@ class SoudInterface(object):
         """Méthode de fermeture de l'interface. Input / Output : None"""
 
         # changement des boolean de check
-        self.gestionnaire.InterfaceOpen = False
-        self.gestionnaire.INTERFACE_OPEN = False
-
+        self.gestionnaire.CloseInterface()
 
     def Update(self, event) -> None:
         """Méthode d'update de l'interface. Input / Output : None"""
@@ -146,7 +246,7 @@ class SoudInterface(object):
 
         # Fermer l'interface avec ESC
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_ESCAPE]:  # Fermer avec ESC
+        if keys[KEYSBIND["echap"]]:  # Fermer avec ESC
             self.CloseInterface()
 
 
@@ -175,6 +275,8 @@ class BundleInterface(object):
         self.planks = pygame.image.load(join("Images", "Item", "PlanksItem.png")).convert_alpha()
         self.oldAxe = pygame.image.load(join("Images", "Item", "OldAxeItem.png")).convert_alpha()
         self.pickaxe = pygame.image.load(join("Images", "Item", "Pickaxe.png")).convert_alpha()
+        self.boat = pygame.image.load(join("Images", "Item", "Boat.png")).convert_alpha()
+        self.keys = pygame.image.load(join("Images", "Item", "Keys.png")).convert_alpha()
 
     def CreateElementRect(self) -> None:
         """Méthode de création des slots et de leurs attributs
@@ -223,6 +325,10 @@ class BundleInterface(object):
                 surf = self.planks
             elif key == "Pickaxe" and INVENTORY["Pickaxe"] > 0: 
                 surf = self.pickaxe
+            elif key == "Boat" and INVENTORY["Boat"] > 0: 
+                surf = self.boat
+            elif key == "Key" and INVENTORY["Key"] >0:
+                surf = self.keys
             else:
                 surf = None
             
@@ -230,7 +336,14 @@ class BundleInterface(object):
             if surf != None:
                 # ajout de l'item dans le slot
                 elementSlot.blit(surf, (0,0))
+
+                # text nombre items
+                textCount = FONT["FONT20"].render(f"{INVENTORY[key]}", True, (50,50,50))
+                elementSlot.blit(textCount, (70,70))
+
+                # affichage slot
                 self.interfaceSurface.blit(elementSlot, self.coordsSurface[indice])
+
 
                 indice += 1 # on change de slot
 
@@ -239,8 +352,7 @@ class BundleInterface(object):
         """Méthode de fermeture de l'interface. Input / Output : None"""
 
         # changement des boolean de check
-        self.gestionnaire.InterfaceOpen = False
-        self.gestionnaire.INTERFACE_OPEN = False
+        self.gestionnaire.CloseInterface()
 
 
     def Update(self, event) -> None:
@@ -252,7 +364,7 @@ class BundleInterface(object):
 
         # Fermer l'interface avec ESC
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_ESCAPE]:  # Fermer avec ESC
+        if keys[KEYSBIND["echap"]]:  # Fermer avec ESC
             self.CloseInterface()
 
 
@@ -284,8 +396,7 @@ class BookInterface(object):
         """Méthode de fermeture de l'interface. Input / Output : None"""
 
         # changement des boolean de check
-        self.gestionnaire.InterfaceOpen = False
-        self.gestionnaire.INTERFACE_OPEN = False
+        self.gestionnaire.CloseInterface()
 
 
     def Update(self, event) -> None:
@@ -297,7 +408,7 @@ class BookInterface(object):
 
         # Fermer l'interface avec ESC
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_ESCAPE]:  # Fermer avec ESC
+        if keys[KEYSBIND["echap"]]:  # Fermer avec ESC
             self.CloseInterface()
 
 
@@ -331,7 +442,7 @@ class PNJInterface(object):
         self.pnj_displayed_text = ""  # Texte affiché du PNJ
         self.pnj_index = 0  # Index pour le texte du PNJ
         self.compteurDialogue = 1
-        self.nombreDialogue = len(TEXTE["Dialogues"][f"Niveau{INFOS["Niveau"]}"][self.gestionnaire.pnjActuel]["Principal"]) if not self.gestionnaire.pnjObj.discussion else len(TEXTE["Dialogues"][f"Niveau{INFOS["Niveau"]}"][self.gestionnaire.pnjActuel]["Alternatif"])
+        self.nombreDialogue = len(TEXTE["Dialogues"][NIVEAU["Map"]][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"][self.gestionnaire.pnjActuel]["Principal"]) if not self.gestionnaire.pnjObj.discussion else len(TEXTE["Dialogues"][NIVEAU["Map"]][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"][self.gestionnaire.pnjActuel]["Alternatif"])
 
         # timer click skip
         self.last_click_time = 0
@@ -339,10 +450,15 @@ class PNJInterface(object):
 
         # chargement des éléments autre
         self.loadPNG()
-        self.loadText()
+
+        if self.gestionnaire.pnjObj.QuestionDone and not self.gestionnaire.pnjObj.discussion: # add 1 : skp dialogue question
+            self.loadText(1)
+        else:
+            self.loadText()
+        
 
 
-    def loadText(self) -> None:
+    def loadText(self, skipDialogueQuestion = 0 ) -> None:
         """Méthode de chargement des dialogues en fontion du pnj et du niveau et de l'avancement de discussion. 
         Input / Output : None"""
 
@@ -350,18 +466,21 @@ class PNJInterface(object):
         self.pnj_displayed_text = ""
         self.pnj_index = 0
 
+        # chargement au dialogue suivant si on a dejé faitune qustions
+        self.compteurDialogue += skipDialogueQuestion
+
         # check déjà discuter avec pnj
         if not self.gestionnaire.pnjObj.discussion:
             # chargement du texte
             if self.compteurDialogue <= self.nombreDialogue:
-                self.pnj_text = TEXTE["Dialogues"][f"Niveau{INFOS["Niveau"]}"][self.gestionnaire.pnjActuel]["Principal"][f"Dialogue{self.compteurDialogue}"]
+                self.pnj_text = TEXTE["Dialogues"][NIVEAU["Map"]][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"][self.gestionnaire.pnjActuel]["Principal"][f"Dialogue{self.compteurDialogue}"]
                 self.compteurDialogue += 1 # passage au dialogue suivant
             else:
                 self.gestionnaire.Vu() # bool de check passage
                 self.CloseInterface() # fermeture interface
 
                 # action après discussions
-                if INFOS["Niveau"] ==0:
+                if NIVEAU["Map"] == "NiveauPlaineRiviere":
                     if self.gestionnaire.pnjActuel == "PNJ1":
                         INVENTORY["OldAxe"] += 1
                         self.gestionnaire.CinematiqueBuild() # préparation au lancement cinematique
@@ -374,10 +493,28 @@ class PNJInterface(object):
                         PNJ["PNJ3"] = True
                         STATE_HELP_INFOS[0] = "MineRock"
 
+                if NIVEAU["Map"] == "NiveauMedievale": 
+                    if self.gestionnaire.pnjActuel == "PNJ1":
+                        PNJ["PNJ1"] = True
+                        STATE_HELP_INFOS[0] = "BuildBridge"
+                    elif self.gestionnaire.pnjActuel == "PNJ2":
+                        PNJ["PNJ2"] = True
+                        STATE_HELP_INFOS[0] = "FindWell"
+                    elif self.gestionnaire.pnjActuel == "PNJ3":
+                        PNJ["PNJ3"] = True
+                        INVENTORY["Key"] += 1
+                        STATE_HELP_INFOS[0] = "OpenDoor"
+                    elif self.gestionnaire.pnjActuel == "PNJ4":
+                        self.gestionnaire.CinematiqueBuild() # préparation au lancement cinematique
+
+
+
+
+
         else:
             # get dialogue deja vu
             if self.compteurDialogue <= self.nombreDialogue:
-                self.pnj_text = TEXTE["Dialogues"][f"Niveau{INFOS["Niveau"]}"][self.gestionnaire.pnjActuel]["Alternatif"][f"Dialogue{self.compteurDialogue}"]
+                self.pnj_text = TEXTE["Dialogues"][NIVEAU["Map"]][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"][self.gestionnaire.pnjActuel]["Alternatif"][f"Dialogue{self.compteurDialogue}"]
                 self.compteurDialogue += 1 # passage au dialogue suivant
             else:
                 self.CloseInterface() # fermeture interface
@@ -394,7 +531,6 @@ class PNJInterface(object):
     def BuildInterface(self) -> None:
         """Méthode de création des éléments de l'interface de discussion avec le pnj. 
         Input / Output : None"""
-
         self.interfaceSurface.fill((0, 0, 0, 0))  # Réinitialiser la surface avec une transparence complète
 
         # load element png
@@ -402,18 +538,42 @@ class PNJInterface(object):
         self.interfaceSurface.blit(self.playerImage, (WINDOW_WIDTH-178, 360))
 
         # load nom pnj + creation text du nom
-        self.pnjName = TEXTE["Dialogues"][f"Niveau{INFOS["Niveau"]}"][self.gestionnaire.pnjActuel]["Nom"]
+        self.pnjName = TEXTE["Dialogues"][NIVEAU["Map"]][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"][self.gestionnaire.pnjActuel]["Nom"]
         pnjName = FONT["FONT36B"].render(self.pnjName, True, (255,255,255))
         self.interfaceSurface.blit(pnjName, (200, 400))
 
-        # load btn skip / lancer
-        self.surfaceBtnSkip = pygame.Surface((100,50))
-        self.btnRectSkip = pygame.Rect(750,600,100,50)
-        self.surfaceBtnSkip.fill((255,255,255))
-        self.textS = TEXTE["Elements"]["InterfacePNJ"]["SkipButton"]
-        self.textSkip = FONT["FONT36"].render(self.textS, True, (10,10,10))
-        self.surfaceBtnSkip.blit(self.textSkip, (0,0))
-        self.interfaceSurface.blit(self.surfaceBtnSkip, (self.btnRectSkip.x, self.btnRectSkip.y))
+        # box petite question
+        if self.gestionnaire.pnjActuel == "PNJ3" and NIVEAU["Map"] == "NiveauMedievale" and not self.gestionnaire.pnjObj.QuestionDone:
+            self.surfaceBtnOui = pygame.Surface((75,50))
+            self.surfaceBtnNon = pygame.Surface((75,50))
+
+            self.rectBtnOui = pygame.Rect(800, 600, 75, 50)
+            self.rectBtnNon = pygame.Rect(1000, 600, 75, 50)
+
+            self.textO = TEXTE["Elements"]["InterfacePNJ"]["Oui"]
+            self.textN = TEXTE["Elements"]["InterfacePNJ"]["Non"]
+
+            self.textOui = FONT["FONT36"].render(self.textO, True, (10,10,10))
+            self.textNon = FONT["FONT36"].render(self.textN, True, (10,10,10))
+
+            self.surfaceBtnOui.blit(self.textOui, (0,0))
+            self.surfaceBtnNon.blit(self.textNon, (0,0))
+
+            self.interfaceSurface.blit(self.surfaceBtnOui, (self.rectBtnOui.x, self.rectBtnOui.y))
+            self.interfaceSurface.blit(self.surfaceBtnNon, (self.rectBtnNon.x, self.rectBtnNon.y))
+
+
+        else:
+
+            # load btn skip / lancer
+            self.surfaceBtnSkip = pygame.Surface((100,50))
+            self.btnRectSkip = pygame.Rect(750,600,100,50)
+            self.surfaceBtnSkip.fill((255,255,255))
+            self.textS = TEXTE["Elements"]["InterfacePNJ"]["SkipButton"]
+            self.textSkip = FONT["FONT36"].render(self.textS, True, (10,10,10))
+            self.surfaceBtnSkip.blit(self.textSkip, (0,0))
+            self.interfaceSurface.blit(self.surfaceBtnSkip, (self.btnRectSkip.x, self.btnRectSkip.y))
+
 
         # bloc gestion texte 
         if self.pnj_index < len(self.pnj_text):
@@ -432,6 +592,7 @@ class PNJInterface(object):
         for i, line in enumerate(wrapped_lines):
             line_surface = FONT["FONT36"].render(line, True, (255, 255, 255))
             self.interfaceSurface.blit(line_surface, (200, y_offset + i * line_height))
+
 
 
     def CloseInterface(self) -> None:
@@ -457,7 +618,7 @@ class PNJInterface(object):
         # Fermer l'interface avec ESC
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_ESCAPE]:  # Fermer avec ESC
+        if keys[KEYSBIND["echap"]]:  # Fermer avec ESC
             self.CloseInterface()
 
         # Vérifie si l'événement est un clic de souris (bouton skip)
@@ -466,16 +627,29 @@ class PNJInterface(object):
             if current_time - self.last_click_time > self.click_delay:
                 self.last_click_time = current_time
 
-                # Vérifiez si le clic est dans le rectangle du bouton
-                if self.btnRectSkip.collidepoint(event.pos):
-                    self.loadText() # pasage au dialogue suivant
-                    self.BuildInterface() # build des éléments
+                if self.gestionnaire.pnjActuel == "PNJ3" and NIVEAU["Map"] == "NiveauMedievale" and not self.gestionnaire.pnjObj.QuestionDone:
+                    if self.rectBtnOui.collidepoint(event.pos):
+                        self.gestionnaire.pnjObj.QuestionDone =True
+                        self.loadText() # pasage au dialogue suivant
+                        self.BuildInterface() # build des éléments
+                    
+                    if self.rectBtnNon.collidepoint(event.pos):
+                        self.CloseInterface()
+                else:
+                    # Vérifiez si le clic est dans le rectangle du bouton
+                    if self.btnRectSkip.collidepoint(event.pos):
+                        self.loadText() # pasage au dialogue suivant
+                        self.BuildInterface() # build des éléments
 
-        # meme chose mais avec espace
-        if keys[pygame.K_SPACE] : 
+  
+        if keys[KEYSBIND["skip"]] : 
             current_time = pygame.time.get_ticks()
             if current_time - self.last_click_time > self.click_delay:
                 self.last_click_time = current_time
-
-                self.loadText()
-                self.BuildInterface()   
+                if  self.gestionnaire.pnjActuel == "PNJ3" and NIVEAU["Map"] == "NiveauMedievale":
+                    if self.gestionnaire.pnjObj.QuestionDone: # condition spécifique
+                        self.loadText()
+                        self.BuildInterface()   
+                else:
+                    self.loadText()
+                    self.BuildInterface()   

@@ -26,9 +26,16 @@ class MiniMap:
         """Méthode de chargement des images pour la minimap. Input / Output : None"""
 
         self.carre1 = pygame.image.load(join("Images", "MiniMap", "Carre1.png")).convert_alpha()
+        self.carre2 = pygame.image.load(join("Images", "MiniMap", "Carre2.png")).convert_alpha()
         self.carre3 = pygame.image.load(join("Images", "MiniMap", "Carre3.png")).convert_alpha()
+        self.carre4 = pygame.image.load(join("Images", "MiniMap", "Carre4.png")).convert_alpha()
+        self.carre5 = pygame.image.load(join("Images", "MiniMap", "Carre5.png")).convert_alpha()
         self.carre6 = pygame.image.load(join("Images", "MiniMap", "Carre6.png")).convert_alpha()
-        self.carre7 = pygame.image.load(join("Images", "MiniMap", "Carre8.png")).convert_alpha()
+        self.carre7 = pygame.image.load(join("Images", "MiniMap", "Carre7.png")).convert_alpha()
+        self.carre8 = pygame.image.load(join("Images", "MiniMap", "Carre8.png")).convert_alpha()
+        self.carre10 = pygame.image.load(join("Images", "MiniMap", "Carre10.png")).convert_alpha()
+        self.carre11 = pygame.image.load(join("Images", "MiniMap", "Carre11.png")).convert_alpha()
+
 
 
     def GenerateStaticMiniMap(self) -> None:
@@ -41,9 +48,25 @@ class MiniMap:
                 if cell == "#": # rivière
                     self.static_surface.blit(self.carre3, pos)
                 elif cell == "B": # border
+                    self.static_surface.blit(self.carre8, pos)
+                elif cell == "=": # path
+                    self.static_surface.blit(self.carre2, pos)
+                elif cell == "H": # maison
+                    self.static_surface.blit(self.carre4, pos)
+                elif cell == "W": # puits
+                    self.static_surface.blit(self.carre5, pos)
+                elif cell == "@": # champs
+                    self.static_surface.blit(self.carre6, pos)
+                elif cell in ["t", "T", "K"]:
                     self.static_surface.blit(self.carre7, pos)
+                elif cell == "C": # murailles
+                    self.static_surface.blit(self.carre11, pos)
                 else: # reste = herbe 
                     self.static_surface.blit(self.carre1, pos)
+                
+        if NIVEAU["Map"] == "NiveauMedievale" : # placement chateau 
+            pos = (104*CELL_SIZE, 0 *CELL_SIZE)
+            self.static_surface.blit(self.carre10, pos)
         
 
     def Update(self, player_pos: tuple, pnjGroup : any, interactionGroup : any) -> None:
@@ -64,12 +87,11 @@ class MiniMap:
             pnj_rect = pygame.Rect(pnj_x * CELL_SIZE * self.ratioImage, pnj_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE * 2)
             pygame.draw.rect(self.MiniMapSurface, (252, 128, 3), pnj_rect)
 
-        # placemnt des interaction object
-        for objectElement in interactionGroup:
-            element_x, element_y = objectElement.pos[0], objectElement.pos[1] # coords déja convertis map pyame
-            element_rect = pygame.Rect(element_x * CELL_SIZE * self.ratioImage, element_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE * 2)
-            pygame.draw.rect(self.MiniMapSurface, (109, 3, 158), element_rect)
-
+        for objectIntrac in interactionGroup:
+            if objectIntrac.id not in [ "Arbre", "Arbre2"] :
+                element_x, element_y = objectIntrac.pos[0], objectIntrac.pos[1]
+                element_rect = pygame.Rect(element_x * CELL_SIZE * self.ratioImage, element_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE * 2)
+                pygame.draw.rect(self.MiniMapSurface, (34, 5, 71), element_rect)      
 
 class InfosTips:
 
@@ -97,10 +119,10 @@ class InfosTips:
     def GetText(self) -> None:
         """Méthode de récupération du texte en foonc de l'état de STATE_HELP_INFOS"""
         
-        if self.text != TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"][STATE_HELP_INFOS[0]]: # si texte différents
+        if self.text != TEXTE["Elements"]["HotBar"]["IdeaTips"][NIVEAU["Map"]][STATE_HELP_INFOS[0]]: # si texte différents
             self.indexTexte = 0 # on reset l'écriture index
         
-        self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][f"Niveau{INFOS["Niveau"]}"][STATE_HELP_INFOS[0]] # texte / nouveau texte
+        self.text = TEXTE["Elements"]["HotBar"]["IdeaTips"][NIVEAU["Map"]][STATE_HELP_INFOS[0]] # texte / nouveau texte
 
 
     def BuildElement(self) -> None:
@@ -120,7 +142,7 @@ class InfosTips:
 
             
         # get lines 
-        max_width = 400
+        max_width = 375
         wrapped_lines = wrap_text(self.displayed_text, FONT["FONT20"], max_width)
 
         # Affichage des lignes
@@ -141,13 +163,14 @@ class InfosTips:
 
 class SettingsAll:
 
-    def __init__(self, screen : any, INTERFACE_OPEN : bool) -> None:
+    def __init__(self, screen : any, gestionnaire) -> None:
         """Méthode initialisation de la box d'accès à tout les settings et utilitaires (bundle, settings, sound, book).
         Input : screen = (element pygame), boolean = check interface global """
 
         # Initialisation
         self.allSettingsSurface = screen
-        self.INTERFACE_OPEN = INTERFACE_OPEN
+
+        self.gestionnaire = gestionnaire
 
         # Création éléments
         self.InterfaceOpen = False # bool de vérification
@@ -185,13 +208,12 @@ class SettingsAll:
         self.book = pygame.image.load(join("Images", "HotBar", "AllSettings", "Book.png")).convert_alpha()
 
 
-    def OpenInterfaceElementClic(self, event : any, INTERFACE_OPEN : bool) -> bool:
+    def OpenInterfaceElementClic(self, event : any) -> bool:
         """Méthode : Appel des méthode de gestion des interfaces par clic souris.
         Input : event = (element pygame), bool = checl interface global; Output : bool"""
 
-        self.INTERFACE_OPEN = INTERFACE_OPEN
 
-        if not self.INTERFACE_OPEN: # sécurité
+        if not self.gestionnaire.INTERFACE_OPEN: # sécurité
             self.openInterface = False 
 
         # Obtenez les coordonnées globales de l'événement
@@ -205,7 +227,7 @@ class SettingsAll:
 
         # Vérifiez si le clic est dans la surface
         if not surface_rect.collidepoint(global_pos):
-            return self.INTERFACE_OPEN
+            return 
 
         # Si collision au clic avec la box, alors on appel la méthode de la gestion de l'interface en question
         if self.ButtonRectWheel.collidepoint(local_pos):
@@ -220,86 +242,92 @@ class SettingsAll:
         elif self.ButtonRectBook.collidepoint(local_pos): 
             self.GestionInterfaceBook()
 
-        return self.INTERFACE_OPEN # mise à jour de l'interface check général
     
 
-    def OpenInterfaceElementClavier(self, event : any, INTERFACE_OPEN : bool) -> bool:
+    def OpenInterfaceElementClavier(self, event : any) -> bool:
         """Méthode : Appel des méthode de gestion des interfaces par touches clavier.
         Input : event = (element pygame), bool = checl interface global; Output : bool"""
 
-        self.INTERFACE_OPEN = INTERFACE_OPEN
 
-        if not self.INTERFACE_OPEN: # sécurité
+        if self.gestionnaire.INTERFACE_OPEN: # sécurité
             self.openInterface = False 
 
         # appel des méthode quand touche du clavier correspondante
-        if event.key == pygame.K_p :
+        if event.key == KEYSBIND["settings"] :
             self.GestionInterfaceSettings()
 
-        elif event.key == pygame.K_v : 
+        elif event.key ==KEYSBIND["sound"]  : 
             self.GestionInterfaceSound()
 
-        elif event.key == pygame.K_i:
+        elif event.key == KEYSBIND["inventory"] :
             self.GestionInterfaceBundle()
 
-        elif event.key == pygame.K_b : 
+        elif event.key == KEYSBIND["book"]  : 
             self.GestionInterfaceBook()
-
-        return self.INTERFACE_OPEN # mise à jour de l'interface check général
 
 
     def GestionInterfaceSettings(self) -> None:
         """Méthode de gestion spécifique interface ouverture / fermeture
         Input / Output : None"""
 
-        if not self.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
-            self.InterfaceOpen = True
-            self.INTERFACE_OPEN = True
+        if not self.gestionnaire.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
+            self.OpenInterface()
             self.interfaceElement = SettingsInterface(self)
         
         elif self.InterfaceOpen: # fermeture interface actuel
-            self.InterfaceOpen = False
-            self.INTERFACE_OPEN = False
+            self.CloseInterface()
+
 
 
     def GestionInterfaceSound(self) -> None:
         """Méthode de gestion spécifique interface ouverture / fermeture
         Input / Output : None"""
 
-        if not self.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
-            self.InterfaceOpen = True
-            self.INTERFACE_OPEN = True
+        if not self.gestionnaire.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
+            self.OpenInterface()
             self.interfaceElement = SoudInterface(self)
         
         elif self.InterfaceOpen: # fermeture interface actuel
-            self.InterfaceOpen = False
-            self.INTERFACE_OPEN = False
+            self.CloseInterface()
+
 
     def GestionInterfaceBundle(self) -> None:
         """Méthode de gestion spécifique interface ouverture / fermeture
         Input / Output : None"""
 
-        if not self.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
-            self.InterfaceOpen = True
-            self.INTERFACE_OPEN = True
+        if not self.gestionnaire.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
+            self.OpenInterface()
             self.interfaceElement = BundleInterface(self)
         
         elif self.InterfaceOpen: # fermeture interface actuel
-            self.InterfaceOpen = False
-            self.INTERFACE_OPEN = False
+            self.CloseInterface()
+
 
     def GestionInterfaceBook(self) -> None:
         """Méthode de gestion spécifique interface ouverture / fermeture
         Input / Output : None"""
 
-        if not self.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
-            self.InterfaceOpen = True
-            self.INTERFACE_OPEN = True
+        if not self.gestionnaire.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
+            self.OpenInterface()
             self.interfaceElement = BookInterface(self)
         
         elif self.InterfaceOpen: # fermeture interface actuel
-            self.InterfaceOpen = False
-            self.INTERFACE_OPEN = False
+            self.CloseInterface()
+
+    def CloseInterface(self) -> None:
+        """Méthode de fermeture de l'interface. Input / Output : None"""
+
+        # changement des boolean de check
+        self.InterfaceOpen = False
+        self.gestionnaire.INTERFACE_OPEN = False
+
+    def OpenInterface(self) -> None:
+        """Méthode de fermeture de l'interface. Input / Output : None"""
+
+        # changement des boolean de check
+        self.InterfaceOpen = True
+        self.gestionnaire.INTERFACE_OPEN = True
+
 
 
     def Update(self, event) -> None:

@@ -29,10 +29,14 @@ class CollisionSprites(pygame.sprite.Sprite):
         self.id = typeCollision # id element
         self.InfoExo = InfoExo # si element exercice ou non (bool)
 
-        if typeCollision == "Arbre" :
+        if typeCollision == "Arbre"  or typeCollision == "Arbre2":
             self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-68))
         elif typeCollision == "pont1" or typeCollision == "pont2":
             self.rect = self.image.get_frect(topleft=(pos[0]-33, pos[1]))
+        elif typeCollision == "pont3":
+            self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-20))
+        elif typeCollision == "MuraillesAngle":
+            self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-64))
         else:
             self.rect = self.image.get_frect(topleft=pos)
 
@@ -44,6 +48,8 @@ class CollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(0,0)
             case "Souche":
                 self.hitbox = self.rect.inflate(-120,-110)
+            case "Souche2":
+                self.hitbox = self.rect.inflate(-120,-110)
             case "HugeRock":
                 self.hitbox = self.rect.inflate(-90,-100)
             case "campFire":
@@ -54,8 +60,35 @@ class CollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(-100,0)
             case "pont2":
                 self.hitbox = self.rect.inflate(-100,0)
+            case "pont3":
+                self.hitbox = self.rect.inflate(0, -100)
             case "ExitRock":
                 self.hitbox = self.rect.inflate(-60, -20)
+            case "Champs":
+                self.hitbox = self.rect.inflate(0,0)
+            case "Murailles":
+                self.hitbox = self.rect.inflate(0,-20)
+            case "House":
+                self.hitbox = self.rect.inflate(-20,-60)
+            case "Well":
+                self.hitbox = self.rect.inflate(-20,-60)
+            case "Chateau":
+                self.hitbox = self.rect.inflate(-20,-60)
+            case "TableCraft":
+                self.hitbox = self.rect.inflate(0,0)
+            case "Boat":
+                self.hitbox = self.rect.inflate(0,0)
+            case "Mur":
+                self.hitbox = self.rect.inflate(0,-40)
+            case "Pilier":
+                self.hitbox = self.rect.inflate(0,-20)
+            case "Door":
+                self.hitbox = self.rect.inflate(0,-60)
+            case "Door2":
+                self.hitbox = self.rect.inflate(0,-60)
+            case "CerclePortal":
+                self.hitbox = self.rect.inflate(-128,-128)
+
             case _:  # par défaut
                 self.hitbox = self.rect.inflate(-70,-140)
 
@@ -100,7 +133,13 @@ class River(pygame.sprite.Sprite):
             "RiverAngularW-Sx128": [],
             "RiverStraightN-Sx128": [],
             "RiverStraightW-Ex128": [],
-            "RiverMontainConflictx128": []
+            "RiverMontainConflictx128": [],
+            "RiverTN-SEx128" : [],
+            "RiverTWN-Sx128" : [],
+            "RiverTWN-Ex128" : [],
+            "RiverTW-SEx128" : [],
+            "CastleWallRiverx128" : [],
+
         }
 
         # parcours dossier et get images / patch
