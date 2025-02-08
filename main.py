@@ -54,6 +54,8 @@ class Game(object):
         self.bgHotBar = pygame.Surface((WINDOW_WIDTH, 160))
         self.bgHotBar.fill((150,150,150))
 
+
+    # méthode de call de la class tool
     def ChargementEcran(self):
         self.GameTool.ChargementEcran()
 
@@ -72,12 +74,13 @@ class Game(object):
         Input / Output : None"""
 
 
-
+        # placement du bool sur True
         self.ERROR_RELANCER = True
         while self.ERROR_RELANCER:
+            #lancement création
             self.loadMapElement = LoadMap(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
-            self.map, self.mapBase, self.ERROR_RELANCER = self.loadMapElement.Update()
-        self.ERROR_RELANCER = False
+            self.map, self.mapBase, self.ERROR_RELANCER = self.loadMapElement.Update() # mise à jour des variables
+
 
         #pnj
         self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
@@ -94,10 +97,10 @@ class Game(object):
             #construction
             self.buildElements = Construire(self)
 
-
+        # placement du player sur le spawn
         getPlayerPosSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
         playerPosSpawn = getPlayerPosSpawn[0] 
-        self.player = Player(((playerPosSpawn[0] + 1 )*CASEMAP,(playerPosSpawn[1] +0.5 )*CASEMAP), self.allSprites, self.collisionSprites) 
+        self.player = Player(((playerPosSpawn[0] + 1 )*CASEMAP,(playerPosSpawn[1] + 0.5 )*CASEMAP), self.allSprites, self.collisionSprites) 
 
 
 
@@ -122,19 +125,19 @@ class Game(object):
 
 
     def run(self):
-        
         self.StartMap()
 
-
         while self.running:
-
+            
+            # si exo réussit
             if INFOS["ExoPasse"]:
                 INFOS["ExoPasse"] = False
-                self.GameTool.ChangementNiveau()
+                self.GameTool.ChangementNiveau() # changement niveau
 
+            # si passage en demi niveau
             if INFOS["DemiNiveau"] and not self.demiNiveau:
-               self.demiNiveau = True
-               self.GameTool.ChangementDemiNiveau()
+               self.demiNiveau = True # bool de verif
+               self.GameTool.ChangementDemiNiveau() # chargement du demi niveau
 
 
 
@@ -143,6 +146,7 @@ class Game(object):
                 if event.type == pygame.QUIT:
                     self.running = False
 
+                # rebinding keys fonctionneemnt
                 if INFOS["RebindingKey"]:
                     if event.type == pygame.KEYDOWN:
                         if not INFOS["RebindingKey"] =="echap" and event.key != pygame.K_ESCAPE: # verif
@@ -170,10 +174,12 @@ class Game(object):
                         if event.key == pygame.K_0:
                             self.player.rect.center = (130*CASEMAP, 25*CASEMAP)
                             self.player.hitbox_rect.center = (130*CASEMAP, 25*CASEMAP)
-                    
+
+                        # interface hotbar
                         if event.key == KEYSBIND["settings"] or event.key == KEYSBIND["sound"] or event.key == KEYSBIND["inventory"] or event.key == KEYSBIND["book"]:
                             self.settingsAll.OpenInterfaceElementClavier(event)
                         
+                        # interaction avec les éléments de la map
                         if event.key == KEYSBIND["action"]:
                             # pnj interface
                             self.INTERFACE_OPEN = self.pnj.OpenInterfaceElementClavier(self.INTERFACE_OPEN)
@@ -190,28 +196,28 @@ class Game(object):
                         if event.key == KEYSBIND["hideHotBar"]:
                             self.hideHotbar = True if not self.hideHotbar else False
                         
-
-
+                        # close interface open
                         if event.key == KEYSBIND["echap"] and self.INTERFACE_OPEN: # Close général interface build
                             if self.interface_exo:
                                 INFOS["Exo"] = False
                             self.INTERFACE_OPEN = False
 
+                    # open au clic des interface de la hotbar
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                         self.settingsAll.OpenInterfaceElementClic(event)
                     
 
 
 
-
+            # update de tous les sprites de la map
             self.allSprites.update(dt, self.cinematique)
             self.displaySurface.fill("#000000")
 
-
+            # si pas de cinématique
             if not self.cinematique:
-                self.allSprites.draw(self.player.rect.center, self.hideHotbar)
+                self.allSprites.draw(self.player.rect.center, self.hideHotbar) # lockcam player
             else:
-                self.allSprites.draw(self.cinematiqueObject.pnjObject.rect.center, self.hideHotbar) # pos pnj lockcam 
+                self.allSprites.draw(self.cinematiqueObject.pnjObject.rect.center, self.hideHotbar) # pnj lockcam
 
             # Afficher la minimap sur l'écran principal + menu settings all
             if not self.cinematique :
@@ -221,24 +227,26 @@ class Game(object):
                 self.settingsAll.Update(event)
 
                 if not self.hideHotbar: # check hide bool
-
-                    self.displaySurface.blit(self.bgHotBar, (0, WINDOW_HEIGHT-160))
-                    if not self.demiNiveau : # pas besoin de la minimap
+                    self.displaySurface.blit(self.bgHotBar, (0, WINDOW_HEIGHT-160)) # hotbar bg
+                    if not self.demiNiveau : # pas besoin de la minimap dans les demi niveau
                         self.displaySurface.blit(self.minimap_surface, (10, WINDOW_HEIGHT-160))
-                    self.displaySurface.blit(self.ideaTips_surface, COORDS_BOX_IDEAS_TIPS)
-                    self.displaySurface.blit(self.allSettings_surface, COORS_BOX_ALL_SETTINGS)
+                    self.displaySurface.blit(self.ideaTips_surface, COORDS_BOX_IDEAS_TIPS)# reste hotbar
+                    self.displaySurface.blit(self.allSettings_surface, COORS_BOX_ALL_SETTINGS)# reste hotbar
                 
-            if not self.cinematique:
-                self.INTERFACE_OPEN, self.cinematique, self.cinematiqueObject = self.pnj.update(self.player.rect.center, self.INTERFACE_OPEN, event)
-                self.InteractionObject.Update(self.player, self.interactionsGroup)
+            if not self.cinematique: 
+                self.INTERFACE_OPEN, self.cinematique, self.cinematiqueObject = self.pnj.update(self.player.rect.center, self.INTERFACE_OPEN, event) # pnj update 
+                self.InteractionObject.Update(self.player, self.interactionsGroup) # interaction update
             
-            else:
+            else: # si cinématique 
                 self.cinematique, endCinematique = self.cinematiqueObject.Update(dt)
+                
+                # fin cinématique + action 
                 if endCinematique:
-                    self.pnj.EndCinematique()
-                    self.cinematiqueObject.Replacement(self.allPNJ)
-                    self.fondu_au_noir()
+                    self.pnj.EndCinematique() # finition cinématique
+                    self.cinematiqueObject.Replacement(self.allPNJ) # placement convenable du png
+                    self.fondu_au_noir() # animation
                     
+                    # action en fonction du niveau et des pnj
                     if NIVEAU["Map"] == "NiveauPlaineRiviere":
                         if  not PNJ["PNJ1"]:
                             # écran noir + text de fin cinématique
@@ -292,14 +300,14 @@ class Game(object):
             
             # update jusqu'a construction du pont / placement bateau
             if (PNJ["PNJ2"] and NIVEAU["Map"] == "NiveauPlaineRiviere") or (PNJ["PNJ1"] and NIVEAU["Map"] == "NiveauMedievale"):
-                if not self.buildElements.getConstructionStatuePont() or not self.buildElements.getPlaceStatueBoat() :
+                if not self.buildElements.getConstructionStatuePont() or not self.buildElements.getPlaceStatueBoat() : # check
                     self.buildElements.Update(self.player.rect.center)
 
 
 
             # update de l'exo 
             if INFOS["Exo"]:
-                if not self.INTERFACE_OPEN:
+                if not self.INTERFACE_OPEN: # creation de l'exo s'il n'est pas encore fait
                     self.INTERFACE_OPEN = True
                     self.interface_exo = True
 
@@ -310,7 +318,7 @@ class Game(object):
                     self.ChargementEcran()
 
                 else:
-                    self.InterfaceExo.Update(event)
+                    self.InterfaceExo.Update(event) # update interface exo
 
             if self.INTERFACE_OPEN is None: # vérification : sécurité
                 self.INTERFACE_OPEN = False
@@ -323,10 +331,14 @@ class Game(object):
 
 class GameToolBox(object):
     def __init__(self, gestionnaire):
+        """Méthode initialisation variable de la tool box de la clas game"""
+
         self.gestionnaire = gestionnaire
-        pass
     
     def CreateFont(self):
+        """Méthode de création de toutes les fonts pour le jeu"""
+        
+        # création
         FONT20 = pygame.font.Font(None, 20)
         FONT22 = pygame.font.Font(None, 22)
         FONT24 = pygame.font.Font(None, 24)
@@ -337,6 +349,7 @@ class GameToolBox(object):
         FONT50 = pygame.font.Font(None, 50)
         FONT74 = pygame.font.Font(None, 74)
 
+        # aplpication dans le dico setting
         FONT["FONT20"] = FONT20
         FONT["FONT22"] = FONT22
         FONT["FONT24"] = FONT24
@@ -347,9 +360,10 @@ class GameToolBox(object):
         FONT["FONT74"] = FONT74
 
 
-    # Fonction pour dessiner l'écran de chargement
     def ChargementEcran(self):
-        loading_step = 0
+        """Méthode pour dessiner l'écran de chargement"""
+
+        loading_step = 0 # variable
         self.gestionnaire.checkLoadingDone = False
         while not self.gestionnaire.checkLoadingDone:
             self.gestionnaire.displaySurface.fill((0,0,0))  # Remplir avec une couleur grise
@@ -369,7 +383,7 @@ class GameToolBox(object):
         self.ouverture_du_noir(self.gestionnaire.player.rect.center)
 
     def textScreen(self, text):
-
+        """Méthode d'affichage du texte d'animation sur l'ecran"""
 
         self.gestionnaire.displaySurface.fill((0,0,0))
         textElement = FONT["FONT50"].render(text, True, (255,255,255))
@@ -382,6 +396,8 @@ class GameToolBox(object):
         self.fondu_au_noir()
 
     def fondu_au_noir(self):
+        "Méthode de fondu noir"
+
         fade_surface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))
         fade_surface.fill((0, 0, 0))
         alpha = 0
@@ -418,6 +434,8 @@ class GameToolBox(object):
         pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])
         
     def ResetValues(self):
+        """En fonction du niveau, on passe au niveau supérieur"""
+
         match NIVEAU["Niveau"]:
             case "Seconde":
 
