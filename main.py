@@ -132,6 +132,7 @@ class Game(object):
             # si exo réussit
             if INFOS["ExoPasse"]:
                 INFOS["ExoPasse"] = False
+                self.hideHotbar = False
                 self.GameTool.ChangementNiveau() # changement niveau
 
             # si passage en demi niveau
@@ -310,7 +311,7 @@ class Game(object):
                 if not self.INTERFACE_OPEN: # creation de l'exo s'il n'est pas encore fait
                     self.INTERFACE_OPEN = True
                     self.interface_exo = True
-
+                    self.hideHotbar = True
                     self.checkLoadingDone = False
                     # Affichage initial de l'écran de chargement
                     threading.Thread(target=self.SetupExo).start()

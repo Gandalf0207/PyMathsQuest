@@ -66,7 +66,7 @@ class Interactions(object):
 
                     else: # si c'est le pont exo
                         INFOS["Exo"] = True # lancement exo dans main (changement variable)
-                        self.gestionnaire.textScreen(TEXTE["Elements"]["MakeExo"]) # text animation
+                        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["MakeExo"]) # text animation
                     
                 # si c'est le rocher qui est destructible
                 elif self.ObjectId == "ExitRock":
@@ -202,7 +202,7 @@ class Interactions(object):
                 # interaction cerlce exo map n°2
                 if self.ObjectId == "CerclePortal":
                     INFOS["Exo"] = True # lancement exo dans main (changement variable)
-                    self.gestionnaire.textScreen(TEXTE["Elements"]["MakeExo"]) # text animation
+                    self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["MakeExo"]) # text animation
 
 
                         
