@@ -464,7 +464,7 @@ class LoadMap():
         
         # parcours et création des sprites pnj
         for coordsPNJ in coordsPNJList:
-            pos = (coordsPNJ[0]*CASEMAP, coordsPNJ[1]*CASEMAP) # calcul coords pygame
+            pos = (coordsPNJ[0]*CASEMAP + 64, coordsPNJ[1]*CASEMAP + 64) # calcul coords pygame
             if coordsPNJ[3] == 1 : 
                 PNJ(pos , "PNJ1", (self.allPNJ, self.allSprites, self.collisionSprites))
             if coordsPNJ[3] == 2 : 
