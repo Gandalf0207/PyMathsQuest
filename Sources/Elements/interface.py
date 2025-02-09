@@ -474,8 +474,12 @@ class PNJInterface(object):
             # chargement du texte
             if self.compteurDialogue <= self.nombreDialogue:
                 self.pnj_text = TEXTE["Dialogues"][NIVEAU["Map"]][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"][self.gestionnaire.pnjActuel]["Principal"][f"Dialogue{self.compteurDialogue}"]
+                self.gestionnaire.gestionSound.Dialogue(self.compteurDialogue)
                 self.compteurDialogue += 1 # passage au dialogue suivant
             else:
+                # gestion son
+                self.gestionnaire.gestionSound.StopDialogue()
+
                 self.gestionnaire.Vu() # bool de check passage
                 self.CloseInterface() # fermeture interface
 
@@ -515,8 +519,11 @@ class PNJInterface(object):
             # get dialogue deja vu
             if self.compteurDialogue <= self.nombreDialogue:
                 self.pnj_text = TEXTE["Dialogues"][NIVEAU["Map"]][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"][self.gestionnaire.pnjActuel]["Alternatif"][f"Dialogue{self.compteurDialogue}"]
+                self.gestionnaire.gestionSound.Dialogue(self.compteurDialogue)
                 self.compteurDialogue += 1 # passage au dialogue suivant
             else:
+                # gestion son
+                self.gestionnaire.gestionSound.StopDialogue()
                 self.CloseInterface() # fermeture interface
 
 
@@ -598,6 +605,8 @@ class PNJInterface(object):
     def CloseInterface(self) -> None:
         """Méthode de fermeture de l'interface de discussion avec le pnj.
         Input / Output : None"""
+        # couper le son si dialogue en cours + augmenter piste audio
+        self.gestionnaire.gestionSound.StopDialogue()
 
         # Mise à jour des bool de check
         self.gestionnaire.openInterface = False

@@ -147,7 +147,7 @@ class PNJ(pygame.sprite.Sprite):
 
 
 class GestionPNJ(object):
-    def __init__(self, displaySurface : any, allpnjGroup : any, INTERFACE_OPEN : bool, mapCollision : list, gestionnaire) -> None:
+    def __init__(self, displaySurface : any, allpnjGroup : any, INTERFACE_OPEN : bool, mapCollision : list, gestionnaire, gestionSound) -> None:
         """Méthode initialisation gestion principal pnj : proche, interface discussion...
         Input : displaySurface / allpnGroupe : pygame element, niveau : int, INTERFACE_OPEN : bool (check all interface), mapCollision : list (check path cinématique)"""
 
@@ -157,6 +157,7 @@ class GestionPNJ(object):
         self.allPNJ = allpnjGroup
         self.INTERFACE_OPEN = INTERFACE_OPEN
         self.map = mapCollision # obstacle pour cinématique déplacement 
+        self.gestionSound = gestionSound
 
         # Initialisation value de base
         self.npc_screen_pos = [0,0]

@@ -333,11 +333,9 @@ class LoadMap():
                 # Pont placé
                 if self.map[ordonnees][abscisses] == "T":
                     CollisionSprites(pos, self.pont2, "pont2",  (self.allSprites, self.collisionSprites))
-                    print(self.allSprites)
 
                 if self.map[ordonnees][abscisses] == "X":
                     CollisionSprites(pos, self.pont3, "pont3",  (self.allSprites, self.collisionSprites, self.interactions))
-                    print(self.allSprites)
 
                 # champs
                 if self.map[ordonnees][abscisses] == "@":

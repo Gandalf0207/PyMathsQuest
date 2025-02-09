@@ -9,7 +9,13 @@ class Player(pygame.sprite.Sprite):
         # initialisation
         super().__init__(groups)
         self.collision_sprites = collision_sprites
-        
+        # sound
+        pygame.mixer.init()
+        self.canal2 = pygame.mixer.Channel(2)
+        self.grassFoot = True
+        self.grass1 = join("Sound", "EffetSonore", "GrassWalk", "WalkGrass1.mp3")
+        self.grass2 = join("Sound", "EffetSonore", "GrassWalk", "WalkGrass2.mp3")
+
         # load image
         self.load_images()
         
@@ -50,11 +56,20 @@ class Player(pygame.sprite.Sprite):
         # Modification du vecteur de déplacement avec vérification des touches
         self.direction.x = int(keys[KEYSBIND["right"]]) - int(keys[KEYSBIND["left"]])
         self.direction.y = int(keys[KEYSBIND["down"]]) - int(keys[KEYSBIND["up"]])
-
-                
+      
         # normalisation vecteur déplacement
         self.direction = self.direction.normalize() if self.direction else self.direction
+        if self.direction: # il y a un deplacement
+            if self.grassFoot:
+                self.grassFoot = False
+                songCanal2 = pygame.mixer.Sound(self.grass1) 
+            else:
+                self.grassFoot = True
+                songCanal2 = pygame.mixer.Sound(self.grass2)
 
+            if not self.canal2.get_busy():
+                self.canal2.set_volume(SOUND["EffetSonore"])
+                self.canal2.play(songCanal2)
 
     def move(self, dt : int) -> None:
         """Méthode déplacement du personnage joueur

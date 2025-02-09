@@ -8,6 +8,7 @@ from Sources.Personnages.pnj import *
 from Sources.Ressources.Texte.creationTexte import *
 from Sources.Elements.construire import *
 from Sources.Exos.createExo import *
+from Sources.Elements.sound import *
 
 
 class Game(object):
@@ -17,6 +18,7 @@ class Game(object):
 
         # general setup
         pygame.init() # Initialisation de la fenetre pygame
+        
         self.displaySurface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT)) # taille fenetre
         self.displayCaption = pygame.display.set_caption(TEXTE["Elements"]["GameName"]) # titre fenetre
         self.running = True # stop de la fenetre
@@ -83,7 +85,7 @@ class Game(object):
 
 
         #pnj
-        self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self)
+        self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self, self.GameTool.gestionSoundDialogues)
         
         # Initialisation dans votre setup 
         self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
@@ -202,6 +204,9 @@ class Game(object):
                             if self.interface_exo:
                                 INFOS["Exo"] = False
                             self.INTERFACE_OPEN = False
+                            
+                            # on réinitialise les niveaux audio.
+                            self.GameTool.gestionSoundDialogues.StopDialogue()
 
                     # open au clic des interface de la hotbar
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -321,6 +326,13 @@ class Game(object):
                 else:
                     self.InterfaceExo.Update(event) # update interface exo
 
+            # update toolBOX
+            self.GameTool.Update()
+
+
+
+
+
             if self.INTERFACE_OPEN is None: # vérification : sécurité
                 self.INTERFACE_OPEN = False
 
@@ -333,8 +345,14 @@ class Game(object):
 class GameToolBox(object):
     def __init__(self, gestionnaire):
         """Méthode initialisation variable de la tool box de la clas game"""
+        self.gestionSoundFond = GestionSoundFond()
+        threading.Thread(target=self.gestionSoundFond.BandeSon, daemon=True).start()
+
+        self.gestionSoundDialogues = GestionSoundDialogues()
 
         self.gestionnaire = gestionnaire
+        self.last_update_time = pygame.time.get_ticks()
+
     
     def CreateFont(self):
         """Méthode de création de toutes les fonts pour le jeu"""
@@ -385,14 +403,14 @@ class GameToolBox(object):
 
     def textScreen(self, text):
         """Méthode d'affichage du texte d'animation sur l'ecran"""
-
-        self.gestionnaire.displaySurface.fill((0,0,0))
-        textElement = FONT["FONT50"].render(text, True, (255,255,255))
-        text_rect = textElement.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
-        self.gestionnaire.displaySurface.blit(textElement, text_rect.topleft)
-
-        pygame.display.flip()
-        pygame.time.delay(2000)  # Temps de mise à jour de l'écran de chargement
+        compteur = 0
+        while compteur < 1250:
+            compteur += 1
+            self.gestionnaire.displaySurface.fill((0,0,0))
+            textElement = FONT["FONT50"].render(text, True, (255,255,255))
+            text_rect = textElement.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
+            self.gestionnaire.displaySurface.blit(textElement, text_rect.topleft)
+            pygame.display.flip()
 
         self.fondu_au_noir()
 
@@ -511,6 +529,14 @@ class GameToolBox(object):
 
         # call rebuild
         self.gestionnaire.StartMap()
+
+    def Update(self):
+        updateSongFondTime = 150000 # 2min 30
+        current_time = pygame.time.get_ticks()
+        if current_time - self.last_update_time >= updateSongFondTime:
+            self.musiqueThread = threading.Thread(target=self.gestionSoundFond.BandeSon, daemon=True).start()
+            self.last_update_time = current_time
+
 
 
 

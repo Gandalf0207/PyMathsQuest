@@ -98,7 +98,7 @@ NIVEAU = {
     "Niveau" : "Seconde",
 
     # map
-    "Map" : "NiveauPlaineRiviere",
+    "Map" : "NiveauMedievale",
 
     # numero
     "Numero" : 0,
@@ -118,6 +118,12 @@ DICOLANGUE = {
     "Fr" : True,
     "En" : False,
     "Es" : False,
+}
+
+SOUND = {
+    "BandeSon" : 0.2,
+    "Dialogue" : 0.8,
+    "EffetSonore" : 0.2,
 }
 
 KEYSBIND = {
