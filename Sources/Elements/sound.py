@@ -27,17 +27,6 @@ class GestionSoundFond(object):
         self.bandeSon2 = join("Sound", "BandeSonore",NIVEAU["Map"],"Nocyfer - therapy (instrumental slowed) 2025-01-29 21_46.mp3")
         self.bandeSon3 = join("Sound", "BandeSonore",NIVEAU["Map"],"Nocyfer - Darkest Hour 2025-01-29 21_40.mp3")
 
-        # dialogues
-        self.Princiapl1Map0Num0PNJ1Diag1 = join("Sound", "Dialogues", NIVEAU["Map"], "Numero0", "PNJ1", "Principal_Bucheron_Map0_Num0_PNJ1_Diag1.mp3")
-        self.Princiapl1Map0Num0PNJ1Diag2 = join("Sound", "Dialogues", NIVEAU["Map"], "Numero0", "PNJ1", "Principal_Bucheron_Map0_Num0_PNJ1_Diag2.mp3")
-
-        # sonf effect 
-        self.grass1 = join("Sound", "EffetSonore", "GrassWalk", "WalkGrass1.mp3")
-        self.grass2 = join("Sound", "EffetSonore", "GrassWalk", "WalkGrass2.mp3")
-        self.river = join("Sound", "EffetSonore", "RiverSong.mp3")
-        self.pontBois = join("Sound", "EffetSonore", "PontBois.mp3")
-        self.CutTree = join("Sound", "EffetSonore", "CutTree.mp3")
-
     def BandeSon(self):
         if not self.canal0.get_busy():
             if NIVEAU["Map"] == "NiveauPlaineRiviere": # lieux
