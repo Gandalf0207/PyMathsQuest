@@ -97,6 +97,10 @@ class LoadMap():
                 self.map, self.mapBase, self.ERROR_RELANCER = NiveauMedievale().Update()
             else:
                 self.map, self.mapBase, self.ERROR_RELANCER =  NiveauMedievaleChateau().Update()
+        
+        # si erreur : return
+        if self.ERROR_RELANCER:
+            return None
 
         # parcours et création de chaque sprites
         for ordonnees in range(len(self.mapBase)):
@@ -507,6 +511,8 @@ class LoadMap():
         if NIVEAU["Map"] == "NiveauPlaineRiviere":
             self.LoadImages()
             self.Setup()
+            if self.ERROR_RELANCER:
+                return None, None, self.ERROR_RELANCER
             self.SetupSpawn()
             self.SetupPNJ()
             self.SetupExit()
@@ -514,6 +520,8 @@ class LoadMap():
         elif NIVEAU["Map"] == "NiveauMedievale":
             self.LoadImages()
             self.Setup()
+            if self.ERROR_RELANCER:
+                return None, None, self.ERROR_RELANCER
             self.SetupPNJ()
         
         # retour des infos de map

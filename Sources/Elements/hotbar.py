@@ -163,13 +163,13 @@ class InfosTips:
 
 class SettingsAll:
 
-    def __init__(self, screen : any, gestionnaire) -> None:
+    def __init__(self, screen : any, gestionSound, gestionnaire) -> None:
         """Méthode initialisation de la box d'accès à tout les settings et utilitaires (bundle, settings, sound, book).
         Input : screen = (element pygame), boolean = check interface global """
 
         # Initialisation
         self.allSettingsSurface = screen
-
+        self.gestionSound = gestionSound
         self.gestionnaire = gestionnaire
 
         # Création éléments

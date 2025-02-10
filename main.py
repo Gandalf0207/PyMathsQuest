@@ -90,7 +90,7 @@ class Game(object):
         # Initialisation dans votre setup 
         self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
         self.ideaTips = InfosTips(self.ideaTips_surface)
-        self.settingsAll = SettingsAll(self.allSettings_surface, self)
+        self.settingsAll = SettingsAll(self.allSettings_surface,self.GameTool.gestionSoundFond, self)
 
         # Interactions
         self.InteractionObject = Interactions(self)

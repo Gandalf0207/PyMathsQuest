@@ -53,6 +53,10 @@ class GestionSoundFond(object):
             else:
                 time.sleep(5)  # Vérifie la condition toutes les 5 secondes
 
+    def Update(self):
+        self.canal0.set_volume(SOUND["BandeSon"])
+
+
 
 class GestionSoundDialogues(object):
     def __init__(self):
