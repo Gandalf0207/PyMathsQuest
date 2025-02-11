@@ -1067,16 +1067,7 @@ class NiveauMedievale(GestionNiveauMap):
             self.ERROR_RELANCER = True
 
     def __AjustementRiver__(self):
-
-
-        # Affiche la carte finale (map) dans la console ligne par ligne pour visualisation
-        for i in range(len(self.map)):
-            print(*self.map[i], sep=" ")
-
-        # Affiche également la carte de base (baseMap) pour comparaison ou débogage
-        for j in range(len(self.baseMap)):
-            print(*self.baseMap[j], sep=" ")
-
+        newCaseRiver = []
         # parcours et création de chaque sprites
         for ordonnees in range(len(self.baseMap)):
             for abscisses in range(len(self.baseMap[ordonnees])):
@@ -1095,13 +1086,16 @@ class NiveauMedievale(GestionNiveauMap):
                                 if can_go_right and can_go_left:
                                     if self.baseMap[ordonnees -2][abscisses-1] == "#" or self.baseMap[ordonnees -2][abscisses] == "#" or self.baseMap[ordonnees -2][abscisses +1] == "#":
                                         self.map[ordonnees -2][abscisses] = "#"
+                                        newCaseRiver.append([abscisses, ordonnees -2])
                                 elif can_go_left:
                                     if self.baseMap[ordonnees -2][abscisses-1] == "#" or self.baseMap[ordonnees -2][abscisses] == "#":   
                                         self.map[ordonnees -2][abscisses] = "#"
+                                        newCaseRiver.append([abscisses, ordonnees -2])
 
                                 elif can_go_right:
                                     if self.baseMap[ordonnees -2][abscisses] == "#" or self.baseMap[ordonnees -2][abscisses +1] == "#":   
                                         self.map[ordonnees -2][abscisses] = "#"  
+                                        newCaseRiver.append([abscisses, ordonnees -2])
 
                     
                     def checkBuildDown(can_go_down, can_go_left, can_go_right): 
@@ -1110,12 +1104,15 @@ class NiveauMedievale(GestionNiveauMap):
                                 if can_go_right and can_go_left:
                                     if self.baseMap[ordonnees +2][abscisses-1] == "#" or self.baseMap[ordonnees +2][abscisses] == "#" or self.baseMap[ordonnees +2][abscisses +1] == "#":
                                         self.map[ordonnees +2][abscisses] = "#" 
+                                        newCaseRiver.append([abscisses, ordonnees +2])
                                 elif can_go_left:
                                     if self.baseMap[ordonnees +2][abscisses-1] == "#" or self.baseMap[ordonnees +2][abscisses] == "#":   
                                         self.map[ordonnees +2][abscisses] = "#" 
+                                        newCaseRiver.append([abscisses, ordonnees +2])
                                 elif can_go_right:
                                     if self.baseMap[ordonnees +2][abscisses] == "#" or self.baseMap[ordonnees +2][abscisses +1] == "#":   
                                         self.map[ordonnees +2][abscisses] = "#"    
+                                        newCaseRiver.append([abscisses, ordonnees +2])
 
                      
                     
@@ -1123,10 +1120,11 @@ class NiveauMedievale(GestionNiveauMap):
                     can_build_down = checkBuildDown(can_go_down,  can_go_left, can_go_right)
 
         # syncronisation
-        for ordonnees in range(len(self.map)):
-            for abscisses in range(len(self.map[ordonnees])):
-                if self.map[ordonnees][abscisses] == "#":
-                    self.baseMap[ordonnees][abscisses] = "#"
+        river1AllCoords = LoadJsonMapValue("coordsMapBase", "Riviere1 Coords")
+        allRvier1Coords = river1AllCoords + newCaseRiver
+        AjoutJsonMapValue(allRvier1Coords, "coordsMapBase", "Riviere1 Coords")
+        for coords in newCaseRiver:
+            self.baseMap[coords[1]][coords[0]] = "#"
 
     def Update(self):
         # Place la bordure de la carte (bords extérieurs)
