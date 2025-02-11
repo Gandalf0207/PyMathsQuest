@@ -31,6 +31,7 @@ class GestionNiveauMap(object):
                         "Mud Coords" : "null",
                         "Rock Coords" : "null",
                         "coords Path" : "null",
+                        "ElementsTerre" : "null",
                         "AllMapInfo" : "null",
                         "AllMapBase" : "null"
                     },
@@ -46,6 +47,11 @@ class GestionNiveauMap(object):
                         "coords PassageRiver1" : "null",
                         "coords CraftTable" : "null",
                         "RiverBoatTPChateau coords" : "null",
+                        "salle1" : "null",
+                        "salle2" : "null",
+                        "salle3" : "null",
+                        "salle4" : "null",
+                        "liaisonsSalles"
                         "Spawn" : "null",
                         "Exit" : "null"
                     }
@@ -1250,6 +1256,199 @@ class NiveauMedievaleChateau():
         return self.map, self.baseMap, self.ERROR_RELANCER
 
 
+
+class NiveauBaseFuturiste(GestionNiveauMap):
+    def __init__(self):
+        """
+        Initialise une instance du niveau médiéval. """
+        super().__init__(150,75)
+        self.longueur = 150
+        self.largeur = 75
+        self.elementsTerre = 1500
+
+    def CheckNiveauPossible(self, listOrdrePointCle: list, pathAccessible: list) -> bool:
+        """
+        Vérifie si le niveau est jouable en testant si un chemin existe entre chaque point clé donné.
+
+        Args:
+            listOrdrePointCle (list): Liste des coordonnées des points clés (ex : PNJ, arbres, entrées, sorties).
+            pathAccessible (list): Liste des types de terrains où le joueur peut se déplacer.
+
+        Returns:
+            bool: True si tous les points sont connectés, sinon False.
+        """
+        for pointCle in range(len(listOrdrePointCle) - 1):
+            # Utilise l'algorithme A* pour vérifier si un chemin existe entre deux points consécutifs.
+            if Astar(
+                listOrdrePointCle[pointCle],
+                listOrdrePointCle[pointCle + 1],
+                self.mapCheckDeplacementPossible,
+                pathAccessible
+            ).a_star():
+                continue  # Passe au prochain point s'il existe un chemin.
+            else:
+                return False  # Retourne False si un chemin est impossible.
+        return True  # Tous les chemins sont accessibles.
+
+    def __PlacementEmementsTerre__(self):
+        """Place des petits rochers (Rock) sur la map de base en évitant les collisions avec d'autres éléments."""
+
+        listeElementTerre = []  # Liste pour stocker les coordonnées des zones de boue
+
+        # Placement des zones de boue en fonction du nombre défini
+        for _ in range(self.elementsTerre):
+            mudPos = [randint(0, self.longueur-1), randint(0, self.largeur-1)]  # Position aléatoire initiale
+
+            # Vérification des collisions : éviter de placer la boue sur d'autres éléments
+            while ((self.baseMap[mudPos[1]][mudPos[0]] != '-') or 
+                (self.map[mudPos[1]][mudPos[0]] != '-') or 
+                (self.map[mudPos[1]-1][mudPos[0]] == '$') or 
+                ((75 <= mudPos[0] <= 149) and (0 <= mudPos[1] <= 20))):  # Conditions supplémentaires pour éviter des cas spécifiques
+                mudPos = [randint(0, self.longueur-1), randint(0, self.largeur-1)]  # Nouvelle tentative si condition non respectée
+
+            # Ajout de la boue sur la map de base
+            self.baseMap[mudPos[1]][mudPos[0]] = "M"  
+            listeElementTerre.append(mudPos)  # Stockage des coordonnées de la zone de boue
+
+        # Sauvegarde des coordonnées des zones de boue dans un fichier JSON
+        AjoutJsonMapValue(listeElementTerre, "coordsMapBase", "ElementsTerre Coords")  
+
+    def __PlacementSalles__(self):
+        """Méthode qui place des champs sur la carte de manière aléatoire"""
+
+        zoneElement = [
+                    [(5,5), (35, 60)]
+                    [(55, 5), (85, 30)]
+                    [(55, 44), (85, 60)]
+                    [(105, 5), (135, 60)]
+                    ]
+        allLiaisons = []
+        
+        salleBasiqueSol = [
+            ["V", "V", "V", "V", "V", "V", "V", "V", "v", "v", "v", "V", "V", "V", "V", "V", "V", "V", "V"],
+            ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
+            ["v", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "v"],
+            ["v", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "v"],
+            ["v", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "v"],
+            ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", "V", "V", "V", "V", "V", ".", "V", "V", "V", "V", "V", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
+            ["V", "V", "V", "V", "V", "V", "V", "V", "v", "v", "v", "V", "V", "V", "V", "V", "V", "V", "V"],
+        ]
+
+
+
+        salleBasiqueCollision = [
+            ["V", "V", "V", "V", "V", "V", "V", "V", "v", "v", "v", "V", "V", "V", "V", "V", "V", "V", "V"],
+            ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
+            ["v", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "v"],
+            ["v", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "v"],
+            ["v", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "v"],
+            ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", "V", "V", "V", "V", "V", "m", "V", "V", "V", "V", "V", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
+            ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
+            ["V", "V", "V", "V", "V", "V", "V", "V", "v", "v", "v", "V", "V", "V", "V", "V", "V", "V", "V"],
+        ]
+
+        for num in range(4):
+            coordsSalle = []
+            posX1, posY1 = randint(zoneElement[num][0][0], zoneElement[num][1][0]), randint(zoneElement[num][0][1], zoneElement[num][1][1])  # Position de départ aléatoire
+
+            # Placement des champs sur la carte
+            for y in range (len(salleBasiqueSol)):
+                for x in salleBasiqueSol[y]:
+                    self.map[posY1 + y][posX1 + x] = salleBasiqueCollision[y][x]
+                    self.baseMap[posY1 + y][posX1 + x] = salleBasiqueSol[y][x]
+                    coordsSalle = [posX1 + x, posY1 + y, salleBasiqueCollision[y][x]]
+            
+            AjoutJsonMapValue(coordsSalle, "coordsMapObject", f"salle{num}")
+
+            if num == 0 or num == 3:
+                liaison = [
+                        [
+                        [posX1 + 7, posY1],
+                        [posX1 + 8, posY1],
+                        [posX1 + 9, posY1],
+                        [posX1 + 10, posY1],
+                        [posX1 + 11, posY1],
+                        ], 
+
+                        [
+                        [posX1 + 7, posY1 + 18],
+                        [posX1 + 8, posY1 + 18],
+                        [posX1 + 9, posY1 + 18],
+                        [posX1 + 10, posY1 + 18],
+                        [posX1 + 11, posY1 + 18],
+                        ]
+                    ]  
+                allLiaisons.append(liaison)
+                pass  # salle 1 : build les éléments
+
+            elif num ==1 or num == 2: 
+                liaison = [
+                        [
+                        [posX1, posY1 + 7],
+                        [posX1, posY1 + 8],
+                        [posX1, posY1 + 8],
+                        [posX1, posY1 + 10],
+                        [posX1, posY1 + 11],
+                        ], 
+
+                        [
+                        [posX1 + 18, posY1 + 7],
+                        [posX1 + 18, posY1 + 8],
+                        [posX1 + 18, posY1 + 8],
+                        [posX1 + 18, posY1 + 10],
+                        [posX1 + 18, posY1 + 11],
+                        ], 
+                    ]  
+                allLiaisons.append(liaison)
+                pass # salle 2 : build les éléments
+                allLiaisons.append(liaison)
+
+        AjoutJsonMapValue(allLiaisons, "coordsMapObject", "liaisonsSalles")
+
+
+
+
+
+
+
+
+    def Upadte(self):
+
+        self.__PlacementEmementsTerre__()
+        
+
+
+        # relancer une nouvelle map
+        if self.ERROR_RELANCER:
+            return None, None, self.ERROR_RELANCER
+        
+        # Retourne la carte actuelle (map) et la carte de base (baseMap)
+        return self.map, self.baseMap, self.ERROR_RELANCER  
+
+    
 
 
 
