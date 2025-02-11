@@ -99,6 +99,7 @@ ElementsFr = {
         "CantTraverserPont" : "Le garde est devant le pont, vous ne pouvez pas le traverser.",
         "BuildBridge" : "Vous venez de construire le pont",
         "CutTree" : "Vous venez de couper un arbre",
+        "RemoveSouche" : "Vous venez de retirer une souche d'arbre",
         "NeedPlanks" : "Vous devez avoir 3 planches pour pouvoir construire le bateau",
         "CraftBoat" : "Vous avez fabriqué un bateau",
         "PlaceBoat" : "Vous avez placé le bateau sur la rivière",

@@ -98,7 +98,7 @@ NIVEAU = {
     "Niveau" : "Seconde",
 
     # map
-    "Map" : "NiveauPlaineRiviere",
+    "Map" : "NiveauMedievale",
 
     # numero
     "Numero" : 0,
@@ -149,9 +149,10 @@ TEXTE = {
 
 # inventaires 
 INVENTORY = {
-    "Planks" : 0,
-    "OldAxe" : 0,
     "Pickaxe" : 0,
+    "OldAxe" : 0,
+    "Showel" : 0,
+    "Planks" : 0,
     "Boat" : 0,
     "Key" : 0,
     "c" : 0,

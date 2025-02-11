@@ -34,7 +34,7 @@ class Interactions(object):
         self.boatPlacementPlayerPos = []
 
 
-    def Interagir(self, groups) -> None:
+    def Interagir(self, groups, interactionGroups) -> None:
         """Méthode de calcul d'interaction entre chaque element en fonction des niveaux
         Input / Output : None"""
 
@@ -78,20 +78,32 @@ class Interactions(object):
 
 
             elif NIVEAU["Map"] == "NiveauMedievale":
-                if self.ObjectId == "Arbre" or self.ObjectId == "Arbre2" :
+                if self.ObjectId == "Arbre" or self.ObjectId == "Arbre2" or self.ObjectId == "Souche" or self.ObjectId == "Souche2" :
                         # texte animation
-                        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["CutTree"])
+                        if self.ObjectId in ["Arbre", "Arbre2"]:
+                            self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["CutTree"])
+                        else:
+                            self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["RemoveSouche"])
 
                         if self.ObjectId == "Arbre":
                             #creation souche
                             soucheArbre = pygame.image.load(join("Images", "Obstacle", "Souche.png")).convert_alpha()
+                            groups = (groups[0], groups[1], interactionGroups)
                             CollisionSprites(self.Obj.pos, soucheArbre,  "Souche", groups)
                             INVENTORY["Planks"] += 1
 
-                        else: 
+                        elif self.ObjectId == "Arbre2": 
                             soucheArbre2 = pygame.image.load(join("Images", "Obstacle", "Souche2.png")).convert_alpha()
+                            groups = (groups[0], groups[1], interactionGroups)
                             CollisionSprites(self.Obj.pos, soucheArbre2,  "Souche2", groups)
                             INVENTORY["Planks"] += 2
+
+                        elif self.ObjectId == "Souche" or self.ObjectId == "Souche2":
+                            #creation boue
+                            boueImage = pygame.image.load(join("Images", "Sol", "Mud", "Mud.png")).convert_alpha()
+                            Sprites(self.Obj.pos, boueImage, groups[0]) # création de la boue
+                            INVENTORY["Planks"] += 1 if self.ObjectId == "Souche" else 2
+
 
                         #gestion arbre
                         self.Obj.kill()
@@ -233,7 +245,7 @@ class Interactions(object):
                 # vrif de possibilité + action possible en fonction de l'avancement
                 if Object.id == "ExitRock" and NIVEAU["Map"] == "NiveauPlaineRiviere" and not PNJ["PNJ3"]:
                     return False
-                if Object.id in ["Arbre", "Arbre2"] and (NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ1"]):
+                if Object.id in ["Arbre", "Arbre2", "Souche", "Souche2"] and (NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ1"]):
                     return False
                 if Object.id == "TableCraft" and NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ2"]:
                     return False

@@ -325,9 +325,16 @@ class LoadMap():
                     elif 85 < choixObstacle <= 100:
                         choixSouche = randint(0,11)
                         if choixSouche < 7:
-                            CollisionSprites(pos, self.souche, "Souche", (self.allSprites, self.collisionSprites))
+                            if NIVEAU["Map"] == "NiveauPlaineRiviere": # add interaction arbre
+                                CollisionSprites(pos, self.souche,"Souche", (self.allSprites, self.collisionSprites))
+                            else:
+                                CollisionSprites(pos, self.souche,"Souche", (self.allSprites, self.collisionSprites, self.interactions))
                         else:
-                            CollisionSprites(pos, self.souche2, "Souche2", (self.allSprites, self.collisionSprites))
+                            if NIVEAU["Map"] == "NiveauPlaineRiviere":
+                                CollisionSprites(pos, self.souche2,"Souche2", (self.allSprites, self.collisionSprites))
+                            else:
+                                CollisionSprites(pos, self.souche2,"Souche2", (self.allSprites, self.collisionSprites, self.interactions))
+
 
 
                 # Abre spécial

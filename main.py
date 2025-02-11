@@ -187,7 +187,7 @@ class Game(object):
                             # pnj interface
                             self.INTERFACE_OPEN = self.pnj.OpenInterfaceElementClavier(self.INTERFACE_OPEN)
                             # element d'interaction
-                            self.InteractionObject.Interagir((self.allSprites, self.collisionSprites))
+                            self.InteractionObject.Interagir((self.allSprites, self.collisionSprites), self.interactionsGroup)
 
                             # si pas possible, on construit le pont si possible
                             if not self.buildElements.getConstructionStatuePont():

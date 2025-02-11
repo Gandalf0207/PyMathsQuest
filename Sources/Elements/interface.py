@@ -338,6 +338,7 @@ class BundleInterface(object):
         self.pickaxe = pygame.image.load(join("Images", "Item", "Pickaxe.png")).convert_alpha()
         self.boat = pygame.image.load(join("Images", "Item", "Boat.png")).convert_alpha()
         self.keys = pygame.image.load(join("Images", "Item", "Keys.png")).convert_alpha()
+        self.showel = pygame.image.load(join("Images", "Item", "OldAxeItem.png")).convert_alpha()
 
     def CreateElementRect(self) -> None:
         """Méthode de création des slots et de leurs attributs
@@ -390,6 +391,8 @@ class BundleInterface(object):
                 surf = self.boat
             elif key == "Key" and INVENTORY["Key"] >0:
                 surf = self.keys
+            elif key == "Showel" and INVENTORY["Showel"] >0:
+                surf = self.showel
             else:
                 surf = None
             
@@ -561,6 +564,7 @@ class PNJInterface(object):
                 if NIVEAU["Map"] == "NiveauMedievale": 
                     if self.gestionnaire.pnjActuel == "PNJ1":
                         PNJ["PNJ1"] = True
+                        INVENTORY["Showel"] += 1
                         STATE_HELP_INFOS[0] = "BuildBridge"
                     elif self.gestionnaire.pnjActuel == "PNJ2":
                         PNJ["PNJ2"] = True
