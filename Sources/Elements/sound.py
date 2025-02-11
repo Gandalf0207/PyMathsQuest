@@ -92,12 +92,12 @@ class GestionSoundDialogues(object):
         elif NIVEAU["Map"] == "NiveauMedievale":
             pass
 
-        if NIVEAU["Map"] == "NiveauPlaineRiviere":
-            dialogue.set_volume(SOUND["Dialogue"])
+        # if NIVEAU["Map"] == "NiveauPlaineRiviere" and :
+        #     dialogue.set_volume(SOUND["Dialogue"])
 
-            if self.canal1.get_busy():
-                self.canal1.stop()
-            self.canal1.play(dialogue)
+        #     if self.canal1.get_busy():
+        #         self.canal1.stop()
+        #     self.canal1.play(dialogue)
 
     def StopDialogue(self):
         self.canal1.stop()

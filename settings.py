@@ -98,7 +98,7 @@ NIVEAU = {
     "Niveau" : "Seconde",
 
     # map
-    "Map" : "NiveauMedievale",
+    "Map" : "NiveauPlaineRiviere",
 
     # numero
     "Numero" : 0,
