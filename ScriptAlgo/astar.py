@@ -4,34 +4,29 @@ from settings import *
 
 class Astar(object):
     def __init__(self, start, goal, mapCalcul, pathAccessible, band_width = 0) -> None:
-        # Initialisation des coordonnées (x, y) pour start et goal
         self.start = (start[0], start[1])
         self.goal = (goal[0], goal[1])
         self.mapCalcul = mapCalcul
         self.pathAccessible = pathAccessible
-        self.band_width = band_width  # Largeur de la bande
-        self.parents = {}  # Nouveau dictionnaire pour suivre les parents
+        self.band_width = band_width
+        self.parents = {}
 
     def __heuristic__(self, a, b):
-        # Distance de Manhattan entre les points a et b
         return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
     def __is_band_accessible__(self, current, direction):
-        # Vérifie que toute la bande est accessible dans la direction donnée
         dx, dy = direction
         for offset in range(-self.band_width, self.band_width + 1):
-            if dx != 0:  # Déplacement horizontal
+            if dx != 0:
                 neighbor = (current[0], current[1] + offset)
-            else:  # Déplacement vertical
+            else:
                 neighbor = (current[0] + offset, current[1])
                 
             if not (0 <= neighbor[1] < len(self.mapCalcul) and
                     0 <= neighbor[0] < len(self.mapCalcul[0]) and
                     self.mapCalcul[neighbor[1]][neighbor[0]] in self.pathAccessible):
                 return False
-
         return True
-
 
     def a_star(self):
         import heapq
@@ -54,26 +49,44 @@ class Astar(object):
                 path.append(self.start)
                 path.reverse()
 
-                # Construction précise de la bande
                 band_path = set()
                 for i in range(len(path) - 1):
                     start = path[i]
                     end = path[i + 1]
 
-                    # Ajout des points sur l'axe principal
                     band_path.add(start)
 
-                    # Ajout de la bande sur le segment entre start et end
-                    if start[0] == end[0]:  # Mouvement vertical
+                    if start[0] == end[0]:
                         for offset in range(-self.band_width, self.band_width + 1):
                             band_path.add((start[0] + offset, start[1]))
-                    elif start[1] == end[1]:  # Mouvement horizontal
+                    elif start[1] == end[1]:
                         for offset in range(-self.band_width, self.band_width + 1):
                             band_path.add((start[0], start[1] + offset))
 
-                # Ajout du dernier point
-                band_path.add(path[-1])
-                return list(band_path)
+                # Ajout du segment de bande pour le point start
+                if len(path) > 1:
+                    for offset in range(-self.band_width, self.band_width + 1):
+                        if path[0][0] == path[1][0]:  # Mouvement vertical
+                            band_path.add((self.start[0] + offset, self.start[1]))
+                        elif path[0][1] == path[1][1]:  # Mouvement horizontal
+                            band_path.add((self.start[0], self.start[1] + offset))
+
+                # Ajout du dernier segment de bande pour le point goal
+                if len(path) > 1:
+                    for offset in range(-self.band_width, self.band_width + 1):
+                        if path[-2][0] == self.goal[0]:  # Mouvement vertical
+                            band_path.add((self.goal[0] + offset, self.goal[1]))
+                        elif path[-2][1] == self.goal[1]:  # Mouvement horizontal
+                            band_path.add((self.goal[0], self.goal[1] + offset))
+                band_path.add(self.goal)
+                
+                # Remplacer les 'V' par des points accessibles
+                corrected_path = []
+                for point in band_path:
+                    if self.mapCalcul[point[1]][point[0]] in self.pathAccessible:
+                        corrected_path.append(point)
+                
+                return corrected_path
 
             for direction in directions:
                 neighbor = (current[0] + direction[0], current[1] + direction[1])

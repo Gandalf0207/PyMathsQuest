@@ -1403,16 +1403,34 @@ class NiveauBaseFuturiste(GestionNiveauMap):
         allLisaison = LoadJsonMapValue("coordsMapObject", "liaisonsSalles")
 
         # chemin généraux (porte de liaisons)
-        linkS1S2 = [allLisaison[0][0], [allLisaison[0][0][0], allLisaison[1][0][1]],[allLisaison[0][0][0]-2, allLisaison[1][0][1]] , allLisaison[1][0]]
-        linkS1S3 = [allLisaison[0][1], allLisaison[2][0]]
-        linkS4S2 = [allLisaison[3][0], allLisaison[1][1]]
-        linkS4S3 = [allLisaison[3][1], allLisaison[2][1]]
+        linkS1S2 = [
+            allLisaison[0][0], 
+            [allLisaison[0][0][0], allLisaison[1][0][1]],
+            [allLisaison[0][0][0]-2, allLisaison[1][0][1]], 
+            allLisaison[1][0]]
+        
+        linkS1S3 = [
+            allLisaison[0][1],  
+            [allLisaison[0][1][0],allLisaison[2][0][1]],
+            [allLisaison[0][1][0] -2,allLisaison[2][0][1]],
+            allLisaison[2][0]]
 
-        allLinkElement = [linkS1S2] #, linkS1S3, linkS4S2, linkS4S3]
+        linkS4S2 = [
+            allLisaison[3][0],  
+            [allLisaison[3][1][0],allLisaison[1][1][1]],
+            [allLisaison[3][1][0] +2,allLisaison[1][1][1]],
+            allLisaison[1][1]]
+        linkS4S3 = [
+            allLisaison[3][1],  
+            [allLisaison[3][1][0],allLisaison[2][1][1]],
+            [allLisaison[3][1][0] +2,allLisaison[2][1][1]],
+            allLisaison[2][1]]
+
+        allLinkElement = [linkS1S2, linkS1S3, linkS4S2, linkS4S3] #, linkS1S3, linkS4S2, linkS4S3]
 
         print(linkS1S2)
 
-        for i in range(1):
+        for i in range(4):
             for j in range(3):
                 start = allLinkElement[i][j]
                 goal = allLinkElement[i][j+1]
