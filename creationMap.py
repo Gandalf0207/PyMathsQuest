@@ -1264,7 +1264,7 @@ class NiveauBaseFuturiste(GestionNiveauMap):
         super().__init__(150,75)
         self.longueur = 150
         self.largeur = 75
-        self.elementsTerre = 1500
+        self.elementsTerre = 300
 
     def CheckNiveauPossible(self, listOrdrePointCle: list, pathAccessible: list) -> bool:
         """
@@ -1290,7 +1290,7 @@ class NiveauBaseFuturiste(GestionNiveauMap):
                 return False  # Retourne False si un chemin est impossible.
         return True  # Tous les chemins sont accessibles.
 
-    def __PlacementEmementsTerre__(self):
+    def __PlacementElementsTerre__(self):
         """Place des petits rochers (Rock) sur la map de base en évitant les collisions avec d'autres éléments."""
 
         listeElementTerre = []  # Liste pour stocker les coordonnées des zones de boue
@@ -1300,10 +1300,7 @@ class NiveauBaseFuturiste(GestionNiveauMap):
             mudPos = [randint(0, self.longueur-1), randint(0, self.largeur-1)]  # Position aléatoire initiale
 
             # Vérification des collisions : éviter de placer la boue sur d'autres éléments
-            while ((self.baseMap[mudPos[1]][mudPos[0]] != '-') or 
-                (self.map[mudPos[1]][mudPos[0]] != '-') or 
-                (self.map[mudPos[1]-1][mudPos[0]] == '$') or 
-                ((75 <= mudPos[0] <= 149) and (0 <= mudPos[1] <= 20))):  # Conditions supplémentaires pour éviter des cas spécifiques
+            while ((self.baseMap[mudPos[1]][mudPos[0]] != '-') or (self.map[mudPos[1]][mudPos[0]] != '-') or self.map[mudPos[1]-1][mudPos[0]] == '$'):
                 mudPos = [randint(0, self.longueur-1), randint(0, self.largeur-1)]  # Nouvelle tentative si condition non respectée
 
             # Ajout de la boue sur la map de base
@@ -1316,58 +1313,59 @@ class NiveauBaseFuturiste(GestionNiveauMap):
     def __PlacementSalles__(self):
         """Méthode qui place des champs sur la carte de manière aléatoire"""
 
+        # zone de map (pour placr les salles)
         zoneElement = [
-                    [(5,5), (35, 60)]
-                    [(55, 5), (85, 30)]
-                    [(55, 44), (85, 60)]
-                    [(105, 5), (135, 60)]
+                    [(9, 25), (30, 29)],
+                    [(52, 0), (80, 6)],
+                    [(52, 51), (80, 52)],
+                    [(102, 25), (122, 29)],
                     ]
         allLiaisons = []
         
         salleBasiqueSol = [
-            ["V", "V", "V", "V", "V", "V", "V", "V", "v", "v", "v", "V", "V", "V", "V", "V", "V", "V", "V"],
+            ["V", "V", "V", "V", "V", "V", "V", "v", "v", "v", "v", "v", "V", "V", "V", "V", "V", "V", "V"],
             ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
             ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
             ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
             ["V", ".", ".", ".", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", ".", ".", ".", "V"],
             ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
             ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
-            ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
             ["v", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "v"],
             ["v", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "v"],
             ["v", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "v"],
-            ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
+            ["v", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "v"],
+            ["v", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "v"],
             ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
             ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
             ["V", ".", ".", ".", "V", "V", "V", "V", "V", ".", "V", "V", "V", "V", "V", ".", ".", ".", "V"],
             ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
             ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
             ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
-            ["V", "V", "V", "V", "V", "V", "V", "V", "v", "v", "v", "V", "V", "V", "V", "V", "V", "V", "V"],
+            ["V", "V", "V", "V", "V", "V", "V", "v", "v", "v", "v", "v", "V", "V", "V", "V", "V", "V", "V"],
         ]
 
 
 
         salleBasiqueCollision = [
-            ["V", "V", "V", "V", "V", "V", "V", "V", "v", "v", "v", "V", "V", "V", "V", "V", "V", "V", "V"],
+            ["V", "V", "V", "V", "V", "V", "V", "v", "v", "v", "v", "v", "V", "V", "V", "V", "V", "V", "V"],
             ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
             ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
             ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
             ["V", ".", ".", ".", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", ".", ".", ".", "V"],
             ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
             ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
-            ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
             ["v", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "v"],
             ["v", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "v"],
             ["v", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "v"],
-            ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
+            ["v", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "v"],
+            ["v", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "v"],
             ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
             ["V", ".", ".", ".", "V", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V", ".", ".", ".", "V"],
             ["V", ".", ".", ".", "V", "V", "V", "V", "V", "m", "V", "V", "V", "V", "V", ".", ".", ".", "V"],
             ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
             ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
             ["V", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "V"],
-            ["V", "V", "V", "V", "V", "V", "V", "V", "v", "v", "v", "V", "V", "V", "V", "V", "V", "V", "V"],
+            ["V", "V", "V", "V", "V", "V", "V", "v", "v", "v", "v", "v", "V", "V", "V", "V", "V", "V", "V"],
         ]
 
         for num in range(4):
@@ -1376,7 +1374,7 @@ class NiveauBaseFuturiste(GestionNiveauMap):
 
             # Placement des champs sur la carte
             for y in range (len(salleBasiqueSol)):
-                for x in salleBasiqueSol[y]:
+                for x in range (len(salleBasiqueSol[y])):
                     self.map[posY1 + y][posX1 + x] = salleBasiqueCollision[y][x]
                     self.baseMap[posY1 + y][posX1 + x] = salleBasiqueSol[y][x]
                     coordsSalle = [posX1 + x, posY1 + y, salleBasiqueCollision[y][x]]
@@ -1385,60 +1383,73 @@ class NiveauBaseFuturiste(GestionNiveauMap):
 
             if num == 0 or num == 3:
                 liaison = [
-                        [
-                        [posX1 + 7, posY1],
-                        [posX1 + 8, posY1],
-                        [posX1 + 9, posY1],
-                        [posX1 + 10, posY1],
-                        [posX1 + 11, posY1],
-                        ], 
-
-                        [
-                        [posX1 + 7, posY1 + 18],
-                        [posX1 + 8, posY1 + 18],
-                        [posX1 + 9, posY1 + 18],
-                        [posX1 + 10, posY1 + 18],
-                        [posX1 + 11, posY1 + 18],
-                        ]
+                        [posX1 + 9, posY1  -3], # -3 -> sortie de l'element pour une lisiaon en angle
+                        [posX1 + 9 , posY1 + 18 +3] # + 3 //
                     ]  
                 allLiaisons.append(liaison)
                 pass  # salle 1 : build les éléments
 
             elif num ==1 or num == 2: 
                 liaison = [
-                        [
-                        [posX1, posY1 + 7],
-                        [posX1, posY1 + 8],
-                        [posX1, posY1 + 8],
-                        [posX1, posY1 + 10],
-                        [posX1, posY1 + 11],
-                        ], 
-
-                        [
-                        [posX1 + 18, posY1 + 7],
-                        [posX1 + 18, posY1 + 8],
-                        [posX1 + 18, posY1 + 8],
-                        [posX1 + 18, posY1 + 10],
-                        [posX1 + 18, posY1 + 11],
-                        ], 
+                        [posX1 -3, posY1], # -3 //
+                        [posX1 + 18 + 3, posY1 + 8], # + 3 //
                     ]  
                 allLiaisons.append(liaison)
-                pass # salle 2 : build les éléments
-                allLiaisons.append(liaison)
+
 
         AjoutJsonMapValue(allLiaisons, "coordsMapObject", "liaisonsSalles")
 
+    def __PlacementCouloirs__(self):
+        allLisaison = LoadJsonMapValue("coordsMapObject", "liaisonsSalles")
+
+        # chemin généraux (porte de liaisons)
+        linkS1S2 = [allLisaison[0][0], allLisaison[1][0]]
+        linkS1S3 = [allLisaison[0][1], allLisaison[2][0]]
+        linkS4S2 = [allLisaison[3][0], allLisaison[1][1]]
+        linkS4S3 = [allLisaison[3][1], allLisaison[2][1]]
+
+        allLinkElement = [linkS1S2, linkS1S3, linkS4S2, linkS4S3]
+
+        print(linkS1S2)
+
+        for i in range(4):
+            for j in range(1):
+                start = allLinkElement[i][0]
+                goal = allLinkElement[i][1]
+                mapAcces = self.map
+                pathAcces = ["v", "-"]
+                print(f"Start: {start}, Goal: {goal}, Map Value Start: {self.map[start[1]][start[0]]}, Map Value Goal: {self.map[goal[1]][goal[0]]}")
+                path = Astar(start, goal, mapAcces, pathAcces, 2).a_star()
+
+                if path:
+                    for coords in path:
+                        self.map[coords[1]][coords[0]] =  "&" # ternaire choix sol
+
+        # checkVerif
 
 
 
 
+    def Update(self):
 
-
-
-    def Upadte(self):
-
-        self.__PlacementEmementsTerre__()
         
+        
+        self.__PlacementElementsTerre__()
+        
+        self.__PlacementSalles__()
+
+        self.__PlacementCouloirs__()
+
+
+        # Affiche la carte finale (map) dans la console ligne par ligne pour visualisation
+        for i in range(len(self.map)):
+            print(*self.map[i], sep=" ")
+
+        print(end="")
+        # Affiche également la carte de base (baseMap) pour comparaison ou débogage
+        for j in range(len(self.baseMap)):
+            print(*self.baseMap[j], sep=" ")
+
 
 
         # relancer une nouvelle map
@@ -1452,10 +1463,10 @@ class NiveauBaseFuturiste(GestionNiveauMap):
 
 
 
-
 # mapp, baseMap =  NiveauPlaineRiviere(150,75,200, 200, 200).Update()
 
 
+mapp, baseMap, error = NiveauBaseFuturiste().Update()
 # for i in range(25):
 #     mapp, baseMap = NiveauMedievale(150, 75).Update()
 #     time.sleep(1)
