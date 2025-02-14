@@ -1381,69 +1381,97 @@ class NiveauBaseFuturiste(GestionNiveauMap):
             
             AjoutJsonMapValue(coordsSalle, "coordsMapObject", f"salle{num}")
 
-            if num == 0 or num == 3:
-                liaison = [
-                        [posX1 + 9, posY1],
-                        [posX1 + 9 , posY1 + 18] 
-                    ]  
-                allLiaisons.append(liaison)
-                pass  # salle 1 : build les éléments
-
-            elif num ==1 or num == 2: 
-                liaison = [
-                        [posX1, posY1+ 9],
-                        [posX1 + 18, posY1 + 9], 
-                    ]  
-                allLiaisons.append(liaison)
-
+            liaison = [
+                    [posX1, posY1 + 9],
+                    [posX1 + 9, posY1],
+                    [posX1 + 18, posY1 + 9],
+                    [posX1 + 9 , posY1 + 18],
+                ]  
+            allLiaisons.append(liaison)
 
         AjoutJsonMapValue(allLiaisons, "coordsMapObject", "liaisonsSalles")
+
 
     def __PlacementCouloirs__(self):
         allLisaison = LoadJsonMapValue("coordsMapObject", "liaisonsSalles")
 
-        # chemin généraux (porte de liaisons)
+        # liaison entre les salles
         linkS1S2 = [
-            allLisaison[0][0], 
-            [allLisaison[0][0][0], allLisaison[1][0][1]],
-            [allLisaison[0][0][0]-2, allLisaison[1][0][1]], 
+            allLisaison[0][1], 
+            [allLisaison[0][1][0], allLisaison[1][0][1]],
+            [allLisaison[0][1][0]-2, allLisaison[1][0][1]], 
             allLisaison[1][0]]
         
         linkS1S3 = [
-            allLisaison[0][1],  
-            [allLisaison[0][1][0],allLisaison[2][0][1]],
-            [allLisaison[0][1][0] -2,allLisaison[2][0][1]],
+            allLisaison[0][3],  
+            [allLisaison[0][3][0],allLisaison[2][0][1]],
+            [allLisaison[0][3][0] -2,allLisaison[2][0][1]],
             allLisaison[2][0]]
 
         linkS4S2 = [
-            allLisaison[3][0],  
-            [allLisaison[3][1][0],allLisaison[1][1][1]],
-            [allLisaison[3][1][0] +2,allLisaison[1][1][1]],
-            allLisaison[1][1]]
-        linkS4S3 = [
             allLisaison[3][1],  
-            [allLisaison[3][1][0],allLisaison[2][1][1]],
-            [allLisaison[3][1][0] +2,allLisaison[2][1][1]],
-            allLisaison[2][1]]
+            [allLisaison[3][1][0],allLisaison[1][2][1]],
+            [allLisaison[3][1][0] +2,allLisaison[1][2][1]],
+            allLisaison[1][2]]
+        linkS4S3 = [
+            allLisaison[3][3],  
+            [allLisaison[3][3][0],allLisaison[2][2][1]],
+            [allLisaison[3][3][0] +2,allLisaison[2][2][1]],
+            allLisaison[2][2]]
 
-        allLinkElement = [linkS1S2, linkS1S3, linkS4S2, linkS4S3] #, linkS1S3, linkS4S2, linkS4S3]
+        # liaison spawn salle1
+        linkSpawnS1 = [
+            [allLisaison[0][0][0] -1 ,allLisaison[0][0][1]],
+            [0, allLisaison[0][0][1]],
+        ]
 
-        print(linkS1S2)
 
-        for i in range(4):
-            for j in range(3):
+
+        allLinkElement = [linkS1S2, linkS1S3, linkS4S2, linkS4S3, linkSpawnS1]
+
+
+        for i in range(len(allLinkElement)):
+            for j in range(len(allLinkElement[i])-1):
                 start = allLinkElement[i][j]
                 goal = allLinkElement[i][j+1]
                 mapAcces = self.map
                 pathAcces = ["v", "-", "&"]
-                print(f"Start: {start}, Goal: {goal}, Map Value Start: {self.map[start[1]][start[0]]}, Map Value Goal: {self.map[goal[1]][goal[0]]}")
                 path = Astar(start, goal, mapAcces, pathAcces, 2).a_star()
 
                 if path:
                     for coords in path:
                         self.map[coords[1]][coords[0]] =  "&" # ternaire choix sol
-
+                        self.baseMap[coords[1]][coords[0]] =  "&"
         # checkVerif
+        allPathCouloirs = []
+        for ordonnes in range(len(self.map)):
+            for abscisse in range (len(self.map[0])):
+                if self.map[ordonnes][abscisse] == "&":
+                    IsN =  self.map[ordonnes-1][abscisse] in ["&", "."]
+                    IsS =  self.map[ordonnes+1][abscisse] in ["&", "."]
+                    IsE =  self.map[ordonnes][abscisse-1] in ["&", "."]
+                    IsW =  self.map[ordonnes][abscisse+1] in ["&", "."]
+                    
+                    IsNW = self.map[ordonnes-1][abscisse-1] in ["&", "."]
+                    IsSW = self.map[ordonnes+1][abscisse-1] in ["&", "."]
+                    IsNE = self.map[ordonnes-1][abscisse+1] in ["&", "."]
+                    IsSE = self.map[ordonnes+1][abscisse+1] in ["&", "."]
+
+                    listAllBuild = [IsN, IsW, IsS, IsE, IsNE, IsNW, IsSE, IsSW]
+                    nb = listAllBuild.count(True)
+                    if nb >7:
+                        allPathCouloirs.append((abscisse, ordonnes))
+
+        for coords in allPathCouloirs:
+            self.map[coords[1]][coords[0]] =  "." # ternaire choix sol
+            self.baseMap[coords[1]][coords[0]] =  "."
+
+
+        
+
+
+
+
 
 
 
