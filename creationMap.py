@@ -1377,7 +1377,7 @@ class NiveauBaseFuturiste(GestionNiveauMap):
                 for x in range (len(salleBasiqueSol[y])):
                     self.map[posY1 + y][posX1 + x] = salleBasiqueCollision[y][x]
                     self.baseMap[posY1 + y][posX1 + x] = salleBasiqueSol[y][x]
-                    coordsSalle = [posX1 + x, posY1 + y, salleBasiqueCollision[y][x]]
+                    coordsSalle.append([posX1 + x, posY1 + y, salleBasiqueCollision[y][x]])
             
             AjoutJsonMapValue(coordsSalle, "coordsMapObject", f"salle{num}")
 
@@ -1421,7 +1421,7 @@ class NiveauBaseFuturiste(GestionNiveauMap):
 
         # liaison spawn salle1
         linkSpawnS1 = [
-            [allLisaison[0][0][0] -1 ,allLisaison[0][0][1]],
+            [allLisaison[0][0][0] ,allLisaison[0][0][1]],
             [0, allLisaison[0][0][1]],
         ]
 
@@ -1467,10 +1467,38 @@ class NiveauBaseFuturiste(GestionNiveauMap):
             self.baseMap[coords[1]][coords[0]] =  "."
 
 
+    def __PlacementVent__(self):
+        allCoordsSalle0 = LoadJsonMapValue("coordsMapObject", "salle0")
+        coordsVent1 = allCoordsSalle0[100]
+        coordsVent2 = allCoordsSalle0[174]
+
+        coordsVents = [coordsVent1, coordsVent2]
+        for coords in coordsVents:
+            self.map[coords[1]][coords[0]] = "j"
+
+
+    def __PlacementSpawn__(self):
+        allLisaison = LoadJsonMapValue("coordsMapObject", "liaisonsSalles")
+        coordsSpawn =[ 2, allLisaison[0][0][1]]
+        self.map[coordsSpawn[1]][coordsSpawn[0]] = "S"
+
+        AjoutJsonMapValue([coordsSpawn], "coordsMapObject", "Spawn") # on ajoute les coordonnées du spawn au fichier json
+
+
+    def __PlacementStructureSalles__(self):
+        allCoordsSalle0 = LoadJsonMapValue("coordsMapObject", "salle0")
+        allCoordsSalle1 = LoadJsonMapValue("coordsMapObject", "salle1")
+        allCoordsSalle2 = LoadJsonMapValue("coordsMapObject", "salle2")
+        allCoordsSalle3 = LoadJsonMapValue("coordsMapObject", "salle3")
+
+        allSalles = [allCoordsSalle0, allCoordsSalle1, allCoordsSalle2, allCoordsSalle3]
         
-
-
-
+        allStructuresName = ["§", "£", "$", "?"]
+        allStructures = []
+        for numSalle in range(len(allSalles)):
+            ptsRef = allSalles[numSalle][140]
+            self.map[ptsRef[1]][ptsRef[0]] = allStructuresName[numSalle]
+            allStructures.append([ptsRef[0], ptsRef[1], allStructuresName[numSalle]])
 
 
 
@@ -1485,6 +1513,12 @@ class NiveauBaseFuturiste(GestionNiveauMap):
         self.__PlacementSalles__()
 
         self.__PlacementCouloirs__()
+
+        self.__PlacementVent__()
+
+        self.__PlacementSpawn__()
+
+        self.__PlacementStructureSalles__()
 
 
         # Affiche la carte finale (map) dans la console ligne par ligne pour visualisation
