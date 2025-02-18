@@ -1500,7 +1500,42 @@ class NiveauBaseFuturiste(GestionNiveauMap):
             self.map[ptsRef[1]][ptsRef[0]] = allStructuresName[numSalle]
             allStructures.append([ptsRef[0], ptsRef[1], allStructuresName[numSalle]])
 
+    def __PlacementPNJ__(self):
+        allCoordsSalle0 = LoadJsonMapValue("coordsMapObject", "salle0")
+        allCoordsSalle1 = LoadJsonMapValue("coordsMapObject", "salle1")
+        allCoordsSalle2 = LoadJsonMapValue("coordsMapObject", "salle2")
+        allCoordsSalle3 = LoadJsonMapValue("coordsMapObject", "salle3")
 
+        allSalles = [allCoordsSalle0, allCoordsSalle1, allCoordsSalle2, allCoordsSalle3]
+        coordsPossiblesRefPNJ = [
+            (0,0),(1,0),(2,0),(3,0),(4,0),(5,0),(6,0),(7,0),(8,0),
+            (0,1),(1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,1),
+            (0,2),(1,2),                              (7,2),(8,2),
+            (0,3),(1,3),                              (7,3),(8,3),
+            (0,4),(1,4),                              (7,4),(8,4),
+            (0,5),(1,5),                              (7,5),(8,5),
+            (0,6),(1,6),                              (7,6),(8,6),
+            (0,7),(1,7),(2,7),(3,7),(4,7),(5,7),(6,7),(7,7),(8,7),
+            (0,8),(1,8),(2,8),(3,8),(4,8),(5,8),(6,8),(7,8),(8,8),
+        ]
+        
+        allPNJCoords = []
+
+        # pnj 1
+        coordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
+        self.map[coordsSpawn[0][1]][coordsSpawn[0][0] +2] = "P"
+        allPNJCoords.append([coordsSpawn[0][0] + 2, coordsSpawn[0][1], "P", 1])
+
+        # pnj 2 / 3 / 4 / 5
+        for numSalle in range(len(allSalles)):
+            ptsFixe = allSalles[numSalle][100]
+            coordsPossiblesPNJ = [(coords[0] + ptsFixe[0], coords[1] + ptsFixe[1]) for coords in coordsPossiblesRefPNJ] 
+            
+            coordsPNJ = choice(coordsPossiblesPNJ)
+            self.map[coordsPNJ[1]][coordsPNJ[0]] = "P"
+            allPNJCoords.append([coordsPNJ[0], coordsPNJ[1], "P", numSalle+1])
+        
+        AjoutJsonMapValue(allPNJCoords, "coordsMapObject", "PNJ Coords") # on ajoute les coordonnées du spawn au fichier json
 
 
 
@@ -1519,6 +1554,8 @@ class NiveauBaseFuturiste(GestionNiveauMap):
         self.__PlacementSpawn__()
 
         self.__PlacementStructureSalles__()
+
+        self.__PlacementPNJ__()
 
 
         # Affiche la carte finale (map) dans la console ligne par ligne pour visualisation
