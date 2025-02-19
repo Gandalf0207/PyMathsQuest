@@ -7,8 +7,9 @@ from Sources.Elements.hotbar import *
 from Sources.Personnages.pnj import *
 from Sources.Ressources.Texte.creationTexte import *
 from Sources.Elements.construire import *
-from Sources.Exos.createExo import *
+from Sources.Interface.interfaceExo import *
 from Sources.Elements.sound import *
+from Sources.Interface.gestionInterface import *
 
 
 class Game(object):
@@ -39,7 +40,6 @@ class Game(object):
         self.allSettings_surface = pygame.Surface((426, 150))
         
         # boolean de check game
-        self.INTERFACE_OPEN = False # interface secondaire ouvert
         self.interface_exo = False
         self.cinematique = False # cinématique
         self.cinematiqueObject = None # obj de la cinematique 
@@ -84,16 +84,19 @@ class Game(object):
             self.map, self.mapBase, self.ERROR_RELANCER = self.loadMapElement.Update() # mise à jour des variables
 
 
+        # gestion des interface du jeu
+        self.gameInterfaces = GestionOtherInterfaces(self) 
+
         #pnj
-        self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.INTERFACE_OPEN, self.map, self, self.GameTool.gestionSoundDialogues)
+        self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.map, self, self.GameTool.gestionSoundDialogues, self.gameInterfaces)
         
         # Initialisation dans votre setup 
         self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
         self.ideaTips = InfosTips(self.ideaTips_surface)
-        self.settingsAll = SettingsAll(self.allSettings_surface,self.GameTool.gestionSoundFond, self)
+        self.settingsAll = SettingsAll(self.allSettings_surface,self.GameTool.gestionSoundFond, self.gameInterfaces, self)
 
         # Interactions
-        self.InteractionObject = Interactions(self)
+        self.InteractionObject = Interactions(self, self.gameInterfaces)
 
         if not INFOS["DemiNiveau"] and NIVEAU["Map"] != "NiveauBaseFuturiste":
             #construction
@@ -104,11 +107,9 @@ class Game(object):
         playerPosSpawn = getPlayerPosSpawn[0] 
         self.player = Player(((playerPosSpawn[0] + 1 )*CASEMAP,(playerPosSpawn[1] + 0.5 )*CASEMAP), self.allSprites, self.collisionSprites) 
 
-
-
-
         self.checkLoadingDone = True
 
+        
     def SetupExo(self):
         """Méthode de création de l'exo : setup de la class
         Input / Output : None"""
@@ -117,13 +118,14 @@ class Game(object):
         self.InterfaceExo.start()
         self.checkLoadingDone = True
 
+
+
     def StartMap(self):
 
         # Affichage initial de l'écran de chargement
         threading.Thread(target=self.SetupAllMap).start()
 
         self.ChargementEcran()
-
 
 
     def run(self):
@@ -178,15 +180,12 @@ class Game(object):
                             self.player.rect.center = (130*CASEMAP, 25*CASEMAP)
                             self.player.hitbox_rect.center = (130*CASEMAP, 25*CASEMAP)
 
-                        # interface hotbar
-                        if event.key == KEYSBIND["settings"] or event.key == KEYSBIND["sound"] or event.key == KEYSBIND["inventory"] or event.key == KEYSBIND["book"]:
-                            self.settingsAll.OpenInterfaceElementClavier(event)
-                        
+                        self.gameInterfaces.GestionInterfaceGlobale(event)
+
                         # interaction avec les éléments de la map
                         if event.key == KEYSBIND["action"]:
-                            # pnj interface
-                            self.INTERFACE_OPEN = self.pnj.OpenInterfaceElementClavier(self.INTERFACE_OPEN)
-                            # element d'interaction
+
+                           # element d'interaction
                             self.InteractionObject.Interagir((self.allSprites, self.collisionSprites), self.interactionsGroup)
 
                             # si pas possible, on construit le pont si possible
@@ -198,26 +197,21 @@ class Game(object):
                         # affichge ou non de la hotbar
                         if event.key == KEYSBIND["hideHotBar"]:
                             self.hideHotbar = True if not self.hideHotbar else False
-                        
-                        # close interface open
-                        if event.key == KEYSBIND["echap"] and self.INTERFACE_OPEN: # Close général interface build
-                            if self.interface_exo:
-                                INFOS["Exo"] = False
-                            self.INTERFACE_OPEN = False
-                            
-                            # on réinitialise les niveaux audio.
-                            self.GameTool.gestionSoundDialogues.StopDialogue()
-
+                    
                     # open au clic des interface de la hotbar
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                         self.settingsAll.OpenInterfaceElementClic(event)
+
+                    # update pnj
+                    self.cinematique, self.cinematiqueObject = self.pnj.update(self.player.rect.center, event) # pnj update 
+            
+            
+
                     
-
-
-
             # update de tous les sprites de la map
             self.allSprites.update(dt, self.cinematique)
             self.displaySurface.fill("#000000")
+
 
             # si pas de cinématique
             if not self.cinematique:
@@ -230,7 +224,7 @@ class Game(object):
                 if not self.demiNiveau: # pas besoin de la minimap
                     self.minimap.Update(self.player.rect.center, self.allPNJ, self.interactionsGroup)
                 self.ideaTips.Update()
-                self.settingsAll.Update(event)
+                self.settingsAll.Update()
 
                 if not self.hideHotbar: # check hide bool
                     self.displaySurface.blit(self.bgHotBar, (0, WINDOW_HEIGHT-160)) # hotbar bg
@@ -238,11 +232,12 @@ class Game(object):
                         self.displaySurface.blit(self.minimap_surface, (10, WINDOW_HEIGHT-160))
                     self.displaySurface.blit(self.ideaTips_surface, COORDS_BOX_IDEAS_TIPS)# reste hotbar
                     self.displaySurface.blit(self.allSettings_surface, COORS_BOX_ALL_SETTINGS)# reste hotbar
+
                 
-            if not self.cinematique: 
-                self.INTERFACE_OPEN, self.cinematique, self.cinematiqueObject = self.pnj.update(self.player.rect.center, self.INTERFACE_OPEN, event) # pnj update 
+                #pnj close
+                self.pnj.isClose(self.player.rect.center)
                 self.InteractionObject.Update(self.player, self.interactionsGroup) # interaction update
-            
+        
             else: # si cinématique 
                 self.cinematique, endCinematique = self.cinematiqueObject.Update(dt)
                 
@@ -309,32 +304,23 @@ class Game(object):
                 if not self.buildElements.getConstructionStatuePont() or not self.buildElements.getPlaceStatueBoat() : # check
                     self.buildElements.Update(self.player.rect.center)
 
+            # update des interfaces
+            if not self.cinematique:
+                self.gameInterfaces.Update(event)
 
-
-            # update de l'exo 
             if INFOS["Exo"]:
-                if not self.INTERFACE_OPEN: # creation de l'exo s'il n'est pas encore fait
-                    self.INTERFACE_OPEN = True
-                    self.interface_exo = True
-                    self.hideHotbar = True
+                if not self.gameInterfaces.isInterfaceExoOpen:
+                    self.gameInterfaces.CloseAllInterface() # VERIF Sécu
+
                     self.checkLoadingDone = False
                     # Affichage initial de l'écran de chargement
                     threading.Thread(target=self.SetupExo).start()
-
                     self.ChargementEcran()
-
-                else:
-                    self.InterfaceExo.Update(event) # update interface exo
+                    # mise à jour de l'interface pour la méthode d'interface
+                    self.gameInterfaces.MiseAJourInterfaceExo(self.InterfaceExo) 
 
             # update toolBOX
             self.GameTool.Update()
-
-
-
-
-
-            if self.INTERFACE_OPEN is None: # vérification : sécurité
-                self.INTERFACE_OPEN = False
 
 
             pygame.display.flip()
@@ -495,7 +481,6 @@ class GameToolBox(object):
         self.gestionnaire.allPNJ.empty()
         self.gestionnaire.interactionsGroup.empty()
 
-        self.gestionnaire.INTERFACE_OPEN = False # interface secondaire ouvert
         self.gestionnaire.interface_exo = False
         self.gestionnaire.cinematique = False # cinématique
         self.gestionnaire.cinematiqueObject = None # obj de la cinematique 
@@ -523,7 +508,6 @@ class GameToolBox(object):
         self.gestionnaire.allPNJ.empty()
         self.gestionnaire.interactionsGroup.empty()
 
-        self.gestionnaire.INTERFACE_OPEN = False # interface secondaire ouvert
         self.gestionnaire.interface_exo = False
         self.gestionnaire.cinematique = False # cinématique
         self.gestionnaire.cinematiqueObject = None # obj de la cinematique 
