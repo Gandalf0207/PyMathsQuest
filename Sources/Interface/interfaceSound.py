@@ -58,20 +58,10 @@ class SoundInterface(object):
             text_rect = volume_text.get_rect(center=(cursor_x + self.cursor_width // 2, slider["y"] - 20))
             self.interfaceSurface.blit(volume_text, text_rect)
 
-    def CloseInterface(self) -> None:
-        """Méthode de fermeture de l'interface. Input / Output : None"""
-        # changement des boolean de check
-        self.gestionnaire.CloseInterface()
-
     def Update(self, event) -> None:
         """Mise à jour de l'interface et gestion des interactions."""
         self.BuildInterface()
         self.displaySurface.blit(self.interfaceSurface, (320,180))
-
-        # Fermer l'interface avec ESC
-        keys = pygame.key.get_pressed()
-        if keys[KEYSBIND["echap"]]:  # Fermer avec ESC
-            self.CloseInterface()
 
         # Coordonnées globales de l'événement
         global_pos = pygame.mouse.get_pos()

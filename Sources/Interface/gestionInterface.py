@@ -40,6 +40,8 @@ class GestionOtherInterfaces(object):
 
     def CloseAllInterface(self):
 
+        INFOS["Exo"] = False
+
         # interfaces globales
         self.isInterfaceOPEN = False
         self.isInterfaceHomeMenuOpen = False 
@@ -102,26 +104,30 @@ class GestionOtherInterfaces(object):
             if self.interface != None and self.isInterfaceOPEN and argsSpecifique not in ["PNJOpen", "PNJClose"]:
                 self.CloseAllInterface()
             else:
-                self.isInterfaceOPEN = True # update element global
-
+                
                 if argsSpecifique == "Settings":
+                    self.isInterfaceOPEN = True # update element global
                     self.isInterfaceSettingsOpen = True
                     self.interface = SettingsInterface(ElementSelfClass)
 
                 elif argsSpecifique == "Sound":
+                    self.isInterfaceOPEN = True # update element global
                     self.isInterfaceSoundOpen = True
                     self.interface = SoundInterface(ElementSelfClass)
 
                 elif argsSpecifique == "Bundle":
+                    self.isInterfaceOPEN = True # update element global
                     self.isInterfaceBundleOpen = True
                     self.interface = BundleInterface(ElementSelfClass)
 
                 elif argsSpecifique == "Book":
+                    self.isInterfaceOPEN = True # update element global
                     self.isInterfaceBookOpen = True
                     self.interface = BookInterface(ElementSelfClass)
                 
                 elif argsSpecifique == "PNJOpen":
                     if not self.isPNJInterfaceOpen:
+                        self.isInterfaceOPEN = True # update element global
                         self.isPNJInterfaceOpen = True
                         self.interface = PNJInterface(ElementSelfClass)
                 
@@ -130,6 +136,7 @@ class GestionOtherInterfaces(object):
                         self.CloseAllInterface()    
                 
                 elif argsSpecifique == "ReactorBloc":
+                    self.isInterfaceOPEN = True # update element global
                     self.isInterfaceRectorOpen = True
                     self.interface = ReactorInterface()
                 

@@ -155,14 +155,6 @@ class CreateExo:
 
         INFOS["ExoPasse"] = False
 
-    def CloseInterface(self) -> None:
-        """Méthode de fermeture de l'interface. Input / Output : None"""
-
-        # changement des boolean de check
-
-        self.gestionnaire.interface_exo = False
-        INFOS["Exo"] = False
-
 
     def Update(self, event : any) -> None:
         """Méthode d'update général pour l'exercice interface, et de gestion de réponse (clic)

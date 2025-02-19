@@ -100,13 +100,6 @@ class BundleInterface(object):
 
                 indice += 1 # on change de slot
 
-        
-    def CloseInterface(self) -> None:
-        """Méthode de fermeture de l'interface. Input / Output : None"""
-
-        # changement des boolean de check
-        self.gestionnaire.CloseInterface()
-
 
     def Update(self, event) -> None:
         """Méthode d'update de l'interface. Input / Output : None"""
@@ -115,7 +108,3 @@ class BundleInterface(object):
         self.BuildInterface()
         self.displaySurface.blit(self.interfaceSurface, (320,180)) # pos topleft
 
-        # Fermer l'interface avec ESC
-        keys = pygame.key.get_pressed()
-        if keys[KEYSBIND["echap"]]:  # Fermer avec ESC
-            self.CloseInterface()

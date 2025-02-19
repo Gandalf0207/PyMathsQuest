@@ -143,14 +143,6 @@ class SettingsInterface(object):
             DICOLANGUE[keyLangue] = False if keyLangue != action else True
         LoadTexte() # load nouveau texte (changement de langue)
 
-
-    def CloseInterface(self) -> None:
-        """Méthode de fermeture de l'interface. Input / Output : None"""
-
-        # changement des boolean de check
-        self.gestionnaire.CloseInterface()
-
-
     def Update(self, event) -> None:
         """Méthode d'update de l'interface. Input / Output : None"""
 
@@ -164,12 +156,6 @@ class SettingsInterface(object):
 
         self.displaySurface.blit(self.interfaceSurface, (320,180)) # pos topleft
 
-
-
-        # Fermer l'interface avec ESC
-        keys = pygame.key.get_pressed()
-        if keys[KEYSBIND["echap"]]:  # Fermer avec ESC
-            self.CloseInterface()
 
         # Gestion des clics de souris
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
