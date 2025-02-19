@@ -1266,30 +1266,6 @@ class NiveauBaseFuturiste(GestionNiveauMap):
         self.largeur = 75
         self.elementsTerre = 300
 
-    def CheckNiveauPossible(self, listOrdrePointCle: list, pathAccessible: list) -> bool:
-        """
-        Vérifie si le niveau est jouable en testant si un chemin existe entre chaque point clé donné.
-
-        Args:
-            listOrdrePointCle (list): Liste des coordonnées des points clés (ex : PNJ, arbres, entrées, sorties).
-            pathAccessible (list): Liste des types de terrains où le joueur peut se déplacer.
-
-        Returns:
-            bool: True si tous les points sont connectés, sinon False.
-        """
-        for pointCle in range(len(listOrdrePointCle) - 1):
-            # Utilise l'algorithme A* pour vérifier si un chemin existe entre deux points consécutifs.
-            if Astar(
-                listOrdrePointCle[pointCle],
-                listOrdrePointCle[pointCle + 1],
-                self.mapCheckDeplacementPossible,
-                pathAccessible
-            ).a_star():
-                continue  # Passe au prochain point s'il existe un chemin.
-            else:
-                return False  # Retourne False si un chemin est impossible.
-        return True  # Tous les chemins sont accessibles.
-
     def __PlacementElementsTerre__(self):
         """Place des petits rochers (Rock) sur la map de base en évitant les collisions avec d'autres éléments."""
 
@@ -1304,7 +1280,7 @@ class NiveauBaseFuturiste(GestionNiveauMap):
                 mudPos = [randint(0, self.longueur-1), randint(0, self.largeur-1)]  # Nouvelle tentative si condition non respectée
 
             # Ajout de la boue sur la map de base
-            self.baseMap[mudPos[1]][mudPos[0]] = "M"  
+            self.baseMap[mudPos[1]][mudPos[0]] = "G"  
             listeElementTerre.append(mudPos)  # Stockage des coordonnées de la zone de boue
 
         # Sauvegarde des coordonnées des zones de boue dans un fichier JSON
@@ -1533,9 +1509,19 @@ class NiveauBaseFuturiste(GestionNiveauMap):
             
             coordsPNJ = choice(coordsPossiblesPNJ)
             self.map[coordsPNJ[1]][coordsPNJ[0]] = "P"
-            allPNJCoords.append([coordsPNJ[0], coordsPNJ[1], "P", numSalle+1])
+            allPNJCoords.append([coordsPNJ[0], coordsPNJ[1], "P", numSalle+2])
         
         AjoutJsonMapValue(allPNJCoords, "coordsMapObject", "PNJ Coords") # on ajoute les coordonnées du spawn au fichier json
+
+    def __ClearMapCaracteres__(self):
+
+        for ordonnees in range(len(self.map)):
+            for abscisses in range(len(self.map[ordonnees])):
+                if self.map[ordonnees][abscisses] in ["V", "v"]:
+                    self.map[ordonnees][abscisses] = "&"
+                    self.baseMap[ordonnees][abscisses] = "&"
+
+
 
 
 
@@ -1556,6 +1542,10 @@ class NiveauBaseFuturiste(GestionNiveauMap):
         self.__PlacementStructureSalles__()
 
         self.__PlacementPNJ__()
+
+        self.__ClearMapCaracteres__()
+
+        # le check générale du niveau n'est pas obligatoire car les chemin font une boucle (a voir si des obstacles sont ajoutés)
 
 
         # Affiche la carte finale (map) dans la console ligne par ligne pour visualisation

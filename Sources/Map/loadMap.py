@@ -25,7 +25,7 @@ class LoadMap():
 
         # load commun
         if NIVEAU["Map"] in ["NiveauPlaineRiviere", "NiveauMedievale"]:
-            self.grass = pygame.image.load(join("Images", "Sol", "Grass", "Grass.png")).convert_alpha()
+            self.sol = pygame.image.load(join("Images", "Sol", "Grass", "Grass.png")).convert_alpha()
             self.flowers = pygame.image.load(join("Images", "Sol", "Flower", "Flower.png")).convert_alpha()
             self.tree = pygame.image.load(join("Images", "Obstacle", "Arbre.png")).convert_alpha()
             self.tree2 = pygame.image.load(join("Images", "Obstacle", "Arbre2.png")).convert_alpha()
@@ -82,8 +82,25 @@ class LoadMap():
                 self.Portal = pygame.image.load(join("Images", "Chateau", "Portal.png")).convert_alpha()
                 self.Sol = pygame.image.load(join("Images", "Chateau", "SolChateau.png")).convert_alpha()
                 self.CerclePortal = pygame.image.load(join("Images", "Chateau", "SolChateau.png")).convert_alpha()
-            
+        
+        if NIVEAU["Map"] == "NiveauBaseFuturiste":
+            self.sol = pygame.image.load(join("Images", "Sol", "Grass", "Grass.png")).convert_alpha()
+            self.sol2 = pygame.image.load(join("Images", "Sol", "Grass", "Grass.png")).convert_alpha()
+            self.bones = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+            self.vent = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+            self.wallAngularNE = pygame.image.load(join("Images", "Sol", "Path", "PathN-Ex128.png")).convert_alpha()
+            self.wallAngularNW = pygame.image.load(join("Images", "Sol", "Path", "PathN-Wx128.png")).convert_alpha()
+            self.wallAngularSE = pygame.image.load(join("Images", "Sol", "Path", "PathE-Sx128.png")).convert_alpha()
+            self.wallAngularSW = pygame.image.load(join("Images", "Sol", "Path", "PathW-Sx128.png")).convert_alpha()
+            self.wallNS = pygame.image.load(join("Images", "Sol", "Path", "PathN-S.png")).convert_alpha()
+            self.wallWE = pygame.image.load(join("Images", "Sol", "Path", "PathW-E.png")).convert_alpha()
 
+            self.centraleNuc = pygame.image.load(join("Images", "Obstacle", "Structures", "BaseFuturiste", "Reacteur.png")).convert_alpha()
+            self.cafet = pygame.image.load(join("Images", "Obstacle", "Structures", "BaseFuturiste", "Cafet.png")).convert_alpha()
+            self.essence = pygame.image.load(join("Images", "Obstacle", "Structures", "BaseFuturiste", "Essence.png")).convert_alpha()
+            self.salleLancement = pygame.image.load(join("Images", "Obstacle", "Structures", "BaseFuturiste", "Lancement.png")).convert_alpha()
+
+            self.doorFuturiste = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
 
     def Setup(self) -> None:
         """Méthode de build de tout les éléments sprites de la map jeu.
@@ -97,6 +114,12 @@ class LoadMap():
                 self.map, self.mapBase, self.ERROR_RELANCER = NiveauMedievale().Update()
             else:
                 self.map, self.mapBase, self.ERROR_RELANCER =  NiveauMedievaleChateau().Update()
+        if NIVEAU["Map"] == "NiveauBaseFuturiste":
+            if not INFOS["DemiNiveau"]:
+                self.map, self.mapBase, self.ERROR_RELANCER = NiveauBaseFuturiste().Update()
+            else:
+                pass
+        
         
         # si erreur : return
         if self.ERROR_RELANCER:
@@ -115,7 +138,11 @@ class LoadMap():
                 elif self.mapBase[ordonnees][abscisses] == "R":
                     Sprites(pos, self.rock, self.allSprites) 
                 elif self.mapBase[ordonnees][abscisses] == "-" :
-                    Sprites(pos, self.grass, self.allSprites) 
+                    Sprites(pos, self.sol, self.allSprites) 
+                elif self.mapBase[ordonnees][abscisses] == ".":
+                    Sprites(pos, self.sol2, self.allSprites)
+                elif self.mapBase[ordonnees][abscisses] == "G":
+                    Sprites(pos, self.bones, self.allSprites)
 
                 # === Vérification du type de chemin === aide IA
                 elif self.mapBase[ordonnees][abscisses] == "=":
@@ -288,8 +315,7 @@ class LoadMap():
                     elif can_build_right or can_build_left:
                         stateFormat = "RiverStraightW-Ex128"
                         River(pos, (self.allSprites, self.collisionSprites), stateFormat)
-
-                
+       
                 # Bordure Montagne
                 elif self.mapBase[ordonnees][abscisses] == "B":
                     if (ordonnees == 0 or ordonnees == (LARGEUR-1) ):
@@ -400,14 +426,14 @@ class LoadMap():
 
                 # maisons
                 if self.map[ordonnees][abscisses] == "H" : 
-                    Sprites(pos, self.grass, self.allSprites) 
+                    Sprites(pos, self.sol, self.allSprites) 
                     if self.map[ordonnees+1][abscisses] == "H" and self.map[ordonnees][abscisses +1] == "H":
                         CollisionSprites(pos, self.house, "House", (self.allSprites, self.collisionSprites))
 
 
                 # puits 
                 if self.map[ordonnees][abscisses] == "W" :
-                    Sprites(pos, self.grass, self.allSprites) 
+                    Sprites(pos, self.sol, self.allSprites) 
                     if self.map[ordonnees-1][abscisses] == "W" and self.map[ordonnees][abscisses +1] == "W":
                         CollisionSprites(pos, self.well, "Well", (self.allSprites, self.collisionSprites))
 
@@ -433,6 +459,58 @@ class LoadMap():
                     CollisionSprites(pos, self.Pilier, "Pilier",  (self.collisionSprites, self.allSprites))
                 elif self.map[ordonnees][abscisses] == "r":
                     CollisionSprites(pos, self.Chandelier, "Chandelier", (self.collisionSprites, self.allSprites))
+
+                # niveau base futuriste
+                if self.map[ordonnees][abscisses] == "j":
+                    CollisionSprites(pos, self.vent, "Vent", (self.interactions,self.collisionSprites, self.allSprites))
+
+                elif self.map[ordonnees][abscisses] == "m":
+                    CollisionSprites(pos, self.doorFuturiste, "DoorFuturiste", (self.allSprites, self.collisionSprites))
+
+                elif self.map[ordonnees][abscisses] == "&":
+
+                    def is_path(self, x, y):
+                        """ Vérifie si une case est un chemin tout en évitant les erreurs d'index. """
+                        return 0 <= x < len(self.mapBase) and 0 <= y < len(self.mapBase[0]) and self.mapBase[x][y] == "&"
+
+                    # Récupération des voisins
+                    up = is_path(self, ordonnees - 1, abscisses)
+                    down = is_path(self, ordonnees + 1, abscisses)
+                    left = is_path(self, ordonnees, abscisses - 1)
+                    right = is_path(self, ordonnees, abscisses + 1)
+
+                    # === 3. Virages (angles) ===
+                    if up and right:
+                        CollisionSprites(pos, self.wallAngularNE, "Wall", (self.allSprites, self.collisionSprites))
+                    elif up and left:
+                        CollisionSprites(pos, self.wallAngularNW, "Wall", (self.allSprites, self.collisionSprites))
+                    elif down and right:
+                        CollisionSprites(pos, self.wallAngularSE, "Wall", (self.allSprites, self.collisionSprites))
+                    elif down and left:
+                        CollisionSprites(pos, self.wallAngularSW, "Wall", (self.allSprites, self.collisionSprites))
+
+                    # === 4. Lignes droites ===
+                    elif up and down:
+                        CollisionSprites(pos, self.wallNS, "Wall", (self.allSprites, self.collisionSprites))
+                    elif left and right:
+                        CollisionSprites(pos, self.wallWE, "Wall", (self.allSprites, self.collisionSprites))
+                    else:
+                        CollisionSprites(pos, self.wallWE, "Wall", (self.allSprites, self.collisionSprites)) 
+
+                if self.map[ordonnees][abscisses] in ["§", "£", "$", "?"]:
+                    if self.map[ordonnees][abscisses] == "§":
+                        CollisionSprites(pos, self.centraleNuc, "Reacteur", (self.collisionSprites, self.allSprites, self.interactions))
+                    elif self.map[ordonnees][abscisses] == "£":
+                        CollisionSprites(pos, self.cafet, "Cafet", (self.allSprites, self.collisionSprites))
+                    elif self.map[ordonnees][abscisses] == "$":
+                        CollisionSprites(pos, self.essence, "Essence", (self.allSprites, self.collisionSprites))
+                    elif self.map[ordonnees][abscisses] == "?":
+                        CollisionSprites(pos, self.salleLancement, "Lancement", (self.collisionSprites, self.interactions, self.allSprites))
+
+
+
+
+
 
 
     def SetupSpawn(self) -> None:
@@ -525,6 +603,13 @@ class LoadMap():
             self.SetupExit()
 
         elif NIVEAU["Map"] == "NiveauMedievale":
+            self.LoadImages()
+            self.Setup()
+            if self.ERROR_RELANCER:
+                return None, None, self.ERROR_RELANCER
+            self.SetupPNJ()
+
+        elif NIVEAU["Map"] == "NiveauBaseFuturiste":
             self.LoadImages()
             self.Setup()
             if self.ERROR_RELANCER:

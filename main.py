@@ -95,7 +95,7 @@ class Game(object):
         # Interactions
         self.InteractionObject = Interactions(self)
 
-        if not INFOS["DemiNiveau"]:
+        if not INFOS["DemiNiveau"] and NIVEAU["Map"] != "NiveauBaseFuturiste":
             #construction
             self.buildElements = Construire(self)
 
@@ -190,7 +190,7 @@ class Game(object):
                             self.InteractionObject.Interagir((self.allSprites, self.collisionSprites), self.interactionsGroup)
 
                             # si pas possible, on construit le pont si possible
-                            if not self.buildElements.getConstructionStatuePont():
+                            if NIVEAU["Map"] in ["NiveauPlaineRiviere", "NiveauMedievale"] and not self.buildElements.getConstructionStatuePont():
                                 self.buildElements.BuildBridge(self.loadMapElement, self.player.rect.center)
                             elif NIVEAU["Map"] == "NiveauMedievale" and not self.buildElements.getPlaceStatueBoat():
                                 self.buildElements.PlaceBoat(self.loadMapElement, self.player.rect.center)
@@ -459,6 +459,7 @@ class GameToolBox(object):
             case "Seconde":
 
                 match NIVEAU["Map"]:
+
                     case "NiveauPlaineRiviere":
                         if not INFOS["ChangementAnnee"]:
                             NIVEAU["Map"] = "NiveauMedievale"
@@ -466,10 +467,10 @@ class GameToolBox(object):
                             NIVEAU["Niveau"] = "Premiere"
 
                     case "NiveauMedievale":
-                        NIVEAU["Map"] = "NiveauSup"
+                        NIVEAU["Map"] = "NiveauBaseFuturiste"
 
-                    case "NiveauSup":
-                        pass
+                    case "NiveauBaseFuturiste":
+                        NIVEAU["Map"] = "NiveauPlaineRiviere"
 
             case "Premiere":
                 pass
