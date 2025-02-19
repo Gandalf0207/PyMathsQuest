@@ -3,13 +3,14 @@ from Sources.Elements.sprites import *
 
 class Interactions(object):
 
-    def __init__(self, gestionnaire : any) -> None:
+    def __init__(self, gestionnaire : any, gameInterfaces) -> None:
         """Méthode initialisation de la gestion avec les interactions (pont, rocher... ) sauf pnj
         Input : gestionanire (self parent)
         Output : None"""
 
         self.displaySurface = pygame.display.get_surface() # surface générale
         self.gestionnaire = gestionnaire
+        self.gameInterfaces = gameInterfaces
         self.player = None
 
         # element interactions
@@ -32,6 +33,7 @@ class Interactions(object):
         # stockag value 
         self.GetCoursTableCraft = False 
         self.boatPlacementPlayerPos = []
+        self.electricityOn = False
 
 
     def Interagir(self, groups, interactionGroups) -> None:
@@ -40,11 +42,12 @@ class Interactions(object):
 
         if self.Isclose(): # si proximité
 
-            # animation 
-            self.gestionnaire.fondu_au_noir()
 
             # niveau 0
             if NIVEAU["Map"] == "NiveauPlaineRiviere":
+                # animation 
+                self.gestionnaire.fondu_au_noir()
+
                 # action si c'est un pont 
                 if self.ObjectId == "pont1" or self.ObjectId == "pont2" :
                     if not self.Obj.InfoExo: # si c'est pas le pont d'exo
@@ -78,6 +81,9 @@ class Interactions(object):
 
 
             elif NIVEAU["Map"] == "NiveauMedievale":
+                # animation 
+                self.gestionnaire.fondu_au_noir()
+
                 if self.ObjectId == "Arbre" or self.ObjectId == "Arbre2" or self.ObjectId == "Souche" or self.ObjectId == "Souche2" :
                         # texte animation
                         if self.ObjectId in ["Arbre", "Arbre2"]:
@@ -215,9 +221,43 @@ class Interactions(object):
                 if self.ObjectId == "CerclePortal":
                     INFOS["Exo"] = True # lancement exo dans main (changement variable)
                     self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["MakeExo"]) # text animation
+            
+            elif NIVEAU["Map"] == "NiveauBaseFuturiste":
 
+                if self.ObjectId == "ReactorBloc":
+                    self.gameInterfaces.GestionInterfaceSpecifique("ReactorBloc")
 
-                        
+                if self.ObjectId == "EssenceBloc":
+                    self.gameInterfaces.GestionInterfaceSpecifique("EssenceBloc")
+
+                if self.ObjectId == "LancementBloc":
+                    self.gameInterfaces.GestionInterfaceSpecifique("LancementBloc")
+
+                # vent tp 
+                if self.ObjectId == "Vent":
+                    # animation 
+                    self.gestionnaire.fondu_au_noir()
+
+                    self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["UseVent"]) # text animation
+                    
+                    allVents = LoadJsonMapValue("coordsMapObject", "coordsVent")
+                    coordsVent = [self.Obj.pos[0] // CASEMAP, self.Obj.pos[1] // CASEMAP]
+
+                    if [allVents[1][0], allVents[1][1]] == coordsVent:
+                        coordsTarget = [(allVents[0][0] + 1)*CASEMAP +64, allVents[0][1] * CASEMAP +64] # + 64 pour center
+                    else:
+                        coordsTarget = [(allVents[1][0] -1)*CASEMAP +64 , allVents[1][1] * CASEMAP +64]
+
+                    self.player.hitbox_rect.center = coordsTarget
+                    self.player.rect.center = self.player.hitbox_rect.center
+
+                    if not self.electricityOn:
+                        if [allVents[1][0], allVents[1][1]] == coordsVent:
+                            STATE_HELP_INFOS[0] = "Electricity"
+                        else:
+                            STATE_HELP_INFOS[0] = "UseVent"
+
+                    self.gestionnaire.ouverture_du_noir(self.player.rect.center)
 
     def Isclose(self) -> bool :
         """Méthode calcul de proximité entre le player et les obj interactions

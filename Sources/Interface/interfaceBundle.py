@@ -1,0 +1,121 @@
+from settings import *
+
+class BundleInterface(object):
+
+    def __init__(self, gestionnaire: any) ->None:
+        """Méthode initialisation de l'interface de bundle.
+        Input : gestionnaire = self méthode d'appel"""
+        
+        # Initialisation
+        self.gestionnaire = gestionnaire
+        
+        # Création éléments
+        self.displaySurface = pygame.display.get_surface() # surface générale
+        self.interfaceSurface = pygame.Surface((WINDOW_WIDTH/2, WINDOW_HEIGHT/2),  pygame.SRCALPHA)
+        self.interfaceSurface.fill("#ffffff")
+
+        # load image
+        self.LoadImage()
+        self.CreateElementRect()
+
+
+    def LoadImage(self) -> None:
+        """Méthode chargement des images Input / Output : None"""
+
+        self.planks = pygame.image.load(join("Images", "Item", "PlanksItem.png")).convert_alpha()
+        self.oldAxe = pygame.image.load(join("Images", "Item", "OldAxeItem.png")).convert_alpha()
+        self.pickaxe = pygame.image.load(join("Images", "Item", "Pickaxe.png")).convert_alpha()
+        self.boat = pygame.image.load(join("Images", "Item", "Boat.png")).convert_alpha()
+        self.keys = pygame.image.load(join("Images", "Item", "Keys.png")).convert_alpha()
+        self.showel = pygame.image.load(join("Images", "Item", "OldAxeItem.png")).convert_alpha()
+
+    def CreateElementRect(self) -> None:
+        """Méthode de création des slots et de leurs attributs
+        Input / Output : None"""
+
+        # surface slot inventaire
+        self.surfaceSlot1 = pygame.Surface((96,96))
+        self.surfaceSlot2 = pygame.Surface((96,96))
+        self.surfaceSlot3 = pygame.Surface((96,96))
+        self.surfaceSlot4 = pygame.Surface((96,96))
+        self.surfaceSlot5 = pygame.Surface((96,96))
+        self.surfaceSlot6 = pygame.Surface((96,96))
+        self.surfaceSlot7 = pygame.Surface((96,96))
+        self.surfaceSlot8 = pygame.Surface((96,96))
+        self.surfaceSlot9 = pygame.Surface((96,96))
+        self.surfaceSlot10 = pygame.Surface((96,96))
+        self.surfaceSlot11 = pygame.Surface((96,96))
+        self.surfaceSlot12 = pygame.Surface((96,96))
+
+        # all slots
+        self.allSurfaceSlot = [self.surfaceSlot1, self.surfaceSlot2, self.surfaceSlot3, self.surfaceSlot4, self.surfaceSlot5, self.surfaceSlot6, self.surfaceSlot7, self.surfaceSlot8, self.surfaceSlot9, self.surfaceSlot1, self.surfaceSlot11, self.surfaceSlot12]
+        
+        #all coords slots
+        self.coordsSurface = [
+                            (56,40), (198,40), (345,40), (492, 40), 
+                            (51, 156), (198, 156), (345, 156), (492, 156), 
+                            (51, 262), (198, 262), (345, 262), (492, 262) ]
+
+    def BuildInterface(self) -> None:
+        """Méthode : Création de tout les éléments composant l'interface. Input / Output : None"""
+
+        # texte titre
+        self.interfaceSurface.fill("#ffffff")
+        text = FONT["FONT36"].render(TEXTE["Elements"]["HotBar"]["Bundle"]["Title"], True, (0,0,0))
+        self.interfaceSurface.blit(text, (10,10))
+
+        indice = 0
+        for key in INVENTORY: # pour tout les élément dans l'inventaire
+            elementSlot = self.allSurfaceSlot[indice] # get slot
+            elementSlot.fill((255,255,255)) # clear slot
+
+            # définition de l'image en fonction de l'item de l'inventaire
+            if key == "OldAxe" and INVENTORY["OldAxe"] > 0: 
+                surf = self.oldAxe
+            elif key == "Planks" and INVENTORY["Planks"] > 0: 
+                surf = self.planks
+            elif key == "Pickaxe" and INVENTORY["Pickaxe"] > 0: 
+                surf = self.pickaxe
+            elif key == "Boat" and INVENTORY["Boat"] > 0: 
+                surf = self.boat
+            elif key == "Key" and INVENTORY["Key"] >0:
+                surf = self.keys
+            elif key == "Showel" and INVENTORY["Showel"] >0:
+                surf = self.showel
+            else:
+                surf = None
+            
+            # s'il y a un item à afficher
+            if surf != None:
+                # ajout de l'item dans le slot
+                elementSlot.blit(surf, (0,0))
+
+                # text nombre items
+                textCount = FONT["FONT20"].render(f"{INVENTORY[key]}", True, (50,50,50))
+                elementSlot.blit(textCount, (70,70))
+
+                # affichage slot
+                self.interfaceSurface.blit(elementSlot, self.coordsSurface[indice])
+
+
+                indice += 1 # on change de slot
+
+        
+    def CloseInterface(self) -> None:
+        """Méthode de fermeture de l'interface. Input / Output : None"""
+
+        # changement des boolean de check
+        self.gestionnaire.CloseInterface()
+
+
+    def Update(self, event) -> None:
+        """Méthode d'update de l'interface. Input / Output : None"""
+
+        # construction d'update
+        self.BuildInterface()
+        self.displaySurface.blit(self.interfaceSurface, (320,180)) # pos topleft
+
+        # Fermer l'interface avec ESC
+        keys = pygame.key.get_pressed()
+        if keys[KEYSBIND["echap"]]:  # Fermer avec ESC
+            self.CloseInterface()

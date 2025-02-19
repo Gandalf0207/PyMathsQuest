@@ -51,9 +51,10 @@ class GestionNiveauMap(object):
                         "salle2" : "null",
                         "salle3" : "null",
                         "salle4" : "null",
-                        "liaisonsSalles"
+                        "liaisonsSalles" : "null",
+                        "coordsVent" : "null",
                         "Spawn" : "null",
-                        "Exit" : "null"
+                        "Exit" : "null",
                     }
                 }   # arborescence fichier json
         self.BaseJson(self.data)
@@ -1216,7 +1217,7 @@ class NiveauMedievaleChateau():
         self.map = [
             ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
             ["o", "~", "~", "~", "~", "u", "~", "~", "~", "~", "o"],
-            ["o", "~", "Y", "R", "~", "~", "~", "r", "Y", "~", "o"],
+            ["o", "~", "Y", "r", "~", "~", "~", "r", "Y", "~", "o"],
             ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
             ["o", "~", "~", "~", "~", "~", "~", "~", "~", "~", "o"],
             ["o", "~", "Y", "r", "~", "~", "~", "r", "Y", "~", "o"],
@@ -1412,7 +1413,7 @@ class NiveauBaseFuturiste(GestionNiveauMap):
                 goal = allLinkElement[i][j+1]
                 mapAcces = self.map
                 pathAcces = ["v", "-", "&"]
-                path = Astar(start, goal, mapAcces, pathAcces, 2).a_star()
+                path = Astar2(start, goal, mapAcces, pathAcces, 2).a_star()
 
                 if path:
                     for coords in path:
@@ -1452,6 +1453,8 @@ class NiveauBaseFuturiste(GestionNiveauMap):
         for coords in coordsVents:
             self.map[coords[1]][coords[0]] = "j"
 
+        AjoutJsonMapValue(coordsVents, "coordsMapObject", "coordsVent")
+
 
     def __PlacementSpawn__(self):
         allLisaison = LoadJsonMapValue("coordsMapObject", "liaisonsSalles")
@@ -1470,10 +1473,19 @@ class NiveauBaseFuturiste(GestionNiveauMap):
         allSalles = [allCoordsSalle0, allCoordsSalle1, allCoordsSalle2, allCoordsSalle3]
         
         allStructuresName = ["§", "£", "$", "?"]
+        allStructuresInteraction = ["¤", "<", None, ">"]
         allStructures = []
         for numSalle in range(len(allSalles)):
             ptsRef = allSalles[numSalle][140]
             self.map[ptsRef[1]][ptsRef[0]] = allStructuresName[numSalle]
+            
+            if allStructuresName[numSalle] in ["§", "£", None , "?"]:
+                ptsRefInteraction = allSalles[numSalle][218]
+                self.map[ptsRefInteraction[1]][ptsRefInteraction[0]] = allStructuresInteraction[numSalle]    
+
+            
+            
+            
             allStructures.append([ptsRef[0], ptsRef[1], allStructuresName[numSalle]])
 
     def __PlacementPNJ__(self):
@@ -1484,7 +1496,7 @@ class NiveauBaseFuturiste(GestionNiveauMap):
 
         allSalles = [allCoordsSalle0, allCoordsSalle1, allCoordsSalle2, allCoordsSalle3]
         coordsPossiblesRefPNJ = [
-            (0,0),(1,0),(2,0),(3,0),(4,0),(5,0),(6,0),(7,0),(8,0),
+                              (3,0),(4,0),(5,0),(6,0),(7,0),(8,0),
             (0,1),(1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,1),
             (0,2),(1,2),                              (7,2),(8,2),
             (0,3),(1,3),                              (7,3),(8,3),
@@ -1573,7 +1585,7 @@ class NiveauBaseFuturiste(GestionNiveauMap):
 # mapp, baseMap =  NiveauPlaineRiviere(150,75,200, 200, 200).Update()
 
 
-mapp, baseMap, error = NiveauBaseFuturiste().Update()
+# mapp, baseMap, error = NiveauBaseFuturiste().Update()
 # for i in range(25):
 #     mapp, baseMap = NiveauMedievale(150, 75).Update()
 #     time.sleep(1)

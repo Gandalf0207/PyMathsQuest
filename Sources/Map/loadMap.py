@@ -102,6 +102,13 @@ class LoadMap():
 
             self.doorFuturiste = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
 
+
+            self.InteractionBlocReactor = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+            self.InteractionBlocEssence = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+            self.InteractionBlocLancement = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+
+
+
     def Setup(self) -> None:
         """Méthode de build de tout les éléments sprites de la map jeu.
         Input / Output : None"""
@@ -497,15 +504,23 @@ class LoadMap():
                     else:
                         CollisionSprites(pos, self.wallWE, "Wall", (self.allSprites, self.collisionSprites)) 
 
-                if self.map[ordonnees][abscisses] in ["§", "£", "$", "?"]:
+                elif self.map[ordonnees][abscisses] in ["§", "£", "$", "?"]:
                     if self.map[ordonnees][abscisses] == "§":
-                        CollisionSprites(pos, self.centraleNuc, "Reacteur", (self.collisionSprites, self.allSprites, self.interactions))
+                        CollisionSprites(pos, self.centraleNuc, "Reacteur", (self.collisionSprites, self.allSprites))
                     elif self.map[ordonnees][abscisses] == "£":
                         CollisionSprites(pos, self.cafet, "Cafet", (self.allSprites, self.collisionSprites))
                     elif self.map[ordonnees][abscisses] == "$":
                         CollisionSprites(pos, self.essence, "Essence", (self.allSprites, self.collisionSprites))
                     elif self.map[ordonnees][abscisses] == "?":
-                        CollisionSprites(pos, self.salleLancement, "Lancement", (self.collisionSprites, self.interactions, self.allSprites))
+                        CollisionSprites(pos, self.salleLancement, "Lancement", (self.collisionSprites, self.allSprites))
+
+                elif self.map[ordonnees][abscisses] in ["¤", "<", ">"]:
+                    if self.map[ordonnees][abscisses] == "¤":
+                        CollisionSprites(pos, self.InteractionBlocReactor, "ReactorBloc", (self.allSprites, self.collisionSprites, self.interactions))
+                    elif self.map[ordonnees][abscisses] == "<":
+                        CollisionSprites(pos, self.InteractionBlocEssence, "EssenceBloc", (self.allSprites, self.collisionSprites, self.interactions))
+                    elif self.map[ordonnees][abscisses] == ">":
+                        CollisionSprites(pos, self.InteractionBlocLancement, "LancementBloc", (self.allSprites, self.collisionSprites, self.interactions))
 
 
 

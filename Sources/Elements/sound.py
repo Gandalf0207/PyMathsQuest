@@ -23,9 +23,9 @@ class GestionSoundFond(object):
     def LoadSounds(self):
         
         #bande son 
-        self.bandeSon1 = join("Sound", "BandeSonore",NIVEAU["Map"],"Nocyfer - alive (alternate stripped version) 2025-01-29 21_46.mp3")              
-        self.bandeSon2 = join("Sound", "BandeSonore",NIVEAU["Map"],"Nocyfer - therapy (instrumental slowed) 2025-01-29 21_46.mp3")
-        self.bandeSon3 = join("Sound", "BandeSonore",NIVEAU["Map"],"Nocyfer - Darkest Hour 2025-01-29 21_40.mp3")
+        self.bandeSon1 = join("Sound", "BandeSonore", "NiveauPlaineRiviere", "Nocyfer - alive (alternate stripped version) 2025-01-29 21_46.mp3")              
+        self.bandeSon2 = join("Sound", "BandeSonore", "NiveauPlaineRiviere", "Nocyfer - therapy (instrumental slowed) 2025-01-29 21_46.mp3")
+        self.bandeSon3 = join("Sound", "BandeSonore", "NiveauMedievale", "Nocyfer - Darkest Hour 2025-01-29 21_40.mp3")
 
     def BandeSon(self):
         if not self.canal0.get_busy():

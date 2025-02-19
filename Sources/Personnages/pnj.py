@@ -1,6 +1,5 @@
 from settings import *
 from ScriptAlgo.astar import *
-from Sources.Elements.interface import *
 
 class PNJ(pygame.sprite.Sprite):
     
@@ -147,17 +146,17 @@ class PNJ(pygame.sprite.Sprite):
 
 
 class GestionPNJ(object):
-    def __init__(self, displaySurface : any, allpnjGroup : any, INTERFACE_OPEN : bool, mapCollision : list, gestionnaire, gestionSound) -> None:
+    def __init__(self, displaySurface : any, allpnjGroup : any, mapCollision : list, gestionnaire, gestionSound, gameInterfaces) -> None:
         """Méthode initialisation gestion principal pnj : proche, interface discussion...
-        Input : displaySurface / allpnGroupe : pygame element, niveau : int, INTERFACE_OPEN : bool (check all interface), mapCollision : list (check path cinématique)"""
+        Input : displaySurface / allpnGroupe : pygame element, niveau : int : bool (check all interface), mapCollision : list (check path cinématique)"""
 
         # Initialisation valeur de main
         self.gestionnaire = gestionnaire
         self.displaySurface = displaySurface        
         self.allPNJ = allpnjGroup
-        self.INTERFACE_OPEN = INTERFACE_OPEN
         self.map = mapCollision # obstacle pour cinématique déplacement 
         self.gestionSound = gestionSound
+        self.gameInterfaces = gameInterfaces
 
         # Initialisation value de base
         self.npc_screen_pos = [0,0]
@@ -267,52 +266,23 @@ class GestionPNJ(object):
         # pas de pnj à proximité
         return False
         
-
-    def OpenInterfaceElementClavier(self, INTERFACE_OPEN : bool) -> bool:
-        """Méthode ouverture / création / fermeture interface de discussion pnj par clavier
-        Input : INTERFE_OPEN : bool (interface générale check); Output : bool"""
-
-        self.INTERFACE_OPEN = INTERFACE_OPEN
-
-        if not self.INTERFACE_OPEN: # sécurité
-            self.openInterface = False 
-
-        if self.check: # si pnj à proximité
-            if not self.openInterface and not self.INTERFACE_OPEN: # aucun interfac ouvert
-                # ouverture interface
-                self.openInterface = True
-                self.INTERFACE_OPEN = True
-                self.Interface = PNJInterface(self)
-        else:
-            if self.openInterface: # si interface déjà ouvert
-                # fermeture
-                self.openInterface = False
-                self.INTERFACE_OPEN = False
-
-        # retour state interface global
-        return self.INTERFACE_OPEN
+ 
     
-    
-    def update(self, playerPos : tuple, INTERFACE_OPEN : bool, event: any) -> any:
+    def update(self, playerPos : tuple, event: any) -> any:
         """Méthode d'update de l'interface d'appel de discussion + gestion pnj / proximité.
-        Intput : playerPos : tuple, INTERFACE_OPEN : bool, event : element pygame. Output : bool"""
-
-        self.INTERFACE_OPEN = INTERFACE_OPEN
-
-        if not self.INTERFACE_OPEN: # sécurité
-            self.openInterface = False 
+        Intput : playerPos : tuple, S : bool, event : element pygame. Output : bool"""
 
         self.check = self.isClose(playerPos) # sécurité 2
-        if not self.check: # si pas de proximité, fermeture de l'interface s'il est ouvert
-            if self.openInterface:
-                self.openInterface = False
-                self.INTERFACE_OPEN = False 
-
-        if self.openInterface: # update de l'interface s'il existe
-            self.Interface.Update(event)
+    
+        if self.check:
+            if event.type == pygame.KEYDOWN: # si pas de proximité, fermeture de l'interface s'il est ouvert
+                if event.key == KEYSBIND["action"]:
+                    self.gameInterfaces.GestionInterfaceSpecifique("PNJOpen", self)
+        else:   
+            self.gameInterfaces.GestionInterfaceSpecifique("PNJClose")
 
         # retour state interface global + etat cinématique
-        return self.INTERFACE_OPEN, self.cinematique, self.cinematiqueObject
+        return self.cinematique, self.cinematiqueObject
 
 
 
@@ -369,8 +339,6 @@ class CinematiquePNJ(object):
         elif NIVEAU["Map"] == "NiveauMedievale":
             for pnjObj in allPNJ:
                 pnjObj.kill()
-
-            
 
 
     def Update(self, dt):

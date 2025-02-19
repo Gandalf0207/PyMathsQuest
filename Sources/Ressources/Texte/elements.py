@@ -57,6 +57,9 @@ ElementsFr = {
 
             "NiveauBaseFuturiste" : {
                 "SeePNJ" : "Discuter avec le pnj sur la map. Regarder la minimap et suivez le chemin !",
+                "Electricity" : "Vous devez activer l'électricité",
+                "UseVent" : "Vous devez utiliser les conduits d'aération", 
+
             },
         },
     },
@@ -145,6 +148,7 @@ ElementsFr = {
 
     "NiveauBaseFuturiste" : {
         "Cinematique1End" : "Le pnj à fuis à travers le portail, vous devez le rallumer",
+        "UseVent" : "Vous vous baladez dans les conduits d'aération.", 
         "MakeExo" : "Pour réouvir le portail, vous devez résoudre cet exercice",
 
         "ExoTexte" : {
