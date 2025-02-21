@@ -40,6 +40,9 @@ class PNJInterface(object):
 
         if self.gestionnaire.pnjObj.QuestionDone and not self.gestionnaire.pnjObj.discussion: # add 1 : skp dialogue question
             self.loadText(1)
+        elif self.gestionnaire.pnjActuel == "PNJ5" and NIVEAU["Map"] == "NiveauBaseFuturiste" and PNJ["PNJ4"] and not self.gestionnaire.pnjObj.discussion :
+            self.loadText(1)
+        
         else:
             self.loadText()
         
@@ -181,6 +184,9 @@ class PNJInterface(object):
             self.interfaceSurface.blit(self.surfaceBtnOui, (self.rectBtnOui.x, self.rectBtnOui.y))
             self.interfaceSurface.blit(self.surfaceBtnNon, (self.rectBtnNon.x, self.rectBtnNon.y))
 
+        elif self.gestionnaire.pnjActuel == "PNJ5" and NIVEAU["Map"] == "NiveauBaseFuturiste" and not PNJ["PNJ4"]:
+            # on ne met pas le btn skip car il manque la vision d'un pnj
+            pass
 
         else:
 
@@ -262,6 +268,9 @@ class PNJInterface(object):
                     if self.gestionnaire.pnjObj.QuestionDone: # condition spécifique
                         self.loadText()
                         self.BuildInterface()   
+                elif self.gestionnaire.pnjActuel == "PNJ5" and NIVEAU["Map"] == "NiveauBaseFuturiste" and not PNJ["PNJ4"]:
+                    self.CloseInterface()
+
                 else:
                     self.loadText()
                     self.BuildInterface()   
