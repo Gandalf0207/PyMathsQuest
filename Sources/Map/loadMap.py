@@ -85,16 +85,19 @@ class LoadMap():
         
         if NIVEAU["Map"] == "NiveauBaseFuturiste":
             self.sol = pygame.image.load(join("Images", "Sol", "Grass", "Grass.png")).convert_alpha()
-            self.sol2 = pygame.image.load(join("Images", "Sol", "Grass", "Grass.png")).convert_alpha()
+            self.sol2 = pygame.image.load(join("Images", "Obstacle", "Structures", "BaseFuturiste", "Floorx128.png")).convert_alpha()
             self.bones = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
-            self.vent = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+            self.vent = pygame.image.load(join("Images", "Obstacle", "Structures", "BaseFuturiste", "Ventx128.png")).convert_alpha()
             self.wallAngularNE = pygame.image.load(join("Images", "Sol", "Path", "PathN-Ex128.png")).convert_alpha()
             self.wallAngularNW = pygame.image.load(join("Images", "Sol", "Path", "PathN-Wx128.png")).convert_alpha()
             self.wallAngularSE = pygame.image.load(join("Images", "Sol", "Path", "PathE-Sx128.png")).convert_alpha()
             self.wallAngularSW = pygame.image.load(join("Images", "Sol", "Path", "PathW-Sx128.png")).convert_alpha()
-            self.wallNS = pygame.image.load(join("Images", "Sol", "Path", "PathN-S.png")).convert_alpha()
-            self.wallWE = pygame.image.load(join("Images", "Sol", "Path", "PathW-E.png")).convert_alpha()
-
+            
+            self.wallNSGauche = pygame.image.load(join("Images", "Sol", "Path", "PathN-S.png")).convert_alpha()
+            self.wallWEHaut = pygame.image.load(join("Images", "Obstacle", "Structures", "BaseFuturiste", "WallEWx128.png")).convert_alpha()
+            self.wallNSDroite = pygame.image.load(join("Images", "Sol", "Path", "PathN-S.png")).convert_alpha()
+            self.wallWEBas = pygame.image.load(join("Images", "Sol", "Path", "PathN-S.png")).convert_alpha()
+            
             self.centraleNuc = pygame.image.load(join("Images", "Obstacle", "Structures", "BaseFuturiste", "Reacteur.png")).convert_alpha()
             self.cafet = pygame.image.load(join("Images", "Obstacle", "Structures", "BaseFuturiste", "Cafet.png")).convert_alpha()
             self.essence = pygame.image.load(join("Images", "Obstacle", "Structures", "BaseFuturiste", "Essence.png")).convert_alpha()
@@ -104,7 +107,7 @@ class LoadMap():
 
 
             self.InteractionBlocReactor = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
-            self.obstacles = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+            self.obstacles = pygame.image.load(join("Images", "Obstacle", "Structures", "BaseFuturiste", "Crate.png")).convert_alpha()
 
 
 
@@ -496,12 +499,25 @@ class LoadMap():
                         CollisionSprites(pos, self.wallAngularSW, "Wall", (self.allSprites, self.collisionSprites))
 
                     # === 4. Lignes droites ===
-                    elif up and down:
-                        CollisionSprites(pos, self.wallNS, "Wall", (self.allSprites, self.collisionSprites))
                     elif left and right:
-                        CollisionSprites(pos, self.wallWE, "Wall", (self.allSprites, self.collisionSprites))
+                        if self.mapBase[ordonnees-1][abscisses] == "." and self.mapBase[ordonnees+1][abscisses] == ".":
+                            CollisionSprites(pos, self.wallWEHaut, "Wall", (self.allSprites, self.collisionSprites))
+                        elif self.mapBase[ordonnees+1][abscisses] == ".":
+                            CollisionSprites(pos, self.wallWEHaut, "Wall", (self.allSprites, self.collisionSprites))
+                        elif self.mapBase[ordonnees-1][abscisses] == ".":
+                            CollisionSprites(pos, self.wallWEBas, "Wall", (self.allSprites, self.collisionSprites))
+
+                    elif up and down:
+                        if self.mapBase[ordonnees][abscisses-1] == ".":
+                            CollisionSprites(pos, self.wallNSDroite, "Wall", (self.allSprites, self.collisionSprites))
+                        else:
+                            CollisionSprites(pos, self.wallNSGauche, "Wall", (self.allSprites, self.collisionSprites))
+
                     else:
-                        CollisionSprites(pos, self.wallWE, "Wall", (self.allSprites, self.collisionSprites)) 
+                        CollisionSprites(pos, self.wallWEHaut, "Wall", (self.allSprites, self.collisionSprites))
+
+
+
 
                 elif self.map[ordonnees][abscisses] in ["§", "£", "$", "?"]:
                     if self.map[ordonnees][abscisses] == "§":
@@ -563,15 +579,14 @@ class LoadMap():
         for coordsPNJ in coordsPNJList:
             pos = (coordsPNJ[0]*CASEMAP + 64, coordsPNJ[1]*CASEMAP + 64) # calcul coords pygame
             if coordsPNJ[3] == 1 : 
-                PNJ(pos , "PNJ1", (self.allPNJ, self.allSprites, self.collisionSprites))
+                PNJOBJ(pos , "PNJ1", (self.allPNJ, self.allSprites, self.collisionSprites))
             if coordsPNJ[3] == 2 : 
-                PNJ(pos , "PNJ2", (self.allPNJ, self.allSprites, self.collisionSprites))
+                PNJOBJ(pos , "PNJ2", (self.allPNJ, self.allSprites, self.collisionSprites))
             if coordsPNJ[3] == 3 :
-                PNJ(pos , "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
+                PNJOBJ(pos , "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
             if coordsPNJ[3] == 4 :
-                PNJ(pos, "PNJ4", (self.allPNJ, self.allSprites, self.collisionSprites))
-            if coordsPNJ[3] == 5 :
-                PNJ(pos , "PNJ5", (self.allPNJ, self.allSprites, self.collisionSprites))
+                PNJOBJ(pos, "PNJ4", (self.allPNJ, self.allSprites, self.collisionSprites))
+            # pas de pnj 5 car il se déplace
 
     
     def AddPont(self, element : str, coords : tuple) -> None:

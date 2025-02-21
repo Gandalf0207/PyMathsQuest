@@ -1,4 +1,5 @@
 from settings import *
+from Sources.Personnages.pnj import *
 
 class PNJInterface(object):
 
@@ -98,7 +99,31 @@ class PNJInterface(object):
                     elif self.gestionnaire.pnjActuel == "PNJ4":
                         self.gestionnaire.CinematiqueBuild() # préparation au lancement cinematique
 
+                if NIVEAU["Map"] == "NiveauBaseFuturiste":
+                    if self.gestionnaire.pnjActuel == "PNJ1":
+                        PNJ["PNJ1"] = True
 
+                    elif self.gestionnaire.pnjActuel == "PNJ2":
+                        PNJ["PNJ2"] = True
+
+                    elif self.gestionnaire.pnjActuel == "PNJ3":
+                        PNJ["PNJ3"] = True
+                        # tp pnj 
+                        self.gestionnaire.gestionnaire.fondu_au_noir()
+                        self.gestionnaire.gestionnaire.textScreen("")
+                        allPNJCoords =  LoadJsonMapValue("coordsMapObject", "PNJ Coords")
+                        pnjPiloteCoords = allPNJCoords[4]
+                        pos = (pnjPiloteCoords[0]*CASEMAP + 64, pnjPiloteCoords[1]*CASEMAP + 64) # calcul coords pygame
+                        self.gestionnaire.pnjObj.kill()
+                        PNJOBJ(pos, "PNJ5", (self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites, self.gestionnaire.allPNJ))
+                        self.gestionnaire.gestionnaire.ouverture_du_noir(self.gestionnaire.gestionnaire.player.rect.center)
+
+
+                    elif self.gestionnaire.pnjActuel == "PNJ4":
+                        PNJ["PNJ4"] = True
+
+                    elif self.gestionnaire.pnjActuel == "PNJ5":
+                        PNJ["PNJ5"] = True
 
 
 

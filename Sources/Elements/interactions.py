@@ -227,12 +227,6 @@ class Interactions(object):
                 if self.ObjectId == "ReactorBloc":
                     self.gameInterfaces.GestionInterfaceSpecifique("ReactorBloc")
 
-                if self.ObjectId == "EssenceBloc":
-                    self.gameInterfaces.GestionInterfaceSpecifique("EssenceBloc")
-
-                if self.ObjectId == "LancementBloc":
-                    self.gameInterfaces.GestionInterfaceSpecifique("LancementBloc")
-
                 # vent tp 
                 if self.ObjectId == "Vent":
                     # animation 
@@ -290,6 +284,10 @@ class Interactions(object):
                 if Object.id == "TableCraft" and NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ2"]:
                     return False
                 if Object.id == "Door" and NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ3"]:
+                    return False
+                if Object.id  == "Vent" and not PNJ["PNJ1"]:
+                    return False
+                if Object.id == "ReactorBloc" and not PNJ["PNJ2"]:
                     return False
         
 

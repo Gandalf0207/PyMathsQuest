@@ -1,7 +1,7 @@
 from settings import *
 from ScriptAlgo.astar import *
 
-class PNJ(pygame.sprite.Sprite):
+class PNJOBJ(pygame.sprite.Sprite):
     
     def __init__(self, pos : tuple ,numpnj : str,  groups : any) -> None:
         """Méthode initialisation object pnj
