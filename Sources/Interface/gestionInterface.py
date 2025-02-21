@@ -32,6 +32,9 @@ class GestionOtherInterfaces(object):
         # element d'update
         self.interface = None
 
+        # sauvgarde des obj qui ne doivent pas etre reset : 
+        self.keepReactorObject = ReactorInterface()
+
 
         # timer click skip
         self.last_click_time = 0
@@ -138,7 +141,7 @@ class GestionOtherInterfaces(object):
                 elif argsSpecifique == "ReactorBloc":
                     self.isInterfaceOPEN = True # update element global
                     self.isInterfaceRectorOpen = True
-                    self.interface = ReactorInterface()
+                    self.interface = self.keepReactorObject
                 
                 # other interace : EssenceBloc / LancementBloc
 

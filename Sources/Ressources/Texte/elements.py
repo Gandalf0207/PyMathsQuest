@@ -13,6 +13,12 @@ ElementsFr = {
 
     },
 
+    "InterfaceReactor": {
+        "Title" : "Réacteur nucléraire Centrale",
+        "Texte" : "Appuyer pour allumer le réacteur",
+        
+    },
+
     "HotBar" : {
         "Settings" : {
             "Title" : "Paramettres",
