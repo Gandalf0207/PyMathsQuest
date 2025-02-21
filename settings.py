@@ -122,7 +122,8 @@ INFOS = {
     "DemiNiveau" :False,
     "ChangementNiveau" : False,
     "ChangementAnnee" : False,
-    "RebindingKey": False
+    "RebindingKey": False,
+    "CrashGame" : False,
 }
 
 DICOLANGUE = {

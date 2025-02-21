@@ -132,6 +132,16 @@ class Game(object):
         self.StartMap()
 
         while self.running:
+
+            if INFOS["CrashGame"]:
+                self.fondu_au_noir()
+                if NIVEAU["Map"] == "NiveauBaseFuturiste":
+                    text1 = "Vous avez envoyé trop de puissance dans le réacteur provoquant son explosion."
+                    text2 = "Fermeture du jeu."
+                self.textScreen(text1)
+                self.textScreen(text2)
+
+                self.running = False
             
             # si exo réussit
             if INFOS["ExoPasse"]:
@@ -390,12 +400,24 @@ class GameToolBox(object):
     def textScreen(self, text):
         """Méthode d'affichage du texte d'animation sur l'ecran"""
         compteur = 0
-        while compteur < 1250:
+        while compteur < 3000:
             compteur += 1
             self.gestionnaire.displaySurface.fill((0,0,0))
-            textElement = FONT["FONT50"].render(text, True, (255,255,255))
-            text_rect = textElement.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
-            self.gestionnaire.displaySurface.blit(textElement, text_rect.topleft)
+
+            # get lines 
+            max_width = 400
+            wrapped_lines = wrap_text(text, FONT["FONT20"], max_width)  # Assurez-vous d'utiliser la même police
+
+            # Affichage des lignes
+            line_height = FONT["FONT50"].size("Tg")[1]  # Hauteur d'une ligne avec la bonne police
+            y_offset = WINDOW_HEIGHT // 2 - (line_height * len(wrapped_lines) // 2)
+
+            for i, line in enumerate(wrapped_lines):
+                line_surface = FONT["FONT50"].render(line, True, (255, 255, 255))  # Couleur corrigée
+                text_rect = line_surface.get_rect(center=(WINDOW_WIDTH // 2, y_offset + i * line_height))
+                self.gestionnaire.displaySurface.blit(line_surface, text_rect)  # Utiliser text_rect directement
+
+
             pygame.display.flip()
 
         self.fondu_au_noir()

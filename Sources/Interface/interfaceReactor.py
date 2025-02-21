@@ -56,13 +56,17 @@ class ReactorInterface(object):
         # statue reacteur     
         temp = self.reactor.calculate_total_temperature() 
         status = "Statue : Null"
+        colorS = WHITE
         if temp < 500 :
             status = "Statue : Normal"
+            colorS = WHITE
         elif temp < 800 :
             status = "Statue : Instable "
+            colorS = ORANGE
         else :
             status = "Statue : Critique"
-        text_status = FONT["FONT24"].render(status, True, WHITE)
+            colorS = RED
+        text_status = FONT["FONT24"].render(status, True, colorS)
         self.interfaceSurface.blit(text_status, (425, 100))
 
         # temperature
@@ -85,8 +89,10 @@ class ReactorInterface(object):
 
         # construction d'update
         self.BuildInterface()
+        
+        # crash jeu 
         if self.clicks > 10:
-            print("game over")
+            INFOS["CrashGame"] = True
 
         if event.type == pygame.MOUSEBUTTONDOWN:  # Si un clic souris est détecté
             current_time = pygame.time.get_ticks()
