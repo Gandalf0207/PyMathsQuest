@@ -1473,15 +1473,14 @@ class NiveauBaseFuturiste(GestionNiveauMap):
         allSalles = [allCoordsSalle0, allCoordsSalle1, allCoordsSalle2, allCoordsSalle3]
         
         allStructuresName = ["§", "£", "$", "?"]
-        allStructuresInteraction = ["¤", "<", None, ">"]
         allStructures = []
         for numSalle in range(len(allSalles)):
             ptsRef = allSalles[numSalle][140]
             self.map[ptsRef[1]][ptsRef[0]] = allStructuresName[numSalle]
             
-            if allStructuresName[numSalle] in ["§", "£", None , "?"]:
+            if allStructuresName[numSalle] == "§":
                 ptsRefInteraction = allSalles[numSalle][218]
-                self.map[ptsRefInteraction[1]][ptsRefInteraction[0]] = allStructuresInteraction[numSalle]    
+                self.map[ptsRefInteraction[1]][ptsRefInteraction[0]] = "¤"    
 
             
             

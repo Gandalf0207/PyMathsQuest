@@ -514,14 +514,8 @@ class LoadMap():
                     elif self.map[ordonnees][abscisses] == "?":
                         CollisionSprites(pos, self.salleLancement, "Lancement", (self.collisionSprites, self.allSprites))
 
-                elif self.map[ordonnees][abscisses] in ["¤", "<", ">"]:
-                    if self.map[ordonnees][abscisses] == "¤":
-                        CollisionSprites(pos, self.InteractionBlocReactor, "ReactorBloc", (self.allSprites, self.collisionSprites, self.interactions))
-                    elif self.map[ordonnees][abscisses] == "<":
-                        CollisionSprites(pos, self.InteractionBlocEssence, "EssenceBloc", (self.allSprites, self.collisionSprites, self.interactions))
-                    elif self.map[ordonnees][abscisses] == ">":
-                        CollisionSprites(pos, self.InteractionBlocLancement, "LancementBloc", (self.allSprites, self.collisionSprites, self.interactions))
-
+                elif self.map[ordonnees][abscisses] == "¤":
+                    CollisionSprites(pos, self.InteractionBlocReactor, "ReactorBloc", (self.allSprites, self.collisionSprites, self.interactions))
 
 
 

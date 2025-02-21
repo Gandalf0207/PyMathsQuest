@@ -32,6 +32,7 @@ class ReactorInterface(object):
 
         self.reactor = Reactor()
         self.surfaceReactor = self.reactor.Update()
+        self.surfaceReactor = self.reactor.Update()
 
     def BuildInterface(self) -> None:
         """Méthode : Création de tout les éléments composant l'interface. Input / Output : None"""
@@ -110,11 +111,6 @@ class ReactorInterface(object):
                     Sprites(pos, OpenDoor, allSprites)
 
 
-
-            
-            pass
-
-
         if event.type == pygame.MOUSEBUTTONDOWN:  # Si un clic souris est détecté
             current_time = pygame.time.get_ticks()
             if current_time - self.last_click_time > self.click_delay:
@@ -132,8 +128,8 @@ class ReactorInterface(object):
                     local_pos = (global_pos[0] - surface_rect.x, global_pos[1] - surface_rect.y)
                     
                     if self.btnRectPuissance.collidepoint(local_pos):
-                        self.clicks += 1
                         self.surfaceReactor = self.reactor.Update()
+                        self.clicks += 1
 
         # Baisser la température toutes les secondes
         current_time = pygame.time.get_ticks()
@@ -269,7 +265,7 @@ class Reactor(object):
 
     def Update(self):
         # Calculer combien d'hexagones activer et quel est le stade de température
-        num_to_activate = int(len(self.hexagons) * (random.randint(1,5) / 10))  # Calculer combien d'hexagones activer
+        num_to_activate = int(len(self.hexagons) * (random.randint(2,5) / 10))  # Calculer combien d'hexagones activer
         self.activate_hexagons(self.hexagons, num_to_activate)
 
         # Dessiner tous les hexagones
