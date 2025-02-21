@@ -34,6 +34,7 @@ class MiniMap:
         self.carre8 = pygame.image.load(join("Images", "MiniMap", "Carre8.png")).convert_alpha()
         self.carre10 = pygame.image.load(join("Images", "MiniMap", "Carre10.png")).convert_alpha()
         self.carre11 = pygame.image.load(join("Images", "MiniMap", "Carre11.png")).convert_alpha()
+        self.carre12 = pygame.image.load(join("Images", "MiniMap", "Carre12.png")).convert_alpha()
 
 
 
@@ -60,6 +61,12 @@ class MiniMap:
                     self.static_surface.blit(self.carre7, pos)
                 elif cell == "C": # murailles
                     self.static_surface.blit(self.carre11, pos)
+                elif cell == "&":
+                    self.static_surface.blit(self.carre12, pos)
+                elif NIVEAU["Map"] == "NiveauBaseFuturiste" and cell in ["-" , "G"]:
+                    self.static_surface.blit(self.carre8, pos)
+                elif cell == ".":
+                    self.static_surface.blit(self.carre2, pos)
                 else: # reste = herbe 
                     self.static_surface.blit(self.carre1, pos)
                 
