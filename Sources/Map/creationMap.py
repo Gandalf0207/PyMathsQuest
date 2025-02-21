@@ -53,6 +53,7 @@ class GestionNiveauMap(object):
                         "salle4" : "null",
                         "liaisonsSalles" : "null",
                         "coordsVent" : "null",
+                        "coordReacteurBloc" : "null",
                         "Spawn" : "null",
                         "Exit" : "null",
                     }
@@ -1208,7 +1209,7 @@ class NiveauMedievale(GestionNiveauMap):
 class NiveauMedievaleChateau():
     def __init__(self):
        """Méhode initialisation valeur de la création de map demi niveau médievale"""
-
+       
        # relancer si error de generation
        self.ERROR_RELANCER = False
 
@@ -1266,6 +1267,32 @@ class NiveauBaseFuturiste(GestionNiveauMap):
         self.longueur = 150
         self.largeur = 75
         self.elementsTerre = 300
+        self.obstacle = 75
+
+    def CheckNiveauPossible(self, listOrdrePointCle: list, pathAccessible: list) -> bool:
+        """
+        Vérifie si le niveau est jouable en testant si un chemin existe entre chaque point clé donné.
+
+        Args:
+            listOrdrePointCle (list): Liste des coordonnées des points clés (ex : PNJ, arbres, entrées, sorties).
+            pathAccessible (list): Liste des types de terrains où le joueur peut se déplacer.
+
+        Returns:
+            bool: True si tous les points sont connectés, sinon False.
+        """
+        for pointCle in range(len(listOrdrePointCle) - 1):
+            # Utilise l'algorithme A* pour vérifier si un chemin existe entre deux points consécutifs.
+            if Astar(
+                listOrdrePointCle[pointCle],
+                listOrdrePointCle[pointCle + 1],
+                self.mapCheckDeplacementPossible,
+                pathAccessible
+            ).a_star():
+                continue  # Passe au prochain point s'il existe un chemin.
+            else:
+                return False  # Retourne False si un chemin est impossible.
+        return True  # Tous les chemins sont accessibles.
+
 
     def __PlacementElementsTerre__(self):
         """Place des petits rochers (Rock) sur la map de base en évitant les collisions avec d'autres éléments."""
@@ -1476,15 +1503,19 @@ class NiveauBaseFuturiste(GestionNiveauMap):
         allStructures = []
         for numSalle in range(len(allSalles)):
             ptsRef = allSalles[numSalle][140]
+
+            # sécu pos salle
+            for y in range(5):
+                for x in range(5):
+                    self.map[ptsRef[1] + y][ptsRef[0] + x] = "è"
+
             self.map[ptsRef[1]][ptsRef[0]] = allStructuresName[numSalle]
             
             if allStructuresName[numSalle] == "§":
                 ptsRefInteraction = allSalles[numSalle][218]
                 self.map[ptsRefInteraction[1]][ptsRefInteraction[0]] = "¤"    
+                AjoutJsonMapValue(ptsRefInteraction, "coordsMapObject", "coordReacteurBloc")
 
-            
-            
-            
             allStructures.append([ptsRef[0], ptsRef[1], allStructuresName[numSalle]])
 
     def __PlacementPNJ__(self):
@@ -1506,12 +1537,12 @@ class NiveauBaseFuturiste(GestionNiveauMap):
             (0,8),(1,8),(2,8),(3,8),(4,8),(5,8),(6,8),(7,8),(8,8),
         ]
         
-        allPNJCoords = []
+        self.allPNJCoords = []
 
         # pnj 1
         coordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
         self.map[coordsSpawn[0][1]][coordsSpawn[0][0] +2] = "P"
-        allPNJCoords.append([coordsSpawn[0][0] + 2, coordsSpawn[0][1], "P", 1])
+        self.allPNJCoords.append([coordsSpawn[0][0] + 2, coordsSpawn[0][1], "P", 1])
 
         # pnj 2 / 3 / 4 / 5
         for numSalle in range(len(allSalles)):
@@ -1520,9 +1551,9 @@ class NiveauBaseFuturiste(GestionNiveauMap):
             
             coordsPNJ = choice(coordsPossiblesPNJ)
             self.map[coordsPNJ[1]][coordsPNJ[0]] = "P"
-            allPNJCoords.append([coordsPNJ[0], coordsPNJ[1], "P", numSalle+2])
+            self.allPNJCoords.append([coordsPNJ[0], coordsPNJ[1], "P", numSalle+2])
         
-        AjoutJsonMapValue(allPNJCoords, "coordsMapObject", "PNJ Coords") # on ajoute les coordonnées du spawn au fichier json
+        AjoutJsonMapValue(self.allPNJCoords, "coordsMapObject", "PNJ Coords") # on ajoute les coordonnées du spawn au fichier json
 
     def __ClearMapCaracteres__(self):
 
@@ -1533,7 +1564,69 @@ class NiveauBaseFuturiste(GestionNiveauMap):
                     self.baseMap[ordonnees][abscisses] = "&"
 
 
+    def __PlacementObstacles__(self):
+        # Placement des obstacles sur la carte
+        checkDeplacementPasPossible = True  # Flag pour vérifier si un déplacement est possible
+        compteur = 0
+        while checkDeplacementPasPossible and compteur < 100: 
+            compteur += 1
+            # Crée une copie de la carte pour tester les placements sans affecter la carte principale
+            self.mapCheckDeplacementPossible = []
+            self.mapCheckDeplacementPossible = copy.deepcopy(self.map)  
 
+            # Liste pour stocker les positions des obstacles
+            listeObstacle = [] 
+
+            # Place les obstacles aléatoirement sur la carte, en vérifiant qu'ils ne se superposent pas
+            for _i_ in range(self.obstacle):
+                obstaclePos = [randint(0, self.longueur-1), randint(0, self.largeur-1)]
+                # Vérifie que la position choisie est valide (case vide et pas dans une zone interdite)
+                while self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] != '.'\
+                    or self.mapCheckDeplacementPossible[obstaclePos[1]-1][obstaclePos[0]] not in [".", "k", "&"] \
+                    or self.mapCheckDeplacementPossible[obstaclePos[1]+1][obstaclePos[0]]  not in [".", "k", "&"] \
+                    or self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]+1]  not in [".", "k", "&"] \
+                    or self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]-1]  not in [".", "k", "&"] :
+                    obstaclePos = [randint(0, self.longueur-1), randint(0, self.largeur-1)]  # Nouvelle tentative
+                # Marque la position comme occupée pour les tests
+                self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] = "k"  
+                listeObstacle.append(obstaclePos)  # Ajoute l'obstacle à la liste
+
+            # Récupère les coordonnées des points clés (par exemple, spawn, passage de la rivière, etc.)
+            getCoordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
+            coordsPts1 = getCoordsSpawn[0]
+            coordsPts2 = self.allPNJCoords[0]
+            coordsAllVent = LoadJsonMapValue("coordsMapObject", "coordsVent")
+            coordsPts3 = coordsAllVent[1] 
+            coordsPts4 = coordsAllVent[0]
+            coordsPts5 = self.allPNJCoords[1]
+            coordsPts6 = LoadJsonMapValue("coordsMapObject", "coordReacteurBloc")
+            coordsPts7 = self.allPNJCoords[2]
+            coordsPts8 = self.allPNJCoords[3]
+            coordsPts9 = self.allPNJCoords[4]
+
+
+            # Liste des points à vérifier pour les déplacements possibles
+            listeOrdrePointCle1 = [coordsPts1, coordsPts2, coordsPts3]
+            listeOrdrePointCle2 = [coordsPts4, coordsPts5, coordsPts6, coordsPts7, coordsPts8, coordsPts9]
+
+            # Vérifie la possibilité de déplacements pour chaque liste de points clés
+            # Le parcours se fait en trois étapes, en passant par les rivières pour s'assurer que les chemins sont valides
+            if self.CheckNiveauPossible(listeOrdrePointCle1, [".", "S", "j", "m", "P", "¤"]):  # Vérifie la première partie
+                if self.CheckNiveauPossible(listeOrdrePointCle2,  [".", "S", "j", "m", "P", "¤"]):  # Vérifie la deuxième partie
+                    # Si tout est valide, les obstacles peuvent être placés et les coordonnées sont sauvegardées
+                    AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords")
+                    checkDeplacementPasPossible = False  # Arrête la boucle
+
+                    # Place les obstacles sur la carte
+                    for coords in listeObstacle:
+                        self.map[coords[1]][coords[0]] = "k"  # Placement des obstacles sur la carte
+
+        ## SECURITE
+        # verif si boucle pour relancement
+        if compteur < 100:
+            self.ERROR_RELANCER = False
+        else:
+            self.ERROR_RELANCER = True
 
 
     def Update(self):
@@ -1555,6 +1648,8 @@ class NiveauBaseFuturiste(GestionNiveauMap):
         self.__PlacementPNJ__()
 
         self.__ClearMapCaracteres__()
+
+        self.__PlacementObstacles__()
 
         # le check générale du niveau n'est pas obligatoire car les chemin font une boucle (a voir si des obstacles sont ajoutés)
 

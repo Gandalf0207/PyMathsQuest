@@ -104,6 +104,8 @@ class CollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(0,-60)
             case "ReactorBloc":
                 self.hitbox = self.rect.inflate(-128,-128)
+            case "Caisses":
+                self.hitbox = self.rect.inflate(-25, -25) 
 
 
 

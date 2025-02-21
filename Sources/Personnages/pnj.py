@@ -18,7 +18,7 @@ class PNJ(pygame.sprite.Sprite):
         self.state, self.frame_index = self.direction, 0
         self.image = pygame.image.load(join("Images","PNJ", NIVEAU["Map"], numpnj,"down", "0.png")).convert_alpha() # première image 
         self.rect = self.image.get_frect(center = pos)
-        self.hitbox = self.rect.inflate(-60,0) # collision
+        self.hitbox = self.rect.inflate(-60,-20) # collision
 
         # Centrer la hitbox par rapport à l'image
         self.hitbox.center = self.rect.center

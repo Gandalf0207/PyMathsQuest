@@ -104,8 +104,7 @@ class LoadMap():
 
 
             self.InteractionBlocReactor = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
-            self.InteractionBlocEssence = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
-            self.InteractionBlocLancement = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+            self.obstacles = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
 
 
 
@@ -517,6 +516,8 @@ class LoadMap():
                 elif self.map[ordonnees][abscisses] == "¤":
                     CollisionSprites(pos, self.InteractionBlocReactor, "ReactorBloc", (self.allSprites, self.collisionSprites, self.interactions))
 
+                elif self.map[ordonnees][abscisses] == "k":
+                    CollisionSprites(pos, self.obstacles, "Caisses", (self.collisionSprites, self.allSprites))
 
 
 
