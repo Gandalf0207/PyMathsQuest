@@ -123,6 +123,7 @@ INFOS = {
     "ChangementNiveau" : False,
     "ChangementAnnee" : False,
     "RebindingKey": False,
+    "ReactorOn" : False,
     "CrashGame" : False,
 }
 

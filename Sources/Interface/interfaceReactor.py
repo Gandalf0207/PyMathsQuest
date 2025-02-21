@@ -1,13 +1,16 @@
 from settings import * 
+from Sources.Elements.sprites import *
 
 class ReactorInterface(object):
 
-    def __init__(self) ->None:
+    def __init__(self, gestionnaire) ->None:
         """Méthode initialisation de l'interface de book.
         Input : gestionnaire = self méthode d'appel"""
            
         # Création éléments
         self.displaySurface = pygame.display.get_surface() # surface générale
+
+        self.gestionnaire = gestionnaire
 
         # Surface pour le fond transparent
         self.backgroundSurface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
@@ -93,6 +96,24 @@ class ReactorInterface(object):
         # crash jeu 
         if self.clicks > 10:
             INFOS["CrashGame"] = True
+
+        if self.clicks == 1:
+            INFOS["ReactorOn"] = True
+            # changer toutes les portes : ouvrir 
+            allCollisionSprites = self.gestionnaire.gestionnaire.collisionSprites
+            allSprites = self.gestionnaire.gestionnaire.allSprites
+            for sprite in allCollisionSprites:
+                if sprite.id == "DoorFuturiste":
+                    pos = sprite.pos
+                    sprite.kill()
+                    OpenDoor = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+                    Sprites(pos, OpenDoor, allSprites)
+
+
+
+            
+            pass
+
 
         if event.type == pygame.MOUSEBUTTONDOWN:  # Si un clic souris est détecté
             current_time = pygame.time.get_ticks()

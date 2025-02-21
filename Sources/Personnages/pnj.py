@@ -11,6 +11,7 @@ class PNJ(pygame.sprite.Sprite):
         super().__init__(groups)
         self.numPNJ = numpnj
         self.pos = (pos[0] // CASEMAP, pos[1] // CASEMAP) # pos sur double list
+        self.id = "PNJ"
 
         # images + hitbox
         self.direction = "down"

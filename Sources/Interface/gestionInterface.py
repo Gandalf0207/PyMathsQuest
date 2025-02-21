@@ -33,7 +33,7 @@ class GestionOtherInterfaces(object):
         self.interface = None
 
         # sauvgarde des obj qui ne doivent pas etre reset : 
-        self.keepReactorObject = ReactorInterface()
+        self.keepReactorObject = ReactorInterface(self)
 
 
         # timer click skip
