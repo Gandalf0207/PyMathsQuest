@@ -517,7 +517,8 @@ class LoadMap():
                         CollisionSprites(pos, self.wallWEHaut, "Wall", (self.allSprites, self.collisionSprites))
 
 
-
+                elif self.map[ordonnees][abscisses] == "S" and NIVEAU["Map"] == "NiveauBaseFuturiste":
+                    AnimatedSprites(pos, (self.allSprites), "PortalGif", join("Images","Portal"))
 
                 elif self.map[ordonnees][abscisses] in ["§", "£", "$", "?"]:
                     if self.map[ordonnees][abscisses] == "§":

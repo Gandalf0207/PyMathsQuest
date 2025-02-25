@@ -10,6 +10,7 @@ from Sources.Elements.construire import *
 from Sources.Interface.interfaceExo import *
 from Sources.Elements.sound import *
 from Sources.Interface.gestionInterface import *
+from Sources.Elements.cinematique import *
 
 
 class Game(object):
@@ -85,7 +86,7 @@ class Game(object):
 
 
         # gestion des interface du jeu
-        self.gameInterfaces = GestionOtherInterfaces(self) 
+        self.gameInterfaces = GestionOtherInterfaces(self, self.GameTool.gestionSoundFond) 
 
         #pnj
         self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.map, self, self.GameTool.gestionSoundDialogues, self.gameInterfaces)
@@ -102,11 +103,13 @@ class Game(object):
             #construction
             self.buildElements = Construire(self)
 
-        # placement du player sur le spawn
         getPlayerPosSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
         playerPosSpawn = getPlayerPosSpawn[0] 
-        self.player = Player(((playerPosSpawn[0] + 1 )*CASEMAP,(playerPosSpawn[1] + 0.5 )*CASEMAP), self.allSprites, self.collisionSprites) 
+            
+        if NIVEAU["Map"] == "NiveauBaseFuturiste":
+            self.cinematique = True # player apparait par le portail
 
+        self.player = Player(((playerPosSpawn[0] + 1 )*CASEMAP,(playerPosSpawn[1] + 0.5 )*CASEMAP), self.allSprites, self.collisionSprites) 
         self.checkLoadingDone = True
 
         
@@ -227,7 +230,10 @@ class Game(object):
             if not self.cinematique:
                 self.allSprites.draw(self.player.rect.center, self.hideHotbar) # lockcam player
             else:
-                self.allSprites.draw(self.cinematiqueObject.pnjObject.rect.center, self.hideHotbar) # pnj lockcam
+                if NIVEAU["Map"] == "NiveauBaseFuturiste":
+                    self.allSprites.draw(self.player.rect.center, self.hideHotbar) # lockcam player
+                else:
+                    self.allSprites.draw(self.cinematiqueObject.pnjObject.rect.center, self.hideHotbar) # pnj lockcam
 
             # Afficher la minimap sur l'écran principal + menu settings all
             if not self.cinematique :
@@ -249,11 +255,21 @@ class Game(object):
                 self.InteractionObject.Update(self.player, self.interactionsGroup) # interaction update
         
             else: # si cinématique 
-                self.cinematique, endCinematique = self.cinematiqueObject.Update(dt)
-                
+                if NIVEAU["Map"] != "NiveauBaseFuturiste":
+                    self.cinematique, endCinematique = self.cinematiqueObject.Update(dt)
+                else:
+                    if self.cinematiqueObject == None:
+                        coordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
+                        goal = [coordsSpawn[0][0] + 8, coordsSpawn[0][1]]
+                        pathAcces = [".","S", "P"]
+                        self.cinematiqueObject = Cinematique(goal, self.player, self.map, pathAcces)
+                    self.cinematique, endCinematique = self.cinematiqueObject.Update(dt)
                 # fin cinématique + action 
                 if endCinematique:
-                    self.pnj.EndCinematique() # finition cinématique
+                    if NIVEAU["Map"] != "NiveauBaseFuturiste":
+                        self.pnj.EndCinematique() # finition cinématique
+                    else:
+                        self.player.EndCinematique()
                     self.cinematiqueObject.Replacement(self.allPNJ) # placement convenable du png
                     self.fondu_au_noir() # animation
                     
@@ -300,6 +316,14 @@ class Game(object):
 
                             STATE_HELP_INFOS[0] = "OpenPortail"
 
+
+                        # reset values cinmatique
+                        self.cinematique = False
+                        self.cinematiqueObject = None
+                    
+                    if NIVEAU["Map"] == "NiveauBaseFuturiste":
+                        
+                        # kill portal
 
                         # reset values cinmatique
                         self.cinematique = False

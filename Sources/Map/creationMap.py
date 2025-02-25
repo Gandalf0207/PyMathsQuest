@@ -5,9 +5,9 @@ from settings import *
 
 # Import des scripts algo pour placer les par-terre de fleurs; relier 2 points entre eux; 
 # check si le niveau est faisable en reliant chaque point clé du niveau entre eux
-from ScriptAlgo.jeuDeLaVie import *
-from ScriptAlgo.liaisonAtoB import *
-from ScriptAlgo.astar import *
+from Sources.ScriptAlgo.jeuDeLaVie import *
+from Sources.ScriptAlgo.liaisonAtoB import *
+from Sources.ScriptAlgo.astar import *
 
 class GestionNiveauMap(object):
     """Class parent création map, settings et méthode globales"""
@@ -1541,8 +1541,8 @@ class NiveauBaseFuturiste(GestionNiveauMap):
 
         # pnj 1
         coordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
-        self.map[coordsSpawn[0][1]][coordsSpawn[0][0] +2] = "P"
-        self.allPNJCoords.append([coordsSpawn[0][0] + 2, coordsSpawn[0][1], "P", 1])
+        self.map[coordsSpawn[0][1]][coordsSpawn[0][0] +8] = "P"
+        self.allPNJCoords.append([coordsSpawn[0][0] + 8, coordsSpawn[0][1], "P", 1])
 
         # pnj 2 / 3 / 4 / 5
         for numSalle in range(len(allSalles)):

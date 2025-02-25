@@ -89,5 +89,6 @@ class SoundInterface(object):
                 # Déplacer le curseur
                 new_x = min(max(mouse_x - self.cursor_width // 2, self.slider_x), self.slider_x + self.slider_width - self.cursor_width)
                 SOUND[slider["Element"]] = (new_x - self.slider_x) / (self.slider_width - self.cursor_width)
-                self.gestionnaire.gestionSound.Update()
+                print(self.gestionnaire)
+                self.gestionnaire.gestionSoundFond.Update()
 

@@ -10,9 +10,10 @@ from Sources.Interface.interfaceExo import *
 
 
 class GestionOtherInterfaces(object):
-    def __init__(self, gestionnaire):
+    def __init__(self, gestionnaire, gestionSoundFond):
         
         self.gestionnaire = gestionnaire
+        self.gestionSoundFond = gestionSoundFond
 
         # interfaces globales
         self.isInterfaceOPEN = False # bool général
@@ -96,7 +97,7 @@ class GestionOtherInterfaces(object):
         self.interface = interfaceOBJ
 
 
-    def GestionInterfaceSpecifique(self, argsSpecifique = None, ElementSelfClass = None):
+    def GestionInterfaceSpecifique(self, argsSpecifique):
         
         #timer pour évier le spam
         current_time = pygame.time.get_ticks()
@@ -111,22 +112,22 @@ class GestionOtherInterfaces(object):
                 if argsSpecifique == "Settings":
                     self.isInterfaceOPEN = True # update element global
                     self.isInterfaceSettingsOpen = True
-                    self.interface = SettingsInterface(ElementSelfClass)
+                    self.interface = SettingsInterface(self)
 
                 elif argsSpecifique == "Sound":
                     self.isInterfaceOPEN = True # update element global
                     self.isInterfaceSoundOpen = True
-                    self.interface = SoundInterface(ElementSelfClass)
+                    self.interface = SoundInterface(self)
 
                 elif argsSpecifique == "Bundle":
                     self.isInterfaceOPEN = True # update element global
                     self.isInterfaceBundleOpen = True
-                    self.interface = BundleInterface(ElementSelfClass)
+                    self.interface = BundleInterface(self)
 
                 elif argsSpecifique == "Book":
                     self.isInterfaceOPEN = True # update element global
                     self.isInterfaceBookOpen = True
-                    self.interface = BookInterface(ElementSelfClass)
+                    self.interface = BookInterface(self)
                 
                 elif argsSpecifique == "PNJOpen":
                     if not self.isPNJInterfaceOpen:
