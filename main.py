@@ -58,6 +58,11 @@ class Game(object):
         self.bgHotBar.fill((150,150,150))
 
 
+        # timer outils waiting
+        self.timer_begin = 0
+        self.timer_delay = 3500  
+
+
     # méthode de call de la class tool
     def ChargementEcran(self):
         self.GameTool.ChargementEcran()
@@ -108,6 +113,7 @@ class Game(object):
             
         if NIVEAU["Map"] == "NiveauBaseFuturiste":
             self.cinematique = True # player apparait par le portail
+            INFOS["HidePlayer"] = True
 
         self.player = Player(((playerPosSpawn[0] + 1 )*CASEMAP,(playerPosSpawn[1] + 0.5 )*CASEMAP), self.allSprites, self.collisionSprites) 
         self.checkLoadingDone = True
@@ -258,12 +264,17 @@ class Game(object):
                 if NIVEAU["Map"] != "NiveauBaseFuturiste":
                     self.cinematique, endCinematique = self.cinematiqueObject.Update(dt)
                 else:
-                    if self.cinematiqueObject == None:
-                        coordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
-                        goal = [coordsSpawn[0][0] + 8, coordsSpawn[0][1]]
-                        pathAcces = [".","S", "P"]
-                        self.cinematiqueObject = Cinematique(goal, self.player, self.map, pathAcces)
-                    self.cinematique, endCinematique = self.cinematiqueObject.Update(dt)
+                    current_time = pygame.time.get_ticks() #check timer (wait 2 s)
+                    if current_time - self.timer_begin > self.timer_delay:
+                        if self.cinematiqueObject == None :
+                            INFOS["HidePlayer"] = False
+                            coordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
+                            goal = [coordsSpawn[0][0] + 8, coordsSpawn[0][1]]
+                            pathAcces = [".","S", "P"]
+                            self.cinematiqueObject = Cinematique(goal, self.player, self.map, pathAcces)
+                        self.cinematique, endCinematique = self.cinematiqueObject.Update(dt)
+                    else:
+                        endCinematique = False
                 # fin cinématique + action 
                 if endCinematique:
                     if NIVEAU["Map"] != "NiveauBaseFuturiste":
@@ -424,7 +435,7 @@ class GameToolBox(object):
     def textScreen(self, text):
         """Méthode d'affichage du texte d'animation sur l'ecran"""
         compteur = 0
-        while compteur < 3000:
+        while compteur < 2000:
             compteur += 1
             self.gestionnaire.displaySurface.fill((0,0,0))
 
@@ -483,6 +494,7 @@ class GameToolBox(object):
             self.gestionnaire.clock.tick(30)  # Limite de rafraîchissement
 
         pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])
+        self.gestionnaire.timer_begin = pygame.time.get_ticks() # timer update pour nv3
         
     def ResetValues(self):
         """En fonction du niveau, on passe au niveau supérieur"""

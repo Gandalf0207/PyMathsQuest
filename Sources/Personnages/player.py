@@ -21,7 +21,10 @@ class Player(pygame.sprite.Sprite):
         
         # création element base
         self.state, self.frame_index = "down", 0
-        self.image = pygame.image.load(join("Images","Player", "down", "0.png")).convert_alpha() # première image 
+        if INFOS["HidePlayer"]:
+            self.image = self.hidePlayerPng
+        else:
+            self.image = pygame.image.load(join("Images","Player", "down", "0.png")).convert_alpha() # première image 
         self.rect = self.image.get_frect(center = pos)
         self.hitbox_rect = self.rect.inflate(-60,0) # collision
 
@@ -33,6 +36,7 @@ class Player(pygame.sprite.Sprite):
     def load_images(self) -> None:
         """Méthode de chargement de toutes les images pour l'animation
         Input / Output : None"""
+        self.hidePlayerPng = pygame.image.load(join("Images", "Player", "Hide", "HidePlayer.png")).convert_alpha()
 
         # dico stockage images
         self.frames = {'left' : [],'right' : [],'up' : [],'down' : []}
@@ -112,7 +116,10 @@ class Player(pygame.sprite.Sprite):
             
         #animation
         self.frame_index = self.frame_index + 5*dt if self.direction else 0
-        self.image = self.frames[self.state][int(self.frame_index) % len(self.frames[self.state])] # changement frame pour animation
+        if INFOS["HidePlayer"]:
+            self.image = self.hidePlayerPng
+        else:
+            self.image = self.frames[self.state][int(self.frame_index) % len(self.frames[self.state])] # changement frame pour animation
 
 
     def update(self, dt : int, cinematique : bool) -> None:

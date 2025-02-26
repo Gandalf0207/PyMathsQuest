@@ -281,7 +281,7 @@ class GestionPNJ(object):
                 if event.key == KEYSBIND["action"]:
                     self.gameInterfaces.GestionInterfaceSpecifique("PNJOpen", self)
         else:   
-            self.gameInterfaces.GestionInterfaceSpecifique("PNJClose")
+            self.gameInterfaces.GestionInterfaceSpecifique("PNJClose", self)
 
         # retour state interface global + etat cinématique
         return self.cinematique, self.cinematiqueObject

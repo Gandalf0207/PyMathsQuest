@@ -97,7 +97,7 @@ class GestionOtherInterfaces(object):
         self.interface = interfaceOBJ
 
 
-    def GestionInterfaceSpecifique(self, argsSpecifique):
+    def GestionInterfaceSpecifique(self, argsSpecifique, elementSelf = None):
         
         #timer pour évier le spam
         current_time = pygame.time.get_ticks()
@@ -133,7 +133,7 @@ class GestionOtherInterfaces(object):
                     if not self.isPNJInterfaceOpen:
                         self.isInterfaceOPEN = True # update element global
                         self.isPNJInterfaceOpen = True
-                        self.interface = PNJInterface(ElementSelfClass)
+                        self.interface = PNJInterface(elementSelf)
                 
                 elif argsSpecifique == "PNJClose":
                     if self.isPNJInterfaceOpen:

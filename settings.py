@@ -124,6 +124,7 @@ INFOS = {
     "ChangementAnnee" : False,
     "RebindingKey": False,
     "ReactorOn" : False,
+    "HidePlayer" : False,
     "CrashGame" : False,
 }
 
