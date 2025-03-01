@@ -44,37 +44,37 @@ class ReactorInterface(object):
 
         # heure 
         current_time = time.strftime("%H:%M:%S")
-        time_text = FONT["FONT24"].render(f"Heure : {current_time}", True, WHITE)
+        time_text = FONT["FONT24"].render(f"{TEXTE["Elements"]["InterfaceReactor"]["Heure"]} : {current_time}", True, WHITE)
         self.interfaceSurface.blit(time_text, (425, 50))
 
         # etat réacteur
         if self.clicks == 0 :
-            etats = "Etat : Inactif"
+            etats = f"{TEXTE["Elements"]["InterfaceReactor"]["EtatName"]} : {TEXTE["Elements"]["InterfaceReactor"]["Etat"]["Inactif"]}"
             colorE = (132, 148, 129)
         else:
-            etats = "Etat : Actif"
+            etats = f"{TEXTE["Elements"]["InterfaceReactor"]["EtatName"]} : {TEXTE["Elements"]["InterfaceReactor"]["Etat"]["Actif"]}"
             colorE = (53, 153, 34)
         etat_text = FONT["FONT24"].render(etats, True, colorE)
         self.interfaceSurface.blit(etat_text, (425, 75))
 
         # statue reacteur     
         temp = self.reactor.calculate_total_temperature() 
-        status = "Statue : Null"
+        status = f"{TEXTE["Elements"]["InterfaceReactor"]["StatueName"]} : {TEXTE["Elements"]["InterfaceReactor"]["Statue"]["Null"]}"
         colorS = WHITE
         if temp < 500 :
-            status = "Statue : Normal"
+            status = f"{TEXTE["Elements"]["InterfaceReactor"]["StatueName"]} : {TEXTE["Elements"]["InterfaceReactor"]["Statue"]["Normal"]}"
             colorS = WHITE
         elif temp < 800 :
-            status = "Statue : Instable "
+            status = f"{TEXTE["Elements"]["InterfaceReactor"]["StatueName"]} : {TEXTE["Elements"]["InterfaceReactor"]["Statue"]["Instable"]}"
             colorS = ORANGE
         else :
-            status = "Statue : Critique"
+            status = f"{TEXTE["Elements"]["InterfaceReactor"]["StatueName"]} : {TEXTE["Elements"]["InterfaceReactor"]["Statue"]["Critique"]}"
             colorS = RED
         text_status = FONT["FONT24"].render(status, True, colorS)
         self.interfaceSurface.blit(text_status, (425, 100))
 
         # temperature
-        temp_text = FONT["FONT24"].render(f"Température : {temp:.2f} °C", True, WHITE)
+        temp_text = FONT["FONT24"].render(f"{TEXTE["Elements"]["InterfaceReactor"]["Temperature"]} : {temp:.2f} °C", True, WHITE)
         self.interfaceSurface.blit(temp_text, (425, 125))
 
 
@@ -82,7 +82,7 @@ class ReactorInterface(object):
         self.surfaceBtnPuissance = pygame.Surface((150,50))
         self.btnRectPuissance = pygame.Rect(425, 175, 150, 50)
         self.surfaceBtnPuissance.fill(RED)
-        self.textS = "Augmenter la puissance"
+        self.textS = TEXTE["Elements"]["InterfaceReactor"]["AddPuissance"]
         self.textSkip = FONT["FONT20"].render(self.textS, True, (10,10,10))
         self.surfaceBtnPuissance.blit(self.textSkip, (0,0))
         self.interfaceSurface.blit(self.surfaceBtnPuissance, (self.btnRectPuissance.x, self.btnRectPuissance.y))
