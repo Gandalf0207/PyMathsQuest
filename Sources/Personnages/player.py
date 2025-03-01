@@ -9,12 +9,14 @@ class Player(pygame.sprite.Sprite):
         # initialisation
         super().__init__(groups)
         self.collision_sprites = collision_sprites
+        self.id = "Player"
         # sound
         pygame.mixer.init()
         self.canal2 = pygame.mixer.Channel(2)
         self.grassFoot = True
         self.grass1 = join("Sound", "EffetSonore", "GrassWalk", "WalkGrass1.mp3")
         self.grass2 = join("Sound", "EffetSonore", "GrassWalk", "WalkGrass2.mp3")
+
 
         # load image
         self.load_images()

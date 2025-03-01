@@ -141,17 +141,17 @@ class LoadMap():
                 
                 # Sol
                 if self.mapBase[ordonnees][abscisses] == "F":
-                    Sprites(pos, self.flowers, self.allSprites)
+                    Sprites(pos, self.flowers, "Flowers", self.allSprites)
                 elif self.mapBase[ordonnees][abscisses] == "M":
-                    Sprites(pos, self.mud, self.allSprites) 
+                    Sprites(pos, self.mud, "Mud", self.allSprites) 
                 elif self.mapBase[ordonnees][abscisses] == "R":
-                    Sprites(pos, self.rock, self.allSprites) 
+                    Sprites(pos, self.rock,"LittleRock",  self.allSprites) 
                 elif self.mapBase[ordonnees][abscisses] == "-" :
-                    Sprites(pos, self.sol, self.allSprites) 
+                    Sprites(pos, self.sol,"Grass", self.allSprites) 
                 elif self.mapBase[ordonnees][abscisses] == ".":
-                    Sprites(pos, self.sol2, self.allSprites)
+                    Sprites(pos, self.sol2,"SolBaseFuturiste", self.allSprites)
                 elif self.mapBase[ordonnees][abscisses] == "G":
-                    Sprites(pos, self.bones, self.allSprites)
+                    Sprites(pos, self.bones,"Bones", self.allSprites)
 
                 # === Vérification du type de chemin === aide IA
                 elif self.mapBase[ordonnees][abscisses] == "=":
@@ -168,47 +168,47 @@ class LoadMap():
 
                     # === 1. Intersection à 4 branches ===
                     if up and down and left and right:
-                        Sprites(pos, self.pathX, self.allSprites)
+                        Sprites(pos, self.pathX, "Path", self.allSprites)
 
                     # === 2. Formes en "T" ===
                     elif up and down and left:
-                        Sprites(pos, self.pathTshapeWNS, self.allSprites)
+                        Sprites(pos, self.pathTshapeWNS, "Path", self.allSprites)
                     elif up and down and right:
-                        Sprites(pos, self.pathTshapeNSE, self.allSprites)
+                        Sprites(pos, self.pathTshapeNSE, "Path", self.allSprites)
                     elif up and right and left:
-                        Sprites(pos, self.pathTshapeNEW, self.allSprites)
+                        Sprites(pos, self.pathTshapeNEW, "Path", self.allSprites)
                     elif down and right and left:
-                        Sprites(pos, self.pathTshapeWES, self.allSprites)
+                        Sprites(pos, self.pathTshapeWES, "Path", self.allSprites)
 
                     # === 3. Virages (angles) ===
                     elif up and right:
-                        Sprites(pos, self.pathAngularNE, self.allSprites)
+                        Sprites(pos, self.pathAngularNE, "Path", self.allSprites)
                     elif up and left:
-                        Sprites(pos, self.pathAngularNW, self.allSprites)
+                        Sprites(pos, self.pathAngularNW, "Path", self.allSprites)
                     elif down and right:
-                        Sprites(pos, self.pathAngularSE, self.allSprites)
+                        Sprites(pos, self.pathAngularSE, "Path", self.allSprites)
                     elif down and left:
-                        Sprites(pos, self.pathAngularSW, self.allSprites)
+                        Sprites(pos, self.pathAngularSW, "Path", self.allSprites)
 
                     # === 4. Lignes droites ===
                     elif up and down:
-                        Sprites(pos, self.pathNS, self.allSprites)
+                        Sprites(pos, self.pathNS, "Path", self.allSprites)
                     elif left and right:
-                        Sprites(pos, self.pathWE, self.allSprites)
+                        Sprites(pos, self.pathWE, "Path", self.allSprites)
 
                     # === 6. Fin de chemin SANS contact avec l'eau ===
                     elif not up and not down and not left and right:
-                        Sprites(pos, self.pathEndE, self.allSprites)  # Fin Ouest
+                        Sprites(pos, self.pathEndE, "Path", self.allSprites)  # Fin Ouest
                     elif not up and not down and left and not right:
-                        Sprites(pos, self.pathEndW, self.allSprites)  # Fin Est
+                        Sprites(pos, self.pathEndW, "Path", self.allSprites)  # Fin Est
                     elif not left and not right and up and not down:
-                        Sprites(pos, self.pathEndN, self.allSprites)  # Fin Sud
+                        Sprites(pos, self.pathEndN, "Path", self.allSprites)  # Fin Sud
                     elif not left and not right and not up and down:
-                        Sprites(pos, self.pathEndS, self.allSprites)  # Fin Nord
+                        Sprites(pos, self.pathEndS, "Path", self.allSprites)  # Fin Nord
                     
                     # path par défault
                     else:
-                        Sprites(pos, self.pathWE, self.allSprites)
+                        Sprites(pos, self.pathWE, "Path", self.allSprites)
 
                 # Toutes les cases rivières
                 elif self.mapBase[ordonnees][abscisses] == "#":
@@ -435,14 +435,14 @@ class LoadMap():
 
                 # maisons
                 if self.map[ordonnees][abscisses] == "H" : 
-                    Sprites(pos, self.sol, self.allSprites) 
+                    Sprites(pos, self.sol, "Grass", self.allSprites) 
                     if self.map[ordonnees+1][abscisses] == "H" and self.map[ordonnees][abscisses +1] == "H":
                         CollisionSprites(pos, self.house, "House", (self.allSprites, self.collisionSprites))
 
 
                 # puits 
                 if self.map[ordonnees][abscisses] == "W" :
-                    Sprites(pos, self.sol, self.allSprites) 
+                    Sprites(pos, self.sol, "Grass", self.allSprites) 
                     if self.map[ordonnees-1][abscisses] == "W" and self.map[ordonnees][abscisses +1] == "W":
                         CollisionSprites(pos, self.well, "Well", (self.allSprites, self.collisionSprites))
 
@@ -452,11 +452,11 @@ class LoadMap():
                 # DEMI NIVEAU MEDIEVALE
                 # base de la map
                 if self.mapBase[ordonnees][abscisses] == "~":
-                    Sprites(pos, self.Sol, self.allSprites)
+                    Sprites(pos, self.Sol,"SolChateau", self.allSprites)
                 elif self.mapBase[ordonnees][abscisses] == "o":
                     CollisionSprites(pos, self.MursAngleWS, "Mur", (self.collisionSprites, self.allSprites))
                 elif self.mapBase[ordonnees][abscisses] == "U":
-                    Sprites(pos, self.Socle, self.allSprites)
+                    Sprites(pos, self.Socle, "SoclePortal", self.allSprites)
                 elif self.mapBase[ordonnees][abscisses] == "D" :
                     if self.mapBase[ordonnees][abscisses-1] == "o" and self.mapBase[ordonnees][abscisses+ 1] =="o": # acces uniquemente pour le demi niveau
                         CollisionSprites(pos, self.Door, "Door", (self.collisionSprites, self.allSprites))

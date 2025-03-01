@@ -335,6 +335,9 @@ class Game(object):
                     if NIVEAU["Map"] == "NiveauBaseFuturiste":
                         
                         # kill portal
+                        for spriteElement in self.allSprites:
+                            if spriteElement.id == "PortalGif":
+                                spriteElement.kill()
 
                         # reset values cinmatique
                         self.cinematique = False

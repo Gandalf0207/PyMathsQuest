@@ -3,7 +3,7 @@ from math import atan2, degrees
 
 class Sprites(pygame.sprite.Sprite):
 
-    def __init__(self,pos : tuple, surf : any, groups : any) -> None:
+    def __init__(self,pos : tuple, surf : any, idName, groups : any) -> None:
         """Méthode initialisation class object sprite game sans collision.
         Input : pos = tuple, surf / groups = element pygame ; Output = None """
 
@@ -11,6 +11,7 @@ class Sprites(pygame.sprite.Sprite):
         super().__init__(groups)
         self.pos = pos
         self.image = surf
+        self.id = idName
         self.rect = self.image.get_frect(topleft = pos)
         self.ground = True # bool dessins des sprites
 
@@ -127,6 +128,7 @@ class River(pygame.sprite.Sprite):
         super().__init__(groups)
         self.state, self.frame_index = stateFormat, 0
         self.pos = pos
+        self.id = "River"
 
         # load all images sprites
         self.LoadImages()

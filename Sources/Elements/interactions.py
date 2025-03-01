@@ -107,7 +107,7 @@ class Interactions(object):
                         elif self.ObjectId == "Souche" or self.ObjectId == "Souche2":
                             #creation boue
                             boueImage = pygame.image.load(join("Images", "Sol", "Mud", "Mud.png")).convert_alpha()
-                            Sprites(self.Obj.pos, boueImage, groups[0]) # création de la boue
+                            Sprites(self.Obj.pos, boueImage, "Mud", groups[0]) # création de la boue
                             INVENTORY["Planks"] += 1 if self.ObjectId == "Souche" else 2
 
 
