@@ -156,7 +156,8 @@ ElementsFr = {
         "Cinematique1End" : "Le pnj à fuis à travers le portail, vous devez le rallumer",
         "UseVent" : "Vous vous baladez dans les conduits d'aération.", 
         "MakeExo" : "Pour réouvir le portail, vous devez résoudre cet exercice",
-
+        "PiloteMoveCafet" : "Le pilote s'est déplacé dans la salle de lancement, rejoignez le !",
+        "VaisseauSpacial" : "Vous montez dans le vaisseau",
         "ExoTexte" : {
             "Seconde" :{
                 "Numero0" :{

@@ -1675,6 +1675,28 @@ class NiveauBaseFuturiste(GestionNiveauMap):
 
     
 
+class NiveauBaseFuturisteVaisseau():
+    def __init__(self):
+       """Méhode initialisation valeur de la création de map demi niveau base futursite vaisseau"""
+       
+       # relancer si error de generation
+       self.ERROR_RELANCER = False
+
+    def Update(self):
+
+
+        AjoutJsonMapValue([[x, y]], "coordsMapObject", "Spawn") # on ajoute les coordonnées du spawn au fichier json
+        AjoutJsonMapValue([x, y], "coordsMapObject", "Exit") # on ajoute les coordonnées du spawn au fichier json
+        AjoutJsonMapValue([[x, y, "P", 6]], "coordsMapObject", "PNJ Coords") # on ajoute les coordonnées du spawn au fichier json
+
+
+        # On charge la map de base
+        AjoutJsonMapValue(self.map, "coordsMapBase", "AllMapInfo")
+
+        # On charche la map (collision)
+        AjoutJsonMapValue(self.baseMap, "coordsMapBase", "AllMapBase")
+
+        return self.map, self.baseMap, self.ERROR_RELANCER
 
 
 # mapp, baseMap =  NiveauPlaineRiviere(150,75,200, 200, 200).Update()

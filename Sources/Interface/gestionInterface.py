@@ -43,7 +43,7 @@ class GestionOtherInterfaces(object):
 
 
     def CloseAllInterface(self):
-
+        
         INFOS["Exo"] = False
 
         # interfaces globales
@@ -149,8 +149,8 @@ class GestionOtherInterfaces(object):
     def Update(self, event):
 
         #sécurité
-        if not self.isInterfaceOPEN:
-            self.CloseAllInterface() 
+        # if not self.isInterfaceOPEN:
+        #     self.CloseAllInterface() 
 
         if self.interface:
             self.interface.Update(event)

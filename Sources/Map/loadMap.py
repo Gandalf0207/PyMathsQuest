@@ -127,7 +127,7 @@ class LoadMap():
             if not INFOS["DemiNiveau"]:
                 self.map, self.mapBase, self.ERROR_RELANCER = NiveauBaseFuturiste().Update()
             else:
-                pass
+                self.map, self.mapBase, self.ERROR_RELANCER = NiveauBaseFuturisteVaisseau().Update()
         
         
         # si erreur : return
@@ -587,7 +587,10 @@ class LoadMap():
                 PNJOBJ(pos , "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
             if coordsPNJ[3] == 4 :
                 PNJOBJ(pos, "PNJ4", (self.allPNJ, self.allSprites, self.collisionSprites))
-            # pas de pnj 5 car il se déplace
+            if coordsPNJ[3] == 5 :
+                PNJOBJ(pos, "PNJ5", (self.allPNJ, self.allSprites, self.collisionSprites))
+            if coordsPNJ[3] == 6: # pnj 5 deplacement nv 3 | demi niveau
+                PNJOBJ(pos, "PNJ6", (self.allPNJ, self.allSprites, self.collisionSprites))
 
     
     def AddPont(self, element : str, coords : tuple) -> None:

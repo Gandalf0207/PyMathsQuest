@@ -99,6 +99,7 @@ class ReactorInterface(object):
             INFOS["CrashGame"] = True
 
         if self.clicks == 1:
+            STATE_HELP_INFOS[0] = "SeePNJ"
             INFOS["ReactorOn"] = True
             # changer toutes les portes : ouvrir 
             allCollisionSprites = self.gestionnaire.gestionnaire.collisionSprites

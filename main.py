@@ -111,7 +111,7 @@ class Game(object):
         getPlayerPosSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
         playerPosSpawn = getPlayerPosSpawn[0] 
             
-        if NIVEAU["Map"] == "NiveauBaseFuturiste":
+        if NIVEAU["Map"] == "NiveauBaseFuturiste" and not INFOS["DemiNiveau"] :
             self.cinematique = True # player apparait par le portail
             INFOS["HidePlayer"] = True
 
@@ -239,7 +239,7 @@ class Game(object):
                 if NIVEAU["Map"] == "NiveauBaseFuturiste":
                     self.allSprites.draw(self.player.rect.center, self.hideHotbar) # lockcam player
                 else:
-                    self.allSprites.draw(self.cinematiqueObject.pnjObject.rect.center, self.hideHotbar) # pnj lockcam
+                    self.allSprites.draw(self.cinematiqueObject.targetObject.rect.center, self.hideHotbar) # pnj lockcam
 
             # Afficher la minimap sur l'écran principal + menu settings all
             if not self.cinematique :
@@ -560,8 +560,10 @@ class GameToolBox(object):
 
     def ChangementDemiNiveau(self):
         self.fondu_au_noir()
-        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["OpenChateau"])
-
+        if NIVEAU["Map"] == "NiveauMedievale":
+            self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["OpenChateau"])
+        elif NIVEAU["Map"] == "BaseFuturiste" :
+            self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["VaisseauSpacial"])
 
         # Réinitialiser les groupes
         self.gestionnaire.allSprites.empty()  # Vide le groupe, supprime les sprites.

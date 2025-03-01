@@ -105,15 +105,19 @@ class PNJInterface(object):
                 if NIVEAU["Map"] == "NiveauBaseFuturiste":
                     if self.gestionnaire.pnjActuel == "PNJ1":
                         PNJ["PNJ1"] = True
+                        STATE_HELP_INFOS[0] = "UseVent"
 
                     elif self.gestionnaire.pnjActuel == "PNJ2":
                         PNJ["PNJ2"] = True
+                        STATE_HELP_INFOS[0] = "Electricity"
 
                     elif self.gestionnaire.pnjActuel == "PNJ3":
                         PNJ["PNJ3"] = True
+                        STATE_HELP_INFOS[0] = "SeePNJ"
+
                         # tp pnj 
                         self.gestionnaire.gestionnaire.fondu_au_noir()
-                        self.gestionnaire.gestionnaire.textScreen("")
+                        self.gestionnaire.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["PiloteMoveCafet"])
                         allPNJCoords =  LoadJsonMapValue("coordsMapObject", "PNJ Coords")
                         pnjPiloteCoords = allPNJCoords[4]
                         pos = (pnjPiloteCoords[0]*CASEMAP + 64, pnjPiloteCoords[1]*CASEMAP + 64) # calcul coords pygame
@@ -124,9 +128,13 @@ class PNJInterface(object):
 
                     elif self.gestionnaire.pnjActuel == "PNJ4":
                         PNJ["PNJ4"] = True
+                        STATE_HELP_INFOS[0] = "SeePNJ"
+
 
                     elif self.gestionnaire.pnjActuel == "PNJ5":
                         PNJ["PNJ5"] = True
+                        INFOS["DemiNiveau"] = True      
+                        STATE_HELP_INFOS[0] = "SeePNJ"                      
 
 
 

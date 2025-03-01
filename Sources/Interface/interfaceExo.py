@@ -189,14 +189,14 @@ class CreateExo:
                             self.Win()
                         else:
                             self.Loose()
-                        self.CloseInterface()
+                        self.gestionnaire.gameInterfaces.CloseAllInterface()
 
                     elif self.ButtonRect2.collidepoint(local_pos):
                         if self.bonneReponsePlace== 1:
                             self.Win()
                         else:
                             self.Loose()
-                        self.CloseInterface()
+                        self.gestionnaire.gameInterfaces.CloseAllInterface()
 
                     
                     elif self.ButtonRect3.collidepoint(local_pos):
@@ -204,4 +204,4 @@ class CreateExo:
                             self.Win()
                         else:
                             self.Loose()
-                        self.CloseInterface()
+                        self.gestionnaire.gameInterfaces.CloseAllInterface()

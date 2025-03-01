@@ -247,7 +247,7 @@ class Interactions(object):
 
                     if not self.electricityOn:
                         if [allVents[1][0], allVents[1][1]] == coordsVent:
-                            STATE_HELP_INFOS[0] = "Electricity"
+                            STATE_HELP_INFOS[0] = "SeePNJ"
                         else:
                             STATE_HELP_INFOS[0] = "UseVent"
 

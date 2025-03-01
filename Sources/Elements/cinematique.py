@@ -67,7 +67,7 @@ class Cinematique(object):
                 pnjObj.kill()
 
         elif NIVEAU["Map"] == "NiveauBaseFuturiste":
-            coordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
+            pass
 
 
 
