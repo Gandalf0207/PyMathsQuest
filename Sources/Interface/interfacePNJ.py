@@ -1,4 +1,5 @@
 from settings import *
+from Sources.Elements.sprites import *
 from Sources.Personnages.pnj import *
 
 class PNJInterface(object):
@@ -134,8 +135,64 @@ class PNJInterface(object):
                     elif self.gestionnaire.pnjActuel == "PNJ5":
                         PNJ["PNJ5"] = True
                         INFOS["DemiNiveau"] = True      
-                        STATE_HELP_INFOS[0] = "SeePNJ"                      
+                        STATE_HELP_INFOS[0] = "SeePNJ"    
 
+                    elif self.gestionnaire.pnjActuel == "PNJ6":
+                            PNJ["PNJ6"] = True
+                            self.gestionnaire.gestionnaire.fondu_au_noir()
+                            self.gestionnaire.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["CrashVaisseau"])
+
+
+                            # remplacement des textures 
+                            allMurSprites = []
+                            allVitreSprites = []
+                            allPanelControlBloc = []
+                            for sprite in self.gestionnaire.gestionnaire.allSprites:
+                                if sprite.id in ["Wall", "Wall2"]:
+                                    allMurSprites.append(sprite)
+                                elif sprite.id == "Vitre":
+                                    allVitreSprites.append(sprite)
+                                elif sprite.id == "TableauDeBord":
+                                    allPanelControlBloc.append(sprite)
+
+                            murModif = sample(allMurSprites, (len(allMurSprites)//randint(2,3)))
+                            vitreModif = sample(allVitreSprites, randint(1,3))
+                            PanelBlocControleBlocModif = sample(allPanelControlBloc, randint(1,3))
+
+                            mur  = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+                            vitre  = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+                            panelBloc = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+
+
+                            for sprite in murModif:
+                                pos = sprite.pos
+                                sprite.kill()
+                                CollisionSprites(pos, mur, "Wall", (self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites))
+                            
+                            for sprite in vitreModif:
+                                pos = sprite.pos
+                                sprite.kill()
+                                CollisionSprites(pos, vitre, "Vitre", ((self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites)))
+
+                            for sprite in PanelBlocControleBlocModif:
+                                pos = sprite.pos
+                                sprite.kill()
+                                CollisionSprites(pos, panelBloc, "TableauDeBord", (self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites))
+
+
+                            # remplacement du pnj
+                            allPNJ = self.gestionnaire.allPNJ
+                            for ObjPNJ in allPNJ:
+                                pos = ObjPNJ.pos
+                                pos = (pos[0]*CASEMAP + 64, pos[1]*CASEMAP + 64) # calcul coords pygame
+                                ObjPNJ.kill()
+                                PNJOBJ(pos, "PNJ7", (self.gestionnaire.allPNJ, self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites) )
+
+                            self.gestionnaire.gestionnaire.ouverture_du_noir(self.gestionnaire.gestionnaire.player.rect.center)
+
+                    elif self.gestionnaire.pnjActuel == "PNJ7":
+                        PNJ["PNJ7"] = True
+                        STATE_HELP_INFOS[0] = "EscapeVaisseau"    
 
 
         else:

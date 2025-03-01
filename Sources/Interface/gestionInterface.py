@@ -64,7 +64,9 @@ class GestionOtherInterfaces(object):
         # reset 
         self.interface = None
 
+        INFOS["HideHotBar"] = False
 
+        
     def GestionInterfaceGlobale(self, event):
         # interface element hotbar hotbar
         if event.key == KEYSBIND["settings"]:
@@ -104,8 +106,9 @@ class GestionOtherInterfaces(object):
         if current_time - self.last_click_time > self.click_delay:
             self.last_click_time = current_time
 
-
-            if self.interface != None and self.isInterfaceOPEN and argsSpecifique not in ["PNJOpen", "PNJClose"]:
+            if self.interface != None and elementSelf != None:
+                pass
+            elif self.interface != None and self.isInterfaceOPEN and argsSpecifique not in ["PNJOpen", "PNJClose"]:
                 self.CloseAllInterface()
             else:
                 
@@ -153,5 +156,7 @@ class GestionOtherInterfaces(object):
         #     self.CloseAllInterface() 
 
         if self.interface:
+            INFOS["HideHotBar"] = True
             self.interface.Update(event)
+
 

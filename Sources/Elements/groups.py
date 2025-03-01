@@ -40,11 +40,11 @@ class AllSprites(pygame.sprite.Group):
         return (target_screen_x, target_screen_y)
 
 
-    def draw(self, target_pos: tuple, hideHotbar) -> None:
+    def draw(self, target_pos: tuple) -> None:
         """Méthode pour dessiner tout les éléments autour de la cible (lock cam). Input : tuple coords target, Output : None"""
         
         # aaptation de la lock cam en fonction de la taille de la map
-        if hideHotbar:
+        if INFOS["HideHotBar"]:
             if INFOS["DemiNiveau"]:
                 if NIVEAU["Map"] == "NiveauMedievale":
                     self.map_width = 11 * CASEMAP
@@ -84,6 +84,6 @@ class AllSprites(pygame.sprite.Group):
 
 
         # Appliquer le masque de vision smooth
-        if not INFOS["ReactorOn"] and NIVEAU["Map"] =="NiveauBaseFuturiste":
+        if not INFOS["ReactorOn"] and NIVEAU["Map"] =="NiveauBaseFuturiste" and not INFOS["DemiNiveau"]:
             vision_surface = self.create_fog(target_pos)
             self.display_surface.blit(vision_surface, (0, 0))

@@ -252,6 +252,12 @@ class Interactions(object):
                             STATE_HELP_INFOS[0] = "UseVent"
 
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center)
+                
+                if self.ObjectId == "DoorFuturisteDemiNiveau":
+                    self.gestionnaire.fondu_au_noir()
+
+                    INFOS["Exo"] = True # lancement exo dans main (changement variable)
+                    self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["MakeExo"]) # text animation
 
     def Isclose(self) -> bool :
         """Méthode calcul de proximité entre le player et les obj interactions
@@ -288,6 +294,8 @@ class Interactions(object):
                 if Object.id  == "Vent" and not PNJ["PNJ1"]:
                     return False
                 if Object.id == "ReactorBloc" and not PNJ["PNJ2"]:
+                    return False
+                if Object.id  == "DoorFuturisteDemiNiveau" and not PNJ["PNJ7"]:
                     return False
         
 

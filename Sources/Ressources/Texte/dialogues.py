@@ -138,8 +138,33 @@ DialoguesFr = {
                 "Dialogue1": "(Cet âne n’a pas l’air de vouloir rentrer chez lui)"
             }
         },
-    },
+        "PNJ6": {
+            "Nom" : "Âne fuyard",
+            "Principal": {
+                "Dialogue1": "fgsgdsfg1(Il semble que cet âne se soit enfui, il y a probabment une ere à proté. l  laissé tber deuobjets, dirait un paremin et une pioche.)",
+                "Dialogue2": "sdgsdfgsdfgsdfgsdfgsd2(Il semble que cet âne se soit enfui, il y a probabment une ere à proté. l  laissé tber deuobjets, dirait un paremin et une pioche.)",
+                "Dialogue3": "3dsfgsdfgsdfgdsfgsdfgsg(Il semble que cet âne se soit enfui, il y a probabment une ere à proté. l  laissé tber deuobjets, dirait un paremin et une pioche.)",
+                },
 
+
+            "Alternatif": {
+                "Dialogue1": "(Cet âne n’a pas l’air de vouloir rentrer chez lui)"
+            }
+        },
+        "PNJ7": {
+            "Nom" : "Âne fuyard",
+            "Principal": {
+                "Dialogue1": "aaaaaaaaaaaaaaaaaaaaaaaaaa1(Il semble que cet âne se soit enfui, il y a probabment une ere à proté. l  laissé tber deuobjets, dirait un paremin et une pioche.)",
+                "Dialogue2": "bbbbbbbbbbbbbbbbbbbbbbbb2(Il semble que cet âne se soit enfui, il y a probabment une ere à proté. l  laissé tber deuobjets, dirait un paremin et une pioche.)",
+                "Dialogue3": "cccccccccccccccccccccc3(Il semble que cet âne se soit enfui, il y a probabment une ere à proté. l  laissé tber deuobjets, dirait un paremin et une pioche.)",
+                },
+
+
+            "Alternatif": {
+                "Dialogue1": "(Cet âne n’a pas l’air de vouloir rentrer chez lui)"
+            }
+        },
+    },
 }
 
 
@@ -175,7 +200,7 @@ DialoguesFr = {
 
 
 
-
+# à traduire
 
 DialoguesEn =  {
     "NiveauPlaineRiviere" : {

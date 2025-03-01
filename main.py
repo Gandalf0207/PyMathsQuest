@@ -44,7 +44,6 @@ class Game(object):
         self.interface_exo = False
         self.cinematique = False # cinématique
         self.cinematiqueObject = None # obj de la cinematique 
-        self.hideHotbar = False
         self.demiNiveau = False
 
         # bool check map : 
@@ -155,7 +154,7 @@ class Game(object):
             # si exo réussit
             if INFOS["ExoPasse"]:
                 INFOS["ExoPasse"] = False
-                self.hideHotbar = False
+                INFOS["HideHotBar"] = False
                 self.GameTool.ChangementNiveau() # changement niveau
 
             # si passage en demi niveau
@@ -215,7 +214,7 @@ class Game(object):
                         
                         # affichge ou non de la hotbar
                         if event.key == KEYSBIND["hideHotBar"]:
-                            self.hideHotbar = True if not self.hideHotbar else False
+                            INFOS["HideHotBar"] = True if not INFOS["HideHotBar"] else False
                     
                     # open au clic des interface de la hotbar
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -234,12 +233,12 @@ class Game(object):
 
             # si pas de cinématique
             if not self.cinematique:
-                self.allSprites.draw(self.player.rect.center, self.hideHotbar) # lockcam player
+                self.allSprites.draw(self.player.rect.center) # lockcam player
             else:
                 if NIVEAU["Map"] == "NiveauBaseFuturiste":
-                    self.allSprites.draw(self.player.rect.center, self.hideHotbar) # lockcam player
+                    self.allSprites.draw(self.player.rect.center) # lockcam player
                 else:
-                    self.allSprites.draw(self.cinematiqueObject.targetObject.rect.center, self.hideHotbar) # pnj lockcam
+                    self.allSprites.draw(self.cinematiqueObject.targetObject.rect.center) # pnj lockcam
 
             # Afficher la minimap sur l'écran principal + menu settings all
             if not self.cinematique :
@@ -248,7 +247,7 @@ class Game(object):
                 self.ideaTips.Update()
                 self.settingsAll.Update()
 
-                if not self.hideHotbar: # check hide bool
+                if not INFOS["HideHotBar"]: # check hide bool
                     self.displaySurface.blit(self.bgHotBar, (0, WINDOW_HEIGHT-160)) # hotbar bg
                     if not self.demiNiveau : # pas besoin de la minimap dans les demi niveau
                         self.displaySurface.blit(self.minimap_surface, (10, WINDOW_HEIGHT-160))
@@ -344,7 +343,7 @@ class Game(object):
                         self.cinematiqueObject = None
                     
 
-                    self.allSprites.draw(self.player.rect.center, self.hideHotbar)
+                    self.allSprites.draw(self.player.rect.center)
 
             
             # update jusqu'a construction du pont / placement bateau
@@ -483,7 +482,7 @@ class GameToolBox(object):
         alpha = 255
 
         while alpha > 0:
-            self.gestionnaire.allSprites.draw(targetPos, self.gestionnaire.hideHotbar)
+            self.gestionnaire.allSprites.draw(targetPos)
             # Ici, ne redessinez pas le fond du jeu, car il est déjà chargé et affiché
             # simplement superposez la surface noire pour l'effet de transparence.
 

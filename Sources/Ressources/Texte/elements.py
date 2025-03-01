@@ -84,6 +84,7 @@ ElementsFr = {
                 "SeePNJ" : "Discuter avec le pnj sur la map. Regarder la minimap et suivez le chemin !",
                 "Electricity" : "Vous devez activer l'électricité",
                 "UseVent" : "Vous devez utiliser les conduits d'aération", 
+                "EscapeVaisseau": "Vous devez vous échaper du vaisseau par la porte arrière."
 
             },
         },
@@ -177,6 +178,7 @@ ElementsFr = {
         "MakeExo" : "Pour réouvir le portail, vous devez résoudre cet exercice",
         "PiloteMoveCafet" : "Le pilote s'est déplacé dans la salle de lancement, rejoignez le !",
         "VaisseauSpacial" : "Vous montez dans le vaisseau",
+        "CrashVaisseau" : "Le vaisseau s'est crash, soit meilleur stp",
         "ExoTexte" : {
             "Seconde" :{
                 "Numero0" :{

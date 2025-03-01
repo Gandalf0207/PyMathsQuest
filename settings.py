@@ -119,9 +119,10 @@ INFOS = {
     "Difficulte" : False,
     "Exo" : False, 
     "ExoPasse" : False,
-    "DemiNiveau" :False,
+    "DemiNiveau" : False,
     "ChangementNiveau" : False,
     "ChangementAnnee" : False,
+    "HideHotBar" : False,
     "RebindingKey": False,
     "ReactorOn" : False,
     "HidePlayer" : False,
@@ -184,7 +185,9 @@ PNJ = {
     "PNJ2" : False, 
     "PNJ3" : False, 
     "PNJ4" : False, 
-    "PNJ5" : False
+    "PNJ5" : False, 
+    "PNJ6" : False, 
+    "PNJ7" : False,
 }
 
 
