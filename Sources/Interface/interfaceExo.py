@@ -155,14 +155,6 @@ class CreateExo:
 
         INFOS["ExoPasse"] = False
 
-    def CloseInterface(self) -> None:
-        """Méthode de fermeture de l'interface. Input / Output : None"""
-
-        # changement des boolean de check
-        self.gestionnaire.INTERFACE_OPEN = False
-        self.gestionnaire.interface_exo = False
-        INFOS["Exo"] = False
-
 
     def Update(self, event : any) -> None:
         """Méthode d'update général pour l'exercice interface, et de gestion de réponse (clic)
@@ -197,14 +189,14 @@ class CreateExo:
                             self.Win()
                         else:
                             self.Loose()
-                        self.CloseInterface()
+                        self.gestionnaire.gameInterfaces.CloseAllInterface()
 
                     elif self.ButtonRect2.collidepoint(local_pos):
                         if self.bonneReponsePlace== 1:
                             self.Win()
                         else:
                             self.Loose()
-                        self.CloseInterface()
+                        self.gestionnaire.gameInterfaces.CloseAllInterface()
 
                     
                     elif self.ButtonRect3.collidepoint(local_pos):
@@ -212,4 +204,4 @@ class CreateExo:
                             self.Win()
                         else:
                             self.Loose()
-                        self.CloseInterface()
+                        self.gestionnaire.gameInterfaces.CloseAllInterface()

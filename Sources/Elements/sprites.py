@@ -3,7 +3,7 @@ from math import atan2, degrees
 
 class Sprites(pygame.sprite.Sprite):
 
-    def __init__(self,pos : tuple, surf : any, groups : any) -> None:
+    def __init__(self,pos : tuple, surf : any, idName, groups : any) -> None:
         """Méthode initialisation class object sprite game sans collision.
         Input : pos = tuple, surf / groups = element pygame ; Output = None """
 
@@ -11,6 +11,7 @@ class Sprites(pygame.sprite.Sprite):
         super().__init__(groups)
         self.pos = pos
         self.image = surf
+        self.id = idName
         self.rect = self.image.get_frect(topleft = pos)
         self.ground = True # bool dessins des sprites
 
@@ -88,6 +89,36 @@ class CollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(0,-60)
             case "CerclePortal":
                 self.hitbox = self.rect.inflate(-128,-128)
+            case "Reacteur":
+                self.hitbox = self.rect.inflate(0,0)
+            case "Cafet":
+                self.hitbox = self.rect.inflate(0,0)
+            case "Essence":
+                self.hitbox = self.rect.inflate(0,0)
+            case "Lancement":
+                self.hitbox = self.rect.inflate(0,0)
+            case "Vent":
+                self.hitbox = self.rect.inflate(-128,-128)
+            case "Wall":
+                self.hitbox = self.rect.inflate(0,-10)
+            case "Wall2" :
+                self.hitbox = self.rect.inflate(0,-110)
+            case "DoorFuturiste":
+                self.hitbox = self.rect.inflate(0,-60)
+            case "ReactorBloc":
+                self.hitbox = self.rect.inflate(-128,-128)
+            case "Caisses":
+                self.hitbox = self.rect.inflate(-80, -80)
+            case "TableauDeBord": 
+                self.hitbox = self.rect.inflate(0,0)
+            case "Siege":
+                self.hitbox = self.rect.inflate(-40,-40)
+            case "DoorFuturisteDemiNiveau":
+                self.hitbox = self.rect.inflate(0,-60)
+
+
+
+
 
             case _:  # par défaut
                 self.hitbox = self.rect.inflate(-70,-140)
@@ -106,6 +137,7 @@ class River(pygame.sprite.Sprite):
         super().__init__(groups)
         self.state, self.frame_index = stateFormat, 0
         self.pos = pos
+        self.id = "River"
 
         # load all images sprites
         self.LoadImages()
@@ -162,4 +194,61 @@ class River(pygame.sprite.Sprite):
         if current_time - self.time_last_update > 300:  # Changer de frame toutes les 100 ms
             self.current_frame = (self.current_frame + 1) % len(self.frames["RiverStraightN-Sx128"])
             self.image = self.frames[self.state][self.current_frame]
+            self.time_last_update = current_time
+
+
+class AnimatedSprites(pygame.sprite.Sprite):
+    def __init__(self, pos : tuple, groups : any, Id, path) -> None:
+        """Méthode initialisation sprite collision spécifique (rivière).
+        Input : pos : tuple, groups  : element pygame, stateFormat : str (infos type de rivière). Output : None"""
+        
+        # Initialisation elements
+        super().__init__(groups)
+        self.frame_index =  0
+        self.pos = pos
+
+        
+        self.id = Id
+
+        # Images et pos (rect)
+        self.path = path
+        self.image = pygame.image.load(join(path, "0.gif")).convert_alpha() # Image initiale
+        self.rect = self.image.get_rect(topleft=pos)
+        self.ground = True # bool dessins des sprites
+
+        
+        # load all images sprites
+        self.LoadImages()
+
+        # information sur animation
+        self.current_frame = 0
+        self.animation_speed = 0.3  # Vitesse de l'animation
+        self.time_last_update = pygame.time.get_ticks()
+
+
+    def LoadImages(self) -> None:
+        """Méthode de chargement de toutes les frames de rivière
+        Input / Output : None"""
+
+        self.frames = []
+
+        # parcours dossier et get images / patch
+        for folder_path, sub_folders, file_names in walk(self.path):
+            if file_names:
+                # modification du dico de stockage
+                for file_name in sorted(file_names, key=lambda name: int(name.split('.')[0])):
+                    full_path = join(folder_path, file_name)
+                    surf = pygame.image.load(full_path).convert_alpha()
+                    self.frames.append(surf)
+
+
+    def update(self, *args) -> None:
+        """Méthode d'update des sprite de la rivière pour l'animation.
+        Input : *args : tout autre args,  Output : None"""
+
+        # Animation des frames
+        current_time = pygame.time.get_ticks()
+        if current_time - self.time_last_update > 300:  # Changer de frame toutes les 100 ms
+            self.current_frame = (self.current_frame + 1) % len(self.frames)
+            self.image = self.frames[self.current_frame]
             self.time_last_update = current_time

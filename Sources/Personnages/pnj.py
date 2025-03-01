@@ -1,8 +1,8 @@
 from settings import *
-from ScriptAlgo.astar import *
-from Sources.Elements.interface import *
+from Sources.ScriptAlgo.astar import *
+from Sources.Elements.cinematique import *
 
-class PNJ(pygame.sprite.Sprite):
+class PNJOBJ(pygame.sprite.Sprite):
     
     def __init__(self, pos : tuple ,numpnj : str,  groups : any) -> None:
         """Méthode initialisation object pnj
@@ -12,13 +12,14 @@ class PNJ(pygame.sprite.Sprite):
         super().__init__(groups)
         self.numPNJ = numpnj
         self.pos = (pos[0] // CASEMAP, pos[1] // CASEMAP) # pos sur double list
+        self.id = "PNJ"
 
         # images + hitbox
         self.direction = "down"
         self.state, self.frame_index = self.direction, 0
         self.image = pygame.image.load(join("Images","PNJ", NIVEAU["Map"], numpnj,"down", "0.png")).convert_alpha() # première image 
         self.rect = self.image.get_frect(center = pos)
-        self.hitbox = self.rect.inflate(-60,0) # collision
+        self.hitbox = self.rect.inflate(-60,-20) # collision
 
         # Centrer la hitbox par rapport à l'image
         self.hitbox.center = self.rect.center
@@ -132,7 +133,7 @@ class PNJ(pygame.sprite.Sprite):
         return pointSuivant, pathDeplacement
 
 
-    def Update(self, dt : int, pointSuivant : tuple, pathDeplacement : list) -> any:
+    def UpdateCinematique(self, dt : int, pointSuivant : tuple, pathDeplacement : list) -> any:
         """Méthode update du déplacement du pnj lors de la cinématique
         Input : int, tuple, list
         Ouput : tuple, list"""
@@ -147,17 +148,17 @@ class PNJ(pygame.sprite.Sprite):
 
 
 class GestionPNJ(object):
-    def __init__(self, displaySurface : any, allpnjGroup : any, INTERFACE_OPEN : bool, mapCollision : list, gestionnaire, gestionSound) -> None:
+    def __init__(self, displaySurface : any, allpnjGroup : any, mapCollision : list, gestionnaire, gestionSound, gameInterfaces) -> None:
         """Méthode initialisation gestion principal pnj : proche, interface discussion...
-        Input : displaySurface / allpnGroupe : pygame element, niveau : int, INTERFACE_OPEN : bool (check all interface), mapCollision : list (check path cinématique)"""
+        Input : displaySurface / allpnGroupe : pygame element, niveau : int : bool (check all interface), mapCollision : list (check path cinématique)"""
 
         # Initialisation valeur de main
         self.gestionnaire = gestionnaire
         self.displaySurface = displaySurface        
         self.allPNJ = allpnjGroup
-        self.INTERFACE_OPEN = INTERFACE_OPEN
         self.map = mapCollision # obstacle pour cinématique déplacement 
         self.gestionSound = gestionSound
+        self.gameInterfaces = gameInterfaces
 
         # Initialisation value de base
         self.npc_screen_pos = [0,0]
@@ -199,7 +200,7 @@ class GestionPNJ(object):
             goal = LoadJsonMapValue("coordsMapObject", "Exit")
             pathAcces = ["~", "U", "u"]
 
-        self.cinematiqueObject = CinematiquePNJ(goal, self.pnjObj, self.map, pathAcces)
+        self.cinematiqueObject = Cinematique(goal, self.pnjObj, self.map, pathAcces)
 
     def EndCinematique(self) -> None:
         """Met fin à la cinématique.
@@ -267,120 +268,20 @@ class GestionPNJ(object):
         # pas de pnj à proximité
         return False
         
-
-    def OpenInterfaceElementClavier(self, INTERFACE_OPEN : bool) -> bool:
-        """Méthode ouverture / création / fermeture interface de discussion pnj par clavier
-        Input : INTERFE_OPEN : bool (interface générale check); Output : bool"""
-
-        self.INTERFACE_OPEN = INTERFACE_OPEN
-
-        if not self.INTERFACE_OPEN: # sécurité
-            self.openInterface = False 
-
-        if self.check: # si pnj à proximité
-            if not self.openInterface and not self.INTERFACE_OPEN: # aucun interfac ouvert
-                # ouverture interface
-                self.openInterface = True
-                self.INTERFACE_OPEN = True
-                self.Interface = PNJInterface(self)
-        else:
-            if self.openInterface: # si interface déjà ouvert
-                # fermeture
-                self.openInterface = False
-                self.INTERFACE_OPEN = False
-
-        # retour state interface global
-        return self.INTERFACE_OPEN
+ 
     
-    
-    def update(self, playerPos : tuple, INTERFACE_OPEN : bool, event: any) -> any:
+    def update(self, playerPos : tuple, event: any) -> any:
         """Méthode d'update de l'interface d'appel de discussion + gestion pnj / proximité.
-        Intput : playerPos : tuple, INTERFACE_OPEN : bool, event : element pygame. Output : bool"""
-
-        self.INTERFACE_OPEN = INTERFACE_OPEN
-
-        if not self.INTERFACE_OPEN: # sécurité
-            self.openInterface = False 
+        Intput : playerPos : tuple, S : bool, event : element pygame. Output : bool"""
 
         self.check = self.isClose(playerPos) # sécurité 2
-        if not self.check: # si pas de proximité, fermeture de l'interface s'il est ouvert
-            if self.openInterface:
-                self.openInterface = False
-                self.INTERFACE_OPEN = False 
-
-        if self.openInterface: # update de l'interface s'il existe
-            self.Interface.Update(event)
+    
+        if self.check:
+            if event.type == pygame.KEYDOWN: # si pas de proximité, fermeture de l'interface s'il est ouvert
+                if event.key == KEYSBIND["action"]:
+                    self.gameInterfaces.GestionInterfaceSpecifique("PNJOpen", self)
+        else:   
+            self.gameInterfaces.GestionInterfaceSpecifique("PNJClose", self)
 
         # retour state interface global + etat cinématique
-        return self.INTERFACE_OPEN, self.cinematique, self.cinematiqueObject
-
-
-
-class CinematiquePNJ(object):
-    def __init__(self, goal : list, pnjObject : any, mapCalcul : list, pathAccessible : list) -> None:
-        """Méthode initialisation des valeurs pour la cinématique"""
-
-        # Initialisation des valeurs
-        self.pnjObject = pnjObject
-        self.pos = self.pnjObject.pos  # Position sur la double liste
-        print(goal)
-        self.goal = (goal[0], goal[1])
-        self.mapCalcul = mapCalcul
-        self.pathAccessible = pathAccessible
-
-        # Récupération des attributs graphiques du PNJ
-        self.rect = self.pnjObject.rect  # Utiliser la hitbox comme référence principale
-        self.hitbox = self.pnjObject.hitbox  # Synchroniser avec la hitbox du PNJ
-
-        # Calcul et définition du chemin
-        self.GetPath()
-        self.SetPath()
-
-
-
-    def GetPath(self) -> None:
-        """Calcul du chemin à l'aide de l'algorithme A*"""
-        self.pathDeplacement = Astar(self.pos, self.goal, self.mapCalcul, self.pathAccessible).a_star()
-        self.pathDeplacement = [(x * CASEMAP, y * CASEMAP) for x, y in self.pathDeplacement]  # Conversion en coordonnées pygame
-
-    def SetPath(self) -> None:
-        """Définit un nouveau chemin pour le PNJ"""
-        if self.pathDeplacement:  # Vérifier que le chemin n'est pas vide
-            self.pointSuivant = self.pathDeplacement.pop(0)  # Prendre le premier point comme cible
-        else:
-            self.pointSuivant = None  # Pas de chemin à suivre
-
-
-    def Replacement(self, allPNJ):
-        """Replace le PNJ une case au-dessus de la position cible."""
-
-        if NIVEAU["Map"] == "NiveauPlaineRiviere":
-
-            # Positionner le PNJ en fonction de l'objectif
-            target_x, target_y = self.goal[0], self.goal[1] - 1  # Une case au-dessus
-
-            # Ajuster les positions de la hitbox et du rectangle
-            self.hitbox.center = (target_x * CASEMAP, target_y * CASEMAP)  # Position en pixels
-            self.rect.center = self.hitbox.center  # Synchroniser la rect avec la hitbox
-
-            # Mettre à jour la position logique de l'objet PNJ si nécessaire
-            self.pnjObject.pos = (target_x, target_y)
-
-        elif NIVEAU["Map"] == "NiveauMedievale":
-            for pnjObj in allPNJ:
-                pnjObj.kill()
-
-            
-
-
-    def Update(self, dt):
-        """Méthode update : appel class pnj update pour l'animation et les déplacements"""
-
-        # déplacemement + animation
-        self.pointSuivant, self.pathDeplacement = self.pnjObject.Update(dt, self.pointSuivant, self.pathDeplacement)
-        
-        # check de fin cinématique ou non.
-        if self.pathDeplacement != []:
-            return True, False
-        else:
-            return False, True
+        return self.cinematique, self.cinematiqueObject

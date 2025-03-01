@@ -1,5 +1,4 @@
 from settings import *
-from Sources.Elements.interface import *
 
 
 class MiniMap:
@@ -35,6 +34,7 @@ class MiniMap:
         self.carre8 = pygame.image.load(join("Images", "MiniMap", "Carre8.png")).convert_alpha()
         self.carre10 = pygame.image.load(join("Images", "MiniMap", "Carre10.png")).convert_alpha()
         self.carre11 = pygame.image.load(join("Images", "MiniMap", "Carre11.png")).convert_alpha()
+        self.carre12 = pygame.image.load(join("Images", "MiniMap", "Carre12.png")).convert_alpha()
 
 
 
@@ -61,6 +61,12 @@ class MiniMap:
                     self.static_surface.blit(self.carre7, pos)
                 elif cell == "C": # murailles
                     self.static_surface.blit(self.carre11, pos)
+                elif cell == "&":
+                    self.static_surface.blit(self.carre12, pos)
+                elif NIVEAU["Map"] == "NiveauBaseFuturiste" and cell in ["-" , "G"]:
+                    self.static_surface.blit(self.carre8, pos)
+                elif cell == ".":
+                    self.static_surface.blit(self.carre2, pos)
                 else: # reste = herbe 
                     self.static_surface.blit(self.carre1, pos)
                 
@@ -159,11 +165,9 @@ class InfosTips:
         self.GetText()
         self.BuildElement()
 
-
-
 class SettingsAll:
 
-    def __init__(self, screen : any, gestionSound, gestionnaire) -> None:
+    def __init__(self, screen : any, gestionSound, gameInterfaces, gestionnaire) -> None:
         """Méthode initialisation de la box d'accès à tout les settings et utilitaires (bundle, settings, sound, book).
         Input : screen = (element pygame), boolean = check interface global """
 
@@ -171,10 +175,8 @@ class SettingsAll:
         self.allSettingsSurface = screen
         self.gestionSound = gestionSound
         self.gestionnaire = gestionnaire
+        self.gameInterfaces = gameInterfaces
 
-        # Création éléments
-        self.InterfaceOpen = False # bool de vérification
-        self.interfaceElement = None # object
 
         # Chargement images + éléments button pygame
         self.loadImage()
@@ -212,10 +214,6 @@ class SettingsAll:
         """Méthode : Appel des méthode de gestion des interfaces par clic souris.
         Input : event = (element pygame), bool = checl interface global; Output : bool"""
 
-
-        if not self.gestionnaire.INTERFACE_OPEN: # sécurité
-            self.openInterface = False 
-
         # Obtenez les coordonnées globales de l'événement
         global_pos = event.pos  # Coordonnées relatives à la fenêtre
 
@@ -231,106 +229,19 @@ class SettingsAll:
 
         # Si collision au clic avec la box, alors on appel la méthode de la gestion de l'interface en question
         if self.ButtonRectWheel.collidepoint(local_pos):
-            self.GestionInterfaceSettings()
+            self.gameInterfaces.GestionInterfaceSpecifique("Settings", self)
 
         elif self.ButtonRectSound.collidepoint(local_pos): 
-            self.GestionInterfaceSound()
+            self.gameInterfaces.GestionInterfaceSpecifique("Sound", self)
 
         elif self.ButtonRectBundle.collidepoint(local_pos):
-            self.GestionInterfaceBundle()
+            self.gameInterfaces.GestionInterfaceSpecifique("Bundle", self)
 
         elif self.ButtonRectBook.collidepoint(local_pos): 
-            self.GestionInterfaceBook()
-
-    
-
-    def OpenInterfaceElementClavier(self, event : any) -> bool:
-        """Méthode : Appel des méthode de gestion des interfaces par touches clavier.
-        Input : event = (element pygame), bool = checl interface global; Output : bool"""
+            self.gameInterfaces.GestionInterfaceSpecifique("Book", self)
 
 
-        if self.gestionnaire.INTERFACE_OPEN: # sécurité
-            self.openInterface = False 
-
-        # appel des méthode quand touche du clavier correspondante
-        if event.key == KEYSBIND["settings"] :
-            self.GestionInterfaceSettings()
-
-        elif event.key ==KEYSBIND["sound"]  : 
-            self.GestionInterfaceSound()
-
-        elif event.key == KEYSBIND["inventory"] :
-            self.GestionInterfaceBundle()
-
-        elif event.key == KEYSBIND["book"]  : 
-            self.GestionInterfaceBook()
-
-
-    def GestionInterfaceSettings(self) -> None:
-        """Méthode de gestion spécifique interface ouverture / fermeture
-        Input / Output : None"""
-
-        if not self.gestionnaire.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
-            self.OpenInterface()
-            self.interfaceElement = SettingsInterface(self)
-        
-        elif self.InterfaceOpen: # fermeture interface actuel
-            self.CloseInterface()
-
-
-
-    def GestionInterfaceSound(self) -> None:
-        """Méthode de gestion spécifique interface ouverture / fermeture
-        Input / Output : None"""
-
-        if not self.gestionnaire.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
-            self.OpenInterface()
-            self.interfaceElement = SoudInterface(self)
-        
-        elif self.InterfaceOpen: # fermeture interface actuel
-            self.CloseInterface()
-
-
-    def GestionInterfaceBundle(self) -> None:
-        """Méthode de gestion spécifique interface ouverture / fermeture
-        Input / Output : None"""
-
-        if not self.gestionnaire.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
-            self.OpenInterface()
-            self.interfaceElement = BundleInterface(self)
-        
-        elif self.InterfaceOpen: # fermeture interface actuel
-            self.CloseInterface()
-
-
-    def GestionInterfaceBook(self) -> None:
-        """Méthode de gestion spécifique interface ouverture / fermeture
-        Input / Output : None"""
-
-        if not self.gestionnaire.INTERFACE_OPEN and not self.InterfaceOpen: # check interface déjà ouvert ou non
-            self.OpenInterface()
-            self.interfaceElement = BookInterface(self)
-        
-        elif self.InterfaceOpen: # fermeture interface actuel
-            self.CloseInterface()
-
-    def CloseInterface(self) -> None:
-        """Méthode de fermeture de l'interface. Input / Output : None"""
-
-        # changement des boolean de check
-        self.InterfaceOpen = False
-        self.gestionnaire.INTERFACE_OPEN = False
-
-    def OpenInterface(self) -> None:
-        """Méthode de fermeture de l'interface. Input / Output : None"""
-
-        # changement des boolean de check
-        self.InterfaceOpen = True
-        self.gestionnaire.INTERFACE_OPEN = True
-
-
-
-    def Update(self, event) -> None:
+    def Update(self) -> None:
         """Méthode de mise à jout de la box settings all + interface sur ouvert.
         Input / Output : None"""
         
@@ -354,10 +265,3 @@ class SettingsAll:
         self.allSettingsSurface.blit(self.surfaceButtonSound, (self.ButtonRectSound.x, self.ButtonRectSound.y))
         self.allSettingsSurface.blit(self.surfaceButtonBundle, (self.ButtonRectBundle.x,  self.ButtonRectBundle.y))
         self.allSettingsSurface.blit(self.surfaceButtonWheel, (self.ButtonRectWheel.x, self.ButtonRectWheel.y))
-
-        # Si interface, alors mise à jour de l'interface
-        if self.InterfaceOpen:
-            self.interfaceElement.Update(event)
-        
-        
-

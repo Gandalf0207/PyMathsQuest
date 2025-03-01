@@ -9,6 +9,7 @@ class Player(pygame.sprite.Sprite):
         # initialisation
         super().__init__(groups)
         self.collision_sprites = collision_sprites
+        self.id = "Player"
         # sound
         pygame.mixer.init()
         self.canal2 = pygame.mixer.Channel(2)
@@ -16,12 +17,16 @@ class Player(pygame.sprite.Sprite):
         self.grass1 = join("Sound", "EffetSonore", "GrassWalk", "WalkGrass1.mp3")
         self.grass2 = join("Sound", "EffetSonore", "GrassWalk", "WalkGrass2.mp3")
 
+
         # load image
         self.load_images()
         
         # création element base
         self.state, self.frame_index = "down", 0
-        self.image = pygame.image.load(join("Images","Player", "down", "0.png")).convert_alpha() # première image 
+        if INFOS["HidePlayer"]:
+            self.image = self.hidePlayerPng
+        else:
+            self.image = pygame.image.load(join("Images","Player", "down", "0.png")).convert_alpha() # première image 
         self.rect = self.image.get_frect(center = pos)
         self.hitbox_rect = self.rect.inflate(-60,0) # collision
 
@@ -33,6 +38,7 @@ class Player(pygame.sprite.Sprite):
     def load_images(self) -> None:
         """Méthode de chargement de toutes les images pour l'animation
         Input / Output : None"""
+        self.hidePlayerPng = pygame.image.load(join("Images", "Player", "Hide", "HidePlayer.png")).convert_alpha()
 
         # dico stockage images
         self.frames = {'left' : [],'right' : [],'up' : [],'down' : []}
@@ -112,7 +118,10 @@ class Player(pygame.sprite.Sprite):
             
         #animation
         self.frame_index = self.frame_index + 5*dt if self.direction else 0
-        self.image = self.frames[self.state][int(self.frame_index) % len(self.frames[self.state])] # changement frame pour animation
+        if INFOS["HidePlayer"]:
+            self.image = self.hidePlayerPng
+        else:
+            self.image = self.frames[self.state][int(self.frame_index) % len(self.frames[self.state])] # changement frame pour animation
 
 
     def update(self, dt : int, cinematique : bool) -> None:
@@ -120,6 +129,89 @@ class Player(pygame.sprite.Sprite):
         Input : dt : int, cinematique : bool ,  Output : None"""
         if not cinematique:
             self.input() # get déplacements
-            self.move(dt) # effectuer les déplacements
-            self.animate(dt) # appliquer les déplacements
+        self.move(dt) # effectuer les déplacements
+        self.animate(dt) # appliquer les déplacements
 
+
+
+
+    # cinematique elements
+    def UpdateCinematique(self, dt : int, pointSuivant : tuple, pathDeplacement : list) -> any:
+        """Méthode update du déplacement du pnj lors de la cinématique
+        Input : int, tuple, list
+        Ouput : tuple, list"""
+
+        pointSuivant, pathDeplacement = self.Move(dt, pointSuivant, pathDeplacement) # déplacement
+        # update deplacement
+        self.hitbox_rect.x += self.direction.x * self.speed * dt
+        self.hitbox_rect.y += self.direction.y * self.speed * dt
+        self.animate(dt)
+        return pointSuivant, pathDeplacement
+    
+
+    def EndCinematique(self) -> None:
+        """Met fin à la cinématique.
+        Input / Output : None"""
+
+        self.state, self.frame_index = "down", 0 # replacement correct
+        coordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
+        pos = [(coordsSpawn[0][0] + 7)*CASEMAP + 64, coordsSpawn[0][1] * CASEMAP + 64]
+        self.rect = self.image.get_frect(center = pos)
+        self.hitbox_rect = self.rect.inflate(-60,0) # collision
+        self.direction = pygame.Vector2(0,0)
+
+
+    def Move(self, dt: int, pointSuivant : tuple, pathDeplacement :list) -> any:
+        """Déplace le PNJ vers le point cible selon les coordonnées données par la cinématique.
+        Input : dt : int (delta time), list de déplacment point (path)
+        Output : any (deux éléments srvant aux calculs de directions)
+        """
+
+        if pointSuivant:  # Vérifie si un point cible existe
+
+            # Extraire les coordonnées cibles
+            target_x, target_y = pointSuivant
+
+            # Calcul des différences entre la position actuelle et la cible
+            dx = target_x - self.hitbox_rect.x
+            dy = target_y - self.hitbox_rect.y
+
+            # Distance totale au point cible
+            distance = sqrt(dx**2 + dy**2)
+
+            if dx > 0:
+                self.direction.x += 0.001
+            elif dx < 0:
+                self.direction.x -= 0.001
+            if dy > 0:
+                self.direction.y += 0.001
+            elif dy < 0:
+                self.direction.y -=0.001
+
+            if distance == 0:  # Si le PNJ est déjà sur la cible
+                if pathDeplacement:  # Passer au point suivant si disponible
+                    pointSuivant = pathDeplacement.pop(0)
+                else:
+                    pointSuivant = None  # Fin du chemin
+
+            # Si la distance restante est inférieure au déplacement possible
+            elif distance <= self.speed * dt:
+                # Atteindre directement la cible
+                self.hitbox_rect.topleft = (target_x, target_y)
+                self.rect.topleft = self.hitbox_rect.topleft  # Synchroniser la rect
+                if pathDeplacement:  # Passer au prochain point
+                    pointSuivant = pathDeplacement.pop(0)
+                else:
+                    pointSuivant = None  # Fin du chemin
+            else:
+                # Calcul du déplacement proportionnel à la direction
+                move_x = (self.speed * dt * dx) / distance
+                move_y = (self.speed * dt * dy) / distance
+
+                # Appliquer le déplacement
+                self.hitbox_rect.x += move_x
+                self.hitbox_rect.y += move_y
+                self.rect.topleft = self.hitbox_rect.topleft  # Synchroniser la rect
+                
+
+        return pointSuivant, pathDeplacement

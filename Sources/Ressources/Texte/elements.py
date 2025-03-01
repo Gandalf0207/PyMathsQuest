@@ -13,6 +13,31 @@ ElementsFr = {
 
     },
 
+    "InterfaceReactor": {
+        "Title" : "Réacteur nucléraire Centrale",
+        "Texte" : "Appuyer pour allumer le réacteur",
+        "Heure" : "Heure",
+        "Temperature" : "Température",
+        "EtatName" : "Etat",
+        "StatueName" : "Statue",
+        "Etat" : {
+            "Inactif" : "Inactif",
+            "Actif" : "Actif",
+        },
+        "Statue" : {
+            "Null" : "Null",
+            "Normal" : "Normal",
+            "Instable" : "Instable",
+            "Critique" : "Critique",
+        },
+        "AddPuissance" : "Augmenter la puissance",    
+    },
+
+    "InterfaceHomeMenu" : {
+        "Title" : "Menu",
+
+    },
+
     "HotBar" : {
         "Settings" : {
             "Title" : "Paramettres",
@@ -53,6 +78,14 @@ ElementsFr = {
                 "NavigateBoat" : "Vous devez rentrer dans le bateau pour pouvoir acceder au chateau.",
                 "OpenDoor" : "Vous devez ouvrir le chateau pour acceder à la suite.",
                 "OpenPortail" : "Vous devez réouvrir le portail",
+            },
+
+            "NiveauBaseFuturiste" : {
+                "SeePNJ" : "Discuter avec le pnj sur la map. Regarder la minimap et suivez le chemin !",
+                "Electricity" : "Vous devez activer l'électricité",
+                "UseVent" : "Vous devez utiliser les conduits d'aération", 
+                "EscapeVaisseau": "Vous devez vous échaper du vaisseau par la porte arrière."
+
             },
         },
     },
@@ -110,6 +143,42 @@ ElementsFr = {
         "OpenPortail" : "Vous devez réouvvrir le portail pour acceder à la suite", 
         "MakeExo" : "Pour réouvir le portail, vous devez résoudre cet exercice",
 
+        "ExoTexte" : {
+            "Seconde" :{
+                "Numero0" :{
+                    "Title" : "Calculs de Volumes",
+
+                    "DifficulteTrue" : {
+                        "Consigne" : " A l'aide des valeurs données, veuillez calculer le volume total de la figure représentée ci-dessous.:",
+                        "QCM" : "Choisissez l'unique et bonne réponse",
+                    },
+
+                    "DifficulteFalse" : {
+                        "Consigne" : "A l'aide des valeurs données, veuillez calculer le volume demandé du cube de côté c, de la sphère de rayon r et du cone de hauter h et de diametre de base d:",
+                        "QCM" : "Choisissez l'unique et bonne réponse",
+                    },
+                },
+
+            },         
+            "Premiere" :{
+                
+            },
+
+            "Terminale" : {
+
+            },
+        }
+
+    },
+
+
+    "NiveauBaseFuturiste" : {
+        "Cinematique1End" : "Le pnj à fuis à travers le portail, vous devez le rallumer",
+        "UseVent" : "Vous vous baladez dans les conduits d'aération.", 
+        "MakeExo" : "Pour réouvir le portail, vous devez résoudre cet exercice",
+        "PiloteMoveCafet" : "Le pilote s'est déplacé dans la salle de lancement, rejoignez le !",
+        "VaisseauSpacial" : "Vous montez dans le vaisseau",
+        "CrashVaisseau" : "Le vaisseau s'est crash, soit meilleur stp",
         "ExoTexte" : {
             "Seconde" :{
                 "Numero0" :{

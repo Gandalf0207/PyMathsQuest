@@ -23,35 +23,38 @@ class GestionSoundFond(object):
     def LoadSounds(self):
         
         #bande son 
-        self.bandeSon1 = join("Sound", "BandeSonore",NIVEAU["Map"],"Nocyfer - alive (alternate stripped version) 2025-01-29 21_46.mp3")              
-        self.bandeSon2 = join("Sound", "BandeSonore",NIVEAU["Map"],"Nocyfer - therapy (instrumental slowed) 2025-01-29 21_46.mp3")
-        self.bandeSon3 = join("Sound", "BandeSonore",NIVEAU["Map"],"Nocyfer - Darkest Hour 2025-01-29 21_40.mp3")
+        self.bandeSon1 = join("Sound", "BandeSonore", "NiveauPlaineRiviere", "Nocyfer - alive (alternate stripped version) 2025-01-29 21_46.mp3")              
+        self.bandeSon2 = join("Sound", "BandeSonore", "NiveauPlaineRiviere", "Nocyfer - therapy (instrumental slowed) 2025-01-29 21_46.mp3")
+        self.bandeSon3 = join("Sound", "BandeSonore", "NiveauMedievale", "Nocyfer - Darkest Hour 2025-01-29 21_40.mp3")
+        self.bandeSon4 = join("Sound", "BandeSonore", "NiveauMedievale", "Nocyfer - hurt me bad 2025-02-24 19_28.mp3")
+        self.bandeSon5 = join("Sound", "BandeSonore", "NiveauBaseFuturiste", "Nocyfer - odyssey 2025-02-24 19_28.mp3")
 
     def BandeSon(self):
         if not self.canal0.get_busy():
+            musique_list = []
+
+            attente = randint(10, 30)  # Attente aléatoire
+            time.sleep(attente)
+
             if NIVEAU["Map"] == "NiveauPlaineRiviere": # lieux
-                attente = randint(10, 30)  # Attente aléatoire
-                time.sleep(attente)
-
                 musique_list = [self.bandeSon1, self.bandeSon2]
-                musique_choisie = choice(musique_list)
-                self.musicFond = pygame.mixer.Sound(musique_choisie)
-                self.canal0.set_volume(SOUND["BandeSon"])
-                self.canal0.play(self.musicFond)
-
             
             elif NIVEAU["Map"] == "NiveauMedievale":
-                attente = randint(10, 30)  # Attente aléatoire
-                time.sleep(attente)
+                musique_list = [self.bandeSon3, self.bandeSon4]
 
-                musique_list = [self.bandeSon3]
-                musique_choisie = choice(musique_list)
-                self.musicFond = pygame.mixer.Sound(musique_choisie)
-                self.canal0.set_volume(SOUND["BandeSon"])
-                self.canal0.play(self.musicFond)
+            elif NIVEAU["Map"] == "NiveauBaseFuturiste":
+                musique_list = [self.bandeSon5]
 
             else:
                 time.sleep(5)  # Vérifie la condition toutes les 5 secondes
+
+            if musique_list != []:
+                # play de la mudique
+                musique_choisie = choice(musique_list)
+                self.musicFond = pygame.mixer.Sound(musique_choisie)
+                self.canal0.set_volume(SOUND["BandeSon"])
+                self.canal0.play(self.musicFond)
+
 
     def Update(self):
         self.canal0.set_volume(SOUND["BandeSon"])

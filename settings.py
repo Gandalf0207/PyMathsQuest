@@ -1,5 +1,6 @@
 from random import randint, random, choice
 from random import *
+import random
 import os
 import time
 import json
@@ -11,6 +12,8 @@ from os.path import join
 from os import walk
 import threading
 from math import *
+import math
+import sys
 import matplotlib.pyplot as plt
 from PIL import Image
 from io import BytesIO
@@ -66,7 +69,15 @@ def wrap_text(text, font, max_width):
 
 
 
-
+# Couleurs (température froide à chaude)
+BLUE = (0, 0, 255)
+CYAN = (0, 255, 255)
+GREEN = (0, 255, 0)
+YELLOW = (255, 255, 0)
+ORANGE = (255, 165, 0)
+RED = (255, 0, 0)
+BLACK = (0,0,0)
+WHITE = (255,255,255)
 
 
 # INFOS FIXES
@@ -98,7 +109,7 @@ NIVEAU = {
     "Niveau" : "Seconde",
 
     # map
-    "Map" : "NiveauMedievale",
+    "Map" : "NiveauBaseFuturiste",
 
     # numero
     "Numero" : 0,
@@ -108,10 +119,14 @@ INFOS = {
     "Difficulte" : False,
     "Exo" : False, 
     "ExoPasse" : False,
-    "DemiNiveau" :False,
+    "DemiNiveau" : False,
     "ChangementNiveau" : False,
     "ChangementAnnee" : False,
-    "RebindingKey": False
+    "HideHotBar" : False,
+    "RebindingKey": False,
+    "ReactorOn" : False,
+    "HidePlayer" : False,
+    "CrashGame" : False,
 }
 
 DICOLANGUE = {
@@ -170,7 +185,9 @@ PNJ = {
     "PNJ2" : False, 
     "PNJ3" : False, 
     "PNJ4" : False, 
-    "PNJ5" : False
+    "PNJ5" : False, 
+    "PNJ6" : False, 
+    "PNJ7" : False,
 }
 
 
