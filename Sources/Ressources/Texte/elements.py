@@ -16,7 +16,21 @@ ElementsFr = {
     "InterfaceReactor": {
         "Title" : "Réacteur nucléraire Centrale",
         "Texte" : "Appuyer pour allumer le réacteur",
-        
+        "Heure" : "Heure",
+        "Temperature" : "Température",
+        "EtatName" : "Etat",
+        "StatueName" : "Statue",
+        "Etat" : {
+            "Inactif" : "Inactif",
+            "Actif" : "Actif",
+        },
+        "Statue" : {
+            "Null" : "Null",
+            "Normal" : "Normal",
+            "Instable" : "Instable",
+            "Critique" : "Critique",
+        },
+        "AddPuissance" : "Augmenter la puissance",    
     },
 
     "InterfaceHomeMenu" : {
