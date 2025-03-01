@@ -19,6 +19,11 @@ ElementsFr = {
         
     },
 
+    "InterfaceHomeMenu" : {
+        "Title" : "Menu",
+
+    },
+
     "HotBar" : {
         "Settings" : {
             "Title" : "Paramettres",

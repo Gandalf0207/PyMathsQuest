@@ -20,7 +20,7 @@ class HomeMenuInterface(object):
 
         # texte titre
         self.interfaceSurface.fill("#ffffff")
-        text = FONT["FONT36"].render("HomeMenu tempo texte", True, (0,0,0))
+        text = FONT["FONT36"].render(TEXTE["Elements"]["InterfaceHomeMenu"]["Title"], True, (0,0,0))
         self.interfaceSurface.blit(text, (10,10))
 
 
