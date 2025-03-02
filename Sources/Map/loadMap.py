@@ -409,6 +409,7 @@ class LoadMap():
 
                 # champs
                 if self.map[ordonnees][abscisses] == "@":
+                    Sprites(pos, self.sol,"Grass", self.allSprites) #placement herbes sous blé
                     CollisionSprites(pos, self.champ, "Champs",  (self.allSprites, self.collisionSprites))
 
 

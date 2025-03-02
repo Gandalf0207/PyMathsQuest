@@ -65,7 +65,7 @@ class PNJInterface(object):
             # chargement du texte
             if self.compteurDialogue <= self.nombreDialogue:
                 self.pnj_text = TEXTE["Dialogues"][NIVEAU["Map"]][self.gestionnaire.pnjActuel]["Principal"][f"Dialogue{self.compteurDialogue}"]
-                self.gestionnaire.gestionSound.Dialogue(self.compteurDialogue)
+                self.gestionnaire.gestionSound.Dialogue(self.compteurDialogue, self.gestionnaire.pnjActuel)
                 self.compteurDialogue += 1 # passage au dialogue suivant
             else:
                 # gestion son
@@ -199,7 +199,7 @@ class PNJInterface(object):
             # get dialogue deja vu
             if self.compteurDialogue <= self.nombreDialogue:
                 self.pnj_text = TEXTE["Dialogues"][NIVEAU["Map"]][self.gestionnaire.pnjActuel]["Alternatif"][f"Dialogue{self.compteurDialogue}"]
-                self.gestionnaire.gestionSound.Dialogue(self.compteurDialogue)
+                self.gestionnaire.gestionSound.Dialogue(self.compteurDialogue,self.gestionnaire.pnjActuel)
                 self.compteurDialogue += 1 # passage au dialogue suivant
             else:
                 # gestion son
