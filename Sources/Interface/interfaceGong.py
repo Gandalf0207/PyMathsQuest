@@ -29,7 +29,7 @@ class GongInterface(object):
 
         # timer click btn delays
         self.last_click_time = 0
-        self.click_delay = 500  
+        self.click_delay = 8000  
 
         self.gongSound = join("Sound", "EffetSonore", "Gong", "Gong.mp3")
         self.songSoleil = join("Sound", "EffetSonore", "Gong", "SongSoleilRouge.mp3")
