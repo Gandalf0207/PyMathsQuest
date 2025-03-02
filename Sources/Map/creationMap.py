@@ -664,6 +664,10 @@ class NiveauMedievale(GestionNiveauMap):
     def __PlacementChateau__(self):
         """Place un château avec des murailles extérieures et intérieures sur la map."""
 
+        # easter egg bloc interaction gong
+        self.map[1][148] = "a"
+
+
         coordsChateau = []  # Liste pour stocker toutes les coordonnées des éléments du château
 
         # Construction des murailles extérieures

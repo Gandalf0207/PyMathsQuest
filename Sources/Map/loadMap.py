@@ -72,6 +72,7 @@ class LoadMap():
             self.boat = pygame.image.load(join("Images", "Obstacle", "Boat.png")).convert_alpha()
             self.DoorChateau = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
             self.DoorMurailles =  pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+            self.gong = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
 
             if INFOS["DemiNiveau"] : 
                 self.MursAngleWS = pygame.image.load(join("Images", "Chateau", "MursChateau.png")).convert_alpha()
@@ -412,6 +413,11 @@ class LoadMap():
 
 
                 # chateau
+                if self.map[ordonnees][abscisses] == "a":
+                    CollisionSprites(pos, self.gong, "Gong",  (self.allSprites, self.collisionSprites, self.interactions))
+
+
+
                 if self.map[ordonnees][abscisses] == "C":
                     
                     def case_valide(y, x):

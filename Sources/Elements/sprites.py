@@ -115,6 +115,9 @@ class CollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(-40,-40)
             case "DoorFuturisteDemiNiveau":
                 self.hitbox = self.rect.inflate(0,-60)
+            case "Gong":
+                self.hitbox = self.rect.inflate(-30,-30)
+
 
 
 

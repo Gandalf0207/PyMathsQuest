@@ -5,7 +5,7 @@ ElementsFr = {
     "Loading" : "Chargement",
     "Interaction" : "Appuyer sur E",
     "LevelSup" : "Vous passez au niveau suppérieur !",
-
+    "Humour" : "Humour, second degré",
     "InterfacePNJ" : {
         "SkipButton" : "Suivant",
         "Oui" : "Oui",

@@ -7,6 +7,7 @@ from Sources.Interface.interfaceReactor import *
 from Sources.Interface.interfaceSettings import *
 from Sources.Interface.interfaceSound import *
 from Sources.Interface.interfaceExo import *
+from Sources.Interface.interfaceGong import *
 
 
 class GestionOtherInterfaces(object):
@@ -20,6 +21,9 @@ class GestionOtherInterfaces(object):
         self.isInterfaceHomeMenuOpen = False # bool menu home
         self.isPNJInterfaceOpen = False # bool PNJ
         self.isInterfaceExoOpen = False # bool exo
+
+        # interface map 2
+        self.isInterfaceGongOpen = False
 
         # interface map 3
         self.isInterfaceRectorOpen = False # bool reactor
@@ -52,6 +56,9 @@ class GestionOtherInterfaces(object):
         self.isPNJInterfaceOpen = False 
         self.isInterfaceExoOpen = False 
 
+        # interface map 2
+        self.isInterfaceGongOpen = False
+
         # interface map 3
         self.isInterfaceRectorOpen = False 
         
@@ -66,7 +73,7 @@ class GestionOtherInterfaces(object):
 
         INFOS["HideHotBar"] = False
 
-        
+
     def GestionInterfaceGlobale(self, event):
         # interface element hotbar hotbar
         if event.key == KEYSBIND["settings"]:
@@ -146,6 +153,11 @@ class GestionOtherInterfaces(object):
                     self.isInterfaceOPEN = True # update element global
                     self.isInterfaceRectorOpen = True
                     self.interface = self.keepReactorObject
+                
+                elif argsSpecifique == "Gong":
+                    self.isInterfaceOPEN = True
+                    self.isInterfaceGongOpen = True
+                    self.interface = GongInterface(self)
                 
                 # other interace : EssenceBloc / LancementBloc
 

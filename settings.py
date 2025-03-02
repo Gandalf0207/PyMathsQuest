@@ -109,7 +109,7 @@ NIVEAU = {
     "Niveau" : "Seconde",
 
     # map
-    "Map" : "NiveauBaseFuturiste",
+    "Map" : "NiveauMedievale",
 
     # numero
     "Numero" : 0,
