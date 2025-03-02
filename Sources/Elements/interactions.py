@@ -81,10 +81,12 @@ class Interactions(object):
 
 
             elif NIVEAU["Map"] == "NiveauMedievale":
-                # animation 
-                self.gestionnaire.fondu_au_noir()
+                
 
                 if self.ObjectId == "Arbre" or self.ObjectId == "Arbre2" or self.ObjectId == "Souche" or self.ObjectId == "Souche2" :
+                        # animation 
+                        self.gestionnaire.fondu_au_noir()
+                        
                         # texte animation
                         if self.ObjectId in ["Arbre", "Arbre2"]:
                             self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["CutTree"])
@@ -118,6 +120,9 @@ class Interactions(object):
                 
                 # action si c'est un pont 
                 if self.ObjectId == "pont1" or self.ObjectId == "pont2" :
+                    # animation 
+                    self.gestionnaire.fondu_au_noir()
+
                     if not self.Obj.InfoExo: # si c'est pas le pont d'exo
                         # text animation
                         self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["TraverserPont"])
@@ -136,25 +141,31 @@ class Interactions(object):
                         self.gestionnaire.ouverture_du_noir(self.player.rect.center)
 
                 if self.ObjectId == "pont3":
-                        # deplacement player
-                        if self.player.rect.y < self.coordObjActuel[1]:
-                            # text animation
-                            self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["TraverserPont"])
+                    # animation 
+                    self.gestionnaire.fondu_au_noir()
 
-                            # action pour traverser
-                            self.player.rect.y += CASEMAP*3
-                            STATE_HELP_INFOS[0] = "SeePNJ" # update tips player
-                        else:
-                            self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["CantTraverserPont"])
+                    # deplacement player
+                    if self.player.rect.y < self.coordObjActuel[1]:
+                        # text animation
+                        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["TraverserPont"])
+
+                        # action pour traverser
+                        self.player.rect.y += CASEMAP*3
+                        STATE_HELP_INFOS[0] = "SeePNJ" # update tips player
+                    else:
+                        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["CantTraverserPont"])
 
 
-                        self.player.hitbox_rect.center = self.player.rect.center
-                        
-                        # fin animation
-                        self.gestionnaire.ouverture_du_noir(self.player.rect.center)  
+                    self.player.hitbox_rect.center = self.player.rect.center
+                    
+                    # fin animation
+                    self.gestionnaire.ouverture_du_noir(self.player.rect.center)  
 
                 # table de craft interactions
                 if self.ObjectId == "TableCraft":
+                    # animation 
+                    self.gestionnaire.fondu_au_noir()
+
                     if not self.GetCoursTableCraft:
                         self.GetCoursTableCraft = True
                         self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["GetCours"])
@@ -171,6 +182,9 @@ class Interactions(object):
 
                 
                 if self.ObjectId == "Boat":
+                    # animation 
+                    self.gestionnaire.fondu_au_noir()
+
                     # check pos player et pos de référence
                     coordsPtsRefRiverTpChateau = LoadJsonMapValue("coordsMapObject", "RiverBoatTPChateau coords")
                     coordsBoat = [(self.Obj.pos[0] -32) // CASEMAP, (self.Obj.pos[1] -32) // CASEMAP ] #  -32 : centre place ; // CASEMAP --> obtention en coords double list
@@ -212,13 +226,23 @@ class Interactions(object):
                         
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center)
 
+                if self.ObjectId == "Gong":
+                    self.gameInterfaces.GestionInterfaceSpecifique("Gong")
+
+
                 # interaction porte chateau
                 if self.ObjectId == "Door":
+                    # animation 
+                    self.gestionnaire.fondu_au_noir()
+
                     INFOS["DemiNiveau"] = True      
                     STATE_HELP_INFOS[0] = "SeePNJ"   
                 
                 # interaction cerlce exo map n°2
                 if self.ObjectId == "CerclePortal":
+                    # animation 
+                    self.gestionnaire.fondu_au_noir()
+                    
                     INFOS["Exo"] = True # lancement exo dans main (changement variable)
                     self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["MakeExo"]) # text animation
             
