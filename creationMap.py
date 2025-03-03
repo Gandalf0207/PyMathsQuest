@@ -42,6 +42,8 @@ class GestionNiveauMap(object):
                         "ArbreSpecial Coords" : "null",
                         "Chateau Coords" : "null",
                         "Champs Coords" : "null",
+                        "coords Volcan" : "null",
+                        "coords Pont" : "null",
                         "coords Villages" : "null",
                         "coords Puits" : "null",
                         "coords PassageRiver1" : "null",
@@ -1749,6 +1751,7 @@ class NiveauMordor(GestionNiveauMap):
         self.largeur = 75
         self.rock = 350
         self.mud = 350
+        self.obstacle = 800
 
     def Bordure(self):
 
@@ -1876,6 +1879,9 @@ class NiveauMordor(GestionNiveauMap):
 
         self.map[getCoords1[1]][getCoords1[0]] = "T" # pas interactions
         self.map[getCoords2[1]][getCoords2[0]] = "X" # interactions
+
+        allPontCoords = [getCoords1, getCoords2]
+        AjoutJsonMapValue(allPontCoords, "coordsMapObject", "coords Pont")
         
 
     def __PlacementStructures__(self):
@@ -1935,19 +1941,110 @@ class NiveauMordor(GestionNiveauMap):
         AjoutJsonMapValue(listeMud, "coordsMapBase", "Mud Coords") # on ajoute au fichier json, la vrai liste de coordonnée des mud
 
     def __PlacementVolcan__(self):
+        allCoordsVolcan = []
         # volcan
-        coordX, coordY = randint(125, 140), randint(3, 64)
-        self.map[coordY][coordX] = "ù"
+        coordX, coordY = randint(110, 135), randint(3, 64)
+        for ordonne in range(5):
+            for abscisse in range(5):
+                self.map[coordY + ordonne][coordX + abscisse] = "ù"
+                allCoordsVolcan.append([coordX + abscisse, coordY + ordonne])
 
         # placement porte volcan
         self.map[coordY + 4][coordX + 2] = "f"
 
-    def __PlacementPNJ__(self):
-        pass
-    
+        AjoutJsonMapValue(allCoordsVolcan,"coordsMapObject", "coords Volcan")
 
-    def __PlacementObstcles__(self):
-        pass
+    def __PlacementPNJ__(self):
+        allCoordsPont = LoadJsonMapValue("coordsMapObject", "coords Pont")
+        coordsPNJ1 = [allCoordsPont[0][0]-1, allCoordsPont[0][1], "P", 1]
+        coordsPNJ2 = [75, 1, "P", 2] # dans la cellule de droite
+        coordsPNJ3 = [74, 8, "P", 3]
+
+        allCoordsVolcan = LoadJsonMapValue("coordsMapObject", "coords Volcan")
+        ptsRefVolcan = allCoordsVolcan[0]
+
+        xPNJ4 = randint((ptsRefVolcan[0] -15), (ptsRefVolcan[0] -1))
+        yPNJ4 = randint((ptsRefVolcan[1] -15), (ptsRefVolcan[1] + 20)) 
+        
+        while xPNJ4 <= 108 or yPNJ4 >= 70 or yPNJ4 <= 4 or self.map[yPNJ4][xPNJ4] != "-":
+            xPNJ4 = randint((ptsRefVolcan[0] -15), (ptsRefVolcan[0] -1))
+            yPNJ4 = randint((ptsRefVolcan[1] -15), (ptsRefVolcan[1]+ 20))    
+        # placement pnj 4 autour du volcan
+        coordsPNJ4 = [xPNJ4, yPNJ4, "P", 4]
+
+        allCoordsPNJ = [coordsPNJ1, coordsPNJ2, coordsPNJ3, coordsPNJ4]
+        
+        for CoordPNJ in allCoordsPNJ:
+            self.map[CoordPNJ[1]][CoordPNJ[0]] = "P"
+
+        AjoutJsonMapValue(allCoordsPNJ, "coordsMapObject", "PNJ Coords") # placement des pnj sur la map 
+    
+    
+    def CheckNiveauPossible(self, listOrdrePointCle :list, pathAccessible :list) -> bool:
+        """Méthode permettant de vérifier si le niveau est possible, suite à la position des obstacle. Utilisation du script A* permettant de trouver un chemin avec les déplacements ZQSD s'il exite entre un point A et B
+        Ces points, donnés dans l'ordre d'évolution de la map, représente les coordonnées des éléments que le joueurs doit allé voir (pnj, arbre, entré, sortie..)"""
+
+        for pointCle in range(len(listOrdrePointCle)-1): #
+            if  Astar(listOrdrePointCle[pointCle], listOrdrePointCle[pointCle+1],self.mapCheckDeplacementPossible, pathAccessible).a_star(): 
+                continue
+            else: # résolution du niveau est impossible
+                return False # false pour niveau impossible
+        return True # les chemins entre les points données existent  
+
+
+    def __PlacementObstacles__(self):
+        # Placement des obstacles sur la carte
+        checkDeplacementPasPossible = True  # Flag pour vérifier si un déplacement est possible
+        compteur = 0
+        while checkDeplacementPasPossible and compteur < 100: 
+            compteur += 1
+            # Crée une copie de la carte pour tester les placements sans affecter la carte principale
+            self.mapCheckDeplacementPossible = []
+            self.mapCheckDeplacementPossible = copy.deepcopy(self.map)  
+
+            # Liste pour stocker les positions des obstacles
+            listeObstacle = [] 
+
+            # Place les obstacles aléatoirement sur la carte, en vérifiant qu'ils ne se superposent pas
+            for _i_ in range(self.obstacle):
+                obstaclePos = [randint(0, self.longueur-2), randint(0, self.largeur-1)]
+                # Vérifie que la position choisie est valide (case vide et pas dans une zone interdite)
+                while self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] != '-' or self.mapCheckDeplacementPossible[obstaclePos[1]-1][obstaclePos[0]] != '-' or self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]+1] != '-' or (1 <= obstaclePos[1] < 11 and 64 <= obstaclePos[0] <= 85):
+                    obstaclePos = [randint(0, self.longueur-2), randint(0, self.largeur-1)]  # Nouvelle tentative
+                # Marque la position comme occupée pour les tests
+                self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] = "O"  
+                listeObstacle.append(obstaclePos)  # Ajoute l'obstacle à la liste
+
+            # Récupère les coordonnées des points clés (par exemple, spawn, passage de la rivière, etc.)
+            coordsPts1 = "a faire"
+
+
+
+            # Liste des points à vérifier pour les déplacements possibles
+            listeOrdrePointCle1 = [coordsPts1, coordsPts2, coordsPts3]
+            listeOrdrePointCle2 = [coordsPts4, coordsPts5, coordsPts6, coordsPts7]
+            listeOrdrePointCle3 = [[coordsPts8[0] + 1, coordsPts8[1]], coordsPts9] # coords pts8 formaté pour ne pas etre sur la river
+
+            # Vérifie la possibilité de déplacements pour chaque liste de points clés
+            # Le parcours se fait en trois étapes, en passant par les rivières pour s'assurer que les chemins sont valides
+            if self.CheckNiveauPossible(listeOrdrePointCle1, ["-", "P", "f", "T", "X", "S"]):  # Vérifie la première partie
+                if self.CheckNiveauPossible(listeOrdrePointCle2,  ["-", "P", "f", "T", "X", "S"]):  # Vérifie la deuxième partie
+                    if self.CheckNiveauPossible(listeOrdrePointCle3,  ["-", "P", "f", "T", "X", "S"]):  # Vérifie la troisième partie
+                        # Si tout est valide, les obstacles peuvent être placés et les coordonnées sont sauvegardées
+                        AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords")
+                        checkDeplacementPasPossible = False  # Arrête la boucle
+
+                        # Place les obstacles sur la carte
+                        for coords in listeObstacle:
+                            self.map[coords[1]][coords[0]] = "O"  # Placement des obstacles sur la carte
+
+        ## SECURITE
+        # verif si boucle pour relancement
+        if compteur < 100:
+            # Sauvegarde les coordonnées du transport de bateau vers le château dans un fichier JSON
+            self.ERROR_RELANCER = False
+        else:
+            self.ERROR_RELANCER = True
 
 
 
@@ -1971,7 +2068,15 @@ class NiveauMordor(GestionNiveauMap):
         # mud 
         self.__PlacementCrateres__()
 
-        # 
+        # volcan 
+        self.__PlacementVolcan__()
+
+        #pnj
+        self.__PlacementPNJ__()
+        
+        # obstalce 
+        self.__PlacementObstacles__()
+        
 
         # le check générale du niveau n'est pas obligatoire car les chemin font une boucle (a voir si des obstacles sont ajoutés)
 
