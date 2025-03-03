@@ -1505,7 +1505,7 @@ class NiveauBaseFuturiste(GestionNiveauMap):
 
         allSalles = [allCoordsSalle0, allCoordsSalle1, allCoordsSalle2, allCoordsSalle3]
         
-        allStructuresName = ["§", "£", "$", "?"]
+        allStructuresName = ["§", None, None, "?"]
         allStructures = []
         for numSalle in range(len(allSalles)):
             ptsRef = allSalles[numSalle][140]
@@ -1898,8 +1898,8 @@ class NiveauMordor(GestionNiveauMap):
         # prisions
         self.prisonStructure = [
             ["C", "-", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "-", "-", "C"],
-            ["C", "-", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "-", "-", "C"],
-            ["C", "-", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "-", "-", "C"],
+            ["C", "-", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "+", "C", "-", "-", "-", "-", "C"],
+            ["C", "-", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "?", "C", "-", "-", "-", "-", "C"],
             ["C", "-", "-", "-", "-", "C", "c", "m", "c", "C", "c", "m", "c", "C", "-", "-", "-", "-", "C"],
             ["C", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "C"],
             ["C", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "C"],
@@ -2016,27 +2016,40 @@ class NiveauMordor(GestionNiveauMap):
                 listeObstacle.append(obstaclePos)  # Ajoute l'obstacle à la liste
 
             # Récupère les coordonnées des points clés (par exemple, spawn, passage de la rivière, etc.)
-            coordsPts1 = "a faire"
+            
+            #spawn
+            getCoordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
+            coordsPts1 = getCoordsSpawn[0]
 
+            #pnj 1
+            allPNJcoords = LoadJsonMapValue("coordsMapObject", "PNJ Coords")
+            coordsPts2 = allPNJcoords[0]
 
+            # prison
+            coordsPts3 = [66,1]
+            coordsPts4 = allPNJcoords[1]
+            coordsPts5 = allPNJcoords[2]
+            #pont passage vers dernier pnj
+            coordsPts6 = allPNJcoords[3]
+            # porte volcan
+            allCoordsVolcan = LoadJsonMapValue("coordsMapObject", "coords Volcan")
+            coordsPts7 = allCoordsVolcan[22]
 
             # Liste des points à vérifier pour les déplacements possibles
-            listeOrdrePointCle1 = [coordsPts1, coordsPts2, coordsPts3]
-            listeOrdrePointCle2 = [coordsPts4, coordsPts5, coordsPts6, coordsPts7]
-            listeOrdrePointCle3 = [[coordsPts8[0] + 1, coordsPts8[1]], coordsPts9] # coords pts8 formaté pour ne pas etre sur la river
+            listeOrdrePointCle1 = [coordsPts1, coordsPts2]
+            listeOrdrePointCle2 = [coordsPts3, coordsPts4, coordsPts5, coordsPts6, coordsPts7]
 
             # Vérifie la possibilité de déplacements pour chaque liste de points clés
             # Le parcours se fait en trois étapes, en passant par les rivières pour s'assurer que les chemins sont valides
-            if self.CheckNiveauPossible(listeOrdrePointCle1, ["-", "P", "f", "T", "X", "S"]):  # Vérifie la première partie
-                if self.CheckNiveauPossible(listeOrdrePointCle2,  ["-", "P", "f", "T", "X", "S"]):  # Vérifie la deuxième partie
-                    if self.CheckNiveauPossible(listeOrdrePointCle3,  ["-", "P", "f", "T", "X", "S"]):  # Vérifie la troisième partie
-                        # Si tout est valide, les obstacles peuvent être placés et les coordonnées sont sauvegardées
-                        AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords")
-                        checkDeplacementPasPossible = False  # Arrête la boucle
+            if self.CheckNiveauPossible(listeOrdrePointCle1, ["-", "P", "f", "T", "X", "S", "D", "m"]):  # Vérifie la première partie
+                if self.CheckNiveauPossible(listeOrdrePointCle2,  ["-", "P", "f", "T", "X", "S", "D", "m"]):  # Vérifie la deuxième partie
+                    # Si tout est valide, les obstacles peuvent être placés et les coordonnées sont sauvegardées
+                    AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords")
+                    checkDeplacementPasPossible = False  # Arrête la boucle
 
-                        # Place les obstacles sur la carte
-                        for coords in listeObstacle:
-                            self.map[coords[1]][coords[0]] = "O"  # Placement des obstacles sur la carte
+                    # Place les obstacles sur la carte
+                    for coords in listeObstacle:
+                        self.map[coords[1]][coords[0]] = "O"  # Placement des obstacles sur la carte
 
         ## SECURITE
         # verif si boucle pour relancement
@@ -2101,7 +2114,7 @@ class NiveauMordor(GestionNiveauMap):
 
 # mapp, baseMap =  NiveauPlaineRiviere(150,75,200, 200, 200).Update()
 
-mapp, baseMap, error = NiveauMordor().Update()
+# mapp, baseMap, error = NiveauMordor().Update()
 
 # mapp, baseMap, error = NiveauBaseFuturiste().Update()
 # for i in range(25):
