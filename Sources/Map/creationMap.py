@@ -1505,7 +1505,7 @@ class NiveauBaseFuturiste(GestionNiveauMap):
 
         allSalles = [allCoordsSalle0, allCoordsSalle1, allCoordsSalle2, allCoordsSalle3]
         
-        allStructuresName = ["§", None, None, "?"]
+        allStructuresName = ["§", "£", "$", "?"]
         allStructures = []
         for numSalle in range(len(allSalles)):
             ptsRef = allSalles[numSalle][140]
@@ -1899,7 +1899,7 @@ class NiveauMordor(GestionNiveauMap):
         self.prisonStructure = [
             ["C", "-", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "-", "-", "C"],
             ["C", "-", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "+", "C", "-", "-", "-", "-", "C"],
-            ["C", "-", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "?", "C", "-", "-", "-", "-", "C"],
+            ["C", "-", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "/", "C", "-", "-", "-", "-", "C"],
             ["C", "-", "-", "-", "-", "C", "c", "m", "c", "C", "c", "m", "c", "C", "-", "-", "-", "-", "C"],
             ["C", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "C"],
             ["C", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "C"],

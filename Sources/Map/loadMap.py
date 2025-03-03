@@ -126,10 +126,33 @@ class LoadMap():
                 self.vitre = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
 
                 self.doorFuturisteDemiNiveau = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+        
+        if NIVEAU["Map"] == "NiveauMordor":
+            self.sol = pygame.image.load(join("Images", "Sol", "Grass", "Grass.png")).convert_alpha()
+            self.rock = pygame.image.load(join("Images", "Sol","Rock", "Rock.png")).convert_alpha() # petit rocher
+            self.mud = pygame.image.load(join("Images", "Sol","Mud", "Mud.png")).convert_alpha() # cratere
 
+            self.montainWE = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ex128.png")).convert_alpha()
+            self.montainWE1 = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ealt1x128.png")).convert_alpha()
 
+            self.MuraillesWE = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesWE.png" )).convert_alpha()
+            self.MuraillesNS = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesNS.png" )).convert_alpha()
+            self.MuraillesMountain = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesMountain.png" )).convert_alpha()
+            self.MuraillesAngle = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesAngle.png" )).convert_alpha()  
 
+            self.DoorChateau = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+            
+            self.obstaclesRock = pygame.image.load(join("Images", "Obstacle", "HugeRock.png")).convert_alpha()
+            self.doorFuturiste = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+            self.pont2 = pygame.image.load(join("Images", "Pont", "BridgePlanksW-Ex128.png")).convert_alpha()
+            self.pont3 = pygame.image.load(join("Images", "Pont","BridgePlanksN-S-x128.png" )).convert_alpha()
 
+            self.pot  = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+            self.parchemin = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+            self.volcan = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+            self.porteVolcan = pygame.image.load(join("Images", "Obstacle", "Structures", "Volcan.png")).convert_alpha()
+
+            self.vaisseauCrash = pygame.image.load(join("Images", "Obstacle", "Structures", "Volcan.png")).convert_alpha()
 
 
     def Setup(self) -> None:
@@ -149,7 +172,11 @@ class LoadMap():
                 self.map, self.mapBase, self.ERROR_RELANCER = NiveauBaseFuturiste().Update()
             else:
                 self.map, self.mapBase, self.ERROR_RELANCER = NiveauBaseFuturisteVaisseau().Update()
-        
+        if NIVEAU["Map"] == "NiveauMordor":
+            if not INFOS["DemiNiveau"]:
+                self.map, self.mapBase, self.ERROR_RELANCER = NiveauMordor().Update()
+            else:
+                pass       
         
         # si erreur : return
         if self.ERROR_RELANCER:
@@ -367,33 +394,37 @@ class LoadMap():
                 
                 # Tout les obstales
                 if self.map[ordonnees][abscisses] == "O":
-                    choixObstacle = randint(0,100)
-                    if choixObstacle <= 65:
-                            if randint(0,3) > 2:
-                                if NIVEAU["Map"] == "NiveauPlaineRiviere": # add interaction arbre
-                                    CollisionSprites(pos, self.tree2,"Arbre2", (self.allSprites, self.collisionSprites))
+                    # map 1 et 2
+                    if NIVEAU["Map"] in ["NiveauPlaineRiviere", "NiveauMedievale"]:
+                        choixObstacle = randint(0,100)
+                        if choixObstacle <= 65:
+                                if randint(0,3) > 2:
+                                    if NIVEAU["Map"] == "NiveauPlaineRiviere": # add interaction arbre
+                                        CollisionSprites(pos, self.tree2,"Arbre2", (self.allSprites, self.collisionSprites))
+                                    else:
+                                        CollisionSprites(pos, self.tree2,"Arbre2", (self.allSprites, self.collisionSprites, self.interactions))
                                 else:
-                                    CollisionSprites(pos, self.tree2,"Arbre2", (self.allSprites, self.collisionSprites, self.interactions))
+                                    if NIVEAU["Map"] == "NiveauPlaineRiviere":
+                                        CollisionSprites(pos, self.tree,"Arbre", (self.allSprites, self.collisionSprites))
+                                    else:
+                                        CollisionSprites(pos, self.tree,"Arbre", (self.allSprites, self.collisionSprites, self.interactions))
+                        elif 65 < choixObstacle <= 85:
+                            CollisionSprites(pos, self.hugeRock, "HugeRock", (self.allSprites, self.collisionSprites))
+                        elif 85 < choixObstacle <= 100:
+                            choixSouche = randint(0,11)
+                            if choixSouche < 7:
+                                if NIVEAU["Map"] == "NiveauPlaineRiviere": # add interaction arbre
+                                    CollisionSprites(pos, self.souche,"Souche", (self.allSprites, self.collisionSprites))
+                                else:
+                                    CollisionSprites(pos, self.souche,"Souche", (self.allSprites, self.collisionSprites, self.interactions))
                             else:
                                 if NIVEAU["Map"] == "NiveauPlaineRiviere":
-                                    CollisionSprites(pos, self.tree,"Arbre", (self.allSprites, self.collisionSprites))
+                                    CollisionSprites(pos, self.souche2,"Souche2", (self.allSprites, self.collisionSprites))
                                 else:
-                                    CollisionSprites(pos, self.tree,"Arbre", (self.allSprites, self.collisionSprites, self.interactions))
-                    elif 65 < choixObstacle <= 85:
-                        CollisionSprites(pos, self.hugeRock, "HugeRock", (self.allSprites, self.collisionSprites))
-                    elif 85 < choixObstacle <= 100:
-                        choixSouche = randint(0,11)
-                        if choixSouche < 7:
-                            if NIVEAU["Map"] == "NiveauPlaineRiviere": # add interaction arbre
-                                CollisionSprites(pos, self.souche,"Souche", (self.allSprites, self.collisionSprites))
-                            else:
-                                CollisionSprites(pos, self.souche,"Souche", (self.allSprites, self.collisionSprites, self.interactions))
-                        else:
-                            if NIVEAU["Map"] == "NiveauPlaineRiviere":
-                                CollisionSprites(pos, self.souche2,"Souche2", (self.allSprites, self.collisionSprites))
-                            else:
-                                CollisionSprites(pos, self.souche2,"Souche2", (self.allSprites, self.collisionSprites, self.interactions))
-
+                                    CollisionSprites(pos, self.souche2,"Souche2", (self.allSprites, self.collisionSprites, self.interactions))
+                    # map 4
+                    else:
+                        CollisionSprites(pos, self.obstaclesRock, "HugeRock", (self.allSprites, self.collisionSprites))
 
 
                 # Abre spécial
@@ -493,7 +524,7 @@ class LoadMap():
 
                 # obstacle de la map
                 if self.map[ordonnees][abscisses] == "u":
-                    CollisionSprites(pos, self.Portal, "Portal", (self.collisionSprites, self.allSprites))
+                    AnimatedSprites(pos, (self.allSprites), "PortalGif", join("Images","Portal"))
                 elif self.map[ordonnees][abscisses] == "Y":
                     CollisionSprites(pos, self.Pilier, "Pilier",  (self.collisionSprites, self.allSprites))
                 elif self.map[ordonnees][abscisses] == "r":
@@ -581,7 +612,24 @@ class LoadMap():
                 elif self.map[ordonnees][abscisses] == "b":
                     CollisionSprites(pos, self.vitre, "Vitre", (self.allSprites, self.collisionSprites))
                 
+                # pot
+                elif self.map[ordonnees][abscisses] == "+":
+                    CollisionSprites(pos, self.pot, "Pot", (self.collisionSprites, self.allSprites))
 
+                # parchemin
+                elif self.map[ordonnees][abscisses] == "/":
+                    Sprites(pos, self.parchemin, "Parchemin" ,(self.allSprites, self.interactions))
+                    
+                # volcan
+                elif self.map[ordonnees][abscisses] == "ù" and self.map[ordonnees-1][abscisses-1] in ["P", "O", "-"] :
+                    CollisionSprites(pos, self.volcan, "Volcan", (self.collisionSprites, self.allSprites))
+
+                elif self.map[ordonnees][abscisses] == "f":
+                    CollisionSprites(pos, self.porteVolcan, "PorteVolcan", (self.collisionSprites, self.allSprites, self.interactions))
+
+                # vaisseau crash spawn
+                elif self.map[ordonnees][abscisses] == "%":
+                    CollisionSprites(pos, self.vaisseauCrash, "CrashVaisseau", (self.collisionSprites, self.allSprites))
 
 
     def SetupSpawn(self) -> None:
@@ -689,6 +737,12 @@ class LoadMap():
                 return None, None, self.ERROR_RELANCER
             self.SetupPNJ()
         
+        elif NIVEAU["Map"] == "NiveauMordor":
+            self.LoadImages()
+            self.Setup()
+            if self.ERROR_RELANCER:
+                return None, None, self.ERROR_RELANCER
+            self.SetupPNJ()
         # retour des infos de map
         return self.map, self.mapBase, self.ERROR_RELANCER
     

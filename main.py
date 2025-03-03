@@ -103,7 +103,7 @@ class Game(object):
         # Interactions
         self.InteractionObject = Interactions(self, self.gameInterfaces)
 
-        if not INFOS["DemiNiveau"] and NIVEAU["Map"] != "NiveauBaseFuturiste":
+        if not INFOS["DemiNiveau"] and NIVEAU["Map"] not in ["NiveauBaseFuturiste", "NiveauMordor"]:
             #construction
             self.buildElements = Construire(self)
 
@@ -516,6 +516,9 @@ class GameToolBox(object):
                         NIVEAU["Map"] = "NiveauBaseFuturiste"
 
                     case "NiveauBaseFuturiste":
+                        NIVEAU["Map"] = "NiveauMordor"
+
+                    case "NiveauMordor":
                         NIVEAU["Map"] = "NiveauPlaineRiviere"
 
             case "Premiere":
@@ -532,7 +535,7 @@ class GameToolBox(object):
 
         # reset demi niveau (chateau)
         INFOS["DemiNiveau"] = False 
-        self.demiNiveau = False
+        self.gestionnaire.demiNiveau = False
 
 
         # Réinitialiser les groupes
