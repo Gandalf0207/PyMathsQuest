@@ -117,6 +117,11 @@ class CollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(0,-60)
             case "Gong":
                 self.hitbox = self.rect.inflate(-30,-30)
+            case "DoorBareau":
+                self.hitbox = self.rect.inflate(0,-60)
+            case "Bareaux":
+                self.hitbox = self.rect.inflate(0,-60)
+
 
 
 

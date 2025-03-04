@@ -109,7 +109,7 @@ NIVEAU = {
     "Niveau" : "Seconde",
 
     # map
-    "Map" : "NiveauMedievale",
+    "Map" : "NiveauMordor",
 
     # numero
     "Numero" : 0,
