@@ -53,7 +53,7 @@ class Game(object):
         self.GameTool.CreateFont()
 
         # surface bg hotbar
-        self.bgHotBar = pygame.Surface((WINDOW_WIDTH, 160))
+        self.bgHotBar = pygame.Surface((WINDOW_WIDTH, 170))
         self.bgHotBar.fill((150,150,150))
 
 
@@ -248,7 +248,7 @@ class Game(object):
                 self.settingsAll.Update()
 
                 if not INFOS["HideHotBar"]: # check hide bool
-                    self.displaySurface.blit(self.bgHotBar, (0, WINDOW_HEIGHT-160)) # hotbar bg
+                    self.displaySurface.blit(self.bgHotBar, (0, WINDOW_HEIGHT-170)) # hotbar bg
                     if not self.demiNiveau : # pas besoin de la minimap dans les demi niveau
                         self.displaySurface.blit(self.minimap_surface, (10, WINDOW_HEIGHT-160))
                     self.displaySurface.blit(self.ideaTips_surface, COORDS_BOX_IDEAS_TIPS)# reste hotbar
