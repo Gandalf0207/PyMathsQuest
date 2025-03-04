@@ -35,6 +35,10 @@ class Interactions(object):
         self.boatPlacementPlayerPos = []
         self.electricityOn = False
 
+        # stockage value
+        self.pot  = False
+        self.parchemin = False
+
 
     def Interagir(self, groups, interactionGroups) -> None:
         """Méthode de calcul d'interaction entre chaque element en fonction des niveaux

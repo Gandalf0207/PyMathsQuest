@@ -153,7 +153,8 @@ class LoadMap():
             self.porteVolcan = pygame.image.load(join("Images", "Obstacle", "Structures", "Volcan.png")).convert_alpha()
 
             self.vaisseauCrash = pygame.image.load(join("Images", "Obstacle", "Structures", "Volcan.png")).convert_alpha()
-
+            self.bareaux = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+            self.DoorBareau = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
 
     def Setup(self) -> None:
         """Méthode de build de tout les éléments sprites de la map jeu.
@@ -457,8 +458,8 @@ class LoadMap():
                         return 0 <= y < len(self.map) and 0 <= x < len(self.map[0])
                     
                     # Vérification des voisins
-                    right = case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] in ["C", "d"]
-                    left = case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] in ["C", "d"]
+                    right = case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] in ["C", "d", "l", "c"]
+                    left = case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] in ["C", "d", "l", "c"]
                     up = case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "C"
                     down = case_valide(ordonnees + 1, abscisses) and self.map[ordonnees + 1][abscisses] == "C"
                     
@@ -492,6 +493,10 @@ class LoadMap():
                     CollisionSprites(pos, self.DoorChateau, "Door", (self.collisionSprites, self.interactions, self.allSprites))
                 if self.map[ordonnees][abscisses] == "d":
                     CollisionSprites(pos, self.DoorMurailles, "Door2", (self.collisionSprites, self.allSprites))
+
+                if self.map[ordonnees][abscisses] == "l":
+                    CollisionSprites(pos, self.DoorBareau, "DoorBareau", (self.collisionSprites, self.interactions, self.allSprites))
+
 
 
                 # maisons
@@ -614,7 +619,7 @@ class LoadMap():
                 
                 # pot
                 elif self.map[ordonnees][abscisses] == "+":
-                    CollisionSprites(pos, self.pot, "Pot", (self.collisionSprites, self.allSprites))
+                    CollisionSprites(pos, self.pot, "Pot", (self.collisionSprites, self.allSprites, self.interactions))
 
                 # parchemin
                 elif self.map[ordonnees][abscisses] == "/":
@@ -630,6 +635,10 @@ class LoadMap():
                 # vaisseau crash spawn
                 elif self.map[ordonnees][abscisses] == "%":
                     CollisionSprites(pos, self.vaisseauCrash, "CrashVaisseau", (self.collisionSprites, self.allSprites))
+                
+                #bareaux
+                elif self.map[ordonnees][abscisses] == "c":
+                    CollisionSprites(pos, self.bareaux, "Bareaux", (self.allSprites, self.collisionSprites))
 
 
     def SetupSpawn(self) -> None:

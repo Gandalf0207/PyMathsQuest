@@ -1898,9 +1898,9 @@ class NiveauMordor(GestionNiveauMap):
         # prisions
         self.prisonStructure = [
             ["C", "-", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "-", "-", "C"],
-            ["C", "-", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "+", "C", "-", "-", "-", "-", "C"],
-            ["C", "-", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "/", "C", "-", "-", "-", "-", "C"],
-            ["C", "-", "-", "-", "-", "C", "c", "m", "c", "C", "c", "m", "c", "C", "-", "-", "-", "-", "C"],
+            ["C", "-", "-", "-", "-", "C", "-", "+", "-", "C", "-", "-", "-", "C", "-", "-", "-", "-", "C"],
+            ["C", "-", "-", "-", "-", "C", "-", "-", "/", "C", "-", "-", "-", "C", "-", "-", "-", "-", "C"],
+            ["C", "-", "-", "-", "-", "C", "c", "l", "c", "C", "c", "l", "c", "C", "-", "-", "-", "-", "C"],
             ["C", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "C"],
             ["C", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "C"],
             ["C", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "C"],
@@ -2041,8 +2041,8 @@ class NiveauMordor(GestionNiveauMap):
 
             # Vérifie la possibilité de déplacements pour chaque liste de points clés
             # Le parcours se fait en trois étapes, en passant par les rivières pour s'assurer que les chemins sont valides
-            if self.CheckNiveauPossible(listeOrdrePointCle1, ["-", "P", "f", "T", "X", "S", "D", "m"]):  # Vérifie la première partie
-                if self.CheckNiveauPossible(listeOrdrePointCle2,  ["-", "P", "f", "T", "X", "S", "D", "m"]):  # Vérifie la deuxième partie
+            if self.CheckNiveauPossible(listeOrdrePointCle1, ["-", "P", "f", "T", "X", "S", "D", "l"]):  # Vérifie la première partie
+                if self.CheckNiveauPossible(listeOrdrePointCle2,  ["-", "P", "f", "T", "X", "S", "D", "l"]):  # Vérifie la deuxième partie
                     # Si tout est valide, les obstacles peuvent être placés et les coordonnées sont sauvegardées
                     AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords")
                     checkDeplacementPasPossible = False  # Arrête la boucle

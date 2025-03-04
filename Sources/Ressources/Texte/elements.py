@@ -213,6 +213,7 @@ ElementsFr = {
 
     "NiveauMordor" : {
         "MakeExo" : "Pour réouvir le portail, vous devez résoudre cet exercice",
+        "GoPrison" : "Vous êtes emprisonné par l'Orc.",
 
         "ExoTexte" : {
             "Seconde" :{

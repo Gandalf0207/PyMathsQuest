@@ -192,7 +192,22 @@ class PNJInterface(object):
 
                     elif self.gestionnaire.pnjActuel == "PNJ7":
                         PNJ["PNJ7"] = True
-                        STATE_HELP_INFOS[0] = "EscapeVaisseau"    
+                        STATE_HELP_INFOS[0] = "EscapeVaisseau"
+
+                if NIVEAU["Map"] == "NiveauMordor":
+                    if self.gestionnaire.pnjActuel == "PNJ1":
+                        
+                        #animation 
+                        self.gestionnaire.gestionnaire.fondu_au_noir()
+                        self.gestionnaire.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["GoPrison"])
+
+                        player = self.gestionnaire.gestionnaire.player
+                        # deplacement player
+                        player.hitbox_rect.center = (71*CASEMAP + 64, 1*CASEMAP + 64) # +64 center case à coté
+                        player.rect.center = player.hitbox_rect.center
+
+                        self.gestionnaire.gestionnaire.ouverture_du_noir(player.rect.center)
+
 
 
         else:
