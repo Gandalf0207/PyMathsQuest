@@ -149,8 +149,8 @@ class LoadMap():
 
             self.pot  = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
             self.parchemin = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
-            self.volcan = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
-            self.porteVolcan = pygame.image.load(join("Images", "Obstacle", "Structures", "Volcan.png")).convert_alpha()
+            self.volcan = pygame.image.load(join("Images", "Obstacle", "Structures", "Volcan.png")).convert_alpha()
+            self.porteVolcan =pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha() 
 
             self.vaisseauCrash = pygame.image.load(join("Images", "Obstacle", "Structures", "Volcan.png")).convert_alpha()
             self.bareaux = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
@@ -626,14 +626,14 @@ class LoadMap():
                     Sprites(pos, self.parchemin, "Parchemin" ,(self.allSprites, self.interactions))
                     
                 # volcan
-                elif self.map[ordonnees][abscisses] == "ù" and self.map[ordonnees-1][abscisses-1] in ["P", "O", "-"] :
+                elif self.map[ordonnees][abscisses] == "ù" and self.map[ordonnees-1][abscisses-1] in ["P", "O", "-"] and self.map[ordonnees][abscisses-1] in ["P", "O", "-"] and self.map[ordonnees-1][abscisses] in ["P", "O", "-"]:
                     CollisionSprites(pos, self.volcan, "Volcan", (self.collisionSprites, self.allSprites))
 
                 elif self.map[ordonnees][abscisses] == "f":
                     CollisionSprites(pos, self.porteVolcan, "PorteVolcan", (self.collisionSprites, self.allSprites, self.interactions))
 
                 # vaisseau crash spawn
-                elif self.map[ordonnees][abscisses] == "%":
+                elif self.map[ordonnees][abscisses] == "%" and self.map[ordonnees-1][abscisses-1] in ["O", "-"] and self.map[ordonnees][abscisses-1] in ["O", "-"] and self.map[ordonnees-1][abscisses] in ["O", "-"]:
                     CollisionSprites(pos, self.vaisseauCrash, "CrashVaisseau", (self.collisionSprites, self.allSprites))
                 
                 #bareaux

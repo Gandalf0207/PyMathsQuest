@@ -1888,7 +1888,9 @@ class NiveauMordor(GestionNiveauMap):
         
         # vaisseau
         coordX, coordY = randint(8, 25), randint(3, 64)
-        self.map[coordY][coordX] = "%"
+        for ordonne in range(5):
+            for abscisse in range(5):
+                self.map[coordY + ordonne][coordX + abscisse] = "%"
 
         # spawn
         coordsSpawn = [coordX + 7, coordY +3]
