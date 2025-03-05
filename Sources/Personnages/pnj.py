@@ -1,6 +1,7 @@
 from settings import *
 from Sources.ScriptAlgo.astar import *
 from Sources.Elements.cinematique import *
+from Sources.Elements.followPlayer import *
 
 class PNJOBJ(pygame.sprite.Sprite):
     
@@ -84,7 +85,6 @@ class PNJOBJ(pygame.sprite.Sprite):
         """
 
         if pointSuivant:  # Vérifie si un point cible existe
-
             # Extraire les coordonnées cibles
             target_x, target_y = pointSuivant
 
@@ -128,6 +128,8 @@ class PNJOBJ(pygame.sprite.Sprite):
                 self.hitbox.x += move_x
                 self.hitbox.y += move_y
                 self.rect.topleft = self.hitbox.topleft  # Synchroniser la rect
+                self.pos = (target_x //CASEMAP, target_y//CASEMAP) # syncro pos
+            
                 
 
         return pointSuivant, pathDeplacement
@@ -142,6 +144,13 @@ class PNJOBJ(pygame.sprite.Sprite):
         pointSuivant, pathDeplacement = self.Move(dt, pointSuivant, pathDeplacement) # déplacement
         self.Animate(dt) # animation
         return pointSuivant, pathDeplacement
+    
+    def UpdateFollow(self, dt : int, pointSuivant : tuple, pathDeplacement : list) -> any:
+        self.ModifSpeed(pathDeplacement) # viteese maj
+        pointSuivant, pathDeplacement = self.Move(dt, pointSuivant, pathDeplacement) # déplacement
+        self.Animate(dt) # animation
+        return pointSuivant, pathDeplacement
+
 
 
 
@@ -169,22 +178,20 @@ class GestionPNJ(object):
         self.map_width = LONGUEUR * CASEMAP
         self.map_height = LARGEUR * CASEMAP
 
-        # state interface de base
-        self.openInterface = False
-        
         # stockage des valeurs du pnj actuel
         self.pnjObj = None
         self.pnjActuel = None
         self.coordsPNJActuel = None
-        self.interface = False
         
         # proximité pnj player
         self.check = False
 
-        # infos cinématique
+        # infos cinématique / follow player
         self.cinematique = False
         self.cinematiqueObject = None
 
+        self.followObject = None #oj suivre
+        self.followPlayer = False # bool 
 
     def CinematiqueBuild(self) -> None:
         """Méthode construction cinématique object. Lancement au prochain update.
@@ -210,6 +217,21 @@ class GestionPNJ(object):
         self.pnjObj.Animate(0) # frame de base
         self.cinematique = False
         self.cinematiqueObject = None
+
+    def FollowBuild(self):
+        self.followPlayer = True
+        self.pnjObj.speed = 475
+
+        if NIVEAU["Map"] == "NiveauMordor":
+            goal = (int(self.gestionnaire.player.rect.center[0] // CASEMAP), int(self.gestionnaire.player.rect.center[1] // CASEMAP))
+            pathAcces = ["-", "l", "/"]
+        
+        self.followObject = FollowPlayer(goal, self.pnjObj, self.map, pathAcces)
+
+    def EndFollow(self):
+        self.followObject = None #oj suivre
+        self.followPlayer = False # bool 
+        
 
 
     def Vu(self) -> None:
@@ -284,4 +306,4 @@ class GestionPNJ(object):
             self.gameInterfaces.GestionInterfaceSpecifique("PNJClose", self)
 
         # retour state interface global + etat cinématique
-        return self.cinematique, self.cinematiqueObject
+        return self.cinematique, self.cinematiqueObject, self.followPlayer, self.followObject

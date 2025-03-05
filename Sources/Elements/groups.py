@@ -56,10 +56,10 @@ class AllSprites(pygame.sprite.Group):
             if INFOS["DemiNiveau"]:
                 if NIVEAU["Map"] == "NiveauMedievale":
                     self.map_width = 11 * CASEMAP
-                    self.map_height = 11 * CASEMAP + 160 # hotbar
+                    self.map_height = 11 * CASEMAP + 170 # hotbar
             else:
                 self.map_width = LONGUEUR * CASEMAP
-                self.map_height = LARGEUR * CASEMAP + 160 # hotbar
+                self.map_height = LARGEUR * CASEMAP + 170 # hotbar
 
                 
         # Calcul de l'offset pour centrer la caméra sur le joueur

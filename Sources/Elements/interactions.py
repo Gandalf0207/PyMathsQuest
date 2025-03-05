@@ -35,6 +35,10 @@ class Interactions(object):
         self.boatPlacementPlayerPos = []
         self.electricityOn = False
 
+        # stockage value
+        self.pot  = False
+        self.parchemin = False
+
 
     def Interagir(self, groups, interactionGroups) -> None:
         """Méthode de calcul d'interaction entre chaque element en fonction des niveaux
@@ -237,7 +241,7 @@ class Interactions(object):
 
                     INFOS["DemiNiveau"] = True      
                     STATE_HELP_INFOS[0] = "SeePNJ"   
-                
+
                 # interaction cerlce exo map n°2
                 if self.ObjectId == "CerclePortal":
                     # animation 
@@ -283,6 +287,79 @@ class Interactions(object):
                     INFOS["Exo"] = True # lancement exo dans main (changement variable)
                     self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["MakeExo"]) # text animation
 
+            elif NIVEAU["Map"] == "NiveauMordor":
+
+                if self.ObjectId == "Parchemin":
+                    # on donne le cours
+                    self.gestionnaire.fondu_au_noir()
+                    
+                    if not self.parchemin:
+                        self.parchemin = True
+                        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["Parchemin"]) # text animation
+                    else:
+                        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["ParcheminVu"]) # text animation
+                    
+                    self.gestionnaire.ouverture_du_noir(self.player.rect.center)
+
+                if self.ObjectId == "Pot":
+                    # on donne le cours
+                    self.gestionnaire.fondu_au_noir()
+
+                    if not self.pot:
+                        self.pot = True
+                        INVENTORY["Key"] += 1
+                        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["Key"]) # text animation
+                    else:
+                        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["Key2"]) # text animation
+                    
+                    self.gestionnaire.ouverture_du_noir(self.player.rect.center)
+
+                if self.ObjectId == "DoorBareau":
+                    self.gestionnaire.fondu_au_noir() # animation
+                    self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["OpenDoor"]) # text animation
+
+                    pos = self.Obj.pos
+                    doorOpen = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+                    Sprites(pos, doorOpen, "OpenDoor", groups[0])
+                    self.Obj.kill()
+
+                    self.gestionnaire.ouverture_du_noir(self.player.rect.center)
+
+                if self.ObjectId == "Door":
+                    self.gestionnaire.fondu_au_noir() # animation
+                    self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["OpenDoor"]) # text animation
+
+                    pos = self.Obj.pos
+                    doorOpen = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+                    Sprites(pos, doorOpen, "OpenDoorPrison", groups[0])
+                    self.Obj.kill()
+
+                    self.gestionnaire.ouverture_du_noir(self.player.rect.center)   
+
+                if self.ObjectId == "pont3":
+                    # animation 
+                    self.gestionnaire.fondu_au_noir()
+                    self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["TraverserPont"])
+                    # deplacement player
+                    if self.player.rect.x < self.coordObjActuel[0]:
+                        self.player.rect.x += CASEMAP*2
+                        STATE_HELP_INFOS[0] = "SeePNJ" # update tips player
+                    else:
+                        self.player.rect.x -= CASEMAP*2
+                        STATE_HELP_INFOS[0] = "CrossBridge" # update tips player
+                    
+                    self.player.hitbox_rect.center = self.player.rect.center    
+                    # fin animation
+                    self.gestionnaire.ouverture_du_noir(self.player.rect.center) 
+
+                if self.ObjectId == "PorteVolcan" : 
+                    self.gestionnaire.fondu_au_noir()
+
+                    INFOS["Exo"] = True # lancement exo dans main (changement variable)
+                    self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["MakeExo"]) # text animation
+
+
+
     def Isclose(self) -> bool :
         """Méthode calcul de proximité entre le player et les obj interactions
         Input : None
@@ -321,7 +398,12 @@ class Interactions(object):
                     return False
                 if Object.id  == "DoorFuturisteDemiNiveau" and not PNJ["PNJ7"]:
                     return False
-        
+                if Object.id == "DoorBareau" and (INVENTORY["Key"] < 1 or not self.parchemin):
+                    return False
+                if Object.id == "Door" and not PNJ["PNJ3"]:
+                    return False
+                if Object.id == "PorteVolcan" and not PNJ["PNJ4"]:
+                    return False
 
                 # valeur importante de l'obj interactions
                 self.Obj = Object

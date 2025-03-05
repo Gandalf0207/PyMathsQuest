@@ -1,16 +1,16 @@
 from settings import *
-from Sources.Interface.interfaceBook import *
-from Sources.Interface.interfaceBundle import *
-from Sources.Interface.interfaceMenuHome import *
-from Sources.Interface.interfacePNJ import *
-from Sources.Interface.interfaceReactor import *
-from Sources.Interface.interfaceSettings import *
-from Sources.Interface.interfaceSound import *
-from Sources.Interface.interfaceExo import *
-from Sources.Interface.interfaceGong import *
+from Sources.Interface.Game.interfaceBook import *
+from Sources.Interface.Game.interfaceBundle import *
+from Sources.Interface.Game.interfaceMenuHome import *
+from Sources.Interface.Game.interfacePNJ import *
+from Sources.Interface.Game.interfaceReactor import *
+from Sources.Interface.Game.interfaceSettings import *
+from Sources.Interface.Game.interfaceSound import *
+from Sources.Interface.Game.interfaceExo import *
+from Sources.Interface.Game.interfaceGong import *
 
 
-class GestionOtherInterfaces(object):
+class GestionGameInterfaces(object):
     def __init__(self, gestionnaire, gestionSoundFond):
         
         self.gestionnaire = gestionnaire

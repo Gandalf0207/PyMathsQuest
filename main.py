@@ -7,9 +7,9 @@ from Sources.Elements.hotbar import *
 from Sources.Personnages.pnj import *
 from Sources.Ressources.Texte.creationTexte import *
 from Sources.Elements.construire import *
-from Sources.Interface.interfaceExo import *
+from Sources.Interface.Game.interfaceExo import *
 from Sources.Elements.sound import *
-from Sources.Interface.gestionInterface import *
+from Sources.Interface.Game.gestionInterfaceGame import *
 from Sources.Elements.cinematique import *
 
 
@@ -45,6 +45,8 @@ class Game(object):
         self.cinematique = False # cinématique
         self.cinematiqueObject = None # obj de la cinematique 
         self.demiNiveau = False
+        self.followObject = None #oj suivre
+        self.followPlayer = False # bool 
 
         # bool check map : 
         self.ERROR_RELANCER = False
@@ -53,7 +55,7 @@ class Game(object):
         self.GameTool.CreateFont()
 
         # surface bg hotbar
-        self.bgHotBar = pygame.Surface((WINDOW_WIDTH, 160))
+        self.bgHotBar = pygame.Surface((WINDOW_WIDTH, 170))
         self.bgHotBar.fill((150,150,150))
 
 
@@ -90,7 +92,7 @@ class Game(object):
 
 
         # gestion des interface du jeu
-        self.gameInterfaces = GestionOtherInterfaces(self, self.GameTool.gestionSoundFond) 
+        self.gameInterfaces = GestionGameInterfaces(self, self.GameTool.gestionSoundFond) 
 
         #pnj
         self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.map, self, self.GameTool.gestionSoundDialogues, self.gameInterfaces)
@@ -103,7 +105,7 @@ class Game(object):
         # Interactions
         self.InteractionObject = Interactions(self, self.gameInterfaces)
 
-        if not INFOS["DemiNiveau"] and NIVEAU["Map"] != "NiveauBaseFuturiste":
+        if not INFOS["DemiNiveau"] and NIVEAU["Map"] not in ["NiveauBaseFuturiste", "NiveauMordor"]:
             #construction
             self.buildElements = Construire(self)
 
@@ -221,7 +223,7 @@ class Game(object):
                         self.settingsAll.OpenInterfaceElementClic(event)
 
                     # update pnj
-                    self.cinematique, self.cinematiqueObject = self.pnj.update(self.player.rect.center, event) # pnj update 
+                    self.cinematique, self.cinematiqueObject, self.followPlayer, self.followObject = self.pnj.update(self.player.rect.center, event) # pnj update 
             
             
 
@@ -229,6 +231,9 @@ class Game(object):
             # update de tous les sprites de la map
             self.allSprites.update(dt, self.cinematique)
             self.displaySurface.fill("#000000")
+
+            if self.followPlayer:
+                self.followObject.Update(self.player.rect.center, dt)
 
 
             # si pas de cinématique
@@ -248,7 +253,7 @@ class Game(object):
                 self.settingsAll.Update()
 
                 if not INFOS["HideHotBar"]: # check hide bool
-                    self.displaySurface.blit(self.bgHotBar, (0, WINDOW_HEIGHT-160)) # hotbar bg
+                    self.displaySurface.blit(self.bgHotBar, (0, WINDOW_HEIGHT-170)) # hotbar bg
                     if not self.demiNiveau : # pas besoin de la minimap dans les demi niveau
                         self.displaySurface.blit(self.minimap_surface, (10, WINDOW_HEIGHT-160))
                     self.displaySurface.blit(self.ideaTips_surface, COORDS_BOX_IDEAS_TIPS)# reste hotbar
@@ -516,6 +521,9 @@ class GameToolBox(object):
                         NIVEAU["Map"] = "NiveauBaseFuturiste"
 
                     case "NiveauBaseFuturiste":
+                        NIVEAU["Map"] = "NiveauMordor"
+
+                    case "NiveauMordor":
                         NIVEAU["Map"] = "NiveauPlaineRiviere"
 
             case "Premiere":
@@ -532,7 +540,7 @@ class GameToolBox(object):
 
         # reset demi niveau (chateau)
         INFOS["DemiNiveau"] = False 
-        self.demiNiveau = False
+        self.gestionnaire.demiNiveau = False
 
 
         # Réinitialiser les groupes

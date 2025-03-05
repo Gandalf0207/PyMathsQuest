@@ -85,7 +85,11 @@ ElementsFr = {
                 "Electricity" : "Vous devez activer l'électricité",
                 "UseVent" : "Vous devez utiliser les conduits d'aération", 
                 "EscapeVaisseau": "Vous devez vous échaper du vaisseau par la porte arrière."
+            },
 
+            "NiveauMordor" : {
+                "SeePNJ" : "Discuter avec le pnj sur la map. Regarder la minimap et suivez le chemin !",
+                "CrossBridge" : "Vous devez traverser le pont pour acceder à la suite",
             },
         },
     },
@@ -179,6 +183,47 @@ ElementsFr = {
         "PiloteMoveCafet" : "Le pilote s'est déplacé dans la salle de lancement, rejoignez le !",
         "VaisseauSpacial" : "Vous montez dans le vaisseau",
         "CrashVaisseau" : "Le vaisseau s'est crash, soit meilleur stp",
+        "ExoTexte" : {
+            "Seconde" :{
+                "Numero0" :{
+                    "Title" : "Calculs de Volumes",
+
+                    "DifficulteTrue" : {
+                        "Consigne" : " A l'aide des valeurs données, veuillez calculer le volume total de la figure représentée ci-dessous.:",
+                        "QCM" : "Choisissez l'unique et bonne réponse",
+                    },
+
+                    "DifficulteFalse" : {
+                        "Consigne" : "A l'aide des valeurs données, veuillez calculer le volume demandé du cube de côté c, de la sphère de rayon r et du cone de hauter h et de diametre de base d:",
+                        "QCM" : "Choisissez l'unique et bonne réponse",
+                    },
+                },
+
+            },         
+            "Premiere" :{
+                
+            },
+
+            "Terminale" : {
+
+            },
+        }
+
+    },
+
+
+    "NiveauMordor" : {
+        "MakeExo" : "Pour réouvir le portail, vous devez résoudre cet exercice",
+        "GoPrison" : "Vous êtes emprisonné par l'Orc.",
+        "Parchemin" : "Vous obtenez le parchemin",
+        "ParcheminVu" : "Vous avez déjà obtenu le perchemin",
+        "Key" : "Vous trouvez des clés dans le pot",
+        "Key2" : "Le pot est vide",
+        "OpenDoor" : "Vous venez d'ouvrir la porte de la cellule",
+        "KillPNJ3" : "Vous venez de tuer le garde, vous pouvez continuer votre route",
+        "LeavePNJ2" : "Votre ami est parti, il vous remercie pour votre aide",
+        "TraverserPont" : "Vous traversez le pont",
+
         "ExoTexte" : {
             "Seconde" :{
                 "Numero0" :{
