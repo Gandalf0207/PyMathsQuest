@@ -6,6 +6,46 @@ ElementsFr = {
     "Interaction" : "Appuyer sur E",
     "LevelSup" : "Vous passez au niveau suppérieur !",
     "Humour" : "Humour, second degré",
+
+    "HomeInterface" : {
+        "Niveau" : {
+            "Title" : "Niveau",
+            "Consignes" : "Choisissez un niveau"
+        },
+        "Difficulte" : {
+            "Title" : "Difficulté",
+            "Consignes" : "Choisissez un niveau"
+        },
+        "Langue" : {
+            "Title" : "Langue",
+            "Consignes" : "Choisissez un niveau"
+        },
+
+        "ConditionsUtilisation" : """Termes et Conditions d'Utilisation (extrait*)
+
+                Merci d'utiliser ce jeu Python Py-Maths-Quest, un projet créé avec passion pour l'amour des mathématiques et du partage de connaissances. Avant de continuer à utiliser ce logiciel, veuillez lire attentivement les conditions suivantes :
+
+                1. Droit d'auteur : Ce jeu est protégé par les lois sur le droit d'auteur et est la propriété intellectuelle de LUBAN Théo & PLADEAU Quentin. Tous les droits qui ne sont pas expressément accordés dans ces conditions sont réservés.
+
+                2. Utilisation personnelle : Ce jeu est destiné à un usage personnel et non commercial. Vous pouvez le partager avec des amis et des proches, mais toute distribution à des fins commerciales est strictement interdite sans autorisation préalable.
+
+                3. Règlementation française : En utilisant ce jeu, vous acceptez de vous conformer à toutes les lois et réglementations en vigueur en France concernant les droits d'auteur, la propriété intellectuelle et toute autre loi applicable.
+
+                4. Librairies open source : Ce jeu utilise des librairies open source telles que Python, Tkinter, Matplotlib, LaTeX, et d'autres. Nous reconnaissons et apprécions le travail des développeurs de ces librairies, et nous nous engageons à respecter les termes de leurs licences respectives. 
+                
+                5. Crédits : Nous tenons à remercier LUBAN Théo & PLADEAU Quentin pour leur contribution à ce projet. Leurs efforts ont été essentiels pour créer ce jeu. Nous apprécions également le soutien de ESCOUTE Cédric, qui a rendu ce projet possible.
+
+                6. Cadre de réalisation : Ce jeu a été développé dans le cadre du cours de NSI de terminale. Nous sommes reconnaissants envers ESCOUTE Cédric, et Patrice-Florent Marie-Jeanne pour son soutien et l'enseignement de connaissances ayant servie au projet.
+
+                En utilisant ce jeu, vous acceptez ces termes et conditions. Si vous n'acceptez pas ces termes, veuillez ne pas utiliser ce logiciel. Ces termes et conditions peuvent être modifiés à tout moment sans préavis.
+
+                Pour toute question ou préoccupation concernant ces termes et conditions, veuillez vous référer à la liscence disponible sur le dépots GitHub du projet : https://github.com/Gandalf0207/Py-Maths-Quest .      
+                
+    © Tous droits réservé 2025
+    LUBAN Théo & PLADEAU Quentin"""
+    },
+
+
     "InterfacePNJ" : {
         "SkipButton" : "Suivant",
         "Oui" : "Oui",

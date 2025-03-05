@@ -78,7 +78,8 @@ ORANGE = (255, 165, 0)
 RED = (255, 0, 0)
 BLACK = (0,0,0)
 WHITE = (255,255,255)
-
+SCROLLBAR_COLOR = (180, 180, 180)  # Couleur de la scrollbar
+SCROLLBAR_HOVER = (150, 150, 150)  # Couleur au survol
 
 # INFOS FIXES
 LONGUEUR = 150
@@ -116,17 +117,22 @@ NIVEAU = {
 }
 # box infos globales
 INFOS = {
+    "GameStart" : False,
+    "CrashGame" : False,
+    
     "Difficulte" : False,
+    "ChangementAnnee" : False,
+    
     "Exo" : False, 
     "ExoPasse" : False,
+    
     "DemiNiveau" : False,
     "ChangementNiveau" : False,
-    "ChangementAnnee" : False,
+    
     "HideHotBar" : False,
     "RebindingKey": False,
     "ReactorOn" : False,
     "HidePlayer" : False,
-    "CrashGame" : False,
 }
 
 DICOLANGUE = {
