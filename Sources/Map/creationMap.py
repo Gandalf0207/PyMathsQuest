@@ -1899,9 +1899,9 @@ class NiveauMordor(GestionNiveauMap):
 
         # prisions
         self.prisonStructure = [
-            ["C", "-", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "-", "-", "C"],
-            ["C", "-", "-", "-", "-", "C", "-", "+", "-", "C", "-", "-", "-", "C", "-", "-", "-", "-", "C"],
             ["C", "-", "-", "-", "-", "C", "-", "-", "/", "C", "-", "-", "-", "C", "-", "-", "-", "-", "C"],
+            ["C", "-", "-", "-", "-", "C", "-", "+", "-", "C", "-", "-", "-", "C", "-", "-", "-", "-", "C"],
+            ["C", "-", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "-", "C", "-", "-", "-", "-", "C"],
             ["C", "-", "-", "-", "-", "C", "c", "l", "c", "C", "c", "l", "c", "C", "-", "-", "-", "-", "C"],
             ["C", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "C"],
             ["C", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "C"],
@@ -1959,7 +1959,7 @@ class NiveauMordor(GestionNiveauMap):
     def __PlacementPNJ__(self):
         allCoordsPont = LoadJsonMapValue("coordsMapObject", "coords Pont")
         coordsPNJ1 = [allCoordsPont[0][0]-1, allCoordsPont[0][1], "P", 1]
-        coordsPNJ2 = [75, 1, "P", 2] # dans la cellule de droite
+        coordsPNJ2 = [76, 1, "P", 2] # dans la cellule de droite
         coordsPNJ3 = [74, 8, "P", 3]
 
         allCoordsVolcan = LoadJsonMapValue("coordsMapObject", "coords Volcan")

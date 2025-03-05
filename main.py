@@ -7,9 +7,9 @@ from Sources.Elements.hotbar import *
 from Sources.Personnages.pnj import *
 from Sources.Ressources.Texte.creationTexte import *
 from Sources.Elements.construire import *
-from Sources.Interface.interfaceExo import *
+from Sources.Interface.Game.interfaceExo import *
 from Sources.Elements.sound import *
-from Sources.Interface.gestionInterface import *
+from Sources.Interface.Game.gestionInterfaceGame import *
 from Sources.Elements.cinematique import *
 
 
@@ -45,6 +45,8 @@ class Game(object):
         self.cinematique = False # cinématique
         self.cinematiqueObject = None # obj de la cinematique 
         self.demiNiveau = False
+        self.followObject = None #oj suivre
+        self.followPlayer = False # bool 
 
         # bool check map : 
         self.ERROR_RELANCER = False
@@ -90,7 +92,7 @@ class Game(object):
 
 
         # gestion des interface du jeu
-        self.gameInterfaces = GestionOtherInterfaces(self, self.GameTool.gestionSoundFond) 
+        self.gameInterfaces = GestionGameInterfaces(self, self.GameTool.gestionSoundFond) 
 
         #pnj
         self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.map, self, self.GameTool.gestionSoundDialogues, self.gameInterfaces)
@@ -221,7 +223,7 @@ class Game(object):
                         self.settingsAll.OpenInterfaceElementClic(event)
 
                     # update pnj
-                    self.cinematique, self.cinematiqueObject = self.pnj.update(self.player.rect.center, event) # pnj update 
+                    self.cinematique, self.cinematiqueObject, self.followPlayer, self.followObject = self.pnj.update(self.player.rect.center, event) # pnj update 
             
             
 
@@ -229,6 +231,9 @@ class Game(object):
             # update de tous les sprites de la map
             self.allSprites.update(dt, self.cinematique)
             self.displaySurface.fill("#000000")
+
+            if self.followPlayer:
+                self.followObject.Update(self.player.rect.center, dt)
 
 
             # si pas de cinématique

@@ -89,6 +89,7 @@ ElementsFr = {
 
             "NiveauMordor" : {
                 "SeePNJ" : "Discuter avec le pnj sur la map. Regarder la minimap et suivez le chemin !",
+                "CrossBridge" : "Vous devez traverser le pont pour acceder à la suite",
             },
         },
     },
@@ -214,6 +215,14 @@ ElementsFr = {
     "NiveauMordor" : {
         "MakeExo" : "Pour réouvir le portail, vous devez résoudre cet exercice",
         "GoPrison" : "Vous êtes emprisonné par l'Orc.",
+        "Parchemin" : "Vous obtenez le parchemin",
+        "ParcheminVu" : "Vous avez déjà obtenu le perchemin",
+        "Key" : "Vous trouvez des clés dans le pot",
+        "Key2" : "Le pot est vide",
+        "OpenDoor" : "Vous venez d'ouvrir la porte de la cellule",
+        "KillPNJ3" : "Vous venez de tuer le garde, vous pouvez continuer votre route",
+        "LeavePNJ2" : "Votre ami est parti, il vous remercie pour votre aide",
+        "TraverserPont" : "Vous traversez le pont",
 
         "ExoTexte" : {
             "Seconde" :{

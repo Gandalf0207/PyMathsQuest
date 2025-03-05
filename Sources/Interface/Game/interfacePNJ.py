@@ -43,7 +43,8 @@ class PNJInterface(object):
             self.loadText(1)
         elif self.gestionnaire.pnjActuel == "PNJ5" and NIVEAU["Map"] == "NiveauBaseFuturiste" and PNJ["PNJ4"] and not self.gestionnaire.pnjObj.discussion :
             self.loadText(1)
-        
+        elif self.gestionnaire.pnjActuel == "PNJ3" and PNJ["PNJ2"]:
+            self.loadText(1)
         else:
             self.loadText()
         
@@ -207,6 +208,31 @@ class PNJInterface(object):
                         player.rect.center = player.hitbox_rect.center
 
                         self.gestionnaire.gestionnaire.ouverture_du_noir(player.rect.center)
+                        PNJ["PNJ1"] = True
+                    
+                    if self.gestionnaire.pnjActuel == "PNJ2":
+                        PNJ["PNJ2"] = True
+                        self.gestionnaire.FollowBuild() # préparation au follow du pnj
+
+                    if self.gestionnaire.pnjActuel == "PNJ3":
+                        self.gestionnaire.gestionnaire.fondu_au_noir()
+                        self.gestionnaire.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["KillPNJ3"])
+                        self.gestionnaire.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["LeavePNJ2"])
+
+
+                        PNJ["PNJ3"] = True # update
+                        self.gestionnaire.pnjObj.kill()
+
+                        # kill pnj + stop follow
+                        for pnjObj in self.gestionnaire.allPNJ:
+                            if pnjObj.numPNJ == "PNJ2":
+                                self.gestionnaire.EndFollow()
+                                pnjObj.kill()
+
+                    if self.gestionnaire.pnjActuel == "PNJ4":
+                        PNJ["PNJ4"] = True
+
+                        
 
 
 
@@ -263,10 +289,6 @@ class PNJInterface(object):
 
             self.interfaceSurface.blit(self.surfaceBtnOui, (self.rectBtnOui.x, self.rectBtnOui.y))
             self.interfaceSurface.blit(self.surfaceBtnNon, (self.rectBtnNon.x, self.rectBtnNon.y))
-
-        elif self.gestionnaire.pnjActuel == "PNJ5" and NIVEAU["Map"] == "NiveauBaseFuturiste" and not PNJ["PNJ4"]:
-            # on ne met pas le btn skip car il manque la vision d'un pnj
-            pass
 
         else:
 
@@ -330,11 +352,20 @@ class PNJInterface(object):
                     
                     if self.rectBtnNon.collidepoint(event.pos):
                         self.CloseInterface()
+                
+                elif self.gestionnaire.pnjActuel == "PNJ5" and NIVEAU["Map"] == "NiveauBaseFuturiste" and not PNJ["PNJ4"]:
+                    self.CloseInterface()
+
+                elif self.gestionnaire.pnjActuel == "PNJ3" and not PNJ["PNJ2"]:
+                    self.CloseInterface()
+
                 else:
                     # Vérifiez si le clic est dans le rectangle du bouton
                     if self.btnRectSkip.collidepoint(event.pos):
                         self.loadText() # pasage au dialogue suivant
                         self.BuildInterface() # build des éléments
+
+                
 
 
         # touche espace skip des dialogues
@@ -349,6 +380,8 @@ class PNJInterface(object):
                         self.loadText()
                         self.BuildInterface()   
                 elif self.gestionnaire.pnjActuel == "PNJ5" and NIVEAU["Map"] == "NiveauBaseFuturiste" and not PNJ["PNJ4"]:
+                    self.CloseInterface()
+                elif self.gestionnaire.pnjActuel == "PNJ3" and not PNJ["PNJ2"]:
                     self.CloseInterface()
 
                 else:
