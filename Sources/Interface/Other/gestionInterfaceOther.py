@@ -23,6 +23,11 @@ class HomeInterface(object):
         self.isInterfaceConditionsUtilisationOPEN = False
         self.interfaceUpdate = None
 
+        # bool check
+        self.isConditionAccept = False
+        self.isHorverText = False
+        self.isHoverBtnLancer = False
+
         # Chargement des images et des éléments
         self.LoadImage()
 
@@ -54,6 +59,37 @@ class HomeInterface(object):
         titleTextLangue = FONT["FONT24"].render(TEXTE["Elements"]["HomeInterface"]["Langue"]["Title"], True, (0, 0, 0))
         self.langueSurface.blit(titleTextLangue, (10, 10))
 
+        # element licence
+        if self.isHorverText:
+            textCondition = FONT["FONT20U"].render(TEXTE["Elements"]["HomeInterface"]["TexteConditions"], True, (0,0,0))
+        else:
+            textCondition = FONT["FONT20"].render(TEXTE["Elements"]["HomeInterface"]["TexteConditions"], True, (0,0,0))
+
+        self.text_rect = textCondition.get_rect(center=(WINDOW_WIDTH // 2, 400))
+        self.interfaceSurface.blit(textCondition, self.text_rect)
+
+        self.checkbox_rect = pygame.Rect(self.text_rect.x- 25, 400 - 10, 20, 20)
+        
+        pygame.draw.rect(self.interfaceSurface, BLACK, self.checkbox_rect, 2) # Dessiner la case (cochée ou non)
+        if self.isConditionAccept:
+            pygame.draw.rect(self.interfaceSurface, GREEN, self.checkbox_rect.inflate(-4, -4))  # Case remplie si cochée
+
+        # btn lancer game
+        self.surfaceBtnLancer = pygame.Surface((350, 100))
+        self.btnRectLancer = pygame.Rect(((WINDOW_WIDTH//2) - self.surfaceBtnLancer.get_width() //2), 450, 350, 140)
+        if self.isConditionAccept:
+            if self.isHoverBtnLancer:
+                self.surfaceBtnLancer.fill((143, 235, 233))
+            else:
+                self.surfaceBtnLancer.fill((141, 201, 200))
+        else:
+            self.surfaceBtnLancer.fill((144, 158, 148))
+        self.textL = TEXTE["Elements"]["HomeInterface"]["Lancer"]
+        self.textLancer = FONT["FONT50"].render(self.textL, True, (10,10,10))
+        self.surfaceBtnLancer.blit(self.textLancer, self.textLancer.get_rect(center=(self.surfaceBtnLancer.get_width()//2, self.surfaceBtnLancer.get_height()//2)))
+        self.interfaceSurface.blit(self.surfaceBtnLancer, (self.btnRectLancer.x, self.btnRectLancer.y))
+
+
 
     def Update(self, event) -> None:
         """Gestion des événements et mise à jour de l'interface."""
@@ -67,13 +103,22 @@ class HomeInterface(object):
         self.displaySurface.blit(self.interfaceSurface, (0, 0))
 
         if event.type == pygame.KEYDOWN:
-            if event.key == KEYSBIND["echap"] and not self.isInterfaceConditionsUtilisationOPEN:
-                self.isInterfaceConditionsUtilisationOPEN = True
-                self.interfaceUpdate = self.keepInterfacConditionsUtilisationObj
-            elif event.key == KEYSBIND["echap"] and self.isInterfaceConditionsUtilisationOPEN:
+            if event.key == KEYSBIND["echap"] and self.isInterfaceConditionsUtilisationOPEN:
                 self.isInterfaceConditionsUtilisationOPEN = False
                 self.interfaceUpdate = None
 
+        if not self.isInterfaceConditionsUtilisationOPEN: # éviter les interaction si les conditions sont ouvertess
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if self.checkbox_rect.collidepoint(event.pos) and not self.isConditionAccept:  # Clic sur la case
+                    self.isConditionAccept = True
+                elif self.checkbox_rect.collidepoint(event.pos) and self.isConditionAccept:
+                    self.isConditionAccept = False
+                elif self.text_rect.collidepoint(event.pos):  # Clic sur le texte
+                    self.isInterfaceConditionsUtilisationOPEN = True
+                    self.interfaceUpdate = self.keepInterfacConditionsUtilisationObj
+            elif event.type == pygame.MOUSEMOTION:
+                self.isHorverText = self.text_rect.collidepoint(event.pos)  # Vérifie si la souris est sur le texte
+                self.isHoverBtnLancer = self.btnRectLancer.collidepoint(event.pos)
 
         if self.isInterfaceConditionsUtilisationOPEN:
             self.interfaceUpdate.Update(event)

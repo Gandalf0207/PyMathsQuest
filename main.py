@@ -404,6 +404,8 @@ class GameToolBox(object):
         
         # création
         FONT20 = pygame.font.Font(None, 20)
+        FONT20U = pygame.font.Font(None, 20)
+        FONT20U.set_underline(True)
         FONT22 = pygame.font.Font(None, 22)
         FONT24 = pygame.font.Font(None, 24)
         FONT30 = pygame.font.Font(None, 30)
@@ -415,6 +417,7 @@ class GameToolBox(object):
 
         # aplpication dans le dico setting
         FONT["FONT20"] = FONT20
+        FONT["FONT20U"] = FONT20U
         FONT["FONT22"] = FONT22
         FONT["FONT24"] = FONT24
         FONT["FONT30"] = FONT30

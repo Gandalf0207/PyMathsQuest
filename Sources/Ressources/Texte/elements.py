@@ -53,6 +53,9 @@ ElementsFr = {
 
         },
 
+        "TexteConditions" : "J'accepte les licenes, termes et conditions d'Utilisations.",
+        "Lancer" : "Commencer",
+
 
     },
 

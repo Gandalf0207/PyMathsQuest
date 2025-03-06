@@ -118,6 +118,7 @@ COORDS_BOX_IDEAS_TIPS = (320, WINDOW_HEIGHT-160)
 # font tool box
 FONT = {
     "FONT20" : None,
+    "FONT20U" : None,
     "FONT22" : None,
     "FONT24" : None,
     "FONT30" : None,
