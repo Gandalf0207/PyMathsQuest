@@ -138,19 +138,16 @@ NIVEAU = {
 
     # map
     "Map" : "NiveauMedievale",
-
-    # numero
-    "Numero" : 0,
 }
 # box infos globales
 INFOS = {
     "GameStart" : False,
+    "GameEnd" : False,
     "CrashGame" : False,
     
     "Difficulte" : False,
-    "ChangementAnnee" : False,
     
-    "Exo" : False, 
+    "Exo" : True, 
     "ExoPasse" : False,
     
     "DemiNiveau" : False,

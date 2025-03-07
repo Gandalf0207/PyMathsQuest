@@ -173,7 +173,6 @@ ElementsFr = {
 
         "ExoTexte" : {
             "Seconde" :{
-                "Numero0" :{
                     "Title" : "Exercice équation du premier degré",
 
                     "DifficulteTrue" : {
@@ -185,16 +184,15 @@ ElementsFr = {
                         "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",
                         "QCM" : "Choisissez l'unique et bonne réponse",
                     },
-                }
 
-            },         
+                },         
             "Premiere" :{
                 
-            },
+                },
 
             "Terminale" : {
 
-            },
+                },
 
             
         }
@@ -219,7 +217,6 @@ ElementsFr = {
 
         "ExoTexte" : {
             "Seconde" :{
-                "Numero0" :{
                     "Title" : "Calculs de Volumes",
 
                     "DifficulteTrue" : {
@@ -231,16 +228,15 @@ ElementsFr = {
                         "Consigne" : "A l'aide des valeurs données, veuillez calculer le volume demandé du cube de côté c, de la sphère de rayon r et du cone de hauter h et de diametre de base d:",
                         "QCM" : "Choisissez l'unique et bonne réponse",
                     },
-                },
 
-            },         
+                },         
             "Premiere" :{
                 
-            },
+                },
 
             "Terminale" : {
 
-            },
+                },
         }
 
     },
@@ -256,7 +252,6 @@ ElementsFr = {
         "ExplosionReacteur" : "Vous avez envoyé trop de puissance dans le réacteur provoquant son explosion.",
         "ExoTexte" : {
             "Seconde" :{
-                "Numero0" :{
                     "Title" : "Calculs de Volumes",
 
                     "DifficulteTrue" : {
@@ -268,16 +263,15 @@ ElementsFr = {
                         "Consigne" : "A l'aide des valeurs données, veuillez calculer le volume demandé du cube de côté c, de la sphère de rayon r et du cone de hauter h et de diametre de base d:",
                         "QCM" : "Choisissez l'unique et bonne réponse",
                     },
-                },
 
-            },         
+                },         
             "Premiere" :{
                 
-            },
+                },
 
             "Terminale" : {
 
-            },
+                },
         }
 
     },
@@ -297,7 +291,7 @@ ElementsFr = {
 
         "ExoTexte" : {
             "Seconde" :{
-                "Numero0" :{
+
                     "Title" : "Calculs de Volumes",
 
                     "DifficulteTrue" : {
@@ -309,16 +303,16 @@ ElementsFr = {
                         "Consigne" : "A l'aide des valeurs données, veuillez calculer le volume demandé du cube de côté c, de la sphère de rayon r et du cone de hauter h et de diametre de base d:",
                         "QCM" : "Choisissez l'unique et bonne réponse",
                     },
-                },
 
-            },         
+
+                },         
             "Premiere" :{
                 
-            },
+                },
 
             "Terminale" : {
 
-            },
+                },
         }
 
     },
