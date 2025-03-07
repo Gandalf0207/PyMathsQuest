@@ -46,10 +46,12 @@ DialoguesFr = {
             }
         },
         "PNJ2": {
-            "Nom" : "Voyageur curieux",
+            "Nom" : "Garde désagréable",
             "Principal": {
-                "Dialogue1": "Salut l’ami si tu souhaites traverser l’Anduin il te faudra créer un pont je n’ai rien d’autre que ces planches alors je vais te les donner et j'espère que tu en feras bon usage.",
-                "Dialogue2": "J’ai même un manuel mais je ne sais pas s’il te sera utile.",
+                "Dialogue1": "Qui êtes-vous ?",
+                "Dialogue2": "Que voulez-vous ?",
+                "Dialogue3": "Avez-vous une autorisation ?",
+                "Dialogue4": "Non, eh bien vous ne passerez pas sacrebleu !",
             },
             "Alternatif": {
                 "Dialogue1": "Alors que trouve-t-on de l’autre côté ? Tu me raconteras une fois que tu l’auras vu."
