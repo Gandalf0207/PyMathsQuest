@@ -147,7 +147,7 @@ INFOS = {
     
     "Difficulte" : False,
     
-    "Exo" : False, 
+    "Exo" : True, 
     "ExoPasse" : False,
     
     "DemiNiveau" : False,

@@ -258,6 +258,12 @@ class HomeInterface(object):
                 self.isHorverText = self.text_rect.collidepoint(event.pos)  # Vérifie si la souris est sur le texte
                 self.isHoverBtnLancer = self.btnRectLancer.collidepoint(event.pos)
 
+                if self.isHorverText:
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)  # Curseur main
+                elif self.isHoverBtnLancer and self.isConditionAccept:
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)  # Curseur main
+                else:
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
         if self.isInterfaceConditionsUtilisationOPEN:
             self.interfaceUpdate.Update(event)

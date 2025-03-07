@@ -11,8 +11,12 @@ class CreateExo:
         self.gestionnaire = gestionnaire # self main
 
         self.displaySurface = pygame.display.get_surface() # surface générale
-        self.interfaceExoSurface = pygame.Surface((WINDOW_WIDTH/2, WINDOW_HEIGHT/2),  pygame.SRCALPHA)
+        self.interfaceExoSurface = pygame.Surface((WINDOW_WIDTH*(3/4), WINDOW_HEIGHT*(3/4)),  pygame.SRCALPHA)
         self.interfaceExoSurface.fill("#ffffff")
+
+        # Surface pour le fond transparent
+        self.backgroundSurface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
+        self.backgroundSurface.fill((50, 50, 50, 200))  # Fond gris avec alpha (200)
 
         # création obj pour la création d'exercice
         self.ObjRender = RenderLatex()
@@ -24,6 +28,9 @@ class CreateExo:
         self.click_delay = 300
         self.indexTexte = 0
 
+        # hauteur x element 
+        self.hauteurAct = 0
+
         # création element button
         self.CreateRectButton()
 
@@ -32,18 +39,21 @@ class CreateExo:
         Inpur / Output : None"""
 
         # surface
-        self.surfaceButton1 = pygame.Surface((100,100))
-        self.surfaceButton2 = pygame.Surface((100,100))
-        self.surfaceButton3 = pygame.Surface((100,100))
+        longueur, largeur = 253, 100
+
+        self.surfaceButton1 = pygame.Surface((longueur, largeur))
+        self.surfaceButton2 = pygame.Surface((longueur, largeur))
+        self.surfaceButton3 = pygame.Surface((longueur, largeur))
 
          # Positions des boutons : element collision rect 
-        self.ButtonRect1 =pygame.Rect(68, WINDOW_HEIGHT/2 - 100, 100, 100) 
-        self.ButtonRect2 = pygame.Rect(236, WINDOW_HEIGHT/2 - 100, 100, 100)
-        self.ButtonRect3 = pygame.Rect(404, WINDOW_HEIGHT/2 -100, 100, 100)
+        self.ButtonRect1 = pygame.Rect(50, self.interfaceExoSurface.get_height() -125, longueur, largeur) 
+        self.ButtonRect2 = pygame.Rect(353, self.interfaceExoSurface.get_height() -125, longueur, largeur)
+        self.ButtonRect3 = pygame.Rect(656, self.interfaceExoSurface.get_height() -125, longueur, largeur)
 
     def BuildInterface(self) -> None:
         """Méthode ce construction de l'interface à chque rafraichissement
         Intput / Oupur : None"""
+        self.hauteurAct = 0 # reset car update interface
 
         # clear
         self.interfaceExoSurface.fill("#ffffff")
@@ -51,6 +61,9 @@ class CreateExo:
         # titre
         textTitre = FONT["FONT30"].render(TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]]["Title"], True, (0, 0, 0))
         self.interfaceExoSurface.blit(textTitre, (10, 10))
+            # update hauteur
+        heightText = FONT["FONT30"].size("TG")[1]
+        self.hauteurAct += heightText + 10
 
         # consigne
         self.textConsigne = TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Difficulte{INFOS["Difficulte"]}"]["Consigne"]
@@ -61,41 +74,49 @@ class CreateExo:
         self.displayed_text = self.textConsigne[:self.indexTexte]
 
         # Fonction simple pour découper le text
-        max_width = 700
-        wrapped_lines = wrap_text(self.displayed_text, FONT["FONT30"], max_width)
+        max_width = self.interfaceExoSurface.get_width() - 50
+        wrapped_lines = wrap_text(self.displayed_text, FONT["FONT22"], max_width)
 
         # Affichage des lignes
-        y_offset =  40 # Position Y de départ
+        self.hauteurAct +=  20 # Position Y de départ
         line_height = FONT["FONT22"].size("Tg")[1]  # Hauteur d'une ligne
         for i, line in enumerate(wrapped_lines):
             line_surface = FONT["FONT22"].render(line, True, (0,0,0))
-            self.interfaceExoSurface.blit(line_surface, (20, y_offset + i * line_height))
+            self.hauteurAct += i*line_height
+            self.interfaceExoSurface.blit(line_surface, (20, self.hauteurAct))
         
 
         # équation affichage
         if NIVEAU["Niveau"] == "Seconde": # appel de la bonne méthode
             if NIVEAU["Map"] == "NiveauPlaineRiviere":
-                    self.interfaceExoSurface.blit(self.latexSurface, (10, 90))
+                    self.hauteurAct += 20
+                    self.interfaceExoSurface.blit(self.latexSurface, (10, self.hauteurAct))
 
             elif NIVEAU["Map"] == "NiveauMedievale":
                     if not INFOS["Difficulte"]: # facile
-                        self.volumeSimpleImg = pygame.image.load(join("Images", "Exos", "ExoVolumeSimple.png")).convert_alpha()
-                        self.interfaceExoSurface.blit(self.volumeSimpleImg, (10, 90))
+                        self.hauteurAct += 20
                         textInfo = f"c : {self.infosBuild[0][0]} ; r :{self.infosBuild[0][1]} ; h : {self.infosBuild[0][2]}; d : {self.infosBuild[0][3]}"
                         text = FONT["FONT20"].render(textInfo, True, (0,0,0))
-                        self.interfaceExoSurface.blit(text, (20, 90))
+                        self.interfaceExoSurface.blit(text, (20, self.hauteurAct))
+
+                        self.hauteurAct += 100
+                        self.volumeSimpleImg = pygame.image.load(join("Images", "Exos", "ExoVolumeSimple.png")).convert_alpha()
+                        self.interfaceExoSurface.blit(self.volumeSimpleImg, self.volumeSimpleImg.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
                     else:
-                        self.volumeDifficileImg = pygame.image.load(join("Images", "Exos", "ExoVolumeDifficile.png")).convert_alpha()
-                        self.interfaceExoSurface.blit(self.volumeDifficileImg, (10, 90))  
+                        self.hauteurAct += 20
                         textInfo = f"a = {self.infosBuild[0][0]} ; b = {self.infosBuild[0][1]} ; c = {self.infosBuild[0][2]} ; d = {self.infosBuild[0][3]} ; e = {self.infosBuild[0][4]} ; f = {self.infosBuild[0][5]} ; r = {self.infosBuild[0][6]}"
                         text = FONT["FONT20"].render(textInfo, True, (0,0,0))
-                        self.interfaceExoSurface.blit(text, (20, 90))
+                        self.interfaceExoSurface.blit(text, (20, self.hauteurAct))
+
+                        self.hauteurAct += 100 
+                        self.volumeDifficileImg = pygame.image.load(join("Images", "Exos", "ExoVolumeDifficile.png")).convert_alpha()
+                        self.interfaceExoSurface.blit(self.volumeDifficileImg, self.volumeDifficileImg.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
 
 
 
         # réponse titre
-        self.textQCM = FONT["FONT22"].render(TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Difficulte{INFOS["Difficulte"]}"]["QCM"], True, (0, 0, 0))
-        self.interfaceExoSurface.blit(self.textQCM, (10, WINDOW_HEIGHT/2 - 120))
+        self.textQCM = FONT["FONT24"].render(TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Difficulte{INFOS["Difficulte"]}"]["QCM"], True, (0, 0, 0))
+        self.interfaceExoSurface.blit(self.textQCM, self.textQCM.get_rect(center=(self.interfaceExoSurface.get_width()//2, self.interfaceExoSurface.get_height()-150)))
 
         # réponse button
         self.surfaceButton1.fill((200,205,205))
@@ -106,20 +127,20 @@ class CreateExo:
 
         for text in range(len(self.allReponseTexte)):
             # Fonction simple pour découper le text
-            max_width = 100
-            wrapped_lines = wrap_text(self.allReponseTexte[text], FONT["FONT22"], max_width)
+            max_width = 243 # 5 de marge 
+            wrapped_lines = wrap_text(self.allReponseTexte[text], FONT["FONT20"], max_width)
 
             # Affichage des lignes
-            y_offset =  0 # Position Y de départ
-            line_height = FONT["FONT22"].size("Tg")[1]  # Hauteur d'une ligne
+            y_offset =  5 # Position Y de départ
+            line_height = FONT["FONT20"].size("Tg")[1]  # Hauteur d'une ligne
             for i, line in enumerate(wrapped_lines):
-                line_surface = FONT["FONT22"].render(line, True, (0,0,0))
+                line_surface = FONT["FONT20"].render(line, True, (0,0,0))
                 if text ==0 :
-                    self.surfaceButton1.blit(line_surface, (0, y_offset + i * line_height))
+                    self.surfaceButton1.blit(line_surface, (5, y_offset + i * line_height))
                 elif text == 1:
-                    self.surfaceButton2.blit(line_surface, (0, y_offset + i * line_height))
+                    self.surfaceButton2.blit(line_surface, (5, y_offset + i * line_height))
                 elif text == 2:
-                    self.surfaceButton3.blit(line_surface, (0, y_offset + i * line_height))
+                    self.surfaceButton3.blit(line_surface, (5, y_offset + i * line_height))
 
         self.interfaceExoSurface.blit(self.surfaceButton1, (self.ButtonRect1.x, self.ButtonRect1.y))
         self.interfaceExoSurface.blit(self.surfaceButton2, (self.ButtonRect2.x, self.ButtonRect2.y))
@@ -162,7 +183,8 @@ class CreateExo:
         #setup de l'interface
         self.interfaceExoSurface.fill("#ffffff")
         self.BuildInterface()
-        self.displaySurface.blit(self.interfaceExoSurface, (320,180))
+        self.displaySurface.blit(self.backgroundSurface, (0,0))
+        self.displaySurface.blit(self.interfaceExoSurface, (160,90))
 
         # Gestion des clics de souris
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -174,7 +196,7 @@ class CreateExo:
                 global_pos = event.pos  # Coordonnées globales dans la fenêtre
 
                 # Rect global de la surface de l'interface
-                surface_rect = pygame.Rect(320, 180, self.interfaceExoSurface.get_width(), self.interfaceExoSurface.get_height())
+                surface_rect = pygame.Rect(160, 90, self.interfaceExoSurface.get_width(), self.interfaceExoSurface.get_height())
 
                 # Vérifiez si le clic est sur l'interface
                 if surface_rect.collidepoint(global_pos):
