@@ -6,6 +6,12 @@ ElementsFr = {
     "Interaction" : "Appuyer sur E",
     "LevelSup" : "Vous passez au niveau suppérieur !",
     "Humour" : "Humour, second degré",
+    "CloseGame" : "Fermeture du jeu.",
+
+    "InterfaceCreditsGame" : {
+        "Title" : "Crédits PyMathsQuest",
+          
+    },
 
     "HomeInterface" : {
         "Niveau" : {
@@ -97,7 +103,8 @@ ElementsFr = {
     },
 
     "InterfaceHomeMenu" : {
-        "Title" : "Menu",
+        "Quitter" : "Quitter",
+        "Credits" : "Crédits",
 
     },
 
@@ -246,6 +253,7 @@ ElementsFr = {
         "PiloteMoveCafet" : "Le pilote s'est déplacé dans la salle de lancement, rejoignez le !",
         "VaisseauSpacial" : "Vous montez dans le vaisseau",
         "CrashVaisseau" : "Le vaisseau s'est crash, soit meilleur stp",
+        "ExplosionReacteur" : "Vous avez envoyé trop de puissance dans le réacteur provoquant son explosion.",
         "ExoTexte" : {
             "Seconde" :{
                 "Numero0" :{

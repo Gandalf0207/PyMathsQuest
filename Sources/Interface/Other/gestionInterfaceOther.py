@@ -188,7 +188,7 @@ class HomeInterface(object):
                 elif self.text_rect.collidepoint(event.pos):  # Clic sur le texte
                     self.isInterfaceConditionsUtilisationOPEN = True
                     self.interfaceUpdate = self.keepInterfacConditionsUtilisationObj
-                elif self.isHoverBtnLancer:
+                elif self.isConditionAccept:
                     if self.btnRectLancer.collidepoint(event.pos):
                         INFOS["GameStart"] = True
                         self.gestionnaire.fondu_au_noir()

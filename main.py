@@ -145,26 +145,6 @@ class Game(object):
         while self.running:
 
             if INFOS["GameStart"]: # dans le jeu
-                if INFOS["CrashGame"]:
-                    self.fondu_au_noir()
-                    if NIVEAU["Map"] == "NiveauBaseFuturiste":
-                        text1 = "Vous avez envoyé trop de puissance dans le réacteur provoquant son explosion."
-                        self.textScreen(text1)
-
-                    text2 = "Fermeture du jeu."
-                    self.textScreen(text2)
-                    self.running = False
-                
-                # si exo réussit
-                if INFOS["ExoPasse"]:
-                    INFOS["ExoPasse"] = False
-                    INFOS["HideHotBar"] = False
-                    self.GameTool.ChangementNiveau() # changement niveau
-
-                # si passage en demi niveau
-                if INFOS["DemiNiveau"] and not self.demiNiveau:
-                    self.demiNiveau = True # bool de verif
-                    self.GameTool.ChangementDemiNiveau() # chargement du demi niveau
 
                 dt = self.clock.tick() / 1000
                 for event in pygame.event.get():
@@ -370,6 +350,30 @@ class Game(object):
                         self.ChargementEcran()
                         # mise à jour de l'interface pour la méthode d'interface
                         self.gameInterfaces.MiseAJourInterfaceExo(self.InterfaceExo) 
+
+
+                # element de gestions
+                if INFOS["CrashGame"]:
+                    self.fondu_au_noir()
+                    if NIVEAU["Map"] == "NiveauBaseFuturiste":
+                        text1 = TEXTE["Elements"][NIVEAU["Map"]]["ExplosionReacteur"]
+                        self.textScreen(text1)
+
+                    text2 = TEXTE["Elements"]["CloseGame"]
+                    self.textScreen(text2)
+                    self.running = False
+                
+                # si exo réussit    
+                if INFOS["ExoPasse"]:
+                    INFOS["ExoPasse"] = False
+                    INFOS["HideHotBar"] = False
+                    self.GameTool.ChangementNiveau() # changement niveau
+
+                # si passage en demi niveau
+                if INFOS["DemiNiveau"] and not self.demiNiveau:
+                    self.demiNiveau = True # bool de verif
+                    self.GameTool.ChangementDemiNiveau() # chargement du demi niveau
+
 
             else:
                 dt = self.clock.tick() / 1000

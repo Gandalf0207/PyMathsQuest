@@ -8,6 +8,7 @@ from Sources.Interface.Game.interfaceSettings import *
 from Sources.Interface.Game.interfaceSound import *
 from Sources.Interface.Game.interfaceExo import *
 from Sources.Interface.Game.interfaceGong import *
+from Sources.Interface.Game.interfaceCredits import *
 
 
 class GestionGameInterfaces(object):
@@ -19,6 +20,7 @@ class GestionGameInterfaces(object):
         # interfaces globales
         self.isInterfaceOPEN = False # bool général
         self.isInterfaceHomeMenuOpen = False # bool menu home
+        self.isInterfaceCreditOpen = False
         self.isPNJInterfaceOpen = False # bool PNJ
         self.isInterfaceExoOpen = False # bool exo
 
@@ -53,6 +55,7 @@ class GestionGameInterfaces(object):
         # interfaces globales
         self.isInterfaceOPEN = False
         self.isInterfaceHomeMenuOpen = False 
+        self.isInterfaceCreditOpen = False
         self.isPNJInterfaceOpen = False 
         self.isInterfaceExoOpen = False 
 
@@ -76,20 +79,26 @@ class GestionGameInterfaces(object):
 
     def GestionInterfaceGlobale(self, event):
         # interface element hotbar hotbar
-        if event.key == KEYSBIND["settings"]:
-            self.GestionInterfaceSpecifique("Settings")
-        elif event.key == KEYSBIND["sound"]:
-            self.GestionInterfaceSpecifique("Sound")
-        elif event.key == KEYSBIND["inventory"]:
-            self.GestionInterfaceSpecifique("Bundle")
-        elif event.key == KEYSBIND["book"]:
-            self.GestionInterfaceSpecifique("Book")
+        if not self.isInterfaceCreditOpen:
+            if event.key == KEYSBIND["settings"]:
+                self.GestionInterfaceSpecifique("Settings")
+            elif event.key == KEYSBIND["sound"]:
+                self.GestionInterfaceSpecifique("Sound")
+            elif event.key == KEYSBIND["inventory"]:
+                self.GestionInterfaceSpecifique("Bundle")
+            elif event.key == KEYSBIND["book"]:
+                self.GestionInterfaceSpecifique("Book")
 
         # close interface open
         if event.key == KEYSBIND["echap"] and self.isInterfaceOPEN: # Close général interface build
-            if self.isInterfaceExoOpen:
+            if self.isInterfaceCreditOpen:
+                self.MiseAJourInterfaceCredits()
+            elif self.isInterfaceExoOpen:
                 INFOS["Exo"] = False
-            self.CloseAllInterface()
+                self.CloseAllInterface()
+            else:
+                self.CloseAllInterface()
+
             # on réinitialise les niveaux audio.
             self.gestionnaire.GameTool.gestionSoundDialogues.StopDialogue()
 
@@ -97,6 +106,18 @@ class GestionGameInterfaces(object):
             self.isInterfaceOPEN = True
             self.isInterfaceHomeMenuOpen = True
             self.interface = HomeMenuInterface(self)
+
+    def MiseAJourInterfaceCredits(self):
+        if self.isInterfaceCreditOpen:
+            self.isInterfaceOPEN = True
+            self.isInterfaceCreditOpen = False
+            self.isInterfaceSettingsOpen = True
+            self.interface = HomeMenuInterface(self)     
+        else:
+            self.isInterfaceOPEN = True
+            self.isInterfaceCreditOpen = True
+            self.isInterfaceSettingsOpen = False
+            self.interface = CreditsInterfaceGame(self)       
 
     
     def MiseAJourInterfaceExo(self, interfaceOBJ):
