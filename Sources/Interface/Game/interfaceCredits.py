@@ -13,8 +13,6 @@ class CreditsInterfaceGame():
         self.interfaceSurface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT),  pygame.SRCALPHA)
         self.interfaceSurface.fill("#ffffff")
 
-        self.interfaceCredit = None
-
 
     def BuildInterface(self) -> None:
         """Méthode : Création de tout les éléments composant l'interface. Input / Output : None"""
