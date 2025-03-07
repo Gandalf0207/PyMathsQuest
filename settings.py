@@ -67,6 +67,31 @@ def wrap_text(text, font, max_width):
             return lines
 
 
+def wrap_text_2(text, font, max_width):
+    """Divise le texte en lignes tout en gardant les sauts de ligne d'origine"""
+    paragraphs = text.split("\n")  # Séparer en paragraphes
+    wrapped_lines = []
+
+    for paragraph in paragraphs:
+        words = paragraph.split(" ")
+        current_line = ""
+
+        for word in words:
+            test_line = f"{current_line} {word}".strip()  # Tester avec un mot en plus
+            if font.size(test_line)[0] <= max_width:
+                current_line = test_line
+            else:
+                wrapped_lines.append(current_line)  # Ajouter la ligne terminée
+                current_line = word  # Commencer une nouvelle ligne
+
+        if current_line:
+            wrapped_lines.append(current_line)  # Ajouter la dernière ligne du paragraphe
+
+        wrapped_lines.append("")  # Ajouter une ligne vide pour séparer les paragraphes
+
+    return wrapped_lines[:-1]  # Supprimer la dernière ligne vide en trop
+
+
 
 
 # Couleurs (température froide à chaude)
@@ -78,7 +103,8 @@ ORANGE = (255, 165, 0)
 RED = (255, 0, 0)
 BLACK = (0,0,0)
 WHITE = (255,255,255)
-
+SCROLLBAR_COLOR = (180, 180, 180)  # Couleur de la scrollbar
+SCROLLBAR_HOVER = (150, 150, 150)  # Couleur au survol
 
 # INFOS FIXES
 LONGUEUR = 150
@@ -92,6 +118,7 @@ COORDS_BOX_IDEAS_TIPS = (320, WINDOW_HEIGHT-160)
 # font tool box
 FONT = {
     "FONT20" : None,
+    "FONT20U" : None,
     "FONT22" : None,
     "FONT24" : None,
     "FONT30" : None,
@@ -107,26 +134,32 @@ STATE_HELP_INFOS = ["SeePNJ"] # list pour pouvoir etre modifié : tips
 NIVEAU = {
      # niveau
     "Niveau" : "Seconde",
+    "All" : False, 
 
     # map
-    "Map" : "NiveauMordor",
+    "Map" : "NiveauMedievale",
 
     # numero
     "Numero" : 0,
 }
 # box infos globales
 INFOS = {
+    "GameStart" : False,
+    "CrashGame" : False,
+    
     "Difficulte" : False,
+    "ChangementAnnee" : False,
+    
     "Exo" : False, 
     "ExoPasse" : False,
+    
     "DemiNiveau" : False,
     "ChangementNiveau" : False,
-    "ChangementAnnee" : False,
+    
     "HideHotBar" : False,
     "RebindingKey": False,
     "ReactorOn" : False,
     "HidePlayer" : False,
-    "CrashGame" : False,
 }
 
 DICOLANGUE = {

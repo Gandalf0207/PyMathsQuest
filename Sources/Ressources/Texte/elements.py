@@ -6,6 +6,75 @@ ElementsFr = {
     "Interaction" : "Appuyer sur E",
     "LevelSup" : "Vous passez au niveau suppérieur !",
     "Humour" : "Humour, second degré",
+    "CloseGame" : "Fermeture du jeu.",
+
+    "InterfaceCreditsGame" : {
+        "Title" : "Crédits PyMathsQuest",
+          
+    },
+
+    "HomeInterface" : {
+        "Niveau" : {
+            "Title" : "Niveau",
+            "Consignes" : "Choisissez un niveau",
+            "Seconde" : "Seconde",
+            "Premiere" : "Premiere",
+            "Terminale" : "Terminale",
+            "All": "Tous",
+        },
+        "Difficulte" : {
+            "Title" : "Difficulté",
+            "Consignes" : "Choisissez un niveau",
+            "Simple" : "Simple",
+            "Difficile" : "Difficile",
+        },
+        "Langue" : {
+            "Title" : "Langue",
+            "Consignes" : "Choisissez un niveau",
+            "Français" : "Français",
+            "Anglais" : "Anglais",
+            "Espagnol" : "Espagnol"
+        },
+
+        "InterfaceCondition" : {
+            "ConditionsUtilisation" : """1. Liberté d'utilisation, de modification et de distribution
+                    Ce programme est sous licence GPL v3+, ce qui signifie que vous êtes libre de :
+
+                    Exécuter le logiciel pour tout usage (personnel, éducatif, commercial, etc.).
+                    Étudier, modifier et améliorer son code source.
+                    Redistribuer des copies du programme, modifiées ou non, à condition de respecter la même licence.
+                    2. Code source et contributions
+                    Le code source du projet est accessible sur GitHub :
+                    👉 https://github.com/Gandalf0207/Py-Maths-Quest
+
+                    Toute contribution est la bienvenue tant qu'elle respecte les termes de la GPL v3.
+
+                    3. Aucune garantie
+                    Ce logiciel est fourni "tel quel", sans garantie d'aucune sorte. Les auteurs ne peuvent être tenus responsables d'éventuels dommages résultant de son utilisation.
+
+                    4. Utilisation de bibliothèques open source
+                    Ce projet utilise des bibliothèques open-source telles que Python, Tkinter, Matplotlib, LaTeX, etc. Nous respectons et apprécions le travail de leurs créateurs et nous conformons aux licences respectives de ces bibliothèques.
+
+                    5. Crédits et cadre de réalisation
+                    Ce projet a été développé par LUBAN Théo & PLADEAU Quentin dans le cadre du cours de NSI en terminale. Un grand merci à ESCOUTE Cédric et Patrice-Florent Marie-Jeanne pour leur soutien et leur enseignement.
+
+                    6. Mise à jour des conditions
+                    Ces conditions peuvent être mises à jour à tout moment. Consultez le dépôt GitHub pour toute information sur la licence et les modifications du projet.
+
+                    © 2025 - Py-Maths-Quest
+                    Publié sous licence GPL v3+ """,
+
+            "Title" : "Termes et conditions d'utilisation"
+
+        },
+
+        "TexteConditions" : "J'accepte les licenes, termes et conditions d'Utilisations.",
+        "Lancer" : "Commencer",
+
+
+    },
+
+
     "InterfacePNJ" : {
         "SkipButton" : "Suivant",
         "Oui" : "Oui",
@@ -34,7 +103,8 @@ ElementsFr = {
     },
 
     "InterfaceHomeMenu" : {
-        "Title" : "Menu",
+        "Quitter" : "Quitter",
+        "Credits" : "Crédits",
 
     },
 
@@ -183,6 +253,7 @@ ElementsFr = {
         "PiloteMoveCafet" : "Le pilote s'est déplacé dans la salle de lancement, rejoignez le !",
         "VaisseauSpacial" : "Vous montez dans le vaisseau",
         "CrashVaisseau" : "Le vaisseau s'est crash, soit meilleur stp",
+        "ExplosionReacteur" : "Vous avez envoyé trop de puissance dans le réacteur provoquant son explosion.",
         "ExoTexte" : {
             "Seconde" :{
                 "Numero0" :{

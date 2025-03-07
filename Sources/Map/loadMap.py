@@ -489,7 +489,7 @@ class LoadMap():
 
 
 
-                if self.map[ordonnees][abscisses] == "D":
+                if self.map[ordonnees][abscisses] == "D" and NIVEAU["Map"] == "NiveauMordor":
                     CollisionSprites(pos, self.DoorChateau, "Door", (self.collisionSprites, self.interactions, self.allSprites))
                 if self.map[ordonnees][abscisses] == "d":
                     CollisionSprites(pos, self.DoorMurailles, "Door2", (self.collisionSprites, self.allSprites))
@@ -523,9 +523,12 @@ class LoadMap():
                     CollisionSprites(pos, self.MursAngleWS, "Mur", (self.collisionSprites, self.allSprites))
                 elif self.mapBase[ordonnees][abscisses] == "U":
                     Sprites(pos, self.Socle, "SoclePortal", self.allSprites)
-                elif self.mapBase[ordonnees][abscisses] == "D" :
-                    if self.mapBase[ordonnees][abscisses-1] == "o" and self.mapBase[ordonnees][abscisses+ 1] =="o": # acces uniquemente pour le demi niveau
+                elif self.mapBase[ordonnees][abscisses] == "D" and NIVEAU["Map"] == "NiveauMedievale":
+                    if self  .mapBase[ordonnees][abscisses-1] == "o" and self.mapBase[ordonnees][abscisses+ 1] =="o":
                         CollisionSprites(pos, self.Door, "Door", (self.collisionSprites, self.allSprites))
+                    else:
+                        CollisionSprites(pos, self.DoorChateau, "Door", (self.collisionSprites,self.interactions, self.allSprites))
+
 
                 # obstacle de la map
                 if self.map[ordonnees][abscisses] == "u":
