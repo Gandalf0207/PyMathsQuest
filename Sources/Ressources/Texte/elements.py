@@ -10,15 +10,24 @@ ElementsFr = {
     "HomeInterface" : {
         "Niveau" : {
             "Title" : "Niveau",
-            "Consignes" : "Choisissez un niveau"
+            "Consignes" : "Choisissez un niveau",
+            "Seconde" : "Seconde",
+            "Premiere" : "Premiere",
+            "Terminale" : "Terminale",
+            "All": "Tous",
         },
         "Difficulte" : {
             "Title" : "Difficulté",
-            "Consignes" : "Choisissez un niveau"
+            "Consignes" : "Choisissez un niveau",
+            "Simple" : "Simple",
+            "Difficile" : "Difficile",
         },
         "Langue" : {
             "Title" : "Langue",
-            "Consignes" : "Choisissez un niveau"
+            "Consignes" : "Choisissez un niveau",
+            "Français" : "Français",
+            "Anglais" : "Anglais",
+            "Espagnol" : "Espagnol"
         },
 
         "InterfaceCondition" : {

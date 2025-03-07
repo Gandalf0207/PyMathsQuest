@@ -43,7 +43,7 @@ class PNJInterface(object):
             self.loadText(1)
         elif self.gestionnaire.pnjActuel == "PNJ5" and NIVEAU["Map"] == "NiveauBaseFuturiste" and PNJ["PNJ4"] and not self.gestionnaire.pnjObj.discussion :
             self.loadText(1)
-        elif self.gestionnaire.pnjActuel == "PNJ3" and PNJ["PNJ2"]:
+        elif self.gestionnaire.pnjActuel == "PNJ3" and PNJ["PNJ2"] and NIVEAU["Map"] == "NiveauMordor":
             self.loadText(1)
         else:
             self.loadText()
@@ -356,7 +356,7 @@ class PNJInterface(object):
                 elif self.gestionnaire.pnjActuel == "PNJ5" and NIVEAU["Map"] == "NiveauBaseFuturiste" and not PNJ["PNJ4"]:
                     self.CloseInterface()
 
-                elif self.gestionnaire.pnjActuel == "PNJ3" and not PNJ["PNJ2"]:
+                elif self.gestionnaire.pnjActuel == "PNJ3" and not PNJ["PNJ2"] and NIVEAU["Map"] == "NiveauMordor":
                     self.CloseInterface()
 
                 else:
@@ -381,7 +381,7 @@ class PNJInterface(object):
                         self.BuildInterface()   
                 elif self.gestionnaire.pnjActuel == "PNJ5" and NIVEAU["Map"] == "NiveauBaseFuturiste" and not PNJ["PNJ4"]:
                     self.CloseInterface()
-                elif self.gestionnaire.pnjActuel == "PNJ3" and not PNJ["PNJ2"]:
+                elif self.gestionnaire.pnjActuel == "PNJ3" and not PNJ["PNJ2"] and NIVEAU["Map"] == "NiveauMordor":
                     self.CloseInterface()
 
                 else:

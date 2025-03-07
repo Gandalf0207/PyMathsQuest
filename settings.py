@@ -134,9 +134,10 @@ STATE_HELP_INFOS = ["SeePNJ"] # list pour pouvoir etre modifié : tips
 NIVEAU = {
      # niveau
     "Niveau" : "Seconde",
+    "All" : False, 
 
     # map
-    "Map" : "NiveauMordor",
+    "Map" : "NiveauMedievale",
 
     # numero
     "Numero" : 0,

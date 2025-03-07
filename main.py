@@ -140,7 +140,7 @@ class Game(object):
 
 
     def run(self):
-        # self.StartMap()
+        # 
 
         while self.running:
 
@@ -451,26 +451,24 @@ class GameToolBox(object):
 
     def textScreen(self, text):
         """Méthode d'affichage du texte d'animation sur l'ecran"""
-        compteur = 0
-        while compteur < 2000:
-            compteur += 1
-            self.gestionnaire.displaySurface.fill((0,0,0))
+    
+        self.gestionnaire.displaySurface.fill((0,0,0))
 
-            # get lines 
-            max_width = 400
-            wrapped_lines = wrap_text(text, FONT["FONT50"], max_width)  # Assurez-vous d'utiliser la même police
+        # get lines 
+        max_width = 1000
+        wrapped_lines = wrap_text(text, FONT["FONT50"], max_width)  # Assurez-vous d'utiliser la même police
 
-            # Affichage des lignes
-            line_height = FONT["FONT50"].size("Tg")[1]  # Hauteur d'une ligne avec la bonne police
-            y_offset = WINDOW_HEIGHT // 2 - (line_height * len(wrapped_lines) // 2)
+        # Affichage des lignes
+        line_height = FONT["FONT50"].size("Tg")[1]  # Hauteur d'une ligne avec la bonne police
+        y_offset = WINDOW_HEIGHT // 2 - (line_height * len(wrapped_lines) // 2)
 
-            for i, line in enumerate(wrapped_lines):
-                line_surface = FONT["FONT50"].render(line, True, (255, 255, 255))  # Couleur corrigée
-                text_rect = line_surface.get_rect(center=(WINDOW_WIDTH // 2, y_offset + i * line_height))
-                self.gestionnaire.displaySurface.blit(line_surface, text_rect)  # Utiliser text_rect directement
+        for i, line in enumerate(wrapped_lines):
+            line_surface = FONT["FONT50"].render(line, True, (255, 255, 255))  # Couleur corrigée
+            text_rect = line_surface.get_rect(center=(WINDOW_WIDTH // 2, y_offset + i * line_height))
+            self.gestionnaire.displaySurface.blit(line_surface, text_rect)  # Utiliser text_rect directement
 
-
-            pygame.display.flip()
+        pygame.display.flip()
+        pygame.time.delay(2500)  # Temps de mise à jour de l'écran de chargement
 
         self.fondu_au_noir()
 

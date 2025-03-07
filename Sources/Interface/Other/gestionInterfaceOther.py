@@ -1,5 +1,7 @@
 from settings import *
 from Sources.Interface.Other.conditionsUtiilisationInterface import *
+from Sources.Ressources.Texte.creationTexte import *
+
 
 class HomeInterface(object):
 
@@ -28,6 +30,15 @@ class HomeInterface(object):
         self.isHorverText = False
         self.isHoverBtnLancer = False
 
+        # bool radio button
+        self.selectedOptionNiveau = 0  # choix 1 départ
+        self.posRadioButtonNiveau = [(25, 50), (25, 100), (25, 150), (25, 200)]
+
+        self.selectedOptionDifficulte = 0
+        self.posRadioButtonDifficulte = [(25, 50), (25, 100)]
+
+        self.selectedOptionLangue = 0
+        self.posRadioButtonLangue = [(25, 50), (25, 100), (25, 150)]
         # Chargement des images et des éléments
         self.LoadImage()
 
@@ -49,15 +60,76 @@ class HomeInterface(object):
         titleTextNiveau = FONT["FONT24"].render(TEXTE["Elements"]["HomeInterface"]["Niveau"]["Title"], True, (0, 0, 0))
         self.niveauSurface.blit(titleTextNiveau, (10, 10))
 
+        textAllNiveau = [TEXTE["Elements"]["HomeInterface"]["Niveau"]["Seconde"],
+                         TEXTE["Elements"]["HomeInterface"]["Niveau"]["Premiere"],
+                         TEXTE["Elements"]["HomeInterface"]["Niveau"]["Terminale"],
+                         TEXTE["Elements"]["HomeInterface"]["Niveau"]["All"],]
+        # Affichage des boutons radio
+        for i, option in enumerate(textAllNiveau):
+            pos = self.posRadioButtonNiveau[i]
+
+            # Cercle externe (bouton radio)
+            pygame.draw.circle(self.niveauSurface, BLACK, pos, 15, 2)
+
+            # Si cette option est sélectionnée, on remplit le cercle
+            if self.selectedOptionNiveau == i:
+                pygame.draw.circle(self.niveauSurface, GREEN, pos, 10)  # Cercle interne rempli
+
+            # Affichage du texte
+            text_surface = FONT["FONT20"].render(option, True, BLACK)
+            self.niveauSurface.blit(text_surface, (pos[0] + 30, pos[1] - 10))  # Décalage à droite
+ 
+
+
         # Box difficulté
         self.difficulteSurface.fill((255, 255, 255))
         titleTextDifficulte = FONT["FONT24"].render(TEXTE["Elements"]["HomeInterface"]["Difficulte"]["Title"], True, (0, 0, 0))
         self.difficulteSurface.blit(titleTextDifficulte, (10, 10))
 
+        textAllDifficulte = [TEXTE["Elements"]["HomeInterface"]["Difficulte"]["Simple"],
+                         TEXTE["Elements"]["HomeInterface"]["Difficulte"]["Difficile"],]
+
+        # Affichage des boutons radio
+        for i, option in enumerate(textAllDifficulte):
+            pos = self.posRadioButtonNiveau[i]
+
+            # Cercle externe (bouton radio)
+            pygame.draw.circle(self.difficulteSurface, BLACK, pos, 15, 2)
+
+            # Si cette option est sélectionnée, on remplit le cercle
+            if self.selectedOptionDifficulte == i:
+                pygame.draw.circle(self.difficulteSurface, GREEN, pos, 10)  # Cercle interne rempli
+
+            # Affichage du texte
+            text_surface = FONT["FONT20"].render(option, True, BLACK)
+            self.difficulteSurface.blit(text_surface, (pos[0] + 30, pos[1] - 10))  # Décalage à droite
+ 
+
         # Box langue
         self.langueSurface.fill((255, 255, 255))
         titleTextLangue = FONT["FONT24"].render(TEXTE["Elements"]["HomeInterface"]["Langue"]["Title"], True, (0, 0, 0))
         self.langueSurface.blit(titleTextLangue, (10, 10))
+
+        textAllLangue = [TEXTE["Elements"]["HomeInterface"]["Langue"]["Français"],
+                            TEXTE["Elements"]["HomeInterface"]["Langue"]["Anglais"],
+                            TEXTE["Elements"]["HomeInterface"]["Langue"]["Espagnol"],]
+
+        # Affichage des boutons radio
+        for i, option in enumerate(textAllLangue):
+            pos = self.posRadioButtonNiveau[i]
+
+            # Cercle externe (bouton radio)
+            pygame.draw.circle(self.langueSurface, BLACK, pos, 15, 2)
+
+            # Si cette option est sélectionnée, on remplit le cercle
+            if self.selectedOptionLangue == i:
+                pygame.draw.circle(self.langueSurface, GREEN, pos, 10)  # Cercle interne rempli
+
+            # Affichage du texte
+            text_surface = FONT["FONT20"].render(option, True, BLACK)
+            self.langueSurface.blit(text_surface, (pos[0] + 30, pos[1] - 10))  # Décalage à droite
+ 
+
 
         # element licence
         if self.isHorverText:
@@ -116,9 +188,76 @@ class HomeInterface(object):
                 elif self.text_rect.collidepoint(event.pos):  # Clic sur le texte
                     self.isInterfaceConditionsUtilisationOPEN = True
                     self.interfaceUpdate = self.keepInterfacConditionsUtilisationObj
+                elif self.isHoverBtnLancer:
+                    if self.btnRectLancer.collidepoint(event.pos):
+                        INFOS["GameStart"] = True
+                        self.gestionnaire.fondu_au_noir()
+                        self.gestionnaire.StartMap()
+                        
+
+                # niveau
+                for i, pos in enumerate(self.posRadioButtonNiveau):
+                    global_pos = (pos[0] + 80, pos[1] + 100)  # Ajout du décalage de la surface niveauSurface
+                    rect = pygame.Rect(global_pos[0] - 15, global_pos[1] - 15, 30, 30)
+
+                    if rect.collidepoint(event.pos):
+                        self.selectedOptionNiveau = i  # Met à jour le choix sélectionné
+
+                        match self.selectedOptionNiveau:
+                            case 0:
+                                NIVEAU["Niveau"] = "Seconde"
+                                NIVEAU["All"] = False
+                            case 1:
+                                NIVEAU["Niveau"] = "Premiere"
+                                NIVEAU["All"] = False
+                            case 2:
+                                NIVEAU["Niveau"] = "Terminale"
+                                NIVEAU["All"] = False
+                            case 3:
+                                NIVEAU["Niveau"] = "Seconde"
+                                NIVEAU["All"] = True
+
+                # difficulte
+                for i, pos in enumerate(self.posRadioButtonDifficulte):
+                    global_pos = (pos[0] + 480, pos[1] + 100)  # Ajout du décalage de la surface niveauSurface
+                    rect = pygame.Rect(global_pos[0] - 15, global_pos[1] - 15, 30, 30)
+
+                    if rect.collidepoint(event.pos):
+                        self.selectedOptionDifficulte = i  # Met à jour le choix sélectionné
+
+                        match self.selectedOptionDifficulte:
+                            case 0:
+                                INFOS["Difficulte"] = False
+                            case 1:
+                                INFOS["Difficulte"] = True
+
+                # langue
+                for i, pos in enumerate(self.posRadioButtonLangue):
+                    global_pos = (pos[0] + 880, pos[1] + 100)  # Ajout du décalage de la surface niveauSurface
+                    rect = pygame.Rect(global_pos[0] - 15, global_pos[1] - 15, 30, 30)
+
+                    if rect.collidepoint(event.pos):
+                        self.selectedOptionLangue = i  # Met à jour le choix sélectionné
+
+                        match self.selectedOptionLangue:
+                            case 0:
+                                DICOLANGUE["Fr"] = True
+                                DICOLANGUE["En"] = False
+                                DICOLANGUE["Es"] = False
+                            case 1 :
+                                DICOLANGUE["Fr"] = False
+                                DICOLANGUE["En"] = True
+                                DICOLANGUE["Es"] = False
+                            case 2 :
+                                DICOLANGUE["Fr"] = False
+                                DICOLANGUE["En"] = False
+                                DICOLANGUE["Es"] = True
+                        LoadTexte()
+
             elif event.type == pygame.MOUSEMOTION:
                 self.isHorverText = self.text_rect.collidepoint(event.pos)  # Vérifie si la souris est sur le texte
                 self.isHoverBtnLancer = self.btnRectLancer.collidepoint(event.pos)
+
 
         if self.isInterfaceConditionsUtilisationOPEN:
             self.interfaceUpdate.Update(event)
