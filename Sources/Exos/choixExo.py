@@ -261,10 +261,8 @@ class GetExo:
         
         if NIVEAU["Niveau"] == "Seconde": # appel de la bonne méthode
             if NIVEAU["Map"] == "NiveauPlaineRiviere":
-                if NIVEAU["Numero"] == 0:
                     self.ExoNv0()
             elif NIVEAU["Map"] == "NiveauMedievale":
-                if NIVEAU["Numero"] == 0:
                     self.ExoNv1()
 
             # case 2:

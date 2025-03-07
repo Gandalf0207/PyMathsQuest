@@ -49,11 +49,11 @@ class CreateExo:
         self.interfaceExoSurface.fill("#ffffff")
 
         # titre
-        textTitre = FONT["FONT30"].render(TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"]["Title"], True, (0, 0, 0))
+        textTitre = FONT["FONT30"].render(TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]]["Title"], True, (0, 0, 0))
         self.interfaceExoSurface.blit(textTitre, (10, 10))
 
         # consigne
-        self.textConsigne = TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"][f"Difficulte{INFOS["Difficulte"]}"]["Consigne"]
+        self.textConsigne = TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Difficulte{INFOS["Difficulte"]}"]["Consigne"]
 
         # Mettre à jour le texte affiché si nécessaire
         if self.indexTexte < len(self.textConsigne):
@@ -75,11 +75,9 @@ class CreateExo:
         # équation affichage
         if NIVEAU["Niveau"] == "Seconde": # appel de la bonne méthode
             if NIVEAU["Map"] == "NiveauPlaineRiviere":
-                if NIVEAU["Numero"] == 0:
                     self.interfaceExoSurface.blit(self.latexSurface, (10, 90))
 
             elif NIVEAU["Map"] == "NiveauMedievale":
-                if NIVEAU["Numero"] == 0:
                     if not INFOS["Difficulte"]: # facile
                         self.volumeSimpleImg = pygame.image.load(join("Images", "Exos", "ExoVolumeSimple.png")).convert_alpha()
                         self.interfaceExoSurface.blit(self.volumeSimpleImg, (10, 90))
@@ -96,7 +94,7 @@ class CreateExo:
 
 
         # réponse titre
-        self.textQCM = FONT["FONT22"].render(TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Numero{NIVEAU["Numero"]}"][f"Difficulte{INFOS["Difficulte"]}"]["QCM"], True, (0, 0, 0))
+        self.textQCM = FONT["FONT22"].render(TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Difficulte{INFOS["Difficulte"]}"]["QCM"], True, (0, 0, 0))
         self.interfaceExoSurface.blit(self.textQCM, (10, WINDOW_HEIGHT/2 - 120))
 
         # réponse button

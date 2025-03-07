@@ -518,30 +518,32 @@ class GameToolBox(object):
     def ResetValues(self):
         """En fonction du niveau, on passe au niveau supérieur"""
 
-        match NIVEAU["Niveau"]:
-            case "Seconde":
+        # changement map / niveau en fonction
+        match NIVEAU["Map"]:
+            case "NiveauPlaineRiviere":
+                NIVEAU["Map"] = "NiveauMedievale"
 
-                match NIVEAU["Map"]:
+            case "NiveauMedievale":
+                NIVEAU["Map"] = "NiveauBaseFuturiste"
 
-                    case "NiveauPlaineRiviere":
-                        if not INFOS["ChangementAnnee"]:
-                            NIVEAU["Map"] = "NiveauMedievale"
-                        else:
+            case "NiveauBaseFuturiste":
+                NIVEAU["Map"] = "NiveauMordor"
+
+            case "NiveauMordor":
+                NIVEAU["Map"] = "NiveauPlaineRiviere"
+                if NIVEAU["All"]:
+                    match NIVEAU["Niveau"]:
+                        case "Seconde":
                             NIVEAU["Niveau"] = "Premiere"
+                        case "Premiere":
+                            NIVEAU["Niveau"] = "Terminale"
+                        case "Terminale":
+                            INFOS["GameEnd"] = True
+                else:
+                    INFOS["GameEnd"] = True
 
-                    case "NiveauMedievale":
-                        NIVEAU["Map"] = "NiveauBaseFuturiste"
 
-                    case "NiveauBaseFuturiste":
-                        NIVEAU["Map"] = "NiveauMordor"
 
-                    case "NiveauMordor":
-                        NIVEAU["Map"] = "NiveauPlaineRiviere"
-
-            case "Premiere":
-                pass
-            case "Terminale" : 
-                pass
 
         # reset valeurs
         PNJ["PNJ1"] = False
