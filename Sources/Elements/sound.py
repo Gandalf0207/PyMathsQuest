@@ -33,7 +33,7 @@ class GestionSoundFond(object):
         if not self.canal0.get_busy():
             musique_list = []
 
-            attente = randint(10, 30)  # Attente aléatoire
+            attente = randint(30, 60)  # Attente aléatoire
             time.sleep(attente)
 
             if NIVEAU["Map"] == "NiveauPlaineRiviere": # lieux

@@ -17,7 +17,7 @@ class BookInterface(object):
 
         # Création éléments
         self.displaySurface = pygame.display.get_surface() # surface générale
-        self.interfaceSurface = pygame.Surface((WINDOW_WIDTH/1.5, WINDOW_HEIGHT/1.5),  pygame.SRCALPHA)
+        self.interfaceSurface = pygame.Surface((WINDOW_WIDTH*(3/4), WINDOW_HEIGHT*(3/4)),  pygame.SRCALPHA)
 
         # book bcg
         self.bookBcg = pygame.image.load(join("Images", "Interface", "Book.png")).convert_alpha()

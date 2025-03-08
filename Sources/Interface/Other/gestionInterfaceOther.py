@@ -41,6 +41,10 @@ class HomeInterface(object):
         self.posRadioButtonLangue = [(25, 50), (25, 100), (25, 150)]
         # Chargement des images et des éléments
 
+        # timer click
+        self.last_click_time = 0
+        self.click_delay = 500  
+
 
     def BuildInterface(self) -> None:
         """Construction de l'interface."""
@@ -178,18 +182,25 @@ class HomeInterface(object):
 
         if not self.isInterfaceConditionsUtilisationOPEN: # éviter les interaction si les conditions sont ouvertess
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if self.checkbox_rect.collidepoint(event.pos) and not self.isConditionAccept:  # Clic sur la case
-                    self.isConditionAccept = True
-                elif self.checkbox_rect.collidepoint(event.pos) and self.isConditionAccept:
-                    self.isConditionAccept = False
-                elif self.text_rect.collidepoint(event.pos):  # Clic sur le texte
-                    self.isInterfaceConditionsUtilisationOPEN = True
-                    self.interfaceUpdate = self.keepInterfacConditionsUtilisationObj
-                elif self.isConditionAccept:
-                    if self.btnRectLancer.collidepoint(event.pos):
-                        INFOS["GameStart"] = True
-                        self.gestionnaire.fondu_au_noir()
-                        self.gestionnaire.StartMap()
+
+                # delay de click
+                current_time = pygame.time.get_ticks()
+                if current_time - self.last_click_time > self.click_delay:
+                    self.last_click_time = current_time
+
+                    
+                    if self.checkbox_rect.collidepoint(event.pos) and not self.isConditionAccept:  # Clic sur la case
+                        self.isConditionAccept = True
+                    elif self.checkbox_rect.collidepoint(event.pos) and self.isConditionAccept:
+                        self.isConditionAccept = False
+                    elif self.text_rect.collidepoint(event.pos):  # Clic sur le texte
+                        self.isInterfaceConditionsUtilisationOPEN = True
+                        self.interfaceUpdate = self.keepInterfacConditionsUtilisationObj
+                    elif self.isConditionAccept:
+                        if self.btnRectLancer.collidepoint(event.pos):
+                            INFOS["GameStart"] = True
+                            self.gestionnaire.fondu_au_noir()
+                            self.gestionnaire.StartMap()
                         
 
                 # niveau

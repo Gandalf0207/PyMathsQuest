@@ -41,8 +41,8 @@ class Game(object):
 
         #animation lancement
         self.animationLancement = AnimationLancementObj(self)
-        self.animationLancementIsDown = False
         threading.Thread(target=self.animationLancement.Update, daemon=True).start()
+        self.animationLancementEnd = False
 
         # tool box
         self.GameTool = GameToolBox(self)
@@ -386,20 +386,17 @@ class Game(object):
                     if event.type == pygame.QUIT:
                         self.running = False
 
-                    if self.animationLancementIsDown:
-                        self.homeInterface.Update(event)
+                    elif event.type == pygame.USEREVENT and event.animationLancement == "animation_finie":
+                        self.animationLancementEnd = True
+
+                if self.animationLancementEnd:        
+                    self.homeInterface.Update(event)
 
 
             # update toolBOX
             self.GameTool.Update()
-
-                
-
-                
-                    
-
-
-            pygame.display.flip()
+            pygame.event.pump()  # 👈 Permet à Pygame de traiter les événements même sans interaction
+            pygame.display.update()
 
         pygame.quit()
 
