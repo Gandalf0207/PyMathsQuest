@@ -43,7 +43,7 @@ class HomeInterface(object):
 
         # timer click
         self.last_click_time = 0
-        self.click_delay = 500  
+        self.click_delay = 100  
 
 
     def BuildInterface(self) -> None:
@@ -188,7 +188,7 @@ class HomeInterface(object):
                 if current_time - self.last_click_time > self.click_delay:
                     self.last_click_time = current_time
 
-                    
+
                     if self.checkbox_rect.collidepoint(event.pos) and not self.isConditionAccept:  # Clic sur la case
                         self.isConditionAccept = True
                     elif self.checkbox_rect.collidepoint(event.pos) and self.isConditionAccept:

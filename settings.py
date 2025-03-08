@@ -92,7 +92,19 @@ def wrap_text_2(text, font, max_width):
 
     return wrapped_lines[:-1]  # Supprimer la dernière ligne vide en trop
 
+def GetLocalPos(event, interfaceSurface, PosBlit):
+    # Coordonnées globales de l'événement
+    global_pos = event.pos  # Coordonnées globales dans la fenêtre
 
+    # Rect global de la surface de l'interface
+    surface_rect = pygame.Rect(PosBlit[0],PosBlit[1], interfaceSurface.get_width(), interfaceSurface.get_height())
+
+    # Vérifiez si le clic est sur l'interface
+    if surface_rect.collidepoint(global_pos):
+        # Convertissez en coordonnées locales
+        local_pos = (global_pos[0] - surface_rect.x, global_pos[1] - surface_rect.y)
+        return local_pos
+    return False
 
 
 # Couleurs (température froide à chaude)
@@ -148,7 +160,7 @@ INFOS = {
     
     "Difficulte" : False,
     
-    "Exo" : False, 
+    "Exo" : True, 
     "ExoPasse" : False,
     
     "DemiNiveau" : False,

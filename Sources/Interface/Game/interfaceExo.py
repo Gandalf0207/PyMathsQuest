@@ -31,6 +31,14 @@ class CreateExo:
         # hauteur x element 
         self.hauteurAct = 0
 
+        # close interface cross
+        self.surfaceCloseCross = pygame.Surface((24,24))
+        self.isCrossCloseHover = False
+        self.crossClose = pygame.image.load(join("Images", "Croix", "x-mark.png")).convert_alpha()
+        self.crossClose2 = pygame.image.load(join("Images", "Croix", "x-mark2.png")).convert_alpha()
+
+
+
         # création element button
         self.CreateRectButton()
 
@@ -147,6 +155,18 @@ class CreateExo:
         self.interfaceExoSurface.blit(self.surfaceButton3, (self.ButtonRect3.x, self.ButtonRect3.y))
 
 
+
+        # close element
+        self.surfaceCloseCross.fill("#ffffff")
+        self.rectCloseCross = pygame.Rect(self.interfaceExoSurface.get_width() - 34, 10, 24, 24)
+        if self.isCrossCloseHover:
+            self.surfaceCloseCross.blit(self.crossClose2, (0,0))
+        else:
+            self.surfaceCloseCross.blit(self.crossClose, (0,0))
+        self.interfaceExoSurface.blit(self.surfaceCloseCross, (self.rectCloseCross.x, self.rectCloseCross.y))
+
+
+
     def start(self) -> None:
         """Méthode de lancement de création de l'exercice. Appel unique par exo
         Input / Output : None"""
@@ -187,41 +207,47 @@ class CreateExo:
         self.displaySurface.blit(self.interfaceExoSurface, (160,90))
 
         # Gestion des clics de souris
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+        if (event.type == pygame.MOUSEBUTTONDOWN and event.button == 1):
             current_time = pygame.time.get_ticks()
             if current_time - self.last_click_time > self.click_delay:
                 self.last_click_time = current_time
+                
+                local_pos = GetLocalPos(event, self.interfaceExoSurface, (160, 90))
+                if local_pos:
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        # Vérifiez si le clic est sur un btn
+                        if self.ButtonRect1.collidepoint(local_pos):
+                            if self.bonneReponsePlace== 0:
+                                self.Win()
+                            else:
+                                self.Loose()
+                            self.gestionnaire.gameInterfaces.CloseAllInterface()
 
-                # Coordonnées globales de l'événement
-                global_pos = event.pos  # Coordonnées globales dans la fenêtre
+                        elif self.ButtonRect2.collidepoint(local_pos):
+                            if self.bonneReponsePlace== 1:
+                                self.Win()
+                            else:
+                                self.Loose()
+                            self.gestionnaire.gameInterfaces.CloseAllInterface()
 
-                # Rect global de la surface de l'interface
-                surface_rect = pygame.Rect(160, 90, self.interfaceExoSurface.get_width(), self.interfaceExoSurface.get_height())
+                        
+                        elif self.ButtonRect3.collidepoint(local_pos):
+                            if self.bonneReponsePlace== 2:
+                                self.Win()
+                            else:
+                                self.Loose()
+                            self.gestionnaire.gameInterfaces.CloseAllInterface()
 
-                # Vérifiez si le clic est sur l'interface
-                if surface_rect.collidepoint(global_pos):
-                    # Convertissez en coordonnées locales
-                    local_pos = (global_pos[0] - surface_rect.x, global_pos[1] - surface_rect.y)
+                        if event.type == pygame.MOUSEBUTTONDOWN:
+                            if self.rectCloseCross.collidepoint(local_pos):
+                                # fermeture interface
+                                self.Loose()
+                                self.gestionnaire.gameInterfaces.CloseAllInterface()
 
-                    # Vérifiez si le clic est sur un btn
-                    if self.ButtonRect1.collidepoint(local_pos):
-                        if self.bonneReponsePlace== 0:
-                            self.Win()
-                        else:
-                            self.Loose()
-                        self.gestionnaire.gameInterfaces.CloseAllInterface()
+        if event.type == pygame.MOUSEMOTION:
+            local_pos = GetLocalPos(event, self.interfaceExoSurface, (160, 90))
+            if local_pos:
+                # cross close interface
+                if event.type == pygame.MOUSEMOTION:
+                    self.isCrossCloseHover = self.rectCloseCross.collidepoint(local_pos)
 
-                    elif self.ButtonRect2.collidepoint(local_pos):
-                        if self.bonneReponsePlace== 1:
-                            self.Win()
-                        else:
-                            self.Loose()
-                        self.gestionnaire.gameInterfaces.CloseAllInterface()
-
-                    
-                    elif self.ButtonRect3.collidepoint(local_pos):
-                        if self.bonneReponsePlace== 2:
-                            self.Win()
-                        else:
-                            self.Loose()
-                        self.gestionnaire.gameInterfaces.CloseAllInterface()

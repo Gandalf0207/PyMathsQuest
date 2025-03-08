@@ -28,6 +28,12 @@ class SoundInterface(object):
         ]
         self.dragging = None
 
+        # close interface cross
+        self.surfaceCloseCross = pygame.Surface((24,24))
+        self.isCrossCloseHover = False
+        self.crossClose = pygame.image.load(join("Images", "Croix", "x-mark.png")).convert_alpha()
+        self.crossClose2 = pygame.image.load(join("Images", "Croix", "x-mark2.png")).convert_alpha()
+
 
 
     def BuildInterface(self) -> None:
@@ -58,31 +64,43 @@ class SoundInterface(object):
             text_rect = volume_text.get_rect(center=(cursor_x + self.cursor_width // 2, slider["y"] - 20))
             self.interfaceSurface.blit(volume_text, text_rect)
 
+        # close element
+        self.surfaceCloseCross.fill("#ffffff")
+        self.rectCloseCross = pygame.Rect(self.interfaceSurface.get_width() - 34, 10, 24, 24)
+        if self.isCrossCloseHover:
+            self.surfaceCloseCross.blit(self.crossClose2, (0,0))
+        else:
+            self.surfaceCloseCross.blit(self.crossClose, (0,0))
+        self.interfaceSurface.blit(self.surfaceCloseCross, (self.rectCloseCross.x, self.rectCloseCross.y))
+
     def Update(self, event) -> None:
         """Mise à jour de l'interface et gestion des interactions."""
         self.BuildInterface()
         self.displaySurface.blit(self.interfaceSurface, (320,180))
 
-        # Coordonnées globales de l'événement
-        global_pos = pygame.mouse.get_pos()
 
-        # Convertir les coordonnées globales en locales
-        surface_rect = pygame.Rect(320, 180, self.interfaceSurface.get_width(), self.interfaceSurface.get_height())
 
-        if surface_rect.collidepoint(global_pos):
-            local_pos = (global_pos[0] - surface_rect.x, global_pos[1] - surface_rect.y)
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            local_pos = GetLocalPos(event, self.interfaceSurface, (320, 180))
+            if local_pos:
                 mouse_x, mouse_y = local_pos
                 for i, slider in enumerate(self.sliders):
                     if self.slider_x <= mouse_x <= self.slider_x + self.slider_width and \
-                       slider["y"] - 5 <= mouse_y <= slider["y"] + self.slider_height + 5:
+                    slider["y"] - 5 <= mouse_y <= slider["y"] + self.slider_height + 5:
                         self.dragging = i  # On stocke l'index du slider actif
+            
+                # check pour le clos interface cross
+                if self.rectCloseCross.collidepoint(local_pos):
+                    # fermeture interface
+                    self.gestionnaire.CloseAllInterface()
 
-            elif event.type == pygame.MOUSEBUTTONUP:
-                self.dragging = None  # On arrête le glissement
 
-            elif event.type == pygame.MOUSEMOTION and self.dragging is not None:
+        elif event.type == pygame.MOUSEBUTTONUP:
+            self.dragging = None  # On arrête le glissement
+
+        elif event.type == pygame.MOUSEMOTION and self.dragging is not None:
+            local_pos = GetLocalPos(event, self.interfaceSurface, (320, 180))
+            if local_pos:
                 mouse_x, _ = local_pos
                 slider = self.sliders[self.dragging]
 
@@ -91,4 +109,10 @@ class SoundInterface(object):
                 SOUND[slider["Element"]] = (new_x - self.slider_x) / (self.slider_width - self.cursor_width)
                 print(self.gestionnaire)
                 self.gestionnaire.gestionSoundFond.Update()
-
+                
+        # cross close interface
+        if event.type == pygame.MOUSEMOTION:
+            local_pos = GetLocalPos(event, self.interfaceSurface, (320, 180))
+            if local_pos:
+                # cross close interface
+                self.isCrossCloseHover = self.rectCloseCross.collidepoint(local_pos)

@@ -14,10 +14,15 @@ class ConditionsUtilisationInterface(object):
         self.backgroundSurface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
         self.backgroundSurface.fill((50, 50, 50, 200))  # Fond gris avec alpha (200)
 
-
         # Création éléments
         self.displaySurface = pygame.display.get_surface() # surface générale
         self.interfaceSurface = pygame.Surface((WINDOW_WIDTH//2, WINDOW_HEIGHT//2),  pygame.SRCALPHA)
+
+        # close interface cross
+        self.surfaceCloseCross = pygame.Surface((24,24))
+        self.isCrossCloseHover = False
+        self.crossClose = pygame.image.load(join("Images", "Croix", "x-mark.png")).convert_alpha()
+        self.crossClose2 = pygame.image.load(join("Images", "Croix", "x-mark2.png")).convert_alpha()
 
         self.CreateBoxConditionsElements()
 
@@ -26,9 +31,9 @@ class ConditionsUtilisationInterface(object):
         """Création de la boîte des conditions d'utilisation."""
         # Box conditions d'utilisation
         self.box_width = (WINDOW_WIDTH//2) - 40
-        self.box_height =( WINDOW_HEIGHT//2) - 40
+        self.box_height =( WINDOW_HEIGHT//2) - 70
         self.box_x = (WINDOW_WIDTH // 2 - self.box_width) // 2 
-        self.box_y = 30
+        self.box_y = 50
         
         self.textConditionsSurface = pygame.Surface((self.box_width, 900), pygame.SRCALPHA)
 
@@ -58,8 +63,6 @@ class ConditionsUtilisationInterface(object):
         self.scrolling = False  
 
 
-
-
     def BuildInterface(self) -> None:
         """Méthode : Création de tout les éléments composant l'interface. Input / Output : None"""
 
@@ -86,43 +89,59 @@ class ConditionsUtilisationInterface(object):
                          (self.scrollbar_x, self.scrollbar_y, self.scrollbar_width, self.scrollbar_height),
                          border_radius=4)
     
+        # close element
+        self.surfaceCloseCross.fill("#ffffff")
+        self.rectCloseCross = pygame.Rect(self.interfaceSurface.get_width() - 34, 10, 24, 24)
+        if self.isCrossCloseHover:
+            self.surfaceCloseCross.blit(self.crossClose2, (0,0))
+        else:
+            self.surfaceCloseCross.blit(self.crossClose, (0,0))
+        self.interfaceSurface.blit(self.surfaceCloseCross, (self.rectCloseCross.x, self.rectCloseCross.y))
+
+
     def Update(self, event) -> None:
         """Méthode d'update de l'interface. Input / Output : None"""
-
-
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if event.button == 4:  # Molette haut
-                self.scroll_y = max(self.scroll_y - 30, 0)
-            if event.button == 5:  # Molette bas
-                self.scroll_y = min(self.scroll_y + 30, self.max_scroll)
-
-            # Vérification clic sur scrollbar avec les coordonnées locales
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                # Coordonnées globales de l'événement
-                global_pos = event.pos  # Coordonnées globales dans la fenêtre
-
-                # Rect global de la surface de l'interface
-                surface_rect = pygame.Rect(320, 180, self.interfaceSurface.get_width(), self.interfaceSurface.get_height())
-
-                # Vérifiez si le clic est sur l'interface
-                if surface_rect.collidepoint(global_pos):
-                    # Convertissez en coordonnées locales
-                    local_pos = (global_pos[0] - surface_rect.x, global_pos[1] - surface_rect.y)
-                    local_x, local_y = local_pos  # Extraction des coordonnées locales
-
-                    if self.scrollbar_x <= local_x <= self.scrollbar_x + self.scrollbar_width and \
-                            self.scrollbar_y <= local_y <= self.scrollbar_y + self.scrollbar_height:
-                        self.scrolling = True
-
-        if event.type == pygame.MOUSEBUTTONUP:
-            self.scrolling = False
-
-        if event.type == pygame.MOUSEMOTION and self.scrolling:
-            rel_y = event.rel[1]
-            new_scroll_y = self.scroll_y + (rel_y * self.max_scroll / (self.box_height - self.scrollbar_height))
-            self.scroll_y = min(max(new_scroll_y, 0), self.max_scroll)
 
         # construction d'update
         self.BuildInterface()
         self.displaySurface.blit(self.backgroundSurface, (0,0))
         self.displaySurface.blit(self.interfaceSurface, (320, 180))  # pos topleft
+
+
+        if event.type in (pygame.MOUSEBUTTONDOWN, pygame.MOUSEBUTTONUP):
+            
+            local_pos = GetLocalPos(event, self.interfaceSurface, (320,180))
+            if local_pos:
+
+                local_x, local_y = local_pos  # Extraction des coordonnées locales
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 4:  # Molette haut
+                        self.scroll_y = max(self.scroll_y - 30, 0)
+                    if event.button == 5:  # Molette bas
+                        self.scroll_y = min(self.scroll_y + 30, self.max_scroll)
+
+                    # Vérification clic sur scrollbar avec les coordonnées locales
+                    if self.scrollbar_x <= local_x <= self.scrollbar_x + self.scrollbar_width and \
+                            self.scrollbar_y <= local_y <= self.scrollbar_y + self.scrollbar_height:
+                        self.scrolling = True
+
+                    if self.rectCloseCross.collidepoint(local_pos):
+                        # fermeture interface
+                        self.gestionnaire.isInterfaceConditionsUtilisationOPEN = False
+
+                if event.type == pygame.MOUSEBUTTONUP:
+                    self.scrolling = False
+
+
+        if event.type == pygame.MOUSEMOTION : 
+            local_pos = GetLocalPos(event, self.interfaceSurface, (320, 180))
+            if local_pos:
+                # cross close interface
+                if event.type == pygame.MOUSEMOTION:
+                    self.isCrossCloseHover = self.rectCloseCross.collidepoint(local_pos)
+
+                if event.type == pygame.MOUSEMOTION and self.scrolling:
+                    rel_y = event.rel[1]
+                    new_scroll_y = self.scroll_y + (rel_y * self.max_scroll / (self.box_height - self.scrollbar_height))
+                    self.scroll_y = min(max(new_scroll_y, 0), self.max_scroll)

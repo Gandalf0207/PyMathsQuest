@@ -23,6 +23,15 @@ class SettingsInterface(object):
         self.button_positions = {}  # Stocke les positions des boutons de touche
         self.buttonsLangue = {}
 
+        # close interface cross
+        self.surfaceCloseCross = pygame.Surface((24,24))
+        self.isCrossCloseHover = False
+        self.crossClose = pygame.image.load(join("Images", "Croix", "x-mark.png")).convert_alpha()
+        self.crossClose2 = pygame.image.load(join("Images", "Croix", "x-mark2.png")).convert_alpha()
+
+
+
+
     def BuildInterfaceBind(self):
         overlay = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
         overlay.fill((100,100,100,180))  # Fond semi-transparent
@@ -132,6 +141,16 @@ class SettingsInterface(object):
                 y_offset = 50  # Réinitialiser le y_offset
                 x_offset += column_width  # Décaler vers la droite pour une nouvelle colonne
 
+        # close element
+        self.surfaceCloseCross.fill("#ffffff")
+        self.rectCloseCross = pygame.Rect(self.interfaceSurface.get_width() - 34, 10, 24, 24)
+        if self.isCrossCloseHover:
+            self.surfaceCloseCross.blit(self.crossClose2, (0,0))
+        else:
+            self.surfaceCloseCross.blit(self.crossClose, (0,0))
+        self.interfaceSurface.blit(self.surfaceCloseCross, (self.rectCloseCross.x, self.rectCloseCross.y))
+
+
 
 
 
@@ -165,24 +184,31 @@ class SettingsInterface(object):
             if current_time - self.last_click_time > self.click_delay:
                 self.last_click_time = current_time
             
-                # Coordonnées globales de l'événement
-                global_pos = event.pos  # Coordonnées globales dans la fenêtre
+                local_pos = GetLocalPos(event, self.interfaceSurface, (320, 180))
+                if local_pos:
 
-                # Rect global de la surface de l'interface
-                surface_rect = pygame.Rect(320, 180, self.interfaceSurface.get_width(), self.interfaceSurface.get_height())
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        # Vérifier si un bouton de langue a été cliqué
+                        if not INFOS["RebindingKey"]:
+                            for action, rectButtonLangue in self.buttonsLangue.items():  # Parcourt le dictionnaire
+                                if rectButtonLangue.collidepoint(local_pos):
+                                    self.ChangeLangue(action)  # Change la langue en fonction du bouton cliqué
 
-                # Vérifiez si le clic est sur l'interface
-                if surface_rect.collidepoint(global_pos):
-                    # Convertissez en coordonnées locales
-                    local_pos = (global_pos[0] - surface_rect.x, global_pos[1] - surface_rect.y)
+                        if not INFOS["RebindingKey"]:  # Si on n'est PAS en mode rebind
+                            for action, rect in self.button_positions.items():
+                                if rect.collidepoint(local_pos):
+                                    INFOS["RebindingKey"] = action  # Déclencher le mode rebind
 
-                    # Vérifier si un bouton de langue a été cliqué
-                    if not INFOS["RebindingKey"]:
-                        for action, rectButtonLangue in self.buttonsLangue.items():  # Parcourt le dictionnaire
-                            if rectButtonLangue.collidepoint(local_pos):
-                                self.ChangeLangue(action)  # Change la langue en fonction du bouton cliqué
 
-                    if not INFOS["RebindingKey"]:  # Si on n'est PAS en mode rebind
-                        for action, rect in self.button_positions.items():
-                            if rect.collidepoint(local_pos):
-                                INFOS["RebindingKey"] = action  # Déclencher le mode rebind
+                    if event.type == pygame.MOUSEBUTTONDOWN and not INFOS["RebindingKey"]:
+                        if self.rectCloseCross.collidepoint(local_pos):
+                            # fermeture interface
+                            self.gestionnaire.CloseAllInterface()
+
+        if event.type == pygame.MOUSEMOTION:
+            local_pos = GetLocalPos(event, self.interfaceSurface, (320, 180))
+            if local_pos:              
+                # cross close interface
+                if event.type == pygame.MOUSEMOTION and not INFOS["RebindingKey"]:
+                    # cross close interface
+                    self.isCrossCloseHover = self.rectCloseCross.collidepoint(local_pos)

@@ -388,9 +388,11 @@ class Game(object):
 
                     elif event.type == pygame.USEREVENT and event.animationLancement == "animation_finie":
                         self.animationLancementEnd = True
-
-                if self.animationLancementEnd:        
-                    self.homeInterface.Update(event)
+                    
+                
+                    # update dans la boucle pour scroll event
+                    if self.animationLancementEnd:        
+                        self.homeInterface.Update(event)
 
 
             # update toolBOX

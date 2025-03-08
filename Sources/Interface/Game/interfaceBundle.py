@@ -14,6 +14,13 @@ class BundleInterface(object):
         self.interfaceSurface = pygame.Surface((WINDOW_WIDTH/2, WINDOW_HEIGHT/2),  pygame.SRCALPHA)
         self.interfaceSurface.fill("#ffffff")
 
+        # close interface cross
+        self.surfaceCloseCross = pygame.Surface((24,24))
+        self.isCrossCloseHover = False
+        self.crossClose = pygame.image.load(join("Images", "Croix", "x-mark.png")).convert_alpha()
+        self.crossClose2 = pygame.image.load(join("Images", "Croix", "x-mark2.png")).convert_alpha()
+
+
         # load image
         self.LoadImage()
         self.CreateElementRect()
@@ -100,6 +107,15 @@ class BundleInterface(object):
 
                 indice += 1 # on change de slot
 
+        # close element
+        self.surfaceCloseCross.fill("#ffffff")
+        self.rectCloseCross = pygame.Rect(self.interfaceSurface.get_width() - 34, 10, 24, 24)
+        if self.isCrossCloseHover:
+            self.surfaceCloseCross.blit(self.crossClose2, (0,0))
+        else:
+            self.surfaceCloseCross.blit(self.crossClose, (0,0))
+        self.interfaceSurface.blit(self.surfaceCloseCross, (self.rectCloseCross.x, self.rectCloseCross.y))
+
 
     def Update(self, event) -> None:
         """Méthode d'update de l'interface. Input / Output : None"""
@@ -108,3 +124,15 @@ class BundleInterface(object):
         self.BuildInterface()
         self.displaySurface.blit(self.interfaceSurface, (320,180)) # pos topleft
 
+        if event.type in (pygame.MOUSEMOTION, pygame.MOUSEBUTTONDOWN):
+
+            local_pos = GetLocalPos(event, self.interfaceSurface, (320, 180))
+            if local_pos:
+                if event.type == pygame.MOUSEMOTION:
+                    # cross close interface
+                    self.isCrossCloseHover = self.rectCloseCross.collidepoint(local_pos)
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.rectCloseCross.collidepoint(local_pos):
+                        # fermeture interface
+                        self.gestionnaire.CloseAllInterface()

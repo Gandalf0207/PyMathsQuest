@@ -30,6 +30,14 @@ class ReactorInterface(object):
         self.last_click_time = 0
         self.click_delay = 500    
 
+        # close interface cross
+        self.surfaceCloseCross = pygame.Surface((24,24))
+        self.isCrossCloseHover = False
+        self.crossClose = pygame.image.load(join("Images", "Croix", "x-mark.png")).convert_alpha()
+        self.crossClose2 = pygame.image.load(join("Images", "Croix", "x-mark2.png")).convert_alpha()
+
+
+
         self.reactor = Reactor()
         self.surfaceReactor = self.reactor.Update()
         self.surfaceReactor = self.reactor.Update()
@@ -87,6 +95,18 @@ class ReactorInterface(object):
         self.surfaceBtnPuissance.blit(self.textSkip, (0,0))
         self.interfaceSurface.blit(self.surfaceBtnPuissance, (self.btnRectPuissance.x, self.btnRectPuissance.y))
 
+        # close element
+        self.surfaceCloseCross.fill("#ffffff")
+        self.rectCloseCross = pygame.Rect(self.interfaceSurface.get_width() - 34, 10, 24, 24)
+        if self.isCrossCloseHover:
+            self.surfaceCloseCross.blit(self.crossClose2, (0,0))
+        else:
+            self.surfaceCloseCross.blit(self.crossClose, (0,0))
+        self.interfaceSurface.blit(self.surfaceCloseCross, (self.rectCloseCross.x, self.rectCloseCross.y))
+
+
+
+
 
     def Update(self, event) -> None:
         """Méthode d'update de l'interface. Input / Output : None"""
@@ -117,20 +137,23 @@ class ReactorInterface(object):
             if current_time - self.last_click_time > self.click_delay:
                 self.last_click_time = current_time
 
-                # Coordonnées globales de l'événement
-                global_pos = event.pos  # Coordonnées globales dans la fenêtre
+                local_pos = GetLocalPos(event, self.interfaceSurface, (320, 180))
+                if local_pos:
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if self.btnRectPuissance.collidepoint(local_pos):
+                            self.surfaceReactor = self.reactor.Update()
+                            self.clicks += 1
 
-                # Rect global de la surface de l'interface
-                surface_rect = pygame.Rect(320, 180, self.interfaceSurface.get_width(), self.interfaceSurface.get_height())
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if self.rectCloseCross.collidepoint(local_pos):
+                            # fermeture interface
+                            self.gestionnaire.CloseAllInterface()
+        if event.type == pygame.MOUSEMOTION:
+            local_pos = GetLocalPos(event, self.interfaceSurface, (320, 180))
+            if local_pos:
+                # cross close interface
+                self.isCrossCloseHover = self.rectCloseCross.collidepoint(local_pos)
 
-                # Vérifiez si le clic est sur l'interface
-                if surface_rect.collidepoint(global_pos):
-                    # Convertissez en coordonnées locales
-                    local_pos = (global_pos[0] - surface_rect.x, global_pos[1] - surface_rect.y)
-                    
-                    if self.btnRectPuissance.collidepoint(local_pos):
-                        self.surfaceReactor = self.reactor.Update()
-                        self.clicks += 1
 
         # Baisser la température toutes les secondes
         current_time = pygame.time.get_ticks()

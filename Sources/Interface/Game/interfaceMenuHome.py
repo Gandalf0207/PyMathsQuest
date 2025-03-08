@@ -76,15 +76,8 @@ class HomeMenuInterface(object):
             if current_time - self.last_click_time > self.click_delay:
                 self.last_click_time = current_time
             
-                # Coordonnées globales de l'événement
-                global_pos = event.pos  # Coordonnées globales dans la fenêtre
-
-                # Rect global de la surface de l'interface
-                surface_rect = pygame.Rect(320, 180, self.interfaceSurface.get_width(), self.interfaceSurface.get_height())
-
-                if surface_rect.collidepoint(global_pos):
-                    # Convertissez en coordonnées locales
-                    local_pos = (global_pos[0] - surface_rect.x, global_pos[1] - surface_rect.y)
+                local_pos = GetLocalPos(event, self.interfaceSurface, (320, 180))
+                if local_pos:
 
                     if self.btnRectCredits.collidepoint(local_pos):
                         self.gestionnaire.MiseAJourInterfaceCredits()
