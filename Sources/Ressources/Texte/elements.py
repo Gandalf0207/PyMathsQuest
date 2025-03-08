@@ -120,16 +120,6 @@ ElementsFr = {
             "PressKey" : "Appuyez sur une touche...",
 
             },
-        "Sound" : {
-            "Title" : "Volume",
-            }, 
-        "Bundle" : {
-            "Title" : "Inventaire",
-            },
-        "Book" : {
-            "Title" : "Livre de cours"
-            },  
-
         "IdeaTips": {
             "NiveauPlaineRiviere" : {
                 "SeePNJ" : "Discuter avec le pnj sur la map. Regarder la minimap",

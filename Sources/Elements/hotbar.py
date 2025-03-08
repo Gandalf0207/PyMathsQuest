@@ -16,7 +16,7 @@ class MiniMap:
         self.static_surface = pygame.Surface((LONGUEUR * CELL_SIZE, LARGEUR * CELL_SIZE))
         self.player_position = None
         self.ratioImage = CELL_SIZE / CASEMAP / 2
-
+        
         self.LoadImagesMiniMap()
         self.GenerateStaticMiniMap() # minimap de base
 

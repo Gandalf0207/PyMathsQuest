@@ -12,7 +12,9 @@ class SoundInterface(object):
         # Création éléments
         self.displaySurface = pygame.display.get_surface() # surface générale
         self.interfaceSurface = pygame.Surface((WINDOW_WIDTH/2, WINDOW_HEIGHT/2),  pygame.SRCALPHA)
-        self.interfaceSurface.fill("#ffffff")
+
+        self.songBcg = pygame.image.load(join("Images", "Interface", "Song.png")).convert_alpha()
+        self.interfaceSurface.blit(self.songBcg, (0,0)) 
 
         # Propriétés des sliders
         self.slider_x = 50  # Position X des sliders
@@ -29,7 +31,7 @@ class SoundInterface(object):
         self.dragging = None
 
         # close interface cross
-        self.surfaceCloseCross = pygame.Surface((24,24))
+        self.surfaceCloseCross = pygame.Surface((24,24),pygame.SRCALPHA )
         self.isCrossCloseHover = False
         self.crossClose = pygame.image.load(join("Images", "Croix", "x-mark.png")).convert_alpha()
         self.crossClose2 = pygame.image.load(join("Images", "Croix", "x-mark2.png")).convert_alpha()
@@ -40,9 +42,7 @@ class SoundInterface(object):
         """Méthode : Création de tout les éléments composant l'interface. Input / Output : None"""
 
         # texte titre
-        self.interfaceSurface.fill("#ffffff")
-        text = FONT["FONT36"].render(TEXTE["Elements"]["HotBar"]["Sound"]["Title"], True, (0,0,0))
-        self.interfaceSurface.blit(text, (10,10))
+        self.interfaceSurface.blit(self.songBcg, (0,0)) 
 
         for i, slider in enumerate(self.sliders):
             # Position du curseur
@@ -50,7 +50,7 @@ class SoundInterface(object):
 
             # Dessiner le titre du slider
             text = FONT["FONT20"].render(slider["label"], True, (0, 0, 0))
-            self.interfaceSurface.blit(text, (self.slider_x, slider["y"] - 45))
+            self.interfaceSurface.blit(text, (self.slider_x +3, slider["y"] - 42))
 
             # Dessiner la barre de volume
             pygame.draw.rect(self.interfaceSurface, (200, 200, 200), (self.slider_x, slider["y"], self.slider_width, self.slider_height))
@@ -65,7 +65,7 @@ class SoundInterface(object):
             self.interfaceSurface.blit(volume_text, text_rect)
 
         # close element
-        self.surfaceCloseCross.fill("#ffffff")
+        self.surfaceCloseCross.fill((0,0,0,0))
         self.rectCloseCross = pygame.Rect(self.interfaceSurface.get_width() - 34, 10, 24, 24)
         if self.isCrossCloseHover:
             self.surfaceCloseCross.blit(self.crossClose2, (0,0))
@@ -107,7 +107,6 @@ class SoundInterface(object):
                 # Déplacer le curseur
                 new_x = min(max(mouse_x - self.cursor_width // 2, self.slider_x), self.slider_x + self.slider_width - self.cursor_width)
                 SOUND[slider["Element"]] = (new_x - self.slider_x) / (self.slider_width - self.cursor_width)
-                print(self.gestionnaire)
                 self.gestionnaire.gestionSoundFond.Update()
                 
         # cross close interface

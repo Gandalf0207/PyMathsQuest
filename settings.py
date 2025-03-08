@@ -150,7 +150,7 @@ NIVEAU = {
     "All" : False, 
 
     # map
-    "Map" : "NiveauMedievale",
+    "Map" : "NiveauPlaineRiviere",
 }
 # box infos globales
 INFOS = {
@@ -160,7 +160,7 @@ INFOS = {
     
     "Difficulte" : False,
     
-    "Exo" : True, 
+    "Exo" : False, 
     "ExoPasse" : False,
     
     "DemiNiveau" : False,

@@ -29,8 +29,6 @@ class BookInterface(object):
 
         # texte titre
         self.interfaceSurface.blit(self.bookBcg, (0,0))
-        text = FONT["FONT36"].render(TEXTE["Elements"]["HotBar"]["Book"]["Title"], True, (0,0,0))
-        self.interfaceSurface.blit(text, (10,10))
 
     def Update(self, event) -> None:
         """Méthode d'update de l'interface. Input / Output : None"""

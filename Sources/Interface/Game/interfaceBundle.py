@@ -12,13 +12,16 @@ class BundleInterface(object):
         # Création éléments
         self.displaySurface = pygame.display.get_surface() # surface générale
         self.interfaceSurface = pygame.Surface((WINDOW_WIDTH/2, WINDOW_HEIGHT/2),  pygame.SRCALPHA)
-        self.interfaceSurface.fill("#ffffff")
+        self.interfaceSurface.fill((0,0,0,255))
 
         # close interface cross
-        self.surfaceCloseCross = pygame.Surface((24,24))
+        self.surfaceCloseCross = pygame.Surface((24,24), pygame.SRCALPHA)
         self.isCrossCloseHover = False
         self.crossClose = pygame.image.load(join("Images", "Croix", "x-mark.png")).convert_alpha()
         self.crossClose2 = pygame.image.load(join("Images", "Croix", "x-mark2.png")).convert_alpha()
+
+        self.bundleBcg = pygame.image.load(join("Images", "Interface", "Inventaire.png")).convert_alpha()
+        self.interfaceSurface.blit(self.bundleBcg, (0,0))
 
 
         # load image
@@ -41,18 +44,18 @@ class BundleInterface(object):
         Input / Output : None"""
 
         # surface slot inventaire
-        self.surfaceSlot1 = pygame.Surface((96,96))
-        self.surfaceSlot2 = pygame.Surface((96,96))
-        self.surfaceSlot3 = pygame.Surface((96,96))
-        self.surfaceSlot4 = pygame.Surface((96,96))
-        self.surfaceSlot5 = pygame.Surface((96,96))
-        self.surfaceSlot6 = pygame.Surface((96,96))
-        self.surfaceSlot7 = pygame.Surface((96,96))
-        self.surfaceSlot8 = pygame.Surface((96,96))
-        self.surfaceSlot9 = pygame.Surface((96,96))
-        self.surfaceSlot10 = pygame.Surface((96,96))
-        self.surfaceSlot11 = pygame.Surface((96,96))
-        self.surfaceSlot12 = pygame.Surface((96,96))
+        self.surfaceSlot1 = pygame.Surface((96,96), pygame.SRCALPHA)
+        self.surfaceSlot2 = pygame.Surface((96,96), pygame.SRCALPHA)
+        self.surfaceSlot3 = pygame.Surface((96,96), pygame.SRCALPHA)
+        self.surfaceSlot4 = pygame.Surface((96,96), pygame.SRCALPHA)
+        self.surfaceSlot5 = pygame.Surface((96,96), pygame.SRCALPHA)
+        self.surfaceSlot6 = pygame.Surface((96,96), pygame.SRCALPHA)
+        self.surfaceSlot7 = pygame.Surface((96,96), pygame.SRCALPHA)
+        self.surfaceSlot8 = pygame.Surface((96,96), pygame.SRCALPHA)
+        self.surfaceSlot9 = pygame.Surface((96,96), pygame.SRCALPHA)
+        self.surfaceSlot10 = pygame.Surface((96,96), pygame.SRCALPHA)
+        self.surfaceSlot11 = pygame.Surface((96,96), pygame.SRCALPHA)
+        self.surfaceSlot12 = pygame.Surface((96,96), pygame.SRCALPHA)
 
         # all slots
         self.allSurfaceSlot = [self.surfaceSlot1, self.surfaceSlot2, self.surfaceSlot3, self.surfaceSlot4, self.surfaceSlot5, self.surfaceSlot6, self.surfaceSlot7, self.surfaceSlot8, self.surfaceSlot9, self.surfaceSlot1, self.surfaceSlot11, self.surfaceSlot12]
@@ -67,14 +70,13 @@ class BundleInterface(object):
         """Méthode : Création de tout les éléments composant l'interface. Input / Output : None"""
 
         # texte titre
-        self.interfaceSurface.fill("#ffffff")
-        text = FONT["FONT36"].render(TEXTE["Elements"]["HotBar"]["Bundle"]["Title"], True, (0,0,0))
-        self.interfaceSurface.blit(text, (10,10))
+        self.interfaceSurface.fill((255,255,255,0))
+        self.interfaceSurface.blit(self.bundleBcg, (0,0))
 
         indice = 0
         for key in INVENTORY: # pour tout les élément dans l'inventaire
             elementSlot = self.allSurfaceSlot[indice] # get slot
-            elementSlot.fill((255,255,255)) # clear slot
+            elementSlot.fill((255,255,255, 0)) # clear slot
 
             # définition de l'image en fonction de l'item de l'inventaire
             if key == "OldAxe" and INVENTORY["OldAxe"] > 0: 
@@ -95,6 +97,7 @@ class BundleInterface(object):
             # s'il y a un item à afficher
             if surf != None:
                 # ajout de l'item dans le slot
+                elementSlot.fill((0,0,0,0))
                 elementSlot.blit(surf, (0,0))
 
                 # text nombre items
@@ -108,7 +111,7 @@ class BundleInterface(object):
                 indice += 1 # on change de slot
 
         # close element
-        self.surfaceCloseCross.fill("#ffffff")
+        self.surfaceCloseCross.fill((0,0,0,0))
         self.rectCloseCross = pygame.Rect(self.interfaceSurface.get_width() - 34, 10, 24, 24)
         if self.isCrossCloseHover:
             self.surfaceCloseCross.blit(self.crossClose2, (0,0))

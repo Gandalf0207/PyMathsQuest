@@ -38,8 +38,7 @@ class BindKey(object):
 
                 return saved_keybinds  # Retourne les touches récupérées du fichier
             except (json.JSONDecodeError, IOError):
-                print("Erreur de lecture du fichier JSON, réinitialisation avec les valeurs par défaut.")
-        
+                pass
         # Si fichier inexistant ou corrompu, on utilise les valeurs par défaut et on les sauvegarde
         self.save_keybinds(self.default_keybinds)
         return self.default_keybinds

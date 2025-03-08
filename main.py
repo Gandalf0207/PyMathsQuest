@@ -77,7 +77,8 @@ class Game(object):
 
         # surface bg hotbar
         self.bgHotBar = pygame.Surface((WINDOW_WIDTH, 170))
-        self.bgHotBar.fill((150,150,150))
+        self.hotbarBcg = pygame.image.load(join("Images", "Interface", "Hotbar.png")).convert_alpha()
+        self.bgHotBar.blit(self.hotbarBcg, (0,0))
 
         # boolean de check game
         self.followObject = None #oj suivre
@@ -179,8 +180,6 @@ class Game(object):
                                 self.player.rect.center = (first_sprite.pos[0]*CASEMAP, first_sprite.pos[1]*CASEMAP)
                                 self.player.hitbox_rect.center = (first_sprite.pos[0]*CASEMAP, first_sprite.pos[1]*CASEMAP)
 
-                                print(f"tp : {first_sprite.pos}")
-                                print(self.player.rect.center)
 
                             if event.key == pygame.K_0:
                                 self.player.rect.center = (130*CASEMAP, 25*CASEMAP)

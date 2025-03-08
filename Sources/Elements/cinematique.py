@@ -10,7 +10,6 @@ class Cinematique(object):
 
         if NIVEAU["Map"] != "NiveauBaseFuturiste":
             self.pos = self.targetObject.pos  # Position sur la double liste
-            print(goal)
 
             # Récupération des attributs graphiques du PNJ
             self.rect = self.targetObject.rect  # Utiliser la hitbox comme référence principale
