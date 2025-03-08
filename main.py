@@ -71,9 +71,9 @@ class Game(object):
         Input / Output : None"""
 
         # all surface secondaire (hotbar)
-        self.minimap_surface = pygame.Surface((300, 150))
-        self.ideaTips_surface = pygame.Surface((514, 150))
-        self.allSettings_surface = pygame.Surface((426, 150))
+        self.minimap_surface = pygame.Surface((300, 150), pygame.SRCALPHA)
+        self.ideaTips_surface = pygame.Surface((514, 150), pygame.SRCALPHA)
+        self.allSettings_surface = pygame.Surface((426, 150), pygame.SRCALPHA)
 
         # surface bg hotbar
         self.bgHotBar = pygame.Surface((WINDOW_WIDTH, 170))

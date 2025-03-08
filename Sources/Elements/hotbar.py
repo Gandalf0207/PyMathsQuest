@@ -16,7 +16,7 @@ class MiniMap:
         self.static_surface = pygame.Surface((LONGUEUR * CELL_SIZE, LARGEUR * CELL_SIZE))
         self.player_position = None
         self.ratioImage = CELL_SIZE / CASEMAP / 2
-        
+
         self.LoadImagesMiniMap()
         self.GenerateStaticMiniMap() # minimap de base
 
@@ -136,8 +136,8 @@ class InfosTips:
         Input / Ouput : None"""
 
         # image
-        self.IdeaTipsSurface.fill("#ffffff") # clear
-        self.IdeaTipsSurface.blit(self.idea, (10,27))
+        self.IdeaTipsSurface.fill((0,0,0,0)) # clear
+        self.IdeaTipsSurface.blit(self.idea, (10,15))
         
         # texte
             # bloc gestion texte 
@@ -148,15 +148,15 @@ class InfosTips:
 
             
         # get lines 
-        max_width = 375
-        wrapped_lines = wrap_text(self.displayed_text, FONT["FONT20"], max_width)
+        max_width = 400
+        wrapped_lines = wrap_text(self.displayed_text, FONT["FONT22"], max_width)
 
         # Affichage des lignes
-        y_offset = 30  # Position Y de départ
-        line_height = FONT["FONT20"].size("Tg")[1]  # Hauteur d'une ligne
+        y_offset = 40  # Position Y de départ
+        line_height = FONT["FONT22"].size("Tg")[1]  # Hauteur d'une ligne
         for i, line in enumerate(wrapped_lines):
-            line_surface = FONT["FONT20"].render(line, True, (0,0,0))
-            self.IdeaTipsSurface.blit(line_surface, (120, y_offset + i * line_height))
+            line_surface = FONT["FONT22"].render(line, True, (255,255,255))
+            self.IdeaTipsSurface.blit(line_surface, (95, y_offset + i * line_height))
     
     def Update(self) -> None:
         """Méthode update des infos tips, get du texte puis affichage de ce dernier
@@ -188,10 +188,10 @@ class SettingsAll:
         des buttons pygame. Input / Output : None"""
 
         # Dimensions des boutons (100x100)
-        self.surfaceButtonWheel = pygame.Surface((100, 100))
-        self.surfaceButtonSound = pygame.Surface((100, 100))
-        self.surfaceButtonBundle = pygame.Surface((100, 100))
-        self.surfaceButtonBook = pygame.Surface((100, 100))
+        self.surfaceButtonWheel = pygame.Surface((100, 100), pygame.SRCALPHA)
+        self.surfaceButtonSound = pygame.Surface((100, 100), pygame.SRCALPHA)
+        self.surfaceButtonBundle = pygame.Surface((100, 100), pygame.SRCALPHA)
+        self.surfaceButtonBook = pygame.Surface((100, 100), pygame.SRCALPHA)
 
         # Positions des boutons, espacés de 6 pixels, centrés verticalement
         self.ButtonRectWheel =pygame.Rect(0, 25, 100, 100) 
@@ -246,19 +246,19 @@ class SettingsAll:
         Input / Output : None"""
         
         # fond box 
-        self.allSettingsSurface.fill((255,255,255))
+        self.allSettingsSurface.fill((0,0,0,0)) # transparent
         
         # Remplissage couleur
-        self.surfaceButtonBook.fill((50,50,50))  # blanc
-        self.surfaceButtonSound.fill((50,50,50))
-        self.surfaceButtonBundle.fill((50,50,50))
-        self.surfaceButtonWheel.fill((50,50,50))
+        self.surfaceButtonBook.fill((0,0,0,0))  # transparent
+        self.surfaceButtonSound.fill((0,0,0,0))
+        self.surfaceButtonBundle.fill((0,0,0,0))
+        self.surfaceButtonWheel.fill((0,0,0,0))
 
         # Dessin des images sur les boutons
-        self.surfaceButtonBook.blit(self.book, (0, 0))
-        self.surfaceButtonSound.blit(self.sound, (0, 0))
-        self.surfaceButtonBundle.blit(self.bundle, (0, 0))
-        self.surfaceButtonWheel.blit(self.wheel, (0, 0))
+        self.surfaceButtonBook.blit(self.book, (2, 2)) # 2, 2 pour center
+        self.surfaceButtonSound.blit(self.sound, (2, 2))
+        self.surfaceButtonBundle.blit(self.bundle, (2, 2))
+        self.surfaceButtonWheel.blit(self.wheel, (2, 2))
 
         # Affichage des bouutons sur la surface allsettings
         self.allSettingsSurface.blit(self.surfaceButtonBook, (self.ButtonRectBook.x, self.ButtonRectBook.y))
