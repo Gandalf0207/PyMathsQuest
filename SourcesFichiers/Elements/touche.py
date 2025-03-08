@@ -4,7 +4,7 @@ class BindKey(object):
 
     def __init__(self):
         """Initialisation des touches et chargement depuis le fichier si existant"""
-        self.file_path = "keybinds.json"
+        self.file_path = join("SourcesFichiers", "Ressources","keybinds.json")
         self.default_keybinds = {
             "up": pygame.K_z,
             "down": pygame.K_s,

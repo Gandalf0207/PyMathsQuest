@@ -1,5 +1,5 @@
-from Sources.Ressources.Texte.dialogues import *
-from Sources.Ressources.Texte.elements import *
+from SourcesFichiers.Ressources.Texte.dialogues import *
+from SourcesFichiers.Ressources.Texte.elements import *
 
 def LoadTexte():
     """Méthode de création du fichier de dialogue

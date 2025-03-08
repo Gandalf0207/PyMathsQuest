@@ -1,5 +1,5 @@
 from settings import *
-from Sources.ScriptAlgo.astar import *
+from SourcesFichiers.ScriptAlgo.astar import *
 
 
 class FollowPlayer(object):

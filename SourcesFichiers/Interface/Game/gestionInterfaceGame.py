@@ -1,14 +1,14 @@
 from settings import *
-from Sources.Interface.Game.interfaceBook import *
-from Sources.Interface.Game.interfaceBundle import *
-from Sources.Interface.Game.interfaceMenuHome import *
-from Sources.Interface.Game.interfacePNJ import *
-from Sources.Interface.Game.interfaceReactor import *
-from Sources.Interface.Game.interfaceSettings import *
-from Sources.Interface.Game.interfaceSound import *
-from Sources.Interface.Game.interfaceExo import *
-from Sources.Interface.Game.interfaceGong import *
-from Sources.Interface.Game.interfaceCredits import *
+from SourcesFichiers.Interface.Game.interfaceBook import *
+from SourcesFichiers.Interface.Game.interfaceBundle import *
+from SourcesFichiers.Interface.Game.interfaceMenuHome import *
+from SourcesFichiers.Interface.Game.interfacePNJ import *
+from SourcesFichiers.Interface.Game.interfaceReactor import *
+from SourcesFichiers.Interface.Game.interfaceSettings import *
+from SourcesFichiers.Interface.Game.interfaceSound import *
+from SourcesFichiers.Interface.Game.interfaceExo import *
+from SourcesFichiers.Interface.Game.interfaceGong import *
+from SourcesFichiers.Interface.Game.interfaceCredits import *
 
 
 class GestionGameInterfaces(object):

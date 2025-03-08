@@ -1,9 +1,9 @@
 from settings import *
-from Sources.Map.creationMap import *
-from Sources.Elements.sprites import *
-from Sources.Personnages.player import *
-from Sources.Elements.groups import *
-from Sources.Personnages.pnj import *
+from SourcesFichiers.Map.creationMap import *
+from SourcesFichiers.Elements.sprites import *
+from SourcesFichiers.Personnages.player import *
+from SourcesFichiers.Elements.groups import *
+from SourcesFichiers.Personnages.pnj import *
 
 
 

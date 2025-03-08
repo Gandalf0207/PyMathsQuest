@@ -1,6 +1,6 @@
 from settings import *
-from Sources.Interface.Other.conditionsUtiilisationInterface import *
-from Sources.Ressources.Texte.creationTexte import *
+from SourcesFichiers.Interface.Other.conditionsUtiilisationInterface import *
+from SourcesFichiers.Ressources.Texte.creationTexte import *
 
 
 class HomeInterface(object):

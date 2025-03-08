@@ -1,5 +1,5 @@
 from settings import * 
-from Sources.Elements.sprites import *
+from SourcesFichiers.Elements.sprites import *
 
 class ReactorInterface(object):
 

@@ -1,6 +1,6 @@
 from settings import *
-from Sources.Elements.sprites import *
-from Sources.Personnages.pnj import *
+from SourcesFichiers.Elements.sprites import *
+from SourcesFichiers.Personnages.pnj import *
 
 class PNJInterface(object):
 

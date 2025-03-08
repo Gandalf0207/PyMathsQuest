@@ -1,5 +1,5 @@
 from settings import *
-from Sources.ScriptAlgo.astar import *
+from SourcesFichiers.ScriptAlgo.astar import *
 
 class Cinematique(object):
     def __init__(self, goal : list, targetObject : any, mapCalcul : list, pathAccessible : list) -> None:

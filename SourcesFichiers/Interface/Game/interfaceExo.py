@@ -1,6 +1,6 @@
 from settings import *
-from Sources.Exos.choixExo import *
-from Sources.Exos.renderLatex import *
+from SourcesFichiers.Exos.choixExo import *
+from SourcesFichiers.Exos.renderLatex import *
 
 class CreateExo:
     def __init__(self, gestionnaire : any) -> None:

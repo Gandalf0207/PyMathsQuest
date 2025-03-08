@@ -1,7 +1,7 @@
 from settings import *
-from Sources.ScriptAlgo.astar import *
-from Sources.Elements.cinematique import *
-from Sources.Elements.followPlayer import *
+from SourcesFichiers.ScriptAlgo.astar import *
+from SourcesFichiers.Elements.cinematique import *
+from SourcesFichiers.Elements.followPlayer import *
 
 class PNJOBJ(pygame.sprite.Sprite):
     

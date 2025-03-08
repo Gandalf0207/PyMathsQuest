@@ -1,18 +1,19 @@
 from settings import *
-from Sources.Elements.touche import *
-from Sources.Elements.interactions import *
-from Sources.Elements.groups import *
-from Sources.Map.loadMap import *
-from Sources.Elements.hotbar import *
-from Sources.Personnages.pnj import *
-from Sources.Ressources.Texte.creationTexte import *
-from Sources.Elements.construire import *
-from Sources.Interface.Game.interfaceExo import *
-from Sources.Elements.sound import *
-from Sources.Interface.Game.gestionInterfaceGame import *
-from Sources.Elements.cinematique import *
-from Sources.Interface.Other.gestionInterfaceOther import *
-from Sources.Interface.Other.animationLancement import *
+from SourcesFichiers.Personnages.player import *
+from SourcesFichiers.Elements.touche import *
+from SourcesFichiers.Elements.interactions import *
+from SourcesFichiers.Elements.groups import *
+from SourcesFichiers.Map.loadMap import *
+from SourcesFichiers.Elements.hotbar import *
+from SourcesFichiers.Personnages.pnj import *
+from SourcesFichiers.Ressources.Texte.creationTexte import *
+from SourcesFichiers.Elements.construire import *
+from SourcesFichiers.Interface.Game.interfaceExo import *
+from SourcesFichiers.Elements.sound import *
+from SourcesFichiers.Interface.Game.gestionInterfaceGame import *
+from SourcesFichiers.Elements.cinematique import *
+from SourcesFichiers.Interface.Other.gestionInterfaceOther import *
+from SourcesFichiers.Interface.Other.animationLancement import *
 
 
 class Game(object):

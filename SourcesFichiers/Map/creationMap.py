@@ -5,9 +5,9 @@ from settings import *
 
 # Import des scripts algo pour placer les par-terre de fleurs; relier 2 points entre eux; 
 # check si le niveau est faisable en reliant chaque point clé du niveau entre eux
-from Sources.ScriptAlgo.jeuDeLaVie import *
-from Sources.ScriptAlgo.liaisonAtoB import *
-from Sources.ScriptAlgo.astar import *
+from SourcesFichiers.ScriptAlgo.jeuDeLaVie import *
+from SourcesFichiers.ScriptAlgo.liaisonAtoB import *
+from SourcesFichiers.ScriptAlgo.astar import *
 
 class GestionNiveauMap(object):
     """Class parent création map, settings et méthode globales"""
@@ -84,7 +84,7 @@ class GestionNiveauMap(object):
         """Initialisation du fichier Json"""
 
         # ouverture en écriture
-        with open(join("Sources","Ressources","AllMapValue.json"), "w") as valueFileJson: 
+        with open(join("SourcesFichiers","Ressources","AllMapValue.json"), "w") as valueFileJson: 
             json.dump(data, valueFileJson, indent=4) 
 
     def PlacementElements(self, coordsElements, pathJson): 
