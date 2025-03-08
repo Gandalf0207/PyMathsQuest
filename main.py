@@ -12,6 +12,7 @@ from Sources.Elements.sound import *
 from Sources.Interface.Game.gestionInterfaceGame import *
 from Sources.Elements.cinematique import *
 from Sources.Interface.Other.gestionInterfaceOther import *
+from Sources.Interface.Other.animationLancement import *
 
 
 class Game(object):
@@ -38,12 +39,17 @@ class Game(object):
         self.ERROR_RELANCER = False
         self.checkLoadingDone = False
 
+        #animation lancement
+        self.animationLancement = AnimationLancementObj(self)
+        self.animationLancementIsDown = False
+        threading.Thread(target=self.animationLancement.Update, daemon=True).start()
 
+        # tool box
         self.GameTool = GameToolBox(self)
         self.GameTool.CreateFont()
 
+        # interface home
         self.homeInterface = HomeInterface(self)
-
 
 
     # méthode de call de la class tool
@@ -374,16 +380,23 @@ class Game(object):
                     self.demiNiveau = True # bool de verif
                     self.GameTool.ChangementDemiNiveau() # chargement du demi niveau
 
-
             else:
                 dt = self.clock.tick() / 1000
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         self.running = False
-                
-                    self.homeInterface.Update(event)
+
+                    if self.animationLancementIsDown:
+                        self.homeInterface.Update(event)
+
+
             # update toolBOX
             self.GameTool.Update()
+
+                
+
+                
+                    
 
 
             pygame.display.flip()

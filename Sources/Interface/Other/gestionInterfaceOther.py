@@ -40,11 +40,7 @@ class HomeInterface(object):
         self.selectedOptionLangue = 0
         self.posRadioButtonLangue = [(25, 50), (25, 100), (25, 150)]
         # Chargement des images et des éléments
-        self.LoadImage()
 
-    def LoadImage(self) -> None:
-        """Chargement des images."""
-        pass
 
     def BuildInterface(self) -> None:
         """Construction de l'interface."""
@@ -165,6 +161,7 @@ class HomeInterface(object):
 
     def Update(self, event) -> None:
         """Gestion des événements et mise à jour de l'interface."""
+
 
         # Mettre à jour l'affichage
         self.BuildInterface()

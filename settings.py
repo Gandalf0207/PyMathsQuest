@@ -3,6 +3,7 @@ from random import *
 import random
 import os
 import time
+import gc
 import json
 import heapq
 import copy
@@ -147,7 +148,7 @@ INFOS = {
     
     "Difficulte" : False,
     
-    "Exo" : True, 
+    "Exo" : False, 
     "ExoPasse" : False,
     
     "DemiNiveau" : False,
