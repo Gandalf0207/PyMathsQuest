@@ -69,11 +69,25 @@ class MiniMap:
                     self.static_surface.blit(self.carre2, pos)
                 else: # reste = herbe 
                     self.static_surface.blit(self.carre1, pos)
-                
+
+        if NIVEAU["Map"] == "NiveauMordor":
+            for y, row in enumerate(self.mapData):
+                for x, cell in enumerate(row):
+                    pos = (x * CELL_SIZE, y * CELL_SIZE)  # Coordonnées des cellules)
+
+                    if cell in ["X", "T"]:
+                        self.static_surface.blit(self.carre7, pos)
+                    elif cell in ["C", "D", "l", "c"]:
+                        self.static_surface.blit(self.carre11, pos)
+                    elif cell in ["%", "ù"]:
+                        self.static_surface.blit(self.carre2, pos)
+
+
         if NIVEAU["Map"] == "NiveauMedievale" : # placement chateau 
             pos = (104*CELL_SIZE, 0 *CELL_SIZE)
             self.static_surface.blit(self.carre10, pos)
-        
+
+
 
     def Update(self, player_pos: tuple, pnjGroup : any, interactionGroup : any) -> None:
         """Méthode : Met à jour uniquement le joueur sur la minimap. 
