@@ -321,7 +321,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
             listeObstacle = [] # liste qui va stocker toutes les coords des obstacles
             for _ in range(self.obstacle): # boucle pour le nombre d'obstacle différents
                 obstaclePos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] pos random sur la map, en éviant les bordure
-                while self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] != '-' or self.mapCheckDeplacementPossible[obstaclePos[1]+1][obstaclePos[0]] != '-': # check de s'il y a déjà des éléments sur la map de test (map).
+                while self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] != '-' or self.mapCheckDeplacementPossible[obstaclePos[1]+1][obstaclePos[0]] != '-' and self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]-2] != '-': # check de s'il y a déjà des éléments sur la map de test (map).
                     obstaclePos = [randint(0, self.longueur-1), randint(0, self.largeur-1)] # forme [x,y] # on replace si jamais il y a un element
                 self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] = "O" # on ajoute sur la map de test l'object
 
