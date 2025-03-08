@@ -106,6 +106,16 @@ def GetLocalPos(event, interfaceSurface, PosBlit):
         return local_pos
     return False
 
+def ChangeCursor(boolCheck, etatCursor):
+    if boolCheck:
+        match etatCursor:
+            case "Hand" :
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+            case "Interdit":
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_NO)
+    else:
+        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+
 
 # Couleurs (température froide à chaude)
 BLUE = (0, 0, 255)

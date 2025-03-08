@@ -199,6 +199,7 @@ class HomeInterface(object):
                     elif self.isConditionAccept:
                         if self.btnRectLancer.collidepoint(event.pos):
                             INFOS["GameStart"] = True
+                            ChangeCursor(False, "Hand")
                             self.gestionnaire.fondu_au_noir()
                             self.gestionnaire.StartMap()
                         
@@ -266,12 +267,24 @@ class HomeInterface(object):
                 self.isHorverText = self.text_rect.collidepoint(event.pos)  # Vérifie si la souris est sur le texte
                 self.isHoverBtnLancer = self.btnRectLancer.collidepoint(event.pos)
 
-                if self.isHorverText:
-                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)  # Curseur main
-                elif self.isHoverBtnLancer and self.isConditionAccept:
-                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)  # Curseur main
+                # check element licence
+                if self.isConditionAccept and not self.isHorverText:
+                    ChangeCursor(self.isHoverBtnLancer, "Hand")
+                elif not self.isConditionAccept and not self.isHorverText:
+                    ChangeCursor(self.isHoverBtnLancer, "Interdit")
                 else:
-                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                    ChangeCursor(self.isHorverText, "Hand")
+
+                # check all radio button 
+                allCoordsRadioButton = [self.posRadioButtonNiveau, self.posRadioButtonDifficulte, self.posRadioButtonLangue]
+                for i, listCoords in enumerate(allCoordsRadioButton):
+                    for coords in listCoords:
+                        global_pos = (coords[0] + 80 + 400*i, coords[1] + 100)  # Ajout du décalage de la surface niveauSurface
+                        rect = pygame.Rect(global_pos[0] - 15, global_pos[1] - 15, 30, 30)
+                    
+                        if rect.collidepoint(event.pos):
+                            ChangeCursor(True, "Hand")
+
 
         if self.isInterfaceConditionsUtilisationOPEN:
             self.interfaceUpdate.Update(event)

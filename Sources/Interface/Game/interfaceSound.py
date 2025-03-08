@@ -49,7 +49,7 @@ class SoundInterface(object):
             cursor_x = self.slider_x + int(SOUND[slider["Element"]] * (self.slider_width - self.cursor_width))
 
             # Dessiner le titre du slider
-            text = FONT["FONT20"].render(slider["label"], True, (0, 0, 0))
+            text = FONT["FONT20"].render(slider["label"], True, (255,255,255))
             self.interfaceSurface.blit(text, (self.slider_x +3, slider["y"] - 42))
 
             # Dessiner la barre de volume
@@ -60,7 +60,7 @@ class SoundInterface(object):
 
             # Afficher le volume en %
             volume_percent = int(SOUND[slider["Element"]] * 100)
-            volume_text = FONT["FONT20"].render(f"{volume_percent}%", True, (0, 0, 0))
+            volume_text = FONT["FONT20"].render(f"{volume_percent}%", True, (255,255,255))
             text_rect = volume_text.get_rect(center=(cursor_x + self.cursor_width // 2, slider["y"] - 20))
             self.interfaceSurface.blit(volume_text, text_rect)
 
