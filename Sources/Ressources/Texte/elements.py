@@ -144,7 +144,8 @@ ElementsFr = {
                 "SeePNJ" : "Discuter avec le pnj sur la map. Regarder la minimap et suivez le chemin !",
                 "Electricity" : "Vous devez activer l'électricité",
                 "UseVent" : "Vous devez utiliser les conduits d'aération", 
-                "EscapeVaisseau": "Vous devez vous échaper du vaisseau par la porte arrière."
+                "EscapeVaisseau": "Vous devez vous échaper du vaisseau par la porte arrière.",
+                "SeePNJSalleLancement" : "Rejoignez le pilote dans la salle de lancement",
             },
 
             "NiveauMordor" : {
