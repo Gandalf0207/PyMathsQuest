@@ -160,7 +160,7 @@ NIVEAU = {
     "All" : False, 
 
     # map
-    "Map" : "NiveauBaseFuturiste",
+    "Map" : "NiveauMordor",
 }
 # box infos globales
 INFOS = {

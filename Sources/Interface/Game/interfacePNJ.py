@@ -200,6 +200,7 @@ class PNJInterface(object):
 
                 if NIVEAU["Map"] == "NiveauMordor":
                     if self.gestionnaire.pnjActuel == "PNJ1":
+                        PNJ["PNJ1"] = True
                         
                         #animation 
                         self.gestionnaire.gestionnaire.fondu_au_noir()
@@ -211,19 +212,22 @@ class PNJInterface(object):
                         player.rect.center = player.hitbox_rect.center
 
                         self.gestionnaire.gestionnaire.ouverture_du_noir(player.rect.center)
-                        PNJ["PNJ1"] = True
+
+                        STATE_HELP_INFOS[0] = "PotParchemin"
                     
                     if self.gestionnaire.pnjActuel == "PNJ2":
                         PNJ["PNJ2"] = True
+                        STATE_HELP_INFOS[0] = "SeePNJ" # update tips player
+
                         self.gestionnaire.FollowBuild() # préparation au follow du pnj
 
                     if self.gestionnaire.pnjActuel == "PNJ3":
+                        PNJ["PNJ3"] = True # update
                         self.gestionnaire.gestionnaire.fondu_au_noir()
                         self.gestionnaire.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["KillPNJ3"])
                         self.gestionnaire.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["LeavePNJ2"])
+                        STATE_HELP_INFOS[0] = "OpenDoorPrison" # update tips player
 
-
-                        PNJ["PNJ3"] = True # update
                         self.gestionnaire.pnjObj.kill()
 
                         # kill pnj + stop follow
@@ -234,6 +238,7 @@ class PNJInterface(object):
 
                     if self.gestionnaire.pnjActuel == "PNJ4":
                         PNJ["PNJ4"] = True
+                        STATE_HELP_INFOS[0] = "OpenVolcan" # update tips player
 
                         
 
@@ -363,6 +368,8 @@ class PNJInterface(object):
 
                 elif self.gestionnaire.pnjActuel == "PNJ3" and not PNJ["PNJ2"] and NIVEAU["Map"] == "NiveauMordor":
                     self.CloseInterface()
+                    STATE_HELP_INFOS[0] = "SeePNJ2avant" # update tips player
+
 
                 else:
                     # Vérifiez si le clic est dans le rectangle du bouton
@@ -390,6 +397,8 @@ class PNJInterface(object):
 
                 elif self.gestionnaire.pnjActuel == "PNJ3" and not PNJ["PNJ2"] and NIVEAU["Map"] == "NiveauMordor":
                     self.CloseInterface()
+                    STATE_HELP_INFOS[0] = "SeePNJ2avant" # update tips player
+
 
                 else:
                     self.loadText()
