@@ -204,10 +204,13 @@ class Game(object):
                             if event.key == KEYSBIND["hideHotBar"]:
                                 INFOS["HideHotBar"] = True if not INFOS["HideHotBar"] else False
                         
+
                         # open au clic des interface de la hotbar
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                             self.settingsAll.OpenInterfaceElementClic(event)
 
+                        if event.type == pygame.MOUSEMOTION:
+                            self.settingsAll.HoverElement(event)
                         # update pnj
                         self.cinematique, self.cinematiqueObject, self.followPlayer, self.followObject = self.pnj.update(self.player.rect.center, event) # pnj update 
                 

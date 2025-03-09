@@ -21,6 +21,9 @@ class HomeMenuInterface(object):
         self.isHoverBtnQuitter = False
         self.isHoverBtnCredits = False
 
+        self.btnTexture = pygame.image.load(join("Images", "Element", "Start.png")).convert_alpha()
+        self.btnTextureHover = pygame.image.load(join("Images", "Element", "StartHover.png")).convert_alpha()
+
         # timer click
         self.last_click_time = 0
         self.click_delay = 500   
@@ -35,9 +38,9 @@ class HomeMenuInterface(object):
         self.surfaceBtnCredits = pygame.Surface((350, 100))
         self.btnRectCredits = pygame.Rect(((WINDOW_WIDTH//4) - self.surfaceBtnCredits.get_width() //2), 65, 350, 140)
         if self.isHoverBtnCredits:
-            self.surfaceBtnCredits.fill((143, 235, 233))
+            self.surfaceBtnCredits.blit(self.btnTextureHover, (0,0))
         else:
-            self.surfaceBtnCredits.fill((141, 201, 200))
+            self.surfaceBtnCredits.blit(self.btnTexture, (0,0))
 
         self.textC = TEXTE["Elements"]["InterfaceHomeMenu"]["Credits"]
         self.textCredits = FONT["FONT50"].render(self.textC, True, (10,10,10))
@@ -48,9 +51,9 @@ class HomeMenuInterface(object):
         self.surfaceBtnQuitter = pygame.Surface((350, 100))
         self.btnRectQuitter = pygame.Rect(((WINDOW_WIDTH//4) - self.surfaceBtnQuitter.get_width() //2), 195, 350, 140)
         if self.isHoverBtnQuitter:
-            self.surfaceBtnQuitter.fill((143, 235, 233))
+            self.surfaceBtnQuitter.blit(self.btnTextureHover, (0,0))
         else:
-            self.surfaceBtnQuitter.fill((141, 201, 200))
+            self.surfaceBtnQuitter.blit(self.btnTexture, (0,0))
 
         self.textQ = TEXTE["Elements"]["InterfaceHomeMenu"]["Quitter"]
         self.textQuitter = FONT["FONT50"].render(self.textQ, True, (10,10,10))
@@ -83,3 +86,22 @@ class HomeMenuInterface(object):
                         self.gestionnaire.MiseAJourInterfaceCredits()
                     if self.btnRectQuitter.collidepoint(local_pos):
                         INFOS["CrashGame"] = True
+
+        if event.type == pygame.MOUSEMOTION:
+            # Obtenir la position locale de la souris dans l'interface
+            local_pos = GetLocalPos(event, self.interfaceSurface, (320, 180))
+            
+            if local_pos:
+                hovered_btn = None
+
+                if self.btnRectCredits.collidepoint(local_pos):
+                    hovered_btn = "Credits"
+                elif self.btnRectQuitter.collidepoint(local_pos):
+                    hovered_btn = "Quitter"
+
+                # Mise à jour des états des boutons
+                self.isHoverBtnCredits = (hovered_btn == "Credits")
+                self.isHoverBtnQuitter = (hovered_btn == "Quitter")
+
+                # Modifier le curseur si sur un bouton, sinon le réinitialiser
+                ChangeCursor(bool(hovered_btn), "Hand")

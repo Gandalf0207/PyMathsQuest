@@ -30,6 +30,9 @@ class HomeInterface(object):
         self.isHorverText = False
         self.isHoverBtnLancer = False
 
+        self.btnTexture = pygame.image.load(join("Images", "Element", "Start.png")).convert_alpha()
+        self.btnTextureHover = pygame.image.load(join("Images", "Element", "StartHover.png")).convert_alpha()
+
         # bool radio button
         self.selectedOptionNiveau = 0  # choix 1 départ
         self.posRadioButtonNiveau = [(25, 50), (25, 100), (25, 150), (25, 200)]
@@ -148,14 +151,11 @@ class HomeInterface(object):
 
         # btn lancer game
         self.surfaceBtnLancer = pygame.Surface((350, 100))
-        self.btnRectLancer = pygame.Rect(((WINDOW_WIDTH//2) - self.surfaceBtnLancer.get_width() //2), 450, 350, 140)
-        if self.isConditionAccept:
-            if self.isHoverBtnLancer:
-                self.surfaceBtnLancer.fill((143, 235, 233))
-            else:
-                self.surfaceBtnLancer.fill((141, 201, 200))
+        self.btnRectLancer = pygame.Rect(((WINDOW_WIDTH//2) - self.surfaceBtnLancer.get_width() //2), 450, 350, 100)
+        if self.isHoverBtnLancer and self.isConditionAccept:
+            self.surfaceBtnLancer.blit(self.btnTextureHover, (0,0))
         else:
-            self.surfaceBtnLancer.fill((144, 158, 148))
+            self.surfaceBtnLancer.blit(self.btnTexture, (0,0))
         self.textL = TEXTE["Elements"]["HomeInterface"]["Lancer"]
         self.textLancer = FONT["FONT50"].render(self.textL, True, (10,10,10))
         self.surfaceBtnLancer.blit(self.textLancer, self.textLancer.get_rect(center=(self.surfaceBtnLancer.get_width()//2, self.surfaceBtnLancer.get_height()//2)))

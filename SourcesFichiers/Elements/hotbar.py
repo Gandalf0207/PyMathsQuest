@@ -254,6 +254,31 @@ class SettingsAll:
         elif self.ButtonRectBook.collidepoint(local_pos): 
             self.gameInterfaces.GestionInterfaceSpecifique("Book", self)
 
+    def HoverElement(self, event):
+
+        # Obtenir la position de la souris dans l'écran
+        global_pos = event.pos  # Position absolue (dans la fenêtre)
+
+        # Récupérer la position de la surface dans l'écran
+        surface_rect = self.allSettingsSurface.get_rect(topleft=COORS_BOX_ALL_SETTINGS)
+
+        # Convertir la position globale en locale
+        local_pos = (global_pos[0] - surface_rect.x, global_pos[1] - surface_rect.y)
+
+        # Vérifier le survol des boutons
+        allBox = [self.ButtonRectWheel, self.ButtonRectBundle, self.ButtonRectBook, self.ButtonRectSound]
+
+        is_hovered = False
+        for element in allBox:
+            if element.collidepoint(local_pos):  # Vérifier la position locale
+                is_hovered = True
+
+            
+        ChangeCursor(is_hovered, "Hand")
+
+
+
+
 
     def Update(self) -> None:
         """Méthode de mise à jout de la box settings all + interface sur ouvert.
