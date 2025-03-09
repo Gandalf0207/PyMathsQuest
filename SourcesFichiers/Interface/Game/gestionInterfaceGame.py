@@ -139,7 +139,7 @@ class GestionGameInterfaces(object):
         if current_time - self.last_click_time > self.click_delay:
             self.last_click_time = current_time
 
-            if self.interface != None and elementSelf != None:
+            if self.interface != None and elementSelf != None and argsSpecifique not in ["PNJOpen", "PNJClose"] :
                 pass
             elif self.interface != None and self.isInterfaceOPEN and argsSpecifique not in ["PNJOpen", "PNJClose"]:
                 self.CloseAllInterface()
@@ -183,9 +183,10 @@ class GestionGameInterfaces(object):
                 
                 elif argsSpecifique == "PNJClose":
                     if self.isPNJInterfaceOpen:
-                        self.CloseAllInterface()  
+                        self.CloseAllInterface() 
+                        self.gestionnaire.GameTool.gestionSoundDialogues.StopDialogue()
 
-                
+
                 elif argsSpecifique == "ReactorBloc":
                     self.isInterfaceOPEN = True # update element global
                     self.isInterfaceRectorOpen = True

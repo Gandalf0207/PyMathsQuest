@@ -172,7 +172,7 @@ class GestionPNJ(object):
         # Initialisation value de base
         self.npc_screen_pos = [0,0]
         self.camera_offset = [0,0]
-        self.distanceMax = 200
+        self.distanceMax = 150
 
         # infos de la map 
         self.map_width = LONGUEUR * CASEMAP
@@ -256,7 +256,7 @@ class GestionPNJ(object):
 
 
             # Calculer la distance entre le joueur et le PNJ
-            distance = sqrt((playerPos[0] - coordPNJ[0] * CASEMAP)**2 + (playerPos[1] - coordPNJ[1] * CASEMAP)**2)
+            distance = sqrt((playerPos[0] - (coordPNJ[0] * CASEMAP +64))**2 + (playerPos[1] - (coordPNJ[1] * CASEMAP +64))**2)
             
             self.camera_offset[0] = max(0, min(playerPos[0] - WINDOW_WIDTH // 2, self.map_width - WINDOW_WIDTH))
             self.camera_offset[1] = max(0, min(playerPos[1] - WINDOW_HEIGHT // 2, self.map_height - WINDOW_HEIGHT))
