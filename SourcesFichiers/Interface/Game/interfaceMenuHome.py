@@ -36,7 +36,7 @@ class HomeMenuInterface(object):
 
         # btn crédits
         self.surfaceBtnCredits = pygame.Surface((350, 100))
-        self.btnRectCredits = pygame.Rect(((WINDOW_WIDTH//4) - self.surfaceBtnCredits.get_width() //2), 65, 350, 140)
+        self.btnRectCredits = pygame.Rect(((WINDOW_WIDTH//4) - self.surfaceBtnCredits.get_width() //2), 65, 350, 100)
         if self.isHoverBtnCredits:
             self.surfaceBtnCredits.blit(self.btnTextureHover, (0,0))
         else:
@@ -49,7 +49,7 @@ class HomeMenuInterface(object):
 
         # btn leave
         self.surfaceBtnQuitter = pygame.Surface((350, 100))
-        self.btnRectQuitter = pygame.Rect(((WINDOW_WIDTH//4) - self.surfaceBtnQuitter.get_width() //2), 195, 350, 140)
+        self.btnRectQuitter = pygame.Rect(((WINDOW_WIDTH//4) - self.surfaceBtnQuitter.get_width() //2), 195, 350, 100)
         if self.isHoverBtnQuitter:
             self.surfaceBtnQuitter.blit(self.btnTextureHover, (0,0))
         else:
@@ -104,4 +104,4 @@ class HomeMenuInterface(object):
                 self.isHoverBtnQuitter = (hovered_btn == "Quitter")
 
                 # Modifier le curseur si sur un bouton, sinon le réinitialiser
-                ChangeCursor(bool(hovered_btn), "Hand")
+                INFOS["Hover"] = bool(hovered_btn)

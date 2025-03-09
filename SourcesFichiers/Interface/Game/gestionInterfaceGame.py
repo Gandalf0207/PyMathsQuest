@@ -75,7 +75,7 @@ class GestionGameInterfaces(object):
         self.interface = None
 
         INFOS["HideHotBar"] = False
-
+        INFOS["Hover"] = False # reset cursor
 
     def GestionInterfaceGlobale(self, event):
         # interface element hotbar hotbar
@@ -89,8 +89,10 @@ class GestionGameInterfaces(object):
             elif event.key == KEYSBIND["book"]:
                 self.GestionInterfaceSpecifique("Book")
 
+
         # close interface open
         if event.key == KEYSBIND["echap"] and self.isInterfaceOPEN: # Close général interface build
+            
             if self.isInterfaceCreditOpen:
                 self.MiseAJourInterfaceCredits()
             elif self.isInterfaceExoOpen:
@@ -99,6 +101,7 @@ class GestionGameInterfaces(object):
             else:
                 self.CloseAllInterface()
 
+            INFOS["Hover"] = False # reset cursor
             # on réinitialise les niveaux audio.
             self.gestionnaire.GameTool.gestionSoundDialogues.StopDialogue()
 
@@ -106,6 +109,7 @@ class GestionGameInterfaces(object):
             self.isInterfaceOPEN = True
             self.isInterfaceHomeMenuOpen = True
             self.interface = HomeMenuInterface(self)
+            INFOS["Hover"] = False # reset cursor
 
     def MiseAJourInterfaceCredits(self):
         if self.isInterfaceCreditOpen:
@@ -118,6 +122,7 @@ class GestionGameInterfaces(object):
             self.isInterfaceCreditOpen = True
             self.isInterfaceSettingsOpen = False
             self.interface = CreditsInterfaceGame(self)       
+        INFOS["Hover"] = False # reset cursor
 
     
     def MiseAJourInterfaceExo(self, interfaceOBJ):
@@ -144,49 +149,59 @@ class GestionGameInterfaces(object):
                     self.isInterfaceOPEN = True # update element global
                     self.isInterfaceSettingsOpen = True
                     self.interface = SettingsInterface(self)
+                    INFOS["Hover"] = False # reset cursor
+
 
                 elif argsSpecifique == "Sound":
                     self.isInterfaceOPEN = True # update element global
                     self.isInterfaceSoundOpen = True
                     self.interface = SoundInterface(self)
+                    INFOS["Hover"] = False # reset cursor
+
 
                 elif argsSpecifique == "Bundle":
                     self.isInterfaceOPEN = True # update element global
                     self.isInterfaceBundleOpen = True
                     self.interface = BundleInterface(self)
+                    INFOS["Hover"] = False # reset cursor
+
 
                 elif argsSpecifique == "Book":
                     self.isInterfaceOPEN = True # update element global
                     self.isInterfaceBookOpen = True
                     self.interface = BookInterface(self)
+                    INFOS["Hover"] = False # reset cursor
+
                 
                 elif argsSpecifique == "PNJOpen":
                     if not self.isPNJInterfaceOpen:
                         self.isInterfaceOPEN = True # update element global
                         self.isPNJInterfaceOpen = True
                         self.interface = PNJInterface(elementSelf)
+                    INFOS["Hover"] = False # reset cursor
+
                 
                 elif argsSpecifique == "PNJClose":
                     if self.isPNJInterfaceOpen:
-                        self.CloseAllInterface()    
+                        self.CloseAllInterface()  
+
                 
                 elif argsSpecifique == "ReactorBloc":
                     self.isInterfaceOPEN = True # update element global
                     self.isInterfaceRectorOpen = True
                     self.interface = self.keepReactorObject
+                    INFOS["Hover"] = False # reset cursor
+
                 
                 elif argsSpecifique == "Gong":
                     self.isInterfaceOPEN = True
                     self.isInterfaceGongOpen = True
                     self.interface = GongInterface(self)
+                    INFOS["Hover"] = False # reset cursor
+
                 
-                # other interace : EssenceBloc / LancementBloc
 
     def Update(self, event):
-
-        #sécurité
-        # if not self.isInterfaceOPEN:
-        #     self.CloseAllInterface() 
 
         if self.interface:
             INFOS["HideHotBar"] = True

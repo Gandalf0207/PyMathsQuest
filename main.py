@@ -148,7 +148,6 @@ class Game(object):
 
 
     def run(self):
-        # 
 
         while self.running:
 
@@ -348,6 +347,12 @@ class Game(object):
                 # update des interfaces
                 if not self.cinematique:
                     self.gameInterfaces.Update(event)
+
+ 
+                # changement cursor
+                ChangeCursor(INFOS["Hover"], "Hand")
+
+
 
                 if INFOS["Exo"]:
                     if not self.gameInterfaces.isInterfaceExoOpen:

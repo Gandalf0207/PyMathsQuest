@@ -266,15 +266,18 @@ class SettingsAll:
         local_pos = (global_pos[0] - surface_rect.x, global_pos[1] - surface_rect.y)
 
         # Vérifier le survol des boutons
-        allBox = [self.ButtonRectWheel, self.ButtonRectBundle, self.ButtonRectBook, self.ButtonRectSound]
+        allBox = [self.ButtonRectWheel, self.ButtonRectBundle, self.ButtonRectSound, self.ButtonRectBook]
 
-        is_hovered = False
-        for element in allBox:
-            if element.collidepoint(local_pos):  # Vérifier la position locale
-                is_hovered = True
+        check = False
+        if not INFOS["HideHotBar"]:
+            if surface_rect.collidepoint(event.pos): # vérifie que l'on est sur la surface all settings
+                for element in allBox:
+                    if element.collidepoint(local_pos):  # Vérifier la position locale
+                        check = True
+                INFOS["Hover"] = check   
+                        
 
-            
-        ChangeCursor(is_hovered, "Hand")
+    
 
 
 

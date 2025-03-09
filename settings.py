@@ -182,6 +182,8 @@ INFOS = {
     "RebindingKey": False,
     "ReactorOn" : False,
     "HidePlayer" : False,
+
+    "Hover" : False,
 }
 
 DICOLANGUE = {
