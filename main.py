@@ -452,89 +452,127 @@ class GameToolBox(object):
 
 
     def ChargementEcran(self):
-        """Méthode pour dessiner l'écran de chargement"""
-
-        loading_step = 0 # variable
+        """Méthode fluide pour l'écran de chargement."""
+        loading_step = 0  # Variable d'animation
         self.gestionnaire.checkLoadingDone = False
-        while not self.gestionnaire.checkLoadingDone:
-            self.gestionnaire.displaySurface.fill((0,0,0))  # Remplir avec une couleur grise
+        clock = pygame.time.Clock()
 
-            # Animation de texte dynamique avec des points qui défilent
-            loading_text = f"{TEXTE["Elements"]["Loading"]}{'.' * (loading_step % 4)}"
+        while not self.gestionnaire.checkLoadingDone:
+            self.gestionnaire.displaySurface.fill((0, 0, 0))  # Fond noir
+
+            # Texte de chargement animé
+            loading_text = f"{TEXTE['Elements']['Loading']}{'.' * (loading_step % 4)}"
             loading_step += 1
             text = FONT["FONT74"].render(loading_text, True, (255, 255, 255))
             text_rect = text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
             self.gestionnaire.displaySurface.blit(text, text_rect.topleft)
 
             pygame.display.flip()
-            pygame.time.delay(200)  # Temps de mise à jour de l'écran de chargement
+            clock.tick(10)  # 10 FPS pour une animation fluide
 
+            # Gérer les événements pour éviter freeze
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
 
         self.fondu_au_noir()
         self.ouverture_du_noir(self.gestionnaire.player.rect.center)
 
+
     def textScreen(self, text):
-        """Méthode d'affichage du texte d'animation sur l'ecran"""
-    
-        self.gestionnaire.displaySurface.fill((0,0,0))
+        """Méthode d'affichage optimisée du texte d'animation sur l'écran."""
+        
+        self.gestionnaire.displaySurface.fill((0, 0, 0))  # Remplir l'écran avec un fond noir
 
-        # get lines 
-        max_width = 1000
-        wrapped_lines = wrap_text(text, FONT["FONT50"], max_width)  # Assurez-vous d'utiliser la même police
+        # Découper le texte en plusieurs lignes pour l'affichage
+        max_width = 1000  # Largeur maximale du texte
+        wrapped_lines = wrap_text(text, FONT["FONT50"], max_width)  # Utilisation d'une fonction wrap_text pour gérer le retour à la ligne
 
-        # Affichage des lignes
-        line_height = FONT["FONT50"].size("Tg")[1]  # Hauteur d'une ligne avec la bonne police
-        y_offset = WINDOW_HEIGHT // 2 - (line_height * len(wrapped_lines) // 2)
+        # Hauteur d'une ligne avec la bonne police
+        line_height = FONT["FONT50"].size("Tg")[1]
+        y_offset = WINDOW_HEIGHT // 2 - (line_height * len(wrapped_lines) // 2)  # Centrer verticalement le texte
 
+        clock = pygame.time.Clock()  # Créer un objet Clock pour gérer le FPS
+
+        # Affichage du texte ligne par ligne avec gestion des événements pour éviter les freezes
         for i, line in enumerate(wrapped_lines):
-            line_surface = FONT["FONT50"].render(line, True, (255, 255, 255))  # Couleur corrigée
-            text_rect = line_surface.get_rect(center=(WINDOW_WIDTH // 2, y_offset + i * line_height))
-            self.gestionnaire.displaySurface.blit(line_surface, text_rect)  # Utiliser text_rect directement
+            line_surface = FONT["FONT50"].render(line, True, (255, 255, 255))  # Créer la surface de texte avec la police et la couleur
+            text_rect = line_surface.get_rect(center=(WINDOW_WIDTH // 2, y_offset + i * line_height))  # Centrer chaque ligne
 
-        pygame.display.flip()
-        pygame.time.delay(2500)  # Temps de mise à jour de l'écran de chargement
+            self.gestionnaire.displaySurface.blit(line_surface, text_rect)  # Afficher le texte à l'écran
+            pygame.display.flip()  # Mettre à jour l'écran
 
-        self.fondu_au_noir()
+            clock.tick(60)  # Limiter à 60 FPS pour garantir que l'animation reste fluide
+
+            # Gestion des événements pendant l'affichage du texte
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()  # Quitter proprement si l'utilisateur ferme la fenêtre
+
+            # Délai entre chaque ligne pour un effet d'animation fluide
+            pygame.time.delay(300)  # Délai entre chaque ligne
+
+        pygame.time.delay(2500)  # Affichage du texte complet pendant un moment supplémentaire
+        self.fondu_au_noir()  # Transition avec fondu au noir après l'affichage du texte
+
 
     def fondu_au_noir(self):
-        "Méthode de fondu noir"
+        """Méthode de fondu au noir avec gestion de l'alpha et optimisation."""
+        fade_surface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))  # Créer une surface de la taille de l'écran
+        fade_surface.fill((0, 0, 0))  # Surface noire
 
-        fade_surface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))
-        fade_surface.fill((0, 0, 0))
+        clock = pygame.time.Clock()
         alpha = 0
+        running = True
 
-        while alpha < 255:
+        # Appliquer un fondu qui se fait progressivement
+        while running and alpha < 255:
+            # Appliquer le fondu sur la surface noire avec un alpha croissant
             fade_surface.set_alpha(alpha)
             self.gestionnaire.displaySurface.blit(fade_surface, (0, 0))
-            alpha += 5
-            pygame.display.flip()
-            self.gestionnaire.clock.tick(30)  # Limite de rafraîchissement
+
+            alpha += 5  # Augmenter l'alpha à chaque itération pour créer l'effet de fondu
+            pygame.display.flip()  # Mettre à jour l'écran
+            clock.tick(60)  # Limite de FPS pour rendre l'animation fluide
+
+            # Gérer les événements pour éviter le freeze pendant l'animation
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+        pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])  # Nettoyer les événements
 
     def ouverture_du_noir(self, targetPos):
-        # Crée une surface noire avec un canal alpha (transparence)
+        """Méthode d'ouverture du noir avec gestion fluide."""
         fade_surface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
         fade_surface.fill((0, 0, 0))
 
-        # Alpha initial pour la surface noire (complètement opaque)
+        clock = pygame.time.Clock()
         alpha = 255
+        running = True
 
-        while alpha > 0:
-            self.gestionnaire.allSprites.draw(targetPos)
-            # Ici, ne redessinez pas le fond du jeu, car il est déjà chargé et affiché
-            # simplement superposez la surface noire pour l'effet de transparence.
-
-            # Appliquer la surface noire avec alpha dégressif
+        while running and alpha > 0:
+            self.gestionnaire.allSprites.draw(self.gestionnaire.player.rect.center)
             fade_surface.set_alpha(alpha)
             self.gestionnaire.displaySurface.blit(fade_surface, (0, 0))
-
-            # Réduire progressivement l'opacité pour rendre la surface noire plus transparente
+            
             alpha -= 5
             pygame.display.flip()
-            self.gestionnaire.clock.tick(30)  # Limite de rafraîchissement
+            clock.tick(60)  # Limite FPS à 60
+
+            # Gérer les événements pour éviter le freeze
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
 
         pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])
-        self.gestionnaire.timer_begin = pygame.time.get_ticks() # timer update pour nv3
-        
+        self.gestionnaire.timer_begin = pygame.time.get_ticks()
+
+            
     def ResetValues(self):
         """En fonction du niveau, on passe au niveau supérieur"""
 
