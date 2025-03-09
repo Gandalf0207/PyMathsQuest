@@ -2,7 +2,7 @@ from settings import *
 
 class Sprites(pygame.sprite.Sprite):
 
-    def __init__(self,pos : tuple, surf : any, idName, groups : any) -> None:
+    def __init__(self,pos : tuple, surf : any, idName, groups : any, layer= 0) -> None:
         """Méthode initialisation class object sprite game sans collision.
         Input : pos = tuple, surf / groups = element pygame ; Output = None """
 
@@ -14,11 +14,14 @@ class Sprites(pygame.sprite.Sprite):
         self.rect = self.image.get_frect(topleft = pos)
         self.ground = True # bool dessins des sprites
 
-
+        # Vérifier si le groupe principal supporte les layers
+        for group in groups:
+            if isinstance(group, pygame.sprite.LayeredUpdates):
+                group.change_layer(self, layer)
 
 class CollisionSprites(pygame.sprite.Sprite):
     
-    def __init__(self,pos : tuple, surf : any,typeCollision : str, groups : any, InfoExo : bool = False ) -> None:
+    def __init__(self,pos : tuple, surf : any,typeCollision : str, groups : any, InfoExo : bool = False, layer = 0) -> None:
         """Méthode initialisation de sprites avec une collision.
         pos : tuple, surf / groups : element pygame, typeCollision : str , InfoExo : bool ; Output : None"""    
 
@@ -28,6 +31,11 @@ class CollisionSprites(pygame.sprite.Sprite):
         self.pos = pos # pos 
         self.id = typeCollision # id element
         self.InfoExo = InfoExo # si element exercice ou non (bool)
+
+        # Vérifier si le groupe principal supporte les layers
+        for group in groups:
+            if isinstance(group, pygame.sprite.LayeredUpdates):
+                group.change_layer(self, layer)
 
         if typeCollision == "Arbre"  or typeCollision == "Arbre2":
             self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-68))
@@ -134,27 +142,34 @@ class CollisionSprites(pygame.sprite.Sprite):
         self.hitbox.center = self.rect.center
 
 
-class River(pygame.sprite.Sprite):
 
-    def __init__(self, pos : tuple, groups : any, stateFormat : str) -> None:
+class AnimatedSprites(pygame.sprite.Sprite):
+    def __init__(self, pos : tuple, groups : any, Id, path, layer = 0) -> None:
         """Méthode initialisation sprite collision spécifique (rivière).
         Input : pos : tuple, groups  : element pygame, stateFormat : str (infos type de rivière). Output : None"""
         
         # Initialisation elements
         super().__init__(groups)
-        self.state, self.frame_index = stateFormat, 0
+        self.frame_index =  0
         self.pos = pos
-        self.id = "River"
+        self.id = Id
 
+
+        # Vérifier si le groupe principal supporte les layers
+        for group in groups:
+            if isinstance(group, pygame.sprite.LayeredUpdates):
+                group.change_layer(self, layer)
+
+        # Images et pos (rect)
+        self.path = path
+        self.image = pygame.image.load(join(path, "0.gif")).convert_alpha() # Image initiale
+        self.rect = self.image.get_rect(topleft=pos)
+        self.ground = True # bool dessins des sprites
+
+        
         # load all images sprites
         self.LoadImages()
-        
-        # Images et pos (rect)
-        self.image = pygame.image.load(join("Images","Sol","Riviere", "RiverStraightN-Sx128", "0.gif")).convert_alpha() # Image initiale
-        self.rect = self.image.get_rect(topleft=pos)
-        self.hitbox = self.rect.inflate(0,0)
-        self.hitbox.center = self.rect.center
-        
+
         # information sur animation
         self.current_frame = 0
         self.animation_speed = 0.3  # Vitesse de l'animation
@@ -165,31 +180,16 @@ class River(pygame.sprite.Sprite):
         """Méthode de chargement de toutes les frames de rivière
         Input / Output : None"""
 
-        self.frames = {
-            "RiverAngularE-Sx128": [],
-            "RiverAngularN-Ex128": [],
-            "RiverAngularN-Wx128": [],
-            "RiverAngularW-Sx128": [],
-            "RiverStraightN-Sx128": [],
-            "RiverStraightW-Ex128": [],
-            "RiverMontainConflictx128": [],
-            "RiverTN-SEx128" : [],
-            "RiverTWN-Sx128" : [],
-            "RiverTWN-Ex128" : [],
-            "RiverTW-SEx128" : [],
-            "CastleWallRiverx128" : [],
-
-        }
+        self.frames = []
 
         # parcours dossier et get images / patch
-        for state in self.frames.keys():
-            for folder_path, sub_folders, file_names in walk(join("Images","Sol", "Riviere", state)):
-                if file_names:
-                    # modification du dico de stockage
-                    for file_name in sorted(file_names, key=lambda name: int(name.split('.')[0])):
-                        full_path = join(folder_path, file_name)
-                        surf = pygame.image.load(full_path).convert_alpha()
-                        self.frames[state].append(surf)
+        for folder_path, sub_folders, file_names in walk(self.path):
+            if file_names:
+                # modification du dico de stockage
+                for file_name in sorted(file_names, key=lambda name: int(name.split('.')[0])):
+                    full_path = join(folder_path, file_name)
+                    surf = pygame.image.load(full_path).convert_alpha()
+                    self.frames.append(surf)
 
 
     def update(self, *args) -> None:
@@ -199,31 +199,56 @@ class River(pygame.sprite.Sprite):
         # Animation des frames
         current_time = pygame.time.get_ticks()
         if current_time - self.time_last_update > 300:  # Changer de frame toutes les 100 ms
-            self.current_frame = (self.current_frame + 1) % len(self.frames["RiverStraightN-Sx128"])
-            self.image = self.frames[self.state][self.current_frame]
+            self.current_frame = (self.current_frame + 1) % len(self.frames)
+            self.image = self.frames[self.current_frame]
             self.time_last_update = current_time
 
 
-class AnimatedSprites(pygame.sprite.Sprite):
-    def __init__(self, pos : tuple, groups : any, Id, path) -> None:
-        """Méthode initialisation sprite collision spécifique (rivière).
-        Input : pos : tuple, groups  : element pygame, stateFormat : str (infos type de rivière). Output : None"""
-        
-        # Initialisation elements
+
+class AnimatedCollisionSprites(pygame.sprite.Sprite):
+    def __init__(self,pos,  path ,typeCollision : str, groups : any, layer = 0, InfoExo = False) -> None:
+        """Méthode initialisation de sprites avec une collision.
+        pos : tuple, surf / groups : element pygame, typeCollision : str , InfoExo : bool ; Output : None"""    
+
+        # element de base
         super().__init__(groups)
+        self.pos = pos # pos 
         self.frame_index =  0
-        self.pos = pos
-
+        self.id = typeCollision # id element
         
-        self.id = Id
-
+        self.InfoExo = InfoExo # si element exercice ou non (bool)
+        
+        
         # Images et pos (rect)
         self.path = path
         self.image = pygame.image.load(join(path, "0.gif")).convert_alpha() # Image initiale
         self.rect = self.image.get_rect(topleft=pos)
         self.ground = True # bool dessins des sprites
 
-        
+        # Vérifier si le groupe principal supporte les layers
+        for group in groups:
+            if isinstance(group, pygame.sprite.LayeredUpdates):
+                group.change_layer(self, layer)
+
+        if typeCollision == "pont3":
+            self.rect = self.image.get_frect(topleft=(pos[0], pos[1]))
+        else:
+            self.rect = self.image.get_frect(topleft=pos)
+
+        # collision en fonction de l'élément # Créer une hitbox plus petite (réduire la largeur et la hauteur)
+        match typeCollision:
+            case "pont3":
+                self.hitbox = self.rect.inflate(-64, -64)
+            case "River":
+                self.hitbox = self.rect.inflate(0,0)
+            
+            case _:  # par défaut
+                self.hitbox = self.rect.inflate(-70,-140)
+
+        # Centrer la hitbox par rapport à l'image
+        self.hitbox.center = self.rect.center
+
+
         # load all images sprites
         self.LoadImages()
 

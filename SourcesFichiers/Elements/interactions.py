@@ -53,7 +53,7 @@ class Interactions(object):
                 self.gestionnaire.fondu_au_noir()
 
                 # action si c'est un pont 
-                if self.ObjectId == "pont1" or self.ObjectId == "pont2" :
+                if self.ObjectId == "pont1" or self.ObjectId == "pont2" or self.ObjectId == "pont3":
                     if not self.Obj.InfoExo: # si c'est pas le pont d'exo
                         # text animation
                         self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["TraverserPont"])
@@ -123,7 +123,7 @@ class Interactions(object):
                         self.gestionnaire.ouverture_du_noir(self.player.rect.center)
                 
                 # action si c'est un pont 
-                if self.ObjectId == "pont1" or self.ObjectId == "pont2" :
+                if self.ObjectId == "pont1" or self.ObjectId == "pont2":
                     # animation 
                     self.gestionnaire.fondu_au_noir()
 

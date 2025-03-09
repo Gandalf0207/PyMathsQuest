@@ -278,6 +278,24 @@ class PNJInterface(object):
         pnjName = FONT["FONT36B"].render(self.pnjName, True, (255,255,255))
         self.interfaceSurface.blit(pnjName, (200, 400))
 
+        # bloc gestion texte 
+        if self.pnj_index < len(self.pnj_text):
+            self.pnj_index += 1
+        # Mettre à jour le texte affiché
+        self.pnj_displayed_text = self.pnj_text[:self.pnj_index]
+
+
+        # Largeur maximale de la boîte de texte
+        max_width = 500
+        wrapped_lines = wrap_text(self.pnj_displayed_text,FONT["FONT36"], max_width)
+
+        # Affichage des lignes
+        y_offset = 420  # Position Y de départ
+        line_height = FONT["FONT36"].size("Tg")[1]  # Hauteur d'une ligne
+        for i, line in enumerate(wrapped_lines):
+            line_surface = FONT["FONT36"].render(line, True, (255, 255, 255))
+            self.interfaceSurface.blit(line_surface, (200, y_offset + i * line_height))
+
         # box petite question
         if self.gestionnaire.pnjActuel == "PNJ3" and NIVEAU["Map"] == "NiveauMedievale" and not self.gestionnaire.pnjObj.QuestionDone:
             self.surfaceBtnOui = pygame.Surface((75,50))
@@ -310,23 +328,6 @@ class PNJInterface(object):
             self.interfaceSurface.blit(self.surfaceBtnSkip, (self.btnRectSkip.x, self.btnRectSkip.y))
 
 
-        # bloc gestion texte 
-        if self.pnj_index < len(self.pnj_text):
-            self.pnj_index += 1
-        # Mettre à jour le texte affiché
-        self.pnj_displayed_text = self.pnj_text[:self.pnj_index]
-
-
-        # Largeur maximale de la boîte de texte
-        max_width = 500
-        wrapped_lines = wrap_text(self.pnj_displayed_text,FONT["FONT36"], max_width)
-
-        # Affichage des lignes
-        y_offset = 420  # Position Y de départ
-        line_height = FONT["FONT36"].size("Tg")[1]  # Hauteur d'une ligne
-        for i, line in enumerate(wrapped_lines):
-            line_surface = FONT["FONT36"].render(line, True, (255, 255, 255))
-            self.interfaceSurface.blit(line_surface, (200, y_offset + i * line_height))
 
     def CloseInterface(self):
         self.gestionnaire.gameInterfaces.CloseAllInterface()

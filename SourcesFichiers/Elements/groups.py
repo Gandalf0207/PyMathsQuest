@@ -1,6 +1,6 @@
 from settings import *
 
-class AllSprites(pygame.sprite.Group):
+class AllSprites(pygame.sprite.LayeredUpdates):
     def __init__(self) -> None:
         """Méhode d'initialisation d'un élement sans colision sur la map. Input / Output : None"""
 

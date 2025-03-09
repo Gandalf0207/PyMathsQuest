@@ -33,6 +33,9 @@ class HomeInterface(object):
         self.btnTexture = pygame.image.load(join("Images", "Element", "Start.png")).convert_alpha()
         self.btnTextureHover = pygame.image.load(join("Images", "Element", "StartHover.png")).convert_alpha()
 
+        self.bcgInterface = pygame.image.load(join("Images", "Interface", "Lancement.png")).convert_alpha()
+        self.interfaceSurface.blit(self.bcgInterface, (0,0))
+
         # bool radio button
         self.selectedOptionNiveau = 0  # choix 1 départ
         self.posRadioButtonNiveau = [(25, 50), (25, 100), (25, 150), (25, 200)]
@@ -52,14 +55,14 @@ class HomeInterface(object):
     def BuildInterface(self) -> None:
         """Construction de l'interface."""
 
-        self.interfaceSurface.fill((48, 155, 217))
+        self.interfaceSurface.blit(self.bcgInterface, (0,0))
 
         # Titre du jeu
         text = FONT["FONT36"].render(TEXTE["Elements"]["GameName"], True, (0, 0, 0))
         self.interfaceSurface.blit(text, text.get_rect(center=(WINDOW_WIDTH // 2, 50)))
 
         # Box niveau
-        self.niveauSurface.fill((255, 255, 255))
+        self.niveauSurface.fill((255, 255, 255,0))
         titleTextNiveau = FONT["FONT24"].render(TEXTE["Elements"]["HomeInterface"]["Niveau"]["Title"], True, (0, 0, 0))
         self.niveauSurface.blit(titleTextNiveau, (10, 10))
 
@@ -85,7 +88,7 @@ class HomeInterface(object):
 
 
         # Box difficulté
-        self.difficulteSurface.fill((255, 255, 255))
+        self.difficulteSurface.fill((255, 255, 255,0))
         titleTextDifficulte = FONT["FONT24"].render(TEXTE["Elements"]["HomeInterface"]["Difficulte"]["Title"], True, (0, 0, 0))
         self.difficulteSurface.blit(titleTextDifficulte, (10, 10))
 
@@ -109,7 +112,7 @@ class HomeInterface(object):
  
 
         # Box langue
-        self.langueSurface.fill((255, 255, 255))
+        self.langueSurface.fill((255, 255, 255,0))
         titleTextLangue = FONT["FONT24"].render(TEXTE["Elements"]["HomeInterface"]["Langue"]["Title"], True, (0, 0, 0))
         self.langueSurface.blit(titleTextLangue, (10, 10))
 

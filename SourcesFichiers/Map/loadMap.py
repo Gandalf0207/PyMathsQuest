@@ -37,7 +37,8 @@ class LoadMap():
             self.souche2 = pygame.image.load(join("Images", "Obstacle", "Souche2.png")).convert_alpha()
             self.hugeRock = pygame.image.load(join("Images", "Obstacle", "HugeRock.png")).convert_alpha()
             self.pont2 = pygame.image.load(join("Images", "Pont", "BridgePlanksW-Ex128.png")).convert_alpha()
-            self.pont3 = pygame.image.load(join("Images", "Pont","BridgePlanksN-S-x128.png" )).convert_alpha()
+            self.pont3 = pygame.image.load(join("Images", "Pont", "BridgePlanksW-Ex128.png")).convert_alpha()
+            
 
         # load Spécifique 
         if NIVEAU["Map"] == "NiveauPlaineRiviere":
@@ -335,47 +336,47 @@ class LoadMap():
                     mountainConflict = checkBuildConflict(can_go_left, can_go_right)
 
 
-                    stateFormat = ""
+                    riverPath = ""
                     # conflif montain
                     if mountainConflict:
-                        stateFormat = "RiverMontainConflictx128"
-                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+                        riverPath = join("Images","Sol","Riviere","RiverMontainConflictx128")
+                        AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
 
                     # Tshape
                     elif can_build_right and can_build_left and can_build_up:
-                        stateFormat = "RiverTWN-Ex128"
-                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)   
+                        riverPath = join("Images","Sol","Riviere","RiverTWN-Ex128")
+                        AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)   
                     elif can_build_right and can_build_left and can_build_down:
-                        stateFormat = "RiverTW-SEx128"
-                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+                        riverPath = join("Images","Sol","Riviere","RiverTW-SEx128")
+                        AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     elif can_build_down and can_build_up and can_build_left:
-                        stateFormat = "RiverTWN-Sx128"
-                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+                        riverPath = join("Images","Sol","Riviere","RiverTWN-Sx128")
+                        AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     elif can_build_down and can_build_up and can_build_right:
-                        stateFormat = "RiverTN-SEx128"
-                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+                        riverPath = join("Images","Sol","Riviere","RiverTN-SEx128")
+                        AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
 
                     # angular
                     elif can_build_right and can_build_down:
-                        stateFormat = "RiverAngularE-Sx128"
-                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+                        riverPath = join("Images","Sol","Riviere","RiverAngularE-Sx128")
+                        AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     elif can_build_right and can_build_up:
-                        stateFormat = "RiverAngularN-Ex128"
-                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+                        riverPath = join("Images","Sol","Riviere","RiverAngularN-Ex128")
+                        AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     elif can_build_left and can_build_down:
-                        stateFormat = "RiverAngularW-Sx128"
-                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+                        riverPath = join("Images","Sol","Riviere","RiverAngularW-Sx128")
+                        AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     elif can_build_left and can_build_up:
-                        stateFormat = "RiverAngularN-Wx128"
-                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+                        riverPath = join("Images","Sol","Riviere","RiverAngularN-Wx128")
+                        AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
 
                     # line
                     elif can_build_up or can_build_down:
-                        stateFormat = "RiverStraightN-Sx128"
-                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+                        riverPath = join("Images","Sol","Riviere","RiverStraightN-Sx128")
+                        AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     elif can_build_right or can_build_left:
-                        stateFormat = "RiverStraightW-Ex128"
-                        River(pos, (self.allSprites, self.collisionSprites), stateFormat)
+                        riverPath = join("Images","Sol","Riviere","RiverStraightW-Ex128")
+                        AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
        
                 # Bordure Montagne
                 elif self.mapBase[ordonnees][abscisses] == "B":
@@ -427,30 +428,7 @@ class LoadMap():
                     else:
                         CollisionSprites(pos, self.obstaclesRock, "HugeRock", (self.allSprites, self.collisionSprites))
 
-
-                # Abre spécial
-                if self.map[ordonnees][abscisses] == "A":
-                    CollisionSprites(pos, self.tree,"Arbre",  (self.allSprites, self.collisionSprites))
-
-                # Pont placé
-                if self.map[ordonnees][abscisses] == "T":
-                    CollisionSprites(pos, self.pont2, "pont2",  (self.allSprites, self.collisionSprites))
-
-                if self.map[ordonnees][abscisses] == "X":
-                    CollisionSprites(pos, self.pont3, "pont3",  (self.allSprites, self.collisionSprites, self.interactions))
-
-                # champs
-                if self.map[ordonnees][abscisses] == "@":
-                    Sprites(pos, self.sol,"Grass", self.allSprites) #placement herbes sous blé
-                    CollisionSprites(pos, self.champ, "Champs",  (self.allSprites, self.collisionSprites))
-
-
-                # chateau
-                if self.map[ordonnees][abscisses] == "a":
-                    CollisionSprites(pos, self.gong, "Gong",  (self.allSprites, self.collisionSprites, self.interactions))
-
-
-
+                # Murs
                 if self.map[ordonnees][abscisses] == "C":
                     
                     def case_valide(y, x):
@@ -476,7 +454,8 @@ class LoadMap():
                     # Passage avec de l'eau
                     elif right and left and case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "#" \
                         and case_valide(ordonnees + 1, abscisses) and self.map[ordonnees + 1][abscisses] == "#":
-                        River(pos, (self.allSprites, self.collisionSprites), "CastleWallRiverx128")
+                        pathRiver = join("Images","Sol","Riviere","CastleWallRiverx128")
+                        AnimatedCollisionSprites(pos,pathRiver, "River", (self.allSprites, self.collisionSprites),layer=1)
                     
                     # Murailles droites
                     elif right or left:
@@ -487,66 +466,6 @@ class LoadMap():
                         # case du blit chateau
                         CollisionSprites(pos, self.chateau, "Chateau", (self.allSprites, self.collisionSprites))
 
-
-
-                if self.map[ordonnees][abscisses] == "D" and NIVEAU["Map"] == "NiveauMordor":
-                    CollisionSprites(pos, self.DoorChateau, "Door", (self.collisionSprites, self.interactions, self.allSprites))
-                if self.map[ordonnees][abscisses] == "d":
-                    CollisionSprites(pos, self.DoorMurailles, "Door2", (self.collisionSprites, self.allSprites))
-
-                if self.map[ordonnees][abscisses] == "l":
-                    CollisionSprites(pos, self.DoorBareau, "DoorBareau", (self.collisionSprites, self.interactions, self.allSprites))
-
-
-
-                # maisons
-                if self.map[ordonnees][abscisses] == "H" : 
-                    Sprites(pos, self.sol, "Grass", self.allSprites) 
-                    if self.map[ordonnees+1][abscisses] == "H" and self.map[ordonnees][abscisses +1] == "H":
-                        CollisionSprites(pos, self.house, "House", (self.allSprites, self.collisionSprites))
-
-
-                # puits 
-                if self.map[ordonnees][abscisses] == "W" :
-                    Sprites(pos, self.sol, "Grass", self.allSprites) 
-                    if self.map[ordonnees-1][abscisses] == "W" and self.map[ordonnees][abscisses +1] == "W":
-                        CollisionSprites(pos, self.well, "Well", (self.allSprites, self.collisionSprites))
-
-                if self.map[ordonnees][abscisses] == "E" :
-                    CollisionSprites(pos, self.tableCraft, "TableCraft", (self.allSprites, self.collisionSprites, self.interactions))
-
-                # DEMI NIVEAU MEDIEVALE
-                # base de la map
-                if self.mapBase[ordonnees][abscisses] == "~":
-                    Sprites(pos, self.Sol,"SolChateau", self.allSprites)
-                elif self.mapBase[ordonnees][abscisses] == "o":
-                    CollisionSprites(pos, self.MursAngleWS, "Mur", (self.collisionSprites, self.allSprites))
-                elif self.mapBase[ordonnees][abscisses] == "U":
-                    Sprites(pos, self.Socle, "SoclePortal", self.allSprites)
-                elif self.mapBase[ordonnees][abscisses] == "D" and NIVEAU["Map"] == "NiveauMedievale":
-                    if self  .mapBase[ordonnees][abscisses-1] == "o" and self.mapBase[ordonnees][abscisses+ 1] =="o":
-                        CollisionSprites(pos, self.Door, "Door", (self.collisionSprites, self.allSprites))
-                    else:
-                        CollisionSprites(pos, self.DoorChateau, "Door", (self.collisionSprites,self.interactions, self.allSprites))
-
-
-                # obstacle de la map
-                if self.map[ordonnees][abscisses] == "u":
-                    AnimatedSprites(pos, (self.allSprites), "PortalGif", join("Images","Portal"))
-                elif self.map[ordonnees][abscisses] == "Y":
-                    CollisionSprites(pos, self.Pilier, "Pilier",  (self.collisionSprites, self.allSprites))
-                elif self.map[ordonnees][abscisses] == "r":
-                    CollisionSprites(pos, self.Chandelier, "Chandelier", (self.collisionSprites, self.allSprites))
-
-                # niveau base futuriste
-                if self.map[ordonnees][abscisses] == "j":
-                    CollisionSprites(pos, self.vent, "Vent", (self.interactions,self.collisionSprites, self.allSprites))
-
-                elif self.map[ordonnees][abscisses] == "m":
-                    if INFOS["DemiNiveau"] and NIVEAU["Map"] == "NiveauBaseFuturiste":
-                        CollisionSprites(pos, self.doorFuturisteDemiNiveau, "DoorFuturisteDemiNiveau", (self.interactions, self.allSprites, self.collisionSprites))
-                    else:
-                        CollisionSprites(pos, self.doorFuturiste, "DoorFuturiste", (self.allSprites, self.collisionSprites))
 
                 elif self.map[ordonnees][abscisses] == "&":
 
@@ -589,6 +508,85 @@ class LoadMap():
 
                     else:
                         CollisionSprites(pos, self.wallWEHaut, "Wall", (self.allSprites, self.collisionSprites))
+
+
+
+                # Abre spécial
+                if self.map[ordonnees][abscisses] == "A":
+                    CollisionSprites(pos, self.tree,"Arbre",  (self.allSprites, self.collisionSprites))
+
+                # Pont placé
+                if self.map[ordonnees][abscisses] == "T":
+                    CollisionSprites(pos, self.pont2, "pont2",  (self.allSprites, self.collisionSprites))
+
+                if self.map[ordonnees][abscisses] == "X":
+                    CollisionSprites(pos, self.pont3, "pont3",  (self.allSprites, self.collisionSprites, self.interactions))
+
+                # champs
+                if self.map[ordonnees][abscisses] == "@":
+                    Sprites(pos, self.sol,"Grass", self.allSprites) #placement herbes sous blé
+                    CollisionSprites(pos, self.champ, "Champs",  (self.allSprites, self.collisionSprites))
+
+                # chateau
+                if self.map[ordonnees][abscisses] == "a":
+                    CollisionSprites(pos, self.gong, "Gong",  (self.allSprites, self.collisionSprites, self.interactions))
+
+                if self.map[ordonnees][abscisses] == "D" and NIVEAU["Map"] == "NiveauMordor":
+                    CollisionSprites(pos, self.DoorChateau, "Door", (self.collisionSprites, self.interactions, self.allSprites))
+                if self.map[ordonnees][abscisses] == "d":
+                    CollisionSprites(pos, self.DoorMurailles, "Door2", (self.collisionSprites, self.allSprites))
+
+                if self.map[ordonnees][abscisses] == "l":
+                    CollisionSprites(pos, self.DoorBareau, "DoorBareau", (self.collisionSprites, self.interactions, self.allSprites))
+
+                # maisons
+                if self.map[ordonnees][abscisses] == "H" : 
+                    Sprites(pos, self.sol, "Grass", self.allSprites) 
+                    if self.map[ordonnees+1][abscisses] == "H" and self.map[ordonnees][abscisses +1] == "H":
+                        CollisionSprites(pos, self.house, "House", (self.allSprites, self.collisionSprites))
+
+                # puits 
+                if self.map[ordonnees][abscisses] == "W" :
+                    Sprites(pos, self.sol, "Grass", self.allSprites) 
+                    if self.map[ordonnees-1][abscisses] == "W" and self.map[ordonnees][abscisses +1] == "W":
+                        CollisionSprites(pos, self.well, "Well", (self.allSprites, self.collisionSprites))
+
+                if self.map[ordonnees][abscisses] == "E" :
+                    CollisionSprites(pos, self.tableCraft, "TableCraft", (self.allSprites, self.collisionSprites, self.interactions))
+
+                # DEMI NIVEAU MEDIEVALE
+                # base de la map
+                if self.mapBase[ordonnees][abscisses] == "~":
+                    Sprites(pos, self.Sol,"SolChateau", self.allSprites)
+                elif self.mapBase[ordonnees][abscisses] == "o":
+                    CollisionSprites(pos, self.MursAngleWS, "Mur", (self.collisionSprites, self.allSprites))
+                elif self.mapBase[ordonnees][abscisses] == "U":
+                    Sprites(pos, self.Socle, "SoclePortal", self.allSprites)
+                elif self.mapBase[ordonnees][abscisses] == "D" and NIVEAU["Map"] == "NiveauMedievale":
+                    if self  .mapBase[ordonnees][abscisses-1] == "o" and self.mapBase[ordonnees][abscisses+ 1] =="o":
+                        CollisionSprites(pos, self.Door, "Door", (self.collisionSprites, self.allSprites))
+                    else:
+                        CollisionSprites(pos, self.DoorChateau, "Door", (self.collisionSprites,self.interactions, self.allSprites))
+
+                # obstacle de la map
+                if self.map[ordonnees][abscisses] == "u":
+                    AnimatedSprites(pos, (self.allSprites), "PortalGif", join("Images","Portal"))
+                elif self.map[ordonnees][abscisses] == "Y":
+                    CollisionSprites(pos, self.Pilier, "Pilier",  (self.collisionSprites, self.allSprites))
+                elif self.map[ordonnees][abscisses] == "r":
+                    CollisionSprites(pos, self.Chandelier, "Chandelier", (self.collisionSprites, self.allSprites))
+
+                # niveau base futuriste
+                if self.map[ordonnees][abscisses] == "j":
+                    CollisionSprites(pos, self.vent, "Vent", (self.interactions,self.collisionSprites, self.allSprites))
+
+                elif self.map[ordonnees][abscisses] == "m":
+                    if INFOS["DemiNiveau"] and NIVEAU["Map"] == "NiveauBaseFuturiste":
+                        CollisionSprites(pos, self.doorFuturisteDemiNiveau, "DoorFuturisteDemiNiveau", (self.interactions, self.allSprites, self.collisionSprites))
+                    else:
+                        CollisionSprites(pos, self.doorFuturiste, "DoorFuturiste", (self.allSprites, self.collisionSprites))
+
+
 
 
                 elif self.map[ordonnees][abscisses] == "S" and NIVEAU["Map"] == "NiveauBaseFuturiste":
@@ -668,11 +666,11 @@ class LoadMap():
         CollisionSprites(coordsExit, self.hugeRock, "ExitRock", (self.allSprites, self.interactions, self.collisionSprites))
         
         # pont décalé de 1
-        coordsPont = (coords[0]*CASEMAP +CASEMAP, coords[1]*CASEMAP)
+        coordsPont = (coords[0]*CASEMAP + CASEMAP -32, coords[1]*CASEMAP)
         # True = element de création exo maths
-        CollisionSprites(coordsPont, self.pont2, "pont2", (self.allSprites, self.collisionSprites, self.interactions), True) 
-
-
+        path = join("Images", "Pont", "Bridgex128")
+        AnimatedCollisionSprites(coordsPont, path, "pont3", (self.allSprites, self.collisionSprites, self.interactions), layer=2, InfoExo=True) 
+        
     def SetupPNJ(self) -> None:
         """Méthode de création et position des pnj.
         Input / Output : None"""
@@ -724,6 +722,7 @@ class LoadMap():
     def Update(self) -> list:
         """Méthode de mise à jour (utilisation unique) + retour de map.
         Input : None, Output : list"""
+
 
         # Appel méthodes créations map + sprites
         if NIVEAU["Map"] == "NiveauPlaineRiviere":
