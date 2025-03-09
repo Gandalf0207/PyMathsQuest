@@ -202,6 +202,7 @@ class Game(object):
                             # affichge ou non de la hotbar
                             if event.key == KEYSBIND["hideHotBar"]:
                                 INFOS["HideHotBar"] = True if not INFOS["HideHotBar"] else False
+                                INFOS["Hover"] = False
                         
 
                         # open au clic des interface de la hotbar
@@ -510,9 +511,6 @@ class GameToolBox(object):
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()  # Quitter proprement si l'utilisateur ferme la fenêtre
-
-            # Délai entre chaque ligne pour un effet d'animation fluide
-            pygame.time.delay(300)  # Délai entre chaque ligne
 
         pygame.time.delay(2500)  # Affichage du texte complet pendant un moment supplémentaire
         self.fondu_au_noir()  # Transition avec fondu au noir après l'affichage du texte

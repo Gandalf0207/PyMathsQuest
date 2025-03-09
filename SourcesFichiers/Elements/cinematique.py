@@ -52,10 +52,10 @@ class Cinematique(object):
         if NIVEAU["Map"] == "NiveauPlaineRiviere":
 
             # Positionner le PNJ en fonction de l'objectif
-            target_x, target_y = self.goal[0], self.goal[1] - 1  # Une case au-dessus
+            target_x, target_y = self.goal[0], (self.goal[1] - 1)  # Une case au-dessus
 
             # Ajuster les positions de la hitbox et du rectangle
-            self.hitbox.center = (target_x * CASEMAP, target_y * CASEMAP)  # Position en pixels
+            self.hitbox.center = (target_x * CASEMAP +64, target_y * CASEMAP +64)  # Position en pixels
             self.rect.center = self.hitbox.center  # Synchroniser la rect avec la hitbox
 
             # Mettre à jour la position logique de l'objet PNJ si nécessaire
