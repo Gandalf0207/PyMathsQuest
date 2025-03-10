@@ -1,5 +1,10 @@
 from settings import *
-from SourcesFichiers.Map.creationMap import *
+
+from SourcesFichiers.Map.MapNiveau.plaineRiviere import *
+from SourcesFichiers.Map.MapNiveau.medievale import *
+from SourcesFichiers.Map.MapNiveau.baseFuturiste import *
+from SourcesFichiers.Map.MapNiveau.mordor import *
+
 from SourcesFichiers.Elements.sprites import *
 from SourcesFichiers.Personnages.player import *
 from SourcesFichiers.Elements.groups import *
