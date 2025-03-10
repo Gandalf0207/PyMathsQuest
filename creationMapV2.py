@@ -94,14 +94,7 @@ class GestionNiveauMap(object):
 
         for j in range(len(self.baseMap)):
             print(*self.baseMap[j], sep=" ")
-
-
-    def PlacementElements(self, coordsElements, pathJson): 
-        """Méthode permettant de placer le spawn du joueur sur la map (collision) et d'ajouter ces coordonnées dans le json"""
-        for coordsPlacement in coordsElements: # on parcourt toute la liste de coords
-            self.map[coordsPlacement[1]][coordsPlacement[0]] = coordsPlacement[2] # on place les element aux coordonnées sur la map (avec la lettre)
-        AjoutJsonMapValue(coordsElements, pathJson[0], pathJson[1]) # on ajoute les coordonnées du spawn au fichier json
-
+            
 
 class RiverCreator(object):
 
@@ -419,7 +412,7 @@ class BorderCreator(object):
         self.SetAndSave()
 
 
-
+# map obj
 class NiveauPlaineRiviere(GestionNiveauMap):
     def __init__(self):
         super().__init__(150,75) 
@@ -546,6 +539,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
                         checkDeplacementPasPossible = False # on arrête la boucle
                         for coords in listeObstacle: # on met à jour la map (on place les objets dessus)
                             self.map[coords[1]][coords[0]] = "O" # placement aux différents cordonnées
+                            self.baseMap[coords[1]][coords[0]] = "-"
 
         ## SECURITE
         # verif si boucle pour relancement
@@ -745,6 +739,11 @@ class NiveauMedievale(GestionNiveauMap):
         self.coordsTableCraft = [self.coordsPuits[0] + 1, self.coordsPuits[1]]  # Coordonnées de la table de craft
         self.map[self.coordsTableCraft[1]][self.coordsTableCraft[0]] = "V"
         self.baseMap[self.coordsTableCraft[1]][self.coordsTableCraft[0]] = "-" # clear
+
+
+        allObjSpecifique = [self.gongCoords, self.coordsChateau, self.coordsDoorChateau, self.coordsDoorMuraille,
+                            self.coordsPontSpawn, self.coordsPontGarde, self.coordsPuits, self.coordsTableCraft]
+        AjoutJsonMapValue(allObjSpecifique, "coordsMapObject", "ObjAPlacer")
 
     def PlacementPath1(self):
 
@@ -993,7 +992,8 @@ class NiveauMedievale(GestionNiveauMap):
                     if self.CheckNiveauPossible(listeOrdrePointCle3,  ["-", "P", "S", "V"], self.mapCheckDeplacementPossible):  # Vérifie la troisième partie
                         checkDeplacementPasPossible = False # on arrête la boucle
                         for coords in listeObstacle: # on met à jour la map (on place les objets dessus)
-                            self.map[coords[1]][coords[0]] = "O" # placement aux différents cordonnées
+                            self.map[coords[1]][coords[0]] = "O" # placement aux différents cordonnées 
+                            self.baseMap[coords[1]][coords[0]] = "-"
 
         ## SECURITE
         # verif si boucle pour relancement
@@ -1048,7 +1048,6 @@ class NiveauMedievale(GestionNiveauMap):
                     can_build_up = checkBuildUp(can_go_up, can_go_left, can_go_right)
                     can_build_down = checkBuildDown(can_go_down,  can_go_left, can_go_right)
 
-
     def Update(self):
         self.PlacementBordure()
         self.PlacementRiver()
@@ -1074,4 +1073,693 @@ class NiveauMedievale(GestionNiveauMap):
         
         # Retourne la carte actuelle (map) et la carte de base (baseMap)
         return self.map, self.baseMap, self.ERROR_RELANCER  
-a, b, c = NiveauMedievale().Update()
+    
+class NiveauMedievaleChateau(GestionNiveauMap):
+    def __init__(self):
+        super().__init__(11,11) 
+    
+    def PlacementMap(self):
+        self.map = [
+            ["W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W"],
+            ["W", "-", "-", "-", "-", "V", "-", "-", "-", "-", "W"],
+            ["W", "-", "Y", "y", "-", "-", "-", "y", "Y", "-", "W"],
+            ["W", "-", "-", "-", "-", "-", "-", "-", "-", "-", "W"],
+            ["W", "-", "-", "-", "-", "-", "-", "-", "-", "-", "W"],
+            ["W", "-", "Y", "y", "-", "-", "-", "y", "Y", "-", "W"],
+            ["W", "-", "-", "-", "-", "-", "-", "-", "-", "-", "W"],
+            ["W", "-", "-", "-", "-", "P", "-", "-", "-", "-", "W"],
+            ["W", "-", "Y", "y", "-", "-", "-", "y", "Y", "-", "W"],
+            ["W", "-", "-", "-", "-", "-", "-", "-", "-", "-", "W"],
+            ["W", "W", "W", "W", "W", "V", "W", "W", "W", "W", "W"],
+        ]
+
+        self.baseMap = [
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+        ]
+
+    def PlacementSpawn(self):
+        self.coordsSpawn = [5, 9]
+        self.map[self.coordsSpawn[1]][self.coordsSpawn[0]] = "S"
+        AjoutJsonMapValue(self.coordsSpawn, "coordsMapObject", "Spawn")
+
+    def PlacementExit(self):
+        self.coordsExit = [5, 1]
+        AjoutJsonMapValue(self.coordsExit, "coordsMapObject", "Exit")
+
+    def PlacementPNJ(self):
+        coordsPNJ4 = [5, 7, "P", 4]
+        self.allCoordsPNJ = [coordsPNJ4]
+        for coords in self.allCoordsPNJ:
+            self.map[coords[1]][coords[0]] = "P"
+        AjoutJsonMapValue(self.allCoordsPNJ, "coordsMapObject", "PNJ Coords")
+
+    def PlacementObjSpecifique(self):
+        # portal
+        self.coordsPortal = [5, 1, "NiveauMedievale", "Portal"]
+
+        # socle
+        self.coordsSocle = [4, 1, "NiveauMedievale", "Socle"]
+
+        allObjSpecifique = [self.coordsPortal, self.coordsSocle]
+        AjoutJsonMapValue(allObjSpecifique, "coordsMapObject", "ObjAPlacer")
+
+    def Update(self):
+        self.PlacementMap()
+        self.PlacementSpawn()
+        self.PlacementExit()
+        self.PlacementPNJ()
+        self.PlacementObjSpecifique()
+        self.SaveGlobal()
+
+        # relancer une nouvelle map
+        if self.ERROR_RELANCER:
+            return None, None, self.ERROR_RELANCER
+        
+        # Retourne la carte actuelle (map) et la carte de base (baseMap)
+        return self.map, self.baseMap, self.ERROR_RELANCER  
+    
+class NiveauBaseFuturiste(GestionNiveauMap):
+    def __init__(self):
+        super().__init__(150, 75)
+        self.obstacle = 75
+        self.mapCheckDeplacementPossible = [] # map test vide
+
+    def PlacementBone(self):
+        self.makeVarienteSolObj.CreateVarienteSol(300)
+    
+    def PlacementSalle(self):
+        zoneElement = [
+                    [(9, 25), (30, 29)],
+                    [(52, 0), (80, 6)],
+                    [(52, 51), (80, 52)],
+                    [(102, 25), (122, 29)],
+                    ]
+
+        self.allLiaisons = []
+        self.allCoordsSalles = []
+        
+        salleStructure = [
+            ["W", "W", "W", "W", "W", "W", "W", "v", "v", "v", "v", "v", "W", "W", "W", "W", "W", "W", "W"],
+            ["W", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "W"],
+            ["W", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "W"],
+            ["W", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "W"],
+            ["W", ".", ".", ".", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", ".", ".", ".", "W"],
+            ["W", ".", ".", ".", "W", ".", ".", ".", ".", ".", ".", ".", ".", ".", "W", ".", ".", ".", "W"],
+            ["W", ".", ".", ".", "W", ".", ".", ".", ".", ".", ".", ".", ".", ".", "W", ".", ".", ".", "W"],
+            ["v", ".", ".", ".", "W", ".", ".", ".", ".", ".", ".", ".", ".", ".", "W", ".", ".", ".", "v"],
+            ["v", ".", ".", ".", "W", ".", ".", ".", ".", ".", ".", ".", ".", ".", "W", ".", ".", ".", "v"],
+            ["v", ".", ".", ".", "W", ".", ".", ".", ".", ".", ".", ".", ".", ".", "W", ".", ".", ".", "v"],
+            ["v", ".", ".", ".", "W", ".", ".", ".", ".", ".", ".", ".", ".", ".", "W", ".", ".", ".", "v"],
+            ["v", ".", ".", ".", "W", ".", ".", ".", ".", ".", ".", ".", ".", ".", "W", ".", ".", ".", "v"],
+            ["W", ".", ".", ".", "W", ".", ".", ".", ".", ".", ".", ".", ".", ".", "W", ".", ".", ".", "W"],
+            ["W", ".", ".", ".", "W", ".", ".", ".", ".", ".", ".", ".", ".", ".", "W", ".", ".", ".", "W"],
+            ["W", ".", ".", ".", "W", "W", "W", "W", "W", ".", "W", "W", "W", "W", "W", ".", ".", ".", "W"],
+            ["W", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "W"],
+            ["W", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "W"],
+            ["W", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "W"],
+            ["W", "W", "W", "W", "W", "W", "W", "v", "v", "v", "v", "v", "W", "W", "W", "W", "W", "W", "W"],
+        ]
+
+        for num in range(4):
+            coordsSalle = []
+            posX1, posY1 = randint(zoneElement[num][0][0], zoneElement[num][1][0]), randint(zoneElement[num][0][1], zoneElement[num][1][1])  # Position de départ aléatoire
+
+            # Placement des champs sur la carte
+            for y in range (len(salleStructure)):
+                for x in range (len(salleStructure[y])):
+                    self.map[posY1 + y][posX1 + x] = salleStructure[y][x]
+                    self.baseMap[posY1 + y][posX1 + x] = "V" # clear
+                    coordsSalle.append([posX1 + x, posY1 + y, salleStructure[y][x]])
+            self.allCoordsSalles.append(coordsSalle)
+            
+
+            liaison = [
+                    [posX1, posY1 + 9],
+                    [posX1 + 9, posY1],
+                    [posX1 + 18, posY1 + 9],
+                    [posX1 + 9 , posY1 + 18],
+                ]  
+            self.allLiaisons.append(liaison)
+
+    def PlacementCouloir(self):
+        # liaison entre les salles
+        linkS1S2 = [
+            self.allLiaisons[0][1], 
+            [self.allLiaisons[0][1][0], self.allLiaisons[1][0][1]],
+            [self.allLiaisons[0][1][0]-2, self.allLiaisons[1][0][1]], 
+            self.allLiaisons[1][0]]
+        
+        linkS1S3 = [
+            self.allLiaisons[0][3],  
+            [self.allLiaisons[0][3][0],self.allLiaisons[2][0][1]],
+            [self.allLiaisons[0][3][0] -2,self.allLiaisons[2][0][1]],
+            self.allLiaisons[2][0]]
+
+        linkS4S2 = [
+            self.allLiaisons[3][1],  
+            [self.allLiaisons[3][1][0],self.allLiaisons[1][2][1]],
+            [self.allLiaisons[3][1][0] +2,self.allLiaisons[1][2][1]],
+            self.allLiaisons[1][2]]
+        linkS4S3 = [
+            self.allLiaisons[3][3],  
+            [self.allLiaisons[3][3][0],self.allLiaisons[2][2][1]],
+            [self.allLiaisons[3][3][0] +2,self.allLiaisons[2][2][1]],
+            self.allLiaisons[2][2]]
+
+        # liaison spawn salle1
+        linkSpawnS1 = [
+            [self.allLiaisons[0][0][0] ,self.allLiaisons[0][0][1]],
+            [0, self.allLiaisons[0][0][1]],
+        ]
+
+        allLinkElement = [linkS1S2, linkS1S3, linkS4S2, linkS4S3, linkSpawnS1]
+
+
+        for i in range(len(allLinkElement)):
+            for j in range(len(allLinkElement[i])-1):
+                start = allLinkElement[i][j]
+                goal = allLinkElement[i][j+1]
+                mapAcces = self.map
+                pathAcces = ["v", "-", "&"]
+                path = Astar2(start, goal, mapAcces, pathAcces, 2).a_star()
+
+                if path:
+                    for coords in path:
+                        self.map[coords[1]][coords[0]] =  "&" 
+                        self.baseMap[coords[1]][coords[0]] =  "V"
+        
+        # checkVerif
+        allPathCouloirs = []
+        for ordonnes in range(len(self.map)):
+            for abscisse in range (len(self.map[0])):
+                if self.map[ordonnes][abscisse] == "&":
+                    IsN =  self.map[ordonnes-1][abscisse] in ["&", "."]
+                    IsS =  self.map[ordonnes+1][abscisse] in ["&", "."]
+                    IsE =  self.map[ordonnes][abscisse-1] in ["&", "."]
+                    IsW =  self.map[ordonnes][abscisse+1] in ["&", "."]
+                    
+                    IsNW = self.map[ordonnes-1][abscisse-1] in ["&", "."]
+                    IsSW = self.map[ordonnes+1][abscisse-1] in ["&", "."]
+                    IsNE = self.map[ordonnes-1][abscisse+1] in ["&", "."]
+                    IsSE = self.map[ordonnes+1][abscisse+1] in ["&", "."]
+
+                    listAllBuild = [IsN, IsW, IsS, IsE, IsNE, IsNW, IsSE, IsSW]
+                    nb = listAllBuild.count(True)
+                    if nb >7:
+                        allPathCouloirs.append((abscisse, ordonnes))
+
+        for coords in allPathCouloirs:
+            self.map[coords[1]][coords[0]] =  "."
+            self.baseMap[coords[1]][coords[0]] =  "V"
+
+        # clear
+        for ordonne in range(len(self.map)):
+            for abscisse in range(len(self.map[0])):
+                if self.map[ordonne][abscisse] in ["v", "&"]:
+                    self.map[ordonne][abscisse] = "W"
+
+    def PlacementObjSpecifique(self):
+
+        # get coords
+        allStructuresCoords = []
+        allDoorsSallesCoords = []
+        for numSalle in range(len(self.allCoordsSalles)):
+            ptsRefStruc = self.allCoordsSalles[numSalle][140]
+            ptsRefDoors = self.allCoordsSalles[numSalle][275]
+
+            # sécu pos salle
+            for y in range(5):
+                for x in range(5):
+                    self.map[ptsRefStruc[1] + y][ptsRefStruc[0] + x] = "&" # sécu check niveau possible
+            self.map[ptsRefDoors[1]][ptsRefDoors[0]] = "V" # clear
+
+            allStructuresCoords.append(ptsRefStruc)
+            allDoorsSallesCoords.append(ptsRefDoors)
+            
+            if numSalle == 0: #salle reacteur
+                ptsRefInteraction = self.allCoordsSalles[numSalle][218]
+                allStructuresCoords.append(ptsRefInteraction)
+
+        # coords structure salles
+        self.coordsReactorStruc = [allStructuresCoords[0][0], allStructuresCoords[0][1], "NiveauBaseFuturiste", "StructureReactor"]
+        self.coordsReactorBloc = [allStructuresCoords[1][0], allStructuresCoords[1][1], "NiveauBaseFuturiste", "ReactorBloc"]
+        self.coordsCafetStruc = [allStructuresCoords[2][0], allStructuresCoords[2][1], "NiveauBaseFuturiste", "StructureCafet"]
+        self.coordsEssenceStruc = [allStructuresCoords[3][0], allStructuresCoords[3][1], "NiveauBaseFuturiste", "StructureEssence"]
+        self.coordsLancementStruc = [allStructuresCoords[4][0], allStructuresCoords[4][1], "NiveauBaseFuturiste", "StructureLancement"]
+        self.map[self.coordsReactorBloc[1]][self.coordsReactorBloc[0]] = "V" # sécu
+
+        # coords vent
+        self.coordsVent1 = [self.allCoordsSalles[0][100][0], self.allCoordsSalles[0][100][1], "NiveauBaseFuturiste", "Vent"]
+        self.coordsVent2 = [self.allCoordsSalles[0][174][0], self.allCoordsSalles[0][174][1], "NiveauBaseFuturiste", "Vent"]
+
+        coordsVents = [self.coordsVent1, self.coordsVent2]
+        for coords in coordsVents:
+            self.map[coords[1]][coords[0]] = "V"
+        
+        # porte salle 
+        self.coordsDoorSalle0 = [allDoorsSallesCoords[0][0], allDoorsSallesCoords[0][1], "NiveauBaseFuturiste", "DoorSalle"]
+        self.coordsDoorSalle1 = [allDoorsSallesCoords[1][0], allDoorsSallesCoords[1][1], "NiveauBaseFuturiste", "DoorSalle"]
+        self.coordsDoorSalle2 = [allDoorsSallesCoords[2][0], allDoorsSallesCoords[2][1], "NiveauBaseFuturiste", "DoorSalle"]
+        self.coordsDoorSalle3 = [allDoorsSallesCoords[3][0], allDoorsSallesCoords[3][1], "NiveauBaseFuturiste", "DoorSalle"]
+
+    def PlacementSpawn(self):
+        self.coordsSpawn =[ 2, self.allLiaisons[0][0][1]]
+        self.map[self.coordsSpawn[1]][self.coordsSpawn[0]] = "S"
+        AjoutJsonMapValue([self.coordsSpawn], "coordsMapObject", "Spawn") # on ajoute les coordonnées du spawn au fichier json
+
+    def PlacementPNJ(self):
+        coordsPossiblesRefPNJ = [
+                              (3,0),(4,0),(5,0),(6,0),(7,0),(8,0),
+            (0,1),(1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,1),
+            (0,2),(1,2),                              (7,2),(8,2),
+            (0,3),(1,3),                              (7,3),(8,3),
+            (0,4),(1,4),                              (7,4),(8,4),
+            (0,5),(1,5),                              (7,5),(8,5),
+            (0,6),(1,6),                              (7,6),(8,6),
+            (0,7),(1,7),(2,7),(3,7),(4,7),(5,7),(6,7),(7,7),(8,7),
+            (0,8),(1,8),(2,8),(3,8),(4,8),(5,8),(6,8),(7,8),(8,8),
+        ]
+        
+        self.allPNJCoords = []
+
+        # pnj 1
+        self.map[self.coordsSpawn[1]][self.coordsSpawn[0] +8] = "P"
+        self.allPNJCoords.append([self.coordsSpawn[0] + 8, self.coordsSpawn[1], "P", 1])
+
+        # pnj 2 / 3 / 4 / 5
+        for numSalle in range(len(self.allCoordsSalles)):
+            ptsFixe = self.allCoordsSalles[numSalle][100]
+            coordsPossiblesPNJ = [(coords[0] + ptsFixe[0], coords[1] + ptsFixe[1]) for coords in coordsPossiblesRefPNJ] 
+            
+            coordsPNJ = choice(coordsPossiblesPNJ)
+            if numSalle !=3: # on ne crée pas de pnj pour le 3
+                self.map[coordsPNJ[1]][coordsPNJ[0]] = "P"
+            self.allPNJCoords.append([coordsPNJ[0], coordsPNJ[1], "P", numSalle+2])
+        
+        AjoutJsonMapValue(self.allPNJCoords, "coordsMapObject", "PNJ Coords") # on ajoute les coordonnées du spawn au fichier json
+
+    def PlacementObstacle(self):
+        # Placement des obstacles sur la carte
+        checkDeplacementPasPossible = True  # Flag pour vérifier si un déplacement est possible
+        compteur = 0
+        while checkDeplacementPasPossible and compteur < 100: 
+            compteur += 1
+            # Crée une copie de la carte pour tester les placements sans affecter la carte principale
+            self.mapCheckDeplacementPossible = []
+            self.mapCheckDeplacementPossible = copy.deepcopy(self.map)  
+
+            # Liste pour stocker les positions des obstacles
+            listeObstacle = [] 
+
+            # Place les obstacles aléatoirement sur la carte, en vérifiant qu'ils ne se superposent pas
+            for _ in range(self.obstacle):
+                obstaclePos = [randint(0, self.longueur-1), randint(0, self.largeur-1)]
+                # Vérifie que la position choisie est valide (case vide et pas dans une zone interdite)
+                while self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] != '.'\
+                    or self.mapCheckDeplacementPossible[obstaclePos[1]-1][obstaclePos[0]] not in [".", "O", "V"] \
+                    or self.mapCheckDeplacementPossible[obstaclePos[1]+1][obstaclePos[0]]  not in [".", "O", "V"] \
+                    or self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]+1]  not in [".", "O", "V"] \
+                    or self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]-1]  not in [".", "O", "V"] :
+                    obstaclePos = [randint(0, self.longueur-1), randint(0, self.largeur-1)]  # Nouvelle tentative
+                # Marque la position comme occupée pour les tests
+                self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] = "O"  
+                listeObstacle.append(obstaclePos)  # Ajoute l'obstacle à la liste
+
+            # Récupère les coordonnées des points clés (par exemple, spawn, passage de la rivière, etc.)
+            coordsPts1 = self.coordsSpawn
+            coordsPts2 = self.allPNJCoords[0]
+            coordsPts3 = self.coordsVent2
+            coordsPts4 = self.coordsVent1
+            coordsPts5 = self.allPNJCoords[1]
+            coordsPts6 = self.coordsReactorBloc
+            coordsPts7 = self.allPNJCoords[2]
+            coordsPts8 = self.allPNJCoords[3]
+            coordsPts9 = self.allPNJCoords[4]
+
+
+            # Liste des points à vérifier pour les déplacements possibles
+            listeOrdrePointCle1 = [coordsPts1, coordsPts2, coordsPts3]
+            listeOrdrePointCle2 = [coordsPts4, coordsPts5, coordsPts6, coordsPts7, coordsPts8, coordsPts9]
+
+            # Vérifie la possibilité de déplacements pour chaque liste de points clés
+            # Le parcours se fait en trois étapes, en passant par les rivières pour s'assurer que les chemins sont valides
+            if self.CheckNiveauPossible(listeOrdrePointCle1, [".", "S", "V", "P"], self.mapCheckDeplacementPossible):  # Vérifie la première partie
+                if self.CheckNiveauPossible(listeOrdrePointCle2,  [".", "S", "V", "P"], self.mapCheckDeplacementPossible):  # Vérifie la deuxième partie
+                    # Si tout est valide, les obstacles peuvent être placés et les coordonnées sont sauvegardées
+                    AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords")
+                    checkDeplacementPasPossible = False  # Arrête la boucle
+
+                    # Place les obstacles sur la carte
+                    for coords in listeObstacle:
+                        self.map[coords[1]][coords[0]] = "O"  # Placement des obstacles sur la carte
+                        self.baseMap[coords[1]][coords[0]] = "-"
+
+        ## SECURITE
+        # verif si boucle pour relancement
+        if compteur < 100:
+            self.ERROR_RELANCER = False
+        else:
+            self.ERROR_RELANCER = True
+
+    def Update(self):
+        self.PlacementBone()
+        self.PlacementSalle()
+        self.PlacementCouloir()
+        self.PlacementObjSpecifique()
+        self.PlacementSpawn()
+        self.PlacementPNJ()
+        self.PlacementObstacle()
+        self.SaveGlobal()
+
+        # relancer une nouvelle map
+        if self.ERROR_RELANCER:
+            return None, None, self.ERROR_RELANCER
+        
+        # Retourne la carte actuelle (map) et la carte de base (baseMap)
+        return self.map, self.baseMap, self.ERROR_RELANCER  
+
+class NiveauBaseFuturisteVaisseau(GestionNiveauMap):
+    def __init__(self):
+        super().__init__(18,17)
+
+    def PlacementMap(self):
+        self.map = [
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "W", "V", "V", "V", "W", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "W", "V", "V", "V", "W", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "W", "V", ".", "V", "W", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "W", ".", ".", ".", "W", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "W", "O", ".", ".", "W", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "W", ".", ".", ".", "W", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "W", "W", "V", "W", "W", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+        ]
+
+        self.baseMap = [
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", ".", ".", ".", ".", ".", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", ".", ".", ".", ".", ".", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", ".", ".", ".", ".", ".", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", ".", ".", ".", ".", ".", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", ".", ".", ".", ".", ".", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", ".", ".", ".", ".", ".", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", ".", ".", ".", ".", ".", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+        ] # oui il y a des différences
+
+    def PlacementSpawn(self):
+        self.coordsSpawn = [8, 10]
+        self.map[self.coordsSpawn[1]][self.coordsSpawn[0]] = "S"
+        AjoutJsonMapValue(self.coordsSpawn, "coordsMapObject", "Spawn")
+
+    def PlacementPNJ(self):
+        coordsPNJ4 = [8, 6, "P", 6]
+        self.allCoordsPNJ = [coordsPNJ4]
+        for coords in self.allCoordsPNJ:
+            self.map[coords[1]][coords[0]] = "P"
+        AjoutJsonMapValue(self.allCoordsPNJ, "coordsMapObject", "PNJ Coords")
+
+    def PlacementObjSpecifique(self):
+
+        # vitre
+        self.coordsVitre1 = [7, 5, "NiveauBaseFuturiste", "Vitre"]
+        self.coordsVitre2 = [8, 5, "NiveauBaseFuturiste", "Vitre"]
+        self.coordsVitre3 = [9, 5, "NiveauBaseFuturiste", "Vitre"]
+
+        # tableau de board
+        self.coordsBoard1 = [7, 6, "NiveauBaseFuturiste", "Board"]
+        self.coordsBoard2 = [8, 6, "NiveauBaseFuturiste", "Board"]
+        self.coordsBoard3 = [9, 6, "NiveauBaseFuturiste", "Board"]
+
+        # siège
+        self.coordsSiege1 = [7, 7, "NiveauBaseFuturiste", "Siege"]
+        self.coordsSiege2 = [9, 7, "NiveauBaseFuturiste", "Siege"]
+
+        allObjSpecifique = [self.coordsVitre1, self.coordsVitre2, self.coordsVitre3,
+                            self.coordsBoard1, self.coordsBoard2, self.coordsBoard3, 
+                            self.coordsSiege1, self.coordsVitre2]
+        AjoutJsonMapValue(allObjSpecifique, "coordsMapObject", "ObjAPlacer")
+
+    def Update(self):
+        self.PlacementMap()
+        self.PlacementSpawn()
+        self.PlacementPNJ()
+        self.PlacementObjSpecifique()
+        self.SaveGlobal()
+
+        # relancer une nouvelle map
+        if self.ERROR_RELANCER:
+            return None, None, self.ERROR_RELANCER
+        
+        # Retourne la carte actuelle (map) et la carte de base (baseMap)
+        return self.map, self.baseMap, self.ERROR_RELANCER  
+
+
+
+class NiveauMordor(GestionNiveauMap):
+    def __init__(self):
+        super().__init__(150, 75) 
+        self.obstacle = 800
+        self.mapCheckDeplacementPossible = [] # map test vide
+    
+    def PlacementBordure(self):
+        self.makeBorder.CreateBorder()
+
+    def PlacementRiver(self):
+        for i in range(4):
+            match i:
+                case 0:
+                    self.makeRiverObj.River0CreationVecticale(0)
+                case 1:
+                    self.makeRiverObj.River1CreationVecticale(1)
+                case 2:
+                    self.makeRiverObj.River2CreationVecticale(2)
+                case 3:
+                    self.makeRiverObj.River3CreationVecticale(3)
+
+    def PlacementRockCratere(self):
+        self.makeVarienteSolObj.CreateVarienteSol(700)
+
+    def PlacementMuraille(self):
+        # prisions
+        self.prisonStructure = [
+            ["W", "-", "-", "-", "-", "W", "-", "-", "V", "W", "-", "-", "-", "W", "-", "-", "-", "-", "W"],
+            ["W", "-", "-", "-", "-", "W", "-", "V", "-", "W", "-", "-", "-", "W", "-", "-", "-", "-", "W"],
+            ["W", "-", "-", "-", "-", "W", "-", "-", "-", "W", "-", "-", "-", "W", "-", "-", "-", "-", "W"],
+            ["W", "-", "-", "-", "-", "W", "V", "V", "V", "W", "V", "V", "V", "W", "-", "-", "-", "-", "W"],
+            ["W", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "W"],
+            ["W", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "W"],
+            ["W", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "W"],
+            ["W", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "W"],
+            ["W", "W", "W", "W", "W", "W", "W", "W", "W", "V", "W", "W", "W", "W", "W", "W", "W", "W", "W"],
+        ]
+        
+        coordsStartPrison = [65, 1]
+        for ordonne in range(len(self.prisonStructure)):
+            for abscisse in range(len(self.prisonStructure[ordonne])):
+                self.map[coordsStartPrison[1] + ordonne][coordsStartPrison[0] + abscisse] = self.prisonStructure[ordonne][abscisse]
+                self.baseMap[coordsStartPrison[1] + ordonne][coordsStartPrison[0] + abscisse] = "-"
+
+    def PlacementObjSpecifique(self):
+        # placement pont 
+        allCoordsRiver1 = LoadJsonMapValue("coordsMapBase", "Riviere1 Coords")
+        allCoordsRiver2 = LoadJsonMapValue("coordsMapBase", "Riviere2 Coords")
+        getCoords1 = choice(allCoordsRiver1)
+            # Vérifie que les coordonnées choisies sont valides (autour de la rivière)
+        while getCoords1[1] < 5 or getCoords1[1] > 70 \
+            or self.map[getCoords1[1]][getCoords1[0]-1] != "-" \
+            or self.map[getCoords1[1]][getCoords1[0]-2] != "-" \
+            or self.map[getCoords1[1]][getCoords1[0]+1] != "-": 
+            getCoords1 = choice(allCoordsRiver1)
+
+        getCoords2 = choice(allCoordsRiver2)
+            # Vérifie que les coordonnées choisies sont valides (autour de la rivière)
+        while getCoords2[1] < 5 or getCoords2[1] > 70 \
+            or self.map[getCoords2[1]][getCoords2[0]-1] != "-" \
+            or self.map[getCoords2[1]][getCoords2[0]-2] != "-" \
+            or self.map[getCoords2[1]][getCoords2[0]+1] != "-": 
+            getCoords2 = choice(allCoordsRiver2)
+        self.coordsPont1 = [getCoords1[0], getCoords1[1], "NiveauMedievale", "Pont5", "NoInteraction"]
+        self.coordsPont2 = [getCoords2[0], getCoords2[1], "NiveauMedievale", "Pont5", "Interaction"]
+
+        # placement vaisseau
+        self.coordsVaisseau = [randint(8, 25), randint(3, 64)]
+        for ordonne in range(5):
+            for abscisse in range(5):
+                self.map[self.coordsVaisseau[1] + ordonne][self.coordsVaisseau[0] + abscisse] = "V"
+                self.baseMap[self.coordsVaisseau[1] + ordonne][self.coordsVaisseau[0] + abscisse] = "-" # clear
+
+        # placement pot prison
+        self.coordsPotPrision = [72, 2, "NiveauMordor", "Pot"]
+
+        # placement parchemin prison
+        self.coordsParcheminPrison = [73, 1, "NiveauMordor", "Parchemin"]
+
+        # placement door prison
+        self.coordsDoorCellule1 = [72, 4, "NiveauMordor", "DoorCellule"]
+        self.coordsDoorCellule2 = [76, 4, "NiveauMordor", "DoorCellule"]
+        self.coordsDoorPrison = [74, 9, "NiveauMordor", "DoorCellule"]
+
+        # barreaux prison
+        self.coordsBarreaux1 = [71, 4, "NiveauMordor", "Barreaux"]
+        self.coordsBarreaux2 = [73, 4, "NiveauMordor", "Barreaux"]
+        self.coordsBarreaux3 = [75, 4, "NiveauMordor", "Barreaux"]
+        self.coordsBarreaux4 = [77, 4, "NiveauMordor", "Barreaux"]
+
+        # placement volcan 
+        self.coordsVolcan = [randint(110, 135), randint(3, 64)]
+        for ordonne in range(5):
+            for abscisse in range(5):
+                self.map[self.coordsVolcan[1] + ordonne][self.coordsVolcan[0] + abscisse] = "&"
+                self.baseMap[self.coordsVolcan[1] + ordonne][self.coordsVolcan[0] + abscisse] = "-"
+
+        # placement porte volcan
+        self.coordsDoorVolcan = [self.coordsVolcan[0] + 2, self.coordsVolcan[1] + 4]
+        
+
+        allObjSpecifique = [self.coordsPont1, self.coordsPont2]
+        AjoutJsonMapValue(allObjSpecifique, "coordsMapObject", "ObjAPlacer")
+    
+    def PlacementSpawn(self):
+        # spawn
+        self.coordsSpawn = [self.coordsVaisseau[1] + 7, self.coordsVaisseau[0] +3]
+        self.map[self.coordsSpawn[1]][self.coordsSpawn[0]] = "S"
+        self.map[self.coordsSpawn[1]][self.coordsSpawn[0]] = "-"
+        AjoutJsonMapValue([self.coordsSpawn], "coordsMapObject", "Spawn") # on ajoute les coordonnées du spawn au fichier json      
+
+    def PlacementPNJ(self):
+        coordsPNJ1 = [self.coordsPont1[0] -1, self.coordsPont1[1], "P", 1]
+        coordsPNJ2 = [76, 1, "P", 2] # dans la cellule de droite
+        coordsPNJ3 = [74, 8, "P", 3]
+
+        xPNJ4 = randint((self.coordsVolcan[0] -15), (self.coordsVolcan[0] -1))
+        yPNJ4 = randint((self.coordsVolcan[1] -15), (self.coordsVolcan[1] + 20)) 
+        
+        while xPNJ4 <= 108 or yPNJ4 >= 70 or yPNJ4 <= 4 or self.map[yPNJ4][xPNJ4] != "-":
+            xPNJ4 = randint((self.coordsVolcan[0] -15), (self.coordsVolcan[0] -1))
+            yPNJ4 = randint((self.coordsVolcan[1] -15), (self.coordsVolcan[1]+ 20))    
+        # placement pnj 4 autour du volcan
+        coordsPNJ4 = [xPNJ4, yPNJ4, "P", 4]
+
+        self.allCoordsPNJ = [coordsPNJ1, coordsPNJ2, coordsPNJ3, coordsPNJ4]
+        
+        for CoordPNJ in self.allCoordsPNJ:
+            self.map[CoordPNJ[1]][CoordPNJ[0]] = "P"
+            self.baseMap[CoordPNJ[1]][CoordPNJ[0]] = "-"
+
+        AjoutJsonMapValue(self.allCoordsPNJ, "coordsMapObject", "PNJ Coords") # placement des pnj sur la map  
+
+    def PlacementObstacle(self):
+ # Placement des obstacles sur la carte
+        checkDeplacementPasPossible = True  # Flag pour vérifier si un déplacement est possible
+        compteur = 0
+        while checkDeplacementPasPossible and compteur < 100: 
+            compteur += 1
+            # Crée une copie de la carte pour tester les placements sans affecter la carte principale
+            self.mapCheckDeplacementPossible = []
+            self.mapCheckDeplacementPossible = copy.deepcopy(self.map)  
+
+            # Liste pour stocker les positions des obstacles
+            listeObstacle = [] 
+
+            # Place les obstacles aléatoirement sur la carte, en vérifiant qu'ils ne se superposent pas
+            for _i_ in range(self.obstacle):
+                obstaclePos = [randint(0, self.longueur-2), randint(0, self.largeur-1)]
+                # Vérifie que la position choisie est valide (case vide et pas dans une zone interdite)
+                while self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] != '-' \
+                    or self.mapCheckDeplacementPossible[obstaclePos[1]-1][obstaclePos[0]] != '-' \
+                    or self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]+1] != '-' \
+                    or (1 <= obstaclePos[1] < 11 and 64 <= obstaclePos[0] <= 85):
+                    obstaclePos = [randint(0, self.longueur-2), randint(0, self.largeur-1)]  # Nouvelle tentative
+                # Marque la position comme occupée pour les tests
+                self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] = "O"  
+                listeObstacle.append(obstaclePos)  # Ajoute l'obstacle à la liste
+
+            # Récupère les coordonnées des points clés (par exemple, spawn, passage de la rivière, etc.)
+            
+            #spawn
+            coordsPts1 = self.coordsSpawn
+
+            #pnj 1
+            coordsPts2 = self.allCoordsPNJ[0]
+
+            # prison
+            coordsPts3 = [66,1]
+            coordsPts4 = self.allCoordsPNJ[1]
+            coordsPts5 = self.allCoordsPNJ[2]
+            #pont passage vers dernier pnj
+            coordsPts6 = self.allCoordsPNJ[3]
+
+            # porte volcan
+            coordsPts7 = self.coordsDoorVolcan
+
+            # Liste des points à vérifier pour les déplacements possibles
+            listeOrdrePointCle1 = [coordsPts1, coordsPts2]
+            listeOrdrePointCle2 = [coordsPts3, coordsPts4, coordsPts5, coordsPts6, coordsPts7]
+
+            # Vérifie la possibilité de déplacements pour chaque liste de points clés
+            # Le parcours se fait en trois étapes, en passant par les rivières pour s'assurer que les chemins sont valides
+            if self.CheckNiveauPossible(listeOrdrePointCle1, ["-", "P", "S", "V"], self.mapCheckDeplacementPossible):  # Vérifie la première partie
+                if self.CheckNiveauPossible(listeOrdrePointCle2,  ["-", "P", "S", "V"], self.mapCheckDeplacementPossible):  # Vérifie la deuxième partie
+                    # Si tout est valide, les obstacles peuvent être placés et les coordonnées sont sauvegardées
+                    AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords")
+                    checkDeplacementPasPossible = False  # Arrête la boucle
+
+                    # Place les obstacles sur la carte
+                    for coords in listeObstacle:
+                        self.map[coords[1]][coords[0]] = "O"  # Placement des obstacles sur la carte
+                        self.baseMap[coords[1]][coords[0]] = "-"
+
+        ## SECURITE
+        # verif si boucle pour relancement
+        if compteur < 100:
+            # Sauvegarde les coordonnées du transport de bateau vers le château dans un fichier JSON
+            self.ERROR_RELANCER = False
+        else:
+            self.ERROR_RELANCER = True
+
+    def Update(self):
+        self.PlacementBordure()
+        self.PlacementRiver()
+        self.PlacementRockCratere()
+        self.PlacementMuraille()
+        self.PlacementObjSpecifique()
+        self.PlacementSpawn()
+        self.PlacementPNJ()
+        self.PlacementObstacle()
+        self.SaveGlobal()
+        
+
+        # relancer une nouvelle map
+        if self.ERROR_RELANCER:
+            return None, None, self.ERROR_RELANCER
+        
+        # Retourne la carte actuelle (map) et la carte de base (baseMap)
+        return self.map, self.baseMap, self.ERROR_RELANCER  
+

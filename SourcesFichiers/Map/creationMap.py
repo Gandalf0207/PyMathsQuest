@@ -421,8 +421,6 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         # Retourne la carte actuelle (map) et la carte de base (baseMap)
         return self.map, self.baseMap, self.ERROR_RELANCER
 
-
-
 class NiveauMedievale(GestionNiveauMap):
     def __init__(self):
         """
@@ -1211,7 +1209,6 @@ class NiveauMedievale(GestionNiveauMap):
         # Retourne la carte actuelle (map) et la carte de base (baseMap)
         return self.map, self.baseMap, self.ERROR_RELANCER
 
-
 class NiveauMedievaleChateau():
     def __init__(self):
        """Méhode initialisation valeur de la création de map demi niveau médievale"""
@@ -1262,8 +1259,6 @@ class NiveauMedievaleChateau():
         AjoutJsonMapValue(self.baseMap, "coordsMapBase", "AllMapBase")
 
         return self.map, self.baseMap, self.ERROR_RELANCER
-
-
 
 class NiveauBaseFuturiste(GestionNiveauMap):
     def __init__(self):
