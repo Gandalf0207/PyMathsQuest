@@ -137,11 +137,6 @@ class NiveauMedievale(GestionNiveauMap):
 
     def PlacementObjSpecifique(self):
 
-        # easter egg gong
-        self.gongCoords = [148, 1, "NiveauMedievale", "Gong"]
-        self.map[self.gongCoords[1]][self.gongCoords[0]] = "&"
-        self.baseMap[self.gongCoords[1]][self.gongCoords[0]] = "-" # clear
-
         # chateau elements
         self.coordsChateau = [140, 0, "NiveauMedievale", "Chateau"]
         self.map[self.coordsChateau[1]][self.coordsChateau[0]] = "&"
@@ -174,7 +169,7 @@ class NiveauMedievale(GestionNiveauMap):
         self.baseMap[self.coordsTableCraft[1]][self.coordsTableCraft[0]] = "-" # clear
 
 
-        allObjSpecifique = [self.gongCoords, self.coordsChateau, self.coordsDoorChateau, self.coordsDoorMuraille,
+        allObjSpecifique = [self.coordsChateau, self.coordsDoorChateau, self.coordsDoorMuraille,
                             self.coordsPontSpawn, self.coordsPontGarde, self.coordsPuits, self.coordsTableCraft]
         AjoutJsonMapValue(allObjSpecifique, "coordsMapObject", "ObjAPlacer")
 

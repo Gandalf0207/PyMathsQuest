@@ -7,7 +7,6 @@ from SourcesFichiers.Interface.Game.interfaceReactor import *
 from SourcesFichiers.Interface.Game.interfaceSettings import *
 from SourcesFichiers.Interface.Game.interfaceSound import *
 from SourcesFichiers.Interface.Game.interfaceExo import *
-from SourcesFichiers.Interface.Game.interfaceGong import *
 from SourcesFichiers.Interface.Game.interfaceCredits import *
 
 
@@ -23,9 +22,6 @@ class GestionGameInterfaces(object):
         self.isInterfaceCreditOpen = False
         self.isPNJInterfaceOpen = False # bool PNJ
         self.isInterfaceExoOpen = False # bool exo
-
-        # interface map 2
-        self.isInterfaceGongOpen = False
 
         # interface map 3
         self.isInterfaceRectorOpen = False # bool reactor
@@ -58,9 +54,6 @@ class GestionGameInterfaces(object):
         self.isInterfaceCreditOpen = False
         self.isPNJInterfaceOpen = False 
         self.isInterfaceExoOpen = False 
-
-        # interface map 2
-        self.isInterfaceGongOpen = False
 
         # interface map 3
         self.isInterfaceRectorOpen = False 
@@ -193,12 +186,6 @@ class GestionGameInterfaces(object):
                     self.interface = self.keepReactorObject
                     INFOS["Hover"] = False # reset cursor
 
-                
-                elif argsSpecifique == "Gong":
-                    self.isInterfaceOPEN = True
-                    self.isInterfaceGongOpen = True
-                    self.interface = GongInterface(self)
-                    INFOS["Hover"] = False # reset cursor
 
                 
 
