@@ -33,8 +33,8 @@ class ReactorInterface(object):
         # close interface cross
         self.surfaceCloseCross = pygame.Surface((24,24))
         self.isCrossCloseHover = False
-        self.crossClose = pygame.image.load(join("Images", "Croix", "x-mark.png")).convert_alpha()
-        self.crossClose2 = pygame.image.load(join("Images", "Croix", "x-mark2.png")).convert_alpha()
+        self.crossClose = pygame.image.load(join("Image","Interface", "Croix", "x-mark.png")).convert_alpha()
+        self.crossClose2 = pygame.image.load(join("Image","Interface", "Croix", "x-mark2.png")).convert_alpha()
 
 
 

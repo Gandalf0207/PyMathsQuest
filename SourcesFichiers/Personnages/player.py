@@ -26,7 +26,7 @@ class Player(pygame.sprite.Sprite):
         if INFOS["HidePlayer"]:
             self.image = self.hidePlayerPng
         else:
-            self.image = pygame.image.load(join("Images","Player", "down", "0.png")).convert_alpha() # première image 
+            self.image = pygame.image.load(join("Image","Player", "down", "0.png")).convert_alpha() # première image 
         self.rect = self.image.get_frect(center = pos)
         self.hitbox_rect = self.rect.inflate(-60,0) # collision
 
@@ -38,14 +38,14 @@ class Player(pygame.sprite.Sprite):
     def load_images(self) -> None:
         """Méthode de chargement de toutes les images pour l'animation
         Input / Output : None"""
-        self.hidePlayerPng = pygame.image.load(join("Images", "Player", "Hide", "HidePlayer.png")).convert_alpha()
+        self.hidePlayerPng = pygame.image.load(join("Image", "Player", "HidePlayer.png")).convert_alpha()
 
         # dico stockage images
         self.frames = {'left' : [],'right' : [],'up' : [],'down' : []}
 
         # parcours du folder et ajout de toutes les images
         for state in self.frames.keys():
-            for folder_path, sub_folders, file_names in walk(join("Images","Player", state)):
+            for folder_path, sub_folders, file_names in walk(join("Image","Player", state)):
                 if file_names:
                     for file_name in sorted(file_names, key= lambda name: int(name.split('.')[0])):
                         full_path = join(folder_path, file_name)

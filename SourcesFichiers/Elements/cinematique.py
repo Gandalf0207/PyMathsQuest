@@ -15,8 +15,7 @@ class Cinematique(object):
             self.rect = self.targetObject.rect  # Utiliser la hitbox comme référence principale
             self.hitbox = self.targetObject.hitbox  # Synchroniser avec la hitbox du PNJ
         else:
-            coordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
-            self.pos = coordsSpawn[0]
+            self.pos = LoadJsonMapValue("coordsMapObject", "Spawn")
 
             # Récupération des attributs graphiques du PNJ
             self.rect = self.targetObject.rect  # Utiliser la hitbox comme référence principale

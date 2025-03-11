@@ -30,10 +30,10 @@ class HomeInterface(object):
         self.isHorverText = False
         self.isHoverBtnLancer = False
 
-        self.btnTexture = pygame.image.load(join("Images", "Element", "Start.png")).convert_alpha()
-        self.btnTextureHover = pygame.image.load(join("Images", "Element", "StartHover.png")).convert_alpha()
+        self.btnTexture = pygame.image.load(join("Image","Interface", "Button", "Start.png")).convert_alpha()
+        self.btnTextureHover = pygame.image.load(join("Image", "Interface", "Button", "StartHover.png")).convert_alpha()
 
-        self.bcgInterface = pygame.image.load(join("Images", "Interface", "Lancement.png")).convert_alpha()
+        self.bcgInterface = pygame.image.load(join("Image", "Interface", "Lancement.png")).convert_alpha()
         self.interfaceSurface.blit(self.bcgInterface, (0,0))
 
         # bool radio button

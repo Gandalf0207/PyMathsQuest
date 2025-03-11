@@ -474,9 +474,13 @@ class LoadMap():
 
                 elif self.map[ordonnees][abscisses] == "&":
 
+                    def case_valide(x, y):
+                        """ Vérifie si une case est valide dans la carte."""
+                        return 0 <= x < len(self.mapBase) and 0 <= y < len(self.mapBase[0])
+                    
                     def is_path(self, x, y):
                         """ Vérifie si une case est un chemin tout en évitant les erreurs d'index. """
-                        return 0 <= x < len(self.mapBase) and 0 <= y < len(self.mapBase[0]) and self.mapBase[x][y] in ["&", "b"]
+                        return case_valide(x, y) and self.mapBase[x][y] in ["W", "V", "&"]
 
                     # Récupération des voisins
                     up = is_path(self, ordonnees - 1, abscisses)
@@ -489,6 +493,13 @@ class LoadMap():
                         CollisionSprites(pos, self.wallAngularNE, "Wall", (self.allSprites, self.collisionSprites))
                     elif up and left:
                         CollisionSprites(pos, self.wallAngularNW, "Wall", (self.allSprites, self.collisionSprites))
+
+                    # Passage avec de l'eau
+                    elif right and left and case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "#" \
+                        and case_valide(ordonnees + 1, abscisses) and self.map[ordonnees + 1][abscisses] == "#":
+                        pathRiver = join("Images","Sol","Riviere","CastleWallRiverx128")
+                        AnimatedCollisionSprites(pos,pathRiver, "River", (self.allSprites, self.collisionSprites),layer=1)
+                        
                     elif down and right:
                         CollisionSprites(pos, self.wallAngularSE, "Wall", (self.allSprites, self.collisionSprites))
                     elif down and left:

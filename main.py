@@ -3,7 +3,7 @@ from SourcesFichiers.Personnages.player import *
 from SourcesFichiers.Elements.touche import *
 from SourcesFichiers.Elements.interactions import *
 from SourcesFichiers.Elements.groups import *
-from SourcesFichiers.Map.loadMap import *
+from SourcesFichiers.Map.loadMapv2 import *
 from SourcesFichiers.Elements.hotbar import *
 from SourcesFichiers.Personnages.pnj import *
 from SourcesFichiers.Ressources.Texte.creationTexte import *
@@ -78,7 +78,7 @@ class Game(object):
 
         # surface bg hotbar
         self.bgHotBar = pygame.Surface((WINDOW_WIDTH, 170))
-        self.hotbarBcg = pygame.image.load(join("Images", "Interface", "Hotbar.png")).convert_alpha()
+        self.hotbarBcg = pygame.image.load(join("Image", "Interface", "Hotbar.png")).convert_alpha()
         self.bgHotBar.blit(self.hotbarBcg, (0,0))
 
         # boolean de check game
@@ -96,7 +96,7 @@ class Game(object):
         self.ERROR_RELANCER = True
         while self.ERROR_RELANCER:
             #lancement création
-            self.loadMapElement = LoadMap(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
+            self.loadMapElement = LoadMapGestion(self.allSprites, self.collisionSprites, self.allPNJ, self.interactionsGroup)
             self.map, self.mapBase, self.ERROR_RELANCER = self.loadMapElement.Update() # mise à jour des variables
 
 
@@ -118,9 +118,8 @@ class Game(object):
             #construction
             self.buildElements = Construire(self)
 
-        getPlayerPosSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
-        playerPosSpawn = getPlayerPosSpawn[0] 
-            
+        playerPosSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
+        
         if NIVEAU["Map"] == "NiveauBaseFuturiste" and not INFOS["DemiNiveau"] :
             self.cinematique = True # player apparait par le portail
             INFOS["HidePlayer"] = True

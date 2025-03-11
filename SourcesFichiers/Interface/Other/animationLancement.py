@@ -16,7 +16,7 @@ class AnimationLancementObj():
         # Initialisation des variables
         self.frame_index = 0
         self.frames = 342
-        self.path = join("Images", "AnimationLancementGame")
+        self.path = join("Image", "AnimationLancementGame")
         self.gestionnaire = gestionnaire
 
         # Paramètres d'animation

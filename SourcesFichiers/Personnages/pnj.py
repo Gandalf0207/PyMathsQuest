@@ -18,7 +18,7 @@ class PNJOBJ(pygame.sprite.Sprite):
         # images + hitbox
         self.direction = "down"
         self.state, self.frame_index = self.direction, 0
-        self.image = pygame.image.load(join("Images","PNJ", NIVEAU["Map"], numpnj,"down", "0.png")).convert_alpha() # première image 
+        self.image = pygame.image.load(join("Image","NPC", NIVEAU["Map"], numpnj,"down", "0.png")).convert_alpha() # première image 
         self.rect = self.image.get_frect(center = pos)
         self.hitbox = self.rect.inflate(-60,-20) # collision
 
@@ -42,7 +42,7 @@ class PNJOBJ(pygame.sprite.Sprite):
 
         # parcours du folder et ajout de toutes les images
         for state in self.frames.keys():
-            for folder_path, sub_folders, file_names in walk(join("Images","PNJ",NIVEAU["Map"], self.numPNJ, state)):
+            for folder_path, sub_folders, file_names in walk(join("Image","NPC",NIVEAU["Map"], self.numPNJ, state)):
                 if file_names:
                     for file_name in sorted(file_names, key= lambda name: int(name.split('.')[0])):
                         full_path = join(folder_path, file_name)

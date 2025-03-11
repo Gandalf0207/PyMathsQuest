@@ -260,8 +260,8 @@ class PNJInterface(object):
         """Méthode de chargement des images.
         Input / Output : None"""
         
-        self.pnjImage = pygame.image.load(join("Images", "PNJ", "Discussion", f"Grand{self.gestionnaire.pnjActuel}.png")).convert_alpha()
-        self.playerImage = pygame.image.load(join("Images", "Player", "Discussion", "GrandPlayer.png")).convert_alpha()
+        self.pnjImage = pygame.image.load(join("Image", "NPC", NIVEAU["Map"], self.gestionnaire.pnjActuel, f"Grand{self.gestionnaire.pnjActuel}.png")).convert_alpha()
+        self.playerImage = pygame.image.load(join("Image", "Player", "GrandPlayer.png")).convert_alpha()
 
 
     def BuildInterface(self) -> None:

@@ -40,7 +40,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         self.coordsExit = [ptsRiverCompatible[0]-1, ptsRiverCompatible[1]]
         self.map[self.coordsExit[1]][self.coordsExit[0]] = "S"
         self.baseMap[self.coordsExit[1]][self.coordsExit[0]] = "-" # clear
-        AjoutJsonMapValue(self.coordsExit, "coordsMapObject", "Spawn")
+        AjoutJsonMapValue(self.coordsExit, "coordsMapObject", "Exit")
 
     def PlacementPNJ(self):
         ptsRiverCompatible = self.getPointSpecifiqueRiver.PlacementSpecial("coordsMapBase", "Riviere2 Coords")
