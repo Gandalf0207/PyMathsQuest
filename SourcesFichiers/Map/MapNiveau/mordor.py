@@ -65,8 +65,8 @@ class NiveauMordor(GestionNiveauMap):
             or self.map[getCoords2[1]][getCoords2[0]-2] != "-" \
             or self.map[getCoords2[1]][getCoords2[0]+1] != "-": 
             getCoords2 = choice(allCoordsRiver2)
-        self.coordsPont1 = [getCoords1[0], getCoords1[1], "NiveauMedievale", "Pont5", "NoInteraction"]
-        self.coordsPont2 = [getCoords2[0], getCoords2[1], "NiveauMedievale", "Pont5", "Interaction"]
+        self.coordsPont1 = [getCoords1[0], getCoords1[1], "NiveauMordor", "Pont5", "NoInteraction"]
+        self.coordsPont2 = [getCoords2[0], getCoords2[1], "NiveauMordor", "Pont5", "Interaction"]
 
         # placement vaisseau
         self.coordsVaisseau = [randint(8, 25), randint(3, 64)]
@@ -106,12 +106,14 @@ class NiveauMordor(GestionNiveauMap):
 
         
 
-        allObjSpecifique = [self.coordsPont1, self.coordsPont2]
+        allObjSpecifique = [self.coordsPont1, self.coordsPont2, self.coordsVaisseau, self.coordsParcheminPrison, self.coordsPotPrision,
+                            self.coordsDoorCellule1,self.coordsDoorCellule2,self.coordsDoorPrison,self.coordsBarreaux1, self.coordsBarreaux2,
+                            self.coordsBarreaux3,self.coordsBarreaux4,self.coordsVolcan, self.coordsDoorVolcan]
         AjoutJsonMapValue(allObjSpecifique, "coordsMapObject", "ObjAPlacer")
     
     def PlacementSpawn(self):
         # spawn
-        self.coordsSpawn = [self.coordsVaisseau[1] + 7, self.coordsVaisseau[0] +3]
+        self.coordsSpawn = [self.coordsVaisseau[0] + 7, self.coordsVaisseau[1] +3]
         self.map[self.coordsSpawn[1]][self.coordsSpawn[0]] = "S"
         self.baseMap[self.coordsSpawn[1]][self.coordsSpawn[0]] = "-"
         AjoutJsonMapValue([self.coordsSpawn], "coordsMapObject", "Spawn") # on ajoute les coordonnées du spawn au fichier json      
@@ -176,28 +178,32 @@ class NiveauMordor(GestionNiveauMap):
             coordsPts3 = [66,1]
             coordsPts4 = self.allCoordsPNJ[1]
             coordsPts5 = self.allCoordsPNJ[2]
+            coordsPts6 = [self.coordsPont2[0]-1, self.coordsPont2[1]] # bloc avant pont
             #pont passage vers dernier pnj
-            coordsPts6 = self.allCoordsPNJ[3]
+            coordsPts7 = [self.coordsPont2[0]+1, self.coordsPont2[1]] # bloc avant pont
+            coordsPts8 = self.allCoordsPNJ[3]
 
             # porte volcan
-            coordsPts7 = self.coordsDoorVolcan
+            coordsPts9 = self.coordsDoorVolcan
 
             # Liste des points à vérifier pour les déplacements possibles
             listeOrdrePointCle1 = [coordsPts1, coordsPts2]
-            listeOrdrePointCle2 = [coordsPts3, coordsPts4, coordsPts5, coordsPts6, coordsPts7]
+            listeOrdrePointCle2 = [coordsPts3, coordsPts4, coordsPts5, coordsPts6]
+            listeOrdrePointCle3 = [coordsPts7, coordsPts8]
 
             # Vérifie la possibilité de déplacements pour chaque liste de points clés
             # Le parcours se fait en trois étapes, en passant par les rivières pour s'assurer que les chemins sont valides
             if self.CheckNiveauPossible(listeOrdrePointCle1, ["-", "P", "S", "V"], self.mapCheckDeplacementPossible):  # Vérifie la première partie
                 if self.CheckNiveauPossible(listeOrdrePointCle2,  ["-", "P", "S", "V"], self.mapCheckDeplacementPossible):  # Vérifie la deuxième partie
-                    # Si tout est valide, les obstacles peuvent être placés et les coordonnées sont sauvegardées
-                    AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords")
-                    checkDeplacementPasPossible = False  # Arrête la boucle
+                    if self.CheckNiveauPossible(listeOrdrePointCle3, ["-", "P", "S", "V"], self.mapCheckDeplacementPossible):  # Vérifie la troisième partie
+                        # Si tout est valide, les obstacles peuvent être placés et les coordonnées sont sauvegardées
+                        AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords")
+                        checkDeplacementPasPossible = False  # Arrête la boucle
 
-                    # Place les obstacles sur la carte
-                    for coords in listeObstacle:
-                        self.map[coords[1]][coords[0]] = "O"  # Placement des obstacles sur la carte
-                        self.baseMap[coords[1]][coords[0]] = "-"
+                        # Place les obstacles sur la carte
+                        for coords in listeObstacle:
+                            self.map[coords[1]][coords[0]] = "O"  # Placement des obstacles sur la carte
+                            self.baseMap[coords[1]][coords[0]] = "-"
 
         ## SECURITE
         # verif si boucle pour relancement

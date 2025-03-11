@@ -186,6 +186,12 @@ class NiveauBaseFuturiste(GestionNiveauMap):
         self.coordsDoorSalle2 = [allDoorsSallesCoords[2][0], allDoorsSallesCoords[2][1], "NiveauBaseFuturiste", "DoorSalle"]
         self.coordsDoorSalle3 = [allDoorsSallesCoords[3][0], allDoorsSallesCoords[3][1], "NiveauBaseFuturiste", "DoorSalle"]
 
+
+        allObjSpecifique = [self.coordsReactorStruc ,self.coordsReactorBloc , self.coordsCafetStruc ,self.coordsEssenceStruc ,self.coordsLancementStruc,
+                            self.coordsVent1, self.coordsVent2, self.coordsDoorSalle0,self.coordsDoorSalle1,self.coordsDoorSalle2,self.coordsDoorSalle3,]
+        AjoutJsonMapValue(allObjSpecifique, "coordsMapObject", "ObjAPlacer")
+
+
     def PlacementSpawn(self):
         self.coordsSpawn =[ 2, self.allLiaisons[0][0][1]]
         self.map[self.coordsSpawn[1]][self.coordsSpawn[0]] = "S"
