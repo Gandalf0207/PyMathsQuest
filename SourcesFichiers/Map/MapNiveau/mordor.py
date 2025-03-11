@@ -30,9 +30,9 @@ class NiveauMordor(GestionNiveauMap):
         # prisions
         self.prisonStructure = [
             ["W", "-", "-", "-", "-", "W", "-", "-", "V", "W", "-", "-", "-", "W", "-", "-", "-", "-", "W"],
-            ["W", "-", "-", "-", "-", "W", "-", "V", "-", "W", "-", "-", "-", "W", "-", "-", "-", "-", "W"],
+            ["W", "-", "-", "-", "-", "W", "-", "&", "-", "W", "-", "-", "-", "W", "-", "-", "-", "-", "W"],
             ["W", "-", "-", "-", "-", "W", "-", "-", "-", "W", "-", "-", "-", "W", "-", "-", "-", "-", "W"],
-            ["W", "-", "-", "-", "-", "W", "V", "V", "V", "W", "V", "V", "V", "W", "-", "-", "-", "-", "W"],
+            ["W", "-", "-", "-", "-", "W", "&", "V", "&", "W", "&", "V", "&", "W", "-", "-", "-", "-", "W"],
             ["W", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "W"],
             ["W", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "W"],
             ["W", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "W"],
@@ -72,7 +72,7 @@ class NiveauMordor(GestionNiveauMap):
         self.coordsVaisseau = [randint(8, 25), randint(3, 64)]
         for ordonne in range(5):
             for abscisse in range(5):
-                self.map[self.coordsVaisseau[1] + ordonne][self.coordsVaisseau[0] + abscisse] = "V"
+                self.map[self.coordsVaisseau[1] + ordonne][self.coordsVaisseau[0] + abscisse] = "&"
                 self.baseMap[self.coordsVaisseau[1] + ordonne][self.coordsVaisseau[0] + abscisse] = "-" # clear
 
         # placement pot prison
@@ -101,6 +101,9 @@ class NiveauMordor(GestionNiveauMap):
 
         # placement porte volcan
         self.coordsDoorVolcan = [self.coordsVolcan[0] + 2, self.coordsVolcan[1] + 4]
+        self.map[self.coordsDoorVolcan[1]][self.coordsDoorPrison[0]] = "V"
+        self.baseMap[self.coordsDoorVolcan[1]][self.coordsDoorPrison[0]] = "-"
+
         
 
         allObjSpecifique = [self.coordsPont1, self.coordsPont2]
@@ -110,7 +113,7 @@ class NiveauMordor(GestionNiveauMap):
         # spawn
         self.coordsSpawn = [self.coordsVaisseau[1] + 7, self.coordsVaisseau[0] +3]
         self.map[self.coordsSpawn[1]][self.coordsSpawn[0]] = "S"
-        self.map[self.coordsSpawn[1]][self.coordsSpawn[0]] = "-"
+        self.baseMap[self.coordsSpawn[1]][self.coordsSpawn[0]] = "-"
         AjoutJsonMapValue([self.coordsSpawn], "coordsMapObject", "Spawn") # on ajoute les coordonnées du spawn au fichier json      
 
     def PlacementPNJ(self):

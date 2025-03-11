@@ -60,7 +60,7 @@ class NiveauPlaineRiviere(GestionNiveauMap):
 
         # camp fire
         self.coordsCampFire = [9,3,"NiveauPlaineRiviere", "CampFire"]
-        self.map[self.coordsCampFire[1]][self.coordsCampFire[0]] = "V"
+        self.map[self.coordsCampFire[1]][self.coordsCampFire[0]] = "&"
         self.baseMap[self.coordsCampFire[1]][self.coordsCampFire[0]] = "-"
 
         # arbre interaction pnj

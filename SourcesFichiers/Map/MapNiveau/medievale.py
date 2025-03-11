@@ -47,7 +47,7 @@ class NiveauMedievale(GestionNiveauMap):
         # structure chateau emplacement vide
         for i in range(5):
             for j in range(5): # (109, 1) = pos ref chateau
-                self.map[1+ j][109 +i] = "V"
+                self.map[1+ j][109 +i] = "&"
                 self.baseMap[1+j][109 +i] = "-" # clear
 
     def PlacementChamp(self):
@@ -139,12 +139,12 @@ class NiveauMedievale(GestionNiveauMap):
 
         # easter egg gong
         self.gongCoords = [148, 1, "NiveauMedievale", "Gong"]
-        self.map[self.gongCoords[1]][self.gongCoords[0]] = "V"
+        self.map[self.gongCoords[1]][self.gongCoords[0]] = "&"
         self.baseMap[self.gongCoords[1]][self.gongCoords[0]] = "-" # clear
 
         # chateau elements
         self.coordsChateau = [140, 0, "NiveauMedievale", "Chateau"]
-        self.map[self.coordsChateau[1]][self.coordsChateau[0]] = "V"
+        self.map[self.coordsChateau[1]][self.coordsChateau[0]] = "&"
         self.baseMap[self.coordsChateau[1]][self.coordsChateau[0]] = "-" # clear
 
         # porte du chateau 
@@ -154,7 +154,7 @@ class NiveauMedievale(GestionNiveauMap):
 
         # porte muraille 
         self.coordsDoorMuraille = [109, 24, "NiveauMedievale", "DoorMuraille"]
-        self.map[self.coordsDoorMuraille[1]][self.coordsDoorMuraille[0]] = "V"
+        self.map[self.coordsDoorMuraille[1]][self.coordsDoorMuraille[0]] = "&"
         self.baseMap[self.coordsDoorMuraille[1]][self.coordsDoorMuraille[0]] = "-" # clear
 
         # pont spawn
@@ -321,7 +321,7 @@ class NiveauMedievale(GestionNiveauMap):
                     if i ==0:
                         self.map[coords[1]][coords[0]] = "H"
                     else:
-                        self.map[coords[1]][coords[0]] = "V" # sécu
+                        self.map[coords[1]][coords[0]] = "&" # sécu
                     self.baseMap[coords[1]][coords[0]] = "-" # clear
 
     def PlacementPath2(self):
