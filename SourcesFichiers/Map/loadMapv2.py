@@ -88,8 +88,8 @@ class LoadMapGestion():
         self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesWE.png" )).convert_alpha()
         self.MurNSGauche = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesNS.png" )).convert_alpha()
         self.MurMountain = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesMountain.png" )).convert_alpha()
-        self.MurAngularSE = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesAngle.png" )).convert_alpha()
-        self.MurAngularSW = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesAngle.png" )).convert_alpha()
+        self.MurAngularNW = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesAngle.png" )).convert_alpha()
+        self.MurAngularNE = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesAngle.png" )).convert_alpha()
 
         self.well = pygame.image.load(join("Image", "Structure", "Medievale", "Puits.png")).convert_alpha()
         self.tableCraft = pygame.image.load(join("Image", "Obstacle", "TableCraft.png")).convert_alpha()
@@ -295,7 +295,8 @@ class LoadMapGestion():
                     # path par défault
                     else:
                         Sprites(pos, self.pathWE, "Path", self.allSprites)
-                        
+
+
                 # riviere
                 if self.map[ordonnees][abscisses] == "#":
 
@@ -307,57 +308,57 @@ class LoadMapGestion():
 
                     def checkBuildUp(can_go_up, can_go_left, can_go_right):
                         if can_go_up:
-                            if self.mapBase[ordonnees -1][abscisses] == "#":
+                            if self.map[ordonnees -1][abscisses] == "#":
                                 return True
-                            if self.mapBase[ordonnees -1][abscisses] == "W":
+                            if self.map[ordonnees -1][abscisses] == "W":
                                 if can_go_right and can_go_left:
-                                    if self.mapBase[ordonnees -2][abscisses-1] == "#" or self.mapBase[ordonnees -2][abscisses] == "#" or self.mapBase[ordonnees -2][abscisses +1] == "#":
+                                    if self.map[ordonnees -2][abscisses-1] == "#" or self.map[ordonnees -2][abscisses] == "#" or self.map[ordonnees -2][abscisses +1] == "#":
                                         return True
                                 if can_go_left:
-                                    if self.mapBase[ordonnees -2][abscisses-1] == "#" or self.mapBase[ordonnees -2][abscisses] == "#":   
+                                    if self.map[ordonnees -2][abscisses-1] == "#" or self.map[ordonnees -2][abscisses] == "#":   
                                         return True
                                 if can_go_right:
-                                    if self.mapBase[ordonnees -2][abscisses] == "#" or self.mapBase[ordonnees -2][abscisses +1] == "#":   
+                                    if self.map[ordonnees -2][abscisses] == "#" or self.map[ordonnees -2][abscisses +1] == "#":   
                                         return True     
                         return False   
                     
                     def checkBuildDown(can_go_down, can_go_left, can_go_right): 
                         if can_go_down:
-                            if self.mapBase[ordonnees +1][abscisses] == "#":
+                            if self.map[ordonnees +1][abscisses] == "#":
                                 return True
-                            if self.mapBase[ordonnees +1][abscisses] == "W":
+                            if self.map[ordonnees +1][abscisses] == "W":
                                 if can_go_right and can_go_left:
-                                    if self.mapBase[ordonnees +2][abscisses-1] == "#" or self.mapBase[ordonnees +2][abscisses] == "#" or self.mapBase[ordonnees +2][abscisses +1] == "#":
+                                    if self.map[ordonnees +2][abscisses-1] == "#" or self.map[ordonnees +2][abscisses] == "#" or self.map[ordonnees +2][abscisses +1] == "#":
                                         return True
                                 if can_go_left:
-                                    if self.mapBase[ordonnees +2][abscisses-1] == "#" or self.mapBase[ordonnees +2][abscisses] == "#":   
+                                    if self.map[ordonnees +2][abscisses-1] == "#" or self.map[ordonnees +2][abscisses] == "#":   
                                         return True
                                 if can_go_right:
-                                    if self.mapBase[ordonnees +2][abscisses] == "#" or self.mapBase[ordonnees +2][abscisses +1] == "#":   
+                                    if self.map[ordonnees +2][abscisses] == "#" or self.map[ordonnees +2][abscisses +1] == "#":   
                                         return True        
                         return False
 
                     def checkBuildLeft(can_go_left):
                         if can_go_left:
-                            if self.mapBase[ordonnees][abscisses - 1] == "#":
+                            if self.map[ordonnees][abscisses - 1] == "#":
                                 return True
                         return False
                     
                     def checkBuildRight(can_go_right):
                         if can_go_right:
-                            if self.mapBase[ordonnees][abscisses + 1] == "#":
+                            if self.map[ordonnees][abscisses + 1] == "#":
                                 return True
                         return False       
 
                     def checkBuildConflict(can_go_left, can_go_right):
                         if can_go_left and can_go_right:
-                            if self.mapBase[ordonnees][abscisses-1] == "B" or self.mapBase[ordonnees][abscisses+1] == "B": 
+                            if self.map[ordonnees][abscisses-1] == "B" or self.map[ordonnees][abscisses+1] == "B": 
                                 return True
                         if can_go_left:  
-                            if self.mapBase[ordonnees][abscisses-1] == "B":
+                            if self.map[ordonnees][abscisses-1] == "B":
                                 return True
                         if can_go_right:  
-                            if self.mapBase[ordonnees][abscisses+1] == "B":
+                            if self.map[ordonnees][abscisses+1] == "B":
                                 return True
 
                         return False
@@ -410,6 +411,11 @@ class LoadMapGestion():
                     elif can_build_right or can_build_left:
                         riverPath = join("Image","Obstacle","Riviere","RiverStraightW-Ex128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
+                    
+                    
+                    else:
+                        riverPath = join("Image","Obstacle","Riviere","RiverStraightN-Sx128")
+                        AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
 
                 # Bordure Montagne
                 elif self.map[ordonnees][abscisses] == "B":
@@ -436,10 +442,10 @@ class LoadMapGestion():
                         return 0 <= y < len(self.map) and 0 <= x < len(self.map[0])
                     
                     # Vérification des voisins
-                    right = case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] in ["C", "&", "V", "c"]
-                    left = case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] in ["C", "&", "V", "c"]
-                    up = case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "C"
-                    down = case_valide(ordonnees + 1, abscisses) and self.map[ordonnees + 1][abscisses] == "C"
+                    right = case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] in ["W", "&", "V"]
+                    left = case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] in ["W", "&", "V"]
+                    up = case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "W"
+                    down = case_valide(ordonnees + 1, abscisses) and self.map[ordonnees + 1][abscisses] == "W"
                     
                     # === 3. Virages (angles) ===
                     if up and right:
@@ -576,7 +582,7 @@ class LoadMapGestion():
             elif obj[2] == "NiveauMedievale":
                 match obj[3]:
                     case "Chateau":
-                        CollisionSprites(pos, self.campFire, "Chateau", (self.allSprites, self.collisionSprites), layer=1)
+                        CollisionSprites(pos, self.chateau, "Chateau", (self.allSprites, self.collisionSprites), layer=1)
                     case "DoorChateau":
                         CollisionSprites(pos, self.DoorChateau, "DoorChateau", (self.allSprites, self.collisionSprites, self.interactions), layer=1)
                     case "DoorMuraille":
@@ -601,9 +607,12 @@ class LoadMapGestion():
             AnimatedCollisionSprites(pos, path, "Pont3", (self.allSprites, self.collisionSprites, self.interactions), InfoExo=True, layer=3)
         elif element == "Pont4":
             path = join("Image", "Structure", "Pont", "Pont4")
-            AnimatedCollisionSprites(pos, path, "Pont4", (self.allSprites, self.collisionSprites, self.interactions), InfoExo=False, layer=3)
+            AnimatedCollisionSprites(pos, path, "Pont4", (self.allSprites, self.collisionSprites, self.interactions), InfoExo=False, layer=4)
     
-
+    def AddBoat(self, element, coords):
+        pos = [coords[0]*CASEMAP, coords[1]*CASEMAP]
+        if element == "BoatObj":
+            CollisionSprites(pos, self.boat, "BoatObj", (self.allSprites, self.interactions), layer=4)
 
 
     def Update(self):

@@ -107,7 +107,7 @@ class MiniMap:
             pygame.draw.rect(self.MiniMapSurface, (252, 128, 3), pnj_rect)
 
         for objectIntrac in interactionGroup:
-            if objectIntrac.id not in [ "Arbre", "Arbre2", "Souche", "Souche2"] :
+            if objectIntrac.id not in [ "Arbre", "Arbre1", "Souche", "Souche1"] :
                 element_x, element_y = objectIntrac.pos[0], objectIntrac.pos[1]
                 element_rect = pygame.Rect(element_x * CELL_SIZE * self.ratioImage, element_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE * 2)
                 pygame.draw.rect(self.MiniMapSurface, (34, 5, 71), element_rect)      

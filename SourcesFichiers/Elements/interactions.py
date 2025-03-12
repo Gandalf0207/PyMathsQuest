@@ -92,7 +92,7 @@ class Interactions(object):
                         self.gestionnaire.fondu_au_noir()
                         
                         # texte animation
-                        if self.ObjectId in ["Arbre", "Arbre2"]:
+                        if self.ObjectId in ["Arbre", "Arbre1"]:
                             self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["CutTree"])
                         else:
                             self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["RemoveSouche"])
@@ -104,15 +104,15 @@ class Interactions(object):
                             CollisionSprites(self.Obj.pos, soucheArbre,  "Souche", groups)
                             INVENTORY["Planks"] += 1
 
-                        elif self.ObjectId == "Arbre2": 
+                        elif self.ObjectId == "Arbre1": 
                             soucheArbre2 = pygame.image.load(join("Image", "Obstacle", "Souche2.png")).convert_alpha()
                             groups = (groups[0], groups[1], interactionGroups)
                             CollisionSprites(self.Obj.pos, soucheArbre2,  "Souche1", groups)
                             INVENTORY["Planks"] += 2
 
-                        elif self.ObjectId == "Souche" or self.ObjectId == "Souche2":
+                        elif self.ObjectId == "Souche" or self.ObjectId == "Souche1":
                             #creation boue
-                            boueImage = pygame.image.load(join("Image", "Sol", "Mud", "Mud.png")).convert_alpha()
+                            boueImage = pygame.image.load(join("Image", "Sol", "Mud.png")).convert_alpha()
                             Sprites(self.Obj.pos, boueImage, "Mud", groups[0]) # création de la boue
                             INVENTORY["Planks"] += 1 if self.ObjectId == "Souche" else 2
 
@@ -123,7 +123,7 @@ class Interactions(object):
                         self.gestionnaire.ouverture_du_noir(self.player.rect.center)
                 
                 # action si c'est un pont 
-                if self.ObjectId == "pont1" or self.ObjectId == "pont2":
+                if self.ObjectId == "Pont2":
                     # animation 
                     self.gestionnaire.fondu_au_noir()
 
@@ -144,7 +144,7 @@ class Interactions(object):
                         # fin animation
                         self.gestionnaire.ouverture_du_noir(self.player.rect.center)
 
-                if self.ObjectId == "pont3":
+                if self.ObjectId == "Pont4":
                     # animation 
                     self.gestionnaire.fondu_au_noir()
 
@@ -185,7 +185,7 @@ class Interactions(object):
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center)
 
                 
-                if self.ObjectId == "Boat":
+                if self.ObjectId == "BoatObj":
                     # animation 
                     self.gestionnaire.fondu_au_noir()
 
@@ -230,12 +230,9 @@ class Interactions(object):
                         
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center)
 
-                if self.ObjectId == "Gong":
-                    self.gameInterfaces.GestionInterfaceSpecifique("Gong")
-
 
                 # interaction porte chateau
-                if self.ObjectId == "Door":
+                if self.ObjectId == "DoorChateau":
                     # animation 
                     self.gestionnaire.fondu_au_noir()
 
@@ -250,6 +247,8 @@ class Interactions(object):
                     INFOS["Exo"] = True # lancement exo dans main (changement variable)
                     self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["MakeExo"]) # text animation
             
+
+
             elif NIVEAU["Map"] == "NiveauBaseFuturiste":
 
                 if self.ObjectId == "ReactorBloc":
@@ -401,11 +400,11 @@ class Interactions(object):
                 # vrif de possibilité + action possible en fonction de l'avancement
                 if Object.id == "ExitRock" and NIVEAU["Map"] == "NiveauPlaineRiviere" and not PNJ["PNJ3"]:
                     return False
-                if Object.id in ["Arbre", "Arbre2", "Souche", "Souche2"] and (NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ1"]):
+                if Object.id in ["Arbre", "Arbre1", "Souche", "Souche1"] and (NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ1"]):
                     return False
                 if Object.id == "TableCraft" and NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ2"]:
                     return False
-                if Object.id == "Door" and NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ3"]:
+                if Object.id == "DoorChateau" and NIVEAU["Map"] == "NiveauMedievale" and not PNJ["PNJ3"]:
                     return False
                 if Object.id  == "Vent" and not PNJ["PNJ1"]:
                     return False
@@ -415,7 +414,7 @@ class Interactions(object):
                     return False
                 if Object.id == "DoorBareau" and (INVENTORY["Key"] < 1 or not self.parchemin):
                     return False
-                if Object.id == "Door" and not PNJ["PNJ3"]:
+                if Object.id == "DoorPrison" and not PNJ["PNJ3"]:
                     return False
                 if Object.id == "PorteVolcan" and not PNJ["PNJ4"]:
                     return False
