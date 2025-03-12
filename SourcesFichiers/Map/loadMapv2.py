@@ -32,9 +32,9 @@ class LoadMapGestion():
 
         self.obstacle = pygame.image.load(join("Image", "Obstacle", "Arbre.png")).convert_alpha()
         self.obstacle1 = pygame.image.load(join("Image", "Obstacle", "Arbre2.png")).convert_alpha()
-        self.obstacle2 = pygame.image.load(join("Image", "Obstacle", "Souche.png")).convert_alpha()
-        self.obstacle3 = pygame.image.load(join("Image", "Obstacle", "Souche2.png")).convert_alpha()
-        self.HugeRock = pygame.image.load(join("Image", "Obstacle", "HugeRock.png")).convert_alpha()
+        self.obstacle2 = pygame.image.load(join("Image", "Obstacle", "HugeRock.png")).convert_alpha()
+        self.obstacle3 = pygame.image.load(join("Image", "Obstacle", "Souche.png")).convert_alpha()
+        self.obstacle4 = pygame.image.load(join("Image", "Obstacle", "Souche2.png")).convert_alpha()
 
         self.montainWE = pygame.image.load(join("Image", "Mur","Mountain", "MountainStraighW-Ex128.png")).convert_alpha()
         self.montainWE1 = pygame.image.load(join("Image", "Mur","Mountain", "MountainStraighW-Ealt1x128.png")).convert_alpha()
@@ -225,16 +225,16 @@ class LoadMapGestion():
                 
                 # sol
                 if self.map[ordonnees][abscisses] ==".":
-                    Sprites(pos, self.sol, "Sol", self.allSprites)
+                    Sprites(pos, self.sol, "Sol", self.allSprites, layer=0)
                 elif self.mapBase[ordonnees][abscisses] == 2:
                     if randint(1, 10) < 7:
-                        Sprites(pos, self.sol2, "Sol2", self.allSprites)
+                        Sprites(pos, self.sol2, "Sol2", self.allSprites, layer=0)
                     else:
-                        Sprites(pos, self.sol3, "Sol3", self.allSprites)
+                        Sprites(pos, self.sol3, "Sol3", self.allSprites, layer=0)
                 elif self.mapBase[ordonnees][abscisses] == 1:
-                    Sprites(pos, self.sol1, "Sol3", self.allSprites)
+                    Sprites(pos, self.sol1, "Sol3", self.allSprites, layer=0)
                 elif self.mapBase[ordonnees][abscisses] == "-":
-                        Sprites(pos, self.sol, "Sol", self.allSprites)
+                    Sprites(pos, self.sol, "Sol", self.allSprites, layer=0)
                 
                 # riviere
                 if self.map[ordonnees][abscisses] == "#":
@@ -357,15 +357,16 @@ class LoadMapGestion():
                         
                         if ordonnees == 0:
                             if choice([True, False]):
-                                CollisionSprites(pos, self.montainWE,"BorderTop",  (self.allSprites, self.collisionSprites))
+                                CollisionSprites(pos, self.montainWE,"BorderTop",  (self.allSprites, self.collisionSprites), layer=1)
                             else:
-                                CollisionSprites(pos, self.montainWE1, "BorderTop", (self.allSprites, self.collisionSprites))
+                                CollisionSprites(pos, self.montainWE1, "BorderTop", (self.allSprites, self.collisionSprites), layer=1)
 
                         else:
                             if choice([True, False]):
-                                CollisionSprites(pos, self.montainWE, "BorderBottom", (self.allSprites, self.collisionSprites))
+                                CollisionSprites(pos, self.montainWE, "BorderBottom", (self.allSprites, self.collisionSprites), layer=1)
                             else:
-                                CollisionSprites(pos, self.montainWE1,"BorderBottom",  (self.allSprites, self.collisionSprites))
+                                CollisionSprites(pos, self.montainWE1,"BorderBottom",  (self.allSprites, self.collisionSprites), layer=1)
+                
                 
                 # murs structure
                 elif self.map[ordonnees][abscisses] == "W":
@@ -407,6 +408,9 @@ class LoadMapGestion():
                             # add pre sol car collision mur bas sprite différents
                             Sprites(pos, self.sol2,"Sol", self.allSprites)
                             CollisionSprites(pos, self.MurWEBas, "Wall2", (self.allSprites, self.collisionSprites))
+                        else:
+                            CollisionSprites(pos, self.MurWEHaut, "Wall2", (self.allSprites, self.collisionSprites))
+
 
                     elif up and down:
                         if self.mapBase[ordonnees][abscisses-1] == ".":
@@ -417,6 +421,46 @@ class LoadMapGestion():
                     else:
                         CollisionSprites(pos, self.MurWEHaut, "Wall", (self.allSprites, self.collisionSprites))
 
+                # obstacles
+                # Tout les obstales
+                if self.map[ordonnees][abscisses] == "O":
+                    # map 1 et 2
+                    if NIVEAU["Map"] in ["NiveauPlaineRiviere", "NiveauMedievale"]:
+                        choixObstacle = randint(0,100)
+                        if choixObstacle <= 65:
+                            if randint(0,3) > 2:
+                                if NIVEAU["Map"] == "NiveauPlaineRiviere": # add interaction arbre
+                                    CollisionSprites(pos, self.obstacle,"Arbre", (self.allSprites, self.collisionSprites))
+                                else:
+                                    CollisionSprites(pos, self.obstacle,"Arbre", (self.allSprites, self.collisionSprites, self.interactions))
+                            else:
+                                if NIVEAU["Map"] == "NiveauPlaineRiviere":
+                                    CollisionSprites(pos, self.obstacle1,"Arbre1", (self.allSprites, self.collisionSprites))
+                                else:
+                                    CollisionSprites(pos, self.obstacle1,"Arbre1", (self.allSprites, self.collisionSprites, self.interactions))
+                        elif 65 < choixObstacle <= 85:
+                            CollisionSprites(pos, self.obstacle2, "HugeRock", (self.allSprites, self.collisionSprites))
+                        elif 85 < choixObstacle <= 100:
+                            choixSouche = randint(0,11)
+                            if choixSouche < 7:
+                                if NIVEAU["Map"] == "NiveauPlaineRiviere": # add interaction arbre
+                                    CollisionSprites(pos, self.obstacle3,"Souche", (self.allSprites, self.collisionSprites))
+                                else:
+                                    CollisionSprites(pos, self.obstacle3,"Souche", (self.allSprites, self.collisionSprites, self.interactions))
+                            else:
+                                if NIVEAU["Map"] == "NiveauPlaineRiviere":
+                                    CollisionSprites(pos, self.obstacle4,"Souche1", (self.allSprites, self.collisionSprites))
+                                else:
+                                    CollisionSprites(pos, self.obstacle4,"Souche1", (self.allSprites, self.collisionSprites, self.interactions))
+
+                    elif NIVEAU["Map"] == "NiveauBaseFuturiste":
+                        CollisionSprites(pos, self.obstacle, "Caisse", (self.allSprites, self.collisionSprites))
+
+                    elif NIVEAU["Map"] == "NiveauMordor":
+                        CollisionSprites(pos, self.obstacle, "HugeRock", (self.allSprites, self.collisionSprites))
+               
+               
+                # maison
                 elif self.map[ordonnees][abscisses] == "H":
                     choix = randint(1, 3)
                     if choix == 1:
@@ -450,7 +494,32 @@ class LoadMapGestion():
                 PNJOBJ(pos, "PNJ6", (self.allPNJ, self.allSprites, self.collisionSprites))
         
     def SetupObj(self):
-        pass
+        allObj = LoadJsonMapValue("coordsMapObject", "ObjAPlacer")
+        
+        for obj in allObj:
+            pos = (obj[0]*CASEMAP, obj[1]*CASEMAP)
+            if obj[2] == "NiveauPlaineRiviere":
+                match obj[3]:
+                    case "CampFire":
+                        CollisionSprites(pos, self.campFire, "CampFire", (self.allSprites, self.collisionSprites), layer=1)
+                    case "ArbreBucheron":
+                        CollisionSprites(pos, self.obstacle, "ArbreBucheron", (self.allSprites, self.collisionSprites), layer=1)
+                    case "Pont3":
+                        self.AddPont("Pont3", [obj[0], obj[1]])
+                    case "ExitRock":
+                        CollisionSprites(pos, self.obstacle2, "ExitRock", (self.allSprites, self.collisionSprites, self.interactions), layer=1)
+
+    def AddPont(self, element, coords):
+        pos =  [coords[0]*CASEMAP, coords[1]*CASEMAP]
+        if element == "Pont1":
+            CollisionSprites(pos, self.pont1, element, (self.allSprites, self.collisionSprites, self.interactions), layer=2)
+        elif element  == "Pont2":
+            CollisionSprites(pos, self.pont2, element, (self.allSprites, self.collisionSprites, self.interactions), layer=2)
+        elif element == "Pont3":
+            path = join("Image", "Structure", "Pont", "Pont3")
+            AnimatedCollisionSprites(pos, path, "Pont3", (self.allSprites, self.collisionSprites, self.interactions), InfoExo=True, layer=3)
+    
+
 
 
     def Update(self):

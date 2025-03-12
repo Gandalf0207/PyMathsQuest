@@ -37,12 +37,11 @@ class CollisionSprites(pygame.sprite.Sprite):
             if isinstance(group, pygame.sprite.LayeredUpdates):
                 group.change_layer(self, layer)
 
-        if typeCollision == "Arbre"  or typeCollision == "Arbre2":
-            self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-68))
-        elif typeCollision == "pont1" or typeCollision == "pont2":
+        if typeCollision == "Arbre"  or typeCollision == "Arbre1" or typeCollision == "ArbreBucheron":
+            self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-66))
+        elif typeCollision == "Pont1" or typeCollision == "Pont2":
             self.rect = self.image.get_frect(topleft=(pos[0]-33, pos[1]))
-        elif typeCollision == "pont3":
-            self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-20))
+
         elif typeCollision == "MuraillesAngle":
             self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-64))
         else:
@@ -68,8 +67,7 @@ class CollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(-100,0)
             case "pont2":
                 self.hitbox = self.rect.inflate(-100,0)
-            case "pont3":
-                self.hitbox = self.rect.inflate(0, -100)
+
             case "ExitRock":
                 self.hitbox = self.rect.inflate(-60, -20)
             case "Champs":
@@ -230,15 +228,15 @@ class AnimatedCollisionSprites(pygame.sprite.Sprite):
             if isinstance(group, pygame.sprite.LayeredUpdates):
                 group.change_layer(self, layer)
 
-        if typeCollision == "pont3":
-            self.rect = self.image.get_frect(topleft=(pos[0], pos[1]))
+        if typeCollision == "Pont3":
+            self.rect = self.image.get_frect(topleft=(pos[0]-32, pos[1]))   
         else:
             self.rect = self.image.get_frect(topleft=pos)
 
         # collision en fonction de l'élément # Créer une hitbox plus petite (réduire la largeur et la hauteur)
         match typeCollision:
-            case "pont3":
-                self.hitbox = self.rect.inflate(-64, -64)
+            case "Pont3":
+                self.hitbox = self.rect.inflate(0, -100)
             case "River":
                 self.hitbox = self.rect.inflate(0,0)
             

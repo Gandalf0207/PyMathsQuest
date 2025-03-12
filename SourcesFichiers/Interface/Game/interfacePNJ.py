@@ -1,3 +1,4 @@
+import pygame.locals
 from settings import *
 from SourcesFichiers.Elements.sprites import *
 from SourcesFichiers.Personnages.pnj import *
@@ -152,7 +153,7 @@ class PNJInterface(object):
                             allVitreSprites = []
                             allPanelControlBloc = []
                             for sprite in self.gestionnaire.gestionnaire.allSprites:
-                                if sprite.id in ["Wall", "Wall2"]:
+                                if sprite.id[:4] == "Wall":
                                     allMurSprites.append(sprite)
                                 elif sprite.id == "Vitre":
                                     allVitreSprites.append(sprite)
@@ -163,13 +164,13 @@ class PNJInterface(object):
                             vitreModif = sample(allVitreSprites, randint(1,3))
                             PanelBlocControleBlocModif = sample(allPanelControlBloc, randint(1,3))
 
-                            mur  = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
-                            vitre  = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
-                            panelBloc = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+                            vitre  = pygame.image.load(join("Image", "Mur", "Futuriste", "Endommage", "Vitre.png")).convert_alpha()
+                            panelBloc = pygame.image.load(join("Image", "Mur", "Futuriste", "Endommage", "PanelBloc.png")).convert_alpha()
 
 
                             for sprite in murModif:
                                 pos = sprite.pos
+                                mur = pygame.image.load(join("Image", "Mur", "Futuriste", "Endommage", f"{sprite.id}.png"))
                                 sprite.kill()
                                 CollisionSprites(pos, mur, "Wall", (self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites))
                             

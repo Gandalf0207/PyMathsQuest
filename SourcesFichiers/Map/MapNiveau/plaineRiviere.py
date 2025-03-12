@@ -69,7 +69,16 @@ class NiveauPlaineRiviere(GestionNiveauMap):
         self.map[self.coordsArbreBucheron[1]][self.coordsArbreBucheron[0]] = "V"
         self.baseMap[self.coordsArbreBucheron[1]][self.coordsArbreBucheron[0]] = "-"
 
-        allObjSpecifique = [self.coordsCampFire, self.coordsArbreBucheron]
+        # pont 3 sortie
+        self.coordsPont3 = [self.coordsExit[0] +1, self.coordsExit[1], "NiveauPlaineRiviere", "Pont3"]
+
+        # rocher qui bloque la sortie
+        self.coordsHugeRockExit = [self.coordsExit[0], self.coordsExit[1], "NiveauPlaineRiviere", "ExitRock"]
+        self.map[self.coordsHugeRockExit[1]][self.coordsHugeRockExit[0]] = "V"
+        self.baseMap[self.coordsHugeRockExit[1]][self.coordsHugeRockExit[0]] = "-"
+
+
+        allObjSpecifique = [self.coordsCampFire, self.coordsArbreBucheron, self.coordsPont3, self.coordsHugeRockExit]
         AjoutJsonMapValue(allObjSpecifique, "coordsMapObject", "ObjAPlacer")
 
     def PlacementObstacles(self):

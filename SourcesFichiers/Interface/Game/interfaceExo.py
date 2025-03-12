@@ -34,8 +34,8 @@ class CreateExo:
         # close interface cross
         self.surfaceCloseCross = pygame.Surface((24,24))
         self.isCrossCloseHover = False
-        self.crossClose = pygame.image.load(join("Images", "Croix", "x-mark.png")).convert_alpha()
-        self.crossClose2 = pygame.image.load(join("Images", "Croix", "x-mark2.png")).convert_alpha()
+        self.crossClose = pygame.image.load(join("Image", "Interface","Croix", "x-mark.png")).convert_alpha()
+        self.crossClose2 = pygame.image.load(join("Image","Interface", "Croix", "x-mark2.png")).convert_alpha()
 
 
 
@@ -108,7 +108,7 @@ class CreateExo:
                         self.interfaceExoSurface.blit(text, (20, self.hauteurAct))
 
                         self.hauteurAct += 100
-                        self.volumeSimpleImg = pygame.image.load(join("Images", "Exos", "ExoVolumeSimple.png")).convert_alpha()
+                        self.volumeSimpleImg = pygame.image.load(join("Image", "Exo", "ExoVolumeSimple.png")).convert_alpha()
                         self.interfaceExoSurface.blit(self.volumeSimpleImg, self.volumeSimpleImg.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
                     else:
                         self.hauteurAct += 20
@@ -117,7 +117,7 @@ class CreateExo:
                         self.interfaceExoSurface.blit(text, (20, self.hauteurAct))
 
                         self.hauteurAct += 100 
-                        self.volumeDifficileImg = pygame.image.load(join("Images", "Exos", "ExoVolumeDifficile.png")).convert_alpha()
+                        self.volumeDifficileImg = pygame.image.load(join("Image", "Exo", "ExoVolumeDifficile.png")).convert_alpha()
                         self.interfaceExoSurface.blit(self.volumeDifficileImg, self.volumeDifficileImg.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
 
 

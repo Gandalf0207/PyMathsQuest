@@ -3,7 +3,7 @@ from settings import *
 
 class MiniMap:
 
-    def __init__(self, mapBase : list, mapData : list, screen: any) -> None:
+    def __init__(self, mapBase : list, mapData : list, screen: any, allInteraction) -> None:
         """Méthode d'initialisation pour la création de la minimap. 
         Input : list *2 = map du niveau, screen = (element pygame); Output : None"""
 
@@ -11,6 +11,7 @@ class MiniMap:
         self.mapBase = mapBase # sol
         self.mapData = mapData # obstacle
         self.MiniMapSurface = screen
+        self.allInteractionGroup = allInteraction
 
         # Création elements
         self.static_surface = pygame.Surface((LONGUEUR * CELL_SIZE, LARGEUR * CELL_SIZE))
@@ -57,10 +58,6 @@ class MiniMap:
                     self.static_surface.blit(self.carre5, pos)
                 elif cell == "@": # champs
                     self.static_surface.blit(self.carre6, pos)
-                elif cell in ["t", "T", "K"]:
-                    self.static_surface.blit(self.carre7, pos)
-                elif cell == "C": # murailles
-                    self.static_surface.blit(self.carre11, pos)
                 elif cell == "&":
                     self.static_surface.blit(self.carre12, pos)
                 elif NIVEAU["Map"] == "NiveauBaseFuturiste" and cell in ["-" , "G"]:
@@ -86,6 +83,8 @@ class MiniMap:
         if NIVEAU["Map"] == "NiveauMedievale" : # placement chateau 
             pos = (104*CELL_SIZE, 0 *CELL_SIZE)
             self.static_surface.blit(self.carre10, pos)
+
+        
 
 
 

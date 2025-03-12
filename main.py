@@ -107,7 +107,7 @@ class Game(object):
         self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.map, self, self.GameTool.gestionSoundDialogues, self.gameInterfaces)
         
         # Initialisation dans votre setup 
-        self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface)
+        self.minimap = MiniMap(self.mapBase, self.map, self.minimap_surface, self.interactionsGroup)
         self.ideaTips = InfosTips(self.ideaTips_surface)
         self.settingsAll = SettingsAll(self.allSettings_surface,self.GameTool.gestionSoundFond, self.gameInterfaces, self)
 
@@ -283,9 +283,12 @@ class Game(object):
                                 self.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["Cinematique1End"])
                             
                                 # pont nb 1
-                                coordPont1 = LoadJsonMapValue("coordsMapObject", "ArbreSpecial Coords")
-                                coords = ((coordPont1[0] + 1)*CASEMAP, coordPont1[1]*CASEMAP) # on ajoute 1 pour etre sur la rivière
-                                self.loadMapElement.AddPont("pont1", coords)
+                                allObj = LoadJsonMapValue("coordsMapObject", "ObjAPlacer")
+                                for obj in allObj:
+                                    pos = (obj[0]*CASEMAP, obj[1]*CASEMAP)
+                                    if obj[3] == "ArbreBucheron":
+                                        coords = [obj[0]+1, obj[1]]
+                                self.loadMapElement.AddPont("Pont1", coords)
                             
                                 # sup arbre
                                 for object in self.collisionSprites:

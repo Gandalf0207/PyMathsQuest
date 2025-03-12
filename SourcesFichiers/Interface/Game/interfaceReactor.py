@@ -128,7 +128,7 @@ class ReactorInterface(object):
                 if sprite.id == "DoorFuturiste":
                     pos = sprite.pos
                     sprite.kill()
-                    OpenDoor = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+                    OpenDoor = pygame.image.load(join("Image", "Obstacle", "Door", "DoorFuturisteBaseOpen.png")).convert_alpha()
                     Sprites(pos, OpenDoor, "DoorFuturisteOpen", allSprites)
 
 

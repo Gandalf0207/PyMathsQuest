@@ -97,8 +97,8 @@ class Construire(object):
             self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["BuildBridge"])
 
             # ajout du pont + mise à jour de l'état de construction 
-            coords = (self.coordsRiviere[0]*CASEMAP, self.coordsRiviere[1]*CASEMAP)
-            loadMapElement.AddPont("pont2", coords)
+            coords = (self.coordsRiviere[0], self.coordsRiviere[1])
+            loadMapElement.AddPont("Pont2", coords)
             self.construitPont = True
 
             # ainimation

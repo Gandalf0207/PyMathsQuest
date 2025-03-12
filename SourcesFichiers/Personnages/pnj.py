@@ -200,8 +200,11 @@ class GestionPNJ(object):
         self.cinematique = True
         
         if NIVEAU["Map"] == "NiveauPlaineRiviere" :
-            goal = LoadJsonMapValue("coordsMapObject","ArbreSpecial Coords")
-            pathAcces = ["-", "A", "P", "S", "="]
+            allObj = LoadJsonMapValue("coordsMapObject", "ObjAPlacer")
+            for obj in allObj:
+                if obj[3] == "ArbreBucheron":
+                    goal = [obj[0], obj[1]]
+            pathAcces = ["-", "P", "S", "V"]
 
         if NIVEAU["Map"] == "NiveauMedievale":
             goal = LoadJsonMapValue("coordsMapObject", "Exit")

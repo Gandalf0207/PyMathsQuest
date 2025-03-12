@@ -167,6 +167,7 @@ NIVEAU = {
 # box infos globales
 INFOS = {
     "GameStart" : False,
+    "ErrorLoad" : False,
     "GameEnd" : False,
     "CrashGame" : False,
     
