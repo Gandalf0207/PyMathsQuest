@@ -87,7 +87,7 @@ class Interactions(object):
             elif NIVEAU["Map"] == "NiveauMedievale":
                 
 
-                if self.ObjectId == "Arbre" or self.ObjectId == "Arbre2" or self.ObjectId == "Souche" or self.ObjectId == "Souche2" :
+                if self.ObjectId == "Arbre" or self.ObjectId == "Arbre1" or self.ObjectId == "Souche" or self.ObjectId == "Souche1" :
                         # animation 
                         self.gestionnaire.fondu_au_noir()
                         
@@ -107,7 +107,7 @@ class Interactions(object):
                         elif self.ObjectId == "Arbre2": 
                             soucheArbre2 = pygame.image.load(join("Image", "Obstacle", "Souche2.png")).convert_alpha()
                             groups = (groups[0], groups[1], interactionGroups)
-                            CollisionSprites(self.Obj.pos, soucheArbre2,  "Souche2", groups)
+                            CollisionSprites(self.Obj.pos, soucheArbre2,  "Souche1", groups)
                             INVENTORY["Planks"] += 2
 
                         elif self.ObjectId == "Souche" or self.ObjectId == "Souche2":

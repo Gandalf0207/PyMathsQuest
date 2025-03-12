@@ -45,54 +45,57 @@ class LoadMapGestion():
         self.campFire = pygame.image.load(join("Image", "Obstacle", "campFire.png")).convert_alpha()
 
     def LoadImagesNiveauMedievale(self):
-        self.sol = pygame.image.load(join("Images", "Sol", "Grass", "Grass.png")).convert_alpha()
-        self.sol1 = pygame.image.load(join("Images", "Sol", "Flower", "Flower.png")).convert_alpha()
-        self.sol2 = pygame.image.load(join("Images", "Sol","Rock", "Rock.png")).convert_alpha()
-        self.sol3 = pygame.image.load(join("Images", "Sol","Mud", "Mud.png")).convert_alpha()
-        self.obstacle = pygame.image.load(join("Images", "Obstacle", "Arbre.png")).convert_alpha()
-        self.obstacle1 = pygame.image.load(join("Images", "Obstacle", "Arbre2.png")).convert_alpha()
-        self.obstacle2 = pygame.image.load(join("Images", "Obstacle", "Souche.png")).convert_alpha()
-        self.obstacle3 = pygame.image.load(join("Images", "Obstacle", "Souche2.png")).convert_alpha()
-        self.HugeRock = pygame.image.load(join("Images", "Obstacle", "HugeRock.png")).convert_alpha()
-        self.montainWE = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ex128.png")).convert_alpha()
-        self.montainWE1 = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ealt1x128.png")).convert_alpha()
-        self.pont1 = pygame.image.load(join("Images", "Pont", "BridgeTreeW-Ex128.png")).convert_alpha()
-        self.pont2 = pygame.image.load(join("Images", "Pont", "BridgePlanksW-Ex128.png")).convert_alpha()
+        self.sol = pygame.image.load(join("Image", "Sol", "Grass.png")).convert_alpha()
+        self.sol1 = pygame.image.load(join("Image", "Sol", "Flower.png")).convert_alpha()
+        self.sol2 = pygame.image.load(join("Image", "Sol", "Rock.png")).convert_alpha()
+        self.sol3 = pygame.image.load(join("Image", "Sol", "Mud.png")).convert_alpha()
+
+        self.obstacle = pygame.image.load(join("Image", "Obstacle", "Arbre.png")).convert_alpha()
+        self.obstacle1 = pygame.image.load(join("Image", "Obstacle", "Arbre2.png")).convert_alpha()
+        self.obstacle2 = pygame.image.load(join("Image", "Obstacle", "HugeRock.png")).convert_alpha()
+        self.obstacle3 = pygame.image.load(join("Image", "Obstacle", "Souche.png")).convert_alpha()
+        self.obstacle4 = pygame.image.load(join("Image", "Obstacle", "Souche2.png")).convert_alpha()
+
+        self.montainWE = pygame.image.load(join("Image", "Mur","Mountain", "MountainStraighW-Ex128.png")).convert_alpha()
+        self.montainWE1 = pygame.image.load(join("Image", "Mur","Mountain", "MountainStraighW-Ealt1x128.png")).convert_alpha()
+
+        self.pont2 = pygame.image.load(join("Image", "Structure", "Pont", "Pont2.png")).convert_alpha()
 
         # path
-        self.pathX = pygame.image.load(join("Images", "Sol", "Path", "PathXx128.png")).convert_alpha()
-        self.pathTshapeNSE = pygame.image.load(join("Images", "Sol", "Path", "PathN-SEx128.png")).convert_alpha()
-        self.pathTshapeWES = pygame.image.load(join("Images", "Sol", "Path", "PathW-ESx128.png")).convert_alpha()
-        self.pathTshapeWNS = pygame.image.load(join("Images", "Sol", "Path", "PathWN-Sx128.png")).convert_alpha()
-        self.pathTshapeNEW = pygame.image.load(join("Images", "Sol", "Path", "PathN-EWx128.png")).convert_alpha()
-        self.pathAngularNE = pygame.image.load(join("Images", "Sol", "Path", "PathN-Ex128.png")).convert_alpha()
-        self.pathAngularNW = pygame.image.load(join("Images", "Sol", "Path", "PathN-Wx128.png")).convert_alpha()
-        self.pathAngularSE = pygame.image.load(join("Images", "Sol", "Path", "PathE-Sx128.png")).convert_alpha()
-        self.pathAngularSW = pygame.image.load(join("Images", "Sol", "Path", "PathW-Sx128.png")).convert_alpha()
-        self.pathNS = pygame.image.load(join("Images", "Sol", "Path", "PathN-S.png")).convert_alpha()
-        self.pathWE = pygame.image.load(join("Images", "Sol", "Path", "PathW-E.png")).convert_alpha()
-        self.pathEndN = pygame.image.load(join("Images", "Sol", "Path", "PathNx128.png")).convert_alpha()
-        self.pathEndS = pygame.image.load(join("Images", "Sol", "Path", "PathSx128.png")).convert_alpha()
-        self.pathEndE = pygame.image.load(join("Images", "Sol", "Path", "PathEx128.png")).convert_alpha()
-        self.pathEndW = pygame.image.load(join("Images", "Sol", "Path", "PathWx128.png")).convert_alpha()
+        self.pathX = pygame.image.load(join("Image", "Sol", "Path", "PathXx128.png")).convert_alpha()
+        self.pathTshapeNSE = pygame.image.load(join("Image", "Sol", "Path", "PathN-SEx128.png")).convert_alpha()
+        self.pathTshapeWES = pygame.image.load(join("Image", "Sol", "Path", "PathW-ESx128.png")).convert_alpha()
+        self.pathTshapeWNS = pygame.image.load(join("Image", "Sol", "Path", "PathWN-Sx128.png")).convert_alpha()
+        self.pathTshapeNEW = pygame.image.load(join("Image", "Sol", "Path", "PathN-EWx128.png")).convert_alpha()
+        self.pathAngularNE = pygame.image.load(join("Image", "Sol", "Path", "PathN-Ex128.png")).convert_alpha()
+        self.pathAngularNW = pygame.image.load(join("Image", "Sol", "Path", "PathN-Wx128.png")).convert_alpha()
+        self.pathAngularSE = pygame.image.load(join("Image", "Sol", "Path", "PathE-Sx128.png")).convert_alpha()
+        self.pathAngularSW = pygame.image.load(join("Image", "Sol", "Path", "PathW-Sx128.png")).convert_alpha()
+        self.pathNS = pygame.image.load(join("Image", "Sol", "Path", "PathN-S.png")).convert_alpha()
+        self.pathWE = pygame.image.load(join("Image", "Sol", "Path", "PathW-E.png")).convert_alpha()
+        self.pathEndN = pygame.image.load(join("Image", "Sol", "Path", "PathNx128.png")).convert_alpha()
+        self.pathEndS = pygame.image.load(join("Image", "Sol", "Path", "PathSx128.png")).convert_alpha()
+        self.pathEndE = pygame.image.load(join("Image", "Sol", "Path", "PathEx128.png")).convert_alpha()
+        self.pathEndW = pygame.image.load(join("Image", "Sol", "Path", "PathWx128.png")).convert_alpha()
 
-        self.champ = pygame.image.load(join("Images", "Sol", "Champs.png")).convert_alpha()
-        self.house1 = pygame.image.load(join("Images", "Obstacle", "Structures", "House.png")).convert_alpha()
-        self.house2 = pygame.image.load(join("Images", "Obstacle", "Structures", "House.png")).convert_alpha()
-        self.house3 = pygame.image.load(join("Images", "Obstacle", "Structures", "House.png")).convert_alpha()
+        self.champ = pygame.image.load(join("Image", "Obstacle", "Champs.png")).convert_alpha()
+        self.house1 = pygame.image.load(join("Image", "Structure","Medievale", "Maison", "House.png")).convert_alpha()
+        self.house2 = pygame.image.load(join("Image", "Structure","Medievale", "Maison", "House2.png")).convert_alpha()
+        self.house3 = pygame.image.load(join("Image", "Structure","Medievale", "Maison", "House3.png")).convert_alpha()
 
-        self.chateau = pygame.image.load(join("Images", "Obstacle", "Structures", "Chateau.png")).convert_alpha()
+        self.chateau = pygame.image.load(join("Image", "Structure", "Medievale", "Chateau.png")).convert_alpha()
 
-        self.MurWE = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesWE.png" )).convert_alpha()
-        self.MurNS = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesNS.png" )).convert_alpha()
-        self.MurMountain = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesMountain.png" )).convert_alpha()
-        self.MurAngle = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesAngle.png" )).convert_alpha()
+        self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesWE.png" )).convert_alpha()
+        self.MurNSGauche = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesNS.png" )).convert_alpha()
+        self.MurMountain = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesMountain.png" )).convert_alpha()
+        self.MurAngularSE = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesAngle.png" )).convert_alpha()
+        self.MurAngularSW = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesAngle.png" )).convert_alpha()
 
-        self.well = pygame.image.load(join("Images", "Obstacle", "Structures", "Puits.png")).convert_alpha()
-        self.tableCraft = pygame.image.load(join("Images", "Obstacle", "TableCraft.png")).convert_alpha()
-        self.boat = pygame.image.load(join("Images", "Obstacle", "Boat.png")).convert_alpha()
-        self.Door = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
-        self.Door2 =  pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+        self.well = pygame.image.load(join("Image", "Structure", "Medievale", "Puits.png")).convert_alpha()
+        self.tableCraft = pygame.image.load(join("Image", "Obstacle", "TableCraft.png")).convert_alpha()
+        self.boat = pygame.image.load(join("Image", "Item", "BoatObj.png")).convert_alpha()
+        self.DoorMuraille = pygame.image.load(join("Image", "Obstacle", "Door", "DoorMuraille.png")).convert_alpha()
+        self.DoorChateau =  pygame.image.load(join("Image", "Obstacle", "Door", "DoorChateau.png")).convert_alpha()
 
     def LoadImagesDemiNiveauChateau(self):
         self.Sol = pygame.image.load(join("Images", "Chateau", "SolChateau.png")).convert_alpha()
@@ -235,7 +238,64 @@ class LoadMapGestion():
                     Sprites(pos, self.sol1, "Sol3", self.allSprites, layer=0)
                 elif self.mapBase[ordonnees][abscisses] == "-":
                     Sprites(pos, self.sol, "Sol", self.allSprites, layer=0)
-                
+
+
+                elif self.mapBase[ordonnees][abscisses] == "=":
+
+                    def is_path(self, x, y):
+                        """ Vérifie si une case est un chemin tout en évitant les erreurs d'index. """
+                        return 0 <= x < len(self.mapBase) and 0 <= y < len(self.mapBase[0]) and self.mapBase[x][y] == "="
+
+                    # Récupération des voisins
+                    up = is_path(self, ordonnees - 1, abscisses)
+                    down = is_path(self, ordonnees + 1, abscisses)
+                    left = is_path(self, ordonnees, abscisses - 1)
+                    right = is_path(self, ordonnees, abscisses + 1)
+
+                    # === 1. Intersection à 4 branches ===
+                    if up and down and left and right:
+                        Sprites(pos, self.pathX, "Path", self.allSprites)
+
+                    # === 2. Formes en "T" ===
+                    elif up and down and left:
+                        Sprites(pos, self.pathTshapeWNS, "Path", self.allSprites)
+                    elif up and down and right:
+                        Sprites(pos, self.pathTshapeNSE, "Path", self.allSprites)
+                    elif up and right and left:
+                        Sprites(pos, self.pathTshapeNEW, "Path", self.allSprites)
+                    elif down and right and left:
+                        Sprites(pos, self.pathTshapeWES, "Path", self.allSprites)
+
+                    # === 3. Virages (angles) ===
+                    elif up and right:
+                        Sprites(pos, self.pathAngularNE, "Path", self.allSprites)
+                    elif up and left:
+                        Sprites(pos, self.pathAngularNW, "Path", self.allSprites)
+                    elif down and right:
+                        Sprites(pos, self.pathAngularSE, "Path", self.allSprites)
+                    elif down and left:
+                        Sprites(pos, self.pathAngularSW, "Path", self.allSprites)
+
+                    # === 4. Lignes droites ===
+                    elif up and down:
+                        Sprites(pos, self.pathNS, "Path", self.allSprites)
+                    elif left and right:
+                        Sprites(pos, self.pathWE, "Path", self.allSprites)
+
+                    # === 6. Fin de chemin SANS contact avec l'eau ===
+                    elif not up and not down and not left and right:
+                        Sprites(pos, self.pathEndE, "Path", self.allSprites)  # Fin Ouest
+                    elif not up and not down and left and not right:
+                        Sprites(pos, self.pathEndW, "Path", self.allSprites)  # Fin Est
+                    elif not left and not right and up and not down:
+                        Sprites(pos, self.pathEndN, "Path", self.allSprites)  # Fin Sud
+                    elif not left and not right and not up and down:
+                        Sprites(pos, self.pathEndS, "Path", self.allSprites)  # Fin Nord
+                    
+                    # path par défault
+                    else:
+                        Sprites(pos, self.pathWE, "Path", self.allSprites)
+                        
                 # riviere
                 if self.map[ordonnees][abscisses] == "#":
 
@@ -392,6 +452,11 @@ class LoadMapGestion():
                         and case_valide(ordonnees + 1, abscisses) and self.map[ordonnees + 1][abscisses] == "#":
                         pathRiver = join("Image","Obstacle","Riviere","CastleWallRiverx128")
                         AnimatedCollisionSprites(pos,pathRiver, "River", (self.allSprites, self.collisionSprites),layer=1)
+
+                    # montain collision
+                    elif down and self.map[ordonnees][abscisses-1] == "B":
+                        CollisionSprites(pos, self.MurMountain, "Wall", (self.allSprites, self.collisionSprites))
+                    
                         
                     elif down and right:
                         CollisionSprites(pos, self.MurAngularSE, "Wall", (self.allSprites, self.collisionSprites))
@@ -508,6 +573,22 @@ class LoadMapGestion():
                         self.AddPont("Pont3", [obj[0], obj[1]])
                     case "ExitRock":
                         CollisionSprites(pos, self.obstacle2, "ExitRock", (self.allSprites, self.collisionSprites, self.interactions), layer=1)
+            elif obj[2] == "NiveauMedievale":
+                match obj[3]:
+                    case "Chateau":
+                        CollisionSprites(pos, self.campFire, "Chateau", (self.allSprites, self.collisionSprites), layer=1)
+                    case "DoorChateau":
+                        CollisionSprites(pos, self.DoorChateau, "DoorChateau", (self.allSprites, self.collisionSprites, self.interactions), layer=1)
+                    case "DoorMuraille":
+                        CollisionSprites(pos, self.DoorMuraille, "DoorMuraille", (self.allSprites, self.collisionSprites), layer=1)
+                    case "Pont3":
+                        self.AddPont("Pont3", [obj[0], obj[1]])
+                    case "Pont4":
+                        self.AddPont("Pont4", [obj[0], obj[1]])
+                    case "Puits":
+                        CollisionSprites(pos, self.well, "Well", (self.allSprites, self.collisionSprites), layer=1)
+                    case "TableCraft":
+                        CollisionSprites(pos, self.tableCraft, "TableCraft", (self.allSprites, self.collisionSprites, self.interactions), layer=1)
 
     def AddPont(self, element, coords):
         pos =  [coords[0]*CASEMAP, coords[1]*CASEMAP]
@@ -518,6 +599,9 @@ class LoadMapGestion():
         elif element == "Pont3":
             path = join("Image", "Structure", "Pont", "Pont3")
             AnimatedCollisionSprites(pos, path, "Pont3", (self.allSprites, self.collisionSprites, self.interactions), InfoExo=True, layer=3)
+        elif element == "Pont4":
+            path = join("Image", "Structure", "Pont", "Pont4")
+            AnimatedCollisionSprites(pos, path, "Pont4", (self.allSprites, self.collisionSprites, self.interactions), InfoExo=False, layer=3)
     
 
 

@@ -164,7 +164,7 @@ class NiveauMedievale(GestionNiveauMap):
         self.baseMap[self.coordsPuits[1]][self.coordsPuits[0]] = "-" # clear
 
         # table de craft
-        self.coordsTableCraft = [self.coordsPuits[0] + 1, self.coordsPuits[1]]  # Coordonnées de la table de craft
+        self.coordsTableCraft = [self.coordsPuits[0] + 1, self.coordsPuits[1], "NiveauMedievale", "TableCraft"]  # Coordonnées de la table de craft
         self.map[self.coordsTableCraft[1]][self.coordsTableCraft[0]] = "V"
         self.baseMap[self.coordsTableCraft[1]][self.coordsTableCraft[0]] = "-" # clear
 
