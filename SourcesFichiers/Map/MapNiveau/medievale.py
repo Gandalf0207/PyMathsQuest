@@ -555,13 +555,16 @@ class NiveauMedievaleChateau(GestionNiveauMap):
         AjoutJsonMapValue(self.allCoordsPNJ, "coordsMapObject", "PNJ Coords")
 
     def PlacementObjSpecifique(self):
+        # door
+        self.coordDoorChaeau = [5, 10, "NiveauMedievale", "DoorChateauInterieur" ]
+
         # portal
         self.coordsPortal = [5, 1, "NiveauMedievale", "Portal"]
 
         # socle
         self.coordsSocle = [4, 1, "NiveauMedievale", "Socle"]
 
-        allObjSpecifique = [self.coordsPortal, self.coordsSocle]
+        allObjSpecifique = [self.coordDoorChaeau, self.coordsPortal, self.coordsSocle]
         AjoutJsonMapValue(allObjSpecifique, "coordsMapObject", "ObjAPlacer")
 
     def Update(self):

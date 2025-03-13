@@ -208,7 +208,7 @@ class GestionPNJ(object):
 
         if NIVEAU["Map"] == "NiveauMedievale":
             goal = LoadJsonMapValue("coordsMapObject", "Exit")
-            pathAcces = ["~", "U", "u"]
+            pathAcces = ["-", "V"]
 
         self.cinematiqueObject = Cinematique(goal, self.pnjObj, self.map, pathAcces)
 

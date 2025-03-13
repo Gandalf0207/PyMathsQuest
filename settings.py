@@ -176,7 +176,7 @@ INFOS = {
     "Exo" : False, 
     "ExoPasse" : False,
     
-    "DemiNiveau" : False,
+    "DemiNiveau" : True,
     "ChangementNiveau" : False,
     
     "HideHotBar" : False,

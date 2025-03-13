@@ -84,9 +84,9 @@ class LoadMapGestion():
         self.house3 = pygame.image.load(join("Image", "Structure","Medievale", "Maison", "House3.png")).convert_alpha()
 
         self.chateau = pygame.image.load(join("Image", "Structure", "Medievale", "Chateau.png")).convert_alpha()
-
         self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesWE.png" )).convert_alpha()
         self.MurNSGauche = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesNS.png" )).convert_alpha()
+        self.MurNSDroite = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesNS.png" )).convert_alpha()
         self.MurMountain = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesMountain.png" )).convert_alpha()
         self.MurAngularNW = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesAngle.png" )).convert_alpha()
         self.MurAngularNE = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesAngle.png" )).convert_alpha()
@@ -98,14 +98,21 @@ class LoadMapGestion():
         self.DoorChateau =  pygame.image.load(join("Image", "Obstacle", "Door", "DoorChateau.png")).convert_alpha()
 
     def LoadImagesDemiNiveauChateau(self):
-        self.Sol = pygame.image.load(join("Images", "Chateau", "SolChateau.png")).convert_alpha()
-        self.Socle = pygame.image.load(join("Images", "Chateau", "Socle.png")).convert_alpha()
-        self.MursAnglularSW = pygame.image.load(join("Images", "Chateau", "MursChateau.png")).convert_alpha()
-        self.Pilier = pygame.image.load(join("Images", "Chateau", "Piliers.png")).convert_alpha()
-        self.Chandelier = pygame.image.load(join("Images", "Chateau", "Chandelier.png")).convert_alpha()
-        self.DoorChateau = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
-        self.Portal = pygame.image.load(join("Images", "Chateau", "Portal.png")).convert_alpha()
-        self.CerclePortal = pygame.image.load(join("Images", "Chateau", "SolChateau.png")).convert_alpha()
+        self.sol = pygame.image.load(join("Image", "Sol", "SolChateauInterieur.png")).convert_alpha()
+        self.Socle = pygame.image.load(join("Image", "Sol", "Socle.png")).convert_alpha()
+
+        self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "CastleWallInside.png" )).convert_alpha()
+        self.MurWEBas = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "BottomCastleWallInside.png" )).convert_alpha()
+        self.MurNSGauche = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "RightCasteWallInside.png" )).convert_alpha()
+        self.MurNSDroite = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "LeftCastleWallInside.png" )).convert_alpha()
+        self.MurAngularNW = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "BottomRightCastleWallInside.png" )).convert_alpha()
+        self.MurAngularNE = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "BottomLeftCastleWallInside.png" )).convert_alpha()
+        self.MurAngularSW = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "TopRightCastleWallInside.png" )).convert_alpha()
+        self.MurAngularSE = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "TopLeftCastleWallInside.png" )).convert_alpha()
+        self.Pilier = pygame.image.load(join("Image", "Obstacle", "CastlePillarInside.png")).convert_alpha()
+
+        self.DoorChateau = pygame.image.load(join("Image", "Obstacle", "Door", "BottomCastleDoorInside.png")).convert_alpha()
+        self.CerclePortal = pygame.image.load(join("Image", "Sol", "Cercle.png")).convert_alpha()
 
     def LoadImagesNiveauBaseFuturiste(self):
         self.sol = pygame.image.load(join("Images", "Sol", "Dirt", "Dirtx128.png")).convert_alpha()
@@ -306,36 +313,22 @@ class LoadMapGestion():
                     can_go_left = abscisses > 0
                     can_go_right = abscisses < 149
 
-                    def checkBuildUp(can_go_up, can_go_left, can_go_right):
+                    def checkBuildUp(can_go_up):
                         if can_go_up:
                             if self.map[ordonnees -1][abscisses] == "#":
                                 return True
                             if self.map[ordonnees -1][abscisses] == "W":
-                                if can_go_right and can_go_left:
-                                    if self.map[ordonnees -2][abscisses-1] == "#" or self.map[ordonnees -2][abscisses] == "#" or self.map[ordonnees -2][abscisses +1] == "#":
-                                        return True
-                                if can_go_left:
-                                    if self.map[ordonnees -2][abscisses-1] == "#" or self.map[ordonnees -2][abscisses] == "#":   
-                                        return True
-                                if can_go_right:
-                                    if self.map[ordonnees -2][abscisses] == "#" or self.map[ordonnees -2][abscisses +1] == "#":   
-                                        return True     
+                                if self.map[ordonnees -2][abscisses] == "#":   
+                                    return True     
                         return False   
                     
-                    def checkBuildDown(can_go_down, can_go_left, can_go_right): 
+                    def checkBuildDown(can_go_down): 
                         if can_go_down:
                             if self.map[ordonnees +1][abscisses] == "#":
                                 return True
                             if self.map[ordonnees +1][abscisses] == "W":
-                                if can_go_right and can_go_left:
-                                    if self.map[ordonnees +2][abscisses-1] == "#" or self.map[ordonnees +2][abscisses] == "#" or self.map[ordonnees +2][abscisses +1] == "#":
-                                        return True
-                                if can_go_left:
-                                    if self.map[ordonnees +2][abscisses-1] == "#" or self.map[ordonnees +2][abscisses] == "#":   
-                                        return True
-                                if can_go_right:
-                                    if self.map[ordonnees +2][abscisses] == "#" or self.map[ordonnees +2][abscisses +1] == "#":   
-                                        return True        
+                                if self.map[ordonnees +2][abscisses] == "#":  
+                                    return True        
                         return False
 
                     def checkBuildLeft(can_go_left):
@@ -363,8 +356,8 @@ class LoadMapGestion():
 
                         return False
                     
-                    can_build_up = checkBuildUp(can_go_up, can_go_left, can_go_right)
-                    can_build_down = checkBuildDown(can_go_down,  can_go_left, can_go_right)
+                    can_build_up = checkBuildUp(can_go_up)
+                    can_build_down = checkBuildDown(can_go_down)
                     can_build_left = checkBuildLeft(can_go_left)
                     can_build_right = checkBuildRight(can_go_right)
                     mountainConflict = checkBuildConflict(can_go_left, can_go_right)
@@ -436,61 +429,112 @@ class LoadMapGestion():
                 
                 # murs structure
                 elif self.map[ordonnees][abscisses] == "W":
+                                    
                     
-                    def case_valide(y, x):
-                        """ Vérifie si une case est valide dans la carte."""
-                        return 0 <= y < len(self.map) and 0 <= x < len(self.map[0])
-                    
-                    # Vérification des voisins
-                    right = case_valide(ordonnees, abscisses + 1) and self.map[ordonnees][abscisses + 1] in ["W", "&", "V"]
-                    left = case_valide(ordonnees, abscisses - 1) and self.map[ordonnees][abscisses - 1] in ["W", "&", "V"]
-                    up = case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "W"
-                    down = case_valide(ordonnees + 1, abscisses) and self.map[ordonnees + 1][abscisses] == "W"
-                    
-                    # === 3. Virages (angles) ===
-                    if up and right:
-                        CollisionSprites(pos, self.MurAngularNE, "WallAngularNE", (self.allSprites, self.collisionSprites))
-                    elif up and left:
-                        CollisionSprites(pos, self.MurAngularNW, "WallAngularNW", (self.allSprites, self.collisionSprites))
+                    # Vérification des bords de la carte
+                    can_go_up = ordonnees > 0
+                    can_go_down = ordonnees < len(self.map[0]) -1
+                    can_go_left = abscisses > 0
+                    can_go_right = abscisses < len(self.map) -1  
 
-                    # Passage avec de l'eau
-                    elif right and left and case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "#" \
-                        and case_valide(ordonnees + 1, abscisses) and self.map[ordonnees + 1][abscisses] == "#":
-                        pathRiver = join("Image","Obstacle","Riviere","CastleWallRiverx128")
-                        AnimatedCollisionSprites(pos,pathRiver, "River", (self.allSprites, self.collisionSprites),layer=1)
+                    def checkWallUp():
+                        return can_go_up and self.map[ordonnees - 1][abscisses] == "W"
 
-                    # montain collision
-                    elif down and self.map[ordonnees][abscisses-1] == "B":
-                        CollisionSprites(pos, self.MurMountain, "WallMountain", (self.allSprites, self.collisionSprites))
-                    
-                        
-                    elif down and right:
-                        CollisionSprites(pos, self.MurAngularSE, "WallAngularSE", (self.allSprites, self.collisionSprites))
-                    elif down and left:
-                        CollisionSprites(pos, self.MurAngularSW, "WallAnfularSW", (self.allSprites, self.collisionSprites))
+                    def checkWallDown():
+                        return can_go_down and self.map[ordonnees + 1][abscisses] == "W"
 
-                    # === 4. Lignes droites ===
-                    elif left and right:
-                        if self.mapBase[ordonnees-1][abscisses] == "." and self.mapBase[ordonnees+1][abscisses] == ".":
-                            CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
-                        elif self.mapBase[ordonnees+1][abscisses] == ".":
-                            CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
-                        elif self.mapBase[ordonnees-1][abscisses] == ".":
-                            # add pre sol car collision mur bas sprite différents
-                            Sprites(pos, self.sol2,"Sol", self.allSprites)
+                    def checkWallLeft():
+                        return can_go_left and self.map[ordonnees][abscisses - 1] in ["W", "&", "V"]
+
+                    def checkWallRight():
+                        return can_go_right and self.map[ordonnees][abscisses + 1] in ["W", "&", "V"]
+
+                    def checkWaterPassage():
+                        return (
+                            
+                            can_go_up and self.map[ordonnees - 1][abscisses] == "#" and
+                            can_go_down and self.map[ordonnees + 1][abscisses] == "#"
+                        )
+
+                    def checkMountainCollision():
+                        return can_go_down and can_go_left and self.map[ordonnees][abscisses - 1] == "B"
+
+                    # Détection des voisins
+                    wall_up = checkWallUp()
+                    wall_down = checkWallDown()
+                    wall_left = checkWallLeft()
+                    wall_right = checkWallRight()
+                    water_passage = checkWaterPassage()
+                    mountain_collision = checkMountainCollision()
+
+                    # Gestion des différents types de murs
+
+                    # === 1. Mur en angle ===
+                    if wall_up and wall_right:
+                        if NIVEAU["Map"] == "NiveauMedievale" and INFOS["DemiNiveau"]:
                             CollisionSprites(pos, self.MurWEBas, "WallWEBas", (self.allSprites, self.collisionSprites))
-                        else:
+
+                        CollisionSprites(pos, self.MurAngularNW, "WallAngularNW", (self.allSprites, self.collisionSprites))
+                    elif wall_up and wall_left:
+                        if NIVEAU["Map"] == "NiveauMedievale" and INFOS["DemiNiveau"]:
+                             CollisionSprites(pos, self.MurWEBas, "WallWEBas", (self.allSprites, self.collisionSprites))
+
+                        CollisionSprites(pos, self.MurAngularNE, "WallAngularNE", (self.allSprites, self.collisionSprites))
+                        
+                    elif wall_down and wall_right:
+                        if NIVEAU["Map"] == "NiveauMedievale" and INFOS["DemiNiveau"]:
                             CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
 
+                        CollisionSprites(pos, self.MurAngularSW, "WallAngularSW", (self.allSprites, self.collisionSprites))
+                    elif wall_down and wall_left:
+                        if NIVEAU["Map"] == "NiveauMedievale" and INFOS["DemiNiveau"]:
+                            CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
+                        CollisionSprites(pos, self.MurAngularSE, "WallAngularSE", (self.allSprites, self.collisionSprites))
 
-                    elif up and down:
-                        if self.mapBase[ordonnees][abscisses-1] == ".":
-                            CollisionSprites(pos, self.MurNSDroite, "WallNSDroite", (self.allSprites, self.collisionSprites))
+                    # === 2. Passage avec de l'eau ===
+                    elif water_passage:
+                        pathRiver = join("Image", "Obstacle", "Riviere", "CastleWallRiverx128")
+                        AnimatedCollisionSprites(pos, pathRiver, "River", (self.allSprites, self.collisionSprites), layer=1)
+
+                    # === 3. Collision montagne ===
+                    elif mountain_collision:
+                        CollisionSprites(pos, self.MurMountain, "WallMountain", (self.allSprites, self.collisionSprites))
+
+                    # === 4. Murs en ligne droite ===
+                    elif wall_left and wall_right:
+                        if not NIVEAU["Map"] == "NiveauMedievale" and not INFOS["DemiNiveau"]:
+                            if can_go_up and self.mapBase[ordonnees - 1][abscisses] == ".":
+                                CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
+                            elif can_go_down and self.mapBase[ordonnees + 1][abscisses] == ".":
+                                Sprites(pos, self.sol2, "Sol", self.allSprites)
+                                CollisionSprites(pos, self.MurWEBas, "WallWEBas", (self.allSprites, self.collisionSprites))
+                            else:
+                                CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
                         else:
-                            CollisionSprites(pos, self.MurNSGauche, "WallNSGauche", (self.allSprites, self.collisionSprites))
+                            if can_go_down :
+                                CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
+                            else:
+                                CollisionSprites(pos, self.MurWEBas, "WallWEBas", (self.allSprites, self.collisionSprites))
 
+
+
+                    elif wall_up and wall_down:
+                        if not NIVEAU["Map"] == "NiveauMedievale" and not INFOS["DemiNiveau"]:
+                            if can_go_left and self.mapBase[ordonnees][abscisses - 1] == ".":
+                                CollisionSprites(pos, self.MurNSDroite, "WallNSDroite", (self.allSprites, self.collisionSprites))
+                            else:
+                                CollisionSprites(pos, self.MurNSGauche, "WallNSGauche", (self.allSprites, self.collisionSprites))
+                        else:
+                            if can_go_left:
+                                CollisionSprites(pos, self.MurNSDroite, "WallNSDroite", (self.allSprites, self.collisionSprites))
+                            else:
+                                CollisionSprites(pos, self.MurNSGauche, "WallNSGauche", (self.allSprites, self.collisionSprites))
+                                
+
+                    # === 5. Mur isolé ou défaut ===
                     else:
                         CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
+
 
                 # obstacles
                 # Tout les obstales
@@ -540,6 +584,15 @@ class LoadMapGestion():
                         CollisionSprites(pos, self.house2, "House", (self.allSprites, self.collisionSprites))
                     else:
                         CollisionSprites(pos, self.house3, "House", (self.allSprites, self.collisionSprites))
+
+
+                # element spéficique sur les maps directement
+                elif self.map[ordonnees][abscisses] == "Y":
+                    CollisionSprites(pos, self.Pilier, "Pilier", (self.allSprites, self.collisionSprites))
+                elif self.map[ordonnees][abscisses] == "y":
+                    path = join("Image", "Obstacle", "Chandelier")
+                    AnimatedCollisionSprites(pos, path, "Chandelier", (self.allSprites, self.collisionSprites), layer=1)
+
 
     def SetupPNJ(self):
         """Méthode de création et position des pnj.
@@ -595,6 +648,13 @@ class LoadMapGestion():
                         CollisionSprites(pos, self.well, "Well", (self.allSprites, self.collisionSprites), layer=1)
                     case "TableCraft":
                         CollisionSprites(pos, self.tableCraft, "TableCraft", (self.allSprites, self.collisionSprites, self.interactions), layer=1)
+                    case "Portal":
+                        path = join("Image", "Obstacle", "Portal")
+                        AnimatedSprites(pos, (self.allSprites, ), "Portal", path, layer=2) # ( , ) pour pouvoir parcourir l'element
+                    case "Socle":
+                        Sprites(pos, self.Socle, "Socle", self.allSprites, layer=1)
+                    case "DoorChateauInterieur":
+                        CollisionSprites(pos, self.DoorChateau, "DoorChateauInterieur", (self.allSprites, self.collisionSprites))
 
     def AddPont(self, element, coords, Interaction = True):
         pos =  [coords[0]*CASEMAP, coords[1]*CASEMAP]
@@ -619,7 +679,13 @@ class LoadMapGestion():
         if element == "BoatObj":
             CollisionSprites(pos, self.boat, "BoatObj", (self.allSprites, self.interactions), layer=4)
 
-
+    def AddCercle(self, element, coords):
+        pos = [coords[0]*CASEMAP, coords[1]*CASEMAP]
+        if element == "CerclePortal":
+            Sprites(pos, self.CerclePortal, "CerclePortal", (self.allSprites, self.interactions), layer=2)
+    
+    
+    
     def Update(self):
         self.LoadImagesGestion()
         self.Setup()

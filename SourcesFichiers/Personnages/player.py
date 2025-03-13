@@ -97,6 +97,7 @@ class Player(pygame.sprite.Sprite):
 
         # check de collision avec tout les sprites
         for sprite in self.collision_sprites:
+            
             if sprite.hitbox.colliderect(self.hitbox_rect):  # Utilisation hitbox
                 if direction == 'horizontal': # axe x
                     if self.direction.x > 0: self.hitbox_rect.right = sprite.hitbox.left

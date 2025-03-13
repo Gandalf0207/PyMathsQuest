@@ -193,10 +193,11 @@ class Game(object):
                                 self.InteractionObject.Interagir((self.allSprites, self.collisionSprites), self.interactionsGroup)
 
                                 # si pas possible, on construit le pont si possible
-                                if NIVEAU["Map"] in ["NiveauPlaineRiviere", "NiveauMedievale"] and not self.buildElements.getConstructionStatuePont():
-                                    self.buildElements.BuildBridge(self.loadMapElement, self.player.rect.center)
-                                elif NIVEAU["Map"] == "NiveauMedievale" and not self.buildElements.getPlaceStatueBoat():
-                                    self.buildElements.PlaceBoat(self.loadMapElement, self.player.rect.center)
+                                if not INFOS["DemiNiveau"] and INFOS["Map"] in ["NiveauPlaineRiviere", "NiveauMedievale"] :
+                                    if NIVEAU["Map"] in ["NiveauPlaineRiviere", "NiveauMedievale"] and not self.buildElements.getConstructionStatuePont():
+                                        self.buildElements.BuildBridge(self.loadMapElement, self.player.rect.center)
+                                    elif NIVEAU["Map"] == "NiveauMedievale" and not self.buildElements.getPlaceStatueBoat():
+                                        self.buildElements.PlaceBoat(self.loadMapElement, self.player.rect.center)
                             
                             # affichge ou non de la hotbar
                             if event.key == KEYSBIND["hideHotBar"]:
@@ -285,7 +286,6 @@ class Game(object):
                                 # pont nb 1
                                 allObj = LoadJsonMapValue("coordsMapObject", "ObjAPlacer")
                                 for obj in allObj:
-                                    pos = (obj[0]*CASEMAP, obj[1]*CASEMAP)
                                     if obj[3] == "ArbreBucheron":
                                         coords = [obj[0]+1, obj[1]]
                                 self.loadMapElement.AddPont("Pont1", coords)
@@ -310,13 +310,15 @@ class Game(object):
                             if not PNJ["PNJ4"]:
                                 self.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["Cinematique1End"])
 
-                                for object in self.collisionSprites:
-                                    if (object.pos[0] // CASEMAP, object.pos[1] // CASEMAP) == self.cinematiqueObject.goal:
+                                for object in self.allSprites:
+                                    if object.id == "Portal":
                                         object.kill()  
 
-                                portal = LoadJsonMapValue("coordsMapObject", "Exit")
-                                coords = ((portal[0])*CASEMAP, portal[1]*CASEMAP) # on ajoute 1 pour etre sur la rivière
-                                self.loadMapElement.AddCerclePortal("CerclePortal", coords)
+                                allObj = LoadJsonMapValue("coordsMapObject", "ObjAPlacer")
+                                for obj in allObj:
+                                    if obj[3] == "Portal":
+                                        coords = [obj[0], obj[1]]
+                                self.loadMapElement.AddCercle("CerclePortal", coords)
 
                                 PNJ["PNJ4"] = True  
 
@@ -331,7 +333,7 @@ class Game(object):
                             
                             # kill portal
                             for spriteElement in self.allSprites:
-                                if spriteElement.id == "PortalGif":
+                                if spriteElement.id == "Portal":
                                     spriteElement.kill()
 
                             # reset values cinmatique
