@@ -156,14 +156,14 @@ class Player(pygame.sprite.Sprite):
 
         self.state, self.frame_index = "down", 0 # replacement correct
         coordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
-        pos = [(coordsSpawn[0][0] + 7)*CASEMAP + 64, coordsSpawn[0][1] * CASEMAP + 64]
+        pos = [(coordsSpawn[0] + 7)*CASEMAP + 64, coordsSpawn[1] * CASEMAP + 64]
         self.rect = self.image.get_frect(center = pos)
         self.hitbox_rect = self.rect.inflate(-60,0) # collision
         self.direction = pygame.Vector2(0,0)
 
 
     def Move(self, dt: int, pointSuivant : tuple, pathDeplacement :list) -> any:
-        """Déplace le PNJ vers le point cible selon les coordonnées données par la cinématique.
+        """Déplace le PNJ vers le point cible selon les coordonnées données par la cinématique.d
         Input : dt : int (delta time), list de déplacment point (path)
         Output : any (deux éléments srvant aux calculs de directions)
         """

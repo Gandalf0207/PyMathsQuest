@@ -193,7 +193,7 @@ class Game(object):
                                 self.InteractionObject.Interagir((self.allSprites, self.collisionSprites), self.interactionsGroup)
 
                                 # si pas possible, on construit le pont si possible
-                                if not INFOS["DemiNiveau"] and INFOS["Map"] in ["NiveauPlaineRiviere", "NiveauMedievale"] :
+                                if not INFOS["DemiNiveau"] and NIVEAU["Map"] in ["NiveauPlaineRiviere", "NiveauMedievale"] :
                                     if NIVEAU["Map"] in ["NiveauPlaineRiviere", "NiveauMedievale"] and not self.buildElements.getConstructionStatuePont():
                                         self.buildElements.BuildBridge(self.loadMapElement, self.player.rect.center)
                                     elif NIVEAU["Map"] == "NiveauMedievale" and not self.buildElements.getPlaceStatueBoat():
@@ -262,7 +262,7 @@ class Game(object):
                             if self.cinematiqueObject == None :
                                 INFOS["HidePlayer"] = False
                                 coordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
-                                goal = [coordsSpawn[0][0] + 8, coordsSpawn[0][1]]
+                                goal = [coordsSpawn[0] + 8, coordsSpawn[1]]
                                 pathAcces = [".","S", "P"]
                                 self.cinematiqueObject = Cinematique(goal, self.player, self.map, pathAcces)
                             self.cinematique, endCinematique = self.cinematiqueObject.Update(dt)

@@ -52,7 +52,7 @@ class NiveauBaseFuturiste(GestionNiveauMap):
             for y in range (len(salleStructure)):
                 for x in range (len(salleStructure[y])):
                     self.map[posY1 + y][posX1 + x] = salleStructure[y][x]
-                    self.baseMap[posY1 + y][posX1 + x] = "V" # clear
+                    self.baseMap[posY1 + y][posX1 + x] = "." # clear
                     coordsSalle.append([posX1 + x, posY1 + y, salleStructure[y][x]])
             self.allCoordsSalles.append(coordsSalle)
             
@@ -110,7 +110,7 @@ class NiveauBaseFuturiste(GestionNiveauMap):
                 if path:
                     for coords in path:
                         self.map[coords[1]][coords[0]] =  "&" 
-                        self.baseMap[coords[1]][coords[0]] =  "V"
+                        self.baseMap[coords[1]][coords[0]] =  "."
         
         # checkVerif
         allPathCouloirs = []
@@ -134,13 +134,14 @@ class NiveauBaseFuturiste(GestionNiveauMap):
 
         for coords in allPathCouloirs:
             self.map[coords[1]][coords[0]] =  "."
-            self.baseMap[coords[1]][coords[0]] =  "V"
+            self.baseMap[coords[1]][coords[0]] =  "."
 
         # clear
         for ordonne in range(len(self.map)):
             for abscisse in range(len(self.map[0])):
                 if self.map[ordonne][abscisse] in ["v", "&"]:
                     self.map[ordonne][abscisse] = "W"
+                    self.baseMap[ordonne][abscisse] = "-"
 
     def PlacementObjSpecifique(self):
 
@@ -173,8 +174,8 @@ class NiveauBaseFuturiste(GestionNiveauMap):
         self.map[self.coordsReactorBloc[1]][self.coordsReactorBloc[0]] = "V" # sécu
 
         # coords vent
-        self.coordsVent1 = [self.allCoordsSalles[0][100][0], self.allCoordsSalles[0][100][1], "NiveauBaseFuturiste", "Vent"]
-        self.coordsVent2 = [self.allCoordsSalles[0][174][0], self.allCoordsSalles[0][174][1], "NiveauBaseFuturiste", "Vent"]
+        self.coordsVent1 = [self.allCoordsSalles[0][100][0], self.allCoordsSalles[0][100][1], "NiveauBaseFuturiste", "Vent1"]
+        self.coordsVent2 = [self.allCoordsSalles[0][174][0], self.allCoordsSalles[0][174][1], "NiveauBaseFuturiste", "Vent2"]
 
         coordsVents = [self.coordsVent1, self.coordsVent2]
         for coords in coordsVents:
@@ -195,7 +196,7 @@ class NiveauBaseFuturiste(GestionNiveauMap):
     def PlacementSpawn(self):
         self.coordsSpawn =[ 2, self.allLiaisons[0][0][1]]
         self.map[self.coordsSpawn[1]][self.coordsSpawn[0]] = "S"
-        AjoutJsonMapValue([self.coordsSpawn], "coordsMapObject", "Spawn") # on ajoute les coordonnées du spawn au fichier json
+        AjoutJsonMapValue(self.coordsSpawn, "coordsMapObject", "Spawn") # on ajoute les coordonnées du spawn au fichier json
 
     def PlacementPNJ(self):
         coordsPossiblesRefPNJ = [
@@ -282,7 +283,7 @@ class NiveauBaseFuturiste(GestionNiveauMap):
                     # Place les obstacles sur la carte
                     for coords in listeObstacle:
                         self.map[coords[1]][coords[0]] = "O"  # Placement des obstacles sur la carte
-                        self.baseMap[coords[1]][coords[0]] = "-"
+                        self.baseMap[coords[1]][coords[0]] = "."
 
         ## SECURITE
         # verif si boucle pour relancement

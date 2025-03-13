@@ -260,11 +260,18 @@ class Interactions(object):
                     self.gestionnaire.fondu_au_noir()
 
                     self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["UseVent"]) # text animation
-                    
-                    allVents = LoadJsonMapValue("coordsMapObject", "coordsVent")
-                    coordsVent = [self.Obj.pos[0] // CASEMAP, self.Obj.pos[1] // CASEMAP]
+                    coordsVentActuel = [self.Obj.pos[0] // CASEMAP, self.Obj.pos[1]//CASEMAP]
 
-                    if [allVents[1][0], allVents[1][1]] == coordsVent:
+                    allObj = LoadJsonMapValue("coordsMapObject", "ObjAPlacer")
+                    allVents = []
+                    for obj in allObj:
+                        if obj[3] == "Vent1":
+                            allVents.append([obj[0], obj[1]])
+                        if obj[3] == "Vent2":
+                            allVents.append([obj[0], obj[1]])
+
+
+                    if [allVents[1][0], allVents[1][1]] == coordsVentActuel:
                         coordsTarget = [(allVents[0][0] + 1)*CASEMAP +64, allVents[0][1] * CASEMAP +64] # + 64 pour center
                     else:
                         coordsTarget = [(allVents[1][0] -1)*CASEMAP +64 , allVents[1][1] * CASEMAP +64]
@@ -273,7 +280,7 @@ class Interactions(object):
                     self.player.rect.center = self.player.hitbox_rect.center
 
                     if not self.electricityOn:
-                        if [allVents[1][0], allVents[1][1]] == coordsVent:
+                        if [allVents[1][0], allVents[1][1]] == coordsVentActuel:
                             STATE_HELP_INFOS[0] = "SeePNJ"
                         else:
                             STATE_HELP_INFOS[0] = "UseVent"

@@ -125,11 +125,11 @@ class ReactorInterface(object):
             allCollisionSprites = self.gestionnaire.gestionnaire.collisionSprites
             allSprites = self.gestionnaire.gestionnaire.allSprites
             for sprite in allCollisionSprites:
-                if sprite.id == "DoorFuturiste":
+                if sprite.id == "DoorFuturisteClose":
                     pos = sprite.pos
                     sprite.kill()
                     OpenDoor = pygame.image.load(join("Image", "Obstacle", "Door", "DoorFuturisteBaseOpen.png")).convert_alpha()
-                    Sprites(pos, OpenDoor, "DoorFuturisteOpen", allSprites)
+                    Sprites(pos, OpenDoor, "DoorFuturisteOpen", allSprites, layer=1)
 
 
         if event.type == pygame.MOUSEBUTTONDOWN:  # Si un clic souris est détecté
