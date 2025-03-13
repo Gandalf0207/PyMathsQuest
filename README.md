@@ -5,7 +5,7 @@
 
 
 ## Présentation : 
-PyMathsQuest est un projet étudiant réalisé par 2 élèves en termianle NSI : LUBAN Théo & PLADEAU Quentin. Le but de ce projet est de réaliser un petit RPG autour des mathématiques sur le langage python et la librairie pygame. Le jeu se veut durable et unique, c'est pourquoi le point fort est l'aléatoire. En effet, que ce soit la génération de la carte ou encore les exercices mathématiques, toutes les valeurs sont aléatoires. Cela rend donc chaque partie unique ! De plus, à la fin d'une partie, les différentes exercices rencontrés sont corrigés pas à pas pour vous aider à mieux les comprendre. Cela est possible grâce à notre librairie Py-Maths qui permet la génération d'exercices corrigés.
+PyMathsQuest est un projet étudiant réalisé par 2 élèves en terminale NSI : LUBAN Théo & PLADEAU Quentin. Le but de ce projet est de réaliser un petit RPG autour des mathématiques grâce au langage python et à la librairie pygame. Le jeu se veut durable et unique, c'est pourquoi le point fort est l'aléatoire. En effet, que ce soit la génération de la carte ou encore les exercices mathématiques, toutes les valeurs sont aléatoires. Cela rend donc chaque partie unique ! De plus, à la fin d'une partie, les différentes exercices rencontrés sont corrigés pas à pas pour vous aider à mieux les comprendre. Cela est possible grâce à notre librairie Py-Maths qui permet la génération d'exercices corrigés.
 Ce projet est donc né de la fusion de Maths-Quest et Py-Maths deux anciens projet réalisé lors de l'année de première en NSI. 
 
 Le projet aborde donc plusieurs notion de mathématique, les voici : 
@@ -41,9 +41,9 @@ Au début de chaque niveau, vous apparaitrez à gauche de la carte générée, v
 ## Installation : 
 
 > [!NOTE]
-> Le projet a été développé sur le systhem d'exploitation window 11, python 3.12.6 ainsi que les librairies présentes dans le fichier requirements.txt Si vous souhaitez modifier ces parametres, veillez à vous assurer de la compatibilit des systhem d'application et versions.
+> Le projet a été développé sur le systeme d'exploitation windows 11, python 3.12.6 ainsi que les librairies présentes dans le fichier requirements.txt Si vous souhaitez modifier ces parametres, veillez à vous assurer de la compatibilité des systemes d'application et versions.
 
-Afin de pouvoir utiliser le jeu sans soucis, nous vous demandons de bien vouloir suivre pas-à-pas l'installation du projet décrite ci-dessous.y
+Afin de pouvoir utiliser le jeu sans soucis, nous vous demandons de bien vouloir suivre pas-à-pas l'installation du projet décrite ci-dessous.
 
   ##### Téléchargement des .exe nécessaires au jeu :
   Vous devez récupérer les 4 .exe qui sont nécessaires à l'installation :
@@ -52,7 +52,7 @@ Afin de pouvoir utiliser le jeu sans soucis, nous vous demandons de bien vouloir
   - [MikTeX](https://miktex.org/download)
   - [Visual C++ x64](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
 
-  Une fois que vous avez récupéré ces 4 fichiers exécutables, executez-les dans l'ordre de téléchargement 1 par 1 et assurer vous d'accorder les droits et autorisation nécessaire à l'installation. Si possible ajouter les éléments nécessaire au Path de votre ordinateur puis redémarez-le. 
+  Une fois que vous avez récupéré ces 4 fichiers exécutables, executez-les dans l'ordre de téléchargement 1 par 1 et assurez vous d'accorder les droits et autorisation nécessaire à l'installation. Si possible ajoutez les éléments nécessaire au Path de votre ordinateur puis redémarez-le. 
 
   ##### Clône du repositorie GitHub:
   - Veillez à redémarrer votre machine si nécessaire pour permettre à votre système de bien intégrer l'installation des logiciels précédents. Après cela, il vous faut installer différentes dépendances nécessaires au bon fonctionnement du jeu.
@@ -66,7 +66,7 @@ Afin de pouvoir utiliser le jeu sans soucis, nous vous demandons de bien vouloir
    ##### Téléchargement des dépendances nécessaires au jeu :
   
   - Vous devez installer manuellement les dépendances. Pour ce faire, ouvrez un invite de commande (cmd / powershell...) et entrez les commandes suivantes dans l'ordre donné.
-    Pour chacune des comandes en rapport avec des dépendances Latex, une fenêtre peut s'ouvrir, il vous faut accepter l'installation.
+    Pour chacune des commandes en rapport avec des dépendances Latex, une fenêtre peut s'ouvrir, vous devrez accepter l'installation.
 
   > Mettre à jour pip 
   ```
@@ -117,7 +117,7 @@ Si vous rencontrez des problèmes avec des éléments de l'installation, vérifi
 > Lorsque vous exécutez une commande **git clone**, assurez-vous que l'emplacement où vous êtes est le bon pour cloner le dossier. La commande **Git clone** est possible seulement si vous avez téléchargé et installé le .exe git. De plus, si vous possédez déjà un clone ou un dossier possédant le même nom que le projet dans le dossier destination du clône, le clône ne pourra avoir lieu.
 
 > [!WARNING]
-> Veuillez faire attention au lieu d'installation des logiciels, et si nécessaire vous octroyer les droits en les ajoutant dans le **PATH**.
+> Veuillez faire attention à l'emplacement d'installation des logiciels, et si nécessaire  octroyez-vous les droits en les ajoutant dans le **PATH**.
 
 > [!WARNING]
 > Si vous rencontrez un problème lors de l'installation des dépendances, après l'installation des logiciels.exe, veillez à redémarrer votre machine puis à réinstaller les dépendances.
