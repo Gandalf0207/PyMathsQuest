@@ -74,13 +74,17 @@ class AllSprites(pygame.sprite.LayeredUpdates):
         self.offset.x = camera_x
         self.offset.y = camera_y
 
-        # Dessiner les sprites
+        # Séparer sol et objets
         ground_sprites = [sprite for sprite in self if hasattr(sprite, 'ground')]
         object_sprites = [sprite for sprite in self if not hasattr(sprite, 'ground')]
 
-        for layer in [ground_sprites, object_sprites]:
-            for sprite in sorted(layer, key=lambda sprite: sprite.rect.centery):
-                self.display_surface.blit(sprite.image, sprite.rect.topleft + self.offset)
+        # 1️⃣ Afficher le sol en premier (aucun tri nécessaire)
+        for sprite in ground_sprites:
+            self.display_surface.blit(sprite.image, sprite.rect.topleft + self.offset)
+
+        # 2️⃣ Trier et afficher les objets en fonction de leur rect.bottom
+        for sprite in sorted(object_sprites, key=lambda sprite: sprite.rect.bottom):
+            self.display_surface.blit(sprite.image, sprite.rect.topleft + self.offset)
 
 
         # Appliquer le masque de vision smooth

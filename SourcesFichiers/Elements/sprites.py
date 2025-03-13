@@ -42,7 +42,7 @@ class CollisionSprites(pygame.sprite.Sprite):
         elif typeCollision == "Pont1" or typeCollision == "Pont2":
             self.rect = self.image.get_frect(topleft=(pos[0]-33, pos[1]))
 
-        elif typeCollision == "MuraillesAngle":
+        elif typeCollision in["WallAngularNE", "WallAngularNW"]:
             self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-64))
         else:
             self.rect = self.image.get_frect(topleft=pos)
@@ -55,7 +55,7 @@ class CollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(0,0)
             case "Souche":
                 self.hitbox = self.rect.inflate(-120,-110)
-            case "Souche2":
+            case "Souche1":
                 self.hitbox = self.rect.inflate(-120,-110)
             case "HugeRock":
                 self.hitbox = self.rect.inflate(-90,-100)
@@ -63,9 +63,9 @@ class CollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(-70,-70)
             case "banc":
                 self.hitbox = self.rect.inflate(-70,-70)
-            case "pont1" :
+            case "Pont1" :
                 self.hitbox = self.rect.inflate(-100,0)
-            case "pont2":
+            case "Pont2":
                 self.hitbox = self.rect.inflate(-100,0)
 
             case "ExitRock":
@@ -230,6 +230,8 @@ class AnimatedCollisionSprites(pygame.sprite.Sprite):
 
         if typeCollision == "Pont3":
             self.rect = self.image.get_frect(topleft=(pos[0]-32, pos[1]))   
+        elif typeCollision == "Pont4":
+            self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-32))   
         else:
             self.rect = self.image.get_frect(topleft=pos)
 
@@ -237,6 +239,8 @@ class AnimatedCollisionSprites(pygame.sprite.Sprite):
         match typeCollision:
             case "Pont3":
                 self.hitbox = self.rect.inflate(0, -100)
+            case "Pont4":
+                self.hitbox = self.rect.inflate(-100, 0)
             case "River":
                 self.hitbox = self.rect.inflate(0,0)
             

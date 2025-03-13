@@ -449,9 +449,9 @@ class LoadMapGestion():
                     
                     # === 3. Virages (angles) ===
                     if up and right:
-                        CollisionSprites(pos, self.MurAngularNE, "Wall", (self.allSprites, self.collisionSprites))
+                        CollisionSprites(pos, self.MurAngularNE, "WallAngularNE", (self.allSprites, self.collisionSprites))
                     elif up and left:
-                        CollisionSprites(pos, self.MurAngularNW, "Wall", (self.allSprites, self.collisionSprites))
+                        CollisionSprites(pos, self.MurAngularNW, "WallAngularNW", (self.allSprites, self.collisionSprites))
 
                     # Passage avec de l'eau
                     elif right and left and case_valide(ordonnees - 1, abscisses) and self.map[ordonnees - 1][abscisses] == "#" \
@@ -461,36 +461,36 @@ class LoadMapGestion():
 
                     # montain collision
                     elif down and self.map[ordonnees][abscisses-1] == "B":
-                        CollisionSprites(pos, self.MurMountain, "Wall", (self.allSprites, self.collisionSprites))
+                        CollisionSprites(pos, self.MurMountain, "WallMountain", (self.allSprites, self.collisionSprites))
                     
                         
                     elif down and right:
-                        CollisionSprites(pos, self.MurAngularSE, "Wall", (self.allSprites, self.collisionSprites))
+                        CollisionSprites(pos, self.MurAngularSE, "WallAngularSE", (self.allSprites, self.collisionSprites))
                     elif down and left:
-                        CollisionSprites(pos, self.MurAngularSW, "Wall", (self.allSprites, self.collisionSprites))
+                        CollisionSprites(pos, self.MurAngularSW, "WallAnfularSW", (self.allSprites, self.collisionSprites))
 
                     # === 4. Lignes droites ===
                     elif left and right:
                         if self.mapBase[ordonnees-1][abscisses] == "." and self.mapBase[ordonnees+1][abscisses] == ".":
-                            CollisionSprites(pos, self.MurWEHaut, "Wall", (self.allSprites, self.collisionSprites))
+                            CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
                         elif self.mapBase[ordonnees+1][abscisses] == ".":
-                            CollisionSprites(pos, self.MurWEHaut, "Wall", (self.allSprites, self.collisionSprites))
+                            CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
                         elif self.mapBase[ordonnees-1][abscisses] == ".":
                             # add pre sol car collision mur bas sprite différents
                             Sprites(pos, self.sol2,"Sol", self.allSprites)
-                            CollisionSprites(pos, self.MurWEBas, "Wall2", (self.allSprites, self.collisionSprites))
+                            CollisionSprites(pos, self.MurWEBas, "WallWEBas", (self.allSprites, self.collisionSprites))
                         else:
-                            CollisionSprites(pos, self.MurWEHaut, "Wall2", (self.allSprites, self.collisionSprites))
+                            CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
 
 
                     elif up and down:
                         if self.mapBase[ordonnees][abscisses-1] == ".":
-                            CollisionSprites(pos, self.MurNSDroite, "Wall", (self.allSprites, self.collisionSprites))
+                            CollisionSprites(pos, self.MurNSDroite, "WallNSDroite", (self.allSprites, self.collisionSprites))
                         else:
-                            CollisionSprites(pos, self.MurNSGauche, "Wall", (self.allSprites, self.collisionSprites))
+                            CollisionSprites(pos, self.MurNSGauche, "WallNSGauche", (self.allSprites, self.collisionSprites))
 
                     else:
-                        CollisionSprites(pos, self.MurWEHaut, "Wall", (self.allSprites, self.collisionSprites))
+                        CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
 
                 # obstacles
                 # Tout les obstales
@@ -588,7 +588,7 @@ class LoadMapGestion():
                     case "DoorMuraille":
                         CollisionSprites(pos, self.DoorMuraille, "DoorMuraille", (self.allSprites, self.collisionSprites), layer=1)
                     case "Pont3":
-                        self.AddPont("Pont3", [obj[0], obj[1]])
+                        self.AddPont("Pont3", [obj[0], obj[1]], False)
                     case "Pont4":
                         self.AddPont("Pont4", [obj[0], obj[1]])
                     case "Puits":
@@ -596,18 +596,23 @@ class LoadMapGestion():
                     case "TableCraft":
                         CollisionSprites(pos, self.tableCraft, "TableCraft", (self.allSprites, self.collisionSprites, self.interactions), layer=1)
 
-    def AddPont(self, element, coords):
+    def AddPont(self, element, coords, Interaction = True):
         pos =  [coords[0]*CASEMAP, coords[1]*CASEMAP]
+        if Interaction:
+            groups = (self.allSprites, self.collisionSprites, self.interactions)
+        else:
+            groups = (self.allSprites, self.collisionSprites)
+
         if element == "Pont1":
-            CollisionSprites(pos, self.pont1, element, (self.allSprites, self.collisionSprites, self.interactions), layer=2)
+            CollisionSprites(pos, self.pont1, element, groups, layer=2)
         elif element  == "Pont2":
-            CollisionSprites(pos, self.pont2, element, (self.allSprites, self.collisionSprites, self.interactions), layer=2)
+            CollisionSprites(pos, self.pont2, element, groups, layer=2)
         elif element == "Pont3":
             path = join("Image", "Structure", "Pont", "Pont3")
-            AnimatedCollisionSprites(pos, path, "Pont3", (self.allSprites, self.collisionSprites, self.interactions), InfoExo=True, layer=3)
+            AnimatedCollisionSprites(pos, path, "Pont3", groups, InfoExo=True, layer=3)
         elif element == "Pont4":
             path = join("Image", "Structure", "Pont", "Pont4")
-            AnimatedCollisionSprites(pos, path, "Pont4", (self.allSprites, self.collisionSprites, self.interactions), InfoExo=False, layer=4)
+            AnimatedCollisionSprites(pos, path, "Pont4", groups, InfoExo=False, layer=4)
     
     def AddBoat(self, element, coords):
         pos = [coords[0]*CASEMAP, coords[1]*CASEMAP]

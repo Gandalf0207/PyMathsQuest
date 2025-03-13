@@ -191,7 +191,7 @@ class Interactions(object):
 
                     # check pos player et pos de référence
                     coordsPtsRefRiverTpChateau = LoadJsonMapValue("coordsMapObject", "RiverBoatTPChateau coords")
-                    coordsBoat = [(self.Obj.pos[0] -32) // CASEMAP, (self.Obj.pos[1] -32) // CASEMAP ] #  -32 : centre place ; // CASEMAP --> obtention en coords double list
+                    coordsBoat = [(self.Obj.pos[0]) // CASEMAP, (self.Obj.pos[1]) // CASEMAP ] 
 
                     if coordsPtsRefRiverTpChateau != coordsBoat : 
                         # texte animation : 
@@ -201,7 +201,7 @@ class Interactions(object):
                         self.boatPlacementPlayerPos = [self.Obj.pos, self.player.rect.center] # sauvgarde
                         
                         # deplacement bateau
-                        self.Obj.pos = (coordsPtsRefRiverTpChateau[0]*CASEMAP +32, coordsPtsRefRiverTpChateau[1]*CASEMAP + 32) # +32 : center case river
+                        self.Obj.pos = (coordsPtsRefRiverTpChateau[0]*CASEMAP, coordsPtsRefRiverTpChateau[1]*CASEMAP)
                         self.Obj.hitbox.topleft = self.Obj.pos
                         self.Obj.rect.topleft = self.Obj.hitbox.topleft
                         

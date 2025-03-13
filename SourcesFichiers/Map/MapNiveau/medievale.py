@@ -124,7 +124,7 @@ class NiveauMedievale(GestionNiveauMap):
         coordsPNJ2 = [getCoords2[0], getCoords2[1] +1, "P", 2]
         
         # Placement fixe du troisième PNJ
-        coordsPNJ3 = [108, 12, "P", 3]
+        coordsPNJ3 = [108, 6, "P", 3]
 
         # Stocke toutes les coordonnées des PNJ dans une liste
         self.allCoordsPNJ = [coordsPNJ1, coordsPNJ2, coordsPNJ3]
@@ -138,7 +138,7 @@ class NiveauMedievale(GestionNiveauMap):
     def PlacementObjSpecifique(self):
 
         # chateau elements
-        self.coordsChateau = [140, 0, "NiveauMedievale", "Chateau"]
+        self.coordsChateau = [107, 1, "NiveauMedievale", "Chateau"]
         self.map[self.coordsChateau[1]][self.coordsChateau[0]] = "&"
         self.baseMap[self.coordsChateau[1]][self.coordsChateau[0]] = "-" # clear
 
