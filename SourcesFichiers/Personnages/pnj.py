@@ -227,7 +227,7 @@ class GestionPNJ(object):
 
         if NIVEAU["Map"] == "NiveauMordor":
             goal = (int(self.gestionnaire.player.rect.center[0] // CASEMAP), int(self.gestionnaire.player.rect.center[1] // CASEMAP))
-            pathAcces = ["-", "l", "/"]
+            pathAcces = ["-", "V", "v"]
         
         self.followObject = FollowPlayer(goal, self.pnjObj, self.map, pathAcces)
 

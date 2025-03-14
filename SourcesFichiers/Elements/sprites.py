@@ -238,7 +238,7 @@ class AnimatedCollisionSprites(pygame.sprite.Sprite):
             if isinstance(group, pygame.sprite.LayeredUpdates):
                 group.change_layer(self, layer)
 
-        if typeCollision == "Pont3":
+        if typeCollision in ["Pont3", "Pont5"]:
             self.rect = self.image.get_frect(topleft=(pos[0]-32, pos[1]))   
         elif typeCollision == "Pont4":
             self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-32))   
@@ -253,6 +253,8 @@ class AnimatedCollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(0, -100)
             case "Pont4":
                 self.hitbox = self.rect.inflate(-100, 0)
+            case "Pont 5":
+                self.hitbox = self.rect.inflate(0, -100)
             case "River":
                 self.hitbox = self.rect.inflate(0,0)
             

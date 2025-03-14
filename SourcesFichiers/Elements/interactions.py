@@ -357,7 +357,7 @@ class Interactions(object):
 
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center)   
 
-                if self.ObjectId == "pont3":
+                if self.ObjectId == "Pont5":
                     # animation 
                     self.gestionnaire.fondu_au_noir()
                     self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["TraverserPont"])
@@ -373,7 +373,7 @@ class Interactions(object):
                     # fin animation
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center) 
 
-                if self.ObjectId == "PorteVolcan" : 
+                if self.ObjectId == "DoorVolcan" : 
                     self.gestionnaire.fondu_au_noir()
 
                     INFOS["Exo"] = True # lancement exo dans main (changement variable)
@@ -419,11 +419,11 @@ class Interactions(object):
                     return False
                 if Object.id  == "DoorFuturisteVaisseau" and not PNJ["PNJ7"]:
                     return False
-                if Object.id == "DoorBareau" and (INVENTORY["Key"] < 1 or not self.parchemin):
+                if Object.id == "DoorCellule" and (INVENTORY["Key"] < 1 or not self.parchemin):
                     return False
                 if Object.id == "DoorPrison" and not PNJ["PNJ3"]:
                     return False
-                if Object.id == "PorteVolcan" and not PNJ["PNJ4"]:
+                if Object.id == "DoorVolcan" and not PNJ["PNJ4"]:
                     return False
 
                 # valeur importante de l'obj interactions

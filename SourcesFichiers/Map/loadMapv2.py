@@ -182,33 +182,35 @@ class LoadMapGestion():
         self.doorFuturisteDemiNiveau = pygame.image.load(join("Image", "Obstacle", "Door", "DoorFuturisteVaisseau.png")).convert_alpha()
 
     def LoadImagesNiveauMordor(self):
-        self.sol = pygame.image.load(join("Images", "Sol", "Grass", "Grass.png")).convert_alpha()
-        self.sol2 = pygame.image.load(join("Images", "Sol","Mud", "Mud.png")).convert_alpha() # cratere
-        self.sol3 = pygame.image.load(join("Images", "Sol","Mud", "Mud.png")).convert_alpha() # cratere
+        self.sol = pygame.image.load(join("Image", "Sol", "MordorSol.png")).convert_alpha()
+        self.sol2 = pygame.image.load(join("Image", "Sol", "MordorSol2.png")).convert_alpha()
+        self.sol3 = pygame.image.load(join("Image", "Sol", "MordorSol3.png")).convert_alpha()
 
-        self.montainWE = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ex128.png")).convert_alpha()
-        self.montainWE1 = pygame.image.load(join("Images", "Border","Mountain", "MountainStraighW-Ealt1x128.png")).convert_alpha()
+        self.montainWE = pygame.image.load(join("Image", "Mur", "Mountain", "MountainMordorStraighW-Ex128.png")).convert_alpha()
+        self.montainWE1 = pygame.image.load(join("Image", "Mur", "Mountain", "MountainMordorStraighW-Ealt1x128.png")).convert_alpha()
 
-        self.MurWE = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesWE.png" )).convert_alpha()
-        self.MurNS = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesNS.png" )).convert_alpha()
-        self.MurMountain = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesMountain.png" )).convert_alpha()
-        self.MurAngle = pygame.image.load(join("Images", "Obstacle",  "Structures", "Chateau", "MuraillesAngle.png" )).convert_alpha()  
+        self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesWE.png" )).convert_alpha()
+        self.MurNSGauche = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesNS.png" )).convert_alpha()
+        self.MurNSDroite = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesNS.png" )).convert_alpha()
+        self.MurMountain = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesMountain.png" )).convert_alpha()
 
-        self.Door = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
-        self.Door2 = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
-        self.Door3 =pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha() 
+        self.MurAngularNE = pygame.image.load(join("Image", "Mur", "Mordor", "Muraille", "WallAngularNE.png")).convert_alpha()
+        self.MurAngularNW = pygame.image.load(join("Image", "Mur", "Mordor", "Muraille", "WallAngularNW.png")).convert_alpha()
+
+
+
+        self.DoorCellule = pygame.image.load(join("Image", "Obstacle", "Door", "DoorCellule.png")).convert_alpha()
+        self.DoorPrison = pygame.image.load(join("Image", "Obstacle","Door",  "DoorPrison.png")).convert_alpha()
+        self.DoorVolcan =pygame.image.load(join("Image", "Obstacle", "Door", "DoorVolcan.png")).convert_alpha() 
         
-        self.obstacle = pygame.image.load(join("Images", "Obstacle", "HugeRock.png")).convert_alpha()
-        self.doorFuturiste = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+        self.obstacle = pygame.image.load(join("Image", "Obstacle", "HugeRock.png")).convert_alpha()
 
-        self.pont5 = pygame.image.load(join("Images", "Pont","BridgePlanksN-S-x128.png" )).convert_alpha()
+        self.pot  = pygame.image.load(join("Image", "Obstacle", "Pot.png")).convert_alpha()
+        self.parchemin = pygame.image.load(join("Image", "Obstacle", "Parchemin.png")).convert_alpha()
+        self.volcan = pygame.image.load(join("Image", "Structure",  "Mordor", "Volcan.png")).convert_alpha()
 
-        self.pot  = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
-        self.parchemin = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
-        self.volcan = pygame.image.load(join("Images", "Obstacle", "Structures", "Volcan.png")).convert_alpha()
-
-        self.vaisseauCrash = pygame.image.load(join("Images", "Obstacle", "Structures", "Volcan.png")).convert_alpha()
-        self.bareaux = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+        self.vaisseauCrash = pygame.image.load(join("Image", "Structure", "Mordor", "VaisseauCrash.png")).convert_alpha()
+        self.bareaux = pygame.image.load(join("Image", "Obstacle", "Barreaux.png")).convert_alpha()
 
     def LoadImagesDemiNiveauVolcan(self):
         pass
@@ -469,7 +471,7 @@ class LoadMapGestion():
                     can_go_right = abscisses < len(self.map[0]) -1  
 
                     def checkWallUp():
-                        return can_go_up and self.map[ordonnees - 1][abscisses] == "W"
+                        return can_go_up and self.map[ordonnees - 1][abscisses] in ["W", "B"]
 
                     def checkWallDown():
                         return can_go_down and self.map[ordonnees + 1][abscisses] == "W"
@@ -500,6 +502,9 @@ class LoadMapGestion():
 
                     # Gestion des différents types de murs
 
+                    if wall_left and wall_right and wall_up:
+                        pass
+
                     # === 1. Mur en angle ===
                     if wall_up and wall_right:
                         if NIVEAU["Map"] == "NiveauMedievale":
@@ -518,6 +523,10 @@ class LoadMapGestion():
 
                             else:
                                 CollisionSprites(pos, self.MurAngularNW2, "WallAngularNW", (self.allSprites, self.collisionSprites))
+                        
+                        if NIVEAU["Map"] == "NiveauMordor":
+                            CollisionSprites(pos, self.MurAngularNW, "WallAngularNW", (self.allSprites, self.collisionSprites))
+
 
                     elif wall_up and wall_left:
                         if NIVEAU["Map"] == "NiveauMedievale":
@@ -536,6 +545,9 @@ class LoadMapGestion():
 
                             else:
                                 CollisionSprites(pos, self.MurAngularNE2, "WallAngularNE", (self.allSprites, self.collisionSprites))
+                        
+                        if NIVEAU["Map"] == "NiveauMordor":
+                            CollisionSprites(pos, self.MurAngularNE, "WallAngularNE", (self.allSprites, self.collisionSprites))
 
                         
                     elif wall_down and wall_right:
@@ -555,7 +567,9 @@ class LoadMapGestion():
                             else:
                                 Sprites(pos, self.sol1, "Sol", self.allSprites)
                                 CollisionSprites(pos, self.MurAngularSW2, "WallBAngularSW", (self.allSprites, self.collisionSprites))
-
+                        
+                        if NIVEAU["Map"] == "NiveauMordor":
+                            CollisionSprites(pos, self.MurAngularSW2, "WallBAngularSW", (self.allSprites, self.collisionSprites))
 
                     elif wall_down and wall_left:
                         if NIVEAU["Map"] == "NiveauMedievale":
@@ -575,11 +589,12 @@ class LoadMapGestion():
                                 Sprites(pos, self.sol1, "Sol", self.allSprites)
                                 CollisionSprites(pos, self.MurAngularSE2, "WallBAngularSW", (self.allSprites, self.collisionSprites))
 
-
+                        if NIVEAU["Map"] == "NiveauMordor":
+                            CollisionSprites(pos, self.MurAngularSE, "WallAngularSE", (self.allSprites, self.collisionSprites))
 
                     # === 2. Passage avec de l'eau ===
                     elif water_passage:
-                        pathRiver = join("Image", "Obstacle", "Riviere", "CastleWallRiverx128")
+                        pathRiver = join("Image", "Obstacle", "Riviere", "CastleWallRiverx128") if NIVEAU["Map"] == "NiveauMedievale" else join("Image", "Obstacle", "Riviere", "CastleWallRiverx128")
                         AnimatedCollisionSprites(pos, pathRiver, "River", (self.allSprites, self.collisionSprites), layer=1)
 
                     # === 3. Collision montagne ===
@@ -598,13 +613,12 @@ class LoadMapGestion():
                                 CollisionSprites(pos, self.MurWEBas, "WallBWEBas", (self.allSprites, self.collisionSprites))
                             else:
                                 CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
+
                         else:
                             if can_go_down :
                                 CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
                             else:
                                 CollisionSprites(pos, self.MurWEBas, "WallWEBas", (self.allSprites, self.collisionSprites))
-
-
 
 
                     elif wall_up and wall_down:
@@ -627,6 +641,7 @@ class LoadMapGestion():
                             else:
                                 Sprites(pos, self.sol, "Sol", self.allSprites)
                                 CollisionSprites(pos, self.MurNSGauche, "WallNSGauche", (self.allSprites, self.collisionSprites))
+                        
                         else :
                             if can_go_left:
                                 CollisionSprites(pos, self.MurNSDroite, "WallNSDroite", (self.allSprites, self.collisionSprites))
@@ -792,7 +807,30 @@ class LoadMapGestion():
                         CollisionSprites(pos, self.siege, "Vitre", (self.allSprites, self.collisionSprites), layer=1)
                     case "DoorFuturisteVaisseau":
                         CollisionSprites(pos, self.doorFuturisteDemiNiveau, "DoorFuturisteVaisseau", (self.allSprites, self.collisionSprites, self.interactions))
-
+            elif obj[2] == "NiveauMordor":
+                match obj[3]:
+                    case "Pont5": 
+                        if obj[4] == "Interaction":
+                            self.AddPont("Pont5", [obj[0], obj[1]])
+                        else:
+                            self.AddPont("Pont5", [obj[0], obj[1]], False)
+                    case "VaisseauCrash":
+                        CollisionSprites(pos, self.vaisseauCrash, "CrashVaisseau", (self.allSprites, self.collisionSprites), layer=1)
+                    case "Pot":
+                        CollisionSprites(pos, self.pot, "Pot", (self.allSprites, self.collisionSprites, self.interactions), layer=1)
+                    case "Parchemin":
+                        Sprites(pos, self.parchemin, "Parchemin", (self.allSprites, self.interactions), layer=1)
+                    case "DoorCellule":
+                        CollisionSprites(pos, self.DoorCellule, "DoorCellule", (self.allSprites, self.collisionSprites, self.interactions), layer=1)
+                    case "DoorPrison":
+                        CollisionSprites(pos, self.DoorPrison, "DoorPrison", (self.allSprites, self.collisionSprites, self.interactions), layer=1)
+                    case "Barreaux":
+                        CollisionSprites(pos, self.bareaux, "Barreaux", (self.allSprites, self.collisionSprites), layer=1)
+                    case "VolcanStruc":
+                        CollisionSprites(pos, self.volcan, "VolcanStruc", (self.allSprites, self.collisionSprites), layer=1)
+                    case "VolcanDoor" : 
+                        CollisionSprites(pos, self.DoorVolcan, "DoorVolcan", (self.allSprites, self.collisionSprites, self.interactions), layer=2)
+                    
 
 
 
@@ -813,7 +851,11 @@ class LoadMapGestion():
         elif element == "Pont4":
             path = join("Image", "Structure", "Pont", "Pont4")
             AnimatedCollisionSprites(pos, path, "Pont4", groups, InfoExo=False, layer=4)
-    
+        elif element == "Pont5":
+            path = join("Image", "Structure", "Pont", "Pont5")
+            AnimatedCollisionSprites(pos, path, "Pont4", groups, InfoExo=False, layer=4)
+
+
     def AddBoat(self, element, coords):
         pos = [coords[0]*CASEMAP, coords[1]*CASEMAP]
         if element == "BoatObj":

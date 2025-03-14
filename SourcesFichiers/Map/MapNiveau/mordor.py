@@ -29,7 +29,7 @@ class NiveauMordor(GestionNiveauMap):
     def PlacementMuraille(self):
         # prisions
         self.prisonStructure = [
-            ["W", "-", "-", "-", "-", "W", "-", "-", "V", "W", "-", "-", "-", "W", "-", "-", "-", "-", "W"],
+            ["W", "-", "-", "-", "-", "W", "-", "-", "v", "W", "-", "-", "-", "W", "-", "-", "-", "-", "W"],
             ["W", "-", "-", "-", "-", "W", "-", "&", "-", "W", "-", "-", "-", "W", "-", "-", "-", "-", "W"],
             ["W", "-", "-", "-", "-", "W", "-", "-", "-", "W", "-", "-", "-", "W", "-", "-", "-", "-", "W"],
             ["W", "-", "-", "-", "-", "W", "&", "V", "&", "W", "&", "V", "&", "W", "-", "-", "-", "-", "W"],
@@ -69,7 +69,7 @@ class NiveauMordor(GestionNiveauMap):
         self.coordsPont2 = [getCoords2[0], getCoords2[1], "NiveauMordor", "Pont5", "Interaction"]
 
         # placement vaisseau
-        self.coordsVaisseau = [randint(8, 25), randint(3, 64)]
+        self.coordsVaisseau = [randint(8, 25), randint(3, 64), "NiveauMordor", "VaisseauCrash"]
         for ordonne in range(5):
             for abscisse in range(5):
                 self.map[self.coordsVaisseau[1] + ordonne][self.coordsVaisseau[0] + abscisse] = "&"
@@ -84,7 +84,7 @@ class NiveauMordor(GestionNiveauMap):
         # placement door prison
         self.coordsDoorCellule1 = [72, 4, "NiveauMordor", "DoorCellule"]
         self.coordsDoorCellule2 = [76, 4, "NiveauMordor", "DoorCellule"]
-        self.coordsDoorPrison = [74, 9, "NiveauMordor", "DoorCellule"]
+        self.coordsDoorPrison = [74, 9, "NiveauMordor", "DoorPrison"]
 
         # barreaux prison
         self.coordsBarreaux1 = [71, 4, "NiveauMordor", "Barreaux"]
@@ -93,14 +93,14 @@ class NiveauMordor(GestionNiveauMap):
         self.coordsBarreaux4 = [77, 4, "NiveauMordor", "Barreaux"]
 
         # placement volcan 
-        self.coordsVolcan = [randint(110, 135), randint(3, 64)]
+        self.coordsVolcan = [randint(110, 135), randint(3, 64), "NiveauMordor", "VolcanStruc"]
         for ordonne in range(5):
             for abscisse in range(5):
                 self.map[self.coordsVolcan[1] + ordonne][self.coordsVolcan[0] + abscisse] = "&"
                 self.baseMap[self.coordsVolcan[1] + ordonne][self.coordsVolcan[0] + abscisse] = "-"
 
         # placement porte volcan
-        self.coordsDoorVolcan = [self.coordsVolcan[0] + 2, self.coordsVolcan[1] + 4]
+        self.coordsDoorVolcan = [self.coordsVolcan[0] + 2, self.coordsVolcan[1] + 4, "NiveauMordor", "VolcanDoor"]
         self.map[self.coordsDoorVolcan[1]][self.coordsDoorPrison[0]] = "V"
         self.baseMap[self.coordsDoorVolcan[1]][self.coordsDoorPrison[0]] = "-"
 
@@ -116,7 +116,7 @@ class NiveauMordor(GestionNiveauMap):
         self.coordsSpawn = [self.coordsVaisseau[0] + 7, self.coordsVaisseau[1] +3]
         self.map[self.coordsSpawn[1]][self.coordsSpawn[0]] = "S"
         self.baseMap[self.coordsSpawn[1]][self.coordsSpawn[0]] = "-"
-        AjoutJsonMapValue([self.coordsSpawn], "coordsMapObject", "Spawn") # on ajoute les coordonnées du spawn au fichier json      
+        AjoutJsonMapValue(self.coordsSpawn, "coordsMapObject", "Spawn") # on ajoute les coordonnées du spawn au fichier json      
 
     def PlacementPNJ(self):
         coordsPNJ1 = [self.coordsPont1[0] -1, self.coordsPont1[1], "P", 1]
