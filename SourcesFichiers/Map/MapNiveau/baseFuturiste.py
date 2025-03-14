@@ -179,7 +179,7 @@ class NiveauBaseFuturiste(GestionNiveauMap):
 
         coordsVents = [self.coordsVent1, self.coordsVent2]
         for coords in coordsVents:
-            self.map[coords[1]][coords[0]] = "V"
+            self.map[coords[1]][coords[0]] = "v"
         
         # porte salle 
         self.coordsDoorSalle0 = [allDoorsSallesCoords[0][0], allDoorsSallesCoords[0][1], "NiveauBaseFuturiste", "DoorSalle"]
@@ -187,9 +187,12 @@ class NiveauBaseFuturiste(GestionNiveauMap):
         self.coordsDoorSalle2 = [allDoorsSallesCoords[2][0], allDoorsSallesCoords[2][1], "NiveauBaseFuturiste", "DoorSalle"]
         self.coordsDoorSalle3 = [allDoorsSallesCoords[3][0], allDoorsSallesCoords[3][1], "NiveauBaseFuturiste", "DoorSalle"]
 
+        # portal 
+        self.coordsPortal = [self.coordsSpawn[0], self.coordsSpawn[1], "NiveauBaseFuturiste", "Portal"]
 
         allObjSpecifique = [self.coordsReactorStruc ,self.coordsReactorBloc , self.coordsCafetStruc ,self.coordsEssenceStruc ,self.coordsLancementStruc,
-                            self.coordsVent1, self.coordsVent2, self.coordsDoorSalle0,self.coordsDoorSalle1,self.coordsDoorSalle2,self.coordsDoorSalle3,]
+                            self.coordsVent1, self.coordsVent2, self.coordsDoorSalle0,self.coordsDoorSalle1,self.coordsDoorSalle2,self.coordsDoorSalle3,
+                            self.coordsPortal]
         AjoutJsonMapValue(allObjSpecifique, "coordsMapObject", "ObjAPlacer")
 
 
@@ -247,10 +250,10 @@ class NiveauBaseFuturiste(GestionNiveauMap):
                 obstaclePos = [randint(0, self.longueur-1), randint(0, self.largeur-1)]
                 # Vérifie que la position choisie est valide (case vide et pas dans une zone interdite)
                 while self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] != '.'\
-                    or self.mapCheckDeplacementPossible[obstaclePos[1]-1][obstaclePos[0]] not in [".", "O", "V"] \
-                    or self.mapCheckDeplacementPossible[obstaclePos[1]+1][obstaclePos[0]]  not in [".", "O", "V"] \
-                    or self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]+1]  not in [".", "O", "V"] \
-                    or self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]-1]  not in [".", "O", "V"] :
+                    or self.mapCheckDeplacementPossible[obstaclePos[1]-1][obstaclePos[0]] not in [".", "W", "O", "V"] \
+                    or self.mapCheckDeplacementPossible[obstaclePos[1]+1][obstaclePos[0]]  not in [".", "W", "O", "V"] \
+                    or self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]+1]  not in [".", "W", "O", "V"] \
+                    or self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]-1]  not in [".", "W", "O", "V"] :
                     obstaclePos = [randint(0, self.longueur-1), randint(0, self.largeur-1)]  # Nouvelle tentative
                 # Marque la position comme occupée pour les tests
                 self.mapCheckDeplacementPossible[obstaclePos[1]][obstaclePos[0]] = "O"  
@@ -274,8 +277,8 @@ class NiveauBaseFuturiste(GestionNiveauMap):
 
             # Vérifie la possibilité de déplacements pour chaque liste de points clés
             # Le parcours se fait en trois étapes, en passant par les rivières pour s'assurer que les chemins sont valides
-            if self.CheckNiveauPossible(listeOrdrePointCle1, [".", "S", "V", "P"], self.mapCheckDeplacementPossible):  # Vérifie la première partie
-                if self.CheckNiveauPossible(listeOrdrePointCle2,  [".", "S", "V", "P"], self.mapCheckDeplacementPossible):  # Vérifie la deuxième partie
+            if self.CheckNiveauPossible(listeOrdrePointCle1, [".", "S", "V", "P", "v"], self.mapCheckDeplacementPossible):  # Vérifie la première partie
+                if self.CheckNiveauPossible(listeOrdrePointCle2,  [".", "S", "V", "P", "v"], self.mapCheckDeplacementPossible):  # Vérifie la deuxième partie
                     # Si tout est valide, les obstacles peuvent être placés et les coordonnées sont sauvegardées
                     AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords")
                     checkDeplacementPasPossible = False  # Arrête la boucle
@@ -296,8 +299,8 @@ class NiveauBaseFuturiste(GestionNiveauMap):
         self.PlacementBone()
         self.PlacementSalle()
         self.PlacementCouloir()
-        self.PlacementObjSpecifique()
         self.PlacementSpawn()
+        self.PlacementObjSpecifique()
         self.PlacementPNJ()
         self.PlacementObstacle()
         self.SaveGlobal()
@@ -320,9 +323,9 @@ class NiveauBaseFuturisteVaisseau(GestionNiveauMap):
             ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
             ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
             ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
-            ["-", "-", "-", "-", "-", "-", "W", "V", "V", "V", "W", "-", "-", "-", "-", "-", "-", "-"],
-            ["-", "-", "-", "-", "-", "-", "W", "V", "V", "V", "W", "-", "-", "-", "-", "-", "-", "-"],
             ["-", "-", "-", "-", "-", "-", "W", "V", ".", "V", "W", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "W", ".", ".", ".", "W", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "W", ".", ".", ".", "W", "-", "-", "-", "-", "-", "-", "-"],
             ["-", "-", "-", "-", "-", "-", "W", ".", ".", ".", "W", "-", "-", "-", "-", "-", "-", "-"],
             ["-", "-", "-", "-", "-", "-", "W", "O", ".", ".", "W", "-", "-", "-", "-", "-", "-", "-"],
             ["-", "-", "-", "-", "-", "-", "W", ".", ".", ".", "W", "-", "-", "-", "-", "-", "-", "-"],
@@ -382,9 +385,11 @@ class NiveauBaseFuturisteVaisseau(GestionNiveauMap):
         self.coordsSiege1 = [7, 7, "NiveauBaseFuturiste", "Siege"]
         self.coordsSiege2 = [9, 7, "NiveauBaseFuturiste", "Siege"]
 
+        self.coordsDoorFuturisteVaisseau = [8, 11, "NiveauBaseFuturiste", "DoorFuturisteVaisseau"]
+
         allObjSpecifique = [self.coordsVitre1, self.coordsVitre2, self.coordsVitre3,
                             self.coordsBoard1, self.coordsBoard2, self.coordsBoard3, 
-                            self.coordsSiege1, self.coordsVitre2]
+                            self.coordsSiege1, self.coordsSiege2, self.coordsVitre2, self.coordsDoorFuturisteVaisseau]
         AjoutJsonMapValue(allObjSpecifique, "coordsMapObject", "ObjAPlacer")
 
     def Update(self):

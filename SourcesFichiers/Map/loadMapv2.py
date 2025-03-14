@@ -125,6 +125,18 @@ class LoadMapGestion():
         self.MurAngularNW = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallBottomLeft.png" )).convert_alpha()
         self.MurAngularNW2 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallBottomLeft2.png" )).convert_alpha()
         
+        self.MurAngularNE = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallBottomRight.png" )).convert_alpha()
+        self.MurAngularNE2 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallBottomRight2.png" )).convert_alpha()
+
+        self.MurAngularSW = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopLeft.png" )).convert_alpha()
+        self.MurAngularSW2 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopLeft2.png" )).convert_alpha()
+        self.MurAngularSW3 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopLeft3.png" )).convert_alpha()
+
+        self.MurAngularSE = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopRight.png" )).convert_alpha()
+        self.MurAngularSE2 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopRight2.png" )).convert_alpha()
+        self.MurAngularSE3 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopRight3.png" )).convert_alpha()
+
+
 
         self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallEWx128.png" )).convert_alpha()
         self.MurWEBas = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallBackWidex128.png" )).convert_alpha()
@@ -132,14 +144,8 @@ class LoadMapGestion():
         self.MurNSDroite = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallRight.png" )).convert_alpha()
 
 
-        self.MurAngularNE = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopRight.png" )).convert_alpha()
-        self.MurAngularNE2 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopRight2.png" )).convert_alpha()
 
-        self.MurAngularSW = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallBottomLeft.png" )).convert_alpha()
-        self.MurAngularSW2 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallBottomLeft2.png" )).convert_alpha()
 
-        self.MurAngularSE = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallBottomRight.png" )).convert_alpha()
-        self.MurAngularSE2 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallBottomRight2.png" )).convert_alpha()
 
         self.reactorBloc = pygame.image.load(join("Image", "Obstacle", "ReactorBloc.png")).convert_alpha()
         self.cafet = pygame.image.load(join("Image", "Structure", "Futuriste", "Cafet.png")).convert_alpha()
@@ -150,18 +156,30 @@ class LoadMapGestion():
         self.obstacle = pygame.image.load(join("Image", "Obstacle","Crate.png")).convert_alpha()
     
     def LoadImagesDemiNiveauVaisseau(self):
-        self.sol = pygame.image.load(join("Images", "Obstacle", "Structures", "BaseFuturiste", "Floorx128.png")).convert_alpha()
+        self.sol = pygame.image.load(join("Image", "Sol", "Dirtx128.png")).convert_alpha()
+        self.sol1 = pygame.image.load(join("Image", "Sol","Floorx128.png")).convert_alpha()
+        self.sol2 = pygame.image.load(join("Image", "Sol", "Space.png")).convert_alpha()
+        self.sol3 = pygame.image.load(join("Image", "Sol", "SpaceStar.png")).convert_alpha()
 
-        self.MurAngularNE = pygame.image.load(join("Images", "Sol", "Path", "PathN-Ex128.png")).convert_alpha()
-        self.MurAngularNW = pygame.image.load(join("Images", "Sol", "Path", "PathN-Wx128.png")).convert_alpha()
-        self.MurAngularSE = pygame.image.load(join("Images", "Sol", "Path", "PathE-Sx128.png")).convert_alpha()
-        self.MurAngularSW = pygame.image.load(join("Images", "Sol", "Path", "PathW-Sx128.png")).convert_alpha()
 
-        self.tableauDeBord = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
-        self.siege = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
-        self.vitre = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+        self.MurAngularNE = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallAngularNE.png")).convert_alpha()
+        self.MurAngularNW = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallAngularNW.png")).convert_alpha()
+        self.MurAngularSE = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallAngularSE.png")).convert_alpha()
+        self.MurAngularSW = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallAngularSW.png")).convert_alpha()
 
-        self.doorFuturisteDemiNiveau = pygame.image.load(join("Images", "Chateau", "Door.png")).convert_alpha()
+        self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Futuriste", "Vaisseau", "Normal", "WallWEHaut.png" )).convert_alpha()
+        self.MurWEBas = pygame.image.load(join("Image", "Mur",  "Futuriste", "Vaisseau", "Normal", "WallWEBas.png" )).convert_alpha()
+        self.MurNSGauche = pygame.image.load(join("Image", "Mur",  "Futuriste", "Vaisseau", "Normal", "WallNSGauche.png" )).convert_alpha()
+        self.MurNSDroite = pygame.image.load(join("Image", "Mur",  "Futuriste", "Vaisseau", "Normal", "WallNSDroite.png" )).convert_alpha()
+
+
+        self.tableauDeBord = pygame.image.load(join("Image", "Obstacle", "TableauBoard.png")).convert_alpha()
+        self.siege = pygame.image.load(join("Image", "Obstacle", "Siege.png")).convert_alpha()
+        self.vitre = pygame.image.load(join("Image", "Obstacle", "Vitre.png")).convert_alpha()
+
+        self.obstacle = pygame.image.load(join("Image", "Obstacle","Crate.png")).convert_alpha()
+
+        self.doorFuturisteDemiNiveau = pygame.image.load(join("Image", "Obstacle", "Door", "DoorFuturisteVaisseau.png")).convert_alpha()
 
     def LoadImagesNiveauMordor(self):
         self.sol = pygame.image.load(join("Images", "Sol", "Grass", "Grass.png")).convert_alpha()
@@ -446,9 +464,9 @@ class LoadMapGestion():
                     
                     # Vérification des bords de la carte
                     can_go_up = ordonnees > 0
-                    can_go_down = ordonnees < len(self.map[0]) -1
+                    can_go_down = ordonnees < len(self.map) -1
                     can_go_left = abscisses > 0
-                    can_go_right = abscisses < len(self.map) -1  
+                    can_go_right = abscisses < len(self.map[0]) -1  
 
                     def checkWallUp():
                         return can_go_up and self.map[ordonnees - 1][abscisses] == "W"
@@ -484,42 +502,80 @@ class LoadMapGestion():
 
                     # === 1. Mur en angle ===
                     if wall_up and wall_right:
-                        if NIVEAU["Map"] == "NiveauMedievale" and INFOS["DemiNiveau"]:
-                            CollisionSprites(pos, self.MurWEBas, "WallWEBas", (self.allSprites, self.collisionSprites))
-                        if NIVEAU["Map"] == "NiveauBaseFuturiste" and not INFOS["DemiNiveau"]:
-                            if self.map[ordonnees-1][abscisses +1] in [".", "O", "P"]:
+                        if NIVEAU["Map"] == "NiveauMedievale":
+                            if INFOS["DemiNiveau"]:
+                                CollisionSprites(pos, self.MurWEBas, "WallWEBas", (self.allSprites, self.collisionSprites))
+                            CollisionSprites(pos, self.MurAngularNW, "WallAngularNW", (self.allSprites, self.collisionSprites))
+
+                        if NIVEAU["Map"] == "NiveauBaseFuturiste" :
+                            if self.map[ordonnees-1][abscisses +1] in [".", "O", "P", "V", "v"]:
                                 if self.map[ordonnees+1][abscisses-1] in ["-", 2]:
                                     CollisionSprites(pos, self.MurAngularNW, "WallAngularNW", (self.allSprites, self.collisionSprites))
+                                    Sprites(pos, self.sol, "sol", self.allSprites, layer=0)
                                 else:
-                                    CollisionSprites(pos, )
-                                
+                                    CollisionSprites(pos, self.MurAngularNW2, "WallAngularNW", (self.allSprites, self.collisionSprites))
+                                    Sprites(pos, self.sol1, "sol", self.allSprites, layer=0)
+
                             else:
                                 CollisionSprites(pos, self.MurAngularNW2, "WallAngularNW", (self.allSprites, self.collisionSprites))
-                                Sprites(pos, self.sol, "sol", self.allSprites, layer=0)
-                        else:
-                            CollisionSprites(pos, self.MurAngularNW, "WallAngularNW", (self.allSprites, self.collisionSprites))
-                    elif wall_up and wall_left:
-                        if NIVEAU["Map"] == "NiveauMedievale" and INFOS["DemiNiveau"]:
-                             CollisionSprites(pos, self.MurWEBas, "WallWEBas", (self.allSprites, self.collisionSprites))
-                        if NIVEAU["Map"] == "NiveauBaseFuturiste" and not INFOS["DemiNiveau"]:
-                            CollisionSprites(pos, self.MurAngularNE2, "WallAngularNE", (self.allSprites, self.collisionSprites))
 
-                        CollisionSprites(pos, self.MurAngularNE, "WallAngularNE", (self.allSprites, self.collisionSprites))
+                    elif wall_up and wall_left:
+                        if NIVEAU["Map"] == "NiveauMedievale":
+                            if INFOS["DemiNiveau"]:
+                                CollisionSprites(pos, self.MurWEBas, "WallWEBas", (self.allSprites, self.collisionSprites))
+                            CollisionSprites(pos, self.MurAngularNE, "WallAngularNE", (self.allSprites, self.collisionSprites))
+
+                        if NIVEAU["Map"] == "NiveauBaseFuturiste":
+                            if self.map[ordonnees-1][abscisses -1] in [".", "O", "P", "V", "v"]:
+                                if self.map[ordonnees+1][abscisses+1] in ["-", 2]:
+                                    CollisionSprites(pos, self.MurAngularNE, "WallAngularNE", (self.allSprites, self.collisionSprites))
+                                    Sprites(pos, self.sol, "sol", self.allSprites, layer=0)
+                                else:
+                                    CollisionSprites(pos, self.MurAngularNE2, "WallAngularNE", (self.allSprites, self.collisionSprites))
+                                    Sprites(pos, self.sol1, "sol", self.allSprites, layer=0)
+
+                            else:
+                                CollisionSprites(pos, self.MurAngularNE2, "WallAngularNE", (self.allSprites, self.collisionSprites))
+
                         
                     elif wall_down and wall_right:
-                        if NIVEAU["Map"] == "NiveauMedievale" and INFOS["DemiNiveau"]:
-                            CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
-                        if NIVEAU["Map"] == "NiveauBaseFuturiste" and not INFOS["DemiNiveau"]:
-                            CollisionSprites(pos, self.MurAngularSW2, "WallAngularSW", (self.allSprites, self.collisionSprites))
+                        if NIVEAU["Map"] == "NiveauMedievale":
+                            if INFOS["DemiNiveau"]:
+                                CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
+                            CollisionSprites(pos, self.MurAngularSW, "WallAngularSW", (self.allSprites, self.collisionSprites))
 
-                        CollisionSprites(pos, self.MurAngularSW, "WallAngularSW", (self.allSprites, self.collisionSprites))
+                        if NIVEAU["Map"] == "NiveauBaseFuturiste":
+                            if self.map[ordonnees+1][abscisses+1] in [".", "O", "P", "V", "v"]:
+                                if self.map[ordonnees-1][abscisses-1] in ["-", 2]:
+                                    Sprites(pos, self.sol, "Sol", self.allSprites)
+                                    CollisionSprites(pos, self.MurAngularSW, "WallAngularSW", (self.allSprites, self.collisionSprites))
+                                else:    
+                                    CollisionSprites(pos, self.MurAngularSW3, "WallAngularSW", (self.allSprites, self.collisionSprites))
+
+                            else:
+                                Sprites(pos, self.sol1, "Sol", self.allSprites)
+                                CollisionSprites(pos, self.MurAngularSW2, "WallBAngularSW", (self.allSprites, self.collisionSprites))
+
+
                     elif wall_down and wall_left:
-                        if NIVEAU["Map"] == "NiveauMedievale" and INFOS["DemiNiveau"]:
-                            CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
-                        if NIVEAU["Map"] == "NiveauBaseFuturiste" and not INFOS["DemiNiveau"]:
-                            CollisionSprites(pos, self.MurAngularSE2, "WallAngularSE", (self.allSprites, self.collisionSprites))
+                        if NIVEAU["Map"] == "NiveauMedievale":
+                            if INFOS["DemiNiveau"]:                            
+                                CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
+                            CollisionSprites(pos, self.MurAngularSE, "WallAngularSE", (self.allSprites, self.collisionSprites))
 
-                        CollisionSprites(pos, self.MurAngularSE, "WallAngularSE", (self.allSprites, self.collisionSprites))
+                        if NIVEAU["Map"] == "NiveauBaseFuturiste":
+                            if self.map[ordonnees+1][abscisses-1] in [".", "O", "P", "V", "v"]:
+                                if self.map[ordonnees-1][abscisses+1] in ["-", 2]:
+                                    Sprites(pos, self.sol, "Sol", self.allSprites)
+                                    CollisionSprites(pos, self.MurAngularSE, "WallAngularSW", (self.allSprites, self.collisionSprites))
+                                else:    
+                                    CollisionSprites(pos, self.MurAngularSE3, "WallAngularSW", (self.allSprites, self.collisionSprites))
+
+                            else:
+                                Sprites(pos, self.sol1, "Sol", self.allSprites)
+                                CollisionSprites(pos, self.MurAngularSE2, "WallBAngularSW", (self.allSprites, self.collisionSprites))
+
+
 
                     # === 2. Passage avec de l'eau ===
                     elif water_passage:
@@ -530,16 +586,18 @@ class LoadMapGestion():
                     elif mountain_collision:
                         CollisionSprites(pos, self.MurMountain, "WallMountain", (self.allSprites, self.collisionSprites))
 
+
                     # === 4. Murs en ligne droite ===
                     elif wall_left and wall_right:
-                        if not NIVEAU["Map"] == "NiveauMedievale" and not INFOS["DemiNiveau"]:
-                            if can_go_up and self.mapBase[ordonnees - 1][abscisses] == ".":
-                                CollisionSprites(pos, self.MurWEBas, "WallWEBas", (self.allSprites, self.collisionSprites))
-                            elif can_go_down and self.mapBase[ordonnees + 1][abscisses] == ".":
-                                Sprites(pos, self.sol2, "Sol", self.allSprites)
+
+                        if NIVEAU["Map"] == "NiveauBaseFuturiste":
+                            if self.map[ordonnees-1][abscisses] in [".", "O", "P", "V", "v"] and self.map[ordonnees+1][abscisses] in [".", "O", "P", "V", "v"]:
                                 CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
+                            elif self.map[ordonnees+1][abscisses] in ["-", 2]:
+                                Sprites(pos, self.sol1, "Sol", self.allSprites)
+                                CollisionSprites(pos, self.MurWEBas, "WallBWEBas", (self.allSprites, self.collisionSprites))
                             else:
-                                CollisionSprites(pos, self.MurWEBas, "WallWEBas", (self.allSprites, self.collisionSprites))
+                                CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
                         else:
                             if can_go_down :
                                 CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
@@ -548,17 +606,37 @@ class LoadMapGestion():
 
 
 
+
                     elif wall_up and wall_down:
-                        if not NIVEAU["Map"] == "NiveauMedievale" and not INFOS["DemiNiveau"]:
-                            if can_go_left and self.mapBase[ordonnees][abscisses - 1] == ".":
+
+                        if NIVEAU["Map"] == "NiveauBaseFuturiste":
+                            if self.map[ordonnees][abscisses-1] in [".", "O", "P", "V", "v"] and self.map[ordonnees][abscisses+1] in [".", "O", "P", "V", "v"]:
+                                
+                                ordDiff = 0
+                                while self.map[ordonnees - ordDiff][abscisses-1] != "W" and self.map[ordonnees - ordDiff][abscisses+1] not in "W":
+                                    ordDiff += 1
+
+                                if self.map[ordonnees - ordDiff][abscisses-1] == "W":
+                                    CollisionSprites(pos, self.MurNSGauche, "WallNSGauche", (self.allSprites, self.collisionSprites))
+                                else:
+                                    CollisionSprites(pos, self.MurNSDroite, "WallNSDroite", (self.allSprites, self.collisionSprites))
+
+                            elif self.map[ordonnees][abscisses+1] in ["-", 2]:
+                                Sprites(pos, self.sol, "Sol", self.allSprites)
                                 CollisionSprites(pos, self.MurNSDroite, "WallNSDroite", (self.allSprites, self.collisionSprites))
                             else:
+                                Sprites(pos, self.sol, "Sol", self.allSprites)
                                 CollisionSprites(pos, self.MurNSGauche, "WallNSGauche", (self.allSprites, self.collisionSprites))
                         else :
                             if can_go_left:
                                 CollisionSprites(pos, self.MurNSDroite, "WallNSDroite", (self.allSprites, self.collisionSprites))
                             else:
                                 CollisionSprites(pos, self.MurNSGauche, "WallNSGauche", (self.allSprites, self.collisionSprites))
+
+
+                    elif wall_left or wall_right:
+                        CollisionSprites(pos, self.MurWEBas, "WallWEBas", (self.allSprites, self.collisionSprites))
+
                     # === 5. Mur isolé ou défaut ===
                     else:
                         CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
@@ -683,6 +761,7 @@ class LoadMapGestion():
                         Sprites(pos, self.Socle, "Socle", self.allSprites, layer=1)
                     case "DoorChateauInterieur":
                         CollisionSprites(pos, self.DoorChateau, "DoorChateauInterieur", (self.allSprites, self.collisionSprites))
+
             elif obj[2] == "NiveauBaseFuturiste":
                 match obj[3]:
                     case "StructureReactor":
@@ -699,9 +778,22 @@ class LoadMapGestion():
                     case "Vent1":
                         Sprites(pos, self.vent, "Vent", (self.allSprites, self.interactions), layer = 1)
                     case "Vent2":
-                        Sprites(pos, self.vent, "Vent", (self.allSprites, self.interactions), layer = 1)
+                        Sprites(pos, self.vent, "Vent", (self.allSprites, self.interactions), layer = 3)
                     case "DoorSalle":
                         CollisionSprites(pos, self.doorFuturisteClose, "DoorFuturisteClose", (self.allSprites, self.collisionSprites), layer =1)
+                    case "Portal":
+                        path = join("Image", "Obstacle", "Portal")
+                        AnimatedSprites(pos, (self.allSprites, ), "Portal", path, layer=2) # ( , ) pour pouvoir parcourir l'element
+                    case "Vitre":
+                        CollisionSprites(pos, self.vitre, "Vitre", (self.allSprites, self.collisionSprites), layer=1)
+                    case "Board":
+                        CollisionSprites(pos, self.tableauDeBord, "ControlPanel", (self.allSprites,  self.collisionSprites), layer=1)
+                    case "Siege":
+                        CollisionSprites(pos, self.siege, "Vitre", (self.allSprites, self.collisionSprites), layer=1)
+                    case "DoorFuturisteVaisseau":
+                        CollisionSprites(pos, self.doorFuturisteDemiNiveau, "DoorFuturisteVaisseau", (self.allSprites, self.collisionSprites, self.interactions))
+
+
 
 
     def AddPont(self, element, coords, Interaction = True):

@@ -157,20 +157,20 @@ class PNJInterface(object):
                                     allMurSprites.append(sprite)
                                 elif sprite.id == "Vitre":
                                     allVitreSprites.append(sprite)
-                                elif sprite.id == "TableauDeBord":
+                                elif sprite.id == "ControlPanel":
                                     allPanelControlBloc.append(sprite)
 
                             murModif = sample(allMurSprites, (len(allMurSprites)//randint(2,3)))
                             vitreModif = sample(allVitreSprites, randint(1,3))
                             PanelBlocControleBlocModif = sample(allPanelControlBloc, randint(1,3))
 
-                            vitre  = pygame.image.load(join("Image", "Mur", "Futuriste", "Endommage", "Vitre.png")).convert_alpha()
-                            panelBloc = pygame.image.load(join("Image", "Mur", "Futuriste", "Endommage", "PanelBloc.png")).convert_alpha()
+                            vitre  = pygame.image.load(join("Image", "Obstacle", "VitreBroken.png")).convert_alpha()
+                            panelBloc = pygame.image.load(join("Image", "Obstacle", "TableauBoardBroken.png")).convert_alpha()
 
 
                             for sprite in murModif:
                                 pos = sprite.pos
-                                mur = pygame.image.load(join("Image", "Mur", "Futuriste", "Endommage", f"{sprite.id}.png"))
+                                mur = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Endommage", f"{sprite.id}.png"))
                                 sprite.kill()
                                 CollisionSprites(pos, mur, "Wall", (self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites))
                             

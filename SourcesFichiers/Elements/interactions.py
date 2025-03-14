@@ -287,7 +287,7 @@ class Interactions(object):
 
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center)
                 
-                if self.ObjectId == "DoorFuturisteDemiNiveau":
+                if self.ObjectId == "DoorFuturisteVaisseau":
                     self.gestionnaire.fondu_au_noir()
 
                     INFOS["Exo"] = True # lancement exo dans main (changement variable)
@@ -417,7 +417,7 @@ class Interactions(object):
                     return False
                 if Object.id == "ReactorBloc" and not PNJ["PNJ2"]:
                     return False
-                if Object.id  == "DoorFuturisteDemiNiveau" and not PNJ["PNJ7"]:
+                if Object.id  == "DoorFuturisteVaisseau" and not PNJ["PNJ7"]:
                     return False
                 if Object.id == "DoorBareau" and (INVENTORY["Key"] < 1 or not self.parchemin):
                     return False

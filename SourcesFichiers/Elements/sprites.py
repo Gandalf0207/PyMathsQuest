@@ -45,8 +45,13 @@ class CollisionSprites(pygame.sprite.Sprite):
             self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-64))
         elif typeCollision == "Pilier":
             self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-56))
+        elif typeCollision[:5] == "WallB" and not INFOS["DemiNiveau"]:
+            self.rect = self.image.get_frect(topleft=(pos[0], pos[1]+102))
         else:
             self.rect = self.image.get_frect(topleft=pos)
+
+
+
 
         # collision en fonction de l'élément # Créer une hitbox plus petite (réduire la largeur et la hauteur)
         match typeCollision:
@@ -113,7 +118,7 @@ class CollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(0,-60)
             case "ReactorBloc":
                 self.hitbox = self.rect.inflate(-128,-128)
-            case "Caisses":
+            case "Caisse":
                 self.hitbox = self.rect.inflate(-80, -80)
             case "TableauDeBord": 
                 self.hitbox = self.rect.inflate(0,0)
@@ -121,8 +126,6 @@ class CollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(-40,-40)
             case "DoorFuturisteDemiNiveau":
                 self.hitbox = self.rect.inflate(0,-60)
-            case "Gong":
-                self.hitbox = self.rect.inflate(-30,-30)
             case "DoorBareau":
                 self.hitbox = self.rect.inflate(0,-60)
             case "Bareaux":
@@ -136,6 +139,12 @@ class CollisionSprites(pygame.sprite.Sprite):
 
             case _:  # par défaut
                 self.hitbox = self.rect.inflate(-70,-140)
+
+        if typeCollision[:4] == "Wall":
+            if typeCollision == "WallWEHaut":
+                self.hitbox = self.rect.inflate(0,-50)
+            else:
+                self.hitbox = self.rect.inflate(0,0)
 
         # Centrer la hitbox par rapport à l'image
         self.hitbox.center = self.rect.center
@@ -233,6 +242,8 @@ class AnimatedCollisionSprites(pygame.sprite.Sprite):
             self.rect = self.image.get_frect(topleft=(pos[0]-32, pos[1]))   
         elif typeCollision == "Pont4":
             self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-32))   
+        elif typeCollision == "Chandelier":
+            self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-56))   
         else:
             self.rect = self.image.get_frect(topleft=pos)
 
