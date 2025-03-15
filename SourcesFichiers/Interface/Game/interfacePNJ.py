@@ -306,11 +306,13 @@ class PNJInterface(object):
 
         # box petite question
         if self.gestionnaire.pnjActuel == "PNJ3" and NIVEAU["Map"] == "NiveauMedievale" and not self.gestionnaire.pnjObj.QuestionDone:
-            self.surfaceBtnOui = pygame.Surface((75,50))
-            self.surfaceBtnNon = pygame.Surface((75,50))
+            self.surfaceBtnOui = pygame.Surface((128,50))
+            self.surfaceBtnNon = pygame.Surface((128,50))
+            self.surfaceBtnOui.fill("#ffffff")
+            self.surfaceBtnNon.fill("#ffffff")
 
-            self.rectBtnOui = pygame.Rect(800, 600, 75, 50)
-            self.rectBtnNon = pygame.Rect(1000, 600, 75, 50)
+            self.rectBtnOui = pygame.Rect(WINDOW_WIDTH-178, 575, 128, 50)
+            self.rectBtnNon = pygame.Rect(WINDOW_WIDTH-178, 650, 128, 50)
 
             self.textO = TEXTE["Elements"]["InterfacePNJ"]["Oui"]
             self.textN = TEXTE["Elements"]["InterfacePNJ"]["Non"]
@@ -318,8 +320,8 @@ class PNJInterface(object):
             self.textOui = FONT["FONT36"].render(self.textO, True, (10,10,10))
             self.textNon = FONT["FONT36"].render(self.textN, True, (10,10,10))
 
-            self.surfaceBtnOui.blit(self.textOui, (0,0))
-            self.surfaceBtnNon.blit(self.textNon, (0,0))
+            self.surfaceBtnOui.blit(self.textOui, self.textOui.get_rect(center=(self.surfaceBtnOui.get_width()//2, self.surfaceBtnOui.get_height()//2)))
+            self.surfaceBtnNon.blit(self.textNon, self.textNon.get_rect(center=(self.surfaceBtnNon.get_width()//2, self.surfaceBtnNon.get_height()//2)))
 
             self.interfaceSurface.blit(self.surfaceBtnOui, (self.rectBtnOui.x, self.rectBtnOui.y))
             self.interfaceSurface.blit(self.surfaceBtnNon, (self.rectBtnNon.x, self.rectBtnNon.y))
@@ -327,12 +329,12 @@ class PNJInterface(object):
         else:
 
             # load btn skip / lancer
-            self.surfaceBtnSkip = pygame.Surface((100,50))
-            self.btnRectSkip = pygame.Rect(750,600,100,50)
+            self.surfaceBtnSkip = pygame.Surface((128,50))
+            self.btnRectSkip = pygame.Rect(WINDOW_WIDTH-178,600,128,50)
             self.surfaceBtnSkip.fill((255,255,255))
             self.textS = TEXTE["Elements"]["InterfacePNJ"]["SkipButton"]
             self.textSkip = FONT["FONT36"].render(self.textS, True, (10,10,10))
-            self.surfaceBtnSkip.blit(self.textSkip, (0,0))
+            self.surfaceBtnSkip.blit(self.textSkip, self.textSkip.get_rect(center=(self.surfaceBtnSkip.get_width()//2, self.surfaceBtnSkip.get_height()//2)))
             self.interfaceSurface.blit(self.surfaceBtnSkip, (self.btnRectSkip.x, self.btnRectSkip.y))
 
 
