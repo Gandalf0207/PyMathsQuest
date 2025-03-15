@@ -20,9 +20,11 @@ class HomeMenuInterface(object):
 
         self.isHoverBtnQuitter = False
         self.isHoverBtnCredits = False
-
-        self.btnTexture = pygame.image.load(join("Image","Interface", "Button", "Start.png")).convert_alpha()
-        self.btnTextureHover = pygame.image.load(join("Image","Interface", "Button", "StartHover.png")).convert_alpha()
+        try :
+            self.btnTexture = pygame.image.load(join("Image","Interface", "Button", "Start.png")).convert_alpha()
+            self.btnTextureHover = pygame.image.load(join("Image","Interface", "Button", "StartHover.png")).convert_alpha()
+        except:
+            INFOS["ErrorLoadElement"] = True
 
         # timer click
         self.last_click_time = 0

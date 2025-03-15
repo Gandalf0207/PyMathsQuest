@@ -23,12 +23,15 @@ class Player(pygame.sprite.Sprite):
         
         # création element base
         self.state, self.frame_index = "down", 0
-        if INFOS["HidePlayer"]:
-            self.image = self.hidePlayerPng
-        else:
-            self.image = pygame.image.load(join("Image","Player", "down", "0.png")).convert_alpha() # première image 
-        self.rect = self.image.get_frect(center = pos)
-        self.hitbox_rect = self.rect.inflate(-60,0) # collision
+        try:
+            if INFOS["HidePlayer"]:
+                self.image = self.hidePlayerPng
+            else:
+                self.image = pygame.image.load(join("Image","Player", "down", "0.png")).convert_alpha() # première image 
+            self.rect = self.image.get_frect(center = pos)
+            self.hitbox_rect = self.rect.inflate(-60,0) # collision
+        except:
+            INFOS["ErrorLoadElement"] = True
 
         #movement
         self.direction = pygame.Vector2(0,0)
@@ -38,19 +41,22 @@ class Player(pygame.sprite.Sprite):
     def load_images(self) -> None:
         """Méthode de chargement de toutes les images pour l'animation
         Input / Output : None"""
-        self.hidePlayerPng = pygame.image.load(join("Image", "Player", "HidePlayer.png")).convert_alpha()
+        try:
+            self.hidePlayerPng = pygame.image.load(join("Image", "Player", "HidePlayer.png")).convert_alpha()
 
-        # dico stockage images
-        self.frames = {'left' : [],'right' : [],'up' : [],'down' : []}
+            # dico stockage images
+            self.frames = {'left' : [],'right' : [],'up' : [],'down' : []}
 
-        # parcours du folder et ajout de toutes les images
-        for state in self.frames.keys():
-            for folder_path, sub_folders, file_names in walk(join("Image","Player", state)):
-                if file_names:
-                    for file_name in sorted(file_names, key= lambda name: int(name.split('.')[0])):
-                        full_path = join(folder_path, file_name)
-                        surf = pygame.image.load(full_path).convert_alpha()
-                        self.frames[state].append(surf)
+            # parcours du folder et ajout de toutes les images
+            for state in self.frames.keys():
+                for folder_path, sub_folders, file_names in walk(join("Image","Player", state)):
+                    if file_names:
+                        for file_name in sorted(file_names, key= lambda name: int(name.split('.')[0])):
+                            full_path = join(folder_path, file_name)
+                            surf = pygame.image.load(full_path).convert_alpha()
+                            self.frames[state].append(surf)
+        except:
+            INFOS["ErrorLoadElement"] = True
 
     def input(self) -> None:
         """Méthode détection input clavier -> modification vecteur déplacement
@@ -65,17 +71,20 @@ class Player(pygame.sprite.Sprite):
       
         # normalisation vecteur déplacement
         self.direction = self.direction.normalize() if self.direction else self.direction
-        if self.direction: # il y a un deplacement
-            if self.grassFoot:
-                self.grassFoot = False
-                songCanal2 = pygame.mixer.Sound(self.grass1) 
-            else:
-                self.grassFoot = True
-                songCanal2 = pygame.mixer.Sound(self.grass2)
+        try:
+            if self.direction: # il y a un deplacement
+                if self.grassFoot:
+                    self.grassFoot = False
+                    songCanal2 = pygame.mixer.Sound(self.grass1) 
+                else:
+                    self.grassFoot = True
+                    songCanal2 = pygame.mixer.Sound(self.grass2)
 
-            if not self.canal2.get_busy():
-                self.canal2.set_volume(SOUND["EffetSonore"])
-                self.canal2.play(songCanal2)
+                if not self.canal2.get_busy():
+                    self.canal2.set_volume(SOUND["EffetSonore"])
+                    self.canal2.play(songCanal2)
+        except:
+            INFOS["ErrorLoadElement"] = True
 
     def move(self, dt : int) -> None:
         """Méthode déplacement du personnage joueur

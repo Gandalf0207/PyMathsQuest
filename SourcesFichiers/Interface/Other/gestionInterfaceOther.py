@@ -29,13 +29,15 @@ class HomeInterface(object):
         self.isConditionAccept = False
         self.isHorverText = False
         self.isHoverBtnLancer = False
+        try :     
+            self.btnTexture = pygame.image.load(join("Image","Interface", "Button", "Start.png")).convert_alpha()
+            self.btnTextureHover = pygame.image.load(join("Image", "Interface", "Button", "StartHover.png")).convert_alpha()
 
-        self.btnTexture = pygame.image.load(join("Image","Interface", "Button", "Start.png")).convert_alpha()
-        self.btnTextureHover = pygame.image.load(join("Image", "Interface", "Button", "StartHover.png")).convert_alpha()
-
-        self.bcgInterface = pygame.image.load(join("Image", "Interface", "Lancement.png")).convert_alpha()
-        self.interfaceSurface.blit(self.bcgInterface, (0,0))
-
+            self.bcgInterface = pygame.image.load(join("Image", "Interface", "Lancement.png")).convert_alpha()
+            self.interfaceSurface.blit(self.bcgInterface, (0,0))
+        except:
+            INFOS["ErrorLoadElement"] = True
+        
         # bool radio button
         self.selectedOptionNiveau = 0  # choix 1 départ
         self.posRadioButtonNiveau = [(25, 50), (25, 100), (25, 150), (25, 200)]

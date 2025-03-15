@@ -25,195 +25,214 @@ class LoadMapGestion():
 
 
     def LoadImagesNiveauPlaineRiviere(self):
-        self.sol = pygame.image.load(join("Image", "Sol", "Grass.png")).convert_alpha()
-        self.sol1 = pygame.image.load(join("Image", "Sol", "Flower.png")).convert_alpha()
-        self.sol2 = pygame.image.load(join("Image", "Sol", "Rock.png")).convert_alpha()
-        self.sol3 = pygame.image.load(join("Image", "Sol", "Mud.png")).convert_alpha()
+        try :
+            self.sol = pygame.image.load(join("Image", "Sol", "Grass.png")).convert_alpha()
+            self.sol1 = pygame.image.load(join("Image", "Sol", "Flower.png")).convert_alpha()
+            self.sol2 = pygame.image.load(join("Image", "Sol", "Rock.png")).convert_alpha()
+            self.sol3 = pygame.image.load(join("Image", "Sol", "Mud.png")).convert_alpha()
 
-        self.obstacle = pygame.image.load(join("Image", "Obstacle", "Arbre.png")).convert_alpha()
-        self.obstacle1 = pygame.image.load(join("Image", "Obstacle", "Arbre2.png")).convert_alpha()
-        self.obstacle2 = pygame.image.load(join("Image", "Obstacle", "HugeRock.png")).convert_alpha()
-        self.obstacle3 = pygame.image.load(join("Image", "Obstacle", "Souche.png")).convert_alpha()
-        self.obstacle4 = pygame.image.load(join("Image", "Obstacle", "Souche2.png")).convert_alpha()
+            self.obstacle = pygame.image.load(join("Image", "Obstacle", "Arbre.png")).convert_alpha()
+            self.obstacle1 = pygame.image.load(join("Image", "Obstacle", "Arbre2.png")).convert_alpha()
+            self.obstacle2 = pygame.image.load(join("Image", "Obstacle", "HugeRock.png")).convert_alpha()
+            self.obstacle3 = pygame.image.load(join("Image", "Obstacle", "Souche.png")).convert_alpha()
+            self.obstacle4 = pygame.image.load(join("Image", "Obstacle", "Souche2.png")).convert_alpha()
 
-        self.montainWE = pygame.image.load(join("Image", "Mur","Mountain", "MountainStraighW-Ex128.png")).convert_alpha()
-        self.montainWE1 = pygame.image.load(join("Image", "Mur","Mountain", "MountainStraighW-Ealt1x128.png")).convert_alpha()
+            self.montainWE = pygame.image.load(join("Image", "Mur","Mountain", "MountainStraighW-Ex128.png")).convert_alpha()
+            self.montainWE1 = pygame.image.load(join("Image", "Mur","Mountain", "MountainStraighW-Ealt1x128.png")).convert_alpha()
 
-        self.pont1 = pygame.image.load(join("Image", "Structure", "Pont", "Pont1.png")).convert_alpha()
-        self.pont2 = pygame.image.load(join("Image", "Structure", "Pont", "Pont2.png")).convert_alpha()
+            self.pont1 = pygame.image.load(join("Image", "Structure", "Pont", "Pont1.png")).convert_alpha()
+            self.pont2 = pygame.image.load(join("Image", "Structure", "Pont", "Pont2.png")).convert_alpha()
 
-        self.campFire = pygame.image.load(join("Image", "Obstacle", "campFire.png")).convert_alpha()
-
+            self.campFire = pygame.image.load(join("Image", "Obstacle", "campFire.png")).convert_alpha()
+        except:
+            INFOS["ErrorLoadElement"] = True
     def LoadImagesNiveauMedievale(self):
-        self.sol = pygame.image.load(join("Image", "Sol", "Grass.png")).convert_alpha()
-        self.sol1 = pygame.image.load(join("Image", "Sol", "Flower.png")).convert_alpha()
-        self.sol2 = pygame.image.load(join("Image", "Sol", "Rock.png")).convert_alpha()
-        self.sol3 = pygame.image.load(join("Image", "Sol", "Mud.png")).convert_alpha()
+        try:
+            self.sol = pygame.image.load(join("Image", "Sol", "Grass.png")).convert_alpha()
+            self.sol1 = pygame.image.load(join("Image", "Sol", "Flower.png")).convert_alpha()
+            self.sol2 = pygame.image.load(join("Image", "Sol", "Rock.png")).convert_alpha()
+            self.sol3 = pygame.image.load(join("Image", "Sol", "Mud.png")).convert_alpha()
 
-        self.obstacle = pygame.image.load(join("Image", "Obstacle", "Arbre.png")).convert_alpha()
-        self.obstacle1 = pygame.image.load(join("Image", "Obstacle", "Arbre2.png")).convert_alpha()
-        self.obstacle2 = pygame.image.load(join("Image", "Obstacle", "HugeRock.png")).convert_alpha()
-        self.obstacle3 = pygame.image.load(join("Image", "Obstacle", "Souche.png")).convert_alpha()
-        self.obstacle4 = pygame.image.load(join("Image", "Obstacle", "Souche2.png")).convert_alpha()
+            self.obstacle = pygame.image.load(join("Image", "Obstacle", "Arbre.png")).convert_alpha()
+            self.obstacle1 = pygame.image.load(join("Image", "Obstacle", "Arbre2.png")).convert_alpha()
+            self.obstacle2 = pygame.image.load(join("Image", "Obstacle", "HugeRock.png")).convert_alpha()
+            self.obstacle3 = pygame.image.load(join("Image", "Obstacle", "Souche.png")).convert_alpha()
+            self.obstacle4 = pygame.image.load(join("Image", "Obstacle", "Souche2.png")).convert_alpha()
 
-        self.montainWE = pygame.image.load(join("Image", "Mur","Mountain", "MountainStraighW-Ex128.png")).convert_alpha()
-        self.montainWE1 = pygame.image.load(join("Image", "Mur","Mountain", "MountainStraighW-Ealt1x128.png")).convert_alpha()
+            self.montainWE = pygame.image.load(join("Image", "Mur","Mountain", "MountainStraighW-Ex128.png")).convert_alpha()
+            self.montainWE1 = pygame.image.load(join("Image", "Mur","Mountain", "MountainStraighW-Ealt1x128.png")).convert_alpha()
 
-        self.pont2 = pygame.image.load(join("Image", "Structure", "Pont", "Pont2.png")).convert_alpha()
+            self.pont2 = pygame.image.load(join("Image", "Structure", "Pont", "Pont2.png")).convert_alpha()
 
-        # path
-        self.pathX = pygame.image.load(join("Image", "Sol", "Path", "PathXx128.png")).convert_alpha()
-        self.pathTshapeNSE = pygame.image.load(join("Image", "Sol", "Path", "PathN-SEx128.png")).convert_alpha()
-        self.pathTshapeWES = pygame.image.load(join("Image", "Sol", "Path", "PathW-ESx128.png")).convert_alpha()
-        self.pathTshapeWNS = pygame.image.load(join("Image", "Sol", "Path", "PathWN-Sx128.png")).convert_alpha()
-        self.pathTshapeNEW = pygame.image.load(join("Image", "Sol", "Path", "PathN-EWx128.png")).convert_alpha()
-        self.pathAngularNE = pygame.image.load(join("Image", "Sol", "Path", "PathN-Ex128.png")).convert_alpha()
-        self.pathAngularNW = pygame.image.load(join("Image", "Sol", "Path", "PathN-Wx128.png")).convert_alpha()
-        self.pathAngularSE = pygame.image.load(join("Image", "Sol", "Path", "PathE-Sx128.png")).convert_alpha()
-        self.pathAngularSW = pygame.image.load(join("Image", "Sol", "Path", "PathW-Sx128.png")).convert_alpha()
-        self.pathNS = pygame.image.load(join("Image", "Sol", "Path", "PathN-S.png")).convert_alpha()
-        self.pathWE = pygame.image.load(join("Image", "Sol", "Path", "PathW-E.png")).convert_alpha()
-        self.pathEndN = pygame.image.load(join("Image", "Sol", "Path", "PathNx128.png")).convert_alpha()
-        self.pathEndS = pygame.image.load(join("Image", "Sol", "Path", "PathSx128.png")).convert_alpha()
-        self.pathEndE = pygame.image.load(join("Image", "Sol", "Path", "PathEx128.png")).convert_alpha()
-        self.pathEndW = pygame.image.load(join("Image", "Sol", "Path", "PathWx128.png")).convert_alpha()
+            # path
+            self.pathX = pygame.image.load(join("Image", "Sol", "Path", "PathXx128.png")).convert_alpha()
+            self.pathTshapeNSE = pygame.image.load(join("Image", "Sol", "Path", "PathN-SEx128.png")).convert_alpha()
+            self.pathTshapeWES = pygame.image.load(join("Image", "Sol", "Path", "PathW-ESx128.png")).convert_alpha()
+            self.pathTshapeWNS = pygame.image.load(join("Image", "Sol", "Path", "PathWN-Sx128.png")).convert_alpha()
+            self.pathTshapeNEW = pygame.image.load(join("Image", "Sol", "Path", "PathN-EWx128.png")).convert_alpha()
+            self.pathAngularNE = pygame.image.load(join("Image", "Sol", "Path", "PathN-Ex128.png")).convert_alpha()
+            self.pathAngularNW = pygame.image.load(join("Image", "Sol", "Path", "PathN-Wx128.png")).convert_alpha()
+            self.pathAngularSE = pygame.image.load(join("Image", "Sol", "Path", "PathE-Sx128.png")).convert_alpha()
+            self.pathAngularSW = pygame.image.load(join("Image", "Sol", "Path", "PathW-Sx128.png")).convert_alpha()
+            self.pathNS = pygame.image.load(join("Image", "Sol", "Path", "PathN-S.png")).convert_alpha()
+            self.pathWE = pygame.image.load(join("Image", "Sol", "Path", "PathW-E.png")).convert_alpha()
+            self.pathEndN = pygame.image.load(join("Image", "Sol", "Path", "PathNx128.png")).convert_alpha()
+            self.pathEndS = pygame.image.load(join("Image", "Sol", "Path", "PathSx128.png")).convert_alpha()
+            self.pathEndE = pygame.image.load(join("Image", "Sol", "Path", "PathEx128.png")).convert_alpha()
+            self.pathEndW = pygame.image.load(join("Image", "Sol", "Path", "PathWx128.png")).convert_alpha()
 
-        self.champ = pygame.image.load(join("Image", "Obstacle", "Champs.png")).convert_alpha()
-        self.house1 = pygame.image.load(join("Image", "Structure","Medievale", "Maison", "House.png")).convert_alpha()
-        self.house2 = pygame.image.load(join("Image", "Structure","Medievale", "Maison", "House2.png")).convert_alpha()
-        self.house3 = pygame.image.load(join("Image", "Structure","Medievale", "Maison", "House3.png")).convert_alpha()
+            self.champ = pygame.image.load(join("Image", "Obstacle", "Champs.png")).convert_alpha()
+            self.house1 = pygame.image.load(join("Image", "Structure","Medievale", "Maison", "House.png")).convert_alpha()
+            self.house2 = pygame.image.load(join("Image", "Structure","Medievale", "Maison", "House2.png")).convert_alpha()
+            self.house3 = pygame.image.load(join("Image", "Structure","Medievale", "Maison", "House3.png")).convert_alpha()
 
-        self.chateau = pygame.image.load(join("Image", "Structure", "Medievale", "Chateau.png")).convert_alpha()
-        self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesWE.png" )).convert_alpha()
-        self.MurNSGauche = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesNS.png" )).convert_alpha()
-        self.MurNSDroite = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesNS.png" )).convert_alpha()
-        self.MurMountain = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesMountain.png" )).convert_alpha()
-        self.MurAngularNW = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesAngle.png" )).convert_alpha()
-        self.MurAngularNE = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesAngle.png" )).convert_alpha()
+            self.chateau = pygame.image.load(join("Image", "Structure", "Medievale", "Chateau.png")).convert_alpha()
+            self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesWE.png" )).convert_alpha()
+            self.MurNSGauche = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesNS.png" )).convert_alpha()
+            self.MurNSDroite = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesNS.png" )).convert_alpha()
+            self.MurMountain = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesMountain.png" )).convert_alpha()
+            self.MurAngularNW = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesAngle.png" )).convert_alpha()
+            self.MurAngularNE = pygame.image.load(join("Image", "Mur",  "Medievale", "Muraille", "MuraillesAngle.png" )).convert_alpha()
 
-        self.well = pygame.image.load(join("Image", "Structure", "Medievale", "Puits.png")).convert_alpha()
-        self.tableCraft = pygame.image.load(join("Image", "Obstacle", "TableCraft.png")).convert_alpha()
-        self.boat = pygame.image.load(join("Image", "Item", "BoatObj.png")).convert_alpha()
-        self.DoorMuraille = pygame.image.load(join("Image", "Obstacle", "Door", "DoorMuraille.png")).convert_alpha()
-        self.DoorChateau =  pygame.image.load(join("Image", "Obstacle", "Door", "DoorChateau.png")).convert_alpha()
+            self.well = pygame.image.load(join("Image", "Structure", "Medievale", "Puits.png")).convert_alpha()
+            self.tableCraft = pygame.image.load(join("Image", "Obstacle", "TableCraft.png")).convert_alpha()
+            self.boat = pygame.image.load(join("Image", "Item", "BoatObj.png")).convert_alpha()
+            self.DoorMuraille = pygame.image.load(join("Image", "Obstacle", "Door", "DoorMuraille.png")).convert_alpha()
+            self.DoorChateau =  pygame.image.load(join("Image", "Obstacle", "Door", "DoorChateau.png")).convert_alpha()
+        except:
+            INFOS["ErrorLoadElement"] = True
 
     def LoadImagesDemiNiveauChateau(self):
-        self.sol = pygame.image.load(join("Image", "Sol", "SolChateauInterieur.png")).convert_alpha()
-        self.Socle = pygame.image.load(join("Image", "Sol", "Socle.png")).convert_alpha()
+        try:
+            self.sol = pygame.image.load(join("Image", "Sol", "SolChateauInterieur.png")).convert_alpha()
+            self.Socle = pygame.image.load(join("Image", "Sol", "Socle.png")).convert_alpha()
 
-        self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "CastleWallInside.png" )).convert_alpha()
-        self.MurWEBas = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "BottomCastleWallInside.png" )).convert_alpha()
-        self.MurNSGauche = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "RightCasteWallInside.png" )).convert_alpha()
-        self.MurNSDroite = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "LeftCastleWallInside.png" )).convert_alpha()
-        self.MurAngularNW = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "BottomRightCastleWallInside.png" )).convert_alpha()
-        self.MurAngularNE = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "BottomLeftCastleWallInside.png" )).convert_alpha()
-        self.MurAngularSW = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "TopRightCastleWallInside.png" )).convert_alpha()
-        self.MurAngularSE = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "TopLeftCastleWallInside.png" )).convert_alpha()
-        self.Pilier = pygame.image.load(join("Image", "Obstacle", "CastlePillarInside.png")).convert_alpha()
+            self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "CastleWallInside.png" )).convert_alpha()
+            self.MurWEBas = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "BottomCastleWallInside.png" )).convert_alpha()
+            self.MurNSGauche = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "RightCasteWallInside.png" )).convert_alpha()
+            self.MurNSDroite = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "LeftCastleWallInside.png" )).convert_alpha()
+            self.MurAngularNW = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "BottomRightCastleWallInside.png" )).convert_alpha()
+            self.MurAngularNE = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "BottomLeftCastleWallInside.png" )).convert_alpha()
+            self.MurAngularSW = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "TopRightCastleWallInside.png" )).convert_alpha()
+            self.MurAngularSE = pygame.image.load(join("Image", "Mur",  "Medievale", "Chateau", "TopLeftCastleWallInside.png" )).convert_alpha()
+            self.Pilier = pygame.image.load(join("Image", "Obstacle", "CastlePillarInside.png")).convert_alpha()
 
-        self.DoorChateau = pygame.image.load(join("Image", "Obstacle", "Door", "BottomCastleDoorInside.png")).convert_alpha()
-        self.CerclePortal = pygame.image.load(join("Image", "Sol", "Cercle.png")).convert_alpha()
+            self.DoorChateau = pygame.image.load(join("Image", "Obstacle", "Door", "BottomCastleDoorInside.png")).convert_alpha()
+            self.CerclePortal = pygame.image.load(join("Image", "Sol", "Cercle.png")).convert_alpha()
+        except:
+            INFOS["ErrorLoadElement"] = True
 
     def LoadImagesNiveauBaseFuturiste(self):
-        self.sol = pygame.image.load(join("Image", "Sol", "Dirtx128.png")).convert_alpha()
-        self.sol1 = pygame.image.load(join("Image", "Sol","Floorx128.png")).convert_alpha()
-        self.sol2 = pygame.image.load(join("Image", "Sol", "Bone.png")).convert_alpha()
-        self.sol3 = pygame.image.load(join("Image", "Sol", "Bone.png")).convert_alpha()
+        try:
+            self.sol = pygame.image.load(join("Image", "Sol", "Dirtx128.png")).convert_alpha()
+            self.sol1 = pygame.image.load(join("Image", "Sol","Floorx128.png")).convert_alpha()
+            self.sol2 = pygame.image.load(join("Image", "Sol", "Bone.png")).convert_alpha()
+            self.sol3 = pygame.image.load(join("Image", "Sol", "Bone.png")).convert_alpha()
 
-        self.vent = pygame.image.load(join("Image", "Sol", "Ventx128.png")).convert_alpha()
+            self.vent = pygame.image.load(join("Image", "Sol", "Ventx128.png")).convert_alpha()
+            
+            self.MurAngularNW = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallBottomLeft.png" )).convert_alpha()
+            self.MurAngularNW2 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallBottomLeft2.png" )).convert_alpha()
+            
+            self.MurAngularNE = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallBottomRight.png" )).convert_alpha()
+            self.MurAngularNE2 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallBottomRight2.png" )).convert_alpha()
+
+            self.MurAngularSW = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopLeft.png" )).convert_alpha()
+            self.MurAngularSW2 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopLeft2.png" )).convert_alpha()
+            self.MurAngularSW3 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopLeft3.png" )).convert_alpha()
+
+            self.MurAngularSE = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopRight.png" )).convert_alpha()
+            self.MurAngularSE2 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopRight2.png" )).convert_alpha()
+            self.MurAngularSE3 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopRight3.png" )).convert_alpha()
+
+
+
+            self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallEWx128.png" )).convert_alpha()
+            self.MurWEBas = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallBackWidex128.png" )).convert_alpha()
+            self.MurNSGauche = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallLeft.png" )).convert_alpha()
+            self.MurNSDroite = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallRight.png" )).convert_alpha()
+
+
+
+
+
+            self.reactorBloc = pygame.image.load(join("Image", "Obstacle", "ReactorBloc.png")).convert_alpha()
+            self.cafet = pygame.image.load(join("Image", "Structure", "Futuriste", "Cafet.png")).convert_alpha()
+            self.essence = pygame.image.load(join("Image", "Structure", "Futuriste", "Essence.png")).convert_alpha()
+            self.salleLancement = pygame.image.load(join("Image", "Structure", "Futuriste", "Lancement.png")).convert_alpha()
+
+            self.doorFuturisteClose = pygame.image.load(join("Image", "Obstacle","Door",  "DoorFuturisteBaseClose.png")).convert_alpha()
+            self.obstacle = pygame.image.load(join("Image", "Obstacle","Crate.png")).convert_alpha()
+        except:
+            INFOS["ErrorLoadElement"] = True
         
-        self.MurAngularNW = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallBottomLeft.png" )).convert_alpha()
-        self.MurAngularNW2 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallBottomLeft2.png" )).convert_alpha()
-        
-        self.MurAngularNE = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallBottomRight.png" )).convert_alpha()
-        self.MurAngularNE2 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallBottomRight2.png" )).convert_alpha()
-
-        self.MurAngularSW = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopLeft.png" )).convert_alpha()
-        self.MurAngularSW2 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopLeft2.png" )).convert_alpha()
-        self.MurAngularSW3 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopLeft3.png" )).convert_alpha()
-
-        self.MurAngularSE = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopRight.png" )).convert_alpha()
-        self.MurAngularSE2 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopRight2.png" )).convert_alpha()
-        self.MurAngularSE3 = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallTopRight3.png" )).convert_alpha()
-
-
-
-        self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallEWx128.png" )).convert_alpha()
-        self.MurWEBas = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallBackWidex128.png" )).convert_alpha()
-        self.MurNSGauche = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallLeft.png" )).convert_alpha()
-        self.MurNSDroite = pygame.image.load(join("Image", "Mur",  "Futuriste", "WallRight.png" )).convert_alpha()
-
-
-
-
-
-        self.reactorBloc = pygame.image.load(join("Image", "Obstacle", "ReactorBloc.png")).convert_alpha()
-        self.cafet = pygame.image.load(join("Image", "Structure", "Futuriste", "Cafet.png")).convert_alpha()
-        self.essence = pygame.image.load(join("Image", "Structure", "Futuriste", "Essence.png")).convert_alpha()
-        self.salleLancement = pygame.image.load(join("Image", "Structure", "Futuriste", "Lancement.png")).convert_alpha()
-
-        self.doorFuturisteClose = pygame.image.load(join("Image", "Obstacle","Door",  "DoorFuturisteBaseClose.png")).convert_alpha()
-        self.obstacle = pygame.image.load(join("Image", "Obstacle","Crate.png")).convert_alpha()
-    
     def LoadImagesDemiNiveauVaisseau(self):
-        self.sol = pygame.image.load(join("Image", "Sol", "Dirtx128.png")).convert_alpha()
-        self.sol1 = pygame.image.load(join("Image", "Sol","Floorx128.png")).convert_alpha()
-        self.sol2 = pygame.image.load(join("Image", "Sol", "Space.png")).convert_alpha()
-        self.sol3 = pygame.image.load(join("Image", "Sol", "SpaceStar.png")).convert_alpha()
+        try:
+            self.sol = pygame.image.load(join("Image", "Sol", "Dirtx128.png")).convert_alpha()
+            self.sol1 = pygame.image.load(join("Image", "Sol","Floorx128.png")).convert_alpha()
+            self.sol2 = pygame.image.load(join("Image", "Sol", "Space.png")).convert_alpha()
+            self.sol3 = pygame.image.load(join("Image", "Sol", "SpaceStar.png")).convert_alpha()
 
 
-        self.MurAngularNE = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallAngularNE.png")).convert_alpha()
-        self.MurAngularNW = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallAngularNW.png")).convert_alpha()
-        self.MurAngularSE = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallAngularSE.png")).convert_alpha()
-        self.MurAngularSW = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallAngularSW.png")).convert_alpha()
+            self.MurAngularNE = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallAngularNE.png")).convert_alpha()
+            self.MurAngularNW = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallAngularNW.png")).convert_alpha()
+            self.MurAngularSE = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallAngularSE.png")).convert_alpha()
+            self.MurAngularSW = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallAngularSW.png")).convert_alpha()
 
-        self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Futuriste", "Vaisseau", "Normal", "WallWEHaut.png" )).convert_alpha()
-        self.MurWEBas = pygame.image.load(join("Image", "Mur",  "Futuriste", "Vaisseau", "Normal", "WallWEBas.png" )).convert_alpha()
-        self.MurNSGauche = pygame.image.load(join("Image", "Mur",  "Futuriste", "Vaisseau", "Normal", "WallNSGauche.png" )).convert_alpha()
-        self.MurNSDroite = pygame.image.load(join("Image", "Mur",  "Futuriste", "Vaisseau", "Normal", "WallNSDroite.png" )).convert_alpha()
+            self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Futuriste", "Vaisseau", "Normal", "WallWEHaut.png" )).convert_alpha()
+            self.MurWEBas = pygame.image.load(join("Image", "Mur",  "Futuriste", "Vaisseau", "Normal", "WallWEBas.png" )).convert_alpha()
+            self.MurNSGauche = pygame.image.load(join("Image", "Mur",  "Futuriste", "Vaisseau", "Normal", "WallNSGauche.png" )).convert_alpha()
+            self.MurNSDroite = pygame.image.load(join("Image", "Mur",  "Futuriste", "Vaisseau", "Normal", "WallNSDroite.png" )).convert_alpha()
 
 
-        self.tableauDeBord = pygame.image.load(join("Image", "Obstacle", "TableauBoard.png")).convert_alpha()
-        self.siege = pygame.image.load(join("Image", "Obstacle", "Siege.png")).convert_alpha()
-        self.vitre = pygame.image.load(join("Image", "Obstacle", "Vitre.png")).convert_alpha()
+            self.tableauDeBord = pygame.image.load(join("Image", "Obstacle", "TableauBoard.png")).convert_alpha()
+            self.siege = pygame.image.load(join("Image", "Obstacle", "Siege.png")).convert_alpha()
+            self.vitre = pygame.image.load(join("Image", "Obstacle", "Vitre.png")).convert_alpha()
 
-        self.obstacle = pygame.image.load(join("Image", "Obstacle","Crate.png")).convert_alpha()
+            self.obstacle = pygame.image.load(join("Image", "Obstacle","Crate.png")).convert_alpha()
 
-        self.doorFuturisteDemiNiveau = pygame.image.load(join("Image", "Obstacle", "Door", "DoorFuturisteVaisseau.png")).convert_alpha()
-
+            self.doorFuturisteDemiNiveau = pygame.image.load(join("Image", "Obstacle", "Door", "DoorFuturisteVaisseau.png")).convert_alpha()
+        except:
+            INFOS["ErrorLoadElement"] = True
     def LoadImagesNiveauMordor(self):
-        self.sol = pygame.image.load(join("Image", "Sol", "MordorSol.png")).convert_alpha()
-        self.sol2 = pygame.image.load(join("Image", "Sol", "MordorSol2.png")).convert_alpha()
-        self.sol3 = pygame.image.load(join("Image", "Sol", "MordorSol3.png")).convert_alpha()
+        try:
+            self.sol = pygame.image.load(join("Image", "Sol", "MordorSol.png")).convert_alpha()
+            self.sol2 = pygame.image.load(join("Image", "Sol", "MordorSol2.png")).convert_alpha()
+            self.sol3 = pygame.image.load(join("Image", "Sol", "MordorSol3.png")).convert_alpha()
 
-        self.montainWE = pygame.image.load(join("Image", "Mur", "Mountain", "MountainMordorStraighW-Ex128.png")).convert_alpha()
-        self.montainWE1 = pygame.image.load(join("Image", "Mur", "Mountain", "MountainMordorStraighW-Ealt1x128.png")).convert_alpha()
+            self.montainWE = pygame.image.load(join("Image", "Mur", "Mountain", "MountainMordorStraighW-Ex128.png")).convert_alpha()
+            self.montainWE1 = pygame.image.load(join("Image", "Mur", "Mountain", "MountainMordorStraighW-Ealt1x128.png")).convert_alpha()
 
-        self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesWE.png" )).convert_alpha()
-        self.MurNSGauche = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesNS.png" )).convert_alpha()
-        self.MurNSDroite = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesNS.png" )).convert_alpha()
-        self.MurMountain = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesMountain.png" )).convert_alpha()
+            self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesWE.png" )).convert_alpha()
+            self.MurNSGauche = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesNS.png" )).convert_alpha()
+            self.MurNSDroite = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesNS.png" )).convert_alpha()
+            self.MurMountain = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesMountain.png" )).convert_alpha()
 
-        self.MurAngularNE = pygame.image.load(join("Image", "Mur", "Mordor", "Muraille", "WallAngularNE.png")).convert_alpha()
-        self.MurAngularNW = pygame.image.load(join("Image", "Mur", "Mordor", "Muraille", "WallAngularNW.png")).convert_alpha()
+            self.MurAngularNE = pygame.image.load(join("Image", "Mur", "Mordor", "Muraille", "WallAngularNE.png")).convert_alpha()
+            self.MurAngularNW = pygame.image.load(join("Image", "Mur", "Mordor", "Muraille", "WallAngularNW.png")).convert_alpha()
 
 
 
-        self.DoorCellule = pygame.image.load(join("Image", "Obstacle", "Door", "DoorCellule.png")).convert_alpha()
-        self.DoorPrison = pygame.image.load(join("Image", "Obstacle","Door",  "DoorPrison.png")).convert_alpha()
-        self.DoorVolcan =pygame.image.load(join("Image", "Obstacle", "Door", "DoorVolcan.png")).convert_alpha() 
-        
-        self.obstacle = pygame.image.load(join("Image", "Obstacle", "HugeRock.png")).convert_alpha()
+            self.DoorCellule = pygame.image.load(join("Image", "Obstacle", "Door", "DoorCellule.png")).convert_alpha()
+            self.DoorPrison = pygame.image.load(join("Image", "Obstacle","Door",  "DoorPrison.png")).convert_alpha()
+            self.DoorVolcan =pygame.image.load(join("Image", "Obstacle", "Door", "DoorVolcan.png")).convert_alpha() 
+            
+            self.obstacle = pygame.image.load(join("Image", "Obstacle", "HugeRock.png")).convert_alpha()
 
-        self.pot  = pygame.image.load(join("Image", "Obstacle", "Pot.png")).convert_alpha()
-        self.parchemin = pygame.image.load(join("Image", "Obstacle", "Parchemin.png")).convert_alpha()
-        self.volcan = pygame.image.load(join("Image", "Structure",  "Mordor", "Volcan.png")).convert_alpha()
+            self.pot  = pygame.image.load(join("Image", "Obstacle", "Pot.png")).convert_alpha()
+            self.parchemin = pygame.image.load(join("Image", "Obstacle", "Parchemin.png")).convert_alpha()
+            self.volcan = pygame.image.load(join("Image", "Structure",  "Mordor", "Volcan.png")).convert_alpha()
 
-        self.vaisseauCrash = pygame.image.load(join("Image", "Structure", "Mordor", "VaisseauCrash.png")).convert_alpha()
-        self.bareaux = pygame.image.load(join("Image", "Obstacle", "Barreaux.png")).convert_alpha()
+            self.vaisseauCrash = pygame.image.load(join("Image", "Structure", "Mordor", "VaisseauCrash.png")).convert_alpha()
+            self.bareaux = pygame.image.load(join("Image", "Obstacle", "Barreaux.png")).convert_alpha()
+        except:
+            INFOS["ErrorLoadElement"] = True
 
     def LoadImagesDemiNiveauVolcan(self):
-        pass
+        try:
+            pass
+        except:
+            pass
 
 
     def LoadImagesGestion(self) -> None:

@@ -78,7 +78,10 @@ class Game(object):
 
         # surface bg hotbar
         self.bgHotBar = pygame.Surface((WINDOW_WIDTH, 170))
-        self.hotbarBcg = pygame.image.load(join("Image", "Interface", "Hotbar.png")).convert_alpha()
+        try :
+            self.hotbarBcg = pygame.image.load(join("Image", "Interface", "Hotbar.png")).convert_alpha()
+        except:
+            INFOS["ErrorLoadElement"] = True
         self.bgHotBar.blit(self.hotbarBcg, (0,0))
 
         # boolean de check game
@@ -152,9 +155,20 @@ class Game(object):
             
             if INFOS["UpdateFont"]:
                 self.GameTool.CreateFont()
+            
+            if INFOS["ErrorLoadElement"]:
+                self.displaySurface.fill("#000000")
+                text = TEXTE["Elements"]["ErreurLoad"]
+                self.textScreen(text)
+
+                # element de gestions
+                self.fondu_au_noir()
+                text2 = TEXTE["Elements"]["CloseGame"]
+                self.textScreen(text2)
+                self.running = False
 
 
-            if INFOS["GameStart"]: # dans le jeu
+            elif INFOS["GameStart"]: # dans le jeu
 
                 dt = self.clock.tick() / 1000
                 for event in pygame.event.get():
@@ -441,17 +455,20 @@ class GameToolBox(object):
 
 
         # création
-        FONT20 = pygame.font.Font(typeFont, int(20*coefSize))
-        FONT20U = pygame.font.Font(typeFont, int(20*coefSize))
-        FONT20U.set_underline(True)
-        FONT22 = pygame.font.Font(typeFont, int(22*coefSize))
-        FONT24 = pygame.font.Font(typeFont, int(24*coefSize))
-        FONT30 = pygame.font.Font(typeFont, int(30*coefSize))
-        FONT36 = pygame.font.Font(typeFont, int(36*coefSize))
-        FONT36B = pygame.font.Font(typeFont, int(36*coefSize))
-        FONT36B.set_bold(True)
-        FONT50 = pygame.font.Font(typeFont, int(50*coefSize))
-        FONT74 = pygame.font.Font(typeFont, int(74*coefSize))
+        try:
+            FONT20 = pygame.font.Font(typeFont, int(20*coefSize))
+            FONT20U = pygame.font.Font(typeFont, int(20*coefSize))
+            FONT20U.set_underline(True)
+            FONT22 = pygame.font.Font(typeFont, int(22*coefSize))
+            FONT24 = pygame.font.Font(typeFont, int(24*coefSize))
+            FONT30 = pygame.font.Font(typeFont, int(30*coefSize))
+            FONT36 = pygame.font.Font(typeFont, int(36*coefSize))
+            FONT36B = pygame.font.Font(typeFont, int(36*coefSize))
+            FONT36B.set_bold(True)
+            FONT50 = pygame.font.Font(typeFont, int(50*coefSize))
+            FONT74 = pygame.font.Font(typeFont, int(74*coefSize))
+        except:
+            INFOS["ErrorLoadElement"] = True
 
         # aplpication dans le dico setting
         FONT["FONT20"] = FONT20

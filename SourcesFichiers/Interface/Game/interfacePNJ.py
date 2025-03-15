@@ -164,26 +164,26 @@ class PNJInterface(object):
                             vitreModif = sample(allVitreSprites, randint(1,3))
                             PanelBlocControleBlocModif = sample(allPanelControlBloc, randint(1,3))
 
-                            vitre  = pygame.image.load(join("Image", "Obstacle", "VitreBroken.png")).convert_alpha()
-                            panelBloc = pygame.image.load(join("Image", "Obstacle", "TableauBoardBroken.png")).convert_alpha()
+                            try :
+                                vitre  = pygame.image.load(join("Image", "Obstacle", "VitreBroken.png")).convert_alpha()
+                                panelBloc = pygame.image.load(join("Image", "Obstacle", "TableauBoardBroken.png")).convert_alpha()
+                                for sprite in murModif:
+                                    pos = sprite.pos
+                                    mur = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Endommage", f"{sprite.id}.png"))
+                                    sprite.kill()
+                                    CollisionSprites(pos, mur, "Wall", (self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites))
+                                
+                                for sprite in vitreModif:
+                                    pos = sprite.pos
+                                    sprite.kill()
+                                    CollisionSprites(pos, vitre, "Vitre", ((self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites)))
 
-
-                            for sprite in murModif:
-                                pos = sprite.pos
-                                mur = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Endommage", f"{sprite.id}.png"))
-                                sprite.kill()
-                                CollisionSprites(pos, mur, "Wall", (self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites))
-                            
-                            for sprite in vitreModif:
-                                pos = sprite.pos
-                                sprite.kill()
-                                CollisionSprites(pos, vitre, "Vitre", ((self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites)))
-
-                            for sprite in PanelBlocControleBlocModif:
-                                pos = sprite.pos
-                                sprite.kill()
-                                CollisionSprites(pos, panelBloc, "TableauDeBord", (self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites))
-
+                                for sprite in PanelBlocControleBlocModif:
+                                    pos = sprite.pos
+                                    sprite.kill()
+                                    CollisionSprites(pos, panelBloc, "TableauDeBord", (self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites))
+                            except:
+                                INFOS["ErrorLoadElement"] = True
 
                             # remplacement du pnj
                             allPNJ = self.gestionnaire.allPNJ
@@ -260,10 +260,11 @@ class PNJInterface(object):
     def loadPNG(self) -> None:
         """Méthode de chargement des images.
         Input / Output : None"""
-        
-        self.pnjImage = pygame.image.load(join("Image", "NPC", NIVEAU["Map"], self.gestionnaire.pnjActuel, f"Grand{self.gestionnaire.pnjActuel}.png")).convert_alpha()
-        self.playerImage = pygame.image.load(join("Image", "Player", "GrandPlayer.png")).convert_alpha()
-
+        try :
+            self.pnjImage = pygame.image.load(join("Image", "NPC", NIVEAU["Map"], self.gestionnaire.pnjActuel, f"Grand{self.gestionnaire.pnjActuel}.png")).convert_alpha()
+            self.playerImage = pygame.image.load(join("Image", "Player", "GrandPlayer.png")).convert_alpha()
+        except:
+            INFOS["ErrorLoadElement"] = True
 
     def BuildInterface(self) -> None:
         """Méthode de création des éléments de l'interface de discussion avec le pnj. 

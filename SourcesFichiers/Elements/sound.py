@@ -51,9 +51,12 @@ class GestionSoundFond(object):
             if musique_list != []:
                 # play de la mudique
                 musique_choisie = choice(musique_list)
-                self.musicFond = pygame.mixer.Sound(musique_choisie)
-                self.canal0.set_volume(SOUND["BandeSon"])
-                self.canal0.play(self.musicFond)
+                try :
+                    self.musicFond = pygame.mixer.Sound(musique_choisie)
+                    self.canal0.set_volume(SOUND["BandeSon"])
+                    self.canal0.play(self.musicFond)
+                except:
+                    INFOS["ErrorLoadElement"] = True
 
 
     def Update(self):
@@ -106,75 +109,79 @@ class GestionSoundDialogues(object):
             if self.canal1.get_busy():
                 self.StopDialogue()
             
-            # get du bon son
-            if NIVEAU["Map"] == "NiveauPlaineRiviere": # lieux
-                if pnj == "PNJ1":
-                    if not PNJ["PNJ1"]:
-                        match compteurDialogue:
-                            case 1:
-                                dialogue = pygame.mixer.Sound(self.PrinciaplMap0PNJ1Diag1)
-                            case 2:
-                                dialogue = pygame.mixer.Sound(self.PrinciaplMap0PNJ1Diag2)
-                    else:
-                        match compteurDialogue:
-                            case 1:
-                                dialogue = pygame.mixer.Sound(self.SecondaireMap0PNJ1Diag1)
-                
-                elif pnj == "PNJ2":
-                    if not PNJ["PNJ2"]:
-                        match compteurDialogue:
-                            case 1:
-                                dialogue = pygame.mixer.Sound(self.PrinciaplMap0PNJ2Diag1)
-                            case 2:
-                                dialogue = pygame.mixer.Sound(self.PrinciaplMap0PNJ2Diag2)
-                    else:
-                        match compteurDialogue:
-                            case 1:
-                                dialogue = pygame.mixer.Sound(self.SecondaireMap0PNJ2Diag1)
+            try:
+                # get du bon son
+                if NIVEAU["Map"] == "NiveauPlaineRiviere": # lieux
+                    if pnj == "PNJ1":
+                        if not PNJ["PNJ1"]:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.PrinciaplMap0PNJ1Diag1)
+                                case 2:
+                                    dialogue = pygame.mixer.Sound(self.PrinciaplMap0PNJ1Diag2)
+                        else:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.SecondaireMap0PNJ1Diag1)
+                    
+                    elif pnj == "PNJ2":
+                        if not PNJ["PNJ2"]:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.PrinciaplMap0PNJ2Diag1)
+                                case 2:
+                                    dialogue = pygame.mixer.Sound(self.PrinciaplMap0PNJ2Diag2)
+                        else:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.SecondaireMap0PNJ2Diag1)
 
 
 
-            elif NIVEAU["Map"] == "NiveauMedievale":
+                elif NIVEAU["Map"] == "NiveauMedievale":
 
-                if pnj == "PNJ2":
-                    if not PNJ["PNJ2"]:
-                        match compteurDialogue:
-                            case 1:
-                                dialogue = pygame.mixer.Sound(self.PrinciaplMap1PNJ2Diag1)
-                            case 2:
-                                dialogue = pygame.mixer.Sound(self.PrinciaplMap1PNJ2Diag2)
-                            case 3:
-                                dialogue = pygame.mixer.Sound(self.PrinciaplMap1PNJ2Diag3)
-                            case 4:
-                                dialogue = pygame.mixer.Sound(self.PrinciaplMap1PNJ2Diag4)
-                    else:
-                        match compteurDialogue:
-                            case 1:
-                                dialogue = pygame.mixer.Sound(self.SecondaireMap1PNJ2Diag1)
-
-
-
-                
-            elif NIVEAU["Map"] == "NiveauBaseFuturiste":
-                if pnj == "PNJ1":
-                    if not PNJ["PNJ1"]:
-                        match compteurDialogue:
-                            case 1:
-                                dialogue = pygame.mixer.Sound(self.PrinciaplMap2PNJ1Diag1)
-                            case 2:
-                                dialogue = pygame.mixer.Sound(self.PrinciaplMap2PNJ1Diag2)
-                    else:
-                        match compteurDialogue:
-                            case 1:
-                                dialogue = pygame.mixer.Sound(self.SecondaireMap2PNJ1Diag1)
+                    if pnj == "PNJ2":
+                        if not PNJ["PNJ2"]:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.PrinciaplMap1PNJ2Diag1)
+                                case 2:
+                                    dialogue = pygame.mixer.Sound(self.PrinciaplMap1PNJ2Diag2)
+                                case 3:
+                                    dialogue = pygame.mixer.Sound(self.PrinciaplMap1PNJ2Diag3)
+                                case 4:
+                                    dialogue = pygame.mixer.Sound(self.PrinciaplMap1PNJ2Diag4)
+                        else:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.SecondaireMap1PNJ2Diag1)
 
 
-            if dialogue != None:
-                dialogue.set_volume(SOUND["Dialogue"])
 
-                if self.canal1.get_busy():
-                    self.canal1.stop()
-                self.canal1.play(dialogue)
+                    
+                elif NIVEAU["Map"] == "NiveauBaseFuturiste":
+                    if pnj == "PNJ1":
+                        if not PNJ["PNJ1"]:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.PrinciaplMap2PNJ1Diag1)
+                                case 2:
+                                    dialogue = pygame.mixer.Sound(self.PrinciaplMap2PNJ1Diag2)
+                        else:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.SecondaireMap2PNJ1Diag1)
+
+
+                if dialogue != None:
+                    dialogue.set_volume(SOUND["Dialogue"])
+
+                    if self.canal1.get_busy():
+                        self.canal1.stop()
+                    self.canal1.play(dialogue)
+                    
+            except:
+                INFOS["ErrorLoadElement"] = True
 
     def StopDialogue(self):
         self.canal1.stop()

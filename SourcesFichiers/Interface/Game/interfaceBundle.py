@@ -17,11 +17,14 @@ class BundleInterface(object):
         # close interface cross
         self.surfaceCloseCross = pygame.Surface((24,24), pygame.SRCALPHA)
         self.isCrossCloseHover = False
-        self.crossClose = pygame.image.load(join("Image", "Interface", "Croix", "x-mark.png")).convert_alpha()
-        self.crossClose2 = pygame.image.load(join("Image", "Interface", "Croix", "x-mark2.png")).convert_alpha()
+        try :
+            self.crossClose = pygame.image.load(join("Image", "Interface", "Croix", "x-mark.png")).convert_alpha()
+            self.crossClose2 = pygame.image.load(join("Image", "Interface", "Croix", "x-mark2.png")).convert_alpha()
 
-        self.bundleBcg = pygame.image.load(join("Image", "Interface", "Inventaire.png")).convert_alpha()
-        self.interfaceSurface.blit(self.bundleBcg, (0,0))
+            self.bundleBcg = pygame.image.load(join("Image", "Interface", "Inventaire.png")).convert_alpha()
+            self.interfaceSurface.blit(self.bundleBcg, (0,0))
+        except:
+            INFOS["ErrorLoadElement"] = True
 
 
         # load image
@@ -31,13 +34,15 @@ class BundleInterface(object):
 
     def LoadImage(self) -> None:
         """Méthode chargement des images Input / Output : None"""
-
-        self.planks = pygame.image.load(join("Image", "Item", "PlanksItem.png")).convert_alpha()
-        self.oldAxe = pygame.image.load(join("Image", "Item", "OldAxeItem.png")).convert_alpha()
-        self.pickaxe = pygame.image.load(join("Image", "Item", "Pickaxe.png")).convert_alpha()
-        self.boat = pygame.image.load(join("Image", "Item", "Boat.png")).convert_alpha()
-        self.keys = pygame.image.load(join("Image", "Item", "Keys.png")).convert_alpha()
-        self.showel = pygame.image.load(join("Image", "Item", "OldShovelItemx96.png")).convert_alpha()
+        try :
+            self.planks = pygame.image.load(join("Image", "Item", "PlanksItem.png")).convert_alpha()
+            self.oldAxe = pygame.image.load(join("Image", "Item", "OldAxeItem.png")).convert_alpha()
+            self.pickaxe = pygame.image.load(join("Image", "Item", "Pickaxe.png")).convert_alpha()
+            self.boat = pygame.image.load(join("Image", "Item", "Boat.png")).convert_alpha()
+            self.keys = pygame.image.load(join("Image", "Item", "Keys.png")).convert_alpha()
+            self.showel = pygame.image.load(join("Image", "Item", "OldShovelItemx96.png")).convert_alpha()
+        except:
+            INFOS["ErrorLoadElement"] = True
 
     def CreateElementRect(self) -> None:
         """Méthode de création des slots et de leurs attributs

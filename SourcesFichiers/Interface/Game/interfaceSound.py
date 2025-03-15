@@ -13,8 +13,16 @@ class SoundInterface(object):
         self.displaySurface = pygame.display.get_surface() # surface générale
         self.interfaceSurface = pygame.Surface((WINDOW_WIDTH/2, WINDOW_HEIGHT/2),  pygame.SRCALPHA)
 
-        self.songBcg = pygame.image.load(join("Image", "Interface", "Song.png")).convert_alpha()
-        self.interfaceSurface.blit(self.songBcg, (0,0)) 
+        self.surfaceCloseCross = pygame.Surface((24,24),pygame.SRCALPHA )
+        self.isCrossCloseHover = False
+
+        try :
+            self.songBcg = pygame.image.load(join("Image", "Interface", "Song.png")).convert_alpha()
+            self.interfaceSurface.blit(self.songBcg, (0,0)) 
+            self.crossClose = pygame.image.load(join("Image","Interface", "Croix", "x-mark.png")).convert_alpha()
+            self.crossClose2 = pygame.image.load(join("Image","Interface", "Croix", "x-mark2.png")).convert_alpha()
+        except:
+            INFOS["ErrorLoadElement"] = True
 
         # Propriétés des sliders
         self.slider_x = 50  # Position X des sliders
@@ -31,11 +39,6 @@ class SoundInterface(object):
         self.dragging = None
 
         # close interface cross
-        self.surfaceCloseCross = pygame.Surface((24,24),pygame.SRCALPHA )
-        self.isCrossCloseHover = False
-        self.crossClose = pygame.image.load(join("Image","Interface", "Croix", "x-mark.png")).convert_alpha()
-        self.crossClose2 = pygame.image.load(join("Image","Interface", "Croix", "x-mark2.png")).convert_alpha()
-
 
 
     def BuildInterface(self) -> None:

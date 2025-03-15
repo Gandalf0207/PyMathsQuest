@@ -7,6 +7,8 @@ ElementsFr = {
     "LevelSup" : "Vous passez au niveau suppérieur !",
     "Humour" : "Humour, second degré",
     "CloseGame" : "Fermeture du jeu.",
+    "ErreurLoad" : "Problème load fichiers ressources. ",
+
 
     "InterfaceCreditsGame" : {
         "Title" : "Crédits PyMathsQuest",

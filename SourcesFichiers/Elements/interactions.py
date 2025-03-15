@@ -99,21 +99,30 @@ class Interactions(object):
 
                         if self.ObjectId == "Arbre":
                             #creation souche
-                            soucheArbre = pygame.image.load(join("Image", "Obstacle", "Souche.png")).convert_alpha()
-                            groups = (groups[0], groups[1], interactionGroups)
-                            CollisionSprites(self.Obj.pos, soucheArbre,  "Souche", groups)
+                            try :
+                                soucheArbre = pygame.image.load(join("Image", "Obstacle", "Souche.png")).convert_alpha()
+                                groups = (groups[0], groups[1], interactionGroups)
+                                CollisionSprites(self.Obj.pos, soucheArbre,  "Souche", groups)
+                            except:
+                                INFOS["ErrorLoadElement"] = True
                             INVENTORY["Planks"] += 1
 
                         elif self.ObjectId == "Arbre1": 
-                            soucheArbre2 = pygame.image.load(join("Image", "Obstacle", "Souche2.png")).convert_alpha()
-                            groups = (groups[0], groups[1], interactionGroups)
-                            CollisionSprites(self.Obj.pos, soucheArbre2,  "Souche1", groups)
+                            try :
+                                soucheArbre2 = pygame.image.load(join("Image", "Obstacle", "Souche2.png")).convert_alpha()
+                                groups = (groups[0], groups[1], interactionGroups)
+                                CollisionSprites(self.Obj.pos, soucheArbre2,  "Souche1", groups)
+                            except:
+                                INFOS["ErrorLoadElement"] = True
                             INVENTORY["Planks"] += 2
 
                         elif self.ObjectId == "Souche" or self.ObjectId == "Souche1":
                             #creation boue
-                            boueImage = pygame.image.load(join("Image", "Sol", "Mud.png")).convert_alpha()
-                            Sprites(self.Obj.pos, boueImage, "Mud", groups[0]) # création de la boue
+                            try :
+                                boueImage = pygame.image.load(join("Image", "Sol", "Mud.png")).convert_alpha()
+                                Sprites(self.Obj.pos, boueImage, "Mud", groups[0]) # création de la boue
+                            except:
+                                INFOS["ErrorLoadElement"] = True
                             INVENTORY["Planks"] += 1 if self.ObjectId == "Souche" else 2
 
 
@@ -331,8 +340,11 @@ class Interactions(object):
                     self.gestionnaire.fondu_au_noir() # animation
 
                     pos = self.Obj.pos
-                    doorOpen = pygame.image.load(join("Image", "Obstacle", "Door", "DoorCellule.png")).convert_alpha()
-                    Sprites(pos, doorOpen, "OpenDoor", groups[0])
+                    try:
+                        doorOpen = pygame.image.load(join("Image", "Obstacle", "Door", "DoorCellule.png")).convert_alpha()
+                        Sprites(pos, doorOpen, "OpenDoor", groups[0])
+                    except:
+                        INFOS["ErrorLoadElement"] = True
                     self.Obj.kill()
                     self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["OpenDoorCellule"]) # text animation
 
@@ -349,8 +361,11 @@ class Interactions(object):
                     self.gestionnaire.fondu_au_noir() # animation
 
                     pos = self.Obj.pos
-                    doorOpen = pygame.image.load(join("Image", "Obstacle", "Door", "DoorPrison.png")).convert_alpha()
-                    Sprites(pos, doorOpen, "OpenDoorPrison", groups[0])
+                    try:
+                        doorOpen = pygame.image.load(join("Image", "Obstacle", "Door", "DoorPrison.png")).convert_alpha()
+                        Sprites(pos, doorOpen, "OpenDoorPrison", groups[0])
+                    except:
+                        INFOS["ErrorLoadElement"] = True
                     self.Obj.kill()
                     
                     self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["OpenDoorPrison"]) # text animation

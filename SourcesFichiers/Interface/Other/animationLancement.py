@@ -29,27 +29,37 @@ class AnimationLancementObj():
     
     def PlaySon(self) -> None:
         SOUND["EffetSonore"] = 0.8
-        self.songPath = join("Sound", "EffetSonore", "SonLancement.mp3")
-        self.music = pygame.mixer.Sound(self.songPath)
-        self.canal4.set_volume(SOUND["EffetSonore"])
-        self.canal4.play(self.music)
+        try :
+            self.songPath = join("Sound", "EffetSonore", "SonLancement.mp3")
+            self.music = pygame.mixer.Sound(self.songPath)
+            self.canal4.set_volume(SOUND["EffetSonore"])
+            self.canal4.play(self.music)
+        except:
+            INFOS["ErrorLoadElement"] = True
 
     def Update(self) -> None:
         """Met à jour l'animation une seule fois jusqu'à la fin"""
         while not self.animationPlayed:
-            current_time = pygame.time.get_ticks()
-            if current_time - self.time_last_update > self.animation_speed:
-                self.time_last_update = current_time
-                if self.frame_index < self.frames-2:
-                    self.frame_index += 1
-                    gc.collect() #☺ clear img
-                    surf = pygame.image.load(join(self.path, f"{self.frame_index}.png")).convert()
-                    self.displaySurface.blit(surf, (0,0))
-                    pygame.display.flip()
-                else:
-                    self.animationPlayed = True
-                    SOUND["EffetSonore"] = 0.05
-                    pygame.display.flip()
+            if not INFOS["ErrorLoadElement"]:
+                current_time = pygame.time.get_ticks()
+                if current_time - self.time_last_update > self.animation_speed:
+                    self.time_last_update = current_time
+                    if self.frame_index < self.frames-2:
+                        gc.collect() #☺ clear img
+                        try :
+                            surf = pygame.image.load(join(self.path, f"{self.frame_index}.png")).convert()
+                            self.displaySurface.blit(surf, (0,0))
+                        except:
+                            INFOS["ErrorLoadElement"] = True
+                        self.frame_index += 1
+                        pygame.display.flip()
+                    else:
+                        self.animationPlayed = True
+                        SOUND["EffetSonore"] = 0.05
+                        pygame.display.flip()
+            else:
+                self.animationPlayed = True
+
 
         # Mettre à jour le played de l'animation (main action)
         pygame.event.post(pygame.event.Event(pygame.USEREVENT, {"animationLancement": "animation_finie"}))

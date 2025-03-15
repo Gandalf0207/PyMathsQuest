@@ -129,7 +129,7 @@ class CollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(-30,-30)
             case "DoorVolcan":
                 self.hitbox = self.rect.inflate(0,-30)
-                
+
             case _:  # par défaut
                 self.hitbox = self.rect.inflate(-70,-140)
 
@@ -163,8 +163,11 @@ class AnimatedSprites(pygame.sprite.Sprite):
 
         # Images et pos (rect)
         self.path = path
-        self.image = pygame.image.load(join(path, "0.gif")).convert_alpha() # Image initiale
-        self.rect = self.image.get_rect(topleft=pos)
+        try :
+            self.image = pygame.image.load(join(path, "0.gif")).convert_alpha() # Image initiale
+            self.rect = self.image.get_rect(topleft=pos)
+        except:
+            INFOS["ErrorLoadElement"] = True
         self.ground = True # bool dessins des sprites
 
         
@@ -189,8 +192,11 @@ class AnimatedSprites(pygame.sprite.Sprite):
                 # modification du dico de stockage
                 for file_name in sorted(file_names, key=lambda name: int(name.split('.')[0])):
                     full_path = join(folder_path, file_name)
-                    surf = pygame.image.load(full_path).convert_alpha()
-                    self.frames.append(surf)
+                    try :
+                        surf = pygame.image.load(full_path).convert_alpha()
+                        self.frames.append(surf)
+                    except:
+                        INFOS["ErrorLoadElement"] = True
 
 
     def update(self, *args) -> None:
@@ -222,8 +228,11 @@ class AnimatedCollisionSprites(pygame.sprite.Sprite):
         
         # Images et pos (rect)
         self.path = path
-        self.image = pygame.image.load(join(path, "0.gif")).convert_alpha() # Image initiale
-        self.rect = self.image.get_rect(topleft=pos)
+        try :
+            self.image = pygame.image.load(join(path, "0.gif")).convert_alpha() # Image initiale
+            self.rect = self.image.get_rect(topleft=pos)
+        except:
+            INFOS["ErrorLoadElement"] = True
         self.ground = True # bool dessins des sprites
 
         # Vérifier si le groupe principal supporte les layers
@@ -283,9 +292,11 @@ class AnimatedCollisionSprites(pygame.sprite.Sprite):
                 # modification du dico de stockage
                 for file_name in sorted(file_names, key=lambda name: int(name.split('.')[0])):
                     full_path = join(folder_path, file_name)
-                    surf = pygame.image.load(full_path).convert_alpha()
-                    self.frames.append(surf)
-
+                    try :
+                        surf = pygame.image.load(full_path).convert_alpha()
+                        self.frames.append(surf)
+                    except:
+                        INFOS["ErrorLoadElement"] = True
 
     def update(self, *args) -> None:
         """Méthode d'update des sprite de la rivière pour l'animation.

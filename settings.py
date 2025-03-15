@@ -170,6 +170,7 @@ INFOS = {
     "ErrorLoad" : False,
     "GameEnd" : False,
     "CrashGame" : False,
+    "ErrorLoadElement": False,
     "UpdateFont" : False,
     
     "Difficulte" : False,

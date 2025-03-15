@@ -24,18 +24,21 @@ class MiniMap:
 
     def LoadImagesMiniMap(self) -> None:
         """Méthode de chargement des images pour la minimap. Input / Output : None"""
+        try:
+            self.carre1 = pygame.image.load(join("Image", "MiniMap", "Carre1.png")).convert_alpha()
+            self.carre2 = pygame.image.load(join("Image", "MiniMap", "Carre2.png")).convert_alpha()
+            self.carre3 = pygame.image.load(join("Image", "MiniMap", "Carre3.png")).convert_alpha()
+            self.carre4 = pygame.image.load(join("Image", "MiniMap", "Carre4.png")).convert_alpha()
+            self.carre5 = pygame.image.load(join("Image", "MiniMap", "Carre5.png")).convert_alpha()
+            self.carre6 = pygame.image.load(join("Image", "MiniMap", "Carre6.png")).convert_alpha()
+            self.carre7 = pygame.image.load(join("Image", "MiniMap", "Carre7.png")).convert_alpha()
+            self.carre8 = pygame.image.load(join("Image", "MiniMap", "Carre8.png")).convert_alpha()
+            self.carre10 = pygame.image.load(join("Image", "MiniMap", "Carre10.png")).convert_alpha()
+            self.carre11 = pygame.image.load(join("Image", "MiniMap", "Carre11.png")).convert_alpha()
+            self.carre12 = pygame.image.load(join("Image", "MiniMap", "Carre12.png")).convert_alpha()
+        except:
+            INFOS["ErrorLoadElement"] = True
 
-        self.carre1 = pygame.image.load(join("Image", "MiniMap", "Carre1.png")).convert_alpha()
-        self.carre2 = pygame.image.load(join("Image", "MiniMap", "Carre2.png")).convert_alpha()
-        self.carre3 = pygame.image.load(join("Image", "MiniMap", "Carre3.png")).convert_alpha()
-        self.carre4 = pygame.image.load(join("Image", "MiniMap", "Carre4.png")).convert_alpha()
-        self.carre5 = pygame.image.load(join("Image", "MiniMap", "Carre5.png")).convert_alpha()
-        self.carre6 = pygame.image.load(join("Image", "MiniMap", "Carre6.png")).convert_alpha()
-        self.carre7 = pygame.image.load(join("Image", "MiniMap", "Carre7.png")).convert_alpha()
-        self.carre8 = pygame.image.load(join("Image", "MiniMap", "Carre8.png")).convert_alpha()
-        self.carre10 = pygame.image.load(join("Image", "MiniMap", "Carre10.png")).convert_alpha()
-        self.carre11 = pygame.image.load(join("Image", "MiniMap", "Carre11.png")).convert_alpha()
-        self.carre12 = pygame.image.load(join("Image", "MiniMap", "Carre12.png")).convert_alpha()
 
 
 
@@ -131,9 +134,10 @@ class InfosTips:
     def loadImage(self) -> None:
         """Méthode chargement des images
         Input / Ouput : None"""
-
-        self.idea = pygame.image.load(join("Image", "HotBar", "LightBulbIcon.png")).convert_alpha()
-
+        try :
+            self.idea = pygame.image.load(join("Image", "HotBar", "LightBulbIcon.png")).convert_alpha()
+        except:
+            INFOS["ErrorLoadElement"] = True
 
     def GetText(self) -> None:
         """Méthode de récupération du texte en foonc de l'état de STATE_HELP_INFOS"""
@@ -216,12 +220,13 @@ class SettingsAll:
     def loadImage(self) -> None:
         """Méthode : Chargement des texture des 
         4 button pygame. Input / Output : None"""
-
-        self.wheel = pygame.image.load(join("Image", "HotBar", "AllSettings", "Wheel.png")).convert_alpha()
-        self.sound = pygame.image.load(join("Image", "HotBar", "AllSettings", "Sound.png")).convert_alpha()
-        self.bundle = pygame.image.load(join("Image", "HotBar", "AllSettings", "Bundle.png")).convert_alpha()
-        self.book = pygame.image.load(join("Image", "HotBar", "AllSettings", "Book.png")).convert_alpha()
-
+        try :
+            self.wheel = pygame.image.load(join("Image", "HotBar", "AllSettings", "Wheel.png")).convert_alpha()
+            self.sound = pygame.image.load(join("Image", "HotBar", "AllSettings", "Sound.png")).convert_alpha()
+            self.bundle = pygame.image.load(join("Image", "HotBar", "AllSettings", "Bundle.png")).convert_alpha()
+            self.book = pygame.image.load(join("Image", "HotBar", "AllSettings", "Book.png")).convert_alpha()
+        except:
+            INFOS["ErrorLoadElement"] = True
 
     def OpenInterfaceElementClic(self, event : any) -> bool:
         """Méthode : Appel des méthode de gestion des interfaces par clic souris.

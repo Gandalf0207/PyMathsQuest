@@ -33,9 +33,11 @@ class ReactorInterface(object):
         # close interface cross
         self.surfaceCloseCross = pygame.Surface((24,24))
         self.isCrossCloseHover = False
-        self.crossClose = pygame.image.load(join("Image","Interface", "Croix", "x-mark.png")).convert_alpha()
-        self.crossClose2 = pygame.image.load(join("Image","Interface", "Croix", "x-mark2.png")).convert_alpha()
-
+        try:
+            self.crossClose = pygame.image.load(join("Image","Interface", "Croix", "x-mark.png")).convert_alpha()
+            self.crossClose2 = pygame.image.load(join("Image","Interface", "Croix", "x-mark2.png")).convert_alpha()
+        except:
+            INFOS["ErrorLoadElement"] = True
 
 
         self.reactor = Reactor()
@@ -128,9 +130,11 @@ class ReactorInterface(object):
                 if sprite.id == "DoorFuturisteClose":
                     pos = sprite.pos
                     sprite.kill()
-                    OpenDoor = pygame.image.load(join("Image", "Obstacle", "Door", "DoorFuturisteBaseOpen.png")).convert_alpha()
-                    Sprites(pos, OpenDoor, "DoorFuturisteOpen", allSprites, layer=1)
-
+                    try:
+                        OpenDoor = pygame.image.load(join("Image", "Obstacle", "Door", "DoorFuturisteBaseOpen.png")).convert_alpha()
+                        Sprites(pos, OpenDoor, "DoorFuturisteOpen", allSprites, layer=1)
+                    except:
+                        INFOS["ErrorLoadElement"] = True
 
         if event.type == pygame.MOUSEBUTTONDOWN:  # Si un clic souris est détecté
             current_time = pygame.time.get_ticks()

@@ -34,9 +34,11 @@ class CreateExo:
         # close interface cross
         self.surfaceCloseCross = pygame.Surface((24,24))
         self.isCrossCloseHover = False
-        self.crossClose = pygame.image.load(join("Image", "Interface","Croix", "x-mark.png")).convert_alpha()
-        self.crossClose2 = pygame.image.load(join("Image","Interface", "Croix", "x-mark2.png")).convert_alpha()
-
+        try :
+            self.crossClose = pygame.image.load(join("Image", "Interface","Croix", "x-mark.png")).convert_alpha()
+            self.crossClose2 = pygame.image.load(join("Image","Interface", "Croix", "x-mark2.png")).convert_alpha()
+        except:
+            INFOS["ErrorLoadElement"] = True
 
 
         # création element button
@@ -108,8 +110,11 @@ class CreateExo:
                         self.interfaceExoSurface.blit(text, (20, self.hauteurAct))
 
                         self.hauteurAct += 100
-                        self.volumeSimpleImg = pygame.image.load(join("Image", "Exo", "ExoVolumeSimple.png")).convert_alpha()
-                        self.interfaceExoSurface.blit(self.volumeSimpleImg, self.volumeSimpleImg.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
+                        try :
+                            self.volumeSimpleImg = pygame.image.load(join("Image", "Exo", "ExoVolumeSimple.png")).convert_alpha()
+                            self.interfaceExoSurface.blit(self.volumeSimpleImg, self.volumeSimpleImg.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
+                        except:
+                            INFOS["ErrorLoadElement"] = True
                     else:
                         self.hauteurAct += 20
                         textInfo = f"a = {self.infosBuild[0][0]} ; b = {self.infosBuild[0][1]} ; c = {self.infosBuild[0][2]} ; d = {self.infosBuild[0][3]} ; e = {self.infosBuild[0][4]} ; f = {self.infosBuild[0][5]} ; r = {self.infosBuild[0][6]}"
@@ -117,8 +122,11 @@ class CreateExo:
                         self.interfaceExoSurface.blit(text, (20, self.hauteurAct))
 
                         self.hauteurAct += 100 
-                        self.volumeDifficileImg = pygame.image.load(join("Image", "Exo", "ExoVolumeDifficile.png")).convert_alpha()
-                        self.interfaceExoSurface.blit(self.volumeDifficileImg, self.volumeDifficileImg.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
+                        try :
+                            self.volumeDifficileImg = pygame.image.load(join("Image", "Exo", "ExoVolumeDifficile.png")).convert_alpha()
+                            self.interfaceExoSurface.blit(self.volumeDifficileImg, self.volumeDifficileImg.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
+                        except:
+                            INFOS["ErrorLoadElement"] = True    
 
 
 
