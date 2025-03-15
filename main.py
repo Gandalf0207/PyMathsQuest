@@ -3,7 +3,7 @@ from SourcesFichiers.Personnages.player import *
 from SourcesFichiers.Elements.touche import *
 from SourcesFichiers.Elements.interactions import *
 from SourcesFichiers.Elements.groups import *
-from SourcesFichiers.Map.loadMapv2 import *
+from SourcesFichiers.Map.loadMapGestion import *
 from SourcesFichiers.Elements.hotbar import *
 from SourcesFichiers.Personnages.pnj import *
 from SourcesFichiers.Ressources.Texte.creationTexte import *

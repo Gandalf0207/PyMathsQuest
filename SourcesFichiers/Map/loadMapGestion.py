@@ -733,9 +733,9 @@ class LoadMapGestion():
                 PNJOBJ(pos , "PNJ3", (self.allPNJ, self.allSprites, self.collisionSprites))
             if coordsPNJ[3] == 4 :
                 PNJOBJ(pos, "PNJ4", (self.allPNJ, self.allSprites, self.collisionSprites))
-            if coordsPNJ[3] == 5 :
+            if coordsPNJ[3] == 5 and NIVEAU["Map"] != "NiveauBaseFuturiste": # pnj 5 deplacement nv 3 | demi niveau
                 PNJOBJ(pos, "PNJ5", (self.allPNJ, self.allSprites, self.collisionSprites))
-            if coordsPNJ[3] == 6: # pnj 5 deplacement nv 3 | demi niveau
+            if coordsPNJ[3] == 6: 
                 PNJOBJ(pos, "PNJ6", (self.allPNJ, self.allSprites, self.collisionSprites))
         
     def SetupObj(self):

@@ -211,7 +211,7 @@ class NiveauBaseFuturiste(GestionNiveauMap):
             (0,5),(1,5),                              (7,5),(8,5),
             (0,6),(1,6),                              (7,6),(8,6),
             (0,7),(1,7),(2,7),(3,7),(4,7),(5,7),(6,7),(7,7),(8,7),
-            (0,8),(1,8),(2,8),(3,8),(4,8),(5,8),(6,8),(7,8),(8,8),
+            (0,8),(1,8),(2,8),(3,8),      (5,8),(6,8),(7,8),(8,8),
         ]
         
         self.allPNJCoords = []
@@ -226,8 +226,7 @@ class NiveauBaseFuturiste(GestionNiveauMap):
             coordsPossiblesPNJ = [(coords[0] + ptsFixe[0], coords[1] + ptsFixe[1]) for coords in coordsPossiblesRefPNJ] 
             
             coordsPNJ = choice(coordsPossiblesPNJ)
-            if numSalle !=3: # on ne crée pas de pnj pour le 3
-                self.map[coordsPNJ[1]][coordsPNJ[0]] = "P"
+            self.map[coordsPNJ[1]][coordsPNJ[0]] = "P"
             self.allPNJCoords.append([coordsPNJ[0], coordsPNJ[1], "P", numSalle+2])
         
         AjoutJsonMapValue(self.allPNJCoords, "coordsMapObject", "PNJ Coords") # on ajoute les coordonnées du spawn au fichier json
