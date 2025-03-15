@@ -60,83 +60,76 @@ class CollisionSprites(pygame.sprite.Sprite):
             case "BorderBottom":
                 self.hitbox = self.rect.inflate(0,0)
             case "Souche":
-                self.hitbox = self.rect.inflate(-120,-110)
+                self.hitbox = self.rect.inflate(-100,-100)
             case "Souche1":
-                self.hitbox = self.rect.inflate(-120,-110)
+                self.hitbox = self.rect.inflate(-100,-100)
             case "HugeRock":
                 self.hitbox = self.rect.inflate(-90,-100)
-            case "campFire":
-                self.hitbox = self.rect.inflate(-70,-70)
-            case "banc":
+            case "CampFire":
                 self.hitbox = self.rect.inflate(-70,-70)
             case "Pont1" :
                 self.hitbox = self.rect.inflate(-100,0)
             case "Pont2":
                 self.hitbox = self.rect.inflate(-100,0)
-
             case "ExitRock":
                 self.hitbox = self.rect.inflate(-60, -20)
             case "Champs":
                 self.hitbox = self.rect.inflate(0,0)
-            case "Murailles":
-                self.hitbox = self.rect.inflate(0,-20)
             case "House":
                 self.hitbox = self.rect.inflate(-20,-60)
             case "Well":
                 self.hitbox = self.rect.inflate(-20,-60)
             case "Chateau":
-                self.hitbox = self.rect.inflate(-20,-60)
+                self.hitbox = self.rect.inflate(0, -30)
             case "TableCraft":
                 self.hitbox = self.rect.inflate(0,0)
             case "Boat":
                 self.hitbox = self.rect.inflate(0,0)
-            case "Mur":
-                self.hitbox = self.rect.inflate(0,-40)
             case "Pilier":
-                self.hitbox = self.rect.inflate(0,-20)
-            case "Door":
-                self.hitbox = self.rect.inflate(0,-60)
-            case "Door2":
-                self.hitbox = self.rect.inflate(0,-60)
+                self.hitbox = self.rect.inflate(-40,-20)
             case "CerclePortal":
                 self.hitbox = self.rect.inflate(-128,-128)
-            case "Reacteur":
-                self.hitbox = self.rect.inflate(0,0)
-            case "Cafet":
-                self.hitbox = self.rect.inflate(0,0)
-            case "Essence":
-                self.hitbox = self.rect.inflate(0,0)
-            case "Lancement":
-                self.hitbox = self.rect.inflate(0,0)
-            case "Vent":
-                self.hitbox = self.rect.inflate(-128,-128)
-            case "Wall":
-                self.hitbox = self.rect.inflate(0,-10)
-            case "Wall2" :
-                self.hitbox = self.rect.inflate(0,-110)
-            case "DoorFuturiste":
-                self.hitbox = self.rect.inflate(0,-60)
+            case "DoorMuraille":
+                self.hitbox = self.rect.inflate(0, -30)
+            case "DoorChateau":
+                self.hitbox = self.rect.inflate(0, -30)
+            case "DoorChateauInterieur":
+                self.hitbox = self.rect.inflate(0, -30)
             case "ReactorBloc":
                 self.hitbox = self.rect.inflate(-128,-128)
-            case "Caisse":
-                self.hitbox = self.rect.inflate(-80, -80)
-            case "TableauDeBord": 
+            case "StructureCafet":
                 self.hitbox = self.rect.inflate(0,0)
+            case "StructureEssence":
+                self.hitbox = self.rect.inflate(0,0)
+            case "StructureLancement":
+                self.hitbox = self.rect.inflate(0,0)
+            case "DoorFuturisteClose":
+                self.hitbox = self.rect.inflate(0, -30)
             case "Siege":
                 self.hitbox = self.rect.inflate(-40,-40)
-            case "DoorFuturisteDemiNiveau":
-                self.hitbox = self.rect.inflate(0,-60)
-            case "DoorBareau":
-                self.hitbox = self.rect.inflate(0,-60)
-            case "Bareaux":
-                self.hitbox = self.rect.inflate(0,-60)
-
-
-
-
-
-
-
+            case "Vitre":
+                self.hitbox = self.rect.inflate(0,0)
+            case "Caisse":
+                self.hitbox = self.rect.inflate(-80, -80)
+            case "ControlPanel": 
+                self.hitbox = self.rect.inflate(0,0)
+            case "DoorFuturisteVaisseau":
+                self.hitbox = self.rect.inflate(0,-30)
+            case "CrashVaisseau":
+                self.hitbox = self.rect.inflate(-30,-30)
+            case "Pot":
+                self.hitbox = self.rect.inflate(-10,-10)
+            case "DoorCellule":
+                self.hitbox = self.rect.inflate(0,-30)
+            case "DoorPrison":
+                self.hitbox = self.rect.inflate(0,-30)
+            case "Barreaux":
+                self.hitbox = self.rect.inflate(0,0)
+            case "VolcanStruc":
+                self.hitbox = self.rect.inflate(-30,-30)
+            case "DoorVolcan":
+                self.hitbox = self.rect.inflate(0,-30)
+                
             case _:  # par défaut
                 self.hitbox = self.rect.inflate(-70,-140)
 
@@ -255,11 +248,15 @@ class AnimatedCollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(-100, 0)
             case "Pont 5":
                 self.hitbox = self.rect.inflate(0, -100)
+            case "Chandelier":
+                self.hitbox = self.rect.inflate(0, -60)
+            case "StructureReactor":
+                self.hitbox = self.rect.inflate(0, 0)
             case "River":
                 self.hitbox = self.rect.inflate(0,0)
             
             case _:  # par défaut
-                self.hitbox = self.rect.inflate(-70,-140)
+                self.hitbox = self.rect.inflate(0, 0)
 
         # Centrer la hitbox par rapport à l'image
         self.hitbox.center = self.rect.center

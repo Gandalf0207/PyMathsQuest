@@ -147,7 +147,7 @@ class SettingsInterface(object):
         # Ecriture
         # ecriture settings
         textPoliceEcriture = FONT["FONT20"].render(TEXTE["Elements"]["HotBar"]["Settings"]["PoliceEcriture"], True, (10, 10, 10))
-        self.interfaceSurface.blit(textPoliceEcriture, (10, 500))
+        self.interfaceSurface.blit(textPoliceEcriture, (500, 50))
 
         y_offsetPoliceEcriture = 75  # Position initiale en vertical
         x_offsetPoliceEcriture = 500  # Position initiale en horizontal

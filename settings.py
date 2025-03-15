@@ -162,7 +162,7 @@ NIVEAU = {
     "All" : False, 
 
     # map
-    "Map" : "NiveauBaseFuturiste",
+    "Map" : "NiveauPlaineRiviere",
 }
 # box infos globales
 INFOS = {
