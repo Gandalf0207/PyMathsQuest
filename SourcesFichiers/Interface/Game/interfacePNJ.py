@@ -246,7 +246,13 @@ class PNJInterface(object):
                     if self.gestionnaire.pnjActuel == "PNJ4":
                         PNJ["PNJ4"] = True
                         STATE_HELP_INFOS[0] = "OpenVolcan" # update tips player
+                    
+                    if self.gestionnaire.pnjActuel == "PNJ5":
+                        PNJ["PNJ5"] = True
 
+                        INFOS["Exo"] = True # lancement exo dans main (changement variable)
+                        self.gestionnaire.gestionnaire.fondu_au_noir()
+                        self.gestionnaire.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["MakeExo"]) # text animation
                         
 
 
@@ -262,6 +268,11 @@ class PNJInterface(object):
                 self.gestionnaire.gestionSound.StopDialogue()
                 self.CloseInterface() # fermeture interface
 
+                # ouverture automatique interface
+                if NIVEAU["Map"] == "NiveauMordor" and INFOS["DemiNiveau"]:
+                    INFOS["Exo"] = True # lancement exo dans main (changement variable)
+                    self.gestionnaire.gestionnaire.fondu_au_noir()
+                    self.gestionnaire.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["MakeExo"]) # text animation
 
     def loadPNG(self) -> None:
         """Méthode de chargement des images.

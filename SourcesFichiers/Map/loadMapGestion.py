@@ -230,9 +230,30 @@ class LoadMapGestion():
 
     def LoadImagesDemiNiveauVolcan(self):
         try:
-            pass
+            self.sol = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
+            self.bcgDemiNiveauVolcan = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
+            self.DoorVolcanEntre = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
+            self.laveCollision = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
+            self.MurWEHaut = pygame.image.load(join("Image", "Obstacle", "BlocVide.png" )).convert_alpha()
+            self.MurNSGauche = pygame.image.load(join("Image", "Obstacle", "BlocVide.png" )).convert_alpha()
+            self.MurNSDroite = pygame.image.load(join("Image", "Obstacle", "BlocVide.png" )).convert_alpha()
+            self.MurMountain = pygame.image.load(join("Image", "Obstacle", "BlocVide.png" )).convert_alpha()
+
+            self.MurAngularNE = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
+            self.MurAngularNW = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
+            self.MurAngularSE = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
+            self.MurAngulaSW = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
+
+            self.MurWEBas = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
+            self.MurWEHaut = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha() 
+
+            self.MurAngularNE2 = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
+            self.MurAngularNW2 = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
+            self.MurAngularSW2 = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
+            self.MurAngularSE2 = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
+
         except:
-            pass
+            INFOS["ErrorLoadElement"] = True
 
 
     def LoadImagesGestion(self) -> None:
@@ -274,7 +295,7 @@ class LoadMapGestion():
             if not INFOS["DemiNiveau"]:
                 self.map, self.mapBase, self.ERROR_RELANCER = NiveauMordor().Update()
             else:
-                pass       
+                self.map, self.mapBase, self.ERROR_RELANCER = NiveauMordorVolcan().Update()    
         
         # si erreur : return
         if self.ERROR_RELANCER:
@@ -361,9 +382,9 @@ class LoadMapGestion():
 
                     # Vérification des bords pour éviter les erreurs d'index
                     can_go_up = ordonnees > 0
-                    can_go_down = ordonnees < LARGEUR - 1
+                    can_go_down = ordonnees < len(self.map) -1
                     can_go_left = abscisses > 0
-                    can_go_right = abscisses < 149
+                    can_go_right = abscisses < len(self.map[0]) -1
 
                     def checkBuildUp(can_go_up):
                         if can_go_up:
@@ -737,7 +758,8 @@ class LoadMapGestion():
                 elif self.map[ordonnees][abscisses] == "y":
                     path = join("Image", "Obstacle", "Chandelier")
                     AnimatedCollisionSprites(pos, path, "Chandelier", (self.allSprites, self.collisionSprites), layer=1)
-
+                elif self.map[ordonnees][abscisses] == "Z":
+                    CollisionSprites(pos, self.laveCollision, "Lave", (self.allSprites, self.collisionSprites), layer=0)
 
     def SetupPNJ(self):
         """Méthode de création et position des pnj.
@@ -854,8 +876,13 @@ class LoadMapGestion():
                         CollisionSprites(pos, self.volcan, "VolcanStruc", (self.allSprites, self.collisionSprites), layer=1)
                     case "VolcanDoor" : 
                         CollisionSprites(pos, self.DoorVolcan, "DoorVolcan", (self.allSprites, self.collisionSprites, self.interactions), layer=2)
-                    
-
+                    case "DoorEntree":
+                        CollisionSprites(pos, self.DoorVolcanEntre, "DoorVolcanEntree", (self.allSprites, self.collisionSprites), layer = 2)
+                    case "Portal":
+                        path = join("Image", "Obstacle", "Portal")
+                        AnimatedSprites(pos, (self.allSprites, ), "Portal", path, layer=2) # ( , ) pour pouvoir parcourir l'element
+                    case "BCG":
+                        Sprites(pos, self.bcgDemiNiveauVolcan, "BCGVolcanDemiNiveau", self.allSprites, layer=0)
 
 
     def AddPont(self, element, coords, Interaction = True):

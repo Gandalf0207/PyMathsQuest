@@ -129,9 +129,14 @@ class CollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(-30,-30)
             case "DoorVolcan":
                 self.hitbox = self.rect.inflate(0,-60)
+            case "DoorVolcanEntree":
+                self.hitbox = self.rect.inflate(-50,-60)
+            case "Lave":
+                self.hitbox = self.rect.inflate(0, -20)
+                
 
             case _:  # par défaut
-                self.hitbox = self.rect.inflate(-70,-140)
+                self.hitbox = self.rect.inflate(0,0)
 
         if typeCollision[:4] == "Wall":
             if typeCollision == "WallWEHaut":

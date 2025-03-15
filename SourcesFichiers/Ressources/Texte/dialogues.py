@@ -204,6 +204,7 @@ DialoguesFr = {
                 "Dialogue1": "De l’humain tout frais, ça fait si longtemps que nous nous contentons de poissons fort peu goûtus. Comment ça ?",
                 "Dialogue1": "Ça s'est juste trompé de chemin et ça ne veut pas être mangé. Oh non ! Peut-être la prochaine fois mon trésor.",
             },
+        },
         "PNJ5": {
             "Nom" : "Roi",
             "Principal": {
@@ -217,8 +218,7 @@ DialoguesFr = {
                 },
             },
         },
-    },
-}
+    }
 
 
 

@@ -21,10 +21,10 @@ class PNJOBJ(pygame.sprite.Sprite):
         try:
             self.image = pygame.image.load(join("Image","NPC", NIVEAU["Map"], numpnj,"down", "0.png")).convert_alpha() # première image 
             self.rect = self.image.get_frect(center = pos)
+            self.hitbox = self.rect.inflate(-60,-20) # collision
         except:
             INFOS["ErrorLoadElement"] = True
 
-        self.hitbox = self.rect.inflate(-60,-20) # collision
 
         # Centrer la hitbox par rapport à l'image
         self.hitbox.center = self.rect.center
@@ -302,6 +302,10 @@ class GestionPNJ(object):
             
         # pas de pnj à proximité
         return False
+    
+    def OpenInterfacePass(self):
+        self.gameInterfaces.GestionInterfaceSpecifique("PNJOpen", self)
+
         
  
     

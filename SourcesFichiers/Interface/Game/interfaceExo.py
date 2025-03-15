@@ -92,15 +92,29 @@ class CreateExo:
         line_height = FONT["FONT22"].size("Tg")[1]  # Hauteur d'une ligne
         for i, line in enumerate(wrapped_lines):
             line_surface = FONT["FONT22"].render(line, True, (0,0,0))
-            self.hauteurAct += i*line_height
             self.interfaceExoSurface.blit(line_surface, (20, self.hauteurAct))
+            self.hauteurAct += line_height
         
 
         # équation affichage
         if NIVEAU["Niveau"] == "Seconde": # appel de la bonne méthode
             if NIVEAU["Map"] in ["NiveauPlaineRiviere", "NiveauMordor"]:
-                self.hauteurAct += 120
-                self.interfaceExoSurface.blit(self.latexSurface, (self.latexSurface.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct))))
+                if not INFOS["DemiNiveau"]:
+                    self.hauteurAct += 120
+                    self.interfaceExoSurface.blit(self.latexSurface, (self.latexSurface.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct))))
+                else:
+                    self.hauteurAct += 20
+                    textInfo = f"a : {self.infosBuild[0][2][4]} ; b :{self.infosBuild[0][2][5]} ; A : {self.infosBuild[0][2][0]}; B : {self.infosBuild[0][2][1]}, C : {self.infosBuild[0][2][2]} , D : {self.infosBuild[0][2][3]}"
+                    text = FONT["FONT20"].render(textInfo, True, (0,0,0))
+                    self.interfaceExoSurface.blit(text, (20, self.hauteurAct))
+
+                    self.hauteurAct += 100
+                    try :
+                        self.exoBoss1Image = pygame.image.load(join("Image", "Exo", "ExoBoss1.png")).convert_alpha()
+                        self.interfaceExoSurface.blit(self.exoBoss1Image, self.exoBoss1Image.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
+                    except:
+                        INFOS["ErrorLoadElement"] = True
+
 
             elif NIVEAU["Map"] == "NiveauMedievale":
                 if not INFOS["Difficulte"]: # facile
@@ -190,7 +204,7 @@ class CreateExo:
         self.infosBuild = self.ObjExoChoix.Choix()
         # surface latex -> avec eqt
         if NIVEAU["Niveau"] == "Seconde":
-            if NIVEAU["Map"] in ["NiveauPlaineRiviere", "NiveauMordor"]:
+            if (NIVEAU["Map"] == "NiveauPlaineRiviere") or ( NIVEAU["Map"] == "NiveauMordor" and not INFOS["DemiNiveau"]):
                 self.latexSurface = self.ObjRender.GetElement(self.infosBuild[0]) # on donne l'eqt
             
 
@@ -203,15 +217,18 @@ class CreateExo:
     def Win(self) -> None:
         """Méthode d'action si la réponse est juste
         Input / Output : None"""
+        if not NIVEAU["Map"] == "NiveauMordor" or not INFOS["DemiNiveau"]:
+            INFOS["ExoPasse"] = True
+        else:
+            INFOS["CinematiqueEndAct"] = True
+            INFOS["ExoPasse"] = False
 
-        INFOS["ExoPasse"] = True
 
     def Loose(self) -> None:
         """Méthode d'action si la réponse est FAUSE
         Input / Output : None"""
 
         INFOS["ExoPasse"] = False
-
 
     def Update(self, event : any) -> None:
         """Méthode d'update général pour l'exercice interface, et de gestion de réponse (clic)

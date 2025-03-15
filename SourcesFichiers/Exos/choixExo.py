@@ -288,7 +288,6 @@ class GetExo:
 
         self.listeConstruction = [(graph_surface, points), resultat, resultat2, resultat3]
 
-
     def ExoNv3(self) -> None:
         """Méthode de création de l'exo 4 : deux niveaux de difficulté
         Input / Output : None"""
@@ -356,9 +355,94 @@ class GetExo:
             resultat3 = f"x = {x*3} ; y = {self.nb2+y}"
             self.listeConstruction = [eqt, resultat, resultat2, resultat3]
 
+    def ExoBoss1(self):
+              #fonction de lancement / relancement si les calculs ne sont pas aux normes attendues
+        def reload_function():
+            XI = 0.0001 # Set des valeurs initiales pour pouvoir rentrer dans la boucle
+            YI = 0.0001
+            while XI != round(XI,1) or XI != round(XI, 2) or XI != round(XI, 3) or YI != round(YI,1) or YI != round(YI, 2) or YI != round(YI, 3): # Conditon : pas plus de 1 o 2 chiffres après la virgules
+
+                # Calcul coef dirrecteur de l'équation réduite sous la forme mx + p
+                m1 = 0.01 # Set valeur initiale pour rentrer dans la boucle
+                while m1 != round(m1,1):
+                    XA = random.randint(-10,10) # Création de valeurs aléatoires
+                    XB = random.randint(-10,10)
+                    YA = random.randint(-10,10)
+                    YB = random.randint(-10,10)
+
+                    A = (XA, YA) 
+                    B = (XB, YB) 
+
+                    if (XA != 0 and XB != 0 and YA != 0 and YB != 0 ) and (XB != XA and YB != YA):
+                        m1 = (B[1]- A[1]) / (B[0] - A[0])
+                    p1 = A[1] - (m1*A[0]) 
+
+                # Calcul coef dirrecteur de l'équation réduite sous la forme mx + p
+                m2 = 0.01 # Set valeur initiale pour rentrer dans la boucle
+                while m2 != round(m2,1):
+
+                    XC = random.randint(-10,10) # Création de valeurs aléatoires
+                    XD = random.randint(-10,10)
+                    YC = random.randint(-10,10)
+                    YD = random.randint(-10,10)
+
+                    C = (XC, YC)
+                    D = (XD, YD)
+
+                    if (XC != 0 and XD != 0 and YC != 0 and YD != 0)  and (XD != XC and YD != YC):
+                        m2 = (D[1]- C[1]) / (D[0] - C[0])
+                    p2 = C[1] - (m2*C[0]) 
 
 
+                if m1 != m2: # Calcul des coordonnées du point d'intersection
+                    nbx = m1 - m2
+                    nb = -p1 + p2
+                    XI = nb/nbx
+                    YI = m1*XI + p1
 
+
+            norme_AI = sqrt((XI - XA)**2 + (YI - YA)**2) # Calculs des longueurs des [AI] et [CI]
+            norme_CI = sqrt((XI - XC)**2 + (YI - YC)**2)
+
+            # Création de la permière partie des résultats en fonction des valeurs de calculs
+            if norme_AI == norme_CI:
+                intersection = False
+            else:
+                intersection = True
+
+
+            # Bout de script pour le calcul du volumes des barrils
+            largeur_barril = random.randint(25,80)
+            longeur_barril = random.randint(55,140)
+
+            while longeur_barril < largeur_barril:
+                largeur_barril = random.randint(25,80)
+                longeur_barril = random.randint(55,140)
+            
+            base = pi*(largeur_barril/2)**2
+            volume = base*longeur_barril
+            #conversion en litre, car les données sont en cm
+            volume_L = volume/1000
+            volume_L = volume_L*85
+            volume_L = round(volume_L,2)
+
+            return (intersection,volume_L,[A, B, C, D, longeur_barril, largeur_barril]) # On retourne s'il y a intersection, le volume en litre, les coordonnées de points et les dimensions des barils, qui serviront à l'utilisateurs pour faire ses calculs
+
+        valeur = reload_function() # Chargement de la fonction principal 
+
+        if valeur[0]:
+            resultat = f"Les deux bateaux vont s'entrechoquer !, Volume total transporté est de {valeur[1]} L d'huile d'olive"
+            resultat2 = f"Les deux bateaux ne vont pas s'entrechoquer !, Volume total transporté est de {round(sqrt(valeur[1]), 1)}"
+            resultat3 = f"Les deux bateaux vont s'entrechoquer !, Volume total transporté est de {valeur[1]*1000}"
+        else:
+            resultat = f"Les deux bateaux ne vont pas s'entrechoquer !, Volume total transporté est de {valeur[1]}"
+            resultat2 = f"Les deux bateaux vont s'entrechoquer !, Volume total transporté est de {valeur[1]*1000} L d'huile d'olive"
+            resultat3 = f"Les deux bateaux ne vont pas s'entrechoquer !, Volume total transporté est de {round(sqrt(valeur[1]), 1)}"
+    
+
+        self.listeConstruction = [valeur, resultat, resultat2, resultat3]
+
+    
     def ExoNv4(self) -> None:
         """Méthode de création de l'exo 5 : deux niveaux de difficulté
         Input / Output : None"""
@@ -432,7 +516,10 @@ class GetExo:
             elif NIVEAU["Map"] == "NiveauBaseFuturiste":
                 self.ExoNv2()
             elif NIVEAU["Map"] == "NiveauMordor":
-                self.ExoNv3()
+                if not INFOS["DemiNiveau"]:
+                    self.ExoNv3()
+                else:
+                    self.ExoBoss1()
                 while self.ErrorGeneration:
                     self.CreateValues()
                     self.ExoNv3()

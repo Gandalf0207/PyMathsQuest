@@ -231,4 +231,72 @@ class NiveauMordor(GestionNiveauMap):
         
         # Retourne la carte actuelle (map) et la carte de base (baseMap)
         return self.map, self.baseMap, self.ERROR_RELANCER  
+    
+
+class NiveauMordorVolcan(GestionNiveauMap):
+    def __init__(self):
+        super().__init__(15, 9)
+
+    def PlacementMap(self):
+            self.map = [
+                ["W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W"],
+                ["W", "-", "-", "-", "-", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "W"],
+                ["W", "-", "-", "-", "-", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "W"],
+                ["W", "-", "-", "-", "-", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "W"],
+                ["V", "-", "-", "-", "-", "-", "-", "-", "-", "-", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "W"],
+                ["W", "-", "-", "-", "-", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "w"],
+                ["W", "-", "-", "-", "-", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "w"],
+                ["W", "-", "-", "-", "-", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "Z", "w"],
+                ["W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W"],
+                
+            ]
+
+            self.baseMap = [
+                ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+                ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+                ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+                ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+                ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+                ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+                ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+                ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+                ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ] # oui il y a des différences
+
+
+    def PlacementSpawn(self):
+        self.coordsSpawn = [1, 4]
+        self.map[self.coordsSpawn[1]][self.coordsSpawn[0]] = "S"
+        AjoutJsonMapValue(self.coordsSpawn, "coordsMapObject", "Spawn")
+
+    def PlacementPNJ(self):
+        coordsPNJ6 = [8, 4, "P", 5]
+        self.allCoordsPNJ = [coordsPNJ6]
+        for coords in self.allCoordsPNJ:
+            self.map[coords[1]][coords[0]] = "P"
+        AjoutJsonMapValue(self.allCoordsPNJ, "coordsMapObject", "PNJ Coords")
+    
+    def PlacementObjSpecifique(self):
+        self.coordsDoorEntree = [0, 4, "NiveauMordor", "DoorEntree"]
+        self.coordsPortal = [11, 4, "NiveauMordor", "Portal"]
+        self.coordsBCGMap = [0,0, "NiveauMordor", "BCG"]
+
+        allObjSpecifique = [self.coordsBCGMap, self.coordsDoorEntree, self.coordsPortal]
+        AjoutJsonMapValue(allObjSpecifique, "coordsMapObject", "ObjAPlacer")
+
+
+    def Update(self):
+
+        self.PlacementMap()
+        self.PlacementSpawn()
+        self.PlacementPNJ()
+        self.PlacementObjSpecifique()
+        self.SaveGlobal()
+
+        # relancer une nouvelle map
+        if self.ERROR_RELANCER:
+            return None, None, self.ERROR_RELANCER
+        
+        # Retourne la carte actuelle (map) et la carte de base (baseMap)
+        return self.map, self.baseMap, self.ERROR_RELANCER  
 

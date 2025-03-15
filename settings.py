@@ -166,7 +166,7 @@ NIVEAU = {
     "All" : False, 
 
     # map
-    "Map" : "NiveauPlaineRiviere",
+    "Map" : "NiveauMordor",
 }
 # box infos globales
 INFOS = {
@@ -176,13 +176,14 @@ INFOS = {
     "CrashGame" : False,
     "ErrorLoadElement": False,
     "UpdateFont" : False,
+    "CinematiqueEndAct" : False,
     
     "Difficulte" : False,
     
     "Exo" : False, 
     "ExoPasse" : False,
     
-    "DemiNiveau" : False,
+    "DemiNiveau" : True,
     "ChangementNiveau" : False,
     
     "HideHotBar" : False,

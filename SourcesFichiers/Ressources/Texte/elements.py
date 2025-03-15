@@ -303,15 +303,15 @@ ElementsFr = {
         "ExoTexte" : {
             "Seconde" :{
 
-                    "Title" : "Calculs de Volumes",
+                    "Title" : "Exo boss seconde",
 
                     "DifficulteTrue" : {
-                        "Consigne" : "Vous devez résoudre ce système à 2 inconnues en trouvant la valeur de x et y.",
+                        "Consigne" : "Un voilier se trouve dans le port de Sète et avant de partir un client veut connaître le volume d’huile que le navire peut transporter sachant qu’il possède une cargaison de 85 tonneaux de longueur 'a' et de largeur 'b' (nous affirmons que les tonneaux utilisés ont des côtés totalement droit et non arrondis. Après cela le bateau prend le large et reçoit des informations sur un autre bateau naviguant à la même vitesse, déterminer si les 2 bateaux se croiseront. De plus le bateau b1 est actuellement au point A et navigue selon la direction (AB). De même le bateau b2 est actuellement au point C et navigue selon la direction (CD). Coordonnées :",
                         "QCM" : "Choisissez l'unique bonne réponse",
                     },
 
                     "DifficulteFalse" : {
-                        "Consigne" : "Vous devez résoudre ce système à 2 inconnues en trouvant la valeur de x et y.",
+                        "Consigne" : "Un voilier se trouve dans le port de Sète et avant de partir un client veut connaître le volume d’huile que le navire peut transporter sachant qu’il possède une cargaison de 85 tonneaux de longueur 'a' et de largeur 'b' (nous affirmons que les tonneaux utilisés ont des côtés totalement droit et non arrondis. Après cela le bateau prend le large et reçoit des informations sur un autre bateau naviguant à la même vitesse, déterminer si les 2 bateaux se croiseront. De plus le bateau b1 est actuellement au point A et navigue selon la direction (AB). De même le bateau b2 est actuellement au point C et navigue selon la direction (CD). Coordonnées :",
                         "QCM" : "Choisissez l'unique bonne réponse",
                     },
 
