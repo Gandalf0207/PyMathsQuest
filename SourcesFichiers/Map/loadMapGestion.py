@@ -402,6 +402,11 @@ class LoadMapGestion():
                         riverPath = join("Image","Obstacle","Riviere","RiverMontainConflictx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
 
+                    # cross    
+                    elif can_build_down and can_build_left and can_build_right and can_build_up:
+                        riverPath = join("Image", "Obstacle", "Riviere", "RiverStraighE-WN-Sx128")
+                        AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
+
                     # Tshape
                     elif can_build_right and can_build_left and can_build_up:
                         riverPath = join("Image","Obstacle","Riviere","RiverTWN-Ex128")
