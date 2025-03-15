@@ -49,7 +49,11 @@ class CreditsInterfaceGame():
         # cross close interface
         if event.type == pygame.MOUSEMOTION:
             # cross close interface
+            check = False
             self.isCrossCloseHover = self.rectCloseCross.collidepoint(event.pos)
+            if self.isCrossCloseHover:
+                check = True
+            INFOS["Hover"] = check   
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.rectCloseCross.collidepoint(event.pos):

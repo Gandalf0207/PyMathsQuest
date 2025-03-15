@@ -249,5 +249,9 @@ class CreateExo:
             if local_pos:
                 # cross close interface
                 if event.type == pygame.MOUSEMOTION:
+                    check = False
                     self.isCrossCloseHover = self.rectCloseCross.collidepoint(local_pos)
 
+                    if self.isCrossCloseHover:
+                        check = True
+                    INFOS["Hover"] = check   

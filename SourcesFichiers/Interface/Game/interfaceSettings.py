@@ -200,7 +200,7 @@ class SettingsInterface(object):
     def ChangeLangue(self, action):
         """Méthode de changement de langue dans les fichier du jeu.
         Input / Output : None"""
-
+        
         for keyLangue in DICOLANGUE:
             DICOLANGUE[keyLangue] = False if keyLangue != action else True
         LoadTexte() # load nouveau texte (changement de langue)
@@ -252,6 +252,7 @@ class SettingsInterface(object):
                         if not INFOS["RebindingKey"]:  # Si on n'est PAS en mode rebind
                             for action, rect in self.button_positions.items():
                                 if rect.collidepoint(local_pos):
+                                    INFOS["Hover"] = False
                                     INFOS["RebindingKey"] = action  # Déclencher le mode rebind
 
                         if not INFOS["RebindingKey"]:  # Si on n'est PAS en mode rebind
@@ -270,4 +271,20 @@ class SettingsInterface(object):
                 # cross close interface
                 if event.type == pygame.MOUSEMOTION and not INFOS["RebindingKey"]:
                     # cross close interface
+                    check = False
                     self.isCrossCloseHover = self.rectCloseCross.collidepoint(local_pos)
+                    if self.isCrossCloseHover:
+                        check = True
+                    for action, rectButtonLangue in self.buttonsLangue.items():  # Parcourt le dictionnaire
+                        if rectButtonLangue.collidepoint(local_pos):
+                            check = True
+
+                    for action, rect in self.button_positions.items():
+                        if rect.collidepoint(local_pos):
+                            check = True
+
+                    for action, rect in self.buttonsPoliceEcriture.items():
+                        if rect.collidepoint(local_pos):
+                            check = True
+                    
+                    INFOS["Hover"] = check   

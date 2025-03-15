@@ -133,7 +133,11 @@ class BundleInterface(object):
             if local_pos:
                 if event.type == pygame.MOUSEMOTION:
                     # cross close interface
+                    check = False
                     self.isCrossCloseHover = self.rectCloseCross.collidepoint(local_pos)
+                    if self.isCrossCloseHover:
+                        check = True
+                    INFOS["Hover"] = check   
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.rectCloseCross.collidepoint(local_pos):

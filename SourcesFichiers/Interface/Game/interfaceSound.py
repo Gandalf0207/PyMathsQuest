@@ -114,4 +114,8 @@ class SoundInterface(object):
             local_pos = GetLocalPos(event, self.interfaceSurface, (320, 180))
             if local_pos:
                 # cross close interface
+                check = False
                 self.isCrossCloseHover = self.rectCloseCross.collidepoint(local_pos)
+                if self.isCrossCloseHover:
+                    check = True
+                INFOS["Hover"] = check   
