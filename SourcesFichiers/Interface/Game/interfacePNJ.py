@@ -116,7 +116,11 @@ class PNJInterface(object):
 
                     elif self.gestionnaire.pnjActuel == "PNJ3":
                         PNJ["PNJ3"] = True
-                        STATE_HELP_INFOS[0] = "SeePNJSalleLancement"
+                        
+                        if PNJ["PNJ4"]:
+                            STATE_HELP_INFOS[0] = "SeePNJ4"
+                        else:
+                            STATE_HELP_INFOS[0] = "SeePNJ3"
 
                         # tp pnj 
                         self.gestionnaire.gestionnaire.fondu_au_noir()
@@ -132,15 +136,15 @@ class PNJInterface(object):
                     elif self.gestionnaire.pnjActuel == "PNJ4":
                         PNJ["PNJ4"] = True
                         if PNJ["PNJ3"]:
-                            STATE_HELP_INFOS[0] = "SeePNJSalleLancement"
+                            STATE_HELP_INFOS[0] = "SeePNJ4"
                         else:
-                            STATE_HELP_INFOS[0] = "SeePNJ"    
+                            STATE_HELP_INFOS[0] = "SeePNJ3"    
 
 
                     elif self.gestionnaire.pnjActuel == "PNJ5":
                         PNJ["PNJ5"] = True
                         INFOS["DemiNiveau"] = True      
-                        STATE_HELP_INFOS[0] = "SeePNJ"    
+                        STATE_HELP_INFOS[0] = "SeePNJ5"    
 
                     elif self.gestionnaire.pnjActuel == "PNJ6":
                             PNJ["PNJ6"] = True
@@ -194,6 +198,8 @@ class PNJInterface(object):
                                 PNJOBJ(pos, "PNJ7", (self.gestionnaire.allPNJ, self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites) )
 
                             self.gestionnaire.gestionnaire.ouverture_du_noir(self.gestionnaire.gestionnaire.player.rect.center)
+                            STATE_HELP_INFOS[0] = "SeePNJ6"
+                            
 
                     elif self.gestionnaire.pnjActuel == "PNJ7":
                         PNJ["PNJ7"] = True
@@ -218,7 +224,7 @@ class PNJInterface(object):
                     
                     if self.gestionnaire.pnjActuel == "PNJ2":
                         PNJ["PNJ2"] = True
-                        STATE_HELP_INFOS[0] = "SeePNJ" # update tips player
+                        STATE_HELP_INFOS[0] = "SeePNJ2avant" # update tips player
 
                         self.gestionnaire.FollowBuild() # préparation au follow du pnj
 

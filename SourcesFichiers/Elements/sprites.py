@@ -90,11 +90,11 @@ class CollisionSprites(pygame.sprite.Sprite):
             case "CerclePortal":
                 self.hitbox = self.rect.inflate(-128,-128)
             case "DoorMuraille":
-                self.hitbox = self.rect.inflate(0, -30)
+                self.hitbox = self.rect.inflate(0, -60)
             case "DoorChateau":
-                self.hitbox = self.rect.inflate(0, -30)
+                self.hitbox = self.rect.inflate(0, -60)
             case "DoorChateauInterieur":
-                self.hitbox = self.rect.inflate(0, -30)
+                self.hitbox = self.rect.inflate(0, -60)
             case "ReactorBloc":
                 self.hitbox = self.rect.inflate(-128,-128)
             case "StructureCafet":
@@ -104,7 +104,7 @@ class CollisionSprites(pygame.sprite.Sprite):
             case "StructureLancement":
                 self.hitbox = self.rect.inflate(0,0)
             case "DoorFuturisteClose":
-                self.hitbox = self.rect.inflate(0, -30)
+                self.hitbox = self.rect.inflate(0, -60)
             case "Siege":
                 self.hitbox = self.rect.inflate(-40,-40)
             case "Vitre":
@@ -114,21 +114,21 @@ class CollisionSprites(pygame.sprite.Sprite):
             case "ControlPanel": 
                 self.hitbox = self.rect.inflate(0,0)
             case "DoorFuturisteVaisseau":
-                self.hitbox = self.rect.inflate(0,-30)
+                self.hitbox = self.rect.inflate(0,-60)
             case "CrashVaisseau":
                 self.hitbox = self.rect.inflate(-30,-30)
             case "Pot":
                 self.hitbox = self.rect.inflate(-10,-10)
             case "DoorCellule":
-                self.hitbox = self.rect.inflate(0,-30)
+                self.hitbox = self.rect.inflate(0,-60)
             case "DoorPrison":
-                self.hitbox = self.rect.inflate(0,-30)
+                self.hitbox = self.rect.inflate(0,-60)
             case "Barreaux":
                 self.hitbox = self.rect.inflate(0,0)
             case "VolcanStruc":
                 self.hitbox = self.rect.inflate(-30,-30)
             case "DoorVolcan":
-                self.hitbox = self.rect.inflate(0,-30)
+                self.hitbox = self.rect.inflate(0,-60)
 
             case _:  # par défaut
                 self.hitbox = self.rect.inflate(-70,-140)

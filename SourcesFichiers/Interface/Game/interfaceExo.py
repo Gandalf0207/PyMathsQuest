@@ -98,36 +98,43 @@ class CreateExo:
 
         # équation affichage
         if NIVEAU["Niveau"] == "Seconde": # appel de la bonne méthode
-            if NIVEAU["Map"] == "NiveauPlaineRiviere":
-                    self.hauteurAct += 20
-                    self.interfaceExoSurface.blit(self.latexSurface, (10, self.hauteurAct))
+            if NIVEAU["Map"] in ["NiveauPlaineRiviere", "NiveauMordor"]:
+                self.hauteurAct += 120
+                self.interfaceExoSurface.blit(self.latexSurface, (self.latexSurface.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct))))
 
             elif NIVEAU["Map"] == "NiveauMedievale":
-                    if not INFOS["Difficulte"]: # facile
-                        self.hauteurAct += 20
-                        textInfo = f"c : {self.infosBuild[0][0]} ; r :{self.infosBuild[0][1]} ; h : {self.infosBuild[0][2]}; d : {self.infosBuild[0][3]}"
-                        text = FONT["FONT20"].render(textInfo, True, (0,0,0))
-                        self.interfaceExoSurface.blit(text, (20, self.hauteurAct))
+                if not INFOS["Difficulte"]: # facile
+                    self.hauteurAct += 20
+                    textInfo = f"c : {self.infosBuild[0][0]} ; r :{self.infosBuild[0][1]} ; h : {self.infosBuild[0][2]}; d : {self.infosBuild[0][3]}"
+                    text = FONT["FONT20"].render(textInfo, True, (0,0,0))
+                    self.interfaceExoSurface.blit(text, (20, self.hauteurAct))
 
-                        self.hauteurAct += 100
-                        try :
-                            self.volumeSimpleImg = pygame.image.load(join("Image", "Exo", "ExoVolumeSimple.png")).convert_alpha()
-                            self.interfaceExoSurface.blit(self.volumeSimpleImg, self.volumeSimpleImg.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
-                        except:
-                            INFOS["ErrorLoadElement"] = True
-                    else:
-                        self.hauteurAct += 20
-                        textInfo = f"a = {self.infosBuild[0][0]} ; b = {self.infosBuild[0][1]} ; c = {self.infosBuild[0][2]} ; d = {self.infosBuild[0][3]} ; e = {self.infosBuild[0][4]} ; f = {self.infosBuild[0][5]} ; r = {self.infosBuild[0][6]}"
-                        text = FONT["FONT20"].render(textInfo, True, (0,0,0))
-                        self.interfaceExoSurface.blit(text, (20, self.hauteurAct))
+                    self.hauteurAct += 100
+                    try :
+                        self.volumeSimpleImg = pygame.image.load(join("Image", "Exo", "ExoVolumeSimple.png")).convert_alpha()
+                        self.interfaceExoSurface.blit(self.volumeSimpleImg, self.volumeSimpleImg.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
+                    except:
+                        INFOS["ErrorLoadElement"] = True
+                else:
+                    self.hauteurAct += 20
+                    textInfo = f"a = {self.infosBuild[0][0]} ; b = {self.infosBuild[0][1]} ; c = {self.infosBuild[0][2]} ; d = {self.infosBuild[0][3]} ; e = {self.infosBuild[0][4]} ; f = {self.infosBuild[0][5]} ; r = {self.infosBuild[0][6]}"
+                    text = FONT["FONT20"].render(textInfo, True, (0,0,0))
+                    self.interfaceExoSurface.blit(text, (20, self.hauteurAct))
 
-                        self.hauteurAct += 100 
-                        try :
-                            self.volumeDifficileImg = pygame.image.load(join("Image", "Exo", "ExoVolumeDifficile.png")).convert_alpha()
-                            self.interfaceExoSurface.blit(self.volumeDifficileImg, self.volumeDifficileImg.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
-                        except:
-                            INFOS["ErrorLoadElement"] = True    
+                    self.hauteurAct += 100 
+                    try :
+                        self.volumeDifficileImg = pygame.image.load(join("Image", "Exo", "ExoVolumeDifficile.png")).convert_alpha()
+                        self.interfaceExoSurface.blit(self.volumeDifficileImg, self.volumeDifficileImg.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
+                    except:
+                        INFOS["ErrorLoadElement"] = True    
+            elif NIVEAU["Map"] == "NiveauBaseFuturiste":
+                self.hauteurAct += 20
+                textInfo = f"A : {self.infosBuild[0][1][0]} ; B :{self.infosBuild[0][1][1]} ; C : {self.infosBuild[0][1][2]}; D : {self.infosBuild[0][1][3]}"
+                text = FONT["FONT20"].render(textInfo, True, (0,0,0))
+                self.interfaceExoSurface.blit(text, (20, self.hauteurAct))
+                self.hauteurAct += 150
 
+                self.interfaceExoSurface.blit(self.infosBuild[0][0], self.infosBuild[0][0].get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
 
 
         # réponse titre
@@ -182,7 +189,10 @@ class CreateExo:
         # création exo -> liste de construction
         self.infosBuild = self.ObjExoChoix.Choix()
         # surface latex -> avec eqt
-        self.latexSurface = self.ObjRender.GetElement(self.infosBuild[0]) # on donne l'eqt
+        if NIVEAU["Niveau"] == "Seconde":
+            if NIVEAU["Map"] in ["NiveauPlaineRiviere", "NiveauMordor"]:
+                self.latexSurface = self.ObjRender.GetElement(self.infosBuild[0]) # on donne l'eqt
+            
 
         # réponse element placés aléatoirement
         self.bonneReponsePlace= randint(0,2)

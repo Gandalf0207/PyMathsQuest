@@ -81,6 +81,7 @@ class Interactions(object):
 
                     self.Obj.kill() # destrcution rocher
 
+                    STATE_HELP_INFOS[0] = "CrossBridge"
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center) # fin animation
 
 
@@ -246,7 +247,7 @@ class Interactions(object):
                     self.gestionnaire.fondu_au_noir()
 
                     INFOS["DemiNiveau"] = True      
-                    STATE_HELP_INFOS[0] = "SeePNJ"   
+                    STATE_HELP_INFOS[0] = "SeePNJRoi"   
 
                 # interaction cerlce exo map n°2
                 if self.ObjectId == "CerclePortal":
@@ -290,7 +291,7 @@ class Interactions(object):
 
                     if not self.electricityOn:
                         if [allVents[1][0], allVents[1][1]] == coordsVentActuel:
-                            STATE_HELP_INFOS[0] = "SeePNJ"
+                            STATE_HELP_INFOS[0] = "SeePNJ2"
                         else:
                             STATE_HELP_INFOS[0] = "UseVent"
 
@@ -404,7 +405,7 @@ class Interactions(object):
         """Méthode calcul de proximité entre le player et les obj interactions
         Input : None
         Ouput : bool"""
-
+        
         for Object in self.interactionGroup: # parcours all obj 
 
             coordsObj = (Object.pos[0] + CASEMAP // 2, Object.pos[1] + CASEMAP // 2) # top left coords -> center coords

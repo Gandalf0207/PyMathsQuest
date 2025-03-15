@@ -131,40 +131,45 @@ ElementsFr = {
             },
         "IdeaTips": {
             "NiveauPlaineRiviere" : {
-                "SeePNJ" : "Discuter avec le pnj sur la map. Regarder la minimap",
-                "LearnCrossBridge" : "Traverser le pont. Se rapprocher du pont qui se trouve à côté du bûcheron.",
-                "BuildBridge" : "Construire le pont. Se rapprocher de la rivière pour pouvoir construire",
-                "CrossBridge" : "Traverser le pont pour acceder à la suite.",
-                "MineRock" : "Utiliser la pioche pour casser le rocher qui bloque le pont de sortie",
+                "SeePNJ" : "Regardez votre carte et essayez de trouver des informations utiles",
+                "LearnCrossBridge" : "Traversez par le chemin que vous a créé le bucheron",
+                "BuildBridge" : "Utilisez les planches que vous a donné le voyageur pour traverser la rivière",
+                "CrossBridge" : "Traversez le pont",
+                "MineRock" : "Trouvez la sortie, vous aurez besoin de déblayer le chemin",
             },
 
            "NiveauMedievale" : {
-                "SeePNJ" : "Discuter avec le pnj sur la map. Regarder la minimap et suivez le chemin !",
-                "BuildBridge" : "Construire le pont. Se rapprocher de la rivière en suivant le chemin pour pouvoir construire",
-                "CrossBridge" : "Traverser le pont pour acceder à la suite.",
-                "FindWell" : "Trouver le puits au centre du village et frabriquer un bateau.",
-                "PlaceBoat" : "Vous devez placer le bateau dans la rivière.",
-                "NavigateBoat" : "Vous devez rentrer dans le bateau pour pouvoir acceder au chateau.",
-                "OpenDoor" : "Vous devez ouvrir le chateau pour acceder à la suite.",
-                "OpenPortail" : "Vous devez réouvrir le portail",
+                "SeePNJ" : "Regardez votre carte et essayez de trouver des informations utiles",
+                "SeePNJRoi" : "Parlez au roi", 
+                "BuildBridge" : "Récoltez du bois et frayez vous un chemin vers le village",
+                "CrossBridge" : "Traversez le pont",
+                "FindWell" : "Le garde ne vous laissera pas passer, vous pouvez le contourner en construisant un radeau à l'établi près du puit",
+                "PlaceBoat" : "Allez à la rivière pour positionner votre radeau",
+                "NavigateBoat" : "Utilisez votre radeau pour passer la muraille",
+                "OpenDoor" : "Rentrez dans le château",
+                "OpenPortail" : "Utilisez le cercle d'invocation à l'emplacement du portail pour pouvoir le rouvrir",
             },
 
             "NiveauBaseFuturiste" : {
-                "SeePNJ" : "Discuter avec le pnj sur la map. Regarder la minimap et suivez le chemin !",
-                "Electricity" : "Vous devez activer l'électricité",
-                "UseVent" : "Vous devez utiliser les conduits d'aération", 
-                "EscapeVaisseau": "Vous devez vous échaper du vaisseau par la porte arrière.",
-                "SeePNJSalleLancement" : "Rejoignez le pilote dans la salle de lancement",
+                "SeePNJ" : "Parlez à Michael à l'entrée de la base",
+                "SeePNJ2" : "Trouvez quelqu'un de compétent pour rallumer le réacteur",
+                "SeePNJ3" : "Maintenant que toute la base est accessible trouvez un moyen de quitter cet endroit : \n   Trouvez un pilote \n    Trouvez un vaisseau avec du carburant",
+                "SeePNJ4" : "Retrouvez Han dans la salle de lancement et préparez vous à décoller",
+                "SeePNJ5" : "Parlez à Han pour lui dire où vous souhaitez vous rendre",
+                "SeePNJ6" : "Allez voir si Han va bien",
+                "Electricity" : "Allez au panneau de contrôle du réacteur et rallumez le",
+                "UseVent" : "Il parait qu'il y a un conduit d'aération permettant d'accéder à la salle du réacteur", 
+                "EscapeVaisseau": "Han est assommé allez faire un tour pour voir si vous trouvez un moyen de repartir",
             },
 
             "NiveauMordor" : {
-                "SeePNJ" : "Discuter avec le pnj sur la map. Regarder la minimap et suivez le chemin !",
-                "CrossBridge" : "Vous devez traverser le pont pour acceder à la suite",
-                "PotParchemin" : "Vous pouvez ouvrir le pot et récupérer le parchemin pour trouver les clés",
-                "OpenDoorCellule" : "Vous devez ouvrir la porte pour rejoindre l'autre prisonnier",
-                "SeePNJ2avant" : "Vous devez d'abord demander de l'aide à votre ami, ouvrir la 2 cellule ",
+                "SeePNJ" : "Regardez votre carte et essayez de trouver des informations utiles",
+                "CrossBridge" : "Continuez votre route vers l'Est",
+                "PotParchemin" : "Fouillez votre cellule pour trouver tout ce qui pourrait vous permettre de vous échapper",
+                "OpenDoorCellule" : "Trouvez un moyen de vous échapper de cette prison",
+                "SeePNJ2avant" : "Libérez l'autre prisonnier et confrontez l'orc",
                 "OpenDoorPrison" : "Vous devez ouvrir la porte du chateau pour poursuivre l'aventure",
-                "OpenVolcan" : "Vous devez entrer dans le volcan pour pour acceder à la suite",
+                "OpenVolcan" : "Allez retrouver le roi dans le volcan",
             },
         },
     },
@@ -182,12 +187,12 @@ ElementsFr = {
 
                     "DifficulteTrue" : {
                         "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",
-                        "QCM" : "Choisissez l'unique et bonne réponse",
+                        "QCM" : "Choisissez l'unique bonne réponse",
                     },
 
                     "DifficulteFalse" : {
                         "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",
-                        "QCM" : "Choisissez l'unique et bonne réponse",
+                        "QCM" : "Choisissez l'unique bonne réponse",
                     },
 
                 },         
@@ -226,12 +231,12 @@ ElementsFr = {
 
                     "DifficulteTrue" : {
                         "Consigne" : " A l'aide des valeurs données, veuillez calculer le volume total de la figure représentée ci-dessous.:",
-                        "QCM" : "Choisissez l'unique et bonne réponse",
+                        "QCM" : "Choisissez l'unique bonne réponse",
                     },
 
                     "DifficulteFalse" : {
                         "Consigne" : "A l'aide des valeurs données, veuillez calculer le volume demandé du cube de côté c, de la sphère de rayon r et du cone de hauter h et de diametre de base d:",
-                        "QCM" : "Choisissez l'unique et bonne réponse",
+                        "QCM" : "Choisissez l'unique bonne réponse",
                     },
 
                 },         
@@ -257,16 +262,16 @@ ElementsFr = {
         "ExplosionReacteur" : "Vous avez envoyé trop de puissance dans le réacteur provoquant son explosion.",
         "ExoTexte" : {
             "Seconde" :{
-                    "Title" : "Calculs de Volumes",
+                    "Title" : "Equation réduites de droites",
 
                     "DifficulteTrue" : {
-                        "Consigne" : " A l'aide des valeurs données, veuillez calculer le volume total de la figure représentée ci-dessous.:",
-                        "QCM" : "Choisissez l'unique et bonne réponse",
+                        "Consigne" : "A l'aide des coordonnées, déterminez l'équation réduite de (AB) et (CD). Voici les coordonnées des points :",
+                        "QCM" : "Choisissez l'unique bonne réponse",
                     },
 
                     "DifficulteFalse" : {
-                        "Consigne" : "A l'aide des valeurs données, veuillez calculer le volume demandé du cube de côté c, de la sphère de rayon r et du cone de hauter h et de diametre de base d:",
-                        "QCM" : "Choisissez l'unique et bonne réponse",
+                        "Consigne" : "A l'aide des coordonnées, déterminez l'équation réduite de (AB) et (CD). Voici les coordonnées des points :",
+                        "QCM" : "Choisissez l'unique bonne réponse",
                     },
 
                 },         
@@ -301,13 +306,13 @@ ElementsFr = {
                     "Title" : "Calculs de Volumes",
 
                     "DifficulteTrue" : {
-                        "Consigne" : " A l'aide des valeurs données, veuillez calculer le volume total de la figure représentée ci-dessous.:",
-                        "QCM" : "Choisissez l'unique et bonne réponse",
+                        "Consigne" : "Vous devez résoudre ce système à 2 inconnues en trouvant la valeur de x et y.",
+                        "QCM" : "Choisissez l'unique bonne réponse",
                     },
 
                     "DifficulteFalse" : {
-                        "Consigne" : "A l'aide des valeurs données, veuillez calculer le volume demandé du cube de côté c, de la sphère de rayon r et du cone de hauter h et de diametre de base d:",
-                        "QCM" : "Choisissez l'unique et bonne réponse",
+                        "Consigne" : "Vous devez résoudre ce système à 2 inconnues en trouvant la valeur de x et y.",
+                        "QCM" : "Choisissez l'unique bonne réponse",
                     },
 
 

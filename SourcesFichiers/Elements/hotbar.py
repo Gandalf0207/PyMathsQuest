@@ -2,118 +2,72 @@ from settings import *
 
 
 class MiniMap:
-
-    def __init__(self, mapBase : list, mapData : list, screen: any, allInteraction) -> None:
-        """Méthode d'initialisation pour la création de la minimap. 
-        Input : list *2 = map du niveau, screen = (element pygame); Output : None"""
-
-        # Initialisation 
-        self.mapBase = mapBase # sol
-        self.mapData = mapData # obstacle
+    def __init__(self, mapBase: list, mapData: list, screen: any, allInteraction) -> None:
+        """Initialisation de la minimap avec rendu en rectangles de couleur."""
+        self.mapBase = mapBase  # sol
+        self.mapData = mapData  # obstacles
         self.MiniMapSurface = screen
         self.allInteractionGroup = allInteraction
 
-        # Création elements
         self.static_surface = pygame.Surface((LONGUEUR * CELL_SIZE, LARGEUR * CELL_SIZE))
         self.player_position = None
         self.ratioImage = CELL_SIZE / CASEMAP / 2
 
-        self.LoadImagesMiniMap()
-        self.GenerateStaticMiniMap() # minimap de base
-
-
-    def LoadImagesMiniMap(self) -> None:
-        """Méthode de chargement des images pour la minimap. Input / Output : None"""
-        try:
-            self.carre1 = pygame.image.load(join("Image", "MiniMap", "Carre1.png")).convert_alpha()
-            self.carre2 = pygame.image.load(join("Image", "MiniMap", "Carre2.png")).convert_alpha()
-            self.carre3 = pygame.image.load(join("Image", "MiniMap", "Carre3.png")).convert_alpha()
-            self.carre4 = pygame.image.load(join("Image", "MiniMap", "Carre4.png")).convert_alpha()
-            self.carre5 = pygame.image.load(join("Image", "MiniMap", "Carre5.png")).convert_alpha()
-            self.carre6 = pygame.image.load(join("Image", "MiniMap", "Carre6.png")).convert_alpha()
-            self.carre7 = pygame.image.load(join("Image", "MiniMap", "Carre7.png")).convert_alpha()
-            self.carre8 = pygame.image.load(join("Image", "MiniMap", "Carre8.png")).convert_alpha()
-            self.carre10 = pygame.image.load(join("Image", "MiniMap", "Carre10.png")).convert_alpha()
-            self.carre11 = pygame.image.load(join("Image", "MiniMap", "Carre11.png")).convert_alpha()
-            self.carre12 = pygame.image.load(join("Image", "MiniMap", "Carre12.png")).convert_alpha()
-        except:
-            INFOS["ErrorLoadElement"] = True
-
-
-
+        self.GenerateStaticMiniMap()
 
     def GenerateStaticMiniMap(self) -> None:
-        """Méthode : Génère une fois pour toute la minimap 
-        statique avec le terrain et les objets. Input / Output : None"""
+        """Génère la minimap statique avec des rectangles colorés."""
+        colorSol = (34, 177, 76) if NIVEAU["Map"] != "NiveauBaseFuturiste" else (150, 75, 0)  # Herbe (vert clair) 
+        colorSol2 = (131, 150, 136)
+        color_mapping = {
+            "#": (0, 0, 255),  # Rivière (bleu)
+            "B": (100, 100, 100),  # Bordure (gris foncé)
+            "=": (200, 200, 200),  # Chemin (gris clair)
+            "H": (150, 75, 0),  # Maison (marron)
+            "W": (0, 0, 0),  # Puits (noir)
+            "@": (255, 255, 0),  # Champs (jaune)
+            "-": colorSol,
+            1  : colorSol,
+            2  : colorSol,
+            ".": colorSol2, # sol base (gris)
+        }
+        for ordonnee in range(len(self.mapBase)):
+            for abscisse in range(len(self.mapBase[0])):
 
-        for y, row in enumerate(self.mapBase):
-            for x, cell in enumerate(row):
-                pos = (x * CELL_SIZE, y * CELL_SIZE)  # Coordonnées des cellules)
-                if cell == "#": # rivière
-                    self.static_surface.blit(self.carre3, pos)
-                elif cell == "B": # border
-                    self.static_surface.blit(self.carre8, pos)
-                elif cell == "=": # path
-                    self.static_surface.blit(self.carre2, pos)
-                elif cell == "H": # maison
-                    self.static_surface.blit(self.carre4, pos)
-                elif cell == "W": # puits
-                    self.static_surface.blit(self.carre5, pos)
-                elif cell == "@": # champs
-                    self.static_surface.blit(self.carre6, pos)
-                elif cell == "&":
-                    self.static_surface.blit(self.carre12, pos)
-                elif NIVEAU["Map"] == "NiveauBaseFuturiste" and cell in ["-" , "G"]:
-                    self.static_surface.blit(self.carre8, pos)
-                elif cell == ".":
-                    self.static_surface.blit(self.carre2, pos)
-                else: # reste = herbe 
-                    self.static_surface.blit(self.carre1, pos)
+                if self.mapBase[ordonnee][abscisse] in [1, 2, "-", "=", "B"]:
+                    cell = self.mapBase[ordonnee][abscisse] 
+                    color = color_mapping.get(cell, colorSol)  # Vert foncé par défaut
+                    rect = pygame.Rect(abscisse * CELL_SIZE, ordonnee * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+                    pygame.draw.rect(self.static_surface, color, rect)
 
-        if NIVEAU["Map"] == "NiveauMordor":
-            for y, row in enumerate(self.mapData):
-                for x, cell in enumerate(row):
-                    pos = (x * CELL_SIZE, y * CELL_SIZE)  # Coordonnées des cellules)
-
-                    if cell in ["X", "T"]:
-                        self.static_surface.blit(self.carre7, pos)
-                    elif cell in ["C", "D", "l", "c"]:
-                        self.static_surface.blit(self.carre11, pos)
-                    elif cell in ["%", "ù"]:
-                        self.static_surface.blit(self.carre2, pos)
+                if self.mapData[ordonnee][abscisse] in ["H", "#", "@", "W"]:
+                    cell = self.mapData[ordonnee][abscisse] 
+                    color = color_mapping.get(cell, colorSol)  # Vert foncé par défaut
+                    rect = pygame.Rect(abscisse * CELL_SIZE, ordonnee * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+                    pygame.draw.rect(self.static_surface, color, rect)
 
 
-        if NIVEAU["Map"] == "NiveauMedievale" : # placement chateau 
-            pos = (104*CELL_SIZE, 0 *CELL_SIZE)
-            self.static_surface.blit(self.carre10, pos)
+    def Update(self, player_pos: tuple, pnjGroup: any, interactionGroup: any) -> None:
+        """Met à jour uniquement les entités mobiles sur la minimap."""
+        self.MiniMapSurface.blit(self.static_surface, (0, 0))
 
-        
-
-
-
-    def Update(self, player_pos: tuple, pnjGroup : any, interactionGroup : any) -> None:
-        """Méthode : Met à jour uniquement le joueur sur la minimap. 
-        Input : tutple (position du joueur), pnjGroup / interactionGroups : element pygame Output : None """
-
-        # Copier la surface statique dans la surface d'affichage
-        self.MiniMapSurface.blit(self.static_surface, (0,0))
-
-        # Dessiner le joueur (en rouge par exemple)
+        # Dessiner le joueur en rouge
         player_x, player_y = player_pos
-        player_rect = pygame.Rect(player_x * CELL_SIZE * self.ratioImage, player_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE*2)
+        player_rect = pygame.Rect(player_x * CELL_SIZE * self.ratioImage, player_y * CELL_SIZE * self.ratioImage, CELL_SIZE * 2, CELL_SIZE * 2)
         pygame.draw.rect(self.MiniMapSurface, (255, 21, 4), player_rect)
-                
-        # placemnt des pnj
+
+        # Dessiner les PNJ en orange
         for objectPNJ in pnjGroup:
-            pnj_x, pnj_y = objectPNJ.pos[0] * CASEMAP, objectPNJ.pos[1] *CASEMAP
-            pnj_rect = pygame.Rect(pnj_x * CELL_SIZE * self.ratioImage, pnj_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE * 2)
+            pnj_x, pnj_y = objectPNJ.pos[0] * CASEMAP, objectPNJ.pos[1] * CASEMAP
+            pnj_rect = pygame.Rect(pnj_x * CELL_SIZE * self.ratioImage, pnj_y * CELL_SIZE * self.ratioImage, CELL_SIZE * 2, CELL_SIZE * 2)
             pygame.draw.rect(self.MiniMapSurface, (252, 128, 3), pnj_rect)
 
+        # Dessiner les objets d'interaction en bleu foncé
         for objectIntrac in interactionGroup:
-            if objectIntrac.id not in [ "Arbre", "Arbre1", "Souche", "Souche1"] :
+            if objectIntrac.id not in ["Arbre", "Arbre1", "Souche", "Souche1", "HugeRock"]:
                 element_x, element_y = objectIntrac.pos[0], objectIntrac.pos[1]
-                element_rect = pygame.Rect(element_x * CELL_SIZE * self.ratioImage, element_y * CELL_SIZE * self.ratioImage, CELL_SIZE*2, CELL_SIZE * 2)
-                pygame.draw.rect(self.MiniMapSurface, (34, 5, 71), element_rect)      
+                element_rect = pygame.Rect(element_x * CELL_SIZE * self.ratioImage, element_y * CELL_SIZE * self.ratioImage, CELL_SIZE * 2, CELL_SIZE * 2)
+                pygame.draw.rect(self.MiniMapSurface, (34, 5, 71), element_rect)    
 
 class InfosTips:
 

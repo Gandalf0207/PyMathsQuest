@@ -20,6 +20,10 @@ from PIL import Image
 from io import BytesIO
 import matplotlib
 from math import atan2, degrees
+import pygame
+import tkinter as tk
+from matplotlib.backends.backend_agg import FigureCanvasAgg
+import matplotlib.pyplot as plt
 
 
 plt.rc('text', usetex=True)  # Active l'utilisation de LaTeX
@@ -162,7 +166,7 @@ NIVEAU = {
     "All" : False, 
 
     # map
-    "Map" : "NiveauMedievale",
+    "Map" : "NiveauPlaineRiviere",
 }
 # box infos globales
 INFOS = {
