@@ -257,6 +257,11 @@ class GestionPNJ(object):
             coordPNJ = pnjObject.pos 
             pnjActuel = pnjObject.numPNJ 
 
+            if pnjActuel == "PNJ2" and NIVEAU["Map"] == "NiveauMordor" and PNJ["PNJ2"]:
+                self.distanceMax = 75
+            else:
+                self.distanceMax = 150
+
 
             # Calculer la distance entre le joueur et le PNJ
             distance = sqrt((playerPos[0] - (coordPNJ[0] * CASEMAP +64))**2 + (playerPos[1] - (coordPNJ[1] * CASEMAP +64))**2)

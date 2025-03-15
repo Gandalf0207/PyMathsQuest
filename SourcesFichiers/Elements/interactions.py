@@ -306,7 +306,7 @@ class Interactions(object):
                         self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["ParcheminVu"]) # text animation
                     
                     if self.parchemin and self.pot:
-                        STATE_HELP_INFOS[0] = "OpenDoorCellules"
+                        STATE_HELP_INFOS[0] = "OpenDoorCellule"
 
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center)
 
@@ -323,34 +323,38 @@ class Interactions(object):
                         self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["Key2"]) # text animation
              
                     if self.parchemin and self.pot:
-                        STATE_HELP_INFOS[0] = "OpenDoorCellules"
+                        STATE_HELP_INFOS[0] = "OpenDoorCellule"
                     
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center)
-                if self.ObjectId == "DoorBareau":
+
+                if self.ObjectId == "DoorCellule":
                     self.gestionnaire.fondu_au_noir() # animation
-                    self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["OpenDoorCellule"]) # text animation
 
                     pos = self.Obj.pos
                     doorOpen = pygame.image.load(join("Image", "Obstacle", "Door", "DoorCellule.png")).convert_alpha()
                     Sprites(pos, doorOpen, "OpenDoor", groups[0])
                     self.Obj.kill()
+                    self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["OpenDoorCellule"]) # text animation
+
 
                     if not PNJ["PNJ2"]:
-                        STATE_HELP_INFOS[0] = "OpenDoorCellules"
+                        STATE_HELP_INFOS[0] = "OpenDoorCellule"
                     else:
                         STATE_HELP_INFOS[0] = "SeePNJ"
 
 
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center)
 
-                if self.ObjectId == "Door":
+                if self.ObjectId == "DoorPrison":
                     self.gestionnaire.fondu_au_noir() # animation
-                    self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["OpenDoorPrison"]) # text animation
 
                     pos = self.Obj.pos
                     doorOpen = pygame.image.load(join("Image", "Obstacle", "Door", "DoorPrison.png")).convert_alpha()
                     Sprites(pos, doorOpen, "OpenDoorPrison", groups[0])
                     self.Obj.kill()
+                    
+                    self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["OpenDoorPrison"]) # text animation
+
 
                     STATE_HELP_INFOS[0] = "CrossBridge"
 

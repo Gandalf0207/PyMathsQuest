@@ -35,8 +35,8 @@ class NiveauMordor(GestionNiveauMap):
             ["W", "-", "-", "-", "-", "W", "&", "V", "&", "W", "&", "V", "&", "W", "-", "-", "-", "-", "W"],
             ["W", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "W"],
             ["W", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "W"],
-            ["W", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "W"],
-            ["W", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "W"],
+            ["W", "-", "-", "-", "-", "-", "-", "-", "e", "e", "e", "-", "-", "-", "-", "-", "-", "-", "W"],
+            ["W", "-", "-", "-", "-", "-", "-", "-", "e", "-", "e", "-", "-", "-", "-", "-", "-", "-", "W"],
             ["W", "W", "W", "W", "W", "W", "W", "W", "W", "V", "W", "W", "W", "W", "W", "W", "W", "W", "W"],
         ]
         
@@ -193,9 +193,9 @@ class NiveauMordor(GestionNiveauMap):
 
             # Vérifie la possibilité de déplacements pour chaque liste de points clés
             # Le parcours se fait en trois étapes, en passant par les rivières pour s'assurer que les chemins sont valides
-            if self.CheckNiveauPossible(listeOrdrePointCle1, ["-", "P", "S", "V"], self.mapCheckDeplacementPossible):  # Vérifie la première partie
-                if self.CheckNiveauPossible(listeOrdrePointCle2,  ["-", "P", "S", "V"], self.mapCheckDeplacementPossible):  # Vérifie la deuxième partie
-                    if self.CheckNiveauPossible(listeOrdrePointCle3, ["-", "P", "S", "V"], self.mapCheckDeplacementPossible):  # Vérifie la troisième partie
+            if self.CheckNiveauPossible(listeOrdrePointCle1, ["-", "P", "S", "V", "e"], self.mapCheckDeplacementPossible):  # Vérifie la première partie
+                if self.CheckNiveauPossible(listeOrdrePointCle2,  ["-", "P", "S", "V", "e"], self.mapCheckDeplacementPossible):  # Vérifie la deuxième partie
+                    if self.CheckNiveauPossible(listeOrdrePointCle3, ["-", "P", "S", "V", "e"], self.mapCheckDeplacementPossible):  # Vérifie la troisième partie
                         # Si tout est valide, les obstacles peuvent être placés et les coordonnées sont sauvegardées
                         AjoutJsonMapValue(listeObstacle, "coordsMapObject", "Obstacles Coords")
                         checkDeplacementPasPossible = False  # Arrête la boucle

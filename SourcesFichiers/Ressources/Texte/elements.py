@@ -152,7 +152,7 @@ ElementsFr = {
                 "SeePNJ" : "Discuter avec le pnj sur la map. Regarder la minimap et suivez le chemin !",
                 "CrossBridge" : "Vous devez traverser le pont pour acceder à la suite",
                 "PotParchemin" : "Vous pouvez ouvrir le pot et récupérer le parchemin pour trouver les clés",
-                "OpenDoorCellules" : "Vous devez ouvrir la porte pour rejoindre l'autre prisonnier",
+                "OpenDoorCellule" : "Vous devez ouvrir la porte pour rejoindre l'autre prisonnier",
                 "SeePNJ2avant" : "Vous devez d'abord demander de l'aide à votre ami, ouvrir la 2 cellule ",
                 "OpenDoorPrison" : "Vous devez ouvrir la porte du chateau pour poursuivre l'aventure",
                 "OpenVolcan" : "Vous devez entrer dans le volcan pour pour acceder à la suite",

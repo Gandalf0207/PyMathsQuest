@@ -853,7 +853,7 @@ class LoadMapGestion():
             AnimatedCollisionSprites(pos, path, "Pont4", groups, InfoExo=False, layer=4)
         elif element == "Pont5":
             path = join("Image", "Structure", "Pont", "Pont5")
-            AnimatedCollisionSprites(pos, path, "Pont4", groups, InfoExo=False, layer=4)
+            AnimatedCollisionSprites(pos, path, "Pont5", groups, InfoExo=False, layer=4)
 
 
     def AddBoat(self, element, coords):
