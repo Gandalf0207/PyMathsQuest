@@ -170,6 +170,7 @@ INFOS = {
     "ErrorLoad" : False,
     "GameEnd" : False,
     "CrashGame" : False,
+    "UpdateFont" : False,
     
     "Difficulte" : False,
     
@@ -191,6 +192,11 @@ DICOLANGUE = {
     "Fr" : True,
     "En" : False,
     "Es" : False,
+}
+
+POLICEECRITURE = {
+    "Normal" : True,
+    "Dyslexique" : False
 }
 
 SOUND = {

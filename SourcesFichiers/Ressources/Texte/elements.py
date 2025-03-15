@@ -117,6 +117,13 @@ ElementsFr = {
                 "En" : "Anglais",
                 "Es" : "Espagnol",
             },
+            "PoliceEcriture" : "Ecriture",
+            "TypeEcriture" : {
+                "Normal" : "Normal",
+                "Dyslexique" : "Dyslexique",
+
+            },
+
             "PressKey" : "Appuyez sur une touche...",
 
             },

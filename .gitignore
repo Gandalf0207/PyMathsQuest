@@ -5,6 +5,7 @@
 *.gif
 Sound/
 *.mp3
+*.otf
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

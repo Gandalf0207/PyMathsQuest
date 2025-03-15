@@ -149,6 +149,10 @@ class Game(object):
     def run(self):
 
         while self.running:
+            
+            if INFOS["UpdateFont"]:
+                self.GameTool.CreateFont()
+
 
             if INFOS["GameStart"]: # dans le jeu
 
@@ -430,19 +434,24 @@ class GameToolBox(object):
     
     def CreateFont(self):
         """Méthode de création de toutes les fonts pour le jeu"""
-        
+        INFOS["UpdateFont"] = False
+
+        typeFont = None if not POLICEECRITURE["Dyslexique"] else join("Font", "OpenDyslexic-Regular.otf")
+        coefSize = 1 if not POLICEECRITURE["Dyslexique"] else 0.6
+
+
         # création
-        FONT20 = pygame.font.Font(None, 20)
-        FONT20U = pygame.font.Font(None, 20)
+        FONT20 = pygame.font.Font(typeFont, int(20*coefSize))
+        FONT20U = pygame.font.Font(typeFont, int(20*coefSize))
         FONT20U.set_underline(True)
-        FONT22 = pygame.font.Font(None, 22)
-        FONT24 = pygame.font.Font(None, 24)
-        FONT30 = pygame.font.Font(None, 30)
-        FONT36 = pygame.font.Font(None, 36)
-        FONT36B = pygame.font.Font(None, 36)
+        FONT22 = pygame.font.Font(typeFont, int(22*coefSize))
+        FONT24 = pygame.font.Font(typeFont, int(24*coefSize))
+        FONT30 = pygame.font.Font(typeFont, int(30*coefSize))
+        FONT36 = pygame.font.Font(typeFont, int(36*coefSize))
+        FONT36B = pygame.font.Font(typeFont, int(36*coefSize))
         FONT36B.set_bold(True)
-        FONT50 = pygame.font.Font(None, 50)
-        FONT74 = pygame.font.Font(None, 74)
+        FONT50 = pygame.font.Font(typeFont, int(50*coefSize))
+        FONT74 = pygame.font.Font(typeFont, int(74*coefSize))
 
         # aplpication dans le dico setting
         FONT["FONT20"] = FONT20

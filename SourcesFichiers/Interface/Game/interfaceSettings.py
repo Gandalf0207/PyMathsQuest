@@ -52,6 +52,7 @@ class SettingsInterface(object):
 
         # texte titre
         self.interfaceSurface.fill("#ffffff")
+
         text = FONT["FONT36"].render(TEXTE["Elements"]["HotBar"]["Settings"]["Title"], True, (0, 0, 0))
         self.interfaceSurface.blit(text, (10, 10))
 
@@ -141,6 +142,48 @@ class SettingsInterface(object):
                 y_offset = 50  # Réinitialiser le y_offset
                 x_offset += column_width  # Décaler vers la droite pour une nouvelle colonne
 
+
+
+        # Ecriture
+        # ecriture settings
+        textPoliceEcriture = FONT["FONT20"].render(TEXTE["Elements"]["HotBar"]["Settings"]["PoliceEcriture"], True, (10, 10, 10))
+        self.interfaceSurface.blit(textPoliceEcriture, (10, 500))
+
+        y_offsetPoliceEcriture = 75  # Position initiale en vertical
+        x_offsetPoliceEcriture = 500  # Position initiale en horizontal
+        self.buttonsPoliceEcriture = {}  # Dictionnaire pour stocker les boutons
+
+        for action, key in POLICEECRITURE.items():  
+            # Création du rectangle pour chaque bouton (position dynamique)
+            rectButtonPoliceEcriture = pygame.Rect(x_offsetPoliceEcriture, y_offsetPoliceEcriture, 100, 50)
+            
+            if key:
+                # Dessiner le rectangle du bouton
+                pygame.draw.rect(self.interfaceSurface, (112, 193, 255), rectButtonPoliceEcriture)
+                #Dessiner le contour du bouton (bordure noire)
+                pygame.draw.rect(self.interfaceSurface, (0, 0, 0), rectButtonPoliceEcriture, width=3)
+            else:
+                # Dessiner le rectangle du bouton
+                pygame.draw.rect(self.interfaceSurface, (200,200,200), rectButtonPoliceEcriture)
+            
+            
+            # Dessiner le texte du bouton
+            texteButtonPoliceEcriture = FONT["FONT20"].render(
+                TEXTE["Elements"]["HotBar"]["Settings"]["TypeEcriture"][action], True, (50, 50, 50)
+            )
+            texte_pos = (
+                rectButtonPoliceEcriture.x + (rectButtonPoliceEcriture.width - texteButtonPoliceEcriture.get_width()) // 2,
+                rectButtonPoliceEcriture.y + (rectButtonPoliceEcriture.height - texteButtonPoliceEcriture.get_height()) // 2,
+            )
+            self.interfaceSurface.blit(texteButtonPoliceEcriture, texte_pos)
+
+            # Ajouter le bouton au dictionnaire
+            self.buttonsPoliceEcriture[action] = rectButtonPoliceEcriture  
+
+            # Déplacer vers le bas pour le prochain bouton
+            y_offsetPoliceEcriture += 60  # 50 de hauteur + 10 de marge
+
+
         # close element
         self.surfaceCloseCross.fill("#ffffff")
         self.rectCloseCross = pygame.Rect(self.interfaceSurface.get_width() - 34, 10, 24, 24)
@@ -161,6 +204,18 @@ class SettingsInterface(object):
         for keyLangue in DICOLANGUE:
             DICOLANGUE[keyLangue] = False if keyLangue != action else True
         LoadTexte() # load nouveau texte (changement de langue)
+
+    def ChangePoliceEcriture(self, action):
+        print(action)
+        if not POLICEECRITURE[action]:
+            if not POLICEECRITURE["Dyslexique"]:
+                POLICEECRITURE["Dyslexique"] = True
+                POLICEECRITURE["Normal"] = False
+            else:
+                POLICEECRITURE["Dyslexique"] = False
+                POLICEECRITURE["Normal"] = True
+            
+            INFOS["UpdateFont"] = True
 
     def Update(self, event) -> None:
         """Méthode d'update de l'interface. Input / Output : None"""
@@ -199,6 +254,10 @@ class SettingsInterface(object):
                                 if rect.collidepoint(local_pos):
                                     INFOS["RebindingKey"] = action  # Déclencher le mode rebind
 
+                        if not INFOS["RebindingKey"]:  # Si on n'est PAS en mode rebind
+                            for action, rect in self.buttonsPoliceEcriture.items():
+                                if rect.collidepoint(local_pos):
+                                    self.ChangePoliceEcriture(action)
 
                     if event.type == pygame.MOUSEBUTTONDOWN and not INFOS["RebindingKey"]:
                         if self.rectCloseCross.collidepoint(local_pos):
