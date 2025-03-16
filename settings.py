@@ -146,6 +146,7 @@ COORDS_BOX_IDEAS_TIPS = (320, WINDOW_HEIGHT-160)
 
 # font tool box
 FONT = {
+    "FONT16" : None,
     "FONT20" : None,
     "FONT20U" : None,
     "FONT22" : None,
@@ -166,7 +167,7 @@ NIVEAU = {
     "All" : False, 
 
     # map
-    "Map" : "NiveauMordor",
+    "Map" : "NiveauBaseFuturiste",
 }
 # box infos globales
 INFOS = {
@@ -183,7 +184,9 @@ INFOS = {
     "Exo" : False, 
     "ExoPasse" : False,
     
-    "DemiNiveau" : True,
+    "GetCours" : 15, 
+
+    "DemiNiveau" : False,
     "ChangementNiveau" : False,
     
     "HideHotBar" : False,
@@ -229,7 +232,8 @@ KEYSBIND = {
 # texte : tout le texte
 TEXTE = {
     "Dialogues" : None,
-    "Elements" : None
+    "Elements" : None, 
+    "Cours" : None,
 }
 
 # inventaires 

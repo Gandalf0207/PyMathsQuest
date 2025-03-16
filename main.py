@@ -14,6 +14,7 @@ from SourcesFichiers.Interface.Game.gestionInterfaceGame import *
 from SourcesFichiers.Elements.cinematique import *
 from SourcesFichiers.Interface.Other.gestionInterfaceOther import *
 from SourcesFichiers.Interface.Other.animationLancement import *
+from SourcesFichiers.ExosCours.gestionCours import *
 
 
 class Game(object):
@@ -39,11 +40,14 @@ class Game(object):
         self.demiNiveau = False
         self.ERROR_RELANCER = False
         self.checkLoadingDone = False
+        self.checkCoursDone = False
 
         #animation lancement
         self.animationLancement = AnimationLancementObj(self)
         threading.Thread(target=self.animationLancement.Update, daemon=True).start()
         self.animationLancementEnd = False
+
+        self.gestionCours = GestionCours(self)
 
         # tool box
         self.GameTool = GameToolBox(self)
@@ -80,9 +84,9 @@ class Game(object):
         self.bgHotBar = pygame.Surface((WINDOW_WIDTH, 170))
         try :
             self.hotbarBcg = pygame.image.load(join("Image", "Interface", "Hotbar.png")).convert_alpha()
+            self.bgHotBar.blit(self.hotbarBcg, (0,0))
         except:
             INFOS["ErrorLoadElement"] = True
-        self.bgHotBar.blit(self.hotbarBcg, (0,0))
 
         # boolean de check game
         self.followObject = None #oj suivre
@@ -104,7 +108,7 @@ class Game(object):
 
 
         # gestion des interface du jeu
-        self.gameInterfaces = GestionGameInterfaces(self, self.GameTool.gestionSoundFond) 
+        self.gameInterfaces = GestionGameInterfaces(self, self.GameTool.gestionSoundFond, self.gestionCours) 
 
         #pnj
         self.pnj = GestionPNJ(self.displaySurface, self.allPNJ, self.map, self, self.GameTool.gestionSoundDialogues, self.gameInterfaces)
@@ -142,9 +146,11 @@ class Game(object):
 
 
     def StartMap(self):
+        self.checkCoursDone = False # passe en true dans le gestionCours
 
         # Affichage initial de l'écran de chargement
         threading.Thread(target=self.SetupAllMap).start()
+        threading.Thread(target=self.gestionCours.MakeCours, daemon=True).start()
 
         self.ChargementEcran()
 
@@ -441,8 +447,8 @@ class GameToolBox(object):
         threading.Thread(target=self.gestionSoundFond.BandeSon, daemon=True).start()
 
         self.gestionSoundDialogues = GestionSoundDialogues()
-
         self.gestionnaire = gestionnaire
+
         self.last_update_time = pygame.time.get_ticks()
 
     
@@ -456,6 +462,7 @@ class GameToolBox(object):
 
         # création
         try:
+            FONT16  = pygame.font.Font(typeFont, int(16*coefSize))
             FONT20 = pygame.font.Font(typeFont, int(20*coefSize))
             FONT20U = pygame.font.Font(typeFont, int(20*coefSize))
             FONT20U.set_underline(True)
@@ -471,6 +478,7 @@ class GameToolBox(object):
             INFOS["ErrorLoadElement"] = True
 
         # aplpication dans le dico setting
+        FONT["FONT16"] = FONT16
         FONT["FONT20"] = FONT20
         FONT["FONT20U"] = FONT20U
         FONT["FONT22"] = FONT22
@@ -488,7 +496,7 @@ class GameToolBox(object):
         self.gestionnaire.checkLoadingDone = False
         clock = pygame.time.Clock()
 
-        while not self.gestionnaire.checkLoadingDone:
+        while not self.gestionnaire.checkLoadingDone or not self.gestionnaire.checkCoursDone:
             self.gestionnaire.displaySurface.fill((0, 0, 0))  # Fond noir
 
             # Texte de chargement animé

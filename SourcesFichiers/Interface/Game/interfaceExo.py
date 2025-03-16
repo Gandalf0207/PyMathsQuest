@@ -1,6 +1,6 @@
 from settings import *
-from SourcesFichiers.Exos.choixExo import *
-from SourcesFichiers.Exos.renderLatex import *
+from SourcesFichiers.ExosCours.choixExo import *
+from SourcesFichiers.ExosCours.renderLatex import *
 
 class CreateExo:
     def __init__(self, gestionnaire : any) -> None:
@@ -205,7 +205,7 @@ class CreateExo:
         # surface latex -> avec eqt
         if NIVEAU["Niveau"] == "Seconde":
             if (NIVEAU["Map"] == "NiveauPlaineRiviere") or ( NIVEAU["Map"] == "NiveauMordor" and not INFOS["DemiNiveau"]):
-                self.latexSurface = self.ObjRender.GetElement(self.infosBuild[0]) # on donne l'eqt
+                self.latexSurface = self.ObjRender.GetElement(self.infosBuild[0], 30) # on donne l'eqt
             
 
         # réponse element placés aléatoirement

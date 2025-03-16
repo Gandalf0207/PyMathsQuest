@@ -8,21 +8,24 @@ class RenderLatex:
 
         pass
 
-    def Render(self, eqt : any) -> any:
+    def Render(self, eqt : any, taille) -> any:
         """
         Convertit un texte LaTeX en une image rendue avec matplotlib.
         :param text: Le texte en LaTeX à afficher.
         :param fontsize: Taille de la police.
         :return: Surface pygame contenant l'image rendue.
         """
-
+        plt.rcParams.update({
+            "text.usetex": True,
+            "text.latex.preamble": r"\usepackage{amsmath,textcomp}"  # Activation des packages
+        })
         # Création de la figure matplotlib
         fig, ax = plt.subplots()
         fig.patch.set_visible(False)
         ax.axis('off')
 
         # Rendu du texte LaTeX
-        ax.text(0, 0, eqt, fontsize=30, ha='center', va='center', wrap=True)
+        ax.text(0, 0, eqt, fontsize=taille, ha='center', va='center', wrap=True)
 
         # Sauvegarder l'image dans un buffer
         buf = BytesIO()
@@ -42,7 +45,7 @@ class RenderLatex:
         return pygame.image.fromstring(data, size, mode)
 
 
-    def GetElement(self, eqt : any) -> any:
+    def GetElement(self, eqt : any, taille) -> any:
         """Récupérer le png de l'equation latex. Input / Output : any (element pygame image)"""
-        surfaceLatex = self.Render(eqt)
+        surfaceLatex = self.Render(eqt, taille)
         return surfaceLatex

@@ -182,6 +182,7 @@ class Interactions(object):
 
                     if not self.GetCoursTableCraft:
                         self.GetCoursTableCraft = True
+                        INFOS["GetCours"] +=1
                         self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["GetCours"])
 
                     if INVENTORY["Planks"] < 3:
@@ -306,12 +307,14 @@ class Interactions(object):
             elif NIVEAU["Map"] == "NiveauMordor":
 
                 if self.ObjectId == "Parchemin":
+                    
                     # on donne le cours
                     self.gestionnaire.fondu_au_noir()
                     
                     if not self.parchemin:
                         self.parchemin = True
                         self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["Parchemin"]) # text animation
+                        INFOS["GetCours"] +=1
                     else:
                         self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["ParcheminVu"]) # text animation
                     

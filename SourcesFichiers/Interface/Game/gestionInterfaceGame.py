@@ -11,10 +11,11 @@ from SourcesFichiers.Interface.Game.interfaceCredits import *
 
 
 class GestionGameInterfaces(object):
-    def __init__(self, gestionnaire, gestionSoundFond):
+    def __init__(self, gestionnaire, gestionSoundFond, gestionCours):
         
         self.gestionnaire = gestionnaire
         self.gestionSoundFond = gestionSoundFond
+        self.gestionCours = gestionCours
 
         # interfaces globales
         self.isInterfaceOPEN = False # bool général
@@ -162,7 +163,7 @@ class GestionGameInterfaces(object):
                 elif argsSpecifique == "Book":
                     self.isInterfaceOPEN = True # update element global
                     self.isInterfaceBookOpen = True
-                    self.interface = BookInterface(self)
+                    self.interface = BookInterface(self, self.gestionCours)
                     INFOS["Hover"] = False # reset cursor
 
                 

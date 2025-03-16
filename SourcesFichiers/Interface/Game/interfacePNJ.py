@@ -80,20 +80,24 @@ class PNJInterface(object):
                 if NIVEAU["Map"] == "NiveauPlaineRiviere":
                     if self.gestionnaire.pnjActuel == "PNJ1":
                         INVENTORY["OldAxe"] += 1
+                        INFOS["GetCours"] +=1
                         self.gestionnaire.CinematiqueBuild() # préparation au lancement cinematique
                     elif self.gestionnaire.pnjActuel == "PNJ2":
                         INVENTORY["Planks"] += 1
                         PNJ["PNJ2"] = True
+                        INFOS["GetCours"] +=1
                         STATE_HELP_INFOS[0] = "BuildBridge"
                     elif self.gestionnaire.pnjActuel == "PNJ3":
                         INVENTORY["Pickaxe"] += 1
                         PNJ["PNJ3"] = True
+                        INFOS["GetCours"] +=1
                         STATE_HELP_INFOS[0] = "MineRock"
 
                 if NIVEAU["Map"] == "NiveauMedievale": 
                     if self.gestionnaire.pnjActuel == "PNJ1":
                         PNJ["PNJ1"] = True
                         INVENTORY["Showel"] += 1
+                        INFOS["GetCours"] +=1
                         STATE_HELP_INFOS[0] = "BuildBridge"
                     elif self.gestionnaire.pnjActuel == "PNJ2":
                         PNJ["PNJ2"] = True
@@ -103,11 +107,13 @@ class PNJInterface(object):
                         INVENTORY["Key"] += 1
                         STATE_HELP_INFOS[0] = "OpenDoor"
                     elif self.gestionnaire.pnjActuel == "PNJ4":
+                        INFOS["GetCours"] +=1
                         self.gestionnaire.CinematiqueBuild() # préparation au lancement cinematique
 
                 if NIVEAU["Map"] == "NiveauBaseFuturiste":
                     if self.gestionnaire.pnjActuel == "PNJ1":
                         PNJ["PNJ1"] = True
+                        INFOS["GetCours"] +=1
                         STATE_HELP_INFOS[0] = "UseVent"
 
                     elif self.gestionnaire.pnjActuel == "PNJ2":
@@ -115,6 +121,7 @@ class PNJInterface(object):
                         STATE_HELP_INFOS[0] = "Electricity"
 
                     elif self.gestionnaire.pnjActuel == "PNJ3":
+                        INFOS["GetCours"] +=1
                         PNJ["PNJ3"] = True
                         
                         if PNJ["PNJ4"]:
@@ -135,6 +142,7 @@ class PNJInterface(object):
 
                     elif self.gestionnaire.pnjActuel == "PNJ4":
                         PNJ["PNJ4"] = True
+                        INFOS["GetCours"] +=1
                         if PNJ["PNJ3"]:
                             STATE_HELP_INFOS[0] = "SeePNJ4"
                         else:
@@ -202,11 +210,13 @@ class PNJInterface(object):
                             
 
                     elif self.gestionnaire.pnjActuel == "PNJ7":
+                        INFOS["GetCours"] +=1
                         PNJ["PNJ7"] = True
                         STATE_HELP_INFOS[0] = "EscapeVaisseau"
 
                 if NIVEAU["Map"] == "NiveauMordor":
                     if self.gestionnaire.pnjActuel == "PNJ1":
+                        INFOS["GetCours"] +=1
                         PNJ["PNJ1"] = True
                         
                         #animation 
@@ -223,12 +233,14 @@ class PNJInterface(object):
                         STATE_HELP_INFOS[0] = "PotParchemin"
                     
                     if self.gestionnaire.pnjActuel == "PNJ2":
+                        INFOS["GetCours"] +=1
                         PNJ["PNJ2"] = True
                         STATE_HELP_INFOS[0] = "SeePNJ2avant" # update tips player
 
                         self.gestionnaire.FollowBuild() # préparation au follow du pnj
 
                     if self.gestionnaire.pnjActuel == "PNJ3":
+                        INFOS["GetCours"] +=1
                         PNJ["PNJ3"] = True # update
                         self.gestionnaire.gestionnaire.fondu_au_noir()
                         self.gestionnaire.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["KillPNJ3"])
@@ -244,6 +256,7 @@ class PNJInterface(object):
                                 pnjObj.kill()
 
                     if self.gestionnaire.pnjActuel == "PNJ4":
+                        INFOS["GetCours"] +=1
                         PNJ["PNJ4"] = True
                         STATE_HELP_INFOS[0] = "OpenVolcan" # update tips player
                     
