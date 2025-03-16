@@ -105,6 +105,7 @@ class PNJInterface(object):
                     elif self.gestionnaire.pnjActuel == "PNJ3":
                         PNJ["PNJ3"] = True
                         INVENTORY["Key"] += 1
+                        INFOS["GetCours"] +=1
                         STATE_HELP_INFOS[0] = "OpenDoor"
                     elif self.gestionnaire.pnjActuel == "PNJ4":
                         INFOS["GetCours"] +=1
@@ -271,22 +272,24 @@ class PNJInterface(object):
 
 
         else:
-            # get dialogue deja vu
-            if self.compteurDialogue <= self.nombreDialogue:
-                self.pnj_text = TEXTE["Dialogues"][NIVEAU["Map"]][self.gestionnaire.pnjActuel]["Alternatif"][f"Dialogue{self.compteurDialogue}"]
-                self.gestionnaire.gestionSound.Dialogue(self.compteurDialogue,self.gestionnaire.pnjActuel)
-                self.compteurDialogue += 1 # passage au dialogue suivant
-            else:
-                # gestion son
-                self.gestionnaire.gestionSound.StopDialogue()
-                self.CloseInterface() # fermeture interface
+            try :
+                # get dialogue deja vu
+                if self.compteurDialogue <= self.nombreDialogue:
+                    self.pnj_text = TEXTE["Dialogues"][NIVEAU["Map"]][self.gestionnaire.pnjActuel]["Alternatif"][f"Dialogue{self.compteurDialogue}"]
+                    self.gestionnaire.gestionSound.Dialogue(self.compteurDialogue,self.gestionnaire.pnjActuel)
+                    self.compteurDialogue += 1 # passage au dialogue suivant
+                else:
+                    # gestion son
+                    self.gestionnaire.gestionSound.StopDialogue()
+                    self.CloseInterface() # fermeture interface
 
-                # ouverture automatique interface
-                if NIVEAU["Map"] == "NiveauMordor" and INFOS["DemiNiveau"]:
-                    INFOS["Exo"] = True # lancement exo dans main (changement variable)
-                    self.gestionnaire.gestionnaire.fondu_au_noir()
-                    self.gestionnaire.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["MakeExo"]) # text animation
-
+                    # ouverture automatique interface
+                    if NIVEAU["Map"] == "NiveauMordor" and INFOS["DemiNiveau"]:
+                        INFOS["Exo"] = True # lancement exo dans main (changement variable)
+                        self.gestionnaire.gestionnaire.fondu_au_noir()
+                        self.gestionnaire.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["MakeExo"]) # text animation
+            except:
+                self.CloseInterface() # fermeture interface # sécurité
     def loadPNG(self) -> None:
         """Méthode de chargement des images.
         Input / Output : None"""

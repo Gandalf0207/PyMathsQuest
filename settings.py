@@ -184,7 +184,7 @@ INFOS = {
     "Exo" : False, 
     "ExoPasse" : False,
     
-    "GetCours" : 15, 
+    "GetCours" : 0, 
 
     "DemiNiveau" : False,
     "ChangementNiveau" : False,

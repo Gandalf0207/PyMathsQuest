@@ -33,6 +33,7 @@ class ReactorInterface(object):
         # close interface cross
         self.surfaceCloseCross = pygame.Surface((24,24))
         self.isCrossCloseHover = False
+        self.CoursAdd = False
         try:
             self.crossClose = pygame.image.load(join("Image","Interface", "Croix", "x-mark.png")).convert_alpha()
             self.crossClose2 = pygame.image.load(join("Image","Interface", "Croix", "x-mark2.png")).convert_alpha()
@@ -122,7 +123,10 @@ class ReactorInterface(object):
 
         if self.clicks == 1:
             STATE_HELP_INFOS[0] = "SeePNJ3"
-            INFOS["GetCours"] +=1
+            if not self.CoursAdd:
+                self.CoursAdd = True
+                INFOS["GetCours"] +=1
+            
             INFOS["ReactorOn"] = True
             # changer toutes les portes : ouvrir 
             allCollisionSprites = self.gestionnaire.gestionnaire.collisionSprites

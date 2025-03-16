@@ -436,6 +436,7 @@ class Game(object):
             self.GameTool.Update()
             pygame.event.pump()  # 👈 Permet à Pygame de traiter les événements même sans interaction
             pygame.display.update()
+            print(INFOS["GetCours"])
 
         pygame.quit()
 
