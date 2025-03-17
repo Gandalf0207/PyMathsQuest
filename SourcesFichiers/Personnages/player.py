@@ -139,6 +139,9 @@ class Player(pygame.sprite.Sprite):
         Input : dt : int, cinematique : bool ,  Output : None"""
         if not cinematique:
             self.input() # get déplacements
+        else:
+            pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])
+
         self.move(dt) # effectuer les déplacements
         self.animate(dt) # appliquer les déplacements
 

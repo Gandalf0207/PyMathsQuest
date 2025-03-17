@@ -159,10 +159,7 @@ class Game(object):
             if NIVEAU["Map"] == "NiveauMedievale":
                 self.checkCoursDone = False # passe en true dans le gestionCours
                 threading.Thread(target=self.gestionCours.MakeCours, daemon=True).start()
-        
-
-
-
+    
         self.ChargementEcran()
 
 
@@ -603,7 +600,7 @@ class GameToolBox(object):
         running = True
 
         while running and alpha > 0:
-            self.gestionnaire.allSprites.draw(self.gestionnaire.player.rect.center)
+            self.gestionnaire.allSprites.draw(targetPos)
             fade_surface.set_alpha(alpha)
             self.gestionnaire.displaySurface.blit(fade_surface, (0, 0))
             
