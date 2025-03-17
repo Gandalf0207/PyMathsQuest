@@ -6,7 +6,7 @@ from SourcesFichiers.Elements.groups import *
 from SourcesFichiers.Map.loadMapGestion import *
 from SourcesFichiers.Elements.hotbar import *
 from SourcesFichiers.Personnages.pnj import *
-from SourcesFichiers.Ressources.Texte.creationTexte import *
+from SourcesFichiers.Ressources.creationTexte import *
 from SourcesFichiers.Elements.construire import *
 from SourcesFichiers.Interface.Game.interfaceExo import *
 from SourcesFichiers.Elements.sound import *
@@ -146,11 +146,22 @@ class Game(object):
 
 
     def StartMap(self):
-        self.checkCoursDone = False # passe en true dans le gestionCours
-
+        
         # Affichage initial de l'écran de chargement
         threading.Thread(target=self.SetupAllMap).start()
-        threading.Thread(target=self.gestionCours.MakeCours, daemon=True).start()
+
+        if NIVEAU["Niveau"] == "Seconde":
+            if NIVEAU["Map"] == "NiveauPlaineRiviere":
+                self.checkCoursDone = False # passe en true dans le gestionCours
+                threading.Thread(target=self.gestionCours.MakeCours, daemon=True).start()
+
+        if NIVEAU["Niveau"] == "Premiere":
+            if NIVEAU["Map"] == "NiveauMedievale":
+                self.checkCoursDone = False # passe en true dans le gestionCours
+                threading.Thread(target=self.gestionCours.MakeCours, daemon=True).start()
+        
+
+
 
         self.ChargementEcran()
 
@@ -609,7 +620,18 @@ class GameToolBox(object):
         pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])
         self.gestionnaire.timer_begin = pygame.time.get_ticks()
 
-            
+    def SetInfosLevel(self):
+        match NIVEAU["Map"]:
+            case "NiveauPlaineRiviere":
+                for key in INVENTORY:
+                    INVENTORY[key] = 0
+
+            case "NiveauMedievale":
+                INVENTORY["Pickaxe"] = 1
+                INVENTORY["OldAxe"] = 1
+                INVENTORY["Showel"] = 1
+
+     
     def ResetValues(self):
         """En fonction du niveau, on passe au niveau supérieur"""
 
@@ -636,8 +658,6 @@ class GameToolBox(object):
                             INFOS["GameEnd"] = True
                 else:
                     INFOS["GameEnd"] = True
-
-
 
 
         # reset valeurs

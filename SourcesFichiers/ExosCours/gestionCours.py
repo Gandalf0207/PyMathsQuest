@@ -1,6 +1,5 @@
 from settings import * 
 from SourcesFichiers.ExosCours.renderLatex import *
-from SourcesFichiers.ExosCours.cours import *
 
 class GestionCours(object):
     def __init__(self, gestionnaire):
@@ -8,10 +7,6 @@ class GestionCours(object):
         self.coursMap = []
         self.coursNiveauScolaire = []
         self.creationNewCours = CreationCours(self)
-        self.LoadCours()
-
-    def LoadCours(self):
-        TEXTE["Cours"] = COURS
 
     def MakeCours(self):
         self.creationNewCours.Update()
@@ -28,22 +23,36 @@ class CreationCours(object):
         self.ObjRender = RenderLatex()
 
     def Update(self):
-        CoursACreer = TEXTE["Cours"][NIVEAU["Niveau"]][NIVEAU["Map"]]
+        # Récupère le niveau actuel à partir du dictionnaire Python chargé
+        niveau_actuel = TEXTE["Cours"][NIVEAU["Niveau"]]
 
-        for CoursNumero in range(len(CoursACreer)):
-            listCoursNumeroFormation = []
-            for ElementCours in range(len(CoursACreer[f"Cours{CoursNumero}"])):
-                if CoursACreer[f"Cours{CoursNumero}"][ElementCours][0] == "Image":
-                    path = CoursACreer[f"Cours{CoursNumero}"][ElementCours][1]
-                    listCoursNumeroFormation.append(["Image", path]) # add image path
-                elif CoursACreer[f"Cours{CoursNumero}"][ElementCours][0]: # check si element latex
-                    eqt = CoursACreer[f"Cours{CoursNumero}"][ElementCours][1]
-                    latexSurf =self.ObjRender.GetElement(eqt, 14) # reation surface latex
-                    listCoursNumeroFormation.append([True, latexSurf]) # add surface
-                else:
-                    listCoursNumeroFormation.append([False, CoursACreer[f"Cours{CoursNumero}"][ElementCours][1]]) # add text du cours
+        # Parcourt chaque carte (exemple : "NiveauPlaineRiviere")
+        for carte, cours in niveau_actuel.items():
+            for cours_key, cours_elements in cours.items():
+                listCoursNumeroFormation = []
+                
+                # Parcourt les éléments de chaque cours (exemple : textes, formules, images)
+                for element_key, element in cours_elements.items():
+                    if len(element) < 2:
+                        print(f"Erreur : Structure invalide pour {cours_key} - {element_key}.")
+                        continue
 
-            self.gestionnaire.coursNiveauScolaire.append(listCoursNumeroFormation)
+                    if element[0] == "Image":  # Gestion des images
+                        pathlist = element[1]
+                        chemin_image = os.path.join(*pathlist)
+                        listCoursNumeroFormation.append(["Image", chemin_image])
+
+                    elif element[0]:  # Si c'est une formule LaTeX
+                        latex_surface = self.ObjRender.GetElement(element[1], 14)
+                        listCoursNumeroFormation.append([True, latex_surface])
+
+                    else:  # Texte simple
+                        texte = element[1]
+                        listCoursNumeroFormation.append([False, texte])
+
+                # Ajoute le cours traité à la liste des cours du niveau scolaire
+                self.gestionnaire.coursNiveauScolaire.append(listCoursNumeroFormation)
+
 
 
 

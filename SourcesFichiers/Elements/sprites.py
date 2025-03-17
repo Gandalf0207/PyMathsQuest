@@ -63,6 +63,10 @@ class CollisionSprites(pygame.sprite.Sprite):
                 self.hitbox = self.rect.inflate(-100,-100)
             case "Souche1":
                 self.hitbox = self.rect.inflate(-100,-100)
+            case "Arbre":
+                self.hitbox = self.rect.inflate(-90,-130)
+            case "Arbre1":
+                self.hitbox = self.rect.inflate(-90,-130)
             case "HugeRock":
                 self.hitbox = self.rect.inflate(-90,-100)
             case "CampFire":

@@ -1,5 +1,5 @@
 from settings import *
-from SourcesFichiers.Ressources.Texte.creationTexte import *
+from SourcesFichiers.Ressources.creationTexte import *
 
 class SettingsInterface(object):
 

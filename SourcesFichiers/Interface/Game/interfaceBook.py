@@ -86,47 +86,64 @@ class BookInterface(object):
 
     def SeparationPage(self):
         """Affiche les cours en les répartissant correctement sur les deux pages (gauche et droite)."""
-        CoursNiveauSco = self.gestionCours.coursNiveauScolaire[:self.compteur]  # Limite aux cours débloqués
+        # Limite les cours à ceux débloqués
+        CoursNiveauSco = self.gestionCours.coursNiveauScolaire[:self.compteur]
         self.hauteurAct = 5  # Position initiale pour l'affichage
 
-        # Calcul pour déterminer les éléments des deux pages actuelles
-        start_index = self.pagesAct * 2  # Indice de départ (chaque double page affiche deux cours)
-        end_index = start_index + 2  # Indice de fin
-        coursParPages = CoursNiveauSco[start_index:end_index]  # Récupération des cours pour cette double page
+        # Indices pour les pages
+        start_index = self.pagesAct * 2  # Départ pour cette double page
+        end_index = min(start_index + 2, len(CoursNiveauSco))  # Fin sans dépasser les limites
+        coursParPages = CoursNiveauSco[start_index:end_index]
 
-        # Parcourir les cours à afficher sur les deux pages
-        for page_position, cours in enumerate(coursParPages):  # page_position = 0 (gauche), 1 (droite)
-            if not cours:  # Vérifie si le cours est vide ou None
-                continue
+        # Parcourt les cours à afficher sur les deux pages
+        for page_position, cours in enumerate(coursParPages):  # 0 = page gauche, 1 = page droite
+            if not cours:
+                continue  # Si un cours est vide ou None, on passe au suivant
 
-            for element in cours:  # Parcourir chaque élément du cours
-                # Vérifie que 'element' est bien une liste avec au moins 2 éléments (structure correcte)
+            for element in cours:
+                # Validation de la structure de l'élément
                 if not isinstance(element, list) or len(element) < 2:
-                    print(f"Structure d'élément incorrecte détectée : {element}")
-                    continue  # Passe à l'élément suivant si la structure est invalide
-                
+                    print(f"Structure d'élément incorrecte détectée : {element}")
+                    continue
+
+                # Gestion des images
                 if element[0] == "Image":
-                    try :
+                    try:
                         imageSurf = pygame.image.load(element[1]).convert_alpha()
                         if page_position == 0:  # Page gauche
-                            self.surfaceGauche.blit(imageSurf, imageSurf.get_rect(center=(self.surfaceGauche.get_width() // 2, self.hauteurAct + 125)))
+                            self.surfaceGauche.blit(
+                                imageSurf,
+                                imageSurf.get_rect(center=(self.surfaceGauche.get_width() // 2, self.hauteurAct + 125))
+                            )
                         else:  # Page droite
-                            self.surfaceDroite.blit(imageSurf, imageSurf.get_rect(center=(self.surfaceDroite.get_width() // 2, self.hauteurAct + 125)))   
-                        self.hauteurAct += imageSurf.get_height() +125 # Décalage pour le prochain élément
-                    except:
+                            self.surfaceDroite.blit(
+                                imageSurf,
+                                imageSurf.get_rect(center=(self.surfaceDroite.get_width() // 2, self.hauteurAct + 125))
+                            )
+                        self.hauteurAct += imageSurf.get_height() + 125  # Décalage pour le prochain élément
+                    except pygame.error as e:
+                        print(f"Erreur de chargement de l'image : {e}")
                         INFOS["ErrorLoadElement"] = True
 
-                # Vérification du type d'élément : Surface Latex ou texte
-                elif element[0]:  # Si c'est une surface Latex
+                # Gestion des surfaces LaTeX
+                elif element[0]:
                     surface = element[1]
                     if page_position == 0:  # Page gauche
-                        self.surfaceGauche.blit(surface, surface.get_rect(center=(self.surfaceGauche.get_width() // 2, self.hauteurAct + 10)))
+                        self.surfaceGauche.blit(
+                            surface,
+                            surface.get_rect(center=(self.surfaceGauche.get_width() // 2, self.hauteurAct + 10))
+                        )
                     else:  # Page droite
-                        self.surfaceDroite.blit(surface, surface.get_rect(center=(self.surfaceDroite.get_width() // 2, self.hauteurAct + 10)))
-                    self.hauteurAct += surface.get_height() +10 # Décalage pour le prochain élément
-                else:  # Si c'est du texte
-                    text = element[1]
-                    wrapped_lines = wrap_text(text, FONT["FONT16"], self.surfaceGauche.get_width() - 20)  # Ajuste le texte
+                        self.surfaceDroite.blit(
+                            surface,
+                            surface.get_rect(center=(self.surfaceDroite.get_width() // 2, self.hauteurAct + 10))
+                        )
+                    self.hauteurAct += surface.get_height() + 10  # Décalage pour le prochain élément
+
+                # Gestion des textes
+                else:
+                    texte = element[1]
+                    wrapped_lines = wrap_text(texte, FONT["FONT16"], self.surfaceGauche.get_width() - 20)
                     line_height = FONT["FONT16"].size("Tg")[1]
                     for line in wrapped_lines:
                         line_surface = FONT["FONT16"].render(line, True, (0, 0, 0))
@@ -134,19 +151,17 @@ class BookInterface(object):
                             self.surfaceGauche.blit(line_surface, (20, self.hauteurAct))
                         else:  # Page droite
                             self.surfaceDroite.blit(line_surface, (20, self.hauteurAct))
-                        self.hauteurAct += line_height  # Décalage pour la prochaine ligne
-            # Réinitialisation de la hauteur après le traitement d'une page
+                        self.hauteurAct += line_height  # Décalage pour chaque ligne
+
+            # Réinitialisation de la hauteur pour chaque page
             self.hauteurAct = 5
 
-            #numero de la page
-            if page_position ==0:
-                text = f"{start_index +1}"
-                textSurf = FONT["FONT16"].render(text, True, (0,0,0))
-                self.surfaceGauche.blit(textSurf, textSurf.get_rect(center=(self.surfaceGauche.get_width()//2, self.surfaceGauche.get_height() -10)))
-            else:
-                text = f"{end_index}"
-                textSurf = FONT["FONT16"].render(text, True, (0,0,0))
-                self.surfaceDroite.blit(textSurf, textSurf.get_rect(center=(self.surfaceDroite.get_width()//2, self.surfaceDroite.get_height() -10)))
+            # Numérotation des pages
+            numero_page = f"{start_index + 1}" if page_position == 0 else f"{end_index}"
+            textSurf = FONT["FONT16"].render(numero_page, True, (0, 0, 0))
+            surface = self.surfaceGauche if page_position == 0 else self.surfaceDroite
+            surface.blit(textSurf, textSurf.get_rect(center=(surface.get_width() // 2, surface.get_height() - 10)))
+
 
 
 

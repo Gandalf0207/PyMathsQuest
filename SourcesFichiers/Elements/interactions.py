@@ -90,8 +90,11 @@ class Interactions(object):
 
                 if self.ObjectId == "Arbre" or self.ObjectId == "Arbre1" or self.ObjectId == "Souche" or self.ObjectId == "Souche1" :
                         # animation 
-                        self.gestionnaire.fondu_au_noir()
+                        pos = self.Obj.pos
+                        #gestion arbre
+                        self.Obj.kill()
                         
+                        self.gestionnaire.fondu_au_noir()
                         # texte animation
                         if self.ObjectId in ["Arbre", "Arbre1"]:
                             self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["CutTree"])
@@ -103,7 +106,7 @@ class Interactions(object):
                             try :
                                 soucheArbre = pygame.image.load(join("Image", "Obstacle", "Souche.png")).convert_alpha()
                                 groups = (groups[0], groups[1], interactionGroups)
-                                CollisionSprites(self.Obj.pos, soucheArbre,  "Souche", groups)
+                                CollisionSprites(pos, soucheArbre,  "Souche", groups)
                             except:
                                 INFOS["ErrorLoadElement"] = True
                             INVENTORY["Planks"] += 1
@@ -112,7 +115,7 @@ class Interactions(object):
                             try :
                                 soucheArbre2 = pygame.image.load(join("Image", "Obstacle", "Souche2.png")).convert_alpha()
                                 groups = (groups[0], groups[1], interactionGroups)
-                                CollisionSprites(self.Obj.pos, soucheArbre2,  "Souche1", groups)
+                                CollisionSprites(pos, soucheArbre2,  "Souche1", groups)
                             except:
                                 INFOS["ErrorLoadElement"] = True
                             INVENTORY["Planks"] += 2
@@ -121,14 +124,12 @@ class Interactions(object):
                             #creation boue
                             try :
                                 boueImage = pygame.image.load(join("Image", "Sol", "Mud.png")).convert_alpha()
-                                Sprites(self.Obj.pos, boueImage, "Mud", groups[0]) # création de la boue
+                                Sprites(pos, boueImage, "Mud", groups[0]) # création de la boue
                             except:
                                 INFOS["ErrorLoadElement"] = True
                             INVENTORY["Planks"] += 1 if self.ObjectId == "Souche" else 2
 
 
-                        #gestion arbre
-                        self.Obj.kill()
                         # réouverture
                         self.gestionnaire.ouverture_du_noir(self.player.rect.center)
                 
