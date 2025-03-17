@@ -1,6 +1,6 @@
 
 *test
-*.json
+SourcesFichiers/Ressources/*.json
 *.png 
 *.gif
 Sound/
