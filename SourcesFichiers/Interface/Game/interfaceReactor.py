@@ -119,6 +119,7 @@ class ReactorInterface(object):
         
         # crash jeu 
         if self.clicks > 10:
+            INFOS["ReactorCrash"] = True
             INFOS["CrashGame"] = True
 
         if self.clicks == 1:

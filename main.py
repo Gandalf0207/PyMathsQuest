@@ -159,7 +159,8 @@ class Game(object):
             if NIVEAU["Map"] == "NiveauMedievale":
                 self.checkCoursDone = False # passe en true dans le gestionCours
                 threading.Thread(target=self.gestionCours.MakeCours, daemon=True).start()
-    
+        
+        self.checkLoadingDone = False
         self.ChargementEcran()
 
 
@@ -403,16 +404,7 @@ class Game(object):
                         self.gameInterfaces.MiseAJourInterfaceExo(self.InterfaceExo) 
 
 
-                # element de gestions
-                if INFOS["CrashGame"]:
-                    self.fondu_au_noir()
-                    if NIVEAU["Map"] == "NiveauBaseFuturiste":
-                        text1 = TEXTE["Elements"][NIVEAU["Map"]]["ExplosionReacteur"]
-                        self.textScreen(text1)
 
-                    text2 = TEXTE["Elements"]["CloseGame"]
-                    self.textScreen(text2)
-                    self.running = False
                 
                 # si exo réussit    
                 if INFOS["ExoPasse"]:
@@ -424,6 +416,14 @@ class Game(object):
                 if INFOS["DemiNiveau"] and not self.demiNiveau:
                     self.demiNiveau = True # bool de verif
                     self.GameTool.ChangementDemiNiveau() # chargement du demi niveau
+
+                if INFOS["ReloadCours"]:
+                    INFOS["ReloadCours"] = False
+                    self.gestionCours.Clear()
+                    self.checkCoursDone = False
+                    threading.Thread(target=self.gestionCours.MakeCours, daemon=True).start()
+                    self.ChargementEcran()
+
 
             else:
                 dt = self.clock.tick() / 1000
@@ -439,6 +439,18 @@ class Game(object):
                     if self.animationLancementEnd:        
                         self.homeInterface.Update(event)
 
+            
+            
+            # element de gestions
+            if INFOS["CrashGame"]:
+                self.fondu_au_noir()
+                if INFOS["ReactorCrash"]:
+                    text1 = TEXTE["Elements"][NIVEAU["Map"]]["ExplosionReacteur"]
+                    self.textScreen(text1)
+
+                text2 = TEXTE["Elements"]["CloseGame"]
+                self.textScreen(text2)
+                self.running = False
 
             # update toolBOX
             self.GameTool.Update()
@@ -502,7 +514,6 @@ class GameToolBox(object):
     def ChargementEcran(self):
         """Méthode fluide pour l'écran de chargement."""
         loading_step = 0  # Variable d'animation
-        self.gestionnaire.checkLoadingDone = False
         clock = pygame.time.Clock()
 
         while not self.gestionnaire.checkLoadingDone or not self.gestionnaire.checkCoursDone:
@@ -524,7 +535,7 @@ class GameToolBox(object):
                     pygame.quit()
                     sys.exit()
 
-        self.fondu_au_noir()
+        self.fondu_au_noir()    
         self.ouverture_du_noir(self.gestionnaire.player.rect.center)
 
 

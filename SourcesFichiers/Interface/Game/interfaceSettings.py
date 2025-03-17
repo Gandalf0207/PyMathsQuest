@@ -207,6 +207,9 @@ class SettingsInterface(object):
             DICOLANGUE[keyLangue] = False if keyLangue != action else True
         LoadTexte() # load nouveau texte (changement de langue)
 
+        # génération dscours dans la bonne langue
+        INFOS["ReloadCours"]= True
+
     def ChangePoliceEcriture(self, action):
         print(action)
         if not POLICEECRITURE[action]:
@@ -249,6 +252,7 @@ class SettingsInterface(object):
                         if not INFOS["RebindingKey"]:
                             for action, rectButtonLangue in self.buttonsLangue.items():  # Parcourt le dictionnaire
                                 if rectButtonLangue.collidepoint(local_pos):
+                                    self.gestionnaire.CloseAllInterface()
                                     self.ChangeLangue(action)  # Change la langue en fonction du bouton cliqué
 
                         if not INFOS["RebindingKey"]:  # Si on n'est PAS en mode rebind

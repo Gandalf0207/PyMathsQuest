@@ -178,6 +178,8 @@ INFOS = {
     "ErrorLoadElement": False,
     "UpdateFont" : False,
     "CinematiqueEndAct" : False,
+    "ReactorCrash" : False,
+    "ReloadCours" : False,
     
     "Difficulte" : False,
     

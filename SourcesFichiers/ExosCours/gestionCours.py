@@ -12,7 +12,7 @@ class GestionCours(object):
         self.creationNewCours.Update()
         self.gestionnaire.checkCoursDone = True
     
-    def ChangementNiveauScolaire(self):
+    def Clear(self):
         self.coursNiveauScolaire = []
 
 
