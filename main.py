@@ -154,12 +154,15 @@ class Game(object):
             if NIVEAU["Map"] == "NiveauPlaineRiviere":
                 self.checkCoursDone = False # passe en true dans le gestionCours
                 threading.Thread(target=self.gestionCours.MakeCours, daemon=True).start()
-
-        if NIVEAU["Niveau"] == "Premiere":
+            else:
+                self.checkCoursDone = True # on ne génère ppas de cours 
+        elif NIVEAU["Niveau"] == "Premiere":
             if NIVEAU["Map"] == "NiveauMedievale":
                 self.checkCoursDone = False # passe en true dans le gestionCours
                 threading.Thread(target=self.gestionCours.MakeCours, daemon=True).start()
-        
+            else:
+                self.checkCoursDone = True # on ne génère ppas de cours 
+
         self.checkLoadingDone = False
         self.ChargementEcran()
 
@@ -184,8 +187,8 @@ class Game(object):
 
 
             elif INFOS["GameStart"]: # dans le jeu
-
                 dt = self.clock.tick() / 1000
+
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         self.running = False
@@ -427,6 +430,7 @@ class Game(object):
 
             else:
                 dt = self.clock.tick() / 1000
+
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         self.running = False
@@ -456,7 +460,6 @@ class Game(object):
             self.GameTool.Update()
             pygame.event.pump()  # 👈 Permet à Pygame de traiter les événements même sans interaction
             pygame.display.update()
-            print(INFOS["GetCours"])
 
         pygame.quit()
 
