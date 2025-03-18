@@ -11,10 +11,10 @@ Ce projet est donc né de la fusion de Maths-Quest et Py-Maths deux anciens proj
 Le projet aborde donc plusieurs notion de mathématique, les voici : 
 |Seconde                         |Premiere                    |Termiale|
 |--------------------------------|----------------------------|--------|
-| Equation du premier degrés     | Suites |  |
-| Volumes                        | Pôlynome du second degrés ||
-| Equation cartésienne de droite | Dérivés | |
-| Equation à 2 inconnues         |||
+| Equation du premier degrés     | Suites | *à venir* |
+| Volumes                        | Pôlynome du second degrés | *à venir* |
+| Equation cartésienne de droite | Dérivés | *à venir* |
+| Equation à 2 inconnues         | / | *à venir*|
 
 
 
@@ -30,7 +30,7 @@ Le projet aborde donc plusieurs notion de mathématique, les voici :
 - P : Ouvrir l'onglet paramètres
 - V : Ouvrir l'onglet volumes sonores
 - I : Ouvrir l'inventaire
-- C : Ouvrir le livre de cours
+- B : Ouvrir le livre de cours
 - M : Cacher la hotbar
 Echap : Ouvrir le menu quitter
 
@@ -73,9 +73,9 @@ Afin de pouvoir utiliser le jeu sans soucis, nous vous demandons de bien vouloir
   python -m ensurepip --upgrade
   python -m pip install --upgrade pip
   ```
-  > Installation de la dépendance : matplotlib
+  > Installation de la dépendance : requirements.txt
   ```
-  python -m pip install matplotlib
+  python -m pip install -r requirements.txt
   ```
   > Installation extension LaTeX : type1cm.sty
   ```
@@ -125,6 +125,30 @@ Si vous rencontrez des problèmes avec des éléments de l'installation, vérifi
 
 <br> </br>
 ## Crédits & Termes et Conditions d'utilisation :
+1. Liberté d'utilisation, de modification et de distribution : 
+  - Ce programme est sous licence GPL v3+, ce qui signifie que vous êtes libre de :
+  - Exécuter le logiciel pour tout usage (personnel, éducatif, commercial, etc.).
+  - Étudier, modifier et améliorer son code source.
+  - Redistribuer des copies du programme, modifiées ou non, à condition de respecter la même licence.
+
+2. Code source et contributions
+  - Le code source du projet est accessible sur GitHub :👉 https://github.com/Gandalf0207/PyMathsQuest
+  - Toute contribution est la bienvenue tant qu'elle respecte les termes de la GPL v3.
+  
+3. Aucune garantie
+  - Ce logiciel est fourni \"tel quel\", sans garantie d'aucune sorte. Les auteurs ne peuvent être tenus responsables d'éventuels dommages résultant de son utilisation.
+
+4. Utilisation de bibliothèques open source
+  - Ce projet utilise des bibliothèques open-source telles que Python, Matplotlib, LaTeX, etc. Nous respectons et apprécions le travail de leurs créateurs et nous conformons aux licences respectives de ces bibliothèques.
+    
+5. Crédits et cadre de réalisation
+  - Ce projet a été développé par LUBAN Théo & PLADEAU Quentin dans le cadre du cours de NSI en terminale. Un grand merci à ESCOUTE Cédric et Patrice-Florent Marie-Jeanne pour leur soutien et leur enseignement.
+
+6. Mise à jour des conditions
+  - Ces conditions peuvent être mises à jour à tout moment. Consultez le dépôt GitHub pour toute information sur la licence et les modifications du projet.
+
+© 2025 - PyMathsQuest
+Publié sous licence GPL v3+",
 
 
 #
