@@ -1,4 +1,3 @@
-
 {
     "ElementsFr" : {
         "GameName" : "PyMathsQuest",
@@ -43,7 +42,7 @@
                     "Title": "Termes et conditions d'utilisation"
                 },
                 
-            "TexteConditions" : "J'accepte les licenes, termes et conditions d'Utilisations.",
+            "TexteConditions" : "J'accepte les licences, termes et conditions d'Utilisations.",
             "Lancer" : "Commencer"
         },
 
@@ -56,7 +55,7 @@
         },
 
         "InterfaceReactor": {
-            "Title" : "Réacteur nucléraire Centrale",
+            "Title" : "Réacteur nucléaire Centrale",
             "Texte" : "Appuyer pour allumer le réacteur",
             "Heure" : "Heure",
             "Temperature" : "Température",
@@ -83,7 +82,7 @@
 
         "HotBar" : {
             "Settings" : {
-                "Title" : "Paramettres",
+                "Title" : "Paramètres",
                 "Language" : "Langue",
                 "TypeLanguage" : {
                     "Fr" : "Français",
@@ -149,8 +148,8 @@
             "Cinematique1End" : "Le bûcheron a coupé l'arbre, vous pouvez traverser la rivière !",
             "TraverserPont" : "Vous venez de traverser le pont",
             "BuildBridge" : "Vous venez de construire le pont",
-            "BreakRock" : "Vous venez de casser le rocher avec votre pioche",
-            "MakeExo" : "Pour pouvoir traverser le pont,  vous devez résoudre cet exercice.",
+            "BreakRock" : "Vous venez de briser le rocher",
+            "MakeExo" : "Résolvez cette exercice pour continuer.",
 
             "ExoTexte" : {
                 "Seconde" :{
@@ -180,9 +179,9 @@
         },
 
         "NiveauMedievale" : {
-            "Cinematique1End" : "Le pnj à fuis à travers le portail, vous devez le rallumer",
+            "Cinematique1End" : "Le roi s'est enfui à travers le portail, utilisez le cercle et une formule pour rouvrir le portail",
             "TraverserPont" : "Vous venez de traverser le pont",
-            "CantTraverserPont" : "Le garde est devant le pont, vous ne pouvez pas le traverser.",
+            "CantTraverserPont" : "Le garde est devant le pont, il ne vous laissera pas passer.",
             "BuildBridge" : "Vous venez de construire le pont",
             "CutTree" : "Vous venez de couper un arbre",
             "RemoveSouche" : "Vous venez de retirer une souche d'arbre",
@@ -191,10 +190,10 @@
             "PlaceBoat" : "Vous avez placé le bateau sur la rivière",
             "UseBoat" : "Vous naviguez sur la rivière et arrivez dans l'enceinte du château.",
             "UseBoat2" : "Vous naviguez sur la rivière et sortez de l'enceinte du château.",
-            "GetCours" : "Vous obtenez un bout du parchemin de cours ! gg à toi ", 
-            "OpenChateau" : "Vous entrez dans le chateau de bobini",
-            "OpenPortail" : "Vous devez réouvvrir le portail pour acceder à la suite", 
-            "MakeExo" : "Pour réouvir le portail, vous devez résoudre cet exercice",
+            "GetCours" : "Un parchemin était sur l'établi vous le récupérez", 
+            "OpenChateau" : "Vous entrez dans le château",
+            "OpenPortail" : "Vous devez rouvrir le portail pour accéder à la suite", 
+            "MakeExo" : "Pour rouvrir le portail, vous devez résoudre cet exercice",
 
             "ExoTexte" : {
                 "Seconde" :{
@@ -224,13 +223,12 @@
 
 
         "NiveauBaseFuturiste" : {
-            "Cinematique1End" : "Le pnj à fuis à travers le portail, vous devez le rallumer",
-            "UseVent" : "Vous vous baladez dans les conduits d'aération.", 
-            "MakeExo" : "Pour réouvir le portail, vous devez résoudre cet exercice",
-            "PiloteMoveCafet" : "Le pilote s'est déplacé dans la salle de lancement, rejoignez le !",
+            "UseVent" : "Vous traversez la base dans les conduits d'aérations.", 
+            "MakeExo" : "Pour sortir, résolvez cet exercice",
+            "PiloteMoveCafet" : "Le pilote s'est déplacé dans la salle de lancement, vous pouvez le rejoindre",
             "VaisseauSpacial" : "Vous montez dans le vaisseau",
-            "CrashVaisseau" : "Le vaisseau s'est crash, soit meilleur stp",
-            "ExplosionReacteur" : "Vous avez envoyé trop de puissance dans le réacteur provoquant son explosion.",
+            "CrashVaisseau" : "Le vaisseau à subi un atterrissage douteux, assurez vous qu'Han aille bien",
+            "ExplosionReacteur" : "Vous avez envoyé trop de puissance dans le réacteur, il a explosé.",
             "ExoTexte" : {
                 "Seconde" :{
                         "Title" : "Equation réduites de droites",
@@ -259,16 +257,16 @@
 
 
         "NiveauMordor" : {
-            "MakeExo" : "Pour réouvir le portail, vous devez résoudre cet exercice",
-            "GoPrison" : "Vous êtes emprisonné par l'Orc.",
+            "MakeExo" : "Pour rentrer dans le volcan, résolvez cet exercice",
+            "GoPrison" : "L'orc ne se montre pas amical, vous finissez en prison.",
             "Parchemin" : "Vous obtenez le parchemin",
-            "ParcheminVu" : "Vous avez déjà obtenu le perchemin",
-            "Key" : "Vous trouvez des clés dans le pot",
-            "Key2" : "Le pot est vide",
+            "ParcheminVu" : "Vous avez déjà obtenu le parchemin",
+            "Key" : "Vous fouillez le pot de chambre et y trouvez des clés",
+            "Key2" : "Le pot ne contient plus rien d'utile",
             "OpenDoorCellule" : "Vous venez d'ouvrir la porte de la cellule",
-            "OpenDoorPrison" : "Vous venez d'ouvrir la porte du chateau",
-            "KillPNJ3" : "Vous venez de tuer le garde, vous pouvez continuer votre route",
-            "LeavePNJ2" : "Votre ami est parti, il vous remercie pour votre aide",
+            "OpenDoorPrison" : "Vous avez ouvert la porte",
+            "KillPNJ3" : "Vous avez vaincu, vous pouvez maintenant vous enfuir",
+            "LeavePNJ2" : "Votre ami continue son chemin",
             "TraverserPont" : "Vous traversez le pont",
 
             "ExoTexte" : {
@@ -297,7 +295,7 @@
                     }
                 }
             } 
-        } 
+        }
     }
 
 
