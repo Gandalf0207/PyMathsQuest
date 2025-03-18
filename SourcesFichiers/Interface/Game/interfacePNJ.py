@@ -165,6 +165,7 @@ class PNJInterface(object):
                             allMurSprites = []
                             allVitreSprites = []
                             allPanelControlBloc = []
+                            allSpritesEspace = []
                             for sprite in self.gestionnaire.gestionnaire.allSprites:
                                 if sprite.id[:4] == "Wall":
                                     allMurSprites.append(sprite)
@@ -172,6 +173,8 @@ class PNJInterface(object):
                                     allVitreSprites.append(sprite)
                                 elif sprite.id == "ControlPanel":
                                     allPanelControlBloc.append(sprite)
+                                elif sprite.id == "Sol":
+                                    allSpritesEspace.append(sprite)
 
                             murModif = sample(allMurSprites, (len(allMurSprites)//randint(2,3)))
                             vitreModif = sample(allVitreSprites, randint(1,3))
@@ -180,6 +183,8 @@ class PNJInterface(object):
                             try :
                                 vitre  = pygame.image.load(join("Image", "Obstacle", "VitreBroken.png")).convert_alpha()
                                 panelBloc = pygame.image.load(join("Image", "Obstacle", "TableauBoardBroken.png")).convert_alpha()
+                                sol = pygame.image.load(join("Image", "Sol", "Grass.png")).convert_alpha()
+
                                 for sprite in murModif:
                                     pos = sprite.pos
                                     mur = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Endommage", f"{sprite.id}.png"))
@@ -195,6 +200,12 @@ class PNJInterface(object):
                                     pos = sprite.pos
                                     sprite.kill()
                                     CollisionSprites(pos, panelBloc, "TableauDeBord", (self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites))
+
+                                for spirte in allSpritesEspace:
+                                    pos = sprite.pos
+                                    sprite.kill()
+                                    Sprites(pos, sol, "Sol", self.gestionnaire.gestionnaire.allSprites, layer=0)
+                            
                             except:
                                 INFOS["ErrorLoadElement"] = True
 

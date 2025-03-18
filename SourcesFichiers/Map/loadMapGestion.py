@@ -169,7 +169,7 @@ class LoadMapGestion():
     def LoadImagesDemiNiveauVaisseau(self):
         try:
             self.sol = pygame.image.load(join("Image", "Sol", "Dirtx128.png")).convert_alpha()
-            self.sol1 = pygame.image.load(join("Image", "Sol","Floorx128.png")).convert_alpha()
+            self.sol1 = pygame.image.load(join("Image", "Sol","FloorSpaceShip.png")).convert_alpha()
             self.sol2 = pygame.image.load(join("Image", "Sol", "Space.png")).convert_alpha()
             self.sol3 = pygame.image.load(join("Image", "Sol", "SpaceStar.png")).convert_alpha()
 
