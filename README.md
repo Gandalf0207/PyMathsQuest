@@ -152,7 +152,6 @@ Publié sous licence GPL v3+",
 
 
 #
-__2025__
 
 *by LUBAN Théo & PLADEAU Quentin with* :heart: 
 
