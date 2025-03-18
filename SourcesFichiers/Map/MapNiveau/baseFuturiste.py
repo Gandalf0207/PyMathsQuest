@@ -372,8 +372,6 @@ class NiveauBaseFuturisteVaisseau(GestionNiveauMap):
 
         # vitre
         self.coordsVitre1 = [7, 5, "NiveauBaseFuturiste", "Vitre"]
-        self.coordsVitre2 = [8, 5, "NiveauBaseFuturiste", "Vitre"]
-        self.coordsVitre3 = [9, 5, "NiveauBaseFuturiste", "Vitre"]
 
         # tableau de board
         self.coordsBoard1 = [7, 6, "NiveauBaseFuturiste", "Board"]
@@ -386,7 +384,7 @@ class NiveauBaseFuturisteVaisseau(GestionNiveauMap):
 
         self.coordsDoorFuturisteVaisseau = [8, 11, "NiveauBaseFuturiste", "DoorFuturisteVaisseau"]
 
-        allObjSpecifique = [self.coordsVitre1, self.coordsVitre2, self.coordsVitre3,
+        allObjSpecifique = [self.coordsVitre1, 
                             self.coordsBoard1, self.coordsBoard2, self.coordsBoard3, 
                             self.coordsSiege1, self.coordsSiege2, self.coordsVitre2, self.coordsDoorFuturisteVaisseau]
         AjoutJsonMapValue(allObjSpecifique, "coordsMapObject", "ObjAPlacer")
