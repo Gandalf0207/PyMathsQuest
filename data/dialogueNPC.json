@@ -82,12 +82,11 @@
             "PNJ1": {
                 "Nom" : "Michael",
                 "Principal": {
-                    "Dialogue1": "Oulah d'où est-ce que tu viens toi ?",
-                    "Dialogue2": "Ton portail à fait sauter le courant dans toute la base, il va falloir le rallumer ou tu risques pas de rentrer chez toi."
+                    "Dialogue1": "Oulah d'où est-ce que tu viens toi ?? Ton portail à fait sauter le courant dans toute la base, il va falloir le rallumer ou tu risques pas de rentrer chez toi.",
+                    "Dialogue2": "J’irais bien allumer le réacteur mais sans courant les portes ne s’ouvriront pas il faudra trouver un autre moyen. Tenez je crois que ceci est tombé avec vous."
                 },
                 "Alternatif": {
-                    "Dialogue1": "J’irais bien allumer le réacteur mais sans courant les portes ne s’ouvriront pas il faudra trouver un autre moyen.",
-                    "Dialogie2": "Tenez je crois que ceci est tombé avec vous."
+                    "Dialogue1": "Alors tu n’as pas encore réparé ta bêtise ? Dépêche-toi le frigo de la cafétéria contient mon déjeuner et t’as plutôt intérêt à ce qu’il soit encore bon quand j’irai le manger !"
                 }
             },
             "PNJ2": {
@@ -129,7 +128,7 @@
             "PNJ5": {
                 "Nom" : "Han",
                 "Principal": {
-                    "Dialogue1": "l va falloir un peu de carburant si tu veux qu’on bouge de cette base.",
+                    "Dialogue1": "ll va falloir un peu de carburant si tu veux qu’on bouge de cette base.",
                     "Dialogue2": "T’as réussi à remplir la fusée ? Si oui on va pouvoir décoller."
                     },
 
