@@ -17,15 +17,15 @@ class MiniMap:
 
     def GenerateStaticMiniMap(self) -> None:
         """Génère la minimap statique avec des rectangles colorés."""
-        colorSol = (34, 177, 76) if NIVEAU["Map"] != "NiveauBaseFuturiste" else (150, 75, 0)  # Herbe (vert clair) 
-        colorSol2 = (131, 150, 136)
+        colorSol = (99, 173, 105) if NIVEAU["Map"] != "NiveauBaseFuturiste" else (156, 125, 86)  # Herbe (vert clair) 
+        colorSol2 = (145, 142, 135)
         color_mapping = {
-            "#": (0, 0, 255),  # Rivière (bleu)
-            "B": (100, 100, 100),  # Bordure (gris foncé)
-            "=": (200, 200, 200),  # Chemin (gris clair)
-            "H": (150, 75, 0),  # Maison (marron)
-            "W": (0, 0, 0),  # Puits (noir)
-            "@": (255, 255, 0),  # Champs (jaune)
+            "#": (83, 205, 230),  # Rivière (bleu)
+            "B": (105, 105, 105),  # Bordure (gris foncé)
+            "=": (156, 125, 86),  # Chemin (gris clair)
+            "H": (29, 34, 69),  # Maison (marron)
+            "W": (99, 99, 99),  # Puits (noir)
+            "@": (189, 186, 13),  # Champs (jaune)
             "-": colorSol,
             1  : colorSol,
             2  : colorSol,

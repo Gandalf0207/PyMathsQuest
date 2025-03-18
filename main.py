@@ -187,7 +187,7 @@ class Game(object):
 
 
             elif INFOS["GameStart"]: # dans le jeu
-                dt = self.clock.tick() / 1000
+                dt = self.clock.tick(30) / 1000
 
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -429,7 +429,7 @@ class Game(object):
 
 
             else:
-                dt = self.clock.tick() / 1000
+                dt = self.clock.tick(30) / 1000
 
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
