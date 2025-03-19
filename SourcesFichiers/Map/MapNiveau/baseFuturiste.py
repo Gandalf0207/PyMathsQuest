@@ -386,7 +386,7 @@ class NiveauBaseFuturisteVaisseau(GestionNiveauMap):
 
         allObjSpecifique = [self.coordsVitre1, 
                             self.coordsBoard1, self.coordsBoard2, self.coordsBoard3, 
-                            self.coordsSiege1, self.coordsSiege2, self.coordsVitre2, self.coordsDoorFuturisteVaisseau]
+                            self.coordsSiege1, self.coordsSiege2, self.coordsDoorFuturisteVaisseau]
         AjoutJsonMapValue(allObjSpecifique, "coordsMapObject", "ObjAPlacer")
 
     def Update(self):

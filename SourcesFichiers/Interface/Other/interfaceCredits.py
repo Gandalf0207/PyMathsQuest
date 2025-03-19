@@ -15,10 +15,10 @@ class CreditsInterfaceGame():
         
         # Création de la boîte des crédits
         self.box_width = (WINDOW_WIDTH ) - 40
-        self.box_height = (WINDOW_HEIGHT ) - 70
+        self.box_height = (WINDOW_HEIGHT ) - 150
         self.box_x = 20
         self.box_y = 80
-        self.textSurface = pygame.Surface((self.box_width, 2000), pygame.SRCALPHA)
+        self.textSurface = pygame.Surface((self.box_width, 2500), pygame.SRCALPHA)
         self.textSurface.fill((255, 255, 255))
         
         self.create_credits_text()

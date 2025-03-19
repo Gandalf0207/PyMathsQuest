@@ -3,7 +3,7 @@
         "GameName" : "PyMathsQuest",
         "Loading" : "Chargement",
         "Interaction" : "Appuyer sur E",
-        "LevelSup" : "Vous passez au niveau suppérieur !",
+        "LevelSup" : "Vous passez au niveau supérieur !",
         "Humour" : "Humour, second degré",
         "CloseGame" : "Fermeture du jeu.",
         "ErreurLoad" : "Problème load fichiers ressources. ",

@@ -276,9 +276,7 @@ class GestionSoundDialogues(object):
                             match compteurDialogue:
                                 case 1:
                                     dialogue = pygame.mixer.Sound(self.PrincipalMap1PNJ4Diag1)
-                        else:
-                            match compteurDialogue:
-                                case 1:
+                                case 2:
                                     dialogue = pygame.mixer.Sound(self.PrincipalMap1PNJ4Diag2)
 
                     
