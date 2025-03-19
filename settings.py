@@ -198,6 +198,10 @@ INFOS = {
     "HidePlayer" : False,
 
     "Hover" : False,
+
+    
+    "ExoReussit" : 0,
+    "TotalExo" : 0,
 }
 
 DICOLANGUE = {

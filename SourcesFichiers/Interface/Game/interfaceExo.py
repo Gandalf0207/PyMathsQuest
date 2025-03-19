@@ -219,6 +219,8 @@ class CreateExo:
         Input / Output : None"""
         if not NIVEAU["Map"] == "NiveauMordor" or not INFOS["DemiNiveau"]:
             INFOS["ExoPasse"] = True
+            INFOS["ExoReussit"] += 1
+            INFOS["TotalExo"] += 1
         else:
             INFOS["CinematiqueEndAct"] = True
             INFOS["ExoPasse"] = False
@@ -229,6 +231,8 @@ class CreateExo:
         Input / Output : None"""
 
         INFOS["ExoPasse"] = False
+        INFOS["TotalExo"] += 1
+
 
     def Update(self, event : any) -> None:
         """Méthode d'update général pour l'exercice interface, et de gestion de réponse (clic)

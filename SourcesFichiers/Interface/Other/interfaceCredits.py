@@ -83,10 +83,13 @@ class CreditsInterfaceGame():
         if INFOS["EndGame"]:  # Auto-scroll continue à la fin du jeu
             self.scroll_y += 0.05  # On ajoute la vitesse au scroll_y
             self.scroll_y = min(self.scroll_y, self.max_scroll)  # On empêche de dépasser la limite
-
+            
+            if event.type == pygame.KEYDOWN:
+                if event.key == KEYSBIND["echap"]:
+                    INFOS["CrashGame"] = True
+                    
             if self.scroll_y == self.max_scroll:
                 INFOS["CrashGame"] = True
-
 
 
     def handle_scroll(self, event) -> None:

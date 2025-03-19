@@ -35,19 +35,9 @@ class EndInterface():
 
     def GetReussite(self):
             # récupération des valeurs stocké dans le json
-        with open(join("data", "exercicesValues.json"), "r", encoding="utf-8") as f: # ouvrir le fichier json en mode e lecture
-            exoValuesJson = json.load(f) # chargement des valeurs
-        
-        win = 0
-        total = 0
-        for exo in exoValuesJson:
-            if exo.reussite:
-                win+= 1
-            total += 1
+        win = INFOS["ExoReussit"]
+        total = INFOS["TotalExo"]
         self.percentageReussite = round(win/total, 2)*100
-
-        return exoValuesJson
-
 
     def BluidInterface(self):
         
@@ -107,7 +97,7 @@ class EndInterface():
     def Update(self, event):
 
         if self.percentageReussite == None:
-            self.allValuesExo = self.GetReussite()
+            self.GetReussite()
 
         # construction d'update
         self.BluidInterface()
@@ -124,6 +114,7 @@ class EndInterface():
                 if self.btnRectPDF.collidepoint(event.pos):
                     pass
                     # générer le pdf
+
                 if self.btnRectQuitter.collidepoint(event.pos):
                     self.gestionnaire.creditsOn = True
 

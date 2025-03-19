@@ -441,7 +441,7 @@ class Game(object):
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         self.running = False
-                    
+
                     self.GestionInterfaceOther.Update(event, "End") # scroll (event)
                 self.GestionInterfaceOther.Update(event, "End") # auto scroll (auto update)
 
