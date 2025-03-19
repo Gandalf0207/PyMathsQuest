@@ -149,6 +149,7 @@ class Game(object):
         
         # Affichage initial de l'écran de chargement
         threading.Thread(target=self.SetupAllMap).start()
+        self.gestionCours.SetInfosLevel()
 
         if NIVEAU["Niveau"] == "Seconde":
             if NIVEAU["Map"] == "NiveauPlaineRiviere":

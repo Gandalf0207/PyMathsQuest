@@ -160,6 +160,11 @@ class PNJInterface(object):
                             self.gestionnaire.gestionnaire.fondu_au_noir()
                             self.gestionnaire.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["CrashVaisseau"])
 
+                            # clear inventaire
+                            INVENTORY["Pickaxe"] = 0
+                            INVENTORY["OldAxe"] = 0
+                            INVENTORY["Showel"] = 0
+
 
                             # remplacement des textures 
                             allMurSprites = []
