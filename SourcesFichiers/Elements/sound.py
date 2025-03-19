@@ -89,8 +89,8 @@ class GestionSoundDialogues(object):
         self.SecondaireMap0PNJ2Diag1 =join("Sound", "Dialogues", "NiveauPlaineRiviere", "PNJ2", "Secondaire_VoyagerCurieux_Map0_PNJ2_Diag1.mp3")
 
         # map 0 # pnj 3
-        self.PrincipalMap0PNJ3Diag1 = join("Sound", "Dialogues", "NiveauPlaineRiviere", "PNJ3", ".mp3")
-        self.SecondaireMap0PNJ3Diag1 = join("Sound", "Dialogues", "NiveauPlaineRiviere", "PNJ3", ".mp3")
+        self.PrincipalMap0PNJ3Diag1 = join("Sound", "Dialogues", "NiveauPlaineRiviere", "PNJ3", "Principal_Ane_Map0_PNJ3_Diag1.mp3")
+        self.SecondaireMap0PNJ3Diag1 = join("Sound", "Dialogues", "NiveauPlaineRiviere", "PNJ3", "Secondaire_Ane_Map0_PNJ3_Diag1.mp3")
 
 
 
@@ -112,8 +112,8 @@ class GestionSoundDialogues(object):
         self.SecondaireMap1PNJ3Diag1 =  join("Sound", "Dialogues", "NiveauMedievale", "PNJ3", "Secondaire_Minerva_Map1_PNJ3_Diag1.mp3" )
 
         #map 1 # pnj 4
-        self.PrincipalMap1PNJ4Diag1 =  join("Sound", "Dialogues", "NiveauMedievale", "PNJ4", ".mp3" )
-        self.PrincipalMap1PNJ4Diag2 =  join("Sound", "Dialogues", "NiveauMedievale", "PNJ4", ".mp3" )
+        self.PrincipalMap1PNJ4Diag1 =  join("Sound", "Dialogues", "NiveauMedievale", "PNJ4", "Principal_Roi_Map1_PNJ4_Diag1.mp3" )
+        self.PrincipalMap1PNJ4Diag2 =  join("Sound", "Dialogues", "NiveauMedievale", "PNJ4", "Principal_Roi_Map1_PNJ4_Diag2.mp3" )
 
 
 
@@ -132,12 +132,13 @@ class GestionSoundDialogues(object):
         self.PrincipalMap2PNJ3Diag1  =  join("Sound", "Dialogues", "NiveauBaseFuturiste", "PNJ3", "Principal_Han_Map2_PNJ3_Diag1.mp3" )
         self.PrincipalMap2PNJ3Diag2  =  join("Sound", "Dialogues", "NiveauBaseFuturiste", "PNJ3", "Principal_Han_Map2_PNJ3_Diag2.mp3" )
         self.PrincipalMap2PNJ3Diag3 =  join("Sound", "Dialogues", "NiveauBaseFuturiste", "PNJ3", "Principal_Han_Map2_PNJ3_Diag3.mp3" )
-        self.PrincipalMap2PNJ3Diag4 =  join("Sound", "Dialogues", "NiveauBaseFuturiste", "PNJ3", ".mp3" )
+        self.PrincipalMap2PNJ3Diag4 =  join("Sound", "Dialogues", "NiveauBaseFuturiste", "PNJ3", "Principal_Han_Map2_PNJ3_Diag4.mp3" )
 
         # map 2 # pnj 4
         self.PrincipalMap2PNJ4Diag1  =  join("Sound", "Dialogues", "NiveauBaseFuturiste", "PNJ4", "Principal_Didier_Map2_PNJ4_Diag1.mp3" )
         self.PrincipalMap2PNJ4Diag2  =  join("Sound", "Dialogues", "NiveauBaseFuturiste", "PNJ4", "Principal_Didier_Map2_PNJ4_Diag2.mp3" )
         self.PrincipalMap2PNJ4Diag3 =  join("Sound", "Dialogues", "NiveauBaseFuturiste", "PNJ4", "Principal_Didier_Map2_PNJ4_Diag3.mp3" )
+        self.PrincipalMap2PNJ4Diag4 =  join("Sound", "Dialogues", "NiveauBaseFuturiste", "PNJ4", "Principal_Didier_Map2_PNJ4_Diag4.mp3" )
         self.SecondaireMap2PNJ4Diag1 =  join("Sound", "Dialogues", "NiveauBaseFuturiste", "PNJ4", "Secondaire_Didier_Map2_PNJ4_Diag1.mp3" )
 
         # map 2 # pnj 5
@@ -150,15 +151,14 @@ class GestionSoundDialogues(object):
         self.PrincipalMap2PNJ6Diag3 =  join("Sound", "Dialogues", "NiveauBaseFuturiste", "PNJ6", "Principal_Han_Map2_PNJ6_Diag3.mp3" )
     
         # map 2 # pnj 7
-        self.PrincipalMap2PNJ7Diag1  =  join("Sound", "Dialogues", "NiveauBaseFuturiste", "PNJ7", ".mp3" )
-        self.SecondaireMap2PNJ7Diag1 =  join("Sound", "Dialogues", "NiveauBaseFuturiste", "PNJ7", ".mp3" )
+        self.PrincipalMap2PNJ7Diag1  =  join("Sound", "Dialogues", "NiveauBaseFuturiste", "PNJ7", "Principal_Han_Map2_PNJ7_Diag1.mp3" )
+        self.SecondaireMap2PNJ7Diag1 =  join("Sound", "Dialogues", "NiveauBaseFuturiste", "PNJ7", "Secondaire_Han_Map2_PNJ7_Diag1.mp3" )
 
 
 
         # map 3 # pnj 1
         self.PrincipalMap3PNJ1Diag1 = join("Sound", "Dialogues", "NiveauMordor", "PNJ1", ".mp3" )
-        self.PrincipalMap3PNJ1Diag2 = join("Sound", "Dialogues", "NiveauMordor", "PNJ1", ".mp3" )
-        self.SecondaireMap3PNJ1Diag1 =  join("Sound", "Dialogues", "NiveauMordor", "PNJ1", ".mp3" )
+        self.PrincipalMap3PNJ1Diag2 = join("Sound", "Dialogues", "NiveauMordor", "PNJ1", "Principal_GardeFrontiereOrc_Map3_PNJ1_Diag2.mp3" )
 
         # map 3 # pnj 2
         self.PrincipalMap3PNJ2Diag1 = join("Sound", "Dialogues", "NiveauMordor", "PNJ2", "Principal_PrisoniereHumaine_Map3_PNJ2_Diag1.mp3" )
@@ -166,9 +166,8 @@ class GestionSoundDialogues(object):
         self.SecondaireMap3PNJ2Diag1 =  join("Sound", "Dialogues", "NiveauMordor", "PNJ2", "Secondaire_PrisoniereHumaine_Map3_PNJ2_Diag1.mp3" )
 
         # map 3 # pnj 3
-        self.PrincipalMap3PNJ3Diag1 = join("Sound", "Dialogues", "NiveauMordor", "PNJ3", ".mp3" )
-        self.PrincipalMap3PNJ3Diag2 = join("Sound", "Dialogues", "NiveauMordor", "PNJ3", ".mp3" )
-        self.SecondaireMap3PNJ3Diag1 =  join("Sound", "Dialogues", "NiveauMordor", "PNJ3", ".mp3" )
+        self.PrincipalMap3PNJ3Diag1 = join("Sound", "Dialogues", "NiveauMordor", "PNJ3", "Principal_GeolierOrc_Map3_PNJ3_Diag1.mp3" )
+        self.PrincipalMap3PNJ3Diag2 = join("Sound", "Dialogues", "NiveauMordor", "PNJ3", "Principal_GeolierOrc_Map3_PNJ3_Diag2.mp3" )
 
         # map 3 # pnj 4
         self.PrincipalMap3PNJ4Diag1 = join("Sound", "Dialogues", "NiveauMordor", "PNJ4", ".mp3" )
@@ -176,11 +175,12 @@ class GestionSoundDialogues(object):
         self.SecondaireMap3PNJ4Diag1 =  join("Sound", "Dialogues", "NiveauMordor", "PNJ4", ".mp3" )
         self.SecondaireMap3PNJ4Diag2 =  join("Sound", "Dialogues", "NiveauMordor", "PNJ4", ".mp3" )
         self.SecondaireMap3PNJ4Diag3 =  join("Sound", "Dialogues", "NiveauMordor", "PNJ4", ".mp3" )
+        self.SecondaireMap3PNJ4Diag4 =  join("Sound", "Dialogues", "NiveauMordor", "PNJ4", "Secondaire_Goulboum_Map3_PNJ4_Diag4.mp3" )
 
         # map 3 # pnj 5
-        self.PrincipalMap3PNJ5Diag1 = join("Sound", "Dialogues", "NiveauMordor", "PNJ5", ".mp3" )
-        self.PrincipalMap3PNJ5Diag2 = join("Sound", "Dialogues", "NiveauMordor", "PNJ5", ".mp3" )
-        self.SecondaireMap3PNJ5Diag1 =  join("Sound", "Dialogues", "NiveauMordor", "PNJ5", ".mp3" )
+        self.PrincipalMap3PNJ5Diag1 = join("Sound", "Dialogues", "NiveauMordor", "PNJ5", "Principal_Roi_Map3_PNJ5_Diag1.mp3" )
+        self.PrincipalMap3PNJ5Diag2 = join("Sound", "Dialogues", "NiveauMordor", "PNJ5", "Principal_Roi_Map3_PNJ5_Diag2.mp3" )
+        self.SecondaireMap3PNJ5Diag1 =  join("Sound", "Dialogues", "NiveauMordor", "PNJ5", "Secondaire_Roi_Map3_PNJ5_Diag1.mp3" )
 
 
     
@@ -210,7 +210,6 @@ class GestionSoundDialogues(object):
                             match compteurDialogue:
                                 case 1:
                                     dialogue = pygame.mixer.Sound(self.SecondaireMap0PNJ1Diag1)
-                    
                     elif pnj == "PNJ2":
                         if not PNJ["PNJ2"]:
                             match compteurDialogue:
@@ -222,7 +221,15 @@ class GestionSoundDialogues(object):
                             match compteurDialogue:
                                 case 1:
                                     dialogue = pygame.mixer.Sound(self.SecondaireMap0PNJ2Diag1)
-
+                    elif pnj == "PNJ3":
+                        if not PNJ["PNJ3"]:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.PrincipalMap0PNJ3Diag1)
+                        else:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.SecondaireMap0PNJ3Diag1)
 
 
                 elif NIVEAU["Map"] == "NiveauMedievale":
@@ -264,7 +271,15 @@ class GestionSoundDialogues(object):
                             match compteurDialogue:
                                 case 1:
                                     dialogue = pygame.mixer.Sound(self.SecondaireMap1PNJ3Diag1)
-
+                    elif pnj == "PNJ4":
+                        if not PNJ["PNJ4"]:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.PrincipalMap1PNJ4Diag1)
+                        else:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.PrincipalMap1PNJ4Diag2)
 
                     
                 elif NIVEAU["Map"] == "NiveauBaseFuturiste":
@@ -312,6 +327,8 @@ class GestionSoundDialogues(object):
                                     dialogue = pygame.mixer.Sound(self.PrincipalMap2PNJ4Diag2)
                                 case 3:
                                     dialogue = pygame.mixer.Sound(self.PrincipalMap2PNJ4Diag3)
+                                case 4:
+                                    dialogue = pygame.mixer.Sound(self.PrincipalMap2PNJ4Diag4)
                         else:
                             match compteurDialogue:
                                 case 1:
@@ -332,9 +349,28 @@ class GestionSoundDialogues(object):
                                     dialogue = pygame.mixer.Sound(self.PrincipalMap2PNJ6Diag2)
                                 case 3:
                                     dialogue = pygame.mixer.Sound(self.PrincipalMap2PNJ6Diag3)
-
+                    elif pnj == "PNJ7":
+                        if not PNJ["PNJ7"]:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.PrincipalMap2PNJ7Diag1)
+                        else:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.SecondaireMap2PNJ7Diag1)
+                        
                 elif NIVEAU["Map"] == "NiveauMordor":
-                    if pnj == "PNJ2":
+
+                    if pnj == "PNJ1":
+                        if not PNJ["PNJ1"]:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.PrincipalMap3PNJ1Diag1)
+                        else:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.PrincipalMap3PNJ1Diag2)
+                    elif pnj == "PNJ2":
                         if not PNJ["PNJ2"]:
                             match compteurDialogue:
                                 case 1:
@@ -345,8 +381,41 @@ class GestionSoundDialogues(object):
                             match compteurDialogue:
                                 case 1:
                                     dialogue = pygame.mixer.Sound(self.SecondaireMap3PNJ2Diag1)
-
-
+                    elif pnj == "PNJ3":
+                        if not PNJ["PNJ3"]:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.PrincipalMap3PNJ3Diag1)
+                                case 2:
+                                    dialogue = pygame.mixer.Sound(self.PrincipalMap3PNJ3Diag2)                                                              
+                    elif pnj == "PNJ4":
+                        if not PNJ["PNJ4"]:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.PrincipalMap3PNJ4Diag1)
+                                case 2:
+                                    dialogue = pygame.mixer.Sound(self.PrincipalMap3PNJ4Diag2)
+                        else:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.SecondaireMap3PNJ4Diag1)
+                                case 2:
+                                    dialogue = pygame.mixer.Sound(self.SecondaireMap3PNJ4Diag2)                                
+                                case 3:
+                                    dialogue = pygame.mixer.Sound(self.SecondaireMap3PNJ4Diag3)                                
+                                case 4:
+                                    dialogue = pygame.mixer.Sound(self.SecondaireMap3PNJ4Diag4)
+                    elif pnj == "PNJ5":
+                        if not PNJ["PNJ5"]:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.PrincipalMap3PNJ5Diag1)
+                                case 2:
+                                    dialogue = pygame.mixer.Sound(self.PrincipalMap3PNJ5Diag2)
+                        else:
+                            match compteurDialogue:
+                                case 1:
+                                    dialogue = pygame.mixer.Sound(self.SecondaireMap3PNJ5Diag1)
                 if dialogue != None:
                     dialogue.set_volume(SOUND["Dialogue"])
 

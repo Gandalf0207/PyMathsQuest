@@ -117,7 +117,8 @@
                 "Principal": {
                     "Dialogue1": "Beh dis donc si tu veux partir d’ici il te faudra un vaisseau mon cochon !",
                     "Dialogue2": "Et pis même si t’en as un, il lui faudra bien du jus pour décoller !",
-                    "Dialogue3": "Va donc voir pour pomper un peu de carburant dans c’te salle on est pas encore passé à l’électrique."
+                    "Dialogue3": "Va donc voir pour pomper un peu de carburant dans c’te salle on est pas encore passé à l’électrique.", 
+                    "Dialogue4" : "(Un bout de papier tombe de la poche de l’énergumène, vous le ramassez)"
                     },
 
 
@@ -176,7 +177,7 @@
                     "Dialogue1": "Merci d’avoir ouvert cette cellule, je vais t’accompagner pour qu’on s’évade de cette maudite prison !",
                     "Dialogue2": "Tiens c’est un papier que j’ai trouvé dans mon pot de chambre mais je compte pas franchement le garder alors prends le."
                 },
-                "Alternatif": {
+                "Alternatif": { 
                     "Dialogue1": "Échappons- nous vite de cet horrible endroit !"
                 }
             },
@@ -200,14 +201,15 @@
                 "Alternatif": {
                     "Dialogue1": "L’humain est revenu mon trésor, veut-il que nous le mangions ? Oh oui mon trésor !",
                     "Dialogue2": "De l’humain tout frais, ça fait si longtemps que nous nous contentons de poissons fort peu goûtus. Comment ça ?",
-                    "Dialogue3": "Ça s'est juste trompé de chemin et ça ne veut pas être mangé. Oh non ! Peut-être la prochaine fois mon trésor."
+                    "Dialogue3": "Ça s'est juste trompé de chemin et ça ne veut pas être mangé. Oh non ! Peut-être la prochaine fois mon trésor.",
+                    "Dialogue4" : "(Vous notez ce qui est écrit sur le pagne de la créature)"
                 }
             },
             "PNJ5": {
                 "Nom" : "Roi",
                 "Principal": {
-                    "Dialogue1": "Mais que voit-on mon trésor, un humain tout frais ici ! Qu’à-t-il dit mon tréssssor ? Il souhaite retrouver le seigneur de ces terres ?!",
-                    "Dialogue2": "Oh oui nous avons vu mon trésor, il est rentré dans la montagne cracheuse de feu, oh oui mon trésor !"
+                    "Dialogue1": "AHAHAHAH ! Tu crois vraiment pouvoir me vaincre ? J’ai transcendé les limites de l’humanité MOUHAHAHAHA !",
+                    "Dialogue2" : "(Si vous souhaitez vaincre le roi et ramener la paix pour rentrer chez vous il faudra montrer toute l’étendue de vos capacités)"
                     },
 
                 "Alternatif": {
