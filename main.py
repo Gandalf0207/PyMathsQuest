@@ -41,6 +41,12 @@ class Game(object):
         self.ERROR_RELANCER = False
         self.checkLoadingDone = False
         self.checkCoursDone = False
+ 
+        # clear json stockage exos
+        fichier = join("data", "exercicesValues.json")
+        # Écrire un objet JSON vide
+        with open(fichier, "w") as f:
+            json.dump({}, f)
 
         #animation lancement
         self.animationLancement = AnimationLancementObj(self)
@@ -54,7 +60,8 @@ class Game(object):
         self.GameTool.CreateFont()
 
         # interface home
-        self.homeInterface = HomeInterface(self)
+        self.GestionInterfaceOther = GestionOtherInterface(self)
+
 
 
     # méthode de call de la class tool
@@ -149,7 +156,7 @@ class Game(object):
         
         # Affichage initial de l'écran de chargement
         threading.Thread(target=self.SetupAllMap).start()
-        self.gestionCours.SetInfosLevel()
+        self.GameTool.SetInfosLevel()
 
         if NIVEAU["Niveau"] == "Seconde":
             if NIVEAU["Map"] == "NiveauPlaineRiviere":
@@ -427,7 +434,16 @@ class Game(object):
                     self.checkCoursDone = False
                     threading.Thread(target=self.gestionCours.MakeCours, daemon=True).start()
                     self.ChargementEcran()
+            
+            
+            elif INFOS["EndGame"]:
 
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        self.running = False
+                    
+                    self.GestionInterfaceOther.Update(event, "End") # scroll (event)
+                self.GestionInterfaceOther.Update(event, "End") # auto scroll (auto update)
 
             else:
                 dt = self.clock.tick(30) / 1000
@@ -442,7 +458,7 @@ class Game(object):
                 
                     # update dans la boucle pour scroll event
                     if self.animationLancementEnd:        
-                        self.homeInterface.Update(event)
+                        self.GestionInterfaceOther.Update(event, "Start")
 
             
             
@@ -642,7 +658,6 @@ class GameToolBox(object):
                 INVENTORY["Pickaxe"] = 1
                 INVENTORY["OldAxe"] = 1
                 INVENTORY["Showel"] = 1
-
      
     def ResetValues(self):
         """En fonction du niveau, on passe au niveau supérieur"""

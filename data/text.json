@@ -7,11 +7,62 @@
         "Humour" : "Humour, second degré",
         "CloseGame" : "Fermeture du jeu.",
         "ErreurLoad" : "Problème load fichiers ressources. ",
+        "Reussite" : "Vous avez une réussite de :",
 
 
-        "InterfaceCreditsGame" : {
-            "Title" : "Crédits PyMathsQuest"
-            
+        "Crédits" : {
+                "Crédits": "PyMathsQuest",
+                "Projet": {
+                  "Nom": "PyMathsQuest",
+                  "Createurs": "LUBAN Théo, PLADEAU Quentin",
+                  "Une idée originale de": "LUBAN Théo"
+                },
+                "Rôles": {
+                  "Concepteur principal": "LUBAN Théo",
+                  "Développeur principal": "PLADEAU Quentin",
+                  "Direction Artistique": "LUBAN Théo",
+                  "Consultant fonctionnement": "PLADEAU Quentin",
+                  "Conception des Niveaux": "LUBAN Théo",
+                  "Directeur projet": "PLADEAU Quentin",
+                  "Dialogues des personnages": "LUBAN Théo"
+                },
+                "Artistes exterieurs": {
+                  "Créateur bandes son": "Nocyfer",
+                  "Pixel Art Joueur": "BARON Héloïse",
+                  "Compositeur": "Nocyfer",
+                  "Traduction Espagnol": "SAMADI Marianne",
+                  "Pixel Art Château": "FERNANDEZ Lucie"
+                },
+                "Doublage francais": {
+                  "Bûcheron": "GABRIEL Tom",
+                  "Voyageur Curieux": "CADEAU-FLAUJAT Gabriel",
+                  "Fermier": "RENAUD-JEHL Dimitri",
+                  "Garde désagréable": "ESCOUTE Cédric",
+                  "Minerva": "LAMY Mahely",
+                  "Roi": "FIEVET Joaquim",
+                  "Michael": "NGUYEN Jordan",
+                  "Ingénieure": "SALES Maureen",
+                  "Han": "KELEMEN Thomas",
+                  "Didier": "BELLEC-ESCALERA Elliot",
+                  "Garde Orc": "Nathan",
+                  "Prisonnière Humaine": "PAUL-GOMEZ Mélusine",
+                  "Goulboum": "LUBAN Théo",
+                  "Narratrice": "ESCOLANO-DUPUY Léonie"
+                },
+                "Testeurs": [],
+                "Consultants": ["PINGARD Mattis", "ESCOUTE Cédric", "MARIE-JEANNE Patrice"],
+                "Technologie": {
+                  "Moteur de jeu": "Pygame",
+                  "Compilateur LaTeX": "MikTeX",
+                  "Langage": "Python",
+                  "Librairies Python": "Matplotlib, pygame-ce, PyMaths"
+                },
+                "Remerciements spéciaux": ["PINGARD Mattis", "ESCOUTE Cédric", "MARIE-JEANNE Patrice"]
+        },
+
+        "InterfaceEnd" : {
+            "PDFGeneration" : "Générer le pdf de correction",
+            "Quitter" : "Quitter"
         },
 
         "HomeInterface" : {

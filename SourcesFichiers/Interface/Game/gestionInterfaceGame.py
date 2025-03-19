@@ -7,7 +7,7 @@ from SourcesFichiers.Interface.Game.interfaceReactor import *
 from SourcesFichiers.Interface.Game.interfaceSettings import *
 from SourcesFichiers.Interface.Game.interfaceSound import *
 from SourcesFichiers.Interface.Game.interfaceExo import *
-from SourcesFichiers.Interface.Game.interfaceCredits import *
+from SourcesFichiers.Interface.Other.interfaceCredits import *
 
 
 class GestionGameInterfaces(object):

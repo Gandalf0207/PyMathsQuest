@@ -7,6 +7,7 @@ SourcesFichiers/Ressources/*.json
 Sound/
 *.mp3
 *.otf
+data/exercicesValues.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

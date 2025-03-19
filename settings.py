@@ -180,6 +180,7 @@ INFOS = {
     "CinematiqueEndAct" : False,
     "ReactorCrash" : False,
     "ReloadCours" : False,
+    "EndGame" : True,
     
     "Difficulte" : False,
     

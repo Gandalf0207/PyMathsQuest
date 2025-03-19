@@ -153,6 +153,8 @@ class GetExo:
             # formatage resultats
             resultat2 = self.nb1
             resultat3 = nbx - nb
+
+            self.stockageValues = (self.nb1, self.nb2, self.nb3, self.nb4)
             self.listeConstruction = [eqt, resultat, resultat2, resultat3]
         
         else: # difficile
@@ -192,6 +194,8 @@ class GetExo:
             # formatage résultats
             resultat2 = numx
             resultat3 = num6
+
+            self.stockageValues = (self.nb1, self.nb2, self.nb3, self.nb4, self.nb5, self.nb6)
             self.listeConstruction = [eqt, resultat, resultat2, resultat3]
 
     def ExoNv1(self) -> None:
@@ -229,8 +233,9 @@ class GetExo:
             else:
                 resultat = (f"Volume du Cube : {round(self.VSphere)}")
                 resultat2 = (f"Volume de la Sphere : {round(self.VCube)}")
-                resultat3 = (f"Volume du Cone : {round(self.VCone)}")    
-            
+                resultat3 = (f"Volume du Cone : {round(self.VCone)}")  
+
+            self.stockageValues = (self.a, self.r, self.h, self.d)
             self.listeConstruction = [(self.a, self.r, self.h, self.d), resultat, resultat2, resultat3]
                                       
         else:
@@ -246,6 +251,7 @@ class GetExo:
             resultat2 = f"Volume total du Chateau : {round(self.volumeTotalChateau - self.volumeCone + arrondir((self.r**2 * pi * self.e) /3) )}"
             resultat3 = f"Volume total du Chateau : {round(self.volumeTotalChateau - self.volumeCylindre1 + self.volumeCylindre2)}" 
 
+            self.stockageValues = (self.a, self.b, self.c, self.d, round(self.e, 3), self.f, self.r)
             self.listeConstruction = [(self.a, self.b, self.c, self.d, round(self.e, 3), self.f, self.r), resultat, resultat2, resultat3]
 
     def ExoNv2(self) -> None:
@@ -286,6 +292,7 @@ class GetExo:
         size = canvas.get_width_height()
         graph_surface = pygame.image.fromstring(raw_data.tobytes(), size, "RGBA")
 
+        self.stockageValues = points
         self.listeConstruction = [(graph_surface, points), resultat, resultat2, resultat3]
 
     def ExoNv3(self) -> None:
@@ -353,7 +360,9 @@ class GetExo:
             resultat = f"x = {x} ; y = {y}"
             resultat2 = f"x = {self.nb1 - x} ; y = {y*2}"
             resultat3 = f"x = {x*3} ; y = {self.nb2+y}"
-            self.listeConstruction = [eqt, resultat, resultat2, resultat3]
+
+            self.stockageValues = (self.nb1, self.nb2, self.nb3, self.nb4, self.nb5, self.nb6)
+            self.listeConstruction = [eqt, resultat, resultat2, resultat3, ]
 
     def ExoBoss1(self):
               #fonction de lancement / relancement si les calculs ne sont pas aux normes attendues
@@ -499,6 +508,30 @@ class GetExo:
         pass
 
 
+    def StockageValues(self):
+        """Chargement des données JSON aux index indiqués pour pouvoir les stocker"""
+        try: # Si le chargement est possible
+            with open(join("data","exercicesValues.json"), "r") as f: # ouvrir le fichier json en mode lecture
+                self.donnees = json.load(f) # chargement des données
+        except (FileNotFoundError, json.JSONDecodeError): # Sinon relève une erreur et arrêt du programme
+            assert ValueError("Error load JSON file") # stop du programme avec l'assert (programmation défensive)
+        
+        
+        newKey = f"Exo{len(self.donnees)+1}"
+        newExo =  {
+            "Niveau" : NIVEAU["Niveau"],
+            "Exo" : NIVEAU["Map"],
+            "Difficulte" : INFOS["Difficulte"],
+            "Values" : self.stockageValues
+        }
+
+        self.donnees[newKey] = newExo
+
+        # Sauvegarde des données dans le fichier JSON avec une indentation pour un format "lisible"
+        with open(join("data","exercicesValues.json"), "w") as f: # ouverture du fichier json en mode écriture
+            json.dump(self.donnees, f, indent=4) # chargement dans le fichier json de l'élément données (possédent les index de position et les valeurs à stocker)
+
+
     def Choix(self) -> list:
         """Méthode choix de création de l'exo en fonction du niveau
         Input : None
@@ -551,5 +584,12 @@ class GetExo:
             #     self.ExoNv13()
             # case 14:
             #     self.ExoNv14()
+        
+        # add json values exo 
+        if NIVEAU["Map"] != "NiveauMordor":
+            self.StockageValues()
+        else:
+            if not INFOS["DemiNiveau"] :
+                self.StockageValues()
 
         return self.listeConstruction
