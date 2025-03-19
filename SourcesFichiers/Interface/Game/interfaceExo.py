@@ -224,6 +224,8 @@ class CreateExo:
         else:
             INFOS["CinematiqueEndAct"] = True
             INFOS["ExoPasse"] = False
+            INFOS["StartGame"] = False
+            INFOS["EndGame"] = True
 
 
     def Loose(self) -> None:
