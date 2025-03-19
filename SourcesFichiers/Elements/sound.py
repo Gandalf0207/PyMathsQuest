@@ -359,16 +359,16 @@ class GestionSoundDialogues(object):
                         
                 elif NIVEAU["Map"] == "NiveauMordor":
 
-                    if pnj == "PNJ1":
-                        if not PNJ["PNJ1"]:
-                            match compteurDialogue:
-                                case 1:
-                                    dialogue = pygame.mixer.Sound(self.PrincipalMap3PNJ1Diag1)
-                        else:
-                            match compteurDialogue:
-                                case 1:
-                                    dialogue = pygame.mixer.Sound(self.PrincipalMap3PNJ1Diag2)
-                    elif pnj == "PNJ2":
+                    # if pnj == "PNJ1":
+                    #     if not PNJ["PNJ1"]:
+                    #         match compteurDialogue:
+                    #             case 1:
+                    #                 dialogue = pygame.mixer.Sound(self.PrincipalMap3PNJ1Diag1)
+                    #     else:
+                    #         match compteurDialogue:
+                    #             case 1:
+                    #                 dialogue = pygame.mixer.Sound(self.PrincipalMap3PNJ1Diag2)
+                    if pnj == "PNJ2":
                         if not PNJ["PNJ2"]:
                             match compteurDialogue:
                                 case 1:
@@ -386,23 +386,23 @@ class GestionSoundDialogues(object):
                                     dialogue = pygame.mixer.Sound(self.PrincipalMap3PNJ3Diag1)
                                 case 2:
                                     dialogue = pygame.mixer.Sound(self.PrincipalMap3PNJ3Diag2)                                                              
-                    elif pnj == "PNJ4":
-                        if not PNJ["PNJ4"]:
-                            match compteurDialogue:
-                                case 1:
-                                    dialogue = pygame.mixer.Sound(self.PrincipalMap3PNJ4Diag1)
-                                case 2:
-                                    dialogue = pygame.mixer.Sound(self.PrincipalMap3PNJ4Diag2)
-                        else:
-                            match compteurDialogue:
-                                case 1:
-                                    dialogue = pygame.mixer.Sound(self.SecondaireMap3PNJ4Diag1)
-                                case 2:
-                                    dialogue = pygame.mixer.Sound(self.SecondaireMap3PNJ4Diag2)                                
-                                case 3:
-                                    dialogue = pygame.mixer.Sound(self.SecondaireMap3PNJ4Diag3)                                
-                                case 4:
-                                    dialogue = pygame.mixer.Sound(self.SecondaireMap3PNJ4Diag4)
+                    # elif pnj == "PNJ4":
+                    #     if not PNJ["PNJ4"]:
+                    #         match compteurDialogue:
+                    #             case 1:
+                    #                 dialogue = pygame.mixer.Sound(self.PrincipalMap3PNJ4Diag1)
+                    #             case 2:
+                    #                 dialogue = pygame.mixer.Sound(self.PrincipalMap3PNJ4Diag2)
+                    #     else:
+                    #         match compteurDialogue:
+                    #             case 1:
+                    #                 dialogue = pygame.mixer.Sound(self.SecondaireMap3PNJ4Diag1)
+                    #             case 2:
+                    #                 dialogue = pygame.mixer.Sound(self.SecondaireMap3PNJ4Diag2)                                
+                    #             case 3:
+                    #                 dialogue = pygame.mixer.Sound(self.SecondaireMap3PNJ4Diag3)                                
+                    #             case 4:
+                    #                 dialogue = pygame.mixer.Sound(self.SecondaireMap3PNJ4Diag4)
                     elif pnj == "PNJ5":
                         if not PNJ["PNJ5"]:
                             match compteurDialogue:

@@ -224,7 +224,7 @@ class CreateExo:
         else:
             INFOS["CinematiqueEndAct"] = True
             INFOS["ExoPasse"] = False
-            INFOS["StartGame"] = False
+            INFOS["GameStart"] = False
             INFOS["EndGame"] = True
 
 

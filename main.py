@@ -684,7 +684,7 @@ class GameToolBox(object):
                         case "Terminale":
                             INFOS["GameEnd"] = True
                 else:
-                    INFOS["GameEnd"] = True
+                    INFOS["EndGame"] = True
 
 
         # reset valeurs

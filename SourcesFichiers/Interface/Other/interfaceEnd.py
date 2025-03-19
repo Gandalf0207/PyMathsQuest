@@ -14,17 +14,21 @@ class EndInterface():
         try :
             self.btnTexture = pygame.image.load(join("Image","Interface", "Button", "Start.png")).convert_alpha()
             self.btnTextureHover = pygame.image.load(join("Image","Interface", "Button", "StartHover.png")).convert_alpha()
+
+            self.medailleDiament = pygame.image.load(join("Image", "Medaille", "Diament.png"))
+            self.medailleOr = pygame.image.load(join("Image", "Medaille", "Or.png"))
+            self.medailleArgent = pygame.image.load(join("Image", "Medaille", "Argent.png"))
+            self.medailleBronze = pygame.image.load(join("Image", "Medaille", "Bronze.png"))
+            self.medailleVide = pygame.image.load(join("Image", "Medaille", "Vide.png"))
+
+            self.bcgEnd = pygame.image.load(join("Image", "Interface", "End.png"))
+
         except:
             INFOS["ErrorLoadElement"] = True
 
         self.medailleSurface = pygame.Surface((128, 128))
 
 
-        self.medailleDiament = pygame.image.load(join("Image", "Medaille", "Diament.png"))
-        self.medailleOr = pygame.image.load(join("Image", "Medaille", "Or.png"))
-        self.medailleArgent = pygame.image.load(join("Image", "Medaille", "Argent.png"))
-        self.medailleBronze = pygame.image.load(join("Image", "Medaille", "Bronze.png"))
-        self.medailleVide = pygame.image.load(join("Image", "Medaille", "Vide.png"))
 
         self.percentageReussite = 0
 
@@ -42,7 +46,7 @@ class EndInterface():
     def BluidInterface(self):
         
         # texte titre
-        self.interfaceSurface.fill((255,255,255,255))
+        self.interfaceSurface.blit(self.bcgEnd, (0,0))
         textT = FONT["FONT74"].render(TEXTE["Elements"]["GameName"], True, (10,10,10))
         self.interfaceSurface.blit(textT, textT.get_rect(center=(self.interfaceSurface.get_width()//2 , 50)))
 

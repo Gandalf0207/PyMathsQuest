@@ -96,7 +96,6 @@ class PNJInterface(object):
                 if NIVEAU["Map"] == "NiveauMedievale": 
                     if self.gestionnaire.pnjActuel == "PNJ1":
                         PNJ["PNJ1"] = True
-                        INVENTORY["Showel"] += 1
                         INFOS["GetCours"] +=1
                         STATE_HELP_INFOS[0] = "BuildBridge"
                     elif self.gestionnaire.pnjActuel == "PNJ2":
