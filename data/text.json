@@ -1,0 +1,352 @@
+{
+    "ElementsFr" : {
+        "GameName" : "PyMathsQuest",
+        "Loading" : "Chargement",
+        "Interaction" : "Appuyer sur E",
+        "LevelSup" : "Vous passez au niveau supérieur !",
+        "Humour" : "Humour, second degré",
+        "CloseGame" : "Fermeture du jeu.",
+        "ErreurLoad" : "Problème load fichiers ressources. ",
+        "Reussite" : "Vous avez une réussite de :",
+
+
+        "Crédits" : {
+                "Crédits": "PyMathsQuest",
+                "Projet": {
+                  "Nom": "PyMathsQuest",
+                  "Createurs": "LUBAN Théo, PLADEAU Quentin",
+                  "Une idée originale de": "LUBAN Théo"
+                },
+                "Rôles": {
+                  "Concepteur principal": "LUBAN Théo",
+                  "Développeur principal": "PLADEAU Quentin",
+                  "Direction Artistique": "LUBAN Théo",
+                  "Consultant fonctionnement": "PLADEAU Quentin",
+                  "Conception des Niveaux": "LUBAN Théo",
+                  "Directeur projet": "PLADEAU Quentin",
+                  "Dialogues des personnages": "LUBAN Théo"
+                },
+                "Artistes exterieurs": {
+                  "Créateur bandes son": "Nocyfer",
+                  "Pixel Art Joueur": "BARON Héloïse",
+                  "Compositeur": "Nocyfer",
+                  "Traduction Espagnol": "SAMADI Marianne",
+                  "Pixel Art Château": "FERNANDEZ Lucie"
+                },
+                "Doublage francais": {
+                  "Bûcheron": "GABRIEL Tom",
+                  "Voyageur Curieux": "CADEAU-FLAUJAT Gabriel",
+                  "Fermier": "RENAUD-JEHL Dimitri",
+                  "Garde désagréable": "ESCOUTE Cédric",
+                  "Minerva": "LAMY Mahely",
+                  "Roi": "FIEVET Joaquim",
+                  "Michael": "NGUYEN Jordan",
+                  "Ingénieure": "SALES Maureen",
+                  "Han": "KELEMEN Thomas",
+                  "Didier": "BELLEC-ESCALERA Elliot",
+                  "Garde Orc": "Nathan",
+                  "Prisonnière Humaine": "PAUL-GOMEZ Mélusine",
+                  "Goulboum": "LUBAN Théo",
+                  "Narratrice": "ESCOLANO-DUPUY Léonie"
+                },
+                "Testeurs": [],
+                "Consultants": ["PINGARD Mattis", "ESCOUTE Cédric", "MARIE-JEANNE Patrice"],
+                "Technologie": {
+                  "Moteur de jeu": "Pygame",
+                  "Compilateur LaTeX": "MikTeX",
+                  "Langage": "Python",
+                  "Librairies Python": "Matplotlib, pygame-ce, PyMaths"
+                },
+                "Remerciements spéciaux": ["PINGARD Mattis", "ESCOUTE Cédric", "MARIE-JEANNE Patrice"]
+        },
+
+        "InterfaceEnd" : {
+            "PDFGeneration" : "Générer le pdf de correction",
+            "Quitter" : "Quitter"
+        },
+
+        "HomeInterface" : {
+            "Niveau" : {
+                "Title" : "Niveau",
+                "Consignes" : "Choisissez un niveau",
+                "Seconde" : "Seconde",
+                "Premiere" : "Premiere",
+                "Terminale" : "Terminale",
+                "All": "Tous"
+            },
+            "Difficulte" : {
+                "Title" : "Difficulté",
+                "Consignes" : "Choisissez un niveau",
+                "Simple" : "Simple",
+                "Difficile" : "Difficile"
+            },
+            "Langue" : {
+                "Title" : "Langue",
+                "Consignes" : "Choisissez un niveau",
+                "Français" : "Français",
+                "Anglais" : "Anglais",
+                "Espagnol" : "Espagnol"
+            },
+
+            "InterfaceCondition" : {
+                    "ConditionsUtilisation": "1. Liberté d'utilisation, de modification et de distribution\n\n Ce programme est sous licence GPL v3+, ce qui signifie que vous êtes libre de :\n\n - Exécuter le logiciel pour tout usage (personnel, éducatif, commercial, etc.).\n - Étudier, modifier et améliorer son code source.\n - Redistribuer des copies du programme, modifiées ou non, à condition de respecter la même licence.\n\n 2. Code source et contributions\n Le code source du projet est accessible sur GitHub :\n 👉 https://github.com/Gandalf0207/Py-Maths-Quest\n\n Toute contribution est la bienvenue tant qu'elle respecte les termes de la GPL v3.\n\n 3. Aucune garantie\n Ce logiciel est fourni \"tel quel\", sans garantie d'aucune sorte. Les auteurs ne peuvent être tenus responsables d'éventuels dommages résultant de son utilisation.\n\n 4. Utilisation de bibliothèques open source\n Ce projet utilise des bibliothèques open-source telles que Python, Tkinter, Matplotlib, LaTeX, etc. Nous respectons et apprécions le travail de leurs créateurs et nous conformons aux licences respectives de ces bibliothèques.\n\n 5. Crédits et cadre de réalisation\n Ce projet a été développé par LUBAN Théo & PLADEAU Quentin dans le cadre du cours de NSI en terminale. Un grand merci à ESCOUTE Cédric et Patrice-Florent Marie-Jeanne pour leur soutien et leur enseignement.\n\n 6. Mise à jour des conditions\n Ces conditions peuvent être mises à jour à tout moment. Consultez le dépôt GitHub pour toute information sur la licence et les modifications du projet.\n\n © 2025 - Py-Maths-Quest\n Publié sous licence GPL v3+",
+                    "Title": "Termes et conditions d'utilisation"
+                },
+                
+            "TexteConditions" : "J'accepte les licences, termes et conditions d'Utilisations.",
+            "Lancer" : "Commencer"
+        },
+
+
+        "InterfacePNJ" : {
+            "SkipButton" : "Suivant",
+            "Oui" : "Oui",
+            "Non" : "Non"
+
+        },
+
+        "InterfaceReactor": {
+            "Title" : "Réacteur nucléaire Centrale",
+            "Texte" : "Appuyer pour allumer le réacteur",
+            "Heure" : "Heure",
+            "Temperature" : "Température",
+            "EtatName" : "Etat",
+            "StatueName" : "Statue",
+            "Etat" : {
+                "Inactif" : "Inactif",
+                "Actif" : "Actif"
+            },
+            "Statue" : {
+                "Null" : "Null",
+                "Normal" : "Normal",
+                "Instable" : "Instable",
+                "Critique" : "Critique"
+            },
+            "AddPuissance" : "Augmenter la puissance" 
+        },
+
+        "InterfaceHomeMenu" : {
+            "Quitter" : "Quitter",
+            "Credits" : "Crédits"
+
+        },
+
+        "HotBar" : {
+            "Settings" : {
+                "Title" : "Paramètres",
+                "Language" : "Langue",
+                "TypeLanguage" : {
+                    "Fr" : "Français",
+                    "En" : "Anglais",
+                    "Es" : "Espagnol"
+                },
+                "PoliceEcriture" : "Ecriture",
+                "TypeEcriture" : {
+                    "Normal" : "Normal",
+                    "Dyslexique" : "Dyslexique"
+
+                },
+
+                "PressKey" : "Appuyez sur une touche..."
+
+                },
+            "IdeaTips": {
+                "NiveauPlaineRiviere" : {
+                    "SeePNJ" : "Regardez votre carte et essayez de trouver des informations utiles",
+                    "LearnCrossBridge" : "Traversez par le chemin que vous a créé le bucheron",
+                    "BuildBridge" : "Utilisez les planches que vous a donné le voyageur pour traverser la rivière",
+                    "CrossBridge" : "Traversez le pont",
+                    "MineRock" : "Trouvez la sortie, vous aurez besoin de déblayer le chemin"
+                },
+
+            "NiveauMedievale" : {
+                    "SeePNJ" : "Regardez votre carte et essayez de trouver des informations utiles",
+                    "SeePNJRoi" : "Parlez au roi", 
+                    "BuildBridge" : "Récoltez du bois et frayez vous un chemin vers le village",
+                    "CrossBridge" : "Traversez le pont",
+                    "FindWell" : "Le garde ne vous laissera pas passer, vous pouvez le contourner en construisant un radeau à l'établi près du puit",
+                    "PlaceBoat" : "Allez à la rivière pour positionner votre radeau",
+                    "NavigateBoat" : "Utilisez votre radeau pour passer la muraille",
+                    "OpenDoor" : "Rentrez dans le château",
+                    "OpenPortail" : "Utilisez le cercle d'invocation à l'emplacement du portail pour pouvoir le rouvrir"
+                },
+
+                "NiveauBaseFuturiste" : {
+                    "SeePNJ" : "Parlez à Michael à l'entrée de la base",
+                    "SeePNJ2" : "Trouvez quelqu'un de compétent pour rallumer le réacteur",
+                    "SeePNJ3" : "Maintenant que toute la base est accessible trouvez un moyen de quitter cet endroit : \n   Trouvez un pilote \n    Trouvez un vaisseau avec du carburant",
+                    "SeePNJ4" : "Retrouvez Han dans la salle de lancement et préparez vous à décoller",
+                    "SeePNJ5" : "Parlez à Han pour lui dire où vous souhaitez vous rendre",
+                    "SeePNJ6" : "Allez voir si Han va bien",
+                    "Electricity" : "Allez au panneau de contrôle du réacteur et rallumez le",
+                    "UseVent" : "Il parait qu'il y a un conduit d'aération permettant d'accéder à la salle du réacteur", 
+                    "EscapeVaisseau": "Han est assommé allez faire un tour pour voir si vous trouvez un moyen de repartir"
+                },
+
+                "NiveauMordor" : {
+                    "SeePNJ" : "Regardez votre carte et essayez de trouver des informations utiles",
+                    "CrossBridge" : "Continuez votre route vers l'Est",
+                    "PotParchemin" : "Fouillez votre cellule pour trouver tout ce qui pourrait vous permettre de vous échapper",
+                    "OpenDoorCellule" : "Trouvez un moyen de vous échapper de cette prison",
+                    "SeePNJ2avant" : "Libérez l'autre prisonnier et confrontez l'orc",
+                    "OpenDoorPrison" : "Vous devez ouvrir la porte du chateau pour poursuivre l'aventure",
+                    "OpenVolcan" : "Allez retrouver le roi dans le volcan"
+                }
+            }
+        },
+
+        "NiveauPlaineRiviere" : {
+            "Cinematique1End" : "Le bûcheron a coupé l'arbre, vous pouvez traverser la rivière !",
+            "TraverserPont" : "Vous venez de traverser le pont",
+            "BuildBridge" : "Vous venez de construire le pont",
+            "BreakRock" : "Vous venez de briser le rocher",
+            "MakeExo" : "Résolvez cette exercice pour continuer.",
+
+            "ExoTexte" : {
+                "Seconde" :{
+                        "Title" : "Exercice équation du premier degré",
+
+                        "DifficulteTrue" : {
+                            "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",
+                            "QCM" : "Choisissez l'unique bonne réponse"
+                        },
+
+                        "DifficulteFalse" : {
+                            "Consigne" : "Trouver la valeur de x dans cette équation du premier degré :",
+                            "QCM" : "Choisissez l'unique bonne réponse"
+                        }
+
+                    },         
+                "Premiere" :{
+                    
+                    },
+
+                "Terminale" : {
+
+                    }
+
+                
+            }
+        },
+
+        "NiveauMedievale" : {
+            "Cinematique1End" : "Le roi s'est enfui à travers le portail, utilisez le cercle et une formule pour rouvrir le portail",
+            "TraverserPont" : "Vous venez de traverser le pont",
+            "CantTraverserPont" : "Le garde est devant le pont, il ne vous laissera pas passer.",
+            "BuildBridge" : "Vous venez de construire le pont",
+            "CutTree" : "Vous venez de couper un arbre",
+            "RemoveSouche" : "Vous venez de retirer une souche d'arbre",
+            "NeedPlanks" : "Vous devez avoir 3 planches pour pouvoir construire le bateau",
+            "CraftBoat" : "Vous avez fabriqué un bateau",
+            "PlaceBoat" : "Vous avez placé le bateau sur la rivière",
+            "UseBoat" : "Vous naviguez sur la rivière et arrivez dans l'enceinte du château.",
+            "UseBoat2" : "Vous naviguez sur la rivière et sortez de l'enceinte du château.",
+            "GetCours" : "Un parchemin était sur l'établi vous le récupérez", 
+            "OpenChateau" : "Vous entrez dans le château",
+            "OpenPortail" : "Vous devez rouvrir le portail pour accéder à la suite", 
+            "MakeExo" : "Pour rouvrir le portail, vous devez résoudre cet exercice",
+
+            "ExoTexte" : {
+                "Seconde" :{
+                        "Title" : "Calculs de Volumes",
+
+                        "DifficulteTrue" : {
+                            "Consigne" : " A l'aide des valeurs données, veuillez calculer le volume total de la figure représentée ci-dessous.:",
+                            "QCM" : "Choisissez l'unique bonne réponse"
+                        },
+
+                        "DifficulteFalse" : {
+                            "Consigne" : "A l'aide des valeurs données, veuillez calculer le volume demandé du cube de côté c, de la sphère de rayon r et du cone de hauter h et de diametre de base d:",
+                            "QCM" : "Choisissez l'unique bonne réponse"
+                        }
+
+                    },         
+                "Premiere" :{
+                    
+                    },
+
+                "Terminale" : {
+
+                    }
+            }
+
+        },
+
+
+        "NiveauBaseFuturiste" : {
+            "UseVent" : "Vous traversez la base dans les conduits d'aérations.", 
+            "MakeExo" : "Pour sortir, résolvez cet exercice",
+            "PiloteMoveCafet" : "Le pilote s'est déplacé dans la salle de lancement, vous pouvez le rejoindre",
+            "VaisseauSpacial" : "Vous montez dans le vaisseau",
+            "CrashVaisseau" : "Le vaisseau à subi un atterrissage douteux, assurez vous qu'Han aille bien",
+            "ExplosionReacteur" : "Vous avez envoyé trop de puissance dans le réacteur, il a explosé.",
+            "ExoTexte" : {
+                "Seconde" :{
+                        "Title" : "Equation réduites de droites",
+
+                        "DifficulteTrue" : {
+                            "Consigne" : "A l'aide des coordonnées, déterminez l'équation réduite de (AB) et (CD). Voici les coordonnées des points :",
+                            "QCM" : "Choisissez l'unique bonne réponse"
+                        },
+
+                        "DifficulteFalse" : {
+                            "Consigne" : "A l'aide des coordonnées, déterminez l'équation réduite de (AB) et (CD). Voici les coordonnées des points :",
+                            "QCM" : "Choisissez l'unique bonne réponse"
+                        }
+
+                    },         
+                "Premiere" :{
+                    
+                    },
+
+                "Terminale" : {
+
+                    }
+            }
+
+        },
+
+
+        "NiveauMordor" : {
+            "MakeExo" : "Pour rentrer dans le volcan, résolvez cet exercice",
+            "GoPrison" : "L'orc ne se montre pas amical, vous finissez en prison.",
+            "Parchemin" : "Vous obtenez le parchemin",
+            "ParcheminVu" : "Vous avez déjà obtenu le parchemin",
+            "Key" : "Vous fouillez le pot de chambre et y trouvez des clés",
+            "Key2" : "Le pot ne contient plus rien d'utile",
+            "OpenDoorCellule" : "Vous venez d'ouvrir la porte de la cellule",
+            "OpenDoorPrison" : "Vous avez ouvert la porte",
+            "KillPNJ3" : "Vous avez vaincu, vous pouvez maintenant vous enfuir",
+            "LeavePNJ2" : "Votre ami continue son chemin",
+            "TraverserPont" : "Vous traversez le pont",
+
+            "ExoTexte" : {
+                "Seconde" :{
+
+                        "Title" : "Exo boss seconde",
+
+                        "DifficulteTrue" : {
+                            "Consigne" : "Un voilier se trouve dans le port de Sète et avant de partir un client veut connaître le volume d’huile que le navire peut transporter sachant qu’il possède une cargaison de 85 tonneaux de longueur 'a' et de largeur 'b' (nous affirmons que les tonneaux utilisés ont des côtés totalement droit et non arrondis. Après cela le bateau prend le large et reçoit des informations sur un autre bateau naviguant à la même vitesse, déterminer si les 2 bateaux se croiseront. De plus le bateau b1 est actuellement au point A et navigue selon la direction (AB). De même le bateau b2 est actuellement au point C et navigue selon la direction (CD). Coordonnées :",
+                            "QCM" : "Choisissez l'unique bonne réponse"
+                        },
+
+                        "DifficulteFalse" : {
+                            "Consigne" : "Un voilier se trouve dans le port de Sète et avant de partir un client veut connaître le volume d’huile que le navire peut transporter sachant qu’il possède une cargaison de 85 tonneaux de longueur 'a' et de largeur 'b' (nous affirmons que les tonneaux utilisés ont des côtés totalement droit et non arrondis. Après cela le bateau prend le large et reçoit des informations sur un autre bateau naviguant à la même vitesse, déterminer si les 2 bateaux se croiseront. De plus le bateau b1 est actuellement au point A et navigue selon la direction (AB). De même le bateau b2 est actuellement au point C et navigue selon la direction (CD). Coordonnées :",
+                            "QCM" : "Choisissez l'unique bonne réponse"
+                        }
+
+
+                    },         
+                "Premiere" :{
+                    
+                    },
+
+                "Terminale" : {
+
+                    }
+                }
+            } 
+        }
+    }
+
+
