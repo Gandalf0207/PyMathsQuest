@@ -308,7 +308,7 @@ class LoadMapGestion():
                 
                 # sol
                 if self.mapBase[ordonnees][abscisses] ==".":
-                    Sprites(pos, self.sol1, "Sol", self.allSprites, layer=0)
+                    Sprites(pos, self.sol1, "Sol1", self.allSprites, layer=0)
                 elif self.mapBase[ordonnees][abscisses] == 2:
                     if randint(1, 10) < 7:
                         Sprites(pos, self.sol2, "Sol2", self.allSprites, layer=0)

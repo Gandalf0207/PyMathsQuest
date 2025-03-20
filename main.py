@@ -583,7 +583,7 @@ class GameToolBox(object):
             self.gestionnaire.displaySurface.blit(line_surface, text_rect)  # Afficher le texte à l'écran
             pygame.display.flip()  # Mettre à jour l'écran
 
-            clock.tick(60)  # Limiter à 60 FPS pour garantir que l'animation reste fluide
+            clock.tick(30)  # Limiter à 60 FPS pour garantir que l'animation reste fluide
 
             # # Gestion des événements pendant l'affichage du texte
             # for event in pygame.event.get():

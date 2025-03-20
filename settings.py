@@ -168,7 +168,7 @@ NIVEAU = {
     "All" : False, 
 
     # map
-    "Map" : "NiveauPlaineRiviere",
+    "Map" : "NiveauBaseFuturiste",
 }
 # box infos globales
 INFOS = {
@@ -190,7 +190,7 @@ INFOS = {
     
     "GetCours" : 0, 
 
-    "DemiNiveau" : False,
+    "DemiNiveau" : True,
     "ChangementNiveau" : False,
     
     "HideHotBar" : False,

@@ -205,7 +205,7 @@ class PNJInterface(object):
                                     sprite.kill()
                                     CollisionSprites(pos, panelBloc, "TableauDeBord", (self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites))
 
-                                for spirte in allSpritesEspace:
+                                for sprite in allSpritesEspace:
                                     pos = sprite.pos
                                     sprite.kill()
                                     Sprites(pos, sol, "Sol", self.gestionnaire.gestionnaire.allSprites, layer=0)
