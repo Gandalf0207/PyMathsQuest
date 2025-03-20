@@ -181,7 +181,7 @@ INFOS = {
     "CinematiqueEndAct" : False,
     "ReactorCrash" : False,
     "ReloadCours" : False,
-    "EndGame" : False,
+    "EndGame" : True,
     
     "Difficulte" : False,
     
