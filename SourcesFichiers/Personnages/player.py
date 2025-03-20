@@ -124,17 +124,17 @@ class Player(pygame.sprite.Sprite):
     def collision(self, direction : tuple) -> None:
         """Méthode gestion de collision player et environnement.
         Input : direction : tuple, Output : None"""
-
-        # check de collision avec tout les sprites
-        for sprite in self.collision_sprites:
-            
-            if sprite.hitbox.colliderect(self.hitbox_rect):  # Utilisation hitbox
-                if direction == 'horizontal': # axe x
-                    if self.direction.x > 0: self.hitbox_rect.right = sprite.hitbox.left
-                    if self.direction.x < 0: self.hitbox_rect.left = sprite.hitbox.right
-                else: # axe y
-                    if self.direction.y < 0: self.hitbox_rect.top = sprite.hitbox.bottom
-                    if self.direction.y > 0: self.hitbox_rect.bottom = sprite.hitbox.top
+        if not INFOS["NoClip"]:
+            # check de collision avec tout les sprites
+            for sprite in self.collision_sprites:
+                
+                if sprite.hitbox.colliderect(self.hitbox_rect):  # Utilisation hitbox
+                    if direction == 'horizontal': # axe x
+                        if self.direction.x > 0: self.hitbox_rect.right = sprite.hitbox.left
+                        if self.direction.x < 0: self.hitbox_rect.left = sprite.hitbox.right
+                    else: # axe y
+                        if self.direction.y < 0: self.hitbox_rect.top = sprite.hitbox.bottom
+                        if self.direction.y > 0: self.hitbox_rect.bottom = sprite.hitbox.top
 
 
     def animate(self, dt : int) -> None:
@@ -161,7 +161,6 @@ class Player(pygame.sprite.Sprite):
         if not cinematique:
             self.input() # get déplacements
         else:
-            self.direction = pygame.Vector2(0, 0)  # Empêcher tout mouvement
             pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])
 
         self.move(dt) # effectuer les déplacements

@@ -218,15 +218,6 @@ class Game(object):
                     elif not self.cinematique:
 
                         if event.type == pygame.KEYDOWN: # TP : ne pas oublier de retirer
-                            if event.key == pygame.K_t:
-                                first_sprite = next(iter(self.allPNJ))  # Premier objet du groupe
-                                self.player.rect.center = (first_sprite.pos[0]*CASEMAP, first_sprite.pos[1]*CASEMAP)
-                                self.player.hitbox_rect.center = (first_sprite.pos[0]*CASEMAP, first_sprite.pos[1]*CASEMAP)
-
-
-                            if event.key == pygame.K_0:
-                                self.player.rect.center = (130*CASEMAP, 25*CASEMAP)
-                                self.player.hitbox_rect.center = (130*CASEMAP, 25*CASEMAP)
 
                             self.gameInterfaces.GestionInterfaceGlobale(event)
 
@@ -666,28 +657,29 @@ class GameToolBox(object):
         """En fonction du niveau, on passe au niveau supérieur"""
 
         # changement map / niveau en fonction
-        match NIVEAU["Map"]:
-            case "NiveauPlaineRiviere":
-                NIVEAU["Map"] = "NiveauMedievale"
+        if not INFOS["AdminReset"]:
+            match NIVEAU["Map"]:
+                case "NiveauPlaineRiviere":
+                    NIVEAU["Map"] = "NiveauMedievale"
 
-            case "NiveauMedievale":
-                NIVEAU["Map"] = "NiveauBaseFuturiste"
+                case "NiveauMedievale":
+                    NIVEAU["Map"] = "NiveauBaseFuturiste"
 
-            case "NiveauBaseFuturiste":
-                NIVEAU["Map"] = "NiveauMordor"
+                case "NiveauBaseFuturiste":
+                    NIVEAU["Map"] = "NiveauMordor"
 
-            case "NiveauMordor":
-                NIVEAU["Map"] = "NiveauPlaineRiviere"
-                if NIVEAU["All"]:
-                    match NIVEAU["Niveau"]:
-                        case "Seconde":
-                            NIVEAU["Niveau"] = "Premiere"
-                        case "Premiere":
-                            NIVEAU["Niveau"] = "Terminale"
-                        case "Terminale":
-                            INFOS["GameEnd"] = True
-                else:
-                    INFOS["EndGame"] = True
+                case "NiveauMordor":
+                    NIVEAU["Map"] = "NiveauPlaineRiviere"
+                    if NIVEAU["All"]:
+                        match NIVEAU["Niveau"]:
+                            case "Seconde":
+                                NIVEAU["Niveau"] = "Premiere"
+                            case "Premiere":
+                                NIVEAU["Niveau"] = "Terminale"
+                            case "Terminale":
+                                INFOS["GameEnd"] = True
+                    else:
+                        INFOS["EndGame"] = True
 
 
         # reset valeurs
@@ -696,6 +688,10 @@ class GameToolBox(object):
         PNJ["PNJ3"] = False
         PNJ["PNJ4"] = False
         PNJ["PNJ5"] = False
+        PNJ["PNJ6"] = False
+        PNJ["PNJ7"] = False
+
+        INFOS["AdminReset"] = False
 
         # reset demi niveau (chateau)
         INFOS["DemiNiveau"] = False 

@@ -168,7 +168,7 @@ NIVEAU = {
     "All" : False, 
 
     # map
-    "Map" : "NiveauBaseFuturiste",
+    "Map" : "NiveauPlaineRiviere",
 }
 # box infos globales
 INFOS = {
@@ -182,6 +182,7 @@ INFOS = {
     "ReactorCrash" : False,
     "ReloadCours" : False,
     "EndGame" : False,
+    "NoClip" : False, 
     
     "Difficulte" : False,
     
@@ -199,7 +200,7 @@ INFOS = {
     "HidePlayer" : False,
 
     "Hover" : False,
-
+    "AdminReset" : False,
     
     "ExoReussit" : 0,
     "TotalExo" : 0,

@@ -8,7 +8,7 @@ from SourcesFichiers.Interface.Game.interfaceSettings import *
 from SourcesFichiers.Interface.Game.interfaceSound import *
 from SourcesFichiers.Interface.Game.interfaceExo import *
 from SourcesFichiers.Interface.Other.interfaceCredits import *
-
+from SourcesFichiers.Interface.Game.interfaceAdmin import *
 
 class GestionGameInterfaces(object):
     def __init__(self, gestionnaire, gestionSoundFond, gestionCours):
@@ -23,6 +23,7 @@ class GestionGameInterfaces(object):
         self.isInterfaceCreditOpen = False
         self.isPNJInterfaceOpen = False # bool PNJ
         self.isInterfaceExoOpen = False # bool exo
+        self.isInterfaceAdminOpen = False
 
         # interface map 3
         self.isInterfaceRectorOpen = False # bool reactor
@@ -39,6 +40,9 @@ class GestionGameInterfaces(object):
         # sauvgarde des obj qui ne doivent pas etre reset : 
         self.keepReactorObject = ReactorInterface(self)
 
+        # code admin
+        self.adminCode = [pygame.K_p, pygame.K_a, pygame.K_t, pygame.K_r, pygame.K_i, pygame.K_c, pygame.K_k] # ...
+        self.inputUser = []
 
         # timer click skip
         self.last_click_time = 0
@@ -56,6 +60,8 @@ class GestionGameInterfaces(object):
         self.isInterfaceCreditOpen = False
         self.isPNJInterfaceOpen = False 
         self.isInterfaceExoOpen = False 
+        self.isInterfaceAdminOpen = False
+
 
         # interface map 3
         self.isInterfaceRectorOpen = False 
@@ -83,6 +89,14 @@ class GestionGameInterfaces(object):
                 self.GestionInterfaceSpecifique("Bundle")
             elif event.key == KEYSBIND["book"]:
                 self.GestionInterfaceSpecifique("Book")
+        
+        # code admin
+        self.inputUser.append(event.key)
+        if len(self.inputUser) > len(self.adminCode):
+            self.inputUser.pop(0)  # Supprimer l'ancienne entrée pour garder la bonne taille
+        if self.inputUser == self.adminCode:
+            self.GestionInterfaceSpecifique("Admin")
+
 
 
         # close interface open
@@ -90,6 +104,7 @@ class GestionGameInterfaces(object):
             
             if self.isInterfaceCreditOpen:
                 self.MiseAJourInterfaceCredits()
+            
             elif self.isInterfaceExoOpen:
                 INFOS["Exo"] = False
                 self.CloseAllInterface()
@@ -134,9 +149,9 @@ class GestionGameInterfaces(object):
         if current_time - self.last_click_time > self.click_delay:
             self.last_click_time = current_time
 
-            if self.interface != None and elementSelf != None and argsSpecifique not in ["PNJOpen", "PNJClose"] :
+            if self.interface != None and elementSelf != None and argsSpecifique not in ["PNJOpen", "PNJClose", "Admin"] :
                 pass
-            elif self.interface != None and self.isInterfaceOPEN and argsSpecifique not in ["PNJOpen", "PNJClose"]:
+            elif self.interface != None and self.isInterfaceOPEN and argsSpecifique not in ["PNJOpen", "PNJClose", "Admin"]:
                 self.CloseAllInterface()
             else:
                 
@@ -186,6 +201,13 @@ class GestionGameInterfaces(object):
                     self.isInterfaceOPEN = True # update element global
                     self.isInterfaceRectorOpen = True
                     self.interface = self.keepReactorObject
+                    INFOS["Hover"] = False # reset cursor
+                
+                elif argsSpecifique == "Admin":
+                    self.CloseAllInterface()
+                    self.isInterfaceOPEN = True
+                    self.isInterfaceAdminOpen = True
+                    self.interface = AdminInterface(self)
                     INFOS["Hover"] = False # reset cursor
 
 
