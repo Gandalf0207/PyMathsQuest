@@ -227,13 +227,13 @@ class GetExo:
                 resultat2 = (f"Volume de la Sphere : {round(self.VCone)}")
                 resultat3 = (f"Volume du Cone : {round(self.VSphere)}")
             elif choix == 2:
-                resultat = (f"Volume du Cube : {round(self.VCone)}")
-                resultat2 = (f"Volume de la Sphere : {round(self.VSphere)}")
+                resultat = (f"Volume de la Sphere : {round(self.VSphere)}")
+                resultat2 = (f"Volume du Cube : {round(self.VCone)}")
                 resultat3 = (f"Volume du Cone : {round(self.VCube)}")
             else:
-                resultat = (f"Volume du Cube : {round(self.VSphere)}")
+                resultat = (f"Volume du Cone : {round(self.VCone)}")
                 resultat2 = (f"Volume de la Sphere : {round(self.VCube)}")
-                resultat3 = (f"Volume du Cone : {round(self.VCone)}")  
+                resultat3 = (f"Volume du Cube : {round(self.VSphere)}")
 
             self.stockageValues = (self.a, self.r, self.h, self.d)
             self.listeConstruction = [(self.a, self.r, self.h, self.d), resultat, resultat2, resultat3]
