@@ -29,7 +29,7 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.image = pygame.image.load(join("Image","Player", "down", "0.png")).convert_alpha() # première image 
             self.rect = self.image.get_frect(center = pos)
-            self.hitbox_rect = self.rect.inflate(-60,0) # collision
+            self.hitbox_rect = self.rect.inflate(-60,-30) # collision
         except:
             INFOS["ErrorLoadElement"] = True
 
