@@ -122,7 +122,7 @@ class CollisionSprites(pygame.sprite.Sprite):
             case "CrashVaisseau":
                 self.hitbox = self.rect.inflate(-30,-30)
             case "Pot":
-                self.hitbox = self.rect.inflate(-10,-10)
+                self.hitbox = self.rect.inflate(-40, -40)
             case "DoorCellule":
                 self.hitbox = self.rect.inflate(0,-60)
             case "DoorPrison":

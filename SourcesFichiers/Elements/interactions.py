@@ -416,7 +416,7 @@ class Interactions(object):
             
 
             # Calculer la distance entre le joueur et le PNJ
-            distance = sqrt((playerPos[0] - coordsObj[0])**2 + (playerPos[1] - coordsObj[1])**2)
+            distance = sqrt((playerPos[0] - (coordsObj[0]))**2 + (playerPos[1] - (coordsObj[1]))**2)
             
             self.camera_offset[0] = max(0, min(playerPos[0] - WINDOW_WIDTH // 2, self.map_width - WINDOW_WIDTH))
             self.camera_offset[1] = max(0, min(playerPos[1] - WINDOW_HEIGHT // 2, self.map_height - WINDOW_HEIGHT))
@@ -424,8 +424,15 @@ class Interactions(object):
             # Limiter la caméra pour ne pas montrer le vide
             self.npc_screen_pos = [coordsObj[0]  - self.camera_offset[0], coordsObj[1] - self.camera_offset[1]]
 
- 
+            # modif disatance spécifique
+            if Object.id == "DoorCellule":
+                self.distanceMax = 225
+            elif Object.id == "Pot":
+                self.distanceMax = 130
+            else:
+                self.distanceMax = 150
 
+ 
             if distance <= self.distanceMax:
                 # vrif de possibilité + action possible en fonction de l'avancement
                 if Object.id == "ExitRock" and NIVEAU["Map"] == "NiveauPlaineRiviere" and not PNJ["PNJ3"]:
