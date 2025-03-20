@@ -504,6 +504,7 @@ class GameToolBox(object):
         # création
         try:
             FONT16  = pygame.font.Font(typeFont, int(16*coefSize))
+            FONT18  = pygame.font.Font(typeFont, int(18*coefSize))
             FONT20 = pygame.font.Font(typeFont, int(20*coefSize))
             FONT20U = pygame.font.Font(typeFont, int(20*coefSize))
             FONT20U.set_underline(True)
@@ -520,6 +521,7 @@ class GameToolBox(object):
 
         # aplpication dans le dico setting
         FONT["FONT16"] = FONT16
+        FONT["FONT18"] = FONT18
         FONT["FONT20"] = FONT20
         FONT["FONT20U"] = FONT20U
         FONT["FONT22"] = FONT22
