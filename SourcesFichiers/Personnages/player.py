@@ -137,9 +137,10 @@ class Player(pygame.sprite.Sprite):
     def update(self, dt : int, cinematique : bool) -> None:
         """Méthode d'update du player sur la map.
         Input : dt : int, cinematique : bool ,  Output : None"""
-        if not cinematique:
+        if not cinematique and not INFOS["Animation"]:
             self.input() # get déplacements
         else:
+            self.direction = pygame.Vector2(0, 0)  # Empêcher tout mouvement
             pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])
 
         self.move(dt) # effectuer les déplacements
@@ -167,11 +168,22 @@ class Player(pygame.sprite.Sprite):
         Input / Output : None"""
 
         self.state, self.frame_index = "down", 0 # replacement correct
-        coordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
-        pos = [(coordsSpawn[0] + 7)*CASEMAP + 64, coordsSpawn[1] * CASEMAP + 64]
+        if NIVEAU["Map"] == "NiveauBaseFuturiste":
+            coordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
+            pos = [(coordsSpawn[0] + 7)*CASEMAP + 64, coordsSpawn[1] * CASEMAP + 64]
         self.rect = self.image.get_frect(center = pos)
         self.hitbox_rect = self.rect.inflate(-60,0) # collision
         self.direction = pygame.Vector2(0,0)
+
+    def EndAnimation(self):
+        self.state, self.frame_index = "down", 0  # Réinitialisation
+
+        pos = self.rect.center
+        self.rect = self.image.get_frect(center=pos)
+        self.hitbox_rect = self.rect.inflate(-60, 0)  # Collision
+
+        self.direction = pygame.Vector2(0, 0)  # ANNULER tout mouvement résiduel
+        pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])  # Effacer les touches pressées
 
 
     def Move(self, dt: int, pointSuivant : tuple, pathDeplacement :list) -> any:
