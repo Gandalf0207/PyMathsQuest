@@ -13,10 +13,18 @@ class Player(pygame.sprite.Sprite):
         # sound
         pygame.mixer.init()
         self.canal2 = pygame.mixer.Channel(2)
-        self.grassFoot = True
-        self.grass1 = join("Sound", "EffetSonore", "GrassWalk", "WalkGrass1.mp3")
-        self.grass2 = join("Sound", "EffetSonore", "GrassWalk", "WalkGrass2.mp3")
+        self.SoundFoot = True
+        try :
+            self.grass1 = join("Sound", "EffetSonore", "GrassWalk", "WalkGrass1.mp3")
+            self.grass2 = join("Sound", "EffetSonore", "GrassWalk", "WalkGrass2.mp3")
 
+            self.floor1 = join("Sound", "EffetSonore", "FloorWalk", "Floor1.mp3")
+            self.floor2 = join("Sound", "EffetSonore", "FloorWalk", "Floor2.mp3")
+
+            self.rock1 = join("Sound", "EffetSonore", "RockWalk", "Rock1.mp3")
+            self.rock2 = join("Sound", "EffetSonore", "RockWalk", "Rock2.mp3")   
+        except:
+            INFOS["ErrorLoadElement"] = True
 
         # load image
         self.load_images()
@@ -71,14 +79,27 @@ class Player(pygame.sprite.Sprite):
       
         # normalisation vecteur déplacement
         self.direction = self.direction.normalize() if self.direction else self.direction
+
+        if NIVEAU["Map"] in ["NiveauPlaineRiviere", "NiveauMedievale"]:
+            self.sound1 = self.grass1
+            self.sound2 = self.grass2
+        elif NIVEAU["Map"] == "NiveauBaseFuturiste" : 
+            self.sound1 = self.floor1
+            self.sound2 = self.floor2   
+        elif NIVEAU["Map"] == "NiveauMordor" : 
+            self.sound1 = self.rock1
+            self.sound2 = self.rock2   
+
+        
+
         try:
             if self.direction: # il y a un deplacement
-                if self.grassFoot:
-                    self.grassFoot = False
-                    songCanal2 = pygame.mixer.Sound(self.grass1) 
+                if self.SoundFoot:
+                    self.SoundFoot = False
+                    songCanal2 = pygame.mixer.Sound(self.sound1) 
                 else:
-                    self.grassFoot = True
-                    songCanal2 = pygame.mixer.Sound(self.grass2)
+                    self.SoundFoot = True
+                    songCanal2 = pygame.mixer.Sound(self.sound2)
 
                 if not self.canal2.get_busy():
                     self.canal2.set_volume(SOUND["EffetSonore"])
