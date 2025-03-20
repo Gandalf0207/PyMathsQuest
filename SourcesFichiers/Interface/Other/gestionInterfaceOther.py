@@ -11,7 +11,7 @@ class GestionOtherInterface(object):
         self.gestionnaire = gestionnaire
         self.homeInterface = HomeInterface(self)
         self.endInterface = EndInterface(self)
-        self.creditInterface = CreditsInterfaceGame(self)
+        self.creditInterface = None
         self.creditsOn = False
 
     def Update(self, event, type) -> None:
@@ -19,8 +19,12 @@ class GestionOtherInterface(object):
 
         if type == "Start":
             self.homeInterface.Update(event)
+            self.creditInterface = None
         elif type == "End" : 
             if not self.creditsOn :
                 self.endInterface.Update(event)
+                self.creditInterface = None
             else:
+                if self.creditInterface == None :
+                    self.creditInterface = CreditsInterfaceGame(self)
                 self.creditInterface.Update(event)

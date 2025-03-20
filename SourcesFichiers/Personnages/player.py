@@ -13,10 +13,18 @@ class Player(pygame.sprite.Sprite):
         # sound
         pygame.mixer.init()
         self.canal2 = pygame.mixer.Channel(2)
-        self.grassFoot = True
-        self.grass1 = join("Sound", "EffetSonore", "GrassWalk", "WalkGrass1.mp3")
-        self.grass2 = join("Sound", "EffetSonore", "GrassWalk", "WalkGrass2.mp3")
+        self.SoundFoot = True
+        try :
+            self.grass1 = join("Sound", "EffetSonore", "GrassWalk", "WalkGrass1.mp3")
+            self.grass2 = join("Sound", "EffetSonore", "GrassWalk", "WalkGrass2.mp3")
 
+            self.floor1 = join("Sound", "EffetSonore", "FloorWalk", "Floor1.mp3")
+            self.floor2 = join("Sound", "EffetSonore", "FloorWalk", "Floor2.mp3")
+
+            self.rock1 = join("Sound", "EffetSonore", "RockWalk", "Rock1.mp3")
+            self.rock2 = join("Sound", "EffetSonore", "RockWalk", "Rock2.mp3")   
+        except:
+            INFOS["ErrorLoadElement"] = True
 
         # load image
         self.load_images()
@@ -29,7 +37,7 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.image = pygame.image.load(join("Image","Player", "down", "0.png")).convert_alpha() # première image 
             self.rect = self.image.get_frect(center = pos)
-            self.hitbox_rect = self.rect.inflate(-60,0) # collision
+            self.hitbox_rect = self.rect.inflate(-60,-30) # collision
         except:
             INFOS["ErrorLoadElement"] = True
 
@@ -71,14 +79,27 @@ class Player(pygame.sprite.Sprite):
       
         # normalisation vecteur déplacement
         self.direction = self.direction.normalize() if self.direction else self.direction
+
+        if NIVEAU["Map"] in ["NiveauPlaineRiviere", "NiveauMedievale"]:
+            self.sound1 = self.grass1
+            self.sound2 = self.grass2
+        elif NIVEAU["Map"] == "NiveauBaseFuturiste" : 
+            self.sound1 = self.floor1
+            self.sound2 = self.floor2   
+        elif NIVEAU["Map"] == "NiveauMordor" : 
+            self.sound1 = self.rock1
+            self.sound2 = self.rock2   
+
+        
+
         try:
             if self.direction: # il y a un deplacement
-                if self.grassFoot:
-                    self.grassFoot = False
-                    songCanal2 = pygame.mixer.Sound(self.grass1) 
+                if self.SoundFoot:
+                    self.SoundFoot = False
+                    songCanal2 = pygame.mixer.Sound(self.sound1) 
                 else:
-                    self.grassFoot = True
-                    songCanal2 = pygame.mixer.Sound(self.grass2)
+                    self.SoundFoot = True
+                    songCanal2 = pygame.mixer.Sound(self.sound2)
 
                 if not self.canal2.get_busy():
                     self.canal2.set_volume(SOUND["EffetSonore"])
@@ -103,17 +124,17 @@ class Player(pygame.sprite.Sprite):
     def collision(self, direction : tuple) -> None:
         """Méthode gestion de collision player et environnement.
         Input : direction : tuple, Output : None"""
-
-        # check de collision avec tout les sprites
-        for sprite in self.collision_sprites:
-            
-            if sprite.hitbox.colliderect(self.hitbox_rect):  # Utilisation hitbox
-                if direction == 'horizontal': # axe x
-                    if self.direction.x > 0: self.hitbox_rect.right = sprite.hitbox.left
-                    if self.direction.x < 0: self.hitbox_rect.left = sprite.hitbox.right
-                else: # axe y
-                    if self.direction.y < 0: self.hitbox_rect.top = sprite.hitbox.bottom
-                    if self.direction.y > 0: self.hitbox_rect.bottom = sprite.hitbox.top
+        if not INFOS["NoClip"]:
+            # check de collision avec tout les sprites
+            for sprite in self.collision_sprites:
+                
+                if sprite.hitbox.colliderect(self.hitbox_rect):  # Utilisation hitbox
+                    if direction == 'horizontal': # axe x
+                        if self.direction.x > 0: self.hitbox_rect.right = sprite.hitbox.left
+                        if self.direction.x < 0: self.hitbox_rect.left = sprite.hitbox.right
+                    else: # axe y
+                        if self.direction.y < 0: self.hitbox_rect.top = sprite.hitbox.bottom
+                        if self.direction.y > 0: self.hitbox_rect.bottom = sprite.hitbox.top
 
 
     def animate(self, dt : int) -> None:
@@ -167,11 +188,22 @@ class Player(pygame.sprite.Sprite):
         Input / Output : None"""
 
         self.state, self.frame_index = "down", 0 # replacement correct
-        coordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
-        pos = [(coordsSpawn[0] + 7)*CASEMAP + 64, coordsSpawn[1] * CASEMAP + 64]
+        if NIVEAU["Map"] == "NiveauBaseFuturiste":
+            coordsSpawn = LoadJsonMapValue("coordsMapObject", "Spawn")
+            pos = [(coordsSpawn[0] + 7)*CASEMAP + 64, coordsSpawn[1] * CASEMAP + 64]
         self.rect = self.image.get_frect(center = pos)
         self.hitbox_rect = self.rect.inflate(-60,0) # collision
         self.direction = pygame.Vector2(0,0)
+
+    def EndAnimation(self):
+        self.state, self.frame_index = "down", 0  # Réinitialisation
+
+        pos = self.rect.center
+        self.rect = self.image.get_frect(center=pos)
+        self.hitbox_rect = self.rect.inflate(-60, 0)  # Collision
+
+        self.direction = pygame.Vector2(0, 0)  # ANNULER tout mouvement résiduel
+        pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])  # Effacer les touches pressées
 
 
     def Move(self, dt: int, pointSuivant : tuple, pathDeplacement :list) -> any:

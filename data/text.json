@@ -9,6 +9,14 @@
         "ErreurLoad" : "Problème load fichiers ressources. ",
         "Reussite" : "Vous avez une réussite de :",
 
+        "AdminPanel" : {
+            "Title" : "Administrateur",
+            "TP" : "TP NPC",
+            "Niveau" : "Niveau", 
+            "Cours" : "Cours",
+            "Autre" : "Autre +"
+        },
+
 
         "Crédits" : {
                 "Crédits": "PyMathsQuest",

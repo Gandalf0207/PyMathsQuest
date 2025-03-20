@@ -43,7 +43,7 @@ class CreationCours(object):
                         listCoursNumeroFormation.append(["Image", chemin_image])
 
                     elif element[0]:  # Si c'est une formule LaTeX
-                        latex_surface = self.ObjRender.GetElement(element[1], 14)
+                        latex_surface = self.ObjRender.GetElement(element[1], 12)
                         listCoursNumeroFormation.append([True, latex_surface])
 
                     else:  # Texte simple

@@ -222,6 +222,7 @@ class CreateExo:
             INFOS["ExoReussit"] += 1
             INFOS["TotalExo"] += 1
         else:
+            self.gestionnaire.fondu_au_noir()
             INFOS["CinematiqueEndAct"] = True
             INFOS["ExoPasse"] = False
             INFOS["GameStart"] = False

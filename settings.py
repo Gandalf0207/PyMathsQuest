@@ -147,6 +147,7 @@ COORDS_BOX_IDEAS_TIPS = (320, WINDOW_HEIGHT-160)
 # font tool box
 FONT = {
     "FONT16" : None,
+    "FONT18" : None,
     "FONT20" : None,
     "FONT20U" : None,
     "FONT22" : None,
@@ -181,6 +182,7 @@ INFOS = {
     "ReactorCrash" : False,
     "ReloadCours" : False,
     "EndGame" : False,
+    "NoClip" : False, 
     
     "Difficulte" : False,
     
@@ -198,7 +200,7 @@ INFOS = {
     "HidePlayer" : False,
 
     "Hover" : False,
-
+    "AdminReset" : False,
     
     "ExoReussit" : 0,
     "TotalExo" : 0,

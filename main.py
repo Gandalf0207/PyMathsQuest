@@ -218,15 +218,6 @@ class Game(object):
                     elif not self.cinematique:
 
                         if event.type == pygame.KEYDOWN: # TP : ne pas oublier de retirer
-                            if event.key == pygame.K_t:
-                                first_sprite = next(iter(self.allPNJ))  # Premier objet du groupe
-                                self.player.rect.center = (first_sprite.pos[0]*CASEMAP, first_sprite.pos[1]*CASEMAP)
-                                self.player.hitbox_rect.center = (first_sprite.pos[0]*CASEMAP, first_sprite.pos[1]*CASEMAP)
-
-
-                            if event.key == pygame.K_0:
-                                self.player.rect.center = (130*CASEMAP, 25*CASEMAP)
-                                self.player.hitbox_rect.center = (130*CASEMAP, 25*CASEMAP)
 
                             self.gameInterfaces.GestionInterfaceGlobale(event)
 
@@ -504,6 +495,7 @@ class GameToolBox(object):
         # création
         try:
             FONT16  = pygame.font.Font(typeFont, int(16*coefSize))
+            FONT18  = pygame.font.Font(typeFont, int(18*coefSize))
             FONT20 = pygame.font.Font(typeFont, int(20*coefSize))
             FONT20U = pygame.font.Font(typeFont, int(20*coefSize))
             FONT20U.set_underline(True)
@@ -520,6 +512,7 @@ class GameToolBox(object):
 
         # aplpication dans le dico setting
         FONT["FONT16"] = FONT16
+        FONT["FONT18"] = FONT18
         FONT["FONT20"] = FONT20
         FONT["FONT20U"] = FONT20U
         FONT["FONT22"] = FONT22
@@ -532,9 +525,9 @@ class GameToolBox(object):
 
 
     def ChargementEcran(self):
+
         """Méthode fluide pour l'écran de chargement."""
         loading_step = 0  # Variable d'animation
-        clock = pygame.time.Clock()
 
         while not self.gestionnaire.checkLoadingDone or not self.gestionnaire.checkCoursDone:
             self.gestionnaire.displaySurface.fill((0, 0, 0))  # Fond noir
@@ -547,7 +540,7 @@ class GameToolBox(object):
             self.gestionnaire.displaySurface.blit(text, text_rect.topleft)
 
             pygame.display.flip()
-            clock.tick(10)  # 10 FPS pour une animation fluide
+            self.gestionnaire.clock.tick(30)  # 10 FPS pour une animation fluide
 
             # Gérer les événements pour éviter freeze
             for event in pygame.event.get():
@@ -557,7 +550,6 @@ class GameToolBox(object):
 
         self.fondu_au_noir()    
         self.ouverture_du_noir(self.gestionnaire.player.rect.center)
-
 
     def textScreen(self, text):
         """Méthode d'affichage optimisée du texte d'animation sur l'écran."""
@@ -582,36 +574,36 @@ class GameToolBox(object):
             self.gestionnaire.displaySurface.blit(line_surface, text_rect)  # Afficher le texte à l'écran
             pygame.display.flip()  # Mettre à jour l'écran
 
-            clock.tick(60)  # Limiter à 60 FPS pour garantir que l'animation reste fluide
+            clock.tick(30)  # Limiter à 60 FPS pour garantir que l'animation reste fluide
 
-            # Gestion des événements pendant l'affichage du texte
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()  # Quitter proprement si l'utilisateur ferme la fenêtre
+            # # Gestion des événements pendant l'affichage du texte
+            # for event in pygame.event.get():
+            #     if event.type == pygame.QUIT:
+            #         pygame.quit()
+            #         sys.exit()  # Quitter proprement si l'utilisateur ferme la fenêtre
 
         pygame.time.delay(2500)  # Affichage du texte complet pendant un moment supplémentaire
         self.fondu_au_noir()  # Transition avec fondu au noir après l'affichage du texte
 
 
+
     def fondu_au_noir(self):
         """Méthode de fondu au noir avec gestion de l'alpha et optimisation."""
+        
         fade_surface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))  # Créer une surface de la taille de l'écran
         fade_surface.fill((0, 0, 0))  # Surface noire
 
-        clock = pygame.time.Clock()
         alpha = 0
-        running = True
 
         # Appliquer un fondu qui se fait progressivement
-        while running and alpha < 255:
+        while alpha < 255:
             # Appliquer le fondu sur la surface noire avec un alpha croissant
             fade_surface.set_alpha(alpha)
             self.gestionnaire.displaySurface.blit(fade_surface, (0, 0))
 
             alpha += 5  # Augmenter l'alpha à chaque itération pour créer l'effet de fondu
             pygame.display.flip()  # Mettre à jour l'écran
-            clock.tick(60)  # Limite de FPS pour rendre l'animation fluide
+            self.gestionnaire.clock.tick(30)  # Limite de FPS pour rendre l'animation fluide
 
             # Gérer les événements pour éviter le freeze pendant l'animation
             for event in pygame.event.get():
@@ -621,23 +613,22 @@ class GameToolBox(object):
 
         pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])  # Nettoyer les événements
 
-    def ouverture_du_noir(self, targetPos):
+
+    def ouverture_du_noir(self, targetPos):      
         """Méthode d'ouverture du noir avec gestion fluide."""
         fade_surface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
         fade_surface.fill((0, 0, 0))
 
-        clock = pygame.time.Clock()
         alpha = 255
-        running = True
 
-        while running and alpha > 0:
+        while alpha > 0:
             self.gestionnaire.allSprites.draw(targetPos)
             fade_surface.set_alpha(alpha)
             self.gestionnaire.displaySurface.blit(fade_surface, (0, 0))
             
             alpha -= 5
             pygame.display.flip()
-            clock.tick(60)  # Limite FPS à 60
+            self.gestionnaire.clock.tick(30)  # Limite FPS à 60
 
             # Gérer les événements pour éviter le freeze
             for event in pygame.event.get():
@@ -645,8 +636,11 @@ class GameToolBox(object):
                     pygame.quit()
                     sys.exit()
 
+            pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])
         pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])
         self.gestionnaire.timer_begin = pygame.time.get_ticks()
+        self.gestionnaire.player.EndAnimation()
+
 
     def SetInfosLevel(self):
         match NIVEAU["Map"]:
@@ -663,28 +657,29 @@ class GameToolBox(object):
         """En fonction du niveau, on passe au niveau supérieur"""
 
         # changement map / niveau en fonction
-        match NIVEAU["Map"]:
-            case "NiveauPlaineRiviere":
-                NIVEAU["Map"] = "NiveauMedievale"
+        if not INFOS["AdminReset"]:
+            match NIVEAU["Map"]:
+                case "NiveauPlaineRiviere":
+                    NIVEAU["Map"] = "NiveauMedievale"
 
-            case "NiveauMedievale":
-                NIVEAU["Map"] = "NiveauBaseFuturiste"
+                case "NiveauMedievale":
+                    NIVEAU["Map"] = "NiveauBaseFuturiste"
 
-            case "NiveauBaseFuturiste":
-                NIVEAU["Map"] = "NiveauMordor"
+                case "NiveauBaseFuturiste":
+                    NIVEAU["Map"] = "NiveauMordor"
 
-            case "NiveauMordor":
-                NIVEAU["Map"] = "NiveauPlaineRiviere"
-                if NIVEAU["All"]:
-                    match NIVEAU["Niveau"]:
-                        case "Seconde":
-                            NIVEAU["Niveau"] = "Premiere"
-                        case "Premiere":
-                            NIVEAU["Niveau"] = "Terminale"
-                        case "Terminale":
-                            INFOS["GameEnd"] = True
-                else:
-                    INFOS["EndGame"] = True
+                case "NiveauMordor":
+                    NIVEAU["Map"] = "NiveauPlaineRiviere"
+                    if NIVEAU["All"]:
+                        match NIVEAU["Niveau"]:
+                            case "Seconde":
+                                NIVEAU["Niveau"] = "Premiere"
+                            case "Premiere":
+                                NIVEAU["Niveau"] = "Terminale"
+                            case "Terminale":
+                                INFOS["GameEnd"] = True
+                    else:
+                        INFOS["EndGame"] = True
 
 
         # reset valeurs
@@ -693,6 +688,10 @@ class GameToolBox(object):
         PNJ["PNJ3"] = False
         PNJ["PNJ4"] = False
         PNJ["PNJ5"] = False
+        PNJ["PNJ6"] = False
+        PNJ["PNJ7"] = False
+
+        INFOS["AdminReset"] = False
 
         # reset demi niveau (chateau)
         INFOS["DemiNiveau"] = False 

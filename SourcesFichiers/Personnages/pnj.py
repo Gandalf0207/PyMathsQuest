@@ -5,7 +5,7 @@ from SourcesFichiers.Elements.followPlayer import *
 
 class PNJOBJ(pygame.sprite.Sprite):
     
-    def __init__(self, pos : tuple ,numpnj : str,  groups : any) -> None:
+    def __init__(self, pos : tuple ,numpnj : str,  groups : any, layer = 5) -> None:
         """Méthode initialisation object pnj
         Input : pos : tuple, numpnj : str, groups : element pygame. Output : None"""
 
@@ -14,6 +14,11 @@ class PNJOBJ(pygame.sprite.Sprite):
         self.numPNJ = numpnj
         self.pos = (pos[0] // CASEMAP, pos[1] // CASEMAP) # pos sur double list
         self.id = "PNJ"
+
+        # Vérifier si le groupe principal supporte les layers
+        for group in groups:
+            if isinstance(group, pygame.sprite.LayeredUpdates):
+                group.change_layer(self, layer)
 
         # images + hitbox
         self.direction = "down"

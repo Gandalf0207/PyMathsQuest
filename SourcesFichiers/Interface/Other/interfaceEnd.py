@@ -30,7 +30,7 @@ class EndInterface():
 
 
 
-        self.percentageReussite = 0
+        self.percentageReussite = None
 
 
         # timer click btn delays
@@ -41,7 +41,7 @@ class EndInterface():
             # récupération des valeurs stocké dans le json
         win = INFOS["ExoReussit"]
         total = INFOS["TotalExo"]
-        self.percentageReussite = round(win/total, 2)*100
+        self.percentageReussite = int(round(win/total, 2)*100)
 
     def BluidInterface(self):
         
