@@ -303,6 +303,22 @@ class PNJInterface(object):
                         INFOS["Exo"] = True # lancement exo dans main (changement variable)
                         self.gestionnaire.gestionnaire.fondu_au_noir()
                         self.gestionnaire.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["MakeExo"]) # text animation
+                    
+                    if NIVEAU["Map"] == "NiveauMordor" and self.gestionnaire.pnjActuel == "PNJ1": # remise en place du tp si nécessaire
+                        #animation 
+                        self.gestionnaire.gestionnaire.fondu_au_noir()
+                        self.gestionnaire.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["GoPrison"])
+
+                        player = self.gestionnaire.gestionnaire.player
+                        # deplacement player
+                        player.hitbox_rect.center = (71*CASEMAP + 64, 1*CASEMAP + 64) # +64 center case à coté
+                        player.rect.center = player.hitbox_rect.center
+
+                        self.gestionnaire.gestionnaire.ouverture_du_noir(player.rect.center)
+
+
+
+
             except:
                 self.CloseInterface() # fermeture interface # sécurité
     def loadPNG(self) -> None:

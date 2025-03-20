@@ -168,7 +168,7 @@ NIVEAU = {
     "All" : False, 
 
     # map
-    "Map" : "NiveauPlaineRiviere",
+    "Map" : "NiveauMordor",
 }
 # box infos globales
 INFOS = {
@@ -181,7 +181,7 @@ INFOS = {
     "CinematiqueEndAct" : False,
     "ReactorCrash" : False,
     "ReloadCours" : False,
-    "EndGame" : True,
+    "EndGame" : False,
     
     "Difficulte" : False,
     
