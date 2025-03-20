@@ -168,7 +168,7 @@ NIVEAU = {
     "All" : False, 
 
     # map
-    "Map" : "NiveauBaseFuturiste",
+    "Map" : "NiveauMordor",
 }
 # box infos globales
 INFOS = {
@@ -190,7 +190,7 @@ INFOS = {
     
     "GetCours" : 0, 
 
-    "DemiNiveau" : True,
+    "DemiNiveau" : False,
     "ChangementNiveau" : False,
     
     "HideHotBar" : False,
