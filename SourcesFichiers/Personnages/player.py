@@ -137,7 +137,7 @@ class Player(pygame.sprite.Sprite):
     def update(self, dt : int, cinematique : bool) -> None:
         """Méthode d'update du player sur la map.
         Input : dt : int, cinematique : bool ,  Output : None"""
-        if not cinematique and not INFOS["Animation"]:
+        if not cinematique:
             self.input() # get déplacements
         else:
             self.direction = pygame.Vector2(0, 0)  # Empêcher tout mouvement

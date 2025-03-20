@@ -599,7 +599,6 @@ class GameToolBox(object):
     def fondu_au_noir(self):
         """Méthode de fondu au noir avec gestion de l'alpha et optimisation."""
         
-        INFOS["Animation"] = True
         fade_surface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))  # Créer une surface de la taille de l'écran
         fade_surface.fill((0, 0, 0))  # Surface noire
 
@@ -648,7 +647,6 @@ class GameToolBox(object):
 
             pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])
         pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])
-        INFOS["Animation"] = False
         self.gestionnaire.timer_begin = pygame.time.get_ticks()
         self.gestionnaire.player.EndAnimation()
 

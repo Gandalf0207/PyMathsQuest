@@ -182,7 +182,6 @@ INFOS = {
     "ReactorCrash" : False,
     "ReloadCours" : False,
     "EndGame" : False,
-    "Animation" : False,
     
     "Difficulte" : False,
     
