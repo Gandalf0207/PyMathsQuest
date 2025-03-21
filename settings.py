@@ -183,25 +183,18 @@ INFOS = {
     "ReloadCours" : False,
     "EndGame" : False,
     "NoClip" : False, 
-    
     "Difficulte" : False,
-    
     "Exo" : False, 
     "ExoPasse" : False,
-    
-    "GetCours" : 0, 
-
+    "GetCours" : 0,
     "DemiNiveau" : False,
     "ChangementNiveau" : False,
-    
     "HideHotBar" : False,
     "RebindingKey": False,
     "ReactorOn" : False,
     "HidePlayer" : False,
-
     "Hover" : False,
     "AdminReset" : False,
-    
     "ExoReussit" : 0,
     "TotalExo" : 0,
 }

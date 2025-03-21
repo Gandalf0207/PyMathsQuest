@@ -69,15 +69,16 @@ class CreateExo:
         self.interfaceExoSurface.fill("#ffffff")
 
         # titre
-        textTitre = FONT["FONT30"].render(TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]]["Title"], True, (0, 0, 0))
+        textT = TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]]["Title"] if NIVEAU["Map"] != "NiveauMordor" else TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"DemiNiveau{INFOS["DemiNiveau"]}"]["Title"]
+        textTitre = FONT["FONT30"].render(textT, True, (0, 0, 0))
         self.interfaceExoSurface.blit(textTitre, (10, 10))
             # update hauteur
         heightText = FONT["FONT30"].size("TG")[1]
         self.hauteurAct += heightText + 10
 
         # consigne
-        self.textConsigne = TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Difficulte{INFOS["Difficulte"]}"]["Consigne"]
-
+        self.textConsigne = TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Difficulte{INFOS["Difficulte"]}"]["Consigne"] if NIVEAU["Map"] != "NiveauMordor" else TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"DemiNiveau{INFOS["DemiNiveau"]}"][f"Difficulte{INFOS["Difficulte"]}"]["Consigne"]
+        
         # Mettre à jour le texte affiché si nécessaire
         if self.indexTexte < len(self.textConsigne):
             self.indexTexte += 1
@@ -152,7 +153,8 @@ class CreateExo:
 
 
         # réponse titre
-        self.textQCM = FONT["FONT24"].render(TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Difficulte{INFOS["Difficulte"]}"]["QCM"], True, (0, 0, 0))
+        textQ = TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Difficulte{INFOS["Difficulte"]}"]["QCM"] if NIVEAU["Map"] != "NiveauMordor" else TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"DemiNiveau{INFOS["DemiNiveau"]}"][f"Difficulte{INFOS["Difficulte"]}"]["QCM"]
+        self.textQCM = FONT["FONT24"].render(textQ, True, (0, 0, 0))
         self.interfaceExoSurface.blit(self.textQCM, self.textQCM.get_rect(center=(self.interfaceExoSurface.get_width()//2, self.interfaceExoSurface.get_height()-150)))
 
         # réponse button
@@ -217,16 +219,23 @@ class CreateExo:
     def Win(self) -> None:
         """Méthode d'action si la réponse est juste
         Input / Output : None"""
-        if not NIVEAU["Map"] == "NiveauMordor" or not INFOS["DemiNiveau"]:
+        if (NIVEAU["Map"] != "NiveauMordor" and INFOS["DemiNiveau"]) or (NIVEAU["Map"] == "NiveauPlaineRiviere"):
             INFOS["ExoPasse"] = True
+            INFOS["ExoReussit"] += 1
+            INFOS["TotalExo"] += 1
+        elif NIVEAU["Map"] == "NiveauMordor" and not INFOS["DemiNiveau"]:
+            INFOS["DemiNiveau"] = True
+            INFOS["ExoPasse"] = False # on ne veux pas changer de niveau
+            STATE_HELP_INFOS[0] = "SeePNJ" # update tips player
             INFOS["ExoReussit"] += 1
             INFOS["TotalExo"] += 1
         else:
             self.gestionnaire.fondu_au_noir()
+            self.gestionnaire.textScreen("   ")
             INFOS["CinematiqueEndAct"] = True
             INFOS["ExoPasse"] = False
-            INFOS["GameStart"] = False
-            INFOS["EndGame"] = True
+            INFOS["GameStart"] = False # jouer la cinématique avant
+            INFOS["EndGame"] = True # de meme 
 
 
     def Loose(self) -> None:

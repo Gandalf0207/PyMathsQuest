@@ -399,8 +399,8 @@ class Interactions(object):
 
                 if self.ObjectId == "DoorVolcan" : 
                     self.gestionnaire.fondu_au_noir()
-                    INFOS["DemiNiveau"] = True
-                    STATE_HELP_INFOS[0] = "SeePNJ" # update tips player
+                    INFOS["Exo"] = True # lancement exo dans main (changement variable)
+                    self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["MakeExo"]) # text animation
 
 
 

@@ -316,7 +316,8 @@
 
 
         "NiveauMordor" : {
-            "MakeExo" : "Pour rentrer dans le volcan, résolvez cet exercice",
+            "MakeExo" : "Pour vaincre le roi, résolvez cet exercice",
+            "EnterVolcan" : "Vous entrez dans le volcan",
             "GoPrison" : "L'orc ne se montre pas amical, vous finissez en prison.",
             "Parchemin" : "Vous obtenez le parchemin",
             "ParcheminVu" : "Vous avez déjà obtenu le parchemin",
@@ -330,17 +331,33 @@
 
             "ExoTexte" : {
                 "Seconde" :{
+                        "DemiNiveauFalse": {
+                            "Title" : "Exercice Equation à 2 inconnues",
 
-                        "Title" : "Exo boss seconde",
+                            "DifficulteTrue" : {
+                                "Consigne" : "Vous devez résoudre ce système à deux inconnues",
+                                "QCM" : "Choisissez l'unique bonne réponse"
+                            },
 
-                        "DifficulteTrue" : {
-                            "Consigne" : "Un voilier se trouve dans le port de Sète et avant de partir un client veut connaître le volume d’huile que le navire peut transporter sachant qu’il possède une cargaison de 85 tonneaux de longueur 'a' et de largeur 'b' (nous affirmons que les tonneaux utilisés ont des côtés totalement droit et non arrondis. Après cela le bateau prend le large et reçoit des informations sur un autre bateau naviguant à la même vitesse, déterminer si les 2 bateaux se croiseront. De plus le bateau b1 est actuellement au point A et navigue selon la direction (AB). De même le bateau b2 est actuellement au point C et navigue selon la direction (CD). Coordonnées :",
-                            "QCM" : "Choisissez l'unique bonne réponse"
+                            "DifficulteFalse" : {
+                                "Consigne" : "Vous devez résoudre ce système à deux inconnues",
+                                "QCM" : "Choisissez l'unique bonne réponse"
+                            }
+
                         },
 
-                        "DifficulteFalse" : {
-                            "Consigne" : "Un voilier se trouve dans le port de Sète et avant de partir un client veut connaître le volume d’huile que le navire peut transporter sachant qu’il possède une cargaison de 85 tonneaux de longueur 'a' et de largeur 'b' (nous affirmons que les tonneaux utilisés ont des côtés totalement droit et non arrondis. Après cela le bateau prend le large et reçoit des informations sur un autre bateau naviguant à la même vitesse, déterminer si les 2 bateaux se croiseront. De plus le bateau b1 est actuellement au point A et navigue selon la direction (AB). De même le bateau b2 est actuellement au point C et navigue selon la direction (CD). Coordonnées :",
-                            "QCM" : "Choisissez l'unique bonne réponse"
+                        "DemiNiveauTrue" : {
+                            "Title" : "Exo boss seconde",
+
+                            "DifficulteTrue" : {
+                                "Consigne" : "Un voilier se trouve dans le port de Sète et avant de partir un client veut connaître le volume d’huile que le navire peut transporter sachant qu’il possède une cargaison de 85 tonneaux de longueur 'a' et de largeur 'b' (nous affirmons que les tonneaux utilisés ont des côtés totalement droit et non arrondis. Après cela le bateau prend le large et reçoit des informations sur un autre bateau naviguant à la même vitesse, déterminer si les 2 bateaux se croiseront. De plus le bateau b1 est actuellement au point A et navigue selon la direction (AB). De même le bateau b2 est actuellement au point C et navigue selon la direction (CD). Coordonnées :",
+                                "QCM" : "Choisissez l'unique bonne réponse"
+                            },
+
+                            "DifficulteFalse" : {
+                                "Consigne" : "Un voilier se trouve dans le port de Sète et avant de partir un client veut connaître le volume d’huile que le navire peut transporter sachant qu’il possède une cargaison de 85 tonneaux de longueur 'a' et de largeur 'b' (nous affirmons que les tonneaux utilisés ont des côtés totalement droit et non arrondis. Après cela le bateau prend le large et reçoit des informations sur un autre bateau naviguant à la même vitesse, déterminer si les 2 bateaux se croiseront. De plus le bateau b1 est actuellement au point A et navigue selon la direction (AB). De même le bateau b2 est actuellement au point C et navigue selon la direction (CD). Coordonnées :",
+                                "QCM" : "Choisissez l'unique bonne réponse"
+                            }    
                         }
 
 

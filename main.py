@@ -22,7 +22,7 @@ class Game(object):
         """Méthode initialisation all settings du jeu en général (groupe, construction...)
         Input / Output : None"""
 
-        # general setup
+        # General setup
         pygame.init() # Initialisation de la fenetre pygame
         
         self.displaySurface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT)) # taille fenetre
@@ -82,7 +82,7 @@ class Game(object):
         """Méthode de création de tout les éléments pour le niveau / map
         Input / Output : None"""
 
-        # all surface secondaire (hotbar)
+        # Ssurface secondaire (hotbar)
         self.minimap_surface = pygame.Surface((300, 150), pygame.SRCALPHA)
         self.ideaTips_surface = pygame.Surface((514, 150), pygame.SRCALPHA)
         self.allSettings_surface = pygame.Surface((426, 150), pygame.SRCALPHA)
@@ -96,7 +96,7 @@ class Game(object):
             INFOS["ErrorLoadElement"] = True
 
         # boolean de check game
-        self.followObject = None #oj suivre
+        self.followObject = None #ojn suivre
         self.followPlayer = False # bool 
         self.interface_exo = False
         self.cinematique = False # cinématique
@@ -726,6 +726,8 @@ class GameToolBox(object):
             self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["OpenChateau"])
         elif NIVEAU["Map"] == "BaseFuturiste" :
             self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["VaisseauSpacial"])
+        elif NIVEAU["Map"] == "NiveauMordor":
+            self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["EnterVolcan"])
 
         # Réinitialiser les groupes
         self.gestionnaire.allSprites.empty()  # Vide le groupe, supprime les sprites.
