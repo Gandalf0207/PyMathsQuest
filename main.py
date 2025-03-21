@@ -540,7 +540,7 @@ class GameToolBox(object):
             self.gestionnaire.displaySurface.blit(text, text_rect.topleft)
 
             pygame.display.flip()
-            self.gestionnaire.clock.tick(30)  # 10 FPS pour une animation fluide
+            self.gestionnaire.clock.tick(10)  # 10 FPS pour une animation fluide
 
             # Gérer les événements pour éviter freeze
             for event in pygame.event.get():
@@ -576,11 +576,11 @@ class GameToolBox(object):
 
             clock.tick(30)  # Limiter à 60 FPS pour garantir que l'animation reste fluide
 
-            # # Gestion des événements pendant l'affichage du texte
-            # for event in pygame.event.get():
-            #     if event.type == pygame.QUIT:
-            #         pygame.quit()
-            #         sys.exit()  # Quitter proprement si l'utilisateur ferme la fenêtre
+            # Gestion des événements pendant l'affichage du texte
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()  # Quitter proprement si l'utilisateur ferme la fenêtre
 
         pygame.time.delay(2500)  # Affichage du texte complet pendant un moment supplémentaire
         self.fondu_au_noir()  # Transition avec fondu au noir après l'affichage du texte
@@ -611,7 +611,7 @@ class GameToolBox(object):
                     pygame.quit()
                     sys.exit()
 
-        pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])  # Nettoyer les événements
+        pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP, pygame.MOUSEBUTTONDOWN, pygame.MOUSEBUTTONUP])  # Nettoyer les événements
 
 
     def ouverture_du_noir(self, targetPos):      

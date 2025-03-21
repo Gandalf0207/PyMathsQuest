@@ -105,6 +105,9 @@ class AdminInterface():
                 INFOS["NoClip"] = True
         
         elif btnType == "OpenExo":
+            if NIVEAU["Map"] not in ["NiveauPlaineRiviere", "NiveauMordor"]:
+                self.gestionnaire.gestionnaire.demiNiveau = True # evite le rechargement
+                INFOS["DemiNiveau"] = True                 
             INFOS["Exo"] = True # lancement exo dans main (changement variable)
         
         elif btnType == "DemiNV":

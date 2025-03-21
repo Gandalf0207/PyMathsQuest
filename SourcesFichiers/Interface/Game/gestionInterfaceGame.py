@@ -50,8 +50,9 @@ class GestionGameInterfaces(object):
 
 
     def CloseAllInterface(self):
-        if INFOS:
+        if self.isInterfaceExoOpen:         
             INFOS["TotalExo"] += 1 #abandon de l'exo (fermure de la fenetre)
+
         INFOS["Exo"] = False
 
         # interfaces globales
@@ -106,7 +107,6 @@ class GestionGameInterfaces(object):
                 self.MiseAJourInterfaceCredits()
             
             elif self.isInterfaceExoOpen:
-                INFOS["Exo"] = False
                 self.CloseAllInterface()
             else:
                 self.CloseAllInterface()

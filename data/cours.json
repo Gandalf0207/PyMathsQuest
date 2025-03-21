@@ -57,7 +57,7 @@
 
                 "Cours3" : {
                     "0" : [false, "La formule pour calculer le volume d’un sphère est :"],
-                    "1" : [true, "$ \\frac{4}{3} \\times \\pi \\times ^3 $"]
+                    "1" : [true, "$ \\frac{4}{3} \\times \\pi \\times r^3 $"]
                 }
             }, 
 

@@ -143,10 +143,10 @@ class BookInterface(object):
                 # Gestion des textes
                 else:
                     texte = element[1]
-                    wrapped_lines = wrap_text(texte, FONT["FONT18"], self.surfaceGauche.get_width() - 20)
-                    line_height = FONT["FONT18"].size("Tg")[1]
+                    wrapped_lines = wrap_text(texte, FONT["FONT20"], self.surfaceGauche.get_width() - 20)
+                    line_height = FONT["FONT20"].size("Tg")[1]
                     for line in wrapped_lines:
-                        line_surface = FONT["FONT18"].render(line, True, (0, 0, 0))
+                        line_surface = FONT["FONT20"].render(line, True, (0, 0, 0))
                         if page_position == 0:  # Page gauche
                             self.surfaceGauche.blit(line_surface, (20, self.hauteurAct))
                         else:  # Page droite

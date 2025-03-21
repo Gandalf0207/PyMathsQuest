@@ -41,7 +41,7 @@ class EndInterface():
             # récupération des valeurs stocké dans le json
         win = INFOS["ExoReussit"]
         total = INFOS["TotalExo"]
-        self.percentageReussite = int(round(win/total, 2)*100)
+        self.percentageReussite = int(round(win/total, 3)*100)
 
     def BluidInterface(self):
         
@@ -116,6 +116,7 @@ class EndInterface():
             
 
                 if self.btnRectPDF.collidepoint(event.pos):
+                    self.gestionnaire.gestionnaire.fondu_au_noir()
                     pass
                     # générer le pdf
 

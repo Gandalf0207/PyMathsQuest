@@ -38,7 +38,7 @@
                   "Créateur bandes son": "Nocyfer",
                   "Pixel Art Joueur": "BARON Héloïse",
                   "Compositeur": "Nocyfer",
-                  "Traduction Espagnol": "SAMADI Marianne",
+                  "Traduction Espagnol": "SAMADI Maryne",
                   "Pixel Art Château": "FERNANDEZ Lucie"
                 },
                 "Doublage francais": {
@@ -57,7 +57,7 @@
                   "Goulboum": "LUBAN Théo",
                   "Narratrice": "ESCOLANO-DUPUY Léonie"
                 },
-                "Testeurs": [],
+                "Testeurs": ["PLADEAU Quentin", "LUBAN Théo", "Les élèves de la seconde Numérique"],
                 "Consultants": ["PINGARD Mattis", "ESCOUTE Cédric", "MARIE-JEANNE Patrice"],
                 "Technologie": {
                   "Moteur de jeu": "Pygame",
@@ -65,6 +65,7 @@
                   "Langage": "Python",
                   "Librairies Python": "Matplotlib, pygame-ce, PyMaths"
                 },
+                "Etablissement" : "Lycée George Clemenceau",
                 "Remerciements spéciaux": ["PINGARD Mattis", "ESCOUTE Cédric", "MARIE-JEANNE Patrice"]
         },
 
@@ -208,7 +209,7 @@
             "TraverserPont" : "Vous venez de traverser le pont",
             "BuildBridge" : "Vous venez de construire le pont",
             "BreakRock" : "Vous venez de briser le rocher",
-            "MakeExo" : "Résolvez cette exercice pour continuer.",
+            "MakeExo" : "Résolvez cet exercice pour continuer.",
 
             "ExoTexte" : {
                 "Seconde" :{

@@ -221,15 +221,12 @@ class CreateExo:
         Input / Output : None"""
         if (NIVEAU["Map"] != "NiveauMordor" and INFOS["DemiNiveau"]) or (NIVEAU["Map"] == "NiveauPlaineRiviere"):
             INFOS["ExoPasse"] = True
-            INFOS["ExoReussit"] += 1
-            INFOS["TotalExo"] += 1
         elif NIVEAU["Map"] == "NiveauMordor" and not INFOS["DemiNiveau"]:
             INFOS["DemiNiveau"] = True
             INFOS["ExoPasse"] = False # on ne veux pas changer de niveau
             STATE_HELP_INFOS[0] = "SeePNJ" # update tips player
-            INFOS["ExoReussit"] += 1
-            INFOS["TotalExo"] += 1
         else:
+            pygame.event.clear([pygame.MOUSEBUTTONDOWN, pygame.MOUSEBUTTONUP])  # Nettoyer les événements
             self.gestionnaire.fondu_au_noir()
             self.gestionnaire.textScreen("   ")
             INFOS["CinematiqueEndAct"] = True
@@ -237,13 +234,17 @@ class CreateExo:
             INFOS["GameStart"] = False # jouer la cinématique avant
             INFOS["EndGame"] = True # de meme 
 
+        # add du total exo dans la gestion des interface (close)
+        INFOS["ExoReussit"] += 1 
+
 
     def Loose(self) -> None:
         """Méthode d'action si la réponse est FAUSE
         Input / Output : None"""
 
         INFOS["ExoPasse"] = False
-        INFOS["TotalExo"] += 1
+
+        pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])  # Nettoyer les événements
 
 
     def Update(self, event : any) -> None:
