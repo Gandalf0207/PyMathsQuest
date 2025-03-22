@@ -124,7 +124,7 @@ class ReactorInterface(object):
 
         if self.clicks == 1:
             STATE_HELP_INFOS[0] = "SeePNJ3"
-            if not self.CoursAdd:
+            if not self.CoursAdd and NIVEAU["Niveau"] == "Seconde":  # get du cours uniquement en seconde sur ce cours là
                 self.CoursAdd = True
                 INFOS["GetCours"] +=1
             

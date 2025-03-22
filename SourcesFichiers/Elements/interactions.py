@@ -181,7 +181,7 @@ class Interactions(object):
                     # animation 
                     self.gestionnaire.fondu_au_noir()
 
-                    if not self.GetCoursTableCraft:
+                    if not self.GetCoursTableCraft and NIVEAU["Niveau"] == "Seconde":  # get du cours uniquement sur le cours de seconde
                         self.GetCoursTableCraft = True
                         INFOS["GetCours"] +=1
                         self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["GetCours"])
