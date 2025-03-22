@@ -149,6 +149,22 @@
                     "En" : "Anglais",
                     "Es" : "Espagnol"
                 },
+                
+                "Touche" : {
+                    "up": "Haut",
+                    "down": "Bas",
+                    "left": "Gauche",
+                    "right": "Droite",
+                    "skip": "Passer",
+                    "inventory": "Inventaire",
+                    "settings": "Paramètres",
+                    "book": "Livre",
+                    "sound": "Volume",
+                    "action": "Action",
+                    "echap": "Echap",
+                    "hideHotBar": "Cacher"
+                },
+
                 "PoliceEcriture" : "Ecriture",
                 "TypeEcriture" : {
                     "Normal" : "Normal",

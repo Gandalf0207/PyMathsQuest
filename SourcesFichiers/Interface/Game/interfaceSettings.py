@@ -114,7 +114,7 @@ class SettingsInterface(object):
 
         for action, key in KEYSBIND.items():
             # Affichage du libellé (non cliquable)
-            text_label = FONT["FONT20"].render(f"{action.capitalize()} :", True, (0,0,0))
+            text_label = FONT["FONT20"].render(f"{TEXTE["Elements"]["HotBar"]["Settings"]["Touche"][action]}:", True, (0,0,0))
             self.interfaceSurface.blit(text_label, (x_offset, y_offset + 5))  # Position fixe du libellé
 
             # Bouton pour la touche (cliquable)
