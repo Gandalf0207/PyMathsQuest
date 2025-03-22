@@ -355,6 +355,10 @@ class NiveauBaseFuturisteVaisseau(GestionNiveauMap):
             ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
             ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
         ] # oui il y a des différences
+    
+    def PlacementVariation(self):
+        self.makeVarienteSolObj.CreateVarienteSol(50)
+
 
     def PlacementSpawn(self):
         self.coordsSpawn = [8, 10]
@@ -362,7 +366,7 @@ class NiveauBaseFuturisteVaisseau(GestionNiveauMap):
         AjoutJsonMapValue(self.coordsSpawn, "coordsMapObject", "Spawn")
 
     def PlacementPNJ(self):
-        coordsPNJ4 = [8, 6, "P", 6]
+        coordsPNJ4 = [8, 7, "P", 6]
         self.allCoordsPNJ = [coordsPNJ4]
         for coords in self.allCoordsPNJ:
             self.map[coords[1]][coords[0]] = "P"
@@ -375,22 +379,16 @@ class NiveauBaseFuturisteVaisseau(GestionNiveauMap):
 
         # tableau de board
         self.coordsBoard1 = [7, 6, "NiveauBaseFuturiste", "Board"]
-        self.coordsBoard2 = [8, 6, "NiveauBaseFuturiste", "Board"]
-        self.coordsBoard3 = [9, 6, "NiveauBaseFuturiste", "Board"]
 
-        # siège
-        self.coordsSiege1 = [7, 7, "NiveauBaseFuturiste", "Siege"]
-        self.coordsSiege2 = [9, 7, "NiveauBaseFuturiste", "Siege"]
 
         self.coordsDoorFuturisteVaisseau = [8, 11, "NiveauBaseFuturiste", "DoorFuturisteVaisseau"]
 
-        allObjSpecifique = [self.coordsVitre1, 
-                            self.coordsBoard1, self.coordsBoard2, self.coordsBoard3, 
-                            self.coordsSiege1, self.coordsSiege2, self.coordsDoorFuturisteVaisseau]
+        allObjSpecifique = [self.coordsVitre1, self.coordsBoard1, self.coordsDoorFuturisteVaisseau]
         AjoutJsonMapValue(allObjSpecifique, "coordsMapObject", "ObjAPlacer")
 
     def Update(self):
         self.PlacementMap()
+        self.PlacementVariation()
         self.PlacementSpawn()
         self.PlacementPNJ()
         self.PlacementObjSpecifique()

@@ -168,38 +168,40 @@ class LoadMapGestion():
         
     def LoadImagesDemiNiveauVaisseau(self):
         try:
-            self.sol = pygame.image.load(join("Image", "Sol", "Dirtx128.png")).convert_alpha()
+            self.sol = pygame.image.load(join("Image", "Sol", "Space.png")).convert_alpha()
             self.sol1 = pygame.image.load(join("Image", "Sol","FloorSpaceShip.png")).convert_alpha()
-            self.sol2 = pygame.image.load(join("Image", "Sol", "Space.png")).convert_alpha()
-            self.sol3 = pygame.image.load(join("Image", "Sol", "SpaceStar.png")).convert_alpha()
+            self.sol2 = pygame.image.load(join("Image", "Sol", "Space2.png")).convert_alpha()
+            self.sol3 = pygame.image.load(join("Image", "Sol", "Space3.png")).convert_alpha()
+            self.sol4 = pygame.image.load(join("Image", "Sol", "Space4.png")).convert_alpha()
 
 
-            self.MurAngularNE = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallAngularNE.png")).convert_alpha()
-            self.MurAngularNW = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallAngularNW.png")).convert_alpha()
-            self.MurAngularSE = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallAngularSE.png")).convert_alpha()
-            self.MurAngularSW = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallAngularSW.png")).convert_alpha()
+            self.MurAngularNE = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallVaisseauBottomRight.png")).convert_alpha()
+            self.MurAngularNW = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallVaisseauBottomLeft.png")).convert_alpha()
+            self.MurAngularSE = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallVaisseauTopright.png")).convert_alpha()
+            self.MurAngularSW = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Normal", "WallVaisseauTopLeft.png")).convert_alpha()
 
-            self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Futuriste", "Vaisseau", "Normal", "WallWEHaut.png" )).convert_alpha()
-            self.MurWEBas = pygame.image.load(join("Image", "Mur",  "Futuriste", "Vaisseau", "Normal", "WallWEBas.png" )).convert_alpha()
+            self.MurWEBas = pygame.image.load(join("Image", "Mur",  "Futuriste", "Vaisseau", "Normal", "WallVaisseauBottom.png" )).convert_alpha()
             self.MurNSGauche = pygame.image.load(join("Image", "Mur",  "Futuriste", "Vaisseau", "Normal", "WallNSGauche.png" )).convert_alpha()
             self.MurNSDroite = pygame.image.load(join("Image", "Mur",  "Futuriste", "Vaisseau", "Normal", "WallNSDroite.png" )).convert_alpha()
 
 
             self.tableauDeBord = pygame.image.load(join("Image", "Obstacle", "TableauBoard.png")).convert_alpha()
-            self.siege = pygame.image.load(join("Image", "Obstacle", "Siege.png")).convert_alpha()
             self.vitre = pygame.image.load(join("Image", "Obstacle", "Vitre.png")).convert_alpha()
 
             self.obstacle = pygame.image.load(join("Image", "Obstacle","Crate.png")).convert_alpha()
 
-            self.doorFuturisteDemiNiveau = pygame.image.load(join("Image", "Obstacle", "Door", "DoorFuturisteVaisseau.png")).convert_alpha()
+            self.doorFuturisteDemiNiveau = pygame.image.load(join("Image", "Obstacle", "Door", "WallVaisseaurDoor.png")).convert_alpha()
         except:
             INFOS["ErrorLoadElement"] = True
     def LoadImagesNiveauMordor(self):
         try:
-            self.sol = pygame.image.load(join("Image", "Sol", "MordorSol.png")).convert_alpha()
+            self.sol = pygame.image.load(join("Image", "Sol", "SolMordor.png")).convert_alpha()
             self.sol2 = pygame.image.load(join("Image", "Sol", "MordorSol2.png")).convert_alpha()
             self.sol3 = pygame.image.load(join("Image", "Sol", "MordorSol3.png")).convert_alpha()
 
+            self.solV2 = pygame.image.load(join("Image", "Sol", "SolMordorV2.png")).convert_alpha()
+            self.sol2V2 = pygame.image.load(join("Image", "Sol", "MordorSol2V2.png")).convert_alpha()
+            self.sol3V2 = pygame.image.load(join("Image", "Sol", "MordorSol3V2.png")).convert_alpha()
             self.montainWE = pygame.image.load(join("Image", "Mur", "Mountain", "MountainMordorStraighW-Ex128.png")).convert_alpha()
             self.montainWE1 = pygame.image.load(join("Image", "Mur", "Mountain", "MountainMordorStraighW-Ealt1x128.png")).convert_alpha()
 
@@ -217,7 +219,7 @@ class LoadMapGestion():
             self.DoorPrison = pygame.image.load(join("Image", "Obstacle","Door",  "DoorPrison.png")).convert_alpha()
             self.DoorVolcan =pygame.image.load(join("Image", "Obstacle", "Door", "DoorVolcan.png")).convert_alpha() 
             
-            self.obstacle = pygame.image.load(join("Image", "Obstacle", "HugeRock.png")).convert_alpha()
+            self.obstacle = pygame.image.load(join("Image", "Obstacle", "HugeRockMordor.png")).convert_alpha()
 
             self.pot  = pygame.image.load(join("Image", "Obstacle", "Pot.png")).convert_alpha()
             self.parchemin = pygame.image.load(join("Image", "Obstacle", "Parchemin.png")).convert_alpha()
@@ -310,14 +312,42 @@ class LoadMapGestion():
                 if self.mapBase[ordonnees][abscisses] ==".":
                     Sprites(pos, self.sol1, "Sol1", self.allSprites, layer=0)
                 elif self.mapBase[ordonnees][abscisses] == 2:
-                    if randint(1, 10) < 7:
-                        Sprites(pos, self.sol2, "Sol2", self.allSprites, layer=0)
+                    if NIVEAU["Map"] == "NiveauMordor":
+                        if randint(1,2) == 1:
+                            if randint(1, 10) < 7:
+                                Sprites(pos, self.sol2, "Sol2", self.allSprites, layer=0)
+                            else:
+                                Sprites(pos, self.sol3, "Sol3", self.allSprites, layer=0)
+                        else:
+                            if randint(1, 10) < 7:
+                                Sprites(pos, self.sol2V2, "Sol2", self.allSprites, layer=0)
+                            else:
+                                Sprites(pos, self.sol3V2, "Sol3", self.allSprites, layer=0)
+
+                    if (NIVEAU["Map"] != "NiveauBaseFuturiste") or (NIVEAU["Map"] == "NiveauBaseFuturiste" and  INFOS["DemiNiveau"]):
+                        if randint(1, 10) < 7:
+                            Sprites(pos, self.sol2, "Sol2", self.allSprites, layer=0)
+                        else:
+                            Sprites(pos, self.sol3, "Sol3", self.allSprites, layer=0)
                     else:
-                        Sprites(pos, self.sol3, "Sol3", self.allSprites, layer=0)
+                        x = randint(1, 10) 
+                        if x < 6:
+                            Sprites(pos, self.sol3, "Sol3", self.allSprites, layer=0)
+                        elif x < 8:
+                            Sprites(pos, self.sol2, "Sol2", self.allSprites, layer=0)
+                        else:
+                            Sprites(pos, self.sol4, "Sol4", self.allSprites, layer=0)
+                            
                 elif self.mapBase[ordonnees][abscisses] == 1:
                     Sprites(pos, self.sol1, "Sol1", self.allSprites, layer=0)
                 elif self.mapBase[ordonnees][abscisses] == "-":
-                    Sprites(pos, self.sol, "Sol", self.allSprites, layer=0)
+                    if NIVEAU["Map"] == "NiveauMordor":
+                        if randint(1,2) == 1:
+                            Sprites(pos, self.sol, "Sol", self.allSprites, layer=0)
+                        else:
+                            Sprites(pos, self.solV2, "Sol", self.allSprites, layer=0)
+                    else:
+                        Sprites(pos, self.sol, "Sol", self.allSprites, layer=0)
 
 
                 elif self.mapBase[ordonnees][abscisses] == "=":
@@ -561,10 +591,10 @@ class LoadMapGestion():
                             if self.map[ordonnees-1][abscisses +1] in [".", "O", "P", "V", "v"]:
                                 if self.map[ordonnees+1][abscisses-1] in ["-", 2]:
                                     CollisionSprites(pos, self.MurAngularNW, "WallAngularNW", (self.allSprites, self.collisionSprites))
-                                    Sprites(pos, self.sol, "sol", self.allSprites, layer=0)
+                                    Sprites(pos, self.sol, "Sol", self.allSprites, layer=0)
                                 else:
                                     CollisionSprites(pos, self.MurAngularNW2, "WallAngularNW", (self.allSprites, self.collisionSprites))
-                                    Sprites(pos, self.sol1, "sol", self.allSprites, layer=0)
+                                    Sprites(pos, self.sol1, "Sol1", self.allSprites, layer=0)
 
                             else:
                                 CollisionSprites(pos, self.MurAngularNW2, "WallAngularNW", (self.allSprites, self.collisionSprites))
@@ -583,10 +613,10 @@ class LoadMapGestion():
                             if self.map[ordonnees-1][abscisses -1] in [".", "O", "P", "V", "v"]:
                                 if self.map[ordonnees+1][abscisses+1] in ["-", 2]:
                                     CollisionSprites(pos, self.MurAngularNE, "WallAngularNE", (self.allSprites, self.collisionSprites))
-                                    Sprites(pos, self.sol, "sol", self.allSprites, layer=0)
+                                    Sprites(pos, self.sol, "Sol", self.allSprites, layer=0)
                                 else:
                                     CollisionSprites(pos, self.MurAngularNE2, "WallAngularNE", (self.allSprites, self.collisionSprites))
-                                    Sprites(pos, self.sol1, "sol", self.allSprites, layer=0)
+                                    Sprites(pos, self.sol1, "Sol1", self.allSprites, layer=0)
 
                             else:
                                 CollisionSprites(pos, self.MurAngularNE2, "WallAngularNE", (self.allSprites, self.collisionSprites))
@@ -610,7 +640,7 @@ class LoadMapGestion():
                                     CollisionSprites(pos, self.MurAngularSW3, "WallAngularSW", (self.allSprites, self.collisionSprites))
 
                             else:
-                                Sprites(pos, self.sol1, "Sol", self.allSprites)
+                                Sprites(pos, self.sol1, "Sol1", self.allSprites)
                                 CollisionSprites(pos, self.MurAngularSW2, "WallBAngularSW", (self.allSprites, self.collisionSprites))
                         
                         if NIVEAU["Map"] == "NiveauMordor":
@@ -631,7 +661,7 @@ class LoadMapGestion():
                                     CollisionSprites(pos, self.MurAngularSE3, "WallAngularSW", (self.allSprites, self.collisionSprites))
 
                             else:
-                                Sprites(pos, self.sol1, "Sol", self.allSprites)
+                                Sprites(pos, self.sol1, "Sol1", self.allSprites)
                                 CollisionSprites(pos, self.MurAngularSE2, "WallBAngularSW", (self.allSprites, self.collisionSprites))
 
                         if NIVEAU["Map"] == "NiveauMordor":
@@ -654,7 +684,7 @@ class LoadMapGestion():
                             if self.map[ordonnees-1][abscisses] in [".", "O", "P", "V", "v"] and self.map[ordonnees+1][abscisses] in [".", "O", "P", "V", "v"]:
                                 CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
                             elif self.map[ordonnees+1][abscisses] in ["-", 2]:
-                                Sprites(pos, self.sol1, "Sol", self.allSprites)
+                                Sprites(pos, self.sol1, "Sol1", self.allSprites)
                                 CollisionSprites(pos, self.MurWEBas, "WallBWEBas", (self.allSprites, self.collisionSprites))
                             else:
                                 CollisionSprites(pos, self.MurWEHaut, "WallWEHaut", (self.allSprites, self.collisionSprites))
@@ -849,8 +879,6 @@ class LoadMapGestion():
                         CollisionSprites(pos, self.vitre, "Vitre", (self.allSprites, self.collisionSprites), layer=1)
                     case "Board":
                         CollisionSprites(pos, self.tableauDeBord, "ControlPanel", (self.allSprites,  self.collisionSprites), layer=1)
-                    case "Siege":
-                        CollisionSprites(pos, self.siege, "Vitre", (self.allSprites, self.collisionSprites), layer=1)
                     case "DoorFuturisteVaisseau":
                         CollisionSprites(pos, self.doorFuturisteDemiNiveau, "DoorFuturisteVaisseau", (self.allSprites, self.collisionSprites, self.interactions))
             elif obj[2] == "NiveauMordor":

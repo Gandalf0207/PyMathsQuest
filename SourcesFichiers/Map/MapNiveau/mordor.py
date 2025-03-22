@@ -24,7 +24,7 @@ class NiveauMordor(GestionNiveauMap):
                     self.makeRiverObj.River3CreationVecticale(3)
 
     def PlacementRockCratere(self):
-        self.makeVarienteSolObj.CreateVarienteSol(700)
+        self.makeVarienteSolObj.CreateVarienteSol(3000)
 
     def PlacementMuraille(self):
         # prisions

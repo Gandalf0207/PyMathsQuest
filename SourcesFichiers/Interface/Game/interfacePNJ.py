@@ -166,49 +166,78 @@ class PNJInterface(object):
 
 
                             # remplacement des textures 
-                            allMurSprites = []
-                            allVitreSprites = []
-                            allPanelControlBloc = []
+                            allSolModif = []
+                            VitreSprite = None
+                            PanelControlBloc = None
                             allSpritesEspace = []
                             for sprite in self.gestionnaire.gestionnaire.allSprites:
-                                if sprite.id[:4] == "Wall":
-                                    allMurSprites.append(sprite)
-                                elif sprite.id == "Vitre":
-                                    allVitreSprites.append(sprite)
+                                if sprite.id == "Vitre":
+                                    VitreSprite = sprite
                                 elif sprite.id == "ControlPanel":
-                                    allPanelControlBloc.append(sprite)
-                                elif sprite.id == "Sol":
+                                    PanelControlBloc = sprite
+                                elif sprite.id in ["Sol", "Sol2", "Sol3", "Sol4"]:
                                     allSpritesEspace.append(sprite)
+                                elif sprite.id == "Sol1":
+                                    allSolModif.append(sprite)
 
-                            murModif = sample(allMurSprites, (len(allMurSprites)//randint(2,3)))
-                            vitreModif = sample(allVitreSprites, randint(1,3))
-                            PanelBlocControleBlocModif = sample(allPanelControlBloc, randint(1,3))
+                            solModif = sample(allSolModif, (len(allSolModif)//randint(2,3)))
 
                             try :
                                 vitre  = pygame.image.load(join("Image", "Obstacle", "VitreBroken.png")).convert_alpha()
-                                panelBloc = pygame.image.load(join("Image", "Obstacle", "TableauBoardBroken.png")).convert_alpha()
-                                sol = pygame.image.load(join("Image", "Sol", "Grass.png")).convert_alpha()
+                                sol = pygame.image.load(join("Image", "Sol", "SolMordor.png")).convert_alpha()
+                                sol2 = pygame.image.load(join("Image", "Sol", "MordorSol2.png")).convert_alpha()
+                                sol3 = pygame.image.load(join("Image", "Sol", "MordorSol3.png")).convert_alpha()
 
-                                for sprite in murModif:
+                                solV2 = pygame.image.load(join("Image", "Sol", "SolMordorV2.png")).convert_alpha()
+                                sol2V2 = pygame.image.load(join("Image", "Sol", "MordorSol2V2.png")).convert_alpha()
+                                sol3V2= pygame.image.load(join("Image", "Sol", "MordorSol3V2.png")).convert_alpha()
+                                obstacle = pygame.image.load(join("Image", "Obstacle", "HugeRock.png")).convert_alpha()
+                                solVaisseau = pygame.image.load(join("Image", "Sol", "FloorVaisseauBroken.png"))
+
+                                # sol vaisseau
+                                for sprite in solModif:
                                     pos = sprite.pos
-                                    mur = pygame.image.load(join("Image", "Mur", "Futuriste", "Vaisseau", "Endommage", f"{sprite.id}.png"))
                                     sprite.kill()
-                                    CollisionSprites(pos, mur, "Wall", (self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites))
+                                    Sprites(pos, solVaisseau, "Sol1", self.gestionnaire.gestionnaire.allSprites, layer=0)
                                 
-                                for sprite in vitreModif:
-                                    pos = sprite.pos
-                                    sprite.kill()
-                                    CollisionSprites(pos, vitre, "Vitre", ((self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites)))
+                                # vitre
+                                sprite = VitreSprite
+                                pos = sprite.pos
+                                sprite.kill()
+                                CollisionSprites(pos, vitre, "Vitre", ((self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites)))
 
-                                for sprite in PanelBlocControleBlocModif:
-                                    pos = sprite.pos
-                                    sprite.kill()
-                                    CollisionSprites(pos, panelBloc, "TableauDeBord", (self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites))
+                                # panel bloc
+                                sprite = PanelControlBloc
+                                pos = sprite.pos
+                                sprite.kill()
+                                path = join("Image", "Obstacle", "VaisseauControlPanelBroken")
+                                AnimatedCollisionSprites(pos,path, "TableauDeBord",  (self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites), layer=2)
 
+                                # sol
                                 for sprite in allSpritesEspace:
                                     pos = sprite.pos
                                     sprite.kill()
-                                    Sprites(pos, sol, "Sol", self.gestionnaire.gestionnaire.allSprites, layer=0)
+                                    if randint(1, 2) == 1:
+                                        x = randint(1, 100)
+                                        if x < 70 :
+                                            Sprites(pos, sol, "Sol", self.gestionnaire.gestionnaire.allSprites, layer=0)
+                                        elif x < 90:
+                                            Sprites(pos, sol2, "Sol2", self.gestionnaire.gestionnaire.allSprites, layer=0)
+                                        else:
+                                            Sprites(pos, sol3, "Sol3", self.gestionnaire.gestionnaire.allSprites, layer=0)
+                                    else:
+                                        x = randint(1, 100)
+                                        if x < 70 :
+                                            Sprites(pos, solV2, "Sol", self.gestionnaire.gestionnaire.allSprites, layer=0)
+                                        elif x < 90:
+                                            Sprites(pos, sol2V2, "Sol2", self.gestionnaire.gestionnaire.allSprites, layer=0)
+                                        else:
+                                            Sprites(pos, sol3V2, "Sol3", self.gestionnaire.gestionnaire.allSprites, layer=0)
+                                    
+                                    if randint(1, 100) < 25:
+                                        CollisionSprites(pos, obstacle, "HugeRock", ((self.gestionnaire.gestionnaire.allSprites, self.gestionnaire.gestionnaire.collisionSprites)), layer=1)
+
+
                             
                             except:
                                 INFOS["ErrorLoadElement"] = True

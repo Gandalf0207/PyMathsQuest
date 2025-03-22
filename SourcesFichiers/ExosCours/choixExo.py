@@ -151,8 +151,8 @@ class GetExo:
                 resultat = nb
 
             # formatage resultats
-            resultat2 = self.nb1
-            resultat3 = nbx - nb
+            resultat2 = (self.nb1)*random.choice([-1, 1])
+            resultat3 = (nbx - nb)*random.choice([-1, 1])
 
             self.stockageValues = (self.nb1, self.nb2, self.nb3, self.nb4)
             self.listeConstruction = [eqt, resultat, resultat2, resultat3]
@@ -192,8 +192,8 @@ class GetExo:
                 self.ErrorGeneration = True
 
             # formatage résultats
-            resultat2 = numx
-            resultat3 = num6
+            resultat2 = (numx)*random.choice([-1, 1])
+            resultat3 = (num6)*random.choice([-1, 1])
 
             self.stockageValues = (self.nb1, self.nb2, self.nb3, self.nb4, self.nb5, self.nb6)
             self.listeConstruction = [eqt, resultat, resultat2, resultat3]

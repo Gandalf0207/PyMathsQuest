@@ -4,8 +4,8 @@ class VarienteSolCreator(object):
     def __init__(self, gestionnaire):
         self.gestionnaire = gestionnaire
         self.nbElements = 0
-        self.longueur = 150
-        self.largeur = 75
+        self.longueur = self.gestionnaire.longueur
+        self.largeur = self.gestionnaire.largeur
     
     def SetAndSave(self):
         for coords in self.allCoordsElementVarienteSol:
