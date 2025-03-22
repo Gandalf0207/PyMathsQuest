@@ -155,6 +155,11 @@
                     "Dyslexique" : "Dyslexique"
 
                 },
+                "Difficulte" : {
+                    "Title" : "Difficulté",
+                    "Simple" : "Simple",
+                    "Difficile" : "Difficile"
+                },
 
                 "PressKey" : "Appuyez sur une touche..."
 

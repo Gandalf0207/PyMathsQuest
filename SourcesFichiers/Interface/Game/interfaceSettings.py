@@ -32,7 +32,8 @@ class SettingsInterface(object):
         except:
             INFOS["ErrorLoadElement"] = True
 
-
+        self.selectedOptionDifficulte = 0
+        self.posRadioButtonDifficulte = [(525, 275), (525, 325)]
 
     def BuildInterfaceBind(self):
         overlay = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
@@ -185,6 +186,30 @@ class SettingsInterface(object):
             # Déplacer vers le bas pour le prochain bouton
             y_offsetPoliceEcriture += 60  # 50 de hauteur + 10 de marge
 
+        # DIFFICULTE
+        textTitreDifficulte = FONT["FONT20"].render(TEXTE["Elements"]["HotBar"]["Settings"]["Difficulte"]["Title"], True, (10, 10, 10))
+        self.interfaceSurface.blit(textTitreDifficulte, (500, 225))
+
+        textAllDifficulte = [TEXTE["Elements"]["HotBar"]["Settings"]["Difficulte"]["Simple"],
+                         TEXTE["Elements"]["HotBar"]["Settings"]["Difficulte"]["Difficile"],]
+
+        # Affichage des boutons radio
+        for i, option in enumerate(textAllDifficulte):
+            pos = self.posRadioButtonDifficulte[i]
+
+            # Cercle externe (bouton radio)
+            pygame.draw.circle(self.interfaceSurface, BLACK, pos, 15, 2)
+
+            # Si cette option est sélectionnée, on remplit le cercle
+            if self.selectedOptionDifficulte == i:
+                pygame.draw.circle(self.interfaceSurface, (112, 193, 255), pos, 10)  # Cercle interne rempli
+
+            # Affichage du texte
+            text_surface = FONT["FONT20"].render(option, True, BLACK)
+            self.interfaceSurface.blit(text_surface, (pos[0] + 30, pos[1] - 10))  # Décalage à droite
+
+
+
 
         # close element
         self.surfaceCloseCross.fill("#ffffff")
@@ -270,6 +295,21 @@ class SettingsInterface(object):
                         if self.rectCloseCross.collidepoint(local_pos):
                             # fermeture interface
                             self.gestionnaire.CloseAllInterface()
+                        
+                        
+                        # difficulte
+                        for i, pos in enumerate(self.posRadioButtonDifficulte):
+                            global_pos = (pos[0], pos[1])  # Ajout du décalage de la surface niveauSurface
+                            rect = pygame.Rect(global_pos[0] - 15, global_pos[1] - 15, 30, 30)
+
+                            if rect.collidepoint(local_pos):
+                                self.selectedOptionDifficulte = i  # Met à jour le choix sélectionné
+
+                                match self.selectedOptionDifficulte:
+                                    case 0:
+                                        INFOS["Difficulte"] = False
+                                    case 1:
+                                        INFOS["Difficulte"] = True
 
         if event.type == pygame.MOUSEMOTION:
             local_pos = GetLocalPos(event, self.interfaceSurface, (320, 180))

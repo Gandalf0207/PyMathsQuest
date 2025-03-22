@@ -107,7 +107,7 @@ class HomeInterface(object):
 
         # Affichage des boutons radio
         for i, option in enumerate(textAllDifficulte):
-            pos = self.posRadioButtonNiveau[i]
+            pos = self.posRadioButtonDifficulte[i]
 
             # Cercle externe (bouton radio)
             pygame.draw.circle(self.difficulteSurface, BLACK, pos, 15, 2)
@@ -132,7 +132,7 @@ class HomeInterface(object):
 
         # Affichage des boutons radio
         for i, option in enumerate(textAllLangue):
-            pos = self.posRadioButtonNiveau[i]
+            pos = self.posRadioButtonLangue[i]
 
             # Cercle externe (bouton radio)
             pygame.draw.circle(self.langueSurface, BLACK, pos, 15, 2)
