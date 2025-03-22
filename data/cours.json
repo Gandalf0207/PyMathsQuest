@@ -155,7 +155,7 @@
         },
 
         "Premiere" : {
-            "NiveauPlaineRiviere" : {
+            "NiveauMedievale" : {
                 "Cours0" : {
                     "0" : [false, "Un polynôme du second degré admet comme forme développée :"],
                     "1" : [true, "$ P(x)= ax^2 + bx + c $"],
@@ -163,16 +163,16 @@
                     "3" : [true, "$ a \\ne 0 $"],
                     "4" : [false, "Chaque polynôme admet une forme canonique sous la forme"],
                     "5" : [true, "$ a \\left( x - \\alpha \\right) ^2 + \\beta $"],
-                    "6" : [true, "$ \\alpha = \\frac{-b}[2a] $"],
-                    "7" : [true, "$ \\beta \\frac{- \\delta}[4a] $"],
-                    "8" : [true, "$ \\delta b^2 -4ac $"]
+                    "6" : [true, "$ \\alpha = \\frac{-b}{2a} $"],
+                    "7" : [true, "$ \\beta \\frac{- \\delta}{4a} $"],
+                    "8" : [true, "$ \\Delta b^2 -4ac $"]
                 }, 
 
                 "Cours1" : {
                     "0" : [false, "Pour résoudre P(x) = 0 il faut déterminer le discriminant delta :"],
                     "1" : [false, "Si le delta > 0, P(x) admet deux solutions distinctes :"],
-                    "2" : [true, "$ x1 = -b - \\frac{\\sqrt{delta}}{2a} $"],
-                    "3" : [true, "$ x2 = -b + \\frac{\\sqrt{delta}}{2a} $"],
+                    "2" : [true, "$ x1 = -b - \\frac{\\sqrt{\\Delta}}{2a} $"],
+                    "3" : [true, "$ x2 = -b + \\frac{\\sqrt{\\Delta}}{2a} $"],
                     "4" : [false, "Remarque : Il peut se factoriser par"],
                     "5" : [true, "$ P(x)= a(x - x1)(x - x2) $"],
                     "6" : [false, "Si delta = 0 alors il n’en admet qu’une unique dite double :"],
@@ -200,7 +200,7 @@
 
             }, 
 
-            "NiveauMedievale" : {
+            "NiveauBaseFuturiste" : {
                 "Cours0" : {
                     "0" : [false, "Le taux de variation d’une fonction f en un point a est une mesure de la rapidité avec laquelle f change près de a. On dit que f est dérivable en a si la limite suivante existe : [Remplacer x par a]"],
                     "1" : [false, "Si cette limite existe, elle est appelée la dérivée de f en a et est notée"],
@@ -215,23 +215,24 @@
                 }, 
 
                 "Cours2" : {
-                    "0" : [true, "$ \\text{Dérivée d'une constante : Si} f(x) = c \\text{alors} f'(x) = 0 $"],
-                    "1" : [true, "$ \\text{Dérivée de} x^n \\text{: Si} f(x) = x^n \\text{alors} f'(x) = nx^{n-1} $"],
-                    "2": [true, "$ \\text{Dérivée de} nx \\text{: Si} f(x) = xn \\text{alors} f'(x) = n $"],
-                    "3" : [true, "$ \\text{Dérivée de} \\text{: Si} f(x) = \\frac{1}{x} \\text{alors} f'(x) = -\\frac{1}{x^2} $"],
-                    "4" : [true, "$ \\text{Dérivée de} \\text{: Si} f(x) = \\sqrt{x} \\text{alors} f'(x) = \\frax{1}{2 \\sqrt{x}} $"],
-                    "5" : [true, "$ \\text{Somme et Différence : Si} f(x) = u+v \\text{alors} f'(x) = u' + v'$"],
-                    "6" : [true, "$ \\text{Produits : Si} f(x) = uv, \\text{alors} f'(x) = u'v + uv' $"],
-                    "7" : [true, "$ \\text{Quotient : Si} f(x) = \\frac{u}{v} \\text{alors} f'(x) = \\frac{u'v - uv'}{v^2}  $"]
+                    "0" : [true, "$ \\text{Dérivée d'une constante : Si} f(x) = c \\quad \\text{alors} \\quad f'(x) = 0 $"],
+                    "1" : [true, "$ \\text{Dérivée de} \\quad x^n \\text{: Si} f(x) = x^n \\quad \\text{alors} \\quad f'(x) = nx^{n-1} $"],
+                    "2": [true, "$ \\text{Dérivée de} \\quad nx \\text{: Si} f(x) = xn \\quad \\text{alors} \\quad f'(x) = n $"],
+                    "3" : [true, "$ \\text{Dérivée de} \\text{: Si} f(x) = \\frac{1}{x} \\quad \\text{alors} \\quad f'(x) = -\\frac{1}{x^2} $"],
+                    "4" : [true, "$ \\text{Dérivée de} \\text{: Si} f(x) = \\sqrt{x} \\quad \\text{alors} \\quad f'(x) = \\frac{1}{2 \\sqrt{x}} $"],
+                    "5" : [true, "$ \\text{Somme : Si} f(x) = u+v \\quad \\text{alors} \\quad f'(x) = u' + v'$"],
+                    "6" : [true, "$ \\text{Différence : Si} f(x) = u-v \\quad \\text{alors} \\quad f'(x) = u' - v'$"],
+                    "7" : [true, "$ \\text{Produits : Si} f(x) = uv, \\quad \\text{alors} \\quad f'(x) = u'v + uv' $"],
+                    "8" : [true, "$ \\text{Quotient : Si} f(x) = \\frac{u}{v} \\quad \\text{alors} \\quad f'(x) = \\frac{u'v - uv'}{v^2}  $"]
 
                 }, 
                 
                 "Cours3" : {
                     "0" : [false, "Une dérivée peut servir à connaître les intervalles croissant et décroissant de la courbe, lorsque f’(x) > 0 alors f(x) est croissant et lorsque f’(x) < 0 alors f(x) est décroissant."]
                 }
-            
             },
-            "NiveauBaseFuturiste" : {
+
+            "NiveauMordor" : {
                 "Cours0" : {
                     "0" : [false, "Une suite est une liste ordonnée de nombres, on la définit souvent par : une relation de récurrence avec le terme n+1 noté Un+1  en fonction du terme n noté Un. Avec l’expression de récurrence, il est nécessaire de connaître un terme de la suite (par exemple U0 ou U1 etc…) pour calculer les autres. Ou une formule explicite qui permet d’exprimer directement le terme Un en fonction de l’indice n."]
                 }, 
@@ -253,7 +254,7 @@
                 "Cours2" : {
                     "0" : [false, "Dans une suite géométrique le terme Vn+1 se calcule à l’aide du terme précédent Vn auquel on multiplie une constante (la raison), notée q."],
                     "1" : [false, "La relation de récurrence de la suite se note :"],
-                    "2" : [true, "$ V_{n+1} = V_{n} \\ times q $"],
+                    "2" : [true, "$ V_{n+1} = V_{n} \\times q $"],
                     "3" : [false, "avec V0 le premier terme de la suite."],
                     "4" : [false, "La formule explicite de la suite se note :"],
                     "5" : [true, "$ V_{n} = V_{0} \\times q^n $"],
@@ -261,7 +262,7 @@
                     "7" : [false, "Forme de récurrence :"],
                     "8" : [true, "$ V_{n+1} = V_{n} \\times 1.7 $"],
                     "9" : [false, "Formule explicite "],
-                    "10" : [true, "$ V_{n} = 0.5 \\times 1.7n $"]
+                    "10" : [true, "$ V_{n} = 0.5 \\times 1.7^n $"]
                 }, 
 
                 "Cours3" : {
@@ -277,31 +278,11 @@
                     "1" : [true, "$ S_{n} = \\text{nombre de termes} \\times \\frac{\\text{premier terme} + \\text{dernier terme}}{2} $"],
                     "2" : [false, "La somme des n premiers termes d’une suite géométrique se calcule avec la formule :"],
                     "3" : [true, "$ S_{n} = \\text{premier terme} \\times \\frac{1 - \\text{raison}^\\text{nombre de termes}}{1 - \\text{raison}} $"]
-                } 
-            }, 
+                }       
+            } 
+        },
 
-            "NiveauMordor" : {
-                "Cours0" : {
-                    "0" : []
-                }, 
 
-                "Cours1" : {
-                    "0" : []
-                }, 
-
-                "Cours2" : {
-                    "0" : []
-                }, 
-                
-                "Cours3" : {
-                    "0" : []
-                }, 
-            
-                "Cours4" : {
-                    "0" : []
-                }
-            }
-        }, 
 
         "Terminale" : {
             "NiveauPlaineRiviere" : {

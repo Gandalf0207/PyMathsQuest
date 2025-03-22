@@ -433,6 +433,7 @@ class Game(object):
                             INFOS["GameStart"] = False # jouer la cinématique avant
                             INFOS["EndGame"] = True # de meme
                         else:
+                            self.cinematique = False
                             INFOS["ExoPasse"] = True
                     else:
                         self.GameTool.fondu_au_noir()
@@ -682,12 +683,13 @@ class GameToolBox(object):
 
                 case "NiveauMordor":
                     if NIVEAU["All"]:
-                        NIVEAU["Map"] = "NiveauPlaineRiviere"
                         match NIVEAU["Niveau"]:
                             case "Seconde":
                                 NIVEAU["Niveau"] = "Premiere"
+                                NIVEAU["Map"] = "NiveauMedievale"
                             case "Premiere":
                                 NIVEAU["Niveau"] = "Terminale"
+                                NIVEAU["Map"] = "NiveauMedievale"
                             case "Terminale":
                                 pass
 
@@ -702,7 +704,7 @@ class GameToolBox(object):
         PNJ["PNJ7"] = False
 
         INFOS["AdminReset"] = False
-
+        INFOS["EndPhase"] = False
         # reset demi niveau (chateau)
         INFOS["DemiNiveau"] = False 
         self.gestionnaire.demiNiveau = False

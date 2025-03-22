@@ -245,6 +245,7 @@ class Interactions(object):
 
                 # interaction porte chateau
                 if self.ObjectId == "DoorChateau":
+                    INVENTORY["Key"] -=1
                     # animation 
                     self.gestionnaire.fondu_au_noir()
 
