@@ -218,6 +218,216 @@
                     }
                 }
             }
+        }, 
+
+    "DialoguesEn": {
+        "NiveauPlaineRiviere": {
+            "PNJ1": {
+                "Nom": "Lumberjack",
+                "Principal": {
+                    "Dialogue1": "Hello toué! Looks like you're hitting your Waterloo! But lâche pas la patate, I'll help you, this tree won't block your way for long tabarnak!",
+                    "Dialogue2": "Also take this trinket it could help you y'know, there's some gibberish written on it I'll leave it with you."
+                },
+                "Alternatif": {
+                    "Dialogue1": "So, go for it my friend, don't be afraid of the water under the trunk, it's not going to jump on you!"
+                }
+            },
+            "PNJ2": {
+                "Nom": "Curious traveler",
+                "Principal": {
+                    "Dialogue1": "Hello friend, if you wish to cross the Anduin, you will need to create a bridge. I have nothing other than these planks, so I will give them to you and I hope you will make good use of them.",
+                    "Dialogue2": "I even have a manual, but I don't know if it will be useful to you."
+                },
+                "Alternatif": {
+                    "Dialogue1": "So what can be found on the other side? You'll tell me about it once you've seen it."
+                }
+            },
+            "PNJ3": {
+                "Nom": "Runaway donkey",
+                "Principal": {
+                    "Dialogue1": "(It seems that this donkey has run away, there is probably a farm nearby. It dropped two items, look like a scroll and a pickaxe.)"
+                },
+                "Alternatif": {
+                    "Dialogue1": "(This donkey doesn't seem to want to go home)"
+                }
+            }
+        },
+        "NiveauMedievale": {
+            "PNJ1": {
+                "Nom": "Farmer",
+                "Principal": {
+                    "Dialogue1": "Hey you, haven't you seen my donkey ? He ran away no later than yesterday, and I can't find him anymore. You saw him, you say?",
+                    "Dialogue2": "You're really saving me, I'll give you this thing as thanks, anyway I can't read and you should get yourself one or two logs, you never know."
+                },
+                "Alternatif": {
+                    "Dialogue1": "Thanks again, buddy, I'll go look for that stubborn mule soon."
+                }
+            },
+            "PNJ2": {
+                "Nom": "Unpleasant guard",
+                "Principal": {
+                    "Dialogue1": "Who are you ?",
+                    "Dialogue2": "What do you want ?",
+                    "Dialogue3": "Do you have an authorization ?",
+                    "Dialogue4": "No, well then you shall not pass, damn it!"
+                },
+                "Alternatif": {
+                    "Dialogue1": "I already told you that you shall not pass, wasn't I clear?"
+                }
+            },
+            "PNJ3": {
+                "Nom": "Minerva",
+                "Principal": {
+                    "Dialogue1": "Hello citizen, I am guard Minerva! If you wish to pass, you will have to answer a particularly complicated riddle. Here is the riddle, is the rounded value of pi indeed 3.14?",
+                    "Dialogue2": "Well done, you have solved the riddle, you may pass. I wish you a good day."
+                },
+                "Alternatif": {
+                    "Dialogue1": "Well done, you have solved the riddle, you may pass. I wish you a good day."
+                }
+            },
+            "PNJ4": {
+                "Nom": "King",
+                "Principal": {
+                    "Dialogue1": "AHAHAH, I found a way to travel through dimensions and conquer everything !!!",
+                    "Dialogue2": "Try to stop me if you dare, you worthless adventurer!"
+                },
+                "Alternatif": {
+                    "Dialogue1": "..."
+                }
+            }
+        },
+        "NiveauBaseFuturiste": {
+            "PNJ1": {
+                "Nom": "Michael",
+                "Principal": {
+                    "Dialogue1": "Whoa, where did you come from?? Your portal caused a power outage throughout the base, you'll need to turn it back on or you won't be able to get back home.",
+                    "Dialogue2": "I would go turn on the reactor myself, but without power the doors won't open, we'll need to find another way. Here, I think this fell with you."
+                },
+                "Alternatif": {
+                    "Dialogue1": "So you haven't fixed your mess yet? Hurry up, the cafeteria fridge has my lunch in it and you'd better make sure it's still good when I go to eat it!"
+                }
+            },
+            "PNJ2": {
+                "Nom": "Engineer",
+                "Principal": {
+                    "Dialogue1": "Hello ! Is anyone there ? I can't see anything, can someone help me ?",
+                    "Dialogue2": "We need to restart the reactor to get the power back on, but I can't find the button.",
+                    "Dialogue3": "Be careful not to overuse the button, it could be dangerous."
+                },
+                "Alternatif": {
+                    "Dialogue1": "Have you found the button ? I just realized I'm blind and actually it makes no difference for me."
+                }
+            },
+            "PNJ3": {
+                "Nom": "Han",
+                "Principal": {
+                    "Dialogue1": "Need a pilot, kid ? I can do the job but you'll have to pay up.",
+                    "Dialogue2": "And if you don't have the money, we can do a bit of bartering.",
+                    "Dialogue3": "You want to buy me with a shovel, an axe and a pickaxe ??? That works out well since I was planning to redo my garden. Here, I'll give you this photo album of my flowers.",
+                    "Dialogue4": "(It turns out Han made a mistake and gave you a math sheet instead)"
+                },
+                "Alternatif": {
+                    "Dialogue1": "..."
+                }
+            },
+            "PNJ4": {
+                "Nom": "Didier ",
+                "Principal": {
+                    "Dialogue1": "Well now, if you want to leave this place, you'll need a shiop, my friend !",
+                    "Dialogue2": "And even if you have one, it'll need some huice to take off !",
+                    "Dialogue3": "Go see about pumping some fuel in that room, we haven't switched to electric yet.",
+                    "Dialogue4": "(A piece of paper falls from the fellow's pocket, you pick it up)"
+                },
+                "Alternatif": {
+                    "Dialogue1": "So hurry up before prices go up ! I don't even know why I'm saying that, we don't pay for it here."
+                }
+            },
+            "PNJ5": {
+                "Nom": "Han",
+                "Principal": {
+                    "Dialogue1": "We'll need some fuel if you want us to move from this base.",
+                    "Dialogue2": "You managedd to fill up the rocket ? If so, we can take off."
+                },
+                "Alternatif": {
+                    "Dialogue1": "..."
+                }
+            },
+            "PNJ6": {
+                "Nom": "Han",
+                "Principal": {
+                    "Dialogue1": "You want to go after a mad king who wants to conquer all dimensions?!",
+                    "Dialogue2": "That sounds fun, as long as I can keep the tools.",
+                    "Dialogue3": "Wait, what's happening ? We must have hit something, I've lost control of the ship, we're going to crash."
+                },
+                "Alternatif": {
+                    "Dialogue1": "..."
+                }
+            },
+            "PNJ7": {
+                "Nom": "Han",
+                "Principal": {
+                    "Dialogue1": "(The pilot seems knocked out, you leave him to explore the surroundings but he has a notebook with inscriptions, you take it)"
+                },
+                "Alternatif": {
+                    "Dialogue1": "(The pilot seems knocked out, you leave him to explore the surroundings but he has a notebook with inscriptions, you take it)"
+                }
+            }
+        },
+        "NiveauMordor": {
+            "PNJ1": {
+                "Nom": "Orc border guard",
+                "Principal": {
+                    "Dialogue1": "A human ?! You're comming with me, I'll offer you to our new lord !",
+                    "Dialogue2": "(At the moment of knocking you out, the orc drops a paper which you pick it up)"
+                },
+                "Alternatif": {
+                    "Dialogue1": "..."
+                }
+            },
+            "PNJ2": {
+                "Nom": "Human prisoner",
+                "Principal": {
+                    "Dialogue1": "Thank you for opening this cell, I'll accompany you so we can escape from this cursed prison !",
+                    "Dialogue2": "Here's a paper I found in my chamber pot, but I don't really want to keep it, so take it."
+                },
+                "Alternatif": {
+                    "Dialogue1": "Let's quickly escape from this horrible place !"
+                }
+            },
+            "PNJ3": {
+                "Nom": "Orc jailer",
+                "Principal": {
+                    "Dialogue1": "(You probably won't be able to defeat him to pass, find a companion or another way to escape.)",
+                    "Dialogue2": "(You and your companion confrint your jailer, during the fight he drops a scroll that you pick up, you can now pass.)"
+                },
+                "Alternatif": {
+                    "Dialogue1": "..."
+                }
+            },
+            "PNJ4": {
+                "Nom": "Goulboum",
+                "Principal": {
+                    "Dialogue1": "But what do we see my precious, a fresh human here ! What did he say my preciousss ? He wishes to find the lord of the lands ?!",
+                    "Dialogue2": "Oh yes we saw him my precious, he went into the fire-spitting mountain, oh yes my precious !"
+                },
+                "Alternatif": {
+                    "Dialogue1": "The human has returned my precious, does he want us to eat him ? oh yes my precious !",
+                    "Dialogue2": "Fresh human, it's been so long since we've made do with tasteless fish. What's that ?",
+                    "Dialogue3": "It just took a wrong turn and doesn't want to be eaten. Oh no ! Maybe next time my precious.",
+                    "Dialogue4": "(You note what is written on the creature's loincloth)"
+                }
+            },
+            "PNJ5": {
+                "Nom": "King",
+                "Principal": {
+                    "Dialogue1": "AHAHAHAH ! You really think you can defeat me ? I have transcended the limits of humanity MUHAHAHAHA !",
+                    "Dialogue2": "(If you wish to defeat the king and bring peace to return home, you will need to show the full extent of your abilities)"
+                },
+                "Alternatif": {
+                    "Dialogue1": "AHAHAH ! You have already failed once, do you think you can defeat me this time ?!"
+                }
+            }
         }
+    }
 }
 

@@ -382,7 +382,7 @@ class AnimatedSpritesUnique(pygame.sprite.Sprite):
 
             if self.current_frame +1 > len(self.frames)-1: # passage à la suite
                 if NIVEAU["Map"] == "NiveauMordor" and INFOS["DemiNiveau"]:
-                    INFOS["EndPhase"] = True
+                    INFOS["CinematiqueEndAct"] = False # on enlève le blocage
  
             else: #animation classique
                 self.current_frame = (self.current_frame + 1) % len(self.frames)

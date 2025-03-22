@@ -270,15 +270,15 @@ class NiveauMordorVolcan(GestionNiveauMap):
         AjoutJsonMapValue(self.coordsSpawn, "coordsMapObject", "Spawn")
 
     def PlacementPNJ(self):
-        coordsPNJ6 = [8, 4, "P", 5]
-        self.allCoordsPNJ = [coordsPNJ6]
+        coordsPNJ5 = [8, 4, "P", 5]
+        self.allCoordsPNJ = [coordsPNJ5]
         for coords in self.allCoordsPNJ:
             self.map[coords[1]][coords[0]] = "P"
         AjoutJsonMapValue(self.allCoordsPNJ, "coordsMapObject", "PNJ Coords")
     
     def PlacementObjSpecifique(self):
         self.coordsDoorEntree = [0, 4, "NiveauMordor", "DoorEntree"]
-        self.coordsPortal = [11, 4, "NiveauMordor", "Portal"]
+        self.coordsPortal = [9, 4, "NiveauMordor", "Portal"]
         self.coordsBCGMap = [0,0, "NiveauMordor", "BCG"]
 
         allObjSpecifique = [self.coordsBCGMap, self.coordsDoorEntree, self.coordsPortal]

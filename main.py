@@ -194,12 +194,13 @@ class Game(object):
                 self.running = False
 
 
-            elif INFOS["GameStart"]: # dans le jeu
-                dt = self.clock.tick(30) / 1000
-
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        self.running = False
+            dt = self.clock.tick(30) / 1000
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.running = False
+                
+                elif INFOS["GameStart"]: # dans le jeu
+                
 
                     # rebinding keys fonctionneemnt
                     if INFOS["RebindingKey"]:
@@ -250,8 +251,20 @@ class Game(object):
                         self.cinematique, self.cinematiqueObject, self.followPlayer, self.followObject = self.pnj.update(self.player.rect.center, event) # pnj update 
                 
                 
+                elif INFOS["EndGame"]:
+                    self.GestionInterfaceOther.Update(event, "End") # scroll (event)
 
-                        
+                else:
+            
+                    if event.type == pygame.USEREVENT and event.animationLancement == "animation_finie":
+                        self.animationLancementEnd = True
+                    
+                    # update dans la boucle pour scroll event
+                    if self.animationLancementEnd:        
+                        self.GestionInterfaceOther.Update(event, "Start")
+
+
+            if INFOS["GameStart"]:            
                 # update de tous les sprites de la map
                 self.allSprites.update(dt, self.cinematique)
                 self.displaySurface.fill("#000000")
@@ -288,7 +301,7 @@ class Game(object):
                     self.pnj.isClose(self.player.rect.center)
                     self.InteractionObject.Update(self.player, self.interactionsGroup) # interaction update
             
-                elif self.cinematique and not INFOS["CinematiqueEndAct"]: # si cinématique
+                elif self.cinematique and not INFOS["CinematiqueEndAct"] and NIVEAU["Map"] != "NiveauMordor": # si cinématique
                     if NIVEAU["Map"] != "NiveauBaseFuturiste":
                         self.cinematique, endCinematique = self.cinematiqueObject.Update(dt)
                     else:
@@ -425,7 +438,6 @@ class Game(object):
                 
                 if INFOS["EndPhase"]:
                     INFOS["EndPhase"] = False
-                    INFOS["CinematiqueEndAct"] = False # on enlève le blocage
                     # check de si on affiche le menu de fin ou alors on passe au niveau sup
                     if NIVEAU["All"]:
                         if NIVEAU["Niveau"] == "Premiere":
@@ -433,39 +445,19 @@ class Game(object):
                             INFOS["GameStart"] = False # jouer la cinématique avant
                             INFOS["EndGame"] = True # de meme
                         else:
-                            self.cinematique = False
                             INFOS["ExoPasse"] = True
                     else:
                         self.GameTool.fondu_au_noir()
                         INFOS["GameStart"] = False # jouer la cinématique avant
                         INFOS["EndGame"] = True # de meme 
-  
+
+                if not INFOS["CinematiqueEndAct"] and self.cinematique: # on arrete la cinématique 
+                    self.cinematique = False
             
             elif INFOS["EndGame"]:
-                    for event in pygame.event.get():
-                        if event.type == pygame.QUIT:
-                            self.running = False
-                        
-                        self.GestionInterfaceOther.Update(event, "End") # scroll (event)
-                    self.GestionInterfaceOther.Update(event, "End") # auto scroll (auto update)
+                self.GestionInterfaceOther.Update(event, "End") # auto scroll (auto update)
 
-            else:
-                dt = self.clock.tick(30) / 1000
 
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        self.running = False
-
-                    elif event.type == pygame.USEREVENT and event.animationLancement == "animation_finie":
-                        self.animationLancementEnd = True
-                    
-                
-                    # update dans la boucle pour scroll event
-                    if self.animationLancementEnd:        
-                        self.GestionInterfaceOther.Update(event, "Start")
-
-            
-            
             # element de gestions
             if INFOS["CrashGame"]:
                 self.fondu_au_noir()

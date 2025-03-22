@@ -107,8 +107,7 @@ class EndInterface():
         self.BluidInterface()
         self.displaySurface.blit(self.interfaceSurface, (0, 0)) # pos topleft
 
-
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             # delay de click
             current_time = pygame.time.get_ticks()
             if current_time - self.last_click_time > self.click_delay:

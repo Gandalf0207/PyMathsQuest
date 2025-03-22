@@ -403,6 +403,10 @@ class Interactions(object):
                     INFOS["Exo"] = True # lancement exo dans main (changement variable)
                     self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["MakeExo"]) # text animation
 
+                if self.ObjectId == "Portal":
+                    INFOS["EndPhase"] = True # gestion de fin du jeu
+
+
 
 
     def Isclose(self) -> bool :

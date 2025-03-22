@@ -908,7 +908,7 @@ class LoadMapGestion():
                         CollisionSprites(pos, self.DoorVolcanEntre, "DoorVolcanEntree", (self.allSprites, self.collisionSprites), layer = 2)
                     case "Portal":
                         path = join("Image", "Obstacle", "Portal")
-                        AnimatedSprites(pos, (self.allSprites, ), "Portal", path, layer=2) # ( , ) pour pouvoir parcourir l'element
+                        AnimatedSprites(pos, (self.allSprites, self.interactions ), "Portal", path, layer=2) # ( , ) pour pouvoir parcourir l'element
                     case "BCG":
                         Sprites(pos, self.bcgDemiNiveauVolcan, "BCGVolcanDemiNiveau", self.allSprites, layer=0)
 
