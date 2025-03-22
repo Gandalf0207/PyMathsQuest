@@ -341,7 +341,7 @@ class LoadMapGestion():
                 elif self.mapBase[ordonnees][abscisses] == 1:
                     Sprites(pos, self.sol1, "Sol1", self.allSprites, layer=0)
                 elif self.mapBase[ordonnees][abscisses] == "-":
-                    if NIVEAU["Map"] == "NiveauMordor":
+                    if NIVEAU["Map"] == "NiveauMordor" and not INFOS["DemiNiveau"]:
                         if randint(1,2) == 1:
                             Sprites(pos, self.sol, "Sol", self.allSprites, layer=0)
                         else:

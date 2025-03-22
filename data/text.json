@@ -338,6 +338,7 @@
 
 
         "NiveauMordor" : {
+            "KillRoi" : "Vous poussez le roi dans la lave",
             "MakeExo" : "Pour vaincre le roi, résolvez cet exercice",
             "EnterVolcan" : "Vous entrez dans le volcan",
             "GoPrison" : "L'orc ne se montre pas amical, vous finissez en prison.",

@@ -264,7 +264,7 @@ class Game(object):
                 if not self.cinematique:
                     self.allSprites.draw(self.player.rect.center) # lockcam player
                 else:
-                    if NIVEAU["Map"] == "NiveauBaseFuturiste":
+                    if NIVEAU["Map"] in ["NiveauBaseFuturiste", "NiveauMordor"]:
                         self.allSprites.draw(self.player.rect.center) # lockcam player
                     else:
                         self.allSprites.draw(self.cinematiqueObject.targetObject.rect.center) # pnj lockcam
@@ -288,7 +288,7 @@ class Game(object):
                     self.pnj.isClose(self.player.rect.center)
                     self.InteractionObject.Update(self.player, self.interactionsGroup) # interaction update
             
-                else: # si cinématique 
+                elif self.cinematique and not INFOS["CinematiqueEndAct"]: # si cinématique
                     if NIVEAU["Map"] != "NiveauBaseFuturiste":
                         self.cinematique, endCinematique = self.cinematiqueObject.Update(dt)
                     else:
@@ -404,9 +404,6 @@ class Game(object):
                         self.ChargementEcran()
                         # mise à jour de l'interface pour la méthode d'interface
                         self.gameInterfaces.MiseAJourInterfaceExo(self.InterfaceExo) 
-
-
-
                 
                 # si exo réussit    
                 if INFOS["ExoPasse"]:
@@ -425,16 +422,31 @@ class Game(object):
                     self.checkCoursDone = False
                     threading.Thread(target=self.gestionCours.MakeCours, daemon=True).start()
                     self.ChargementEcran()
-            
+                
+                if INFOS["EndPhase"]:
+                    INFOS["EndPhase"] = False
+                    INFOS["CinematiqueEndAct"] = False # on enlève le blocage
+                    # check de si on affiche le menu de fin ou alors on passe au niveau sup
+                    if NIVEAU["All"]:
+                        if NIVEAU["Niveau"] == "Premiere":
+                            self.GameTool.fondu_au_noir()
+                            INFOS["GameStart"] = False # jouer la cinématique avant
+                            INFOS["EndGame"] = True # de meme
+                        else:
+                            INFOS["ExoPasse"] = True
+                    else:
+                        self.GameTool.fondu_au_noir()
+                        INFOS["GameStart"] = False # jouer la cinématique avant
+                        INFOS["EndGame"] = True # de meme 
+  
             
             elif INFOS["EndGame"]:
-
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        self.running = False
-
-                    self.GestionInterfaceOther.Update(event, "End") # scroll (event)
-                self.GestionInterfaceOther.Update(event, "End") # auto scroll (auto update)
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            self.running = False
+                        
+                        self.GestionInterfaceOther.Update(event, "End") # scroll (event)
+                    self.GestionInterfaceOther.Update(event, "End") # auto scroll (auto update)
 
             else:
                 dt = self.clock.tick(30) / 1000
@@ -669,17 +681,15 @@ class GameToolBox(object):
                     NIVEAU["Map"] = "NiveauMordor"
 
                 case "NiveauMordor":
-                    NIVEAU["Map"] = "NiveauPlaineRiviere"
                     if NIVEAU["All"]:
+                        NIVEAU["Map"] = "NiveauPlaineRiviere"
                         match NIVEAU["Niveau"]:
                             case "Seconde":
                                 NIVEAU["Niveau"] = "Premiere"
                             case "Premiere":
                                 NIVEAU["Niveau"] = "Terminale"
                             case "Terminale":
-                                INFOS["GameEnd"] = True
-                    else:
-                        INFOS["EndGame"] = True
+                                pass
 
 
         # reset valeurs

@@ -1,4 +1,5 @@
 from settings import *
+from SourcesFichiers.Elements.sprites import *
 from SourcesFichiers.ExosCours.choixExo import *
 from SourcesFichiers.ExosCours.renderLatex import *
 
@@ -225,14 +226,22 @@ class CreateExo:
             INFOS["DemiNiveau"] = True
             INFOS["ExoPasse"] = False # on ne veux pas changer de niveau
             STATE_HELP_INFOS[0] = "SeePNJ" # update tips player
-        else:
+        else: # interaction pnj roi nv mrodor
             pygame.event.clear([pygame.MOUSEBUTTONDOWN, pygame.MOUSEBUTTONUP])  # Nettoyer les événements
+            INFOS["CinematiqueEndAct"] = True # on lance la cinématique de fin (aucune action du player)
+
             self.gestionnaire.fondu_au_noir()
-            self.gestionnaire.textScreen("   ")
-            INFOS["CinematiqueEndAct"] = True
+            text = TEXTE["Elements"][NIVEAU["Map"]]["KillRoi"]
+            self.gestionnaire.textScreen(text)
+            self.gestionnaire.cinematique = True
+
+            for pnj in self.gestionnaire.allPNJ:
+                if pnj.numPNJ == "PNJ5":
+                    pos = (pnj.pos[0]*CASEMAP, pnj.pos[1]*CASEMAP)
+                    pnj.kill()
+                    path = join("Image", "AnimationKillRoi")
+                    AnimatedSpritesUnique(pos, self.gestionnaire.allSprites, "KillRoi", path, layer = 1)
             INFOS["ExoPasse"] = False
-            INFOS["GameStart"] = False # jouer la cinématique avant
-            INFOS["EndGame"] = True # de meme 
 
         # add du total exo dans la gestion des interface (close)
         INFOS["ExoReussit"] += 1 
