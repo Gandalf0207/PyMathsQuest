@@ -80,11 +80,11 @@ class CollisionSprites(pygame.sprite.Sprite):
             case "Champs":
                 self.hitbox = self.rect.inflate(0,0)
             case "House":
-                self.hitbox = self.rect.inflate(-20,-60)
+                self.hitbox = self.rect.inflate(-20,-120)
             case "Well":
                 self.hitbox = self.rect.inflate(-20,-60)
             case "Chateau":
-                self.hitbox = self.rect.inflate(0, -30)
+                self.hitbox = self.rect.inflate(-20, -70)
             case "TableCraft":
                 self.hitbox = self.rect.inflate(0,0)
             case "Boat":
@@ -96,7 +96,7 @@ class CollisionSprites(pygame.sprite.Sprite):
             case "DoorMuraille":
                 self.hitbox = self.rect.inflate(0, -60)
             case "DoorChateau":
-                self.hitbox = self.rect.inflate(0, -60)
+                self.hitbox = self.rect.inflate(-20, -70)
             case "DoorChateauInterieur":
                 self.hitbox = self.rect.inflate(0, -60)
             case "ReactorBloc":

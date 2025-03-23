@@ -155,8 +155,8 @@ class Game(object):
     def StartMap(self):
         
         # Affichage initial de l'écran de chargement
-        threading.Thread(target=self.SetupAllMap).start()
         self.GameTool.SetInfosLevel()
+        threading.Thread(target=self.SetupAllMap).start()
 
         if NIVEAU["Niveau"] == "Seconde":
             if NIVEAU["Map"] == "NiveauPlaineRiviere":

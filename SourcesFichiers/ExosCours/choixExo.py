@@ -13,38 +13,11 @@ class GetExo:
     def CreateValues(self) -> None:
         """Méthode de créations des valeur aléatoires (sous conditions et vérification)
         Input / Output : None"""
+        if NIVEAU["Niveau"] == "Seconde":
+            if NIVEAU["Map"] in ["NiveauPlaineRiviere", "NiveauMedievale", "NiveauMordor"]:
+                def checkUniqueValuesList(liste):
+                    return len(liste) == len(set(liste)) # check de si toutes les valeurs sont uniques
 
-        if NIVEAU["Map"] in ["NiveauPlaineRiviere", "NiveauMedievale", "NiveauMordor"]:
-            def checkUniqueValuesList(liste):
-                return len(liste) == len(set(liste)) # check de si toutes les valeurs sont uniques
-
-            self.a = randint(5,25 )
-            self.b = randint(25,50) 
-            self.r = randint(4, 12) 
-            self.d = randint(6, 32)
-            self.L = randint(8, 34)
-            self.l = randint(7, 23) 
-            self.h = randint(3, 45)
-            self.e = sqrt((self.r**2)+(self.h**2)) # check valeurs correct (nb chiffres après la virgule exo volume nv2)
-
-
-            self.nb1 = randint(2,50)
-            self.nb2 = randint(2,50)
-            self.nb3 = randint(2,50)
-            self.nb4 = randint(2,50)
-            self.nb5 = randint(2,50)
-            self.nb6 = randint(2,50)
-            self.nb7 = randint(2,50)
-            self.nb8 = randint(2,50)
-            self.nb9 = randint(2,50)
-            self.nb10 = randint(2,50)
-            self.nb11 = randint(2,50)
-            self.nb12 = randint(2,50)
-            
-            liste = [self.nb1, self.nb2, self.nb3, self.nb4, self.nb5, self.nb6, 
-                    self.nb7, self.nb8, self.nb9, self.nb10, self.nb11, self.nb12]
-
-            while not checkUniqueValuesList(liste):
                 self.a = randint(5,25 )
                 self.b = randint(25,50) 
                 self.r = randint(4, 12) 
@@ -68,54 +41,90 @@ class GetExo:
                 self.nb11 = randint(2,50)
                 self.nb12 = randint(2,50)
                 
-            
                 liste = [self.nb1, self.nb2, self.nb3, self.nb4, self.nb5, self.nb6, 
                         self.nb7, self.nb8, self.nb9, self.nb10, self.nb11, self.nb12]
-        elif NIVEAU["Map"] == "NiveauBaseFuturiste":
-            XA = randint(-10,10)
-            XB = randint(-10,10)
-            XC = randint(-10,10)
-            XD = randint(-10,10)
 
-            YA = randint(-10,10)
-            YB = randint(-10,10)
-            YC = randint(-10,10)
-            YD = randint(-10,10)
+                while not checkUniqueValuesList(liste):
+                    self.a = randint(5,25 )
+                    self.b = randint(25,50) 
+                    self.r = randint(4, 12) 
+                    self.d = randint(6, 32)
+                    self.L = randint(8, 34)
+                    self.l = randint(7, 23) 
+                    self.h = randint(3, 45)
+                    self.e = sqrt((self.r**2)+(self.h**2)) # check valeurs correct (nb chiffres après la virgule exo volume nv2)
 
-            #calculs avec conditon pour éviter les erreurs, et obtenir des valeurs correctes (meme principe que le script du fichier py_maths_boss)
-            m1 = 0.01
-            while m1 != round(m1,1):
-                XA = random.randint(-10,10)
-                XB = random.randint(-10,10)
-                YA = random.randint(-10,10)
-                YB = random.randint(-10,10)
 
-                A = (XA, YA) 
-                B = (XB, YB) 
+                    self.nb1 = randint(2,50)
+                    self.nb2 = randint(2,50)
+                    self.nb3 = randint(2,50)
+                    self.nb4 = randint(2,50)
+                    self.nb5 = randint(2,50)
+                    self.nb6 = randint(2,50)
+                    self.nb7 = randint(2,50)
+                    self.nb8 = randint(2,50)
+                    self.nb9 = randint(2,50)
+                    self.nb10 = randint(2,50)
+                    self.nb11 = randint(2,50)
+                    self.nb12 = randint(2,50)
+                    
+                
+                    liste = [self.nb1, self.nb2, self.nb3, self.nb4, self.nb5, self.nb6, 
+                            self.nb7, self.nb8, self.nb9, self.nb10, self.nb11, self.nb12]
+            elif NIVEAU["Map"] == "NiveauBaseFuturiste":
+                XA = randint(-10,10)
+                XB = randint(-10,10)
+                XC = randint(-10,10)
+                XD = randint(-10,10)
 
-                if (XA != 0 and XB != 0 and YA != 0 and YB != 0) and (XB != XA and YB != YA):
-                    m1 = (B[1]- A[1]) / (B[0] - A[0])
-                p1 = A[1] - (m1*A[0]) 
+                YA = randint(-10,10)
+                YB = randint(-10,10)
+                YC = randint(-10,10)
+                YD = randint(-10,10)
 
-            #calculs avec conditon pour éviter les erreurs, et obtenir des valeurs correctes (meme principe que le script du fichier py_maths_boss)
-            m2 = 0.01
-            while m2 != round(m2,1):
+                #calculs avec conditon pour éviter les erreurs, et obtenir des valeurs correctes (meme principe que le script du fichier py_maths_boss)
+                m1 = 0.01
+                while m1 != round(m1,1):
+                    XA = random.randint(-10,10)
+                    XB = random.randint(-10,10)
+                    YA = random.randint(-10,10)
+                    YB = random.randint(-10,10)
 
-                XC = random.randint(-10,10)
-                XD = random.randint(-10,10)
-                YC = random.randint(-10,10)
-                YD = random.randint(-10,10)
+                    A = (XA, YA) 
+                    B = (XB, YB) 
 
-                C = (XC, YC)
-                D = (XD, YD)
+                    if (XA != 0 and XB != 0 and YA != 0 and YB != 0) and (XB != XA and YB != YA):
+                        m1 = (B[1]- A[1]) / (B[0] - A[0])
+                    p1 = A[1] - (m1*A[0]) 
 
-                if (XC != 0 and XD != 0 and YC != 0 and YD != 0) and (XD != XC and YD != YC):
-                    m2 = (D[1]- C[1]) / (D[0] - C[0])
-                p2 = C[1] - (m2*C[0]) 
-            
-            self.valeurs = ([m1, round(p1,1), m2, round(p2,1), A, B, C, D]) # Retour des valeurs pour les équations réduites + coordonnées
-    
+                #calculs avec conditon pour éviter les erreurs, et obtenir des valeurs correctes (meme principe que le script du fichier py_maths_boss)
+                m2 = 0.01
+                while m2 != round(m2,1):
 
+                    XC = random.randint(-10,10)
+                    XD = random.randint(-10,10)
+                    YC = random.randint(-10,10)
+                    YD = random.randint(-10,10)
+
+                    C = (XC, YC)
+                    D = (XD, YD)
+
+                    if (XC != 0 and XD != 0 and YC != 0 and YD != 0) and (XD != XC and YD != YC):
+                        m2 = (D[1]- C[1]) / (D[0] - C[0])
+                    p2 = C[1] - (m2*C[0]) 
+                
+                self.valeurs = ([m1, round(p1,1), m2, round(p2,1), A, B, C, D]) # Retour des valeurs pour les équations réduites + coordonnées
+        
+        elif NIVEAU["Niveau"] == "Premiere" :   
+            if NIVEAU["Map"] == "NiveauMedievale":
+                self.a = randint(-7,7) # Génération aléatoire des valeurs
+                self.b = randint(2,25)
+                self.c = randint(2,10)
+
+                while self.a ==0 or self.a ==-1 or self.a==1 or self.b == self.c: # on évite les valeurs non utilisables
+                    self.a = random.randint(-15,15)
+                    self.b = randint(2,25)
+                    self.c = randint(2,10)
 
 
     def pgcd(self, a: int, b : int) -> int:
@@ -455,7 +464,52 @@ class GetExo:
     def ExoNv4(self) -> None:
         """Méthode de création de l'exo 5 : deux niveaux de difficulté
         Input / Output : None"""
-        pass
+        self.ErrorGeneration = False
+
+        eqt = r"$ P(x) =  %sx^2 + %sx + %x $" %(self.a, self.b, self.c)
+
+        delta = self.b**2 - 4*self.a*self.c
+
+        # values
+        if delta > 0:
+            x1 = round((-self.b - sqrt(delta) )/ self.a*2, 2)
+            x2 = round((-self.b + sqrt(delta) )/ self.a*2, 2)
+
+            valueError1 = round((-self.a + sqrt(self.b))/ self.c, 2)
+            valueError2 = round((-self.b + self.a)/ self.b, 2)
+            valueError3 = round(sqrt((self.b + self.a)**2), 2)
+            valueError4 = round((-self.a -self.c) / self.b, 2)
+
+        elif delta == 0:
+            xSimple = round((-self.b) / 2*self.a , 2)
+
+            valueError1 = round((self.a) / 2*self.b, 2)
+            valueError2 = round((-self.b) / self.c + 2*self.a, 2)
+        
+        else:
+            valueError1 = round((-self.a + sqrt(self.b))/ self.c, 2)
+            valueError2 = round((-self.a -self.c) / self.b, 2)
+            valueError3 = round((-self.b) / self.c + 2*self.a, 2)
+
+        # réponses
+        if delta > 0:
+            resultat = f"P(0) admet 2 solutions : x1 = {x1}; x2 = {x2}"
+            resultat2 = f"P(0) admet 2 solutions : x1 = {valueError1}; x2 = {valueError3}" 
+            resultat3 = f"P(0) admet 2 solutions : x1 = {valueError2}; x2 = {valueError4}"
+
+        elif delta == 0:
+            resultat = f"P(0) admet une seule et unique soluion : x = {xSimple}"
+            resultat2 = f"P(0) admet une seule et unique soluion : x = {valueError1}"
+            resultat3 = f"P(0) admet une seule et unique soluion : x = {valueError2}"
+        
+        else: 
+            resultat = f"P(0) admet aucune solution dans R. "
+            resultat2 = f"P(0) admet 2 solutions : x1 = {valueError1}; x2 = {valueError2}"
+            resultat3 = f"P(0) admet une seule et unique soluion : x = {valueError3}"
+
+        self.stockageValues = (self.a, self.b, self.c)
+        self.listeConstruction = [eqt, resultat, resultat2, resultat3]
+
 
     def ExoNv5(self) -> None:
         """Méthode de création de l'exo 6 : deux niveaux de difficulté
@@ -556,7 +610,9 @@ class GetExo:
                 while self.ErrorGeneration:
                     self.CreateValues()
                     self.ExoNv3()
-            
+        elif NIVEAU["Niveau"] == "Premiere":
+            if NIVEAU["Map"] == "NiveauMedievale":
+                self.ExoNv4()
 
             # case 2:
             #     self.ExoNv2()

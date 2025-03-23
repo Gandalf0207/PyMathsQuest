@@ -157,6 +157,10 @@ class CreateExo:
 
                 self.interfaceExoSurface.blit(self.infosBuild[0][0], self.infosBuild[0][0].get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
 
+        elif NIVEAU["Niveau"] == "Premiere":
+            if NIVEAU["Map"] == "NiveauMedievale":
+                self.hauteurAct += 120
+                self.interfaceExoSurface.blit(self.latexSurface, (self.latexSurface.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct))))
 
         # réponse titre
         textQ = TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Difficulte{INFOS["Difficulte"]}"]["QCM"] if NIVEAU["Map"] != "NiveauMordor" else TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"DemiNiveau{INFOS["DemiNiveau"]}"][f"Difficulte{INFOS["Difficulte"]}"]["QCM"]
@@ -247,6 +251,10 @@ class CreateExo:
         # surface latex -> avec eqt
         if NIVEAU["Niveau"] == "Seconde":
             if (NIVEAU["Map"] == "NiveauPlaineRiviere") or ( NIVEAU["Map"] == "NiveauMordor" and not INFOS["DemiNiveau"]):
+                self.latexSurface = self.ObjRender.GetElement(self.infosBuild[0], 30) # on donne l'eqt
+
+        elif NIVEAU["Niveau"] == "Premiere":
+            if NIVEAU["Map"] == "NiveauMedievale":
                 self.latexSurface = self.ObjRender.GetElement(self.infosBuild[0], 30) # on donne l'eqt
             
 

@@ -227,15 +227,18 @@ class HomeInterface(object):
                         match self.selectedOptionNiveau:
                             case 0:
                                 NIVEAU["Niveau"] = "Seconde"
+                                NIVEAU["Map"] = "NiveauPlaineRiviere"
                                 NIVEAU["All"] = False
                             case 1:
                                 NIVEAU["Niveau"] = "Premiere"
+                                NIVEAU["Map"] = "NiveauMedievale"
                                 NIVEAU["All"] = False
                             case 2:
                                 NIVEAU["Niveau"] = "Terminale"
                                 NIVEAU["All"] = False
                             case 3:
                                 NIVEAU["Niveau"] = "Seconde"
+                                NIVEAU["Map"] = "NiveauPlaineRiviere"
                                 NIVEAU["All"] = True
 
                 # difficulte
