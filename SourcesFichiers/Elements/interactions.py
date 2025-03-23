@@ -60,12 +60,12 @@ class Interactions(object):
 
                         # deplacement player
                         if self.player.rect.x < self.coordObjActuel[0]:
-                            self.player.rect.x += CASEMAP*2
+                            self.player.rect.x = self.coordObjActuel[0] + CASEMAP
                             STATE_HELP_INFOS[0] = "SeePNJ" # update tips player
                         else:
-                            self.player.rect.x -= CASEMAP*2
+                            self.player.rect.x = self.coordObjActuel[0] - CASEMAP
                             STATE_HELP_INFOS[0] = "CrossBridge" # update tips player
-
+                        self.player.rect.y = self.coordObjActuel[1]
                         self.player.hitbox_rect.center = self.player.rect.center
                         
                         # fin animation
@@ -144,12 +144,13 @@ class Interactions(object):
 
                         # deplacement player
                         if self.player.rect.x < self.coordObjActuel[0]:
-                            self.player.rect.x += CASEMAP*2
+                            self.player.rect.x = self.coordObjActuel[0] + CASEMAP
                             STATE_HELP_INFOS[0] = "SeePNJ" # update tips player
                         else:
-                            self.player.rect.x -= CASEMAP*2
+                            self.player.rect.x = self.coordObjActuel[0] - CASEMAP
                             STATE_HELP_INFOS[0] = "CrossBridge" # update tips player
-
+                        
+                        self.player.rect.y = self.coordObjActuel[1]
                         self.player.hitbox_rect.center = self.player.rect.center
                         
                         # fin animation
@@ -161,16 +162,16 @@ class Interactions(object):
 
                     # deplacement player
                     if self.player.rect.y < self.coordObjActuel[1]:
+                        self.player.rect.y = self.coordObjActuel[1] + CASEMAP*2
                         # text animation
                         self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["TraverserPont"])
 
                         # action pour traverser
-                        self.player.rect.y += CASEMAP*3
                         STATE_HELP_INFOS[0] = "SeePNJ" # update tips player
                     else:
                         self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["CantTraverserPont"])
 
-
+                    self.player.rect.x = self.coordObjActuel[0]
                     self.player.hitbox_rect.center = self.player.rect.center
                     
                     # fin animation
@@ -388,12 +389,13 @@ class Interactions(object):
                     self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["TraverserPont"])
                     # deplacement player
                     if self.player.rect.x < self.coordObjActuel[0]:
-                        self.player.rect.x += CASEMAP*2
+                        self.player.rect.x = self.coordObjActuel[0] + CASEMAP
                         STATE_HELP_INFOS[0] = "SeePNJ" # update tips player
                     else:
-                        self.player.rect.x -= CASEMAP*2
+                        self.player.rect.x = self.coordObjActuel[0] - CASEMAP
                         STATE_HELP_INFOS[0] = "CrossBridge" # update tips player
                     
+                    self.player.rect.y = self.coordObjActuel[1]
                     self.player.hitbox_rect.center = self.player.rect.center    
                     # fin animation
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center) 
