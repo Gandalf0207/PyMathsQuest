@@ -202,8 +202,8 @@ class LoadMapGestion():
             self.solV2 = pygame.image.load(join("Image", "Sol", "SolMordorV2.png")).convert_alpha()
             self.sol2V2 = pygame.image.load(join("Image", "Sol", "MordorSol2V2.png")).convert_alpha()
             self.sol3V2 = pygame.image.load(join("Image", "Sol", "MordorSol3V2.png")).convert_alpha()
-            self.montainWE = pygame.image.load(join("Image", "Mur", "Mountain", "MountainMordorStraighW-Ex128.png")).convert_alpha()
-            self.montainWE1 = pygame.image.load(join("Image", "Mur", "Mountain", "MountainMordorStraighW-Ealt1x128.png")).convert_alpha()
+            self.montainWE = pygame.image.load(join("Image", "Mur", "Mordor", "MountainStraighW-E.png")).convert_alpha()
+            self.montainWE1 = pygame.image.load(join("Image", "Mur", "Mordor", "MountainStraighW-E.png")).convert_alpha()
 
             self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesWE.png" )).convert_alpha()
             self.MurNSGauche = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesNS.png" )).convert_alpha()
@@ -276,7 +276,10 @@ class LoadMapGestion():
             elif NIVEAU["Map"] == "NiveauBaseFuturiste":
                 self.LoadImagesDemiNiveauVaisseau()
             elif NIVEAU["Map"] == "NiveauMordor":
-                self.LoadImagesDemiNiveauVolcan()
+                if not INFOS["DemiNiveau"]:
+                    self.LoadImagesNiveauMordor()
+                else:
+                    self.LoadImagesDemiNiveauVolcan()
 
     def Setup(self):
 
@@ -467,55 +470,56 @@ class LoadMapGestion():
 
 
                     riverPath = ""
+                    typeRiver = "Riviere" if NIVEAU["Map"] != "NiveauMordor" else "Lave"
                     # conflif montain
                     if mountainConflict:
-                        riverPath = join("Image","Obstacle","Riviere","RiverMontainConflictx128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverMontainConflictx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
 
                     # cross    
                     elif can_build_down and can_build_left and can_build_right and can_build_up:
-                        riverPath = join("Image", "Obstacle", "Riviere", "RiverStraighE-WN-Sx128")
+                        riverPath = join("Image", "Obstacle", typeRiver, "RiverStraighE-WN-Sx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
 
                     # Tshape
                     elif can_build_right and can_build_left and can_build_up:
-                        riverPath = join("Image","Obstacle","Riviere","RiverTWN-Ex128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverTWN-Ex128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)   
                     elif can_build_right and can_build_left and can_build_down:
-                        riverPath = join("Image","Obstacle","Riviere","RiverTW-SEx128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverTW-SEx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     elif can_build_down and can_build_up and can_build_left:
-                        riverPath = join("Image","Obstacle","Riviere","RiverTWN-Sx128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverTWN-Sx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     elif can_build_down and can_build_up and can_build_right:
-                        riverPath = join("Image","Obstacle","Riviere","RiverTN-SEx128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverTN-SEx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
 
                     # angular
                     elif can_build_right and can_build_down:
-                        riverPath = join("Image","Obstacle","Riviere","RiverAngularE-Sx128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverAngularE-Sx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     elif can_build_right and can_build_up:
-                        riverPath = join("Image","Obstacle","Riviere","RiverAngularN-Ex128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverAngularN-Ex128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     elif can_build_left and can_build_down:
-                        riverPath = join("Image","Obstacle","Riviere","RiverAngularW-Sx128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverAngularW-Sx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     elif can_build_left and can_build_up:
-                        riverPath = join("Image","Obstacle","Riviere","RiverAngularN-Wx128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverAngularN-Wx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
 
                     # line
                     elif can_build_up or can_build_down:
-                        riverPath = join("Image","Obstacle","Riviere","RiverStraightN-Sx128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverStraightN-Sx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     elif can_build_right or can_build_left:
-                        riverPath = join("Image","Obstacle","Riviere","RiverStraightW-Ex128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverStraightW-Ex128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     
                     
                     else:
-                        riverPath = join("Image","Obstacle","Riviere","RiverStraightN-Sx128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverStraightN-Sx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
 
                 # Bordure Montagne
@@ -669,7 +673,8 @@ class LoadMapGestion():
 
                     # === 2. Passage avec de l'eau ===
                     elif water_passage:
-                        pathRiver = join("Image", "Obstacle", "Riviere", "CastleWallRiverx128") if NIVEAU["Map"] == "NiveauMedievale" else join("Image", "Obstacle", "Riviere", "CastleWallRiverx128")
+                        typeRiver = "Riviere" if NIVEAU["Map"] != "NiveauMordor" else "Lave"
+                        pathRiver = join("Image", "Obstacle", typeRiver, "CastleWallRiverx128")
                         AnimatedCollisionSprites(pos, pathRiver, "River", (self.allSprites, self.collisionSprites), layer=1)
 
                     # === 3. Collision montagne ===
@@ -949,11 +954,12 @@ class LoadMapGestion():
     
     def Update(self):
         self.LoadImagesGestion()
-        self.Setup()
-        if self.ERROR_RELANCER:
-            return None, None, self.ERROR_RELANCER
-        self.SetupPNJ()
-        self.SetupObj()
+        if not INFOS["ErrorLoadElement"]: # vérif de load
+            self.Setup()
+            if self.ERROR_RELANCER:
+                return None, None, self.ERROR_RELANCER
+            self.SetupPNJ()
+            self.SetupObj()
 
         # retour des infos de map
         return self.map, self.mapBase, self.ERROR_RELANCER
