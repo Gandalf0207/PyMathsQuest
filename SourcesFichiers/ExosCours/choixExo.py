@@ -514,7 +514,89 @@ class GetExo:
     def ExoNv5(self) -> None:
         """Méthode de création de l'exo 6 : deux niveaux de difficulté
         Input / Output : None"""
-        pass
+
+        def EvaluerFonction(fonction, coef, x):
+            """Évalue la fonction à un point donné (f(x))."""
+            if "Xcarre" in fonction:
+                return coef * (x ** 2)
+            elif "XexposantN" in fonction:
+                coef, exposant =coef
+                return coef * (x ** exposant)
+            elif "racinecarreX" in fonction:
+                return round(coef * (x ** 0.5), 2)
+            elif "expX" in fonction:
+                return round(exp(coef*x),2) # Approximation de e
+            elif "X" in fonction:
+                return coef * x
+            elif "C" in fonction:
+                return coef
+            return 0
+
+        def EvaluerDerivee(fonction, coef, x):
+            """Évalue la dérivée de la fonction à un point donné (f'(x))."""
+            if "Xcarre" in fonction:
+                return 2 * coef * x
+            elif "XexposantN" in fonction:
+                coef, exposant = coef
+                return round(coef * exposant * (x ** (exposant - 1)), 2)
+            elif "racinecarreX" in fonction:
+                return round(coef * (1 / (2 * (x ** 0.5))), 2)
+            elif "expX" in fonction:
+                return round((coef * exp(coef * x)), 2)
+            elif "X" in fonction:
+                return coef
+            elif "C" in fonction:
+                return 0
+            return 0
+
+        listElement = ["Xcarre", "XexposantN", "racinecarreX", "X", "C", "expX"]
+        fonctionElement = choice(listElement)
+
+        # création fonction f(x)
+        if fonctionElement == "Xcarre":
+            coef = randint(2, 5)
+            strLatex = r"$ f(x) = %sx^2 $"% (coef)
+        elif fonctionElement == "XexposantN":
+            coef = (randint(2, 5), randint(2, 5))
+            strLatex = r"$ f(x) = %sx^{%s} $"% (coef[0], coef[1])
+        elif fonctionElement == "racinecarreX":
+            coef = randint(2, 5)
+            strLatex = r"$ f(x) = %s \sqrt{x} " % (coef)
+        elif fonctionElement == "X":
+            coef = randint(2, 5)
+            strLatex = r"$ f(x) = %sx $" % (coef)
+        elif fonctionElement == "C":
+            coef = randint(2, 5)
+            strLatex = r"$ f(x) = %s $" % (coef)
+        elif fonctionElement == "expX":
+            coef = randint(2, 5)
+            strLatex = r"$ f(x) = e^%s $" % (coef)
+
+        coefElement = coef
+        eqt = strLatex
+
+
+        f1 = EvaluerFonction(fonctionElement, coef,  2)
+        fPrime1 = EvaluerDerivee(fonctionElement, coef, 2) 
+
+        if f1 - 2 * fPrime1 < 0:    
+            resultat = f"y = {fPrime1}x  {round(f1 - 2 * fPrime1, 2)}"
+        else:
+            resultat = f"y = {fPrime1}x  {round(f1 - 2 * fPrime1, 2)}"
+
+        if f1*2 + fPrime1 < 0: # valeur fausses
+            resultat2 = f"y = {fPrime1/2}x {f1*2 + fPrime1}"
+        else:
+            resultat2 = f"y = {fPrime1/2}x + {f1*2 + fPrime1}"
+
+        if -f1 < 0:   # valeur fausses
+            resultat3 = f"y = {f1*2 + fPrime1}x {-f1}"
+        else:
+            resultat3 = f"y = {f1*2 + fPrime1}x + {-f1}"
+
+        
+        self.stockageValues = (fonctionElement, coefElement)
+        self.listeConstruction = [eqt, resultat, resultat2, resultat3]
 
     def ExoNv6(self) -> None:
         """Méthode de création de l'exo 7 : deux niveaux de difficulté
@@ -613,6 +695,8 @@ class GetExo:
         elif NIVEAU["Niveau"] == "Premiere":
             if NIVEAU["Map"] == "NiveauMedievale":
                 self.ExoNv4()
+            elif NIVEAU["Map"] == "NiveauBaseFuturiste":
+                self.ExoNv5()
 
             # case 2:
             #     self.ExoNv2()

@@ -158,7 +158,7 @@ class CreateExo:
                 self.interfaceExoSurface.blit(self.infosBuild[0][0], self.infosBuild[0][0].get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
 
         elif NIVEAU["Niveau"] == "Premiere":
-            if NIVEAU["Map"] == "NiveauMedievale":
+            if NIVEAU["Map"] in ["NiveauMedievale", "NiveauBaseFuturiste"]:
                 self.hauteurAct += 120
                 self.interfaceExoSurface.blit(self.latexSurface, (self.latexSurface.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct))))
 
@@ -254,7 +254,7 @@ class CreateExo:
                 self.latexSurface = self.ObjRender.GetElement(self.infosBuild[0], 30) # on donne l'eqt
 
         elif NIVEAU["Niveau"] == "Premiere":
-            if NIVEAU["Map"] == "NiveauMedievale":
+            if NIVEAU["Map"] in ["NiveauMedievale", "NiveauBaseFuturiste"]:
                 self.latexSurface = self.ObjRender.GetElement(self.infosBuild[0], 30) # on donne l'eqt
             
 

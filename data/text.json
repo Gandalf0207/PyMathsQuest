@@ -297,7 +297,15 @@
                     }
                 },
                 "Premiere": {
-
+                    "Title": "Dérivés et tangentes",
+                    "DifficulteTrue": {
+                        "Consigne": "Vous devez déterminer la tangente 'y' au point d'abscisse x = 2:",
+                        "QCM": "Choisissez l'unique bonne réponse"
+                    },
+                    "DifficulteFalse": {
+                        "Consigne": "Vous devez déterminer la tangente 'y' au point d'abscisse x = 2",
+                        "QCM": "Choisissez l'unique bonne réponse"
+                    }
                 }
             }
         },
