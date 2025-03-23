@@ -18,7 +18,7 @@ class CreditsInterfaceGame():
         self.box_height = (WINDOW_HEIGHT ) - 150
         self.box_x = 20
         self.box_y = 80
-        heightBoxText = 2000 if not POLICEECRITURE["Dyslexique"] else 3000
+        heightBoxText = 2200 if not POLICEECRITURE["Dyslexique"] else 3300
         self.textSurface = pygame.Surface((self.box_width, heightBoxText), pygame.SRCALPHA)
         self.textSurface.fill((255, 255, 255))
         
@@ -82,7 +82,7 @@ class CreditsInterfaceGame():
             self.handle_scroll(event)
         
         if INFOS["EndGame"]:  # Auto-scroll continue à la fin du jeu
-            self.scroll_y += 0.1  # On ajoute la vitesse au scroll_y
+            self.scroll_y += 1  # On ajoute la vitesse au scroll_y
             self.scroll_y = min(self.scroll_y, self.max_scroll)  # On empêche de dépasser la limite
             
             if event.type == pygame.KEYDOWN:

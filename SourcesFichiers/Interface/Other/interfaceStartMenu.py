@@ -42,13 +42,13 @@ class HomeInterface(object):
         
         # bool radio button
         self.selectedOptionNiveau = 0  # choix 1 départ
-        self.posRadioButtonNiveau = [(25, 50), (25, 100), (25, 150), (25, 200)]
+        self.posRadioButtonNiveau = [(50, 50), (50, 100), (50, 150), (50, 200)]
 
         self.selectedOptionDifficulte = 0
-        self.posRadioButtonDifficulte = [(25, 50), (25, 100)]
+        self.posRadioButtonDifficulte = [(50, 50), (50, 100)]
 
         self.selectedOptionLangue = 0
-        self.posRadioButtonLangue = [(25, 50), (25, 100), (25, 150)]
+        self.posRadioButtonLangue = [(50, 50), (50, 100), (50, 150)]
         # Chargement des images et des éléments
 
         # timer click

@@ -451,7 +451,7 @@ class Game(object):
                         INFOS["GameStart"] = False # jouer la cinématique avant
                         INFOS["EndGame"] = True # de meme 
 
-                if not INFOS["CinematiqueEndAct"] and self.cinematique: # on arrete la cinématique 
+                if not INFOS["CinematiqueEndAct"] and INFOS["BoolDoubleCheck"]: # on arrete la cinématique 
                     self.cinematique = False
             
             elif INFOS["EndGame"]:
@@ -697,6 +697,8 @@ class GameToolBox(object):
 
         INFOS["AdminReset"] = False
         INFOS["EndPhase"] = False
+        INFOS["BoolDoubleCheck"] = False
+        INFOS["CinematiqueEndAct"] = True
         # reset demi niveau (chateau)
         INFOS["DemiNiveau"] = False 
         self.gestionnaire.demiNiveau = False
