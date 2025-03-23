@@ -475,6 +475,13 @@ class PNJInterface(object):
                         self.loadText() # pasage au dialogue suivant
                         self.BuildInterface() # build des éléments
 
+        if event.type == pygame.MOUSEMOTION:
+            if self.btnRectSkip.collidepoint(event.pos):
+                INFOS["Hover"] = True 
+            else:
+                INFOS["Hover"] = False
+
+
                 
 
 
