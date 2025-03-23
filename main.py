@@ -698,7 +698,7 @@ class GameToolBox(object):
         INFOS["AdminReset"] = False
         INFOS["EndPhase"] = False
         INFOS["BoolDoubleCheck"] = False
-        INFOS["CinematiqueEndAct"] = True
+        INFOS["CinematiqueEndAct"] = False
         # reset demi niveau (chateau)
         INFOS["DemiNiveau"] = False 
         self.gestionnaire.demiNiveau = False

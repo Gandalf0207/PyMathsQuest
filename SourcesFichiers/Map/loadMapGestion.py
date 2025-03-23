@@ -324,12 +324,7 @@ class LoadMapGestion():
                             else:
                                 Sprites(pos, self.sol3V2, "Sol3", self.allSprites, layer=0)
 
-                    if (NIVEAU["Map"] != "NiveauBaseFuturiste") or (NIVEAU["Map"] == "NiveauBaseFuturiste" and  INFOS["DemiNiveau"]):
-                        if randint(1, 10) < 7:
-                            Sprites(pos, self.sol2, "Sol2", self.allSprites, layer=0)
-                        else:
-                            Sprites(pos, self.sol3, "Sol3", self.allSprites, layer=0)
-                    else:
+                    elif NIVEAU["Map"] == "NiveauBaseFuturiste" and  INFOS["DemiNiveau"]:
                         x = randint(1, 10) 
                         if x < 6:
                             Sprites(pos, self.sol3, "Sol3", self.allSprites, layer=0)
@@ -337,6 +332,11 @@ class LoadMapGestion():
                             Sprites(pos, self.sol2, "Sol2", self.allSprites, layer=0)
                         else:
                             Sprites(pos, self.sol4, "Sol4", self.allSprites, layer=0)
+                    else:
+                        if randint(1, 10) < 7:
+                            Sprites(pos, self.sol2, "Sol2", self.allSprites, layer=0)
+                        else:
+                            Sprites(pos, self.sol3, "Sol3", self.allSprites, layer=0)
                             
                 elif self.mapBase[ordonnees][abscisses] == 1:
                     Sprites(pos, self.sol1, "Sol1", self.allSprites, layer=0)
