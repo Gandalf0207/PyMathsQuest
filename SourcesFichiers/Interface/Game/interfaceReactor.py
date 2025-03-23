@@ -35,10 +35,14 @@ class ReactorInterface(object):
         self.isCrossCloseHover = False
         self.CoursAdd = False
         try:
-            self.crossClose = pygame.image.load(join("Image","Interface", "Croix", "x-mark.png")).convert_alpha()
-            self.crossClose2 = pygame.image.load(join("Image","Interface", "Croix", "x-mark2.png")).convert_alpha()
+            self.crossClose = pygame.image.load(join("Image","Interface", "Croix", "x-markV2.png")).convert_alpha()
+            self.crossClose2 = pygame.image.load(join("Image","Interface", "Croix", "x-mark2V2.png")).convert_alpha()
+            self.btnTexture = pygame.image.load(join("Image","Interface", "Button", "Reactor", "NonHover.png")).convert_alpha()
+            self.btnTextureHover = pygame.image.load(join("Image","Interface", "Button", "Reactor", "Hover.png")).convert_alpha()
         except:
             INFOS["ErrorLoadElement"] = True
+        
+        self.isBtnRectPuissanceHover = False
 
 
         self.reactor = Reactor()
@@ -72,10 +76,10 @@ class ReactorInterface(object):
         temp = self.reactor.calculate_total_temperature() 
         status = f"{TEXTE["Elements"]["InterfaceReactor"]["StatueName"]} : {TEXTE["Elements"]["InterfaceReactor"]["Statue"]["Null"]}"
         colorS = WHITE
-        if temp < 500 :
+        if temp < 300 :
             status = f"{TEXTE["Elements"]["InterfaceReactor"]["StatueName"]} : {TEXTE["Elements"]["InterfaceReactor"]["Statue"]["Normal"]}"
             colorS = WHITE
-        elif temp < 800 :
+        elif temp < 450 :
             status = f"{TEXTE["Elements"]["InterfaceReactor"]["StatueName"]} : {TEXTE["Elements"]["InterfaceReactor"]["Statue"]["Instable"]}"
             colorS = ORANGE
         else :
@@ -92,14 +96,36 @@ class ReactorInterface(object):
         # button puissance
         self.surfaceBtnPuissance = pygame.Surface((150,50))
         self.btnRectPuissance = pygame.Rect(425, 175, 150, 50)
-        self.surfaceBtnPuissance.fill(RED)
+
+        if self.isBtnRectPuissanceHover : 
+            self.surfaceBtnPuissance.blit(self.btnTextureHover, (0,0))
+        else:
+            self.surfaceBtnPuissance.blit(self.btnTexture, (0,0))
+
+        button_height = self.surfaceBtnPuissance.get_height()
+        button_width = self.surfaceBtnPuissance.get_width()
+
+        maxWidth = self.surfaceBtnPuissance.get_width() - 10
+
         self.textS = TEXTE["Elements"]["InterfaceReactor"]["AddPuissance"]
-        self.textSkip = FONT["FONT20"].render(self.textS, True, (10,10,10))
-        self.surfaceBtnPuissance.blit(self.textSkip, (0,0))
+        wrapped_lines = wrap_text(self.textS, FONT["FONT22"], maxWidth)
+
+        # Hauteur totale du texte
+        line_height = FONT["FONT22"].size("Tg")[1]  # Hauteur d'une ligne
+        total_text_height = len(wrapped_lines) * line_height
+        # Y de départ pour centrer verticalement
+        y_offset = (button_height - total_text_height) // 2
+        for i, line in enumerate(wrapped_lines):
+            line_surface= FONT["FONT22"].render(line, True, (10,10,10))
+            
+            # X pour centrer horizontalement
+            x = (button_width - line_surface.get_width()) // 2
+            self.surfaceBtnPuissance.blit(line_surface, (x, y_offset + i * line_height))
+        
         self.interfaceSurface.blit(self.surfaceBtnPuissance, (self.btnRectPuissance.x, self.btnRectPuissance.y))
 
         # close element
-        self.surfaceCloseCross.fill("#ffffff")
+        self.surfaceCloseCross.fill("#000000")
         self.rectCloseCross = pygame.Rect(self.interfaceSurface.get_width() - 34, 10, 24, 24)
         if self.isCrossCloseHover:
             self.surfaceCloseCross.blit(self.crossClose2, (0,0))
@@ -164,8 +190,8 @@ class ReactorInterface(object):
                 # cross close interface
                 check = False
                 self.isCrossCloseHover = self.rectCloseCross.collidepoint(local_pos)
-
-                if self.isCrossCloseHover:
+                self.isBtnRectPuissanceHover = self.btnRectPuissance.collidepoint(local_pos)
+                if self.isCrossCloseHover or self.isBtnRectPuissanceHover:
                     check = True
                 INFOS["Hover"] = check   
         # Baisser la température toutes les secondes
@@ -283,15 +309,15 @@ class Reactor(object):
 
         fill_height = int((temperature / max_temperature) * gauge_height)
 
-        if temperature <= max_temperature * 0.2:
+        if temperature <= max_temperature * 0.1:
             gauge_color = BLUE
-        elif temperature <= max_temperature * 0.4:
+        elif temperature <= max_temperature * 0.2:
             gauge_color = CYAN
-        elif temperature <= max_temperature * 0.6:
+        elif temperature <= max_temperature * 0.4:
             gauge_color = GREEN
-        elif temperature <= max_temperature * 0.8:
+        elif temperature <= max_temperature * 0.6:
             gauge_color = YELLOW
-        elif temperature <= max_temperature * 0.9:
+        elif temperature <= max_temperature * 0.7:
             gauge_color = ORANGE
         else:
             gauge_color = RED
