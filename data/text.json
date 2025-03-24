@@ -261,8 +261,7 @@
                         "Consigne": "A l'aide des valeurs données, veuillez calculer le volume demandé du cube de côté c, de la sphère de rayon r et du cone de hauter h et de diametre de base d:",
                         "QCM": "Choisissez l'unique bonne réponse"
                     }
-                }, 
-
+                },
                 "Premiere": {
                     "Title": "Pôlynome du second degrés",
                     "DifficulteTrue": {
@@ -274,7 +273,6 @@
                         "QCM": "Choisissez l'unique bonne réponse"
                     }
                 }
-   
             }
         },
         "NiveauBaseFuturiste": {
@@ -348,7 +346,32 @@
                         }
                     }
                 },
-                "Premiere": {},
+                
+                "Premiere": {
+                    "DemiNiveauFalse": {
+                        "Title": "Suite Arithmétique et Géométrique",
+                        "DifficulteTrue": {
+                            "Consigne": "Vous devez trouver la raison de cette suite et calculer la somme des 'n' premiers termes.",
+                            "QCM": "Choisissez l'unique bonne réponse"
+                        },
+                        "DifficulteFalse": {
+                            "Consigne": "Vous devez trouver la raison de cette suite et calculer la somme des 'n' premiers termes.",
+                            "QCM": "Choisissez l'unique bonne réponse"
+                        }
+                    },
+                    "DemiNiveauTrue": {
+                        "Title": "Exo boss seconde",
+                        "DifficulteTrue": {
+                            "Consigne": "Un voilier se trouve dans le port de Sète et avant de partir un client veut connaître le volume d’huile que le navire peut transporter sachant qu’il possède une cargaison de 85 tonneaux de longueur 'a' et de largeur 'b' (nous affirmons que les tonneaux utilisés ont des côtés totalement droit et non arrondis. Après cela le bateau prend le large et reçoit des informations sur un autre bateau naviguant à la même vitesse, déterminer si les 2 bateaux se croiseront. De plus le bateau b1 est actuellement au point A et navigue selon la direction (AB). De même le bateau b2 est actuellement au point C et navigue selon la direction (CD). Coordonnées :",
+                            "QCM": "Choisissez l'unique bonne réponse"
+                        },
+                        "DifficulteFalse": {
+                            "Consigne": "Un voilier se trouve dans le port de Sète et avant de partir un client veut connaître le volume d’huile que le navire peut transporter sachant qu’il possède une cargaison de 85 tonneaux de longueur 'a' et de largeur 'b' (nous affirmons que les tonneaux utilisés ont des côtés totalement droit et non arrondis. Après cela le bateau prend le large et reçoit des informations sur un autre bateau naviguant à la même vitesse, déterminer si les 2 bateaux se croiseront. De plus le bateau b1 est actuellement au point A et navigue selon la direction (AB). De même le bateau b2 est actuellement au point C et navigue selon la direction (CD). Coordonnées :",
+                            "QCM": "Choisissez l'unique bonne réponse"
+                        }
+                    }
+                },
+
                 "Terminale": {}
             }
         }

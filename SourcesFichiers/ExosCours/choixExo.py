@@ -601,47 +601,44 @@ class GetExo:
     def ExoNv6(self) -> None:
         """Méthode de création de l'exo 7 : deux niveaux de difficulté
         Input / Output : None"""
-        pass
 
-    def ExoNv7(self) -> None:
+        #script generation des suites
+        U0 = random.randint(-10,10)
+        r = random.randint(-10,10)
+        n = random.randint(4,15)
+
+        while U0 == 0 or r == 0: #on évite les valeurs == 0
+            U0 = random.randint(-10,10)
+            r = random.randint(-10,10)
+
+
+        if not INFOS["Difficulte"]: # suite SA
+            U1 = U0 + r
+            U2 = U1 + r
+            eqt = r"$ U_{n} = U_{0} + n \times r ; \quad U_{0} = %s ; \quad U_{1} = %s ; \quad U_{2} = %s $ " % (U0, U1, U2)
+            somme_suite = (n/2)*(2*U0+(n-1)*r)
+
+        
+        else : #suite SG
+            U1 = U0*r
+            U2 = U0*(r**2)
+            eqt = r"$ U_{n} = U_{0} + r^n ; \quad U_{0} = %s ; \quad U_{1} = %s ; \quad U_{2} = %s $ " % (U0, U1, U2)
+            somme_suite = U0*((1-(r**n))/(1-r))
+
+
+        # formatage des résultats 
+        resultat = f"La somme de la suite est : {somme_suite}"
+        resultat2 = f"La somme de la suite est : {somme_suite-1000}"
+        resultat3 = f"La somme de la suite est : {somme_suite+(U0*r**3)}"
+
+        self.stockageValues = (U0, r, n)
+        self.listeConstruction = [eqt, resultat, resultat2, resultat3, n]
+
+    def ExoBoss2(self) -> None:
         """Méthode de création de l'exo 8 : deux niveaux de difficulté
         Input / Output : None"""
         pass
 
-    def ExoNv8(self) -> None:
-        """Méthode de création de l'exo 9 : deux niveaux de difficulté
-        Input / Output : None"""
-        pass
-
-    def ExoNv9(self) -> None:
-        """Méthode de création de l'exo 10 : deux niveaux de difficulté
-        Input / Output : None"""
-        pass
-
-    def ExoNv10(self) -> None:
-        """Méthode de création de l'exo 11 : deux niveaux de difficulté
-        Input / Output : None"""
-        pass
-
-    def ExoNv11(self) -> None:
-        """Méthode de création de l'exo 12 : deux niveaux de difficulté
-        Input / Output : None"""
-        pass
-
-    def ExoNv12(self) -> None:
-        """Méthode de création de l'exo 13 : deux niveaux de difficulté
-        Input / Output : None"""
-        pass
-
-    def ExoNv13(self) -> None:
-        """Méthode de création de l'exo 14 : deux niveaux de difficulté
-        Input / Output : None"""
-        pass
-
-    def ExoNv14(self) -> None:
-        """Méthode de création de l'exo 15 : deux niveaux de difficulté
-        Input / Output : None"""
-        pass
 
 
     def StockageValues(self):
@@ -697,34 +694,13 @@ class GetExo:
                 self.ExoNv4()
             elif NIVEAU["Map"] == "NiveauBaseFuturiste":
                 self.ExoNv5()
+            elif NIVEAU["Map"] == "NiveauMordor":
+                if not INFOS["DemiNiveau"]:
+                    self.ExoNv6()
+                else:
+                    pass
 
-            # case 2:
-            #     self.ExoNv2()
-            # case 3:
-            #     self.ExoNv3()
-            # case 4:
-            #     self.ExoNv4()
-            # case 5:
-            #     self.ExoNv5()
-            # case 6:
-            #     self.ExoNv6()
-            # case 7:
-            #     self.ExoNv7()
-            # case 8:
-            #     self.ExoNv8()
-            # case 9:
-            #     self.ExoNv9()
-            # case 10:
-            #     self.ExoNv10()
-            # case 11:
-            #     self.ExoNv11()
-            # case 12:
-            #     self.ExoNv12()
-            # case 13:
-            #     self.ExoNv13()
-            # case 14:
-            #     self.ExoNv14()
-        
+     
         # add json values exo 
         if NIVEAU["Map"] != "NiveauMordor":
             self.StockageValues()

@@ -121,8 +121,6 @@ class CreateExo:
                         self.interfaceExoSurface.blit(self.exoBoss1Image, self.exoBoss1Image.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
                     except:
                         INFOS["ErrorLoadElement"] = True
-
-
             elif NIVEAU["Map"] == "NiveauMedievale":
                 if not INFOS["Difficulte"]: # facile
                     self.hauteurAct += 20
@@ -161,7 +159,16 @@ class CreateExo:
             if NIVEAU["Map"] in ["NiveauMedievale", "NiveauBaseFuturiste"]:
                 self.hauteurAct += 120
                 self.interfaceExoSurface.blit(self.latexSurface, (self.latexSurface.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct))))
+            elif NIVEAU["Map"] == "NiveauMordor" and not INFOS["Difficulte"]:
+                # text valeur n : 
+                self.hauteurAct += 20
+                textInfo = f"n = {self.infosBuild[4]}"
+                text = FONT["FONT20"].render(textInfo, True, (0,0,0))
+                self.interfaceExoSurface.blit(text, (20, self.hauteurAct))
 
+                self.hauteurAct += 120
+                self.interfaceExoSurface.blit(self.latexSurface, (self.latexSurface.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct))))
+        
         # réponse titre
         textQ = TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Difficulte{INFOS["Difficulte"]}"]["QCM"] if NIVEAU["Map"] != "NiveauMordor" else TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"DemiNiveau{INFOS["DemiNiveau"]}"][f"Difficulte{INFOS["Difficulte"]}"]["QCM"]
         self.textQCM = FONT["FONT24"].render(textQ, True, (0, 0, 0))
@@ -255,6 +262,8 @@ class CreateExo:
 
         elif NIVEAU["Niveau"] == "Premiere":
             if NIVEAU["Map"] in ["NiveauMedievale", "NiveauBaseFuturiste"]:
+                self.latexSurface = self.ObjRender.GetElement(self.infosBuild[0], 30) # on donne l'eqt
+            elif NIVEAU["Map"] == "NiveauMordor" and not INFOS["Difficulte"]:
                 self.latexSurface = self.ObjRender.GetElement(self.infosBuild[0], 30) # on donne l'eqt
             
 
