@@ -160,7 +160,7 @@ class GetExo:
                 resultat = nb
 
             # formatage resultats
-            resultat2 = (self.nb1)*random.choice([-1, 1])
+            resultat2 = (self.nb1 + nb)*random.choice([-1, 1])
             resultat3 = (nbx - nb)*random.choice([-1, 1])
 
             self.stockageValues = (self.nb1, self.nb2, self.nb3, self.nb4)

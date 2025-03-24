@@ -786,6 +786,10 @@ class LoadMapGestion():
                     else:
                         CollisionSprites(pos, self.house3, "House", (self.allSprites, self.collisionSprites))
 
+                # champs : 
+                elif self.map[ordonnees][abscisses] == "@":
+                    CollisionSprites(pos, self.champ, "Champs", (self.allSprites, self.collisionSprites), layer=1)
+
 
                 # element spéficique sur les maps directement
                 elif self.map[ordonnees][abscisses] == "Y":

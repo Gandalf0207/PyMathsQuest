@@ -138,7 +138,7 @@ class Game(object):
             self.cinematique = True # player apparait par le portail
             INFOS["HidePlayer"] = True
 
-        self.player = Player(((playerPosSpawn[0] + 1 )*CASEMAP,(playerPosSpawn[1] + 0.5 )*CASEMAP), self.allSprites, self.collisionSprites) 
+        self.player = Houmous(((playerPosSpawn[0] + 1 )*CASEMAP,(playerPosSpawn[1] + 0.5 )*CASEMAP), self.allSprites, self.collisionSprites) 
         self.checkLoadingDone = True
 
         
