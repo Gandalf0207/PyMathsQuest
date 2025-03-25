@@ -19,14 +19,12 @@ class EndInterface():
             self.medailleOr = pygame.image.load(join("Image", "Medaille", "Or.png"))
             self.medailleArgent = pygame.image.load(join("Image", "Medaille", "Argent.png"))
             self.medailleBronze = pygame.image.load(join("Image", "Medaille", "Bronze.png"))
-            self.medailleVide = pygame.image.load(join("Image", "Medaille", "Vide.png"))
-
             self.bcgEnd = pygame.image.load(join("Image", "Interface", "End.png"))
 
         except:
             INFOS["ErrorLoadElement"] = True
 
-        self.medailleSurface = pygame.Surface((128, 128))
+        self.medailleSurface = pygame.Surface((128, 128), pygame.SRCALPHA)
 
 
 
@@ -43,6 +41,15 @@ class EndInterface():
         total = INFOS["TotalExo"]
         self.percentageReussite = int(round(win/total, 3)*100)
 
+        if self.percentageReussite == 100:
+            self.medailleSurface.blit(self.medailleDiament,(0,0) )
+        elif self.percentageReussite >= 80:
+            self.medailleSurface.blit(self.medailleOr, (0,0))
+        elif self.percentageReussite >=40:
+            self.medailleSurface.blit(self.medailleArgent, (0,0))
+        else :
+            self.medailleSurface.blit(self.medailleBronze, (0,0))
+
     def BluidInterface(self):
         
         # texte titre
@@ -55,18 +62,8 @@ class EndInterface():
         self.interfaceSurface.blit(textReussite, textReussite.get_rect(center=(self.interfaceSurface.get_width()//2, 150)))
 
         # medaille
-        if self.percentageReussite == 100:
-            self.medailleSurface.blit(self.medailleDiament, (self.interfaceSurface.get_width()//2, 175))
-        elif self.percentageReussite >= 80:
-            self.medailleSurface.blit(self.medailleOr, (self.interfaceSurface.get_width()//2, 175))
-        elif self.percentageReussite >=60:
-            self.medailleSurface.blit(self.medailleArgent, (self.interfaceSurface.get_width()//2, 175))
-        elif self.percentageReussite >= 40:
-            self.medailleSurface.blit(self.medailleBronze, (self.interfaceSurface.get_width()//2, 175))
-        else:            
-            self.medailleSurface.blit(self.medailleVide, (self.interfaceSurface.get_width()//2, 175))
-
-        self.interfaceSurface.blit(self.medailleSurface, (self.medailleSurface.get_rect(center=(self.interfaceSurface.get_width()//2, 250))))
+        self.interfaceSurface.blit(self.medailleSurface, self.medailleSurface.get_rect(center =( self.interfaceSurface.get_width()//2, 250)))
+        
         #pourcentage réussite"
 
 
@@ -84,7 +81,7 @@ class EndInterface():
         self.interfaceSurface.blit(self.surfaceBtnPDF, (self.btnRectPDF.x, self.btnRectPDF.y))
 
         # btn leave
-        self.surfaceBtnQuitter = pygame.Surface((350, 100))
+        self.surfaceBtnQuitter = pygame.Surface((350, 100), pygame.SRCALPHA)
         self.btnRectQuitter = pygame.Rect(((WINDOW_WIDTH//2) - self.surfaceBtnQuitter.get_width() //2), 550, 350, 100)
         if self.isHoverBtnQuitter:
             self.surfaceBtnQuitter.blit(self.btnTextureHover, (0,0))

@@ -360,13 +360,13 @@
                         }
                     },
                     "DemiNiveauTrue": {
-                        "Title": "Exo boss seconde",
+                        "Title": "Exo boss premiere",
                         "DifficulteTrue": {
-                            "Consigne": "Un voilier se trouve dans le port de Sète et avant de partir un client veut connaître le volume d’huile que le navire peut transporter sachant qu’il possède une cargaison de 85 tonneaux de longueur 'a' et de largeur 'b' (nous affirmons que les tonneaux utilisés ont des côtés totalement droit et non arrondis. Après cela le bateau prend le large et reçoit des informations sur un autre bateau naviguant à la même vitesse, déterminer si les 2 bateaux se croiseront. De plus le bateau b1 est actuellement au point A et navigue selon la direction (AB). De même le bateau b2 est actuellement au point C et navigue selon la direction (CD). Coordonnées :",
+                            "Consigne": "Un fabriquant envisage la production de briques de lait en carton. Au départ, il dispose d’une feuille carrée en carton dans laquelle on a retiré deux bandes de même largeur. Le côté de la feuille carrée 'a' et on désigne par x la largeur des bandes découpées en centimètres. Trouver le volume en litre maximal dans cette brique à lait en fonction de x. Trouver ensuite le prix de la brique au bout de n années (données ci-dessous), sachant qu'il subit une inflation de y% et que le prix d'origine était 1.20€ ",
                             "QCM": "Choisissez l'unique bonne réponse"
                         },
                         "DifficulteFalse": {
-                            "Consigne": "Un voilier se trouve dans le port de Sète et avant de partir un client veut connaître le volume d’huile que le navire peut transporter sachant qu’il possède une cargaison de 85 tonneaux de longueur 'a' et de largeur 'b' (nous affirmons que les tonneaux utilisés ont des côtés totalement droit et non arrondis. Après cela le bateau prend le large et reçoit des informations sur un autre bateau naviguant à la même vitesse, déterminer si les 2 bateaux se croiseront. De plus le bateau b1 est actuellement au point A et navigue selon la direction (AB). De même le bateau b2 est actuellement au point C et navigue selon la direction (CD). Coordonnées :",
+                            "Consigne": "Un fabriquant envisage la production de briques de lait en carton. Au départ, il dispose d’une feuille carrée en carton dans laquelle on a retiré deux bandes de même largeur. Le côté de la feuille carrée 'a' et on désigne par x la largeur des bandes découpées en centimètres. Trouver le volume en litre maximal dans cette brique à lait en fonction de x. Trouver ensuite le prix de la brique au bout de n années (données ci-dessous), sachant qu'il subit une inflation de y% et que le prix d'origine était 1.20€ ",
                             "QCM": "Choisissez l'unique bonne réponse"
                         }
                     }

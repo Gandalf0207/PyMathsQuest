@@ -164,7 +164,7 @@ STATE_HELP_INFOS = ["SeePNJ"] # list pour pouvoir etre modifié : tips
 
 NIVEAU = {
      # niveau
-    "Niveau" : "Seconde",
+    "Niveau" : "Premiere",
     "All" : False, 
 
     # map

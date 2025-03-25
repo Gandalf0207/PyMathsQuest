@@ -637,8 +637,46 @@ class GetExo:
     def ExoBoss2(self) -> None:
         """Méthode de création de l'exo 8 : deux niveaux de difficulté
         Input / Output : None"""
-        pass
+        
+        #brique de lait exo
+        a = random.randint(14,46) # random de la valeur de la longueur de la feille
+        while a%2 != 0 :
+            a = random.randint(14,46)
 
+        y_max = 0
+        x_max = 0
+        for x in range(int(a/2 + 1)) : # calcul dérivée + max volume avec comparaison en brute force
+            if (x*(a**2))/2 - 2*a*(x**2) + 2*(x**3) > y_max :
+                x_max = x
+                y_max = (x*(a**2))/2 - 2*a*(x**2) + 2*(x**3)
+
+        #conversion en litre
+        v_l = y_max/1000
+
+        #formatage résultats
+        add_value = random.randint(-5,5)
+        while add_value ==0:
+            add_value = random.randint(-5,5)
+
+
+        #Suite
+
+        #exo suite SG avec calcul en fonction du nb d'année (n) et du % d'inflation
+        U0 = 1.20
+        r = 1+(random.randint(10,80)/1000)
+        n = random.randint(5,10)
+        Un = U0*(r**n)
+
+
+        #formatage réponse : 
+        resultat = f"{round(v_l,2)} Litres; {round(Un,2)} €"
+        resultat2= f"{round((y_max/1000)*choice((0.5, 1.5)),2)} Litres; {abs(round(Un*2,2))} €"
+        resultat3 = f"{round(Un+U0,2)} Litres; {abs(round(v_l + add_value,2))} €"
+
+
+        infos = [a,n,r] # liste avec les infos données à l'utilisateur
+        self.stockageValues = infos
+        self.listeConstruction = [infos, resultat, resultat2, resultat3]
 
 
     def StockageValues(self):
@@ -698,7 +736,7 @@ class GetExo:
                 if not INFOS["DemiNiveau"]:
                     self.ExoNv6()
                 else:
-                    pass
+                    self.ExoBoss2()
 
      
         # add json values exo 

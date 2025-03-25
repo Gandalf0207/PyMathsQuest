@@ -96,7 +96,6 @@ class LoadMapGestion():
 
             self.well = pygame.image.load(join("Image", "Structure", "Medievale", "Puits.png")).convert_alpha()
             self.tableCraft = pygame.image.load(join("Image", "Obstacle", "TableCraft.png")).convert_alpha()
-            self.boat = pygame.image.load(join("Image", "Item", "BoatObj.png")).convert_alpha()
             self.DoorMuraille = pygame.image.load(join("Image", "Obstacle", "Door", "DoorMuraille.png")).convert_alpha()
             self.DoorChateau =  pygame.image.load(join("Image", "Obstacle", "Door", "DoorChateau.png")).convert_alpha()
         except:
@@ -210,8 +209,8 @@ class LoadMapGestion():
             self.MurNSDroite = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesNS.png" )).convert_alpha()
             self.MurMountain = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesMountain.png" )).convert_alpha()
 
-            self.MurAngularNE = pygame.image.load(join("Image", "Mur", "Mordor", "Muraille", "WallAngularNE.png")).convert_alpha()
-            self.MurAngularNW = pygame.image.load(join("Image", "Mur", "Mordor", "Muraille", "WallAngularNW.png")).convert_alpha()
+            self.MurAngularNE = pygame.image.load(join("Image", "Mur", "Mordor", "Muraille", "MuraillesAngle.png")).convert_alpha()
+            self.MurAngularNW = pygame.image.load(join("Image", "Mur", "Mordor", "Muraille", "MuraillesAngle.png")).convert_alpha()
 
 
 
@@ -244,7 +243,7 @@ class LoadMapGestion():
             self.MurAngularNE = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
             self.MurAngularNW = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
             self.MurAngularSE = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
-            self.MurAngulaSW = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
+            self.MurAngularSW = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
 
             self.MurWEBas = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
             self.MurWEHaut = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha() 
@@ -648,7 +647,7 @@ class LoadMapGestion():
                                 CollisionSprites(pos, self.MurAngularSW2, "WallBAngularSW", (self.allSprites, self.collisionSprites))
                         
                         if NIVEAU["Map"] == "NiveauMordor":
-                            CollisionSprites(pos, self.MurAngularSW2, "WallBAngularSW", (self.allSprites, self.collisionSprites))
+                            CollisionSprites(pos, self.MurAngularSW, "WallAngularSW", (self.allSprites, self.collisionSprites))
 
                     elif wall_down and wall_left:
                         if NIVEAU["Map"] == "NiveauMedievale":
@@ -947,7 +946,8 @@ class LoadMapGestion():
     def AddBoat(self, element, coords):
         pos = [coords[0]*CASEMAP, coords[1]*CASEMAP]
         if element == "BoatObj":
-            CollisionSprites(pos, self.boat, "BoatObj", (self.allSprites, self.interactions), layer=4)
+            path = join("Image", "Obstacle", "Boat")
+            AnimatedCollisionSprites(pos, path, "BoatObj", (self.allSprites, self.interactions), layer=4)
 
     def AddCercle(self, element, coords):
         pos = [coords[0]*CASEMAP, coords[1]*CASEMAP]

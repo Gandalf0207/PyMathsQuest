@@ -58,9 +58,10 @@ class AdminInterface():
             self.hauteurAct += 40  # Espacement des boutons   
 
         try:
+            self.bcgImage = pygame.image.load(join("Image", "Interface", "Baseinterface.png")).convert_alpha()
             self.iggyImage = pygame.image.load(join("Image", "Interface", "Iggy.png")).convert_alpha()
-            self.ImageInterface = pygame.Surface((100,100))
-            self.ImageInterface.fill((255,255,255))
+            self.ImageInterface = pygame.Surface((100,100), pygame.SRCALPHA)
+            self.ImageInterface.fill((255,255,255, 0))
             self.ImageInterface.blit(self.iggyImage, (0,0))
         except:
             INFOS["ErrorLoadElement"] = True
@@ -118,7 +119,7 @@ class AdminInterface():
         """Méthode : Création de tout les éléments composant l'interface. Input / Output : None"""
 
         # base
-        self.interfaceSurface.fill((255,255,255))
+        self.interfaceSurface.blit(self.bcgImage, (0,0))
         self.interfaceSurface.blit(self.ImageInterface, (self.interfaceSurface.get_width()-120, self.interfaceSurface.get_height()-120))
 
         # titre

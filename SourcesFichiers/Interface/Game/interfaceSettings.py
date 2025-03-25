@@ -24,11 +24,13 @@ class SettingsInterface(object):
         self.buttonsLangue = {}
 
         # close interface cross
-        self.surfaceCloseCross = pygame.Surface((24,24))
+        self.surfaceCloseCross = pygame.Surface((24,24), pygame.SRCALPHA)
         self.isCrossCloseHover = False
         try :
             self.crossClose = pygame.image.load(join("Image","Interface", "Croix", "x-mark.png")).convert_alpha()
             self.crossClose2 = pygame.image.load(join("Image","Interface", "Croix", "x-mark2.png")).convert_alpha()
+            self.bcgImage = pygame.image.load(join("Image", "Interface", "Baseinterface.png")).convert_alpha()
+
         except:
             INFOS["ErrorLoadElement"] = True
 
@@ -54,7 +56,7 @@ class SettingsInterface(object):
         """Méthode : Création de tous les éléments composant l'interface. Input / Output : None"""
 
         # texte titre
-        self.interfaceSurface.fill("#ffffff")
+        self.interfaceSurface.blit(self.bcgImage, (0,0))
 
         text = FONT["FONT36"].render(TEXTE["Elements"]["HotBar"]["Settings"]["Title"], True, (0, 0, 0))
         self.interfaceSurface.blit(text, (10, 10))
@@ -212,7 +214,7 @@ class SettingsInterface(object):
 
 
         # close element
-        self.surfaceCloseCross.fill("#ffffff")
+        self.surfaceCloseCross.fill((0,0,0,0))
         self.rectCloseCross = pygame.Rect(self.interfaceSurface.get_width() - 34, 10, 24, 24)
         if self.isCrossCloseHover:
             self.surfaceCloseCross.blit(self.crossClose2, (0,0))

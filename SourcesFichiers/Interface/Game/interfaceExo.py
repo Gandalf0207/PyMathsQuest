@@ -33,13 +33,14 @@ class CreateExo:
         self.hauteurAct = 0
 
         # close interface cross
-        self.surfaceCloseCross = pygame.Surface((24,24))
+        self.surfaceCloseCross = pygame.Surface((24,24), pygame.SRCALPHA)
         self.isCrossCloseHover = False
         try :
             self.crossClose = pygame.image.load(join("Image", "Interface","Croix", "x-mark.png")).convert_alpha()
             self.crossClose2 = pygame.image.load(join("Image","Interface", "Croix", "x-mark2.png")).convert_alpha()
             self.btnTexture = pygame.image.load(join("Image","Interface", "Button", "Exo", "NonHover.png")).convert_alpha()
             self.btnTextureHover = pygame.image.load(join("Image","Interface", "Button", "Exo", "Hover.png")).convert_alpha()
+            self.bcgImage = pygame.image.load(join("Image", "Interface", "Baseinterface2.png")).convert_alpha()
         except:
             INFOS["ErrorLoadElement"] = True
 
@@ -72,7 +73,7 @@ class CreateExo:
         self.hauteurAct = 0 # reset car update interface
 
         # clear
-        self.interfaceExoSurface.fill("#ffffff")
+        self.interfaceExoSurface.blit(self.bcgImage, (0,0))
 
         # titre
         textT = TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]]["Title"] if NIVEAU["Map"] != "NiveauMordor" else TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"DemiNiveau{INFOS["DemiNiveau"]}"]["Title"]
@@ -159,7 +160,7 @@ class CreateExo:
             if NIVEAU["Map"] in ["NiveauMedievale", "NiveauBaseFuturiste"]:
                 self.hauteurAct += 120
                 self.interfaceExoSurface.blit(self.latexSurface, (self.latexSurface.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct))))
-            elif NIVEAU["Map"] == "NiveauMordor" and not INFOS["Difficulte"]:
+            elif NIVEAU["Map"] == "NiveauMordor" and not INFOS["DemiNiveau"]:
                 # text valeur n : 
                 self.hauteurAct += 20
                 textInfo = f"n = {self.infosBuild[4]}"
@@ -168,7 +169,19 @@ class CreateExo:
 
                 self.hauteurAct += 120
                 self.interfaceExoSurface.blit(self.latexSurface, (self.latexSurface.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct))))
-        
+            else:
+                self.hauteurAct += 20
+                textInfo = f"a : (Côté feuille) : {self.infosBuild[0][0]} cm;  Nombre d'années :{self.infosBuild[0][1]}; y : (Inflation) : {self.infosBuild[0][2]} %"
+                text = FONT["FONT20"].render(textInfo, True, (0,0,0))
+                self.interfaceExoSurface.blit(text, (20, self.hauteurAct))
+
+                self.hauteurAct += 120
+                try :
+                    self.exoBoss1Image = pygame.image.load(join("Image", "Exo", "ExoBoss2.png")).convert_alpha()
+                    self.interfaceExoSurface.blit(self.exoBoss1Image, self.exoBoss1Image.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
+                except:
+                    INFOS["ErrorLoadElement"] = True
+
         # réponse titre
         textQ = TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Difficulte{INFOS["Difficulte"]}"]["QCM"] if NIVEAU["Map"] != "NiveauMordor" else TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"DemiNiveau{INFOS["DemiNiveau"]}"][f"Difficulte{INFOS["Difficulte"]}"]["QCM"]
         self.textQCM = FONT["FONT24"].render(textQ, True, (0, 0, 0))
@@ -239,7 +252,7 @@ class CreateExo:
 
 
         # close element
-        self.surfaceCloseCross.fill("#ffffff")
+        self.surfaceCloseCross.fill((0,0,0,0))
         self.rectCloseCross = pygame.Rect(self.interfaceExoSurface.get_width() - 34, 10, 24, 24)
         if self.isCrossCloseHover:
             self.surfaceCloseCross.blit(self.crossClose2, (0,0))
@@ -263,7 +276,7 @@ class CreateExo:
         elif NIVEAU["Niveau"] == "Premiere":
             if NIVEAU["Map"] in ["NiveauMedievale", "NiveauBaseFuturiste"]:
                 self.latexSurface = self.ObjRender.GetElement(self.infosBuild[0], 30) # on donne l'eqt
-            elif NIVEAU["Map"] == "NiveauMordor" and not INFOS["Difficulte"]:
+            elif NIVEAU["Map"] == "NiveauMordor" and not INFOS["DemiNiveau"]:
                 self.latexSurface = self.ObjRender.GetElement(self.infosBuild[0], 30) # on donne l'eqt
             
 

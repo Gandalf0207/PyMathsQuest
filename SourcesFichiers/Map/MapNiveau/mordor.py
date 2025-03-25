@@ -29,6 +29,7 @@ class NiveauMordor(GestionNiveauMap):
     def PlacementMuraille(self):
         # prisions
         self.prisonStructure = [
+            ["W", "B", "B", "B", "B", "W", "B", "B", "B", "W", "B", "B", "B", "W", "B", "B", "B", "B", "W"],
             ["W", "-", "-", "-", "-", "W", "-", "-", "v", "W", "-", "-", "-", "W", "-", "-", "-", "-", "W"],
             ["W", "-", "-", "-", "-", "W", "-", "&", "-", "W", "-", "-", "-", "W", "-", "-", "-", "-", "W"],
             ["W", "-", "-", "-", "-", "W", "-", "-", "-", "W", "-", "-", "-", "W", "-", "-", "-", "-", "W"],
@@ -40,7 +41,7 @@ class NiveauMordor(GestionNiveauMap):
             ["W", "W", "W", "W", "W", "W", "W", "W", "W", "V", "W", "W", "W", "W", "W", "W", "W", "W", "W"],
         ]
         
-        coordsStartPrison = [65, 1]
+        coordsStartPrison = [65, 0]
         for ordonne in range(len(self.prisonStructure)):
             for abscisse in range(len(self.prisonStructure[ordonne])):
                 self.map[coordsStartPrison[1] + ordonne][coordsStartPrison[0] + abscisse] = self.prisonStructure[ordonne][abscisse]
