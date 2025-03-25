@@ -9,12 +9,12 @@ PyMathsQuest est un projet étudiant réalisé par 2 élèves en terminale NSI :
 Ce projet est donc né de la fusion de Maths-Quest et Py-Maths deux anciens projet réalisé lors de l'année de première en NSI. 
 
 Le projet aborde donc plusieurs notion de mathématique, les voici : 
-|Seconde                         |Premiere                    |Termiale|
-|--------------------------------|----------------------------|--------|
-| Equation du premier degrés     | Suites | *à venir* |
-| Volumes                        | Pôlynome du second degrés | *à venir* |
-| Equation cartésienne de droite | Dérivés | *à venir* |
-| Equation à 2 inconnues         | / | *à venir*|
+|Seconde                         |Premiere                    |
+|--------------------------------|----------------------------|
+| Equation du premier degrés     | Suites |
+| Volumes                        | Pôlynome du second degrés |
+| Equation cartésienne de droite | Dérivés |
+| Equation à 2 inconnues         | / |
 
 
 
@@ -103,6 +103,12 @@ Afin de pouvoir utiliser le jeu sans soucis, nous vous demandons de bien vouloir
   ```
 <br>
 
+   ##### Téléchargement des ressources nécessaires au jeu :
+  - Après avoir réalisé l'installation, téléchargez les ressources (images, audios et polices) et placez ces trois dossiers dans le dossier PyMathsQuest, au même niveau que le fichier main.py.
+  - Lien de téléchargement : [Lien]
+
+<br>
+
 Si vous rencontrez des problèmes avec des éléments de l'installation, vérifiez bien que vous respectez les différents éléments de prévention, présents dans les explications de l'installation ci-dessus.
 
 <br>
@@ -121,6 +127,9 @@ Si vous rencontrez des problèmes avec des éléments de l'installation, vérifi
 
 > [!WARNING]
 > Si vous rencontrez un problème lors de l'installation des dépendances, après l'installation des logiciels.exe, veillez à redémarrer votre machine puis à réinstaller les dépendances.
+
+
+
 
 
 <br> </br>
