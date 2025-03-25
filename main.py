@@ -680,9 +680,6 @@ class GameToolBox(object):
                                 NIVEAU["Niveau"] = "Premiere"
                                 NIVEAU["Map"] = "NiveauMedievale"
                             case "Premiere":
-                                NIVEAU["Niveau"] = "Terminale"
-                                NIVEAU["Map"] = "NiveauMedievale"
-                            case "Terminale":
                                 pass
 
 
