@@ -275,10 +275,7 @@ class LoadMapGestion():
             elif NIVEAU["Map"] == "NiveauBaseFuturiste":
                 self.LoadImagesDemiNiveauVaisseau()
             elif NIVEAU["Map"] == "NiveauMordor":
-                if not INFOS["DemiNiveau"]:
-                    self.LoadImagesNiveauMordor()
-                else:
-                    self.LoadImagesDemiNiveauVolcan()
+                self.LoadImagesDemiNiveauVolcan()
 
     def Setup(self):
 
