@@ -32,7 +32,7 @@ Le projet aborde donc plusieurs notion de mathématique, les voici :
 - I : Ouvrir l'inventaire
 - B : Ouvrir le livre de cours
 - M : Cacher la hotbar
-Echap : Ouvrir le menu quitter
+Echap : Ouvrir le menu général / quitter un menu ouvert
 
 Au lancement initial vous devrez choisir le niveau de votre partie entre Seconde et Premiere puis votre difficulté et enfin votre langue, il suffira ensuite d'accepter la licence et d'appuyer sur commencer et le jeu se lancera.
 Au début de chaque niveau, vous apparaitrez à gauche de la carte générée, vous devrez ensuite parler à divers personnages non joueur et interagir avec plusieurs éléments pour ramasser des morceaux de cours et arriver jusqu'à l'évènement qui engendre l'exercice. Si jamais vous semblez bloqué utilisez les infobulles situés dans la hotbar. Le niveau se déroulant à l'intérieur d'un volcan signifie que vous allez affronter le problème final et que le jeu est presque fini. Une fois le problème finale résolu vous aurez la possibilité de récupérer une correction des exos auxquels vous avez été confrontés ainsi qu'une médaille indiquant votre taux de réussite.
