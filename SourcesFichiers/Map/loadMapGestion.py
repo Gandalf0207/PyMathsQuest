@@ -252,6 +252,7 @@ class LoadMapGestion():
             self.MurAngularNW2 = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
             self.MurAngularSW2 = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
             self.MurAngularSE2 = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
+            self.obstacle = pygame.image.load(join("Image", "Obstacle", "HugeRockMordor.png")).convert_alpha()
 
         except:
             INFOS["ErrorLoadElement"] = True
