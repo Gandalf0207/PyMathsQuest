@@ -8,7 +8,8 @@ Sound/
 *.mp3
 *.otf
 data/exercicesValues.json
-
+*.pdf 
+*.tex
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

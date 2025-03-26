@@ -401,11 +401,6 @@ class Game(object):
                 if not self.cinematique:
                     self.gameInterfaces.Update(event)
 
- 
-                # changement cursor
-                ChangeCursor(INFOS["Hover"], "Hand")
-
-
 
                 if INFOS["Exo"]:
                     if not self.gameInterfaces.isInterfaceExoOpen:
@@ -469,6 +464,9 @@ class Game(object):
                 self.textScreen(text2)
                 self.running = False
 
+            # changement cursor
+            ChangeCursor(INFOS["Hover"], "Hand")
+            
             # update toolBOX
             self.GameTool.Update()
             pygame.event.pump()  # 👈 Permet à Pygame de traiter les événements même sans interaction

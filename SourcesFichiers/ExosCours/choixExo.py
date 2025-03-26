@@ -244,7 +244,7 @@ class GetExo:
                 resultat2 = (f"Volume de la Sphere : {round(self.VCube)}")
                 resultat3 = (f"Volume du Cube : {round(self.VSphere)}")
 
-            self.stockageValues = (self.a, self.r, self.h, self.d)
+            self.stockageValues = (self.a, self.b, self.r, self.d, self.L, self.l, self.h)
             self.listeConstruction = [(self.a, self.r, self.h, self.d), resultat, resultat2, resultat3]
                                       
         else:
@@ -260,7 +260,7 @@ class GetExo:
             resultat2 = f"Volume total du Chateau : {round(self.volumeTotalChateau - self.volumeCone + arrondir((self.r**2 * pi * self.e) /3) )}"
             resultat3 = f"Volume total du Chateau : {round(self.volumeTotalChateau - self.volumeCylindre1 + self.volumeCylindre2)}" 
 
-            self.stockageValues = (self.a, self.b, self.c, self.d, round(self.e, 3), self.f, self.r)
+            self.stockageValues = (self.a, self.b, self.r, self.d, self.L, self.l, self.h)
             self.listeConstruction = [(self.a, self.b, self.c, self.d, round(self.e, 3), self.f, self.r), resultat, resultat2, resultat3]
 
     def ExoNv2(self) -> None:

@@ -1,4 +1,5 @@
 from settings import *
+from SourcesFichiers.Ressources.PyMathsMaKEpdf import *
 
 class EndInterface():
     def __init__(self, gestionnaire):
@@ -11,6 +12,7 @@ class EndInterface():
 
         self.isHoverBtnQuitter = False
         self.isHoverBtnPDF = False
+        self.isPDF = False
         try :
             self.btnTexture = pygame.image.load(join("Image","Interface", "Button", "Start.png")).convert_alpha()
             self.btnTextureHover = pygame.image.load(join("Image","Interface", "Button", "StartHover.png")).convert_alpha()
@@ -50,6 +52,15 @@ class EndInterface():
         else :
             self.medailleSurface.blit(self.medailleBronze, (0,0))
 
+    def PdfGeneration(self):
+        objMakePDF = MakePDFWithPyMaths()
+        objMakePDF.GetExoValues()
+        objMakePDF.GenerateCorrection()
+        objMakePDF.CompilPDF()
+        self.gestionnaire.gestionnaire.checkLoadingDone = True
+
+
+
     def BluidInterface(self):
         
         # texte titre
@@ -70,12 +81,12 @@ class EndInterface():
         # btn crédits
         self.surfaceBtnPDF = pygame.Surface((350, 100))
         self.btnRectPDF = pygame.Rect(((WINDOW_WIDTH//2) - self.surfaceBtnPDF.get_width() //2), 425, 350, 100)
-        if self.isHoverBtnPDF:
+        if self.isHoverBtnPDF or self.isPDF:
             self.surfaceBtnPDF.blit(self.btnTextureHover, (0,0))
         else:
             self.surfaceBtnPDF.blit(self.btnTexture, (0,0))
 
-        self.textP = TEXTE["Elements"]["InterfaceEnd"]["PDFGeneration"]
+        self.textP = TEXTE["Elements"]["InterfaceEnd"]["PDFGeneration"] if not self.isPDF else TEXTE["Elements"]["InterfaceEnd"]["PDFGenere"]
         self.textPDF = FONT["FONT30"].render(self.textP, True, (10,10,10))
         self.surfaceBtnPDF.blit(self.textPDF, self.textPDF.get_rect(center=(self.surfaceBtnPDF.get_width()//2, self.surfaceBtnPDF.get_height()//2)))
         self.interfaceSurface.blit(self.surfaceBtnPDF, (self.btnRectPDF.x, self.btnRectPDF.y))
@@ -111,10 +122,14 @@ class EndInterface():
                 self.last_click_time = current_time
             
 
-                if self.btnRectPDF.collidepoint(event.pos):
+                if self.btnRectPDF.collidepoint(event.pos) and not self.isPDF: # générer le pdf
+                    self.isPDF = True
+                    self.gestionnaire.gestionnaire.checkLoadingDone = False
                     self.gestionnaire.gestionnaire.fondu_au_noir()
-                    pass
-                    # générer le pdf
+                    threading.Thread(target=self.PdfGeneration, daemon=True).start()
+                    
+                    self.gestionnaire.gestionnaire.ChargementEcran()
+
 
                 if self.btnRectQuitter.collidepoint(event.pos):
                     self.gestionnaire.creditsOn = True
@@ -122,9 +137,9 @@ class EndInterface():
         if event.type == pygame.MOUSEMOTION:
             # Obtenir la position locale de la souris dans l'interface
             hovered_btn = None
-            if self.btnRectPDF.collidepoint(event.pos):
+            if self.btnRectPDF.collidepoint(event.pos) and not self.isPDF:
                 hovered_btn = "PDF"
-            elif self.btnRectQuitter.collidepoint(event.pos):
+            if self.btnRectQuitter.collidepoint(event.pos):
                 hovered_btn = "Quitter"
 
             # Mise à jour des états des boutons

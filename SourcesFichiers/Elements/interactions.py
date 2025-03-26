@@ -348,7 +348,7 @@ class Interactions(object):
 
                     pos = self.Obj.pos
                     try:
-                        doorOpen = pygame.image.load(join("Image", "Obstacle", "Door", "DoorCellule.png")).convert_alpha()
+                        doorOpen = pygame.image.load(join("Image", "Obstacle", "Door", "IronBarsDoorOpen.png")).convert_alpha()
                         Sprites(pos, doorOpen, "OpenDoor", groups[0])
                     except:
                         INFOS["ErrorLoadElement"] = True

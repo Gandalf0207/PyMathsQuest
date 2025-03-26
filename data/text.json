@@ -79,6 +79,7 @@
         },
         "InterfaceEnd": {
             "PDFGeneration": "Générer le pdf de correction",
+            "PDFGenere" : "Vous avez générez le pdf",
             "Quitter": "Quitter"
         },
         "HomeInterface": {
