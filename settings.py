@@ -24,6 +24,8 @@ import pygame
 import tkinter as tk
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 import matplotlib.pyplot as plt
+import ctypes
+import webbrowser
 
 
 plt.rc('text', usetex=True)  # Active l'utilisation de LaTeX
@@ -168,7 +170,7 @@ NIVEAU = {
     "All" : False, 
 
     # map
-    "Map" : "NiveauMordor",
+    "Map" : "NiveauPlaineRiviere",
 }
 # box infos globales
 INFOS = {
@@ -188,7 +190,7 @@ INFOS = {
     "Exo" : False, 
     "ExoPasse" : False,
     "GetCours" : 0,
-    "DemiNiveau" : True,
+    "DemiNiveau" : False,
     "ChangementNiveau" : False,
     "HideHotBar" : False,
     "RebindingKey": False,

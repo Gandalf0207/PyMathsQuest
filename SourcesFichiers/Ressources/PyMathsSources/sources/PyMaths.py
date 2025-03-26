@@ -113,12 +113,13 @@ class Generation(object):
             self.nb_9 = random.randint(3, 8)
             self.nb_10 = random.randint(3, 8)
 
-    def BuildPdf(self, title):
+    def BuildPdf(self, title, filePath):
         """Méthode pour générer le pdf depuis"""
-        typeExo = title
-        self.doc.generate_pdf(f"Py-Maths_{typeExo}", clean_tex=False, compiler="pdfLaTex")
-
-
+        output_path = filePath.replace(f"{title}.pdf", "")
+        self.doc.generate_pdf(output_path, clean_tex=True, compiler="pdfLaTex")
+        
+        final_pdf_path = output_path + ".pdf"
+        webbrowser.open(f"file://{os.path.abspath(final_pdf_path)}")
 
 
 # Generation instance

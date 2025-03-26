@@ -52,11 +52,60 @@ class EndInterface():
         else :
             self.medailleSurface.blit(self.medailleBronze, (0,0))
 
+    def SavePdf(self):
+        
+        # aide ia / internet pour l'ouverture d'un interface window de path
+        from ctypes import wintypes
+        # Structure pour le filtre des fichiers (PDF uniquement)
+        class OPENFILENAME(ctypes.Structure):
+            _fields_ = [
+                ("lStructSize", wintypes.DWORD),
+                ("hwndOwner", wintypes.HWND),
+                ("hInstance", wintypes.HINSTANCE),
+                ("lpstrFilter", wintypes.LPCWSTR),
+                ("lpstrCustomFilter", wintypes.LPWSTR),
+                ("nMaxCustFilter", wintypes.DWORD),
+                ("nFilterIndex", wintypes.DWORD),
+                ("lpstrFile", wintypes.LPWSTR),
+                ("nMaxFile", wintypes.DWORD),
+                ("lpstrFileTitle", wintypes.LPWSTR),
+                ("nMaxFileTitle", wintypes.DWORD),
+                ("lpstrInitialDir", wintypes.LPCWSTR),
+                ("lpstrTitle", wintypes.LPCWSTR),
+                ("Flags", wintypes.DWORD),
+                ("nFileOffset", wintypes.WORD),
+                ("nFileExtension", wintypes.WORD),
+                ("lpstrDefExt", wintypes.LPCWSTR),
+                ("lCustData", wintypes.LPARAM),
+                ("lpfnHook", wintypes.LPVOID),
+                ("lpTemplateName", wintypes.LPCWSTR),
+            ]
+
+        ofn = OPENFILENAME()
+        
+        buffer = ctypes.create_unicode_buffer(260)  # Stocke le chemin sélectionné
+        buffer.value = "PyMathsQuestCorrectionsExercices"
+        ofn.lStructSize = ctypes.sizeof(OPENFILENAME)
+        ofn.lpstrFilter = "PDF Files\0*.pdf\0All Files\0*.*\0"
+        ofn.lpstrFile = ctypes.cast(buffer, wintypes.LPWSTR) 
+        ofn.nMaxFile = 260
+        ofn.lpstrDefExt = "pdf"
+        ofn.lpstrTitle = "Enregistrer le fichier PDF"
+
+        if ctypes.windll.comdlg32.GetSaveFileNameW(ctypes.byref(ofn)):
+            return buffer.value  # Retourne le chemin choisi par l'utilisateur
+        
+        return None  # Si l'utilisateur annule
+
     def PdfGeneration(self):
         objMakePDF = MakePDFWithPyMaths()
         objMakePDF.GetExoValues()
         objMakePDF.GenerateCorrection()
-        objMakePDF.CompilPDF()
+
+        filePath  =  self.SavePdf()
+        if not filePath:
+            filePath = "PyMaths.pdf"
+        objMakePDF.CompilPDF(filePath)
         self.gestionnaire.gestionnaire.checkLoadingDone = True
 
 

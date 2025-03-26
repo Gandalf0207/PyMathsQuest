@@ -10,8 +10,8 @@ class MakePDFWithPyMaths(object):
         with open(join("data","exercicesValues.json"), "r") as f: # ouvrir le fichier json en mode e lecture
             self.allExoValues = json.load(f) # chargement des valeurs
 
-    def CompilPDF(self):
-        self.InstancePyMaths.BuildPdf(self.title)
+    def CompilPDF(self, filePath):
+        self.InstancePyMaths.BuildPdf(self.title, filePath)
 
     def GenerateCorrection(self):
         self.InstancePyMaths.FirstPage(self.title)
