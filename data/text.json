@@ -70,7 +70,7 @@
                 "Langage": "Python",
                 "Librairies Python": "Matplotlib, pygame-ce, PyMaths"
             },
-            "Etablissement": "Lycée George Clemenceau",
+            "Etablissement": ["Lycée George Clemenceau"],
             "Remerciements spéciaux": [
                 "PINGARD Mattis",
                 "ESCOUTE Cédric",

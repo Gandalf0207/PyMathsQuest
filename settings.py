@@ -170,7 +170,7 @@ NIVEAU = {
     "All" : False, 
 
     # map
-    "Map" : "NiveauMordor",
+    "Map" : "NiveauPlaineRiviere",
 }
 # box infos globales
 INFOS = {
