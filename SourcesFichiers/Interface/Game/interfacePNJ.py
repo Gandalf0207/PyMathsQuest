@@ -475,6 +475,19 @@ class PNJInterface(object):
                         self.loadText() # pasage au dialogue suivant
                         self.BuildInterface() # build des éléments
 
+        if event.type == pygame.MOUSEMOTION:
+            if self.gestionnaire.pnjActuel == "PNJ3" and NIVEAU["Map"] == "NiveauMedievale" and not self.gestionnaire.pnjObj.QuestionDone:
+                if self.rectBtnNon.collidepoint(event.pos) or self.rectBtnOui.collidepoint(event.pos):
+                    INFOS["Hover"] = True 
+                else:
+                    INFOS["Hover"] = False
+            else:
+                if self.btnRectSkip.collidepoint(event.pos):
+                    INFOS["Hover"] = True 
+                else:
+                    INFOS["Hover"] = False
+
+
                 
 
 

@@ -1,8 +1,8 @@
-{ 
+{
     "DialoguesFr": {
-        "NiveauPlaineRiviere" : {
+        "NiveauPlaineRiviere": {
             "PNJ1": {
-                "Nom" : "Bûcheron",
+                "Nom": "Bûcheron",
                 "Principal": {
                     "Dialogue1": "Bonjour toué ! Dis donc tu m’as l’air de frapper ton waterloo toi ! Mais lâche pas la patate je vais t’aider, cet arbre va pas te bloquer le chemin longtemps tabarnak !",
                     "Dialogue2": "Aussi prends c’te babiole ça pourrait t’aider t’sais, il y a écrit un charabia dessus j’te la laisse."
@@ -12,7 +12,7 @@
                 }
             },
             "PNJ2": {
-                "Nom" : "Voyageur curieux",
+                "Nom": "Voyageur curieux",
                 "Principal": {
                     "Dialogue1": "Salut l’ami si tu souhaites traverser l’Anduin il te faudra créer un pont je n’ai rien d’autre que ces planches alors je vais te les donner et j'espère que tu en feras bon usage.",
                     "Dialogue2": "J’ai même un manuel mais je ne sais pas s’il te sera utile."
@@ -22,7 +22,7 @@
                 }
             },
             "PNJ3": {
-                "Nom" : "Âne fuyard",
+                "Nom": "Âne fuyard",
                 "Principal": {
                     "Dialogue1": "(Il semble que cet âne se soit enfui, il y a probablement une ferme à proximité. Il a laissé tomber deux objets, on dirait un parchemin et une pioche.)"
                 },
@@ -30,12 +30,10 @@
                     "Dialogue1": "(Cet âne n’a pas l’air de vouloir rentrer chez lui)"
                 }
             }
-
         },
-
-        "NiveauMedievale" : {
+        "NiveauMedievale": {
             "PNJ1": {
-                "Nom" : "Fermier",
+                "Nom": "Fermier",
                 "Principal": {
                     "Dialogue1": "Hé toi, t’aurais-tu pas vu mon âne ? Il s’est enfuit pas plus tard qu’hier, et j’le r’trouve plus. Tu l’as vu, dis-tu ?",
                     "Dialogue2": "Tu me sauves dis donc, j’te passe ce truc en remerciement, t’façon j’sais po lire et puis tu devrais t’munir d’une ou deux bûches sait-on jamais."
@@ -45,7 +43,7 @@
                 }
             },
             "PNJ2": {
-                "Nom" : "Garde désagréable",
+                "Nom": "Garde désagréable",
                 "Principal": {
                     "Dialogue1": "Qui êtes-vous ?",
                     "Dialogue2": "Que voulez-vous ?",
@@ -57,7 +55,7 @@
                 }
             },
             "PNJ3": {
-                "Nom" : "Minerva",
+                "Nom": "Minerva",
                 "Principal": {
                     "Dialogue1": "Bonjour citoyen, je suis la garde Minerva ! Si vous souhaitez passer il vous faudra répondre à une énigme particulièrement compliquée. Voilà l'énigme, l’arrondi de pi est-il bien 3.14 ? ",
                     "Dialogue2": "Bien joué vous avez réussi l’énigme vous pouvez passer. Je vous souhaite une bonne journée."
@@ -67,20 +65,19 @@
                 }
             },
             "PNJ4": {
-                "Nom" : "Roi",
+                "Nom": "Roi",
                 "Principal": {
                     "Dialogue1": "AHAHAH, J’ai trouvé un moyen de voyager à travers les dimensions et de tout conquérir !!! ",
-                    "Dialogue2" : "Essayez de m'arrêter si vous l’osez pauvre aventurier de pacotille !"
-                    },
+                    "Dialogue2": "Essayez de m'arrêter si vous l’osez pauvre aventurier de pacotille !"
+                },
                 "Alternatif": {
                     "Dialogue1": "..."
                 }
             }
         },
-
-        "NiveauBaseFuturiste" : {
+        "NiveauBaseFuturiste": {
             "PNJ1": {
-                "Nom" : "Michael",
+                "Nom": "Michael",
                 "Principal": {
                     "Dialogue1": "Oulah d'où est-ce que tu viens toi ?? Ton portail à fait sauter le courant dans toute la base, il va falloir le rallumer ou tu risques pas de rentrer chez toi.",
                     "Dialogue2": "J’irais bien allumer le réacteur mais sans courant les portes ne s’ouvriront pas il faudra trouver un autre moyen. Tenez je crois que ceci est tombé avec vous."
@@ -90,7 +87,7 @@
                 }
             },
             "PNJ2": {
-                "Nom" : "Ingénieure",
+                "Nom": "Ingénieure",
                 "Principal": {
                     "Dialogue1": "Allo ! Il y a quelqu’un ? Je ne vois plus rien quelqu’un peut m’aider ?",
                     "Dialogue2": "Il faut redémarrer le réacteur pour récupérer le courant mais je ne trouve pas le bouton.",
@@ -101,7 +98,7 @@
                 }
             },
             "PNJ3": {
-                "Nom" : "Han",
+                "Nom": "Han",
                 "Principal": {
                     "Dialogue1": "T’as besoin d’un pilote p’tit gars ? Je peux faire le boulot mais va falloir raquer.",
                     "Dialogue2": "Et si t’as pas d’argent on peut faire un peu de troc.",
@@ -113,56 +110,51 @@
                 }
             },
             "PNJ4": {
-                "Nom" : "Didier ",
+                "Nom": "Didier ",
                 "Principal": {
                     "Dialogue1": "Beh dis donc si tu veux partir d’ici il te faudra un vaisseau mon cochon !",
                     "Dialogue2": "Et pis même si t’en as un, il lui faudra bien du jus pour décoller !",
-                    "Dialogue3": "Va donc voir pour pomper un peu de carburant dans c’te salle on est pas encore passé à l’électrique.", 
-                    "Dialogue4" : "(Un bout de papier tombe de la poche de l’énergumène, vous le ramassez)"
-                    },
-
-
+                    "Dialogue3": "Va donc voir pour pomper un peu de carburant dans c’te salle on est pas encore passé à l’électrique.",
+                    "Dialogue4": "(Un bout de papier tombe de la poche de l’énergumène, vous le ramassez)"
+                },
                 "Alternatif": {
                     "Dialogue1": "Alors dépêche toi avant que les prix augmentent ! Je sais même pas pourquoi j’dis ça on la paie pas ici."
                 }
             },
             "PNJ5": {
-                "Nom" : "Han",
+                "Nom": "Han",
                 "Principal": {
                     "Dialogue1": "ll va falloir un peu de carburant si tu veux qu’on bouge de cette base.",
                     "Dialogue2": "T’as réussi à remplir la fusée ? Si oui on va pouvoir décoller."
-                    },
-
+                },
                 "Alternatif": {
                     "Dialogue1": "..."
                 }
             },
             "PNJ6": {
-                "Nom" : "Han",
+                "Nom": "Han",
                 "Principal": {
                     "Dialogue1": "Tu veux aller à la poursuite d’un roi fou qui veut conquérir toutes les dimensions ?!",
                     "Dialogue2": "Ça à l’air sympa, tant que je peux garder les outils.",
                     "Dialogue3": "Attends qu’est-ce qui se passe ? On a dû heurter quelque chose je n’ai plus les contrôles du vaisseau on va se crasher. "
-                    },
-
+                },
                 "Alternatif": {
                     "Dialogue1": "..."
                 }
             },
             "PNJ7": {
-                "Nom" : "Han",
+                "Nom": "Han",
                 "Principal": {
                     "Dialogue1": "(Le pilote semble assommé vous le laisser pour explorez les environ mais il dispose d’un carnet avec des inscriptions, vous le récupérez)"
-                    },
-
+                },
                 "Alternatif": {
                     "Dialogue1": "(Le pilote semble assommé vous le laisser pour explorez les environ mais il dispose d’un carnet avec des inscriptions, vous le récupérez)"
                 }
             }
         },
-        "NiveauMordor" : {
+        "NiveauMordor": {
             "PNJ1": {
-                "Nom" : "Garde frontière orc",
+                "Nom": "Garde frontière orc",
                 "Principal": {
                     "Dialogue1": "Un humain ?! Tu vas venir avec moi je t’offrirai à notre nouveau seigneur !",
                     "Dialogue2": "(Au moment de vous assommer, l’orc fait tomber un papier que vous ramassez)"
@@ -172,17 +164,17 @@
                 }
             },
             "PNJ2": {
-                "Nom" : "Prisonnière humaine",
+                "Nom": "Prisonnière humaine",
                 "Principal": {
                     "Dialogue1": "Merci d’avoir ouvert cette cellule, je vais t’accompagner pour qu’on s’évade de cette maudite prison !",
                     "Dialogue2": "Tiens c’est un papier que j’ai trouvé dans mon pot de chambre mais je compte pas franchement le garder alors prends le."
                 },
-                "Alternatif": { 
+                "Alternatif": {
                     "Dialogue1": "Échappons- nous vite de cet horrible endroit !"
                 }
             },
             "PNJ3": {
-                "Nom" : "Geôlier orc",
+                "Nom": "Geôlier orc",
                 "Principal": {
                     "Dialogue1": "(Vous ne pourrez surement pas le battre pour passer, trouvez un compagnon ou un autre moyen de vous évader.)",
                     "Dialogue2": "(Vous et votre compagnon affrontez votre geôlier, pendant le combat il fait tomber un parchemin que vous ramassez, vous pouvez maintenant passer.)"
@@ -192,34 +184,30 @@
                 }
             },
             "PNJ4": {
-                "Nom" : "Goulboum",
+                "Nom": "Goulboum",
                 "Principal": {
                     "Dialogue1": "Mais que voit-on mon trésor, un humain tout frais ici ! Qu’à-t-il dit mon tréssssor ? Il souhaite retrouver le seigneur de ces terres ?!",
                     "Dialogue2": "Oh oui nous avons vu mon trésor, il est rentré dans la montagne cracheuse de feu, oh oui mon trésor !"
-                    },
-
+                },
                 "Alternatif": {
                     "Dialogue1": "L’humain est revenu mon trésor, veut-il que nous le mangions ? Oh oui mon trésor !",
                     "Dialogue2": "De l’humain tout frais, ça fait si longtemps que nous nous contentons de poissons fort peu goûtus. Comment ça ?",
                     "Dialogue3": "Ça s'est juste trompé de chemin et ça ne veut pas être mangé. Oh non ! Peut-être la prochaine fois mon trésor.",
-                    "Dialogue4" : "(Vous notez ce qui est écrit sur le pagne de la créature)"
+                    "Dialogue4": "(Vous notez ce qui est écrit sur le pagne de la créature)"
                 }
             },
             "PNJ5": {
-                "Nom" : "Roi",
+                "Nom": "Roi",
                 "Principal": {
                     "Dialogue1": "AHAHAHAH ! Tu crois vraiment pouvoir me vaincre ? J’ai transcendé les limites de l’humanité MOUHAHAHAHA !",
-                    "Dialogue2" : "(Si vous souhaitez vaincre le roi et ramener la paix pour rentrer chez vous il faudra montrer toute l’étendue de vos capacités)"
-                    },
-
+                    "Dialogue2": "(Si vous souhaitez vaincre le roi et ramener la paix pour rentrer chez vous il faudra montrer toute l’étendue de vos capacités)"
+                },
                 "Alternatif": {
                     "Dialogue1": "AHAHAH ! Tu as déjà échoué une fois, tu crois pouvoir me vaincre cette fois ?!"
-
-                    }
                 }
             }
-        }, 
-
+        }
+    },
     "DialoguesEn": {
         "NiveauPlaineRiviere": {
             "PNJ1": {
@@ -428,6 +416,214 @@
                 }
             }
         }
+    },
+    "DialoguesEs": {
+        "NiveauPlaineRiviere": {
+            "PNJ1": {
+                "Nom": "Leñador",
+                "Principal": {
+                    "Dialogue1": "¡Buenos días a ti! ¡Oye me parece que estás derrotando! Pero relájate te voy ayudar, este árbol no te va a bloquear el camino mucho tiempo ¡carajo!",
+                    "Dialogue2": "También, recoge ‘ta baratija te podría ayudar sabes, está escrito un galimatías encima, te la dejo."
+                },
+                "Alternatif": {
+                    "Dialogue1": "Pues, ¡adelante amigo, no tengas miedo del agua debajo del tronco, no se te va a saltar encima! "
+                }
+            },
+            "PNJ2": {
+                "Nom": "Viajero curioso",
+                "Principal": {
+                    "Dialogue1": "Hola amigo si quieres cruzar el Anduin tendrás que crear un puente, no tengo nada más que estas tablas pues te las voy a dar y espero que hagas buen uso de ellas.",
+                    "Dialogue2": "Incluso tengo un manual pero no sé si te será útil."
+                },
+                "Alternatif": {
+                    "Dialogue1": " Pues ¿qué es lo que se encuentra del otro lado? Me lo contarás una vez visto."
+                }
+            },
+            "PNJ3": {
+                "Nom": "Burro huidor",
+                "Principal": {
+                    "Dialogue1": "(parece que este burro haya huido, habrá probablemente una granja cerca. Dejó caer dos objetos, parecen ser un pergamino y un pico.)"
+                },
+                "Alternatif": {
+                    "Dialogue1": "(Este burro no parece querer volver a casa)"
+                }
+            }
+        },
+        "NiveauMedievale": {
+            "PNJ1": {
+                "Nom": "Granjero",
+                "Principal": {
+                    "Dialogue1": "Oye tú, ¿no habrás visto un burro? Huyó no más que ayer, y ya no lo veo. ¿Lo viste, dices?",
+                    "Dialogue2": "Me salvas vaya, te doy esto como agradecimiento, de toas formas, no sé leer y tendrías que proveerte de una o dos leñas por si acaso."
+                },
+                "Alternatif": {
+                    "Dialogue1": "Muchas gracias colega, te voy a buscar ese cabezota pronto."
+                }
+            },
+            "PNJ2": {
+                "Nom": "Guardia desagradable",
+                "Principal": {
+                    "Dialogue1": "¿Quién es usted?",
+                    "Dialogue2": "¿Qué quiere?",
+                    "Dialogue3": "¿Usted tiene alguna autorización?",
+                    "Dialogue4": "No, pues no pasará ¡Santo cielo!"
+                },
+                "Alternatif": {
+                    "Dialogue1": "Ya te he dicho que no pasarás, ¿no fui claro?"
+                }
+            },
+            "PNJ3": {
+                "Nom": "Minerva",
+                "Principal": {
+                    "Dialogue1": "Buenos días ciudadano, ¡soy Minerva la guardiana! Si usted desea pasar tendrá que contestar un enigma particularmente complicado. Aquí está el enigma, ¿El redondeo de pi es realmente 3,14?",
+                    "Dialogue2": "Buen trabajo, resolvió el enigma, puede pasar. Le deseo un buen día."
+                },
+                "Alternatif": {
+                    "Dialogue1": "Buen trabajo, resolvió el enigma, puede pasar. Le deseo un buen día."
+                }
+            },
+            "PNJ4": {
+                "Nom": "Rey",
+                "Principal": {
+                    "Dialogue1": "¡¡JAJAJAJA!!, ¡¡¡Encontré un medio para viajar por las dimensiones y conquistarlo todo!!!",
+                    "Dialogue2": "Intente detenerme si usted se atreve, ¡pobre aventurero de pacotilla!"
+                },
+                "Alternatif": {
+                    "Dialogue1": "..."
+                }
+            }
+        },
+        "NiveauBaseFuturiste": {
+            "PNJ1": {
+                "Nom": "Michael",
+                "Principal": {
+                    "Dialogue1": "Oye, ¿De dónde vienes tú? Tu portal cortó la corriente en toda la base, habrá que volver a encenderlo o no podrás volver a casa.",
+                    "Dialogue2": "Me gustaría encender el reactor pero sin corriente las puertas no se abrirán habrá que encontrar otra solución. Tome, creo que usted hizo caer esto consigo."
+                },
+                "Alternatif": {
+                    "Dialogue1": "¿Entonces todavía no has arreglado tu error? ¡Date prisa, el frigorífico de la cafetería contiene mi almuerzo y más te vale que siga estando bueno cuando vaya a comerlo!"
+                }
+            },
+            "PNJ2": {
+                "Nom": "Ingeniera",
+                "Principal": {
+                    "Dialogue1": "¿Hola? ¿hay alguien? No veo nada, ¿alguien me puede ayudar?",
+                    "Dialogue2": "Hay que volver a arrancar el reactor para recuperar la corriente pero no encuentro el botón.",
+                    "Dialogue3": "Cuidado con no abusar del botón, podría ser peligroso."
+                },
+                "Alternatif": {
+                    "Dialogue1": "¿Encontraste el botón? Acabo de enterarme de que soy ciego y que en realidad no cambia nada para mí."
+                }
+            },
+            "PNJ3": {
+                "Nom": "Han",
+                "Principal": {
+                    "Dialogue1": "¿Necesitas un piloto hombrecito? Puedo hacer la curra pero habrá que soltar la pasta.",
+                    "Dialogue2": "Y si no tienes dinero podemos hacer un poco de trueque.",
+                    "Dialogue3": "¿¿¿Me quieres comprar con una pala, un hacha, y un pico??? Suena bien, contaba con rehacer mi jardín. Toma, te doy ese librito de fotos de mis flores.",
+                    "Dialogue4": "(Resulta que Han se equivocó y dio una hoja de matemáticas a la vez)"
+                },
+                "Alternatif": {
+                    "Dialogue1": "..."
+                }
+            },
+            "PNJ4": {
+                "Nom": "Didier ",
+                "Principal": {
+                    "Dialogue1": "Vaya, si quieres salir de aquí, necesitarás una nave mi cerdito.",
+                    "Dialogue2": "Y aun si tienes una, necesitará corriente para despegar.",
+                    "Dialogue3": "Vaya a ver para bombear un poco de combustible en ‘ta sala, no hemos pasado a lo eléctrico todavía.",
+                    "Dialogue4": "(Un trozo de papel cae del bolsillo del energúmeno, lo recoges)."
+                },
+                "Alternatif": {
+                    "Dialogue1": "¡Oye apúrate antes de que los precios aumenten! Aun no sé por qué lo digo, aquí no lo pagamos."
+                }
+            },
+            "PNJ5": {
+                "Nom": "Han",
+                "Principal": {
+                    "Dialogue1": "Se necesitará un poco de combustible si quieres que nos larguemos de esta base.",
+                    "Dialogue2": "¿Lograste llenar el cohete? Si así es, vamos a poder despegar.."
+                },
+                "Alternatif": {
+                    "Dialogue1": "..."
+                }
+            },
+            "PNJ6": {
+                "Nom": "Han",
+                "Principal": {
+                    "Dialogue1": "¿Quieres perseguir a un rey loco que quiere conquistar todas las dimensiones?",
+                    "Dialogue2": "Me parece chulo, con tal de que pueda conservar mis herramientas.",
+                    "Dialogue3": "Espera, ¿Qué pasa? Debemos haber chocado contra algo, ya no tengo los controles de la nave, nos vamos a estrellar.. "
+                },
+                "Alternatif": {
+                    "Dialogue1": "..."
+                }
+            },
+            "PNJ7": {
+                "Nom": "Han",
+                "Principal": {
+                    "Dialogue1": "(El piloto parece noqueado, usted lo deja para explorar los alrededores pero él dispone de un librito con apuntes, usted lo recoge)"
+                },
+                "Alternatif": {
+                    "Dialogue1": "(El piloto parece noqueado, usted lo deja para explorar los alrededores pero él dispone de un librito con apuntes, usted lo recoge)"
+                }
+            }
+        },
+        "NiveauMordor": {
+            "PNJ1": {
+                "Nom": "Guardia frontera orco",
+                "Principal": {
+                    "Dialogue1": "¿¡Un humano!?¡ Vas a venir conmigo te ofreceré a nuestro nuevo señor!",
+                    "Dialogue2": "(Cuando el orco le noquea, deja caer un papel que usted recoge)"
+                },
+                "Alternatif": {
+                    "Dialogue1": "..."
+                }
+            },
+            "PNJ2": {
+                "Nom": "Prisionera humana",
+                "Principal": {
+                    "Dialogue1": "Gracias por haber abierto esta celda, te voy a acompañar para que nos escapemos de esa maldita cárcel.",
+                    "Dialogue2": "Toma, es un papel que encontré en mi orinal pero no pretendo sinceramente conservarlo, así que tómalo."
+                },
+                "Alternatif": {
+                    "Dialogue1": "¡Escapemos rápido de aquel lugar horrible!"
+                }
+            },
+            "PNJ3": {
+                "Nom": "Alcaide orco",
+                "Principal": {
+                    "Dialogue1": "(Seguramente no pueda vencerlo, para pasar, encuentre un compañero u otro medio para escapar)",
+                    "Dialogue2": "(Usted y su compañero se enfrentan a su alcaide, durante el combate deja caer un pergamino que recoge usted, ahora puede pasar)"
+                },
+                "Alternatif": {
+                    "Dialogue1": "..."
+                }
+            },
+            "PNJ4": {
+                "Nom": "Goulboum",
+                "Principal": {
+                    "Dialogue1": "Y qué vemos mi tesoro, ¡un humano fresquito por aquí! ¿Qué dijo mi tesoooooro? ¿¡Desea volver a encontrar el señor de esas tierras?!",
+                    "Dialogue2": "¡Oh, sí! Vimos mi tesoro, se adentró en la montaña escupidora de fuego, ¡oh sí mi tesoro!"
+                },
+                "Alternatif": {
+                    "Dialogue1": "El humano ha vuelto mi tesoro, ¿quiere que lo comamos? ¡Oh sí mi tesoro!",
+                    "Dialogue2": "Humano fresquito, hace tanto tiempo que nos conformamos con pescados muy poco sabrosos. ¿Qué pasa?",
+                    "Dialogue3": "Solo te equivocaste de camino y no quieres ser comido. ¡Oh no! Quizás la próxima vez mi tesoro.",
+                    "Dialogue4": "(Anotas lo que está escrito en el paño de la criatura)."
+                }
+            },
+            "PNJ5": {
+                "Nom": "Roi",
+                "Principal": {
+                    "Dialogue1": "¡JAJAJAJA! ¿De verdad crees que puedes vencerme? ¡He trascendido los límites de la humanidad! ¡JAJAJAJA!",
+                    "Dialogue2": "(Si deseas vencer al rey y traer la paz para volver a casa, tendrás que demostrar toda la extensión de tus capacidades)."
+                },
+                "Alternatif": {
+                    "Dialogue1": "¡JAJAJA! Ya fracaste una vez, ¿¡crees poder vencerme esta vez?!"
+                }
+            }
+        }
     }
 }
-

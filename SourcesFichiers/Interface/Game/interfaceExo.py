@@ -33,15 +33,21 @@ class CreateExo:
         self.hauteurAct = 0
 
         # close interface cross
-        self.surfaceCloseCross = pygame.Surface((24,24))
+        self.surfaceCloseCross = pygame.Surface((24,24), pygame.SRCALPHA)
         self.isCrossCloseHover = False
         try :
             self.crossClose = pygame.image.load(join("Image", "Interface","Croix", "x-mark.png")).convert_alpha()
             self.crossClose2 = pygame.image.load(join("Image","Interface", "Croix", "x-mark2.png")).convert_alpha()
+            self.btnTexture = pygame.image.load(join("Image","Interface", "Button", "Exo", "NonHover.png")).convert_alpha()
+            self.btnTextureHover = pygame.image.load(join("Image","Interface", "Button", "Exo", "Hover.png")).convert_alpha()
+            self.bcgImage = pygame.image.load(join("Image", "Interface", "Baseinterface2.png")).convert_alpha()
         except:
             INFOS["ErrorLoadElement"] = True
 
-
+        self.isBtn1Hover = False
+        self.isBtn2Hover = False
+        self.isBtn3Hover = False
+        
         # création element button
         self.CreateRectButton()
 
@@ -67,7 +73,7 @@ class CreateExo:
         self.hauteurAct = 0 # reset car update interface
 
         # clear
-        self.interfaceExoSurface.fill("#ffffff")
+        self.interfaceExoSurface.blit(self.bcgImage, (0,0))
 
         # titre
         textT = TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]]["Title"] if NIVEAU["Map"] != "NiveauMordor" else TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"DemiNiveau{INFOS["DemiNiveau"]}"]["Title"]
@@ -116,8 +122,6 @@ class CreateExo:
                         self.interfaceExoSurface.blit(self.exoBoss1Image, self.exoBoss1Image.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
                     except:
                         INFOS["ErrorLoadElement"] = True
-
-
             elif NIVEAU["Map"] == "NiveauMedievale":
                 if not INFOS["Difficulte"]: # facile
                     self.hauteurAct += 20
@@ -152,6 +156,31 @@ class CreateExo:
 
                 self.interfaceExoSurface.blit(self.infosBuild[0][0], self.infosBuild[0][0].get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
 
+        elif NIVEAU["Niveau"] == "Premiere":
+            if NIVEAU["Map"] in ["NiveauMedievale", "NiveauBaseFuturiste"]:
+                self.hauteurAct += 120
+                self.interfaceExoSurface.blit(self.latexSurface, (self.latexSurface.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct))))
+            elif NIVEAU["Map"] == "NiveauMordor" and not INFOS["DemiNiveau"]:
+                # text valeur n : 
+                self.hauteurAct += 20
+                textInfo = f"n = {self.infosBuild[4]}"
+                text = FONT["FONT20"].render(textInfo, True, (0,0,0))
+                self.interfaceExoSurface.blit(text, (20, self.hauteurAct))
+
+                self.hauteurAct += 120
+                self.interfaceExoSurface.blit(self.latexSurface, (self.latexSurface.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct))))
+            else:
+                self.hauteurAct += 20
+                textInfo = f"a : (Côté feuille) : {self.infosBuild[0][0]} cm;  Nombre d'années :{self.infosBuild[0][1]}; y : (Inflation) : {self.infosBuild[0][2]} %"
+                text = FONT["FONT20"].render(textInfo, True, (0,0,0))
+                self.interfaceExoSurface.blit(text, (20, self.hauteurAct))
+
+                self.hauteurAct += 120
+                try :
+                    self.exoBoss1Image = pygame.image.load(join("Image", "Exo", "ExoBoss2.png")).convert_alpha()
+                    self.interfaceExoSurface.blit(self.exoBoss1Image, self.exoBoss1Image.get_rect(center = (self.interfaceExoSurface.get_width()//2, self.hauteurAct)))
+                except:
+                    INFOS["ErrorLoadElement"] = True
 
         # réponse titre
         textQ = TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"Difficulte{INFOS["Difficulte"]}"]["QCM"] if NIVEAU["Map"] != "NiveauMordor" else TEXTE["Elements"][NIVEAU["Map"]]["ExoTexte"][NIVEAU["Niveau"]][f"DemiNiveau{INFOS["DemiNiveau"]}"][f"Difficulte{INFOS["Difficulte"]}"]["QCM"]
@@ -165,22 +194,56 @@ class CreateExo:
 
         self.allReponseTexte = [str(self.listeReponse[0]),str(self.listeReponse[1]),str(self.listeReponse[2])]
 
-        for text in range(len(self.allReponseTexte)):
-            # Fonction simple pour découper le text
-            max_width = 243 # 5 de marge 
-            wrapped_lines = wrap_text(self.allReponseTexte[text], FONT["FONT20"], max_width)
+        for textIndice in range(len(self.allReponseTexte)):
+            
+            #bcg btn
+            if textIndice == 0:
+                if self.isBtn1Hover:
+                    self.surfaceButton1.blit(self.btnTextureHover, (0,0))
+                else:
+                    self.surfaceButton1.blit(self.btnTexture, (0,0))
+            elif textIndice == 1:
+                if self.isBtn2Hover:
+                    self.surfaceButton2.blit(self.btnTextureHover, (0,0))
+                else:
+                    self.surfaceButton2.blit(self.btnTexture, (0,0))
+            elif textIndice == 2:
+                if self.isBtn3Hover:
+                    self.surfaceButton3.blit(self.btnTextureHover, (0,0))
+                else:
+                    self.surfaceButton3.blit(self.btnTexture, (0,0))
 
-            # Affichage des lignes
-            y_offset =  5 # Position Y de départ
-            line_height = FONT["FONT20"].size("Tg")[1]  # Hauteur d'une ligne
+
+
+            # Largeur et hauteur du bouton
+            button_width = self.surfaceButton1.get_width()
+            button_height = self.surfaceButton1.get_height()
+
+            # Largeur max du texte à ne pas dépasser
+            max_width = button_width - 10  # On enlève une marge de 5 pixels de chaque côté
+
+            # Fonction simple pour découper le text
+            wrapped_lines = wrap_text(self.allReponseTexte[textIndice], FONT["FONT24"], max_width)
+
+            # Hauteur totale du texte
+            line_height = FONT["FONT24"].size("Tg")[1]
+            total_text_height = len(wrapped_lines) * line_height
+
+            # Y de départ pour centrer verticalement
+            y_offset = (button_height - total_text_height) // 2
+
             for i, line in enumerate(wrapped_lines):
-                line_surface = FONT["FONT20"].render(line, True, (0,0,0))
-                if text ==0 :
-                    self.surfaceButton1.blit(line_surface, (5, y_offset + i * line_height))
-                elif text == 1:
-                    self.surfaceButton2.blit(line_surface, (5, y_offset + i * line_height))
-                elif text == 2:
-                    self.surfaceButton3.blit(line_surface, (5, y_offset + i * line_height))
+                line_surface = FONT["FONT24"].render(line, True, (0,0,0))
+
+                # X pour centrer horizontalement
+                x = (button_width - line_surface.get_width()) // 2
+                            
+                if textIndice == 0:
+                    self.surfaceButton1.blit(line_surface, (x, y_offset + i * line_height))
+                elif textIndice == 1:
+                    self.surfaceButton2.blit(line_surface, (x, y_offset + i * line_height))
+                elif textIndice == 2:
+                    self.surfaceButton3.blit(line_surface, (x, y_offset + i * line_height))
 
         self.interfaceExoSurface.blit(self.surfaceButton1, (self.ButtonRect1.x, self.ButtonRect1.y))
         self.interfaceExoSurface.blit(self.surfaceButton2, (self.ButtonRect2.x, self.ButtonRect2.y))
@@ -189,7 +252,7 @@ class CreateExo:
 
 
         # close element
-        self.surfaceCloseCross.fill("#ffffff")
+        self.surfaceCloseCross.fill((0,0,0,0))
         self.rectCloseCross = pygame.Rect(self.interfaceExoSurface.get_width() - 34, 10, 24, 24)
         if self.isCrossCloseHover:
             self.surfaceCloseCross.blit(self.crossClose2, (0,0))
@@ -208,6 +271,12 @@ class CreateExo:
         # surface latex -> avec eqt
         if NIVEAU["Niveau"] == "Seconde":
             if (NIVEAU["Map"] == "NiveauPlaineRiviere") or ( NIVEAU["Map"] == "NiveauMordor" and not INFOS["DemiNiveau"]):
+                self.latexSurface = self.ObjRender.GetElement(self.infosBuild[0], 30) # on donne l'eqt
+
+        elif NIVEAU["Niveau"] == "Premiere":
+            if NIVEAU["Map"] in ["NiveauMedievale", "NiveauBaseFuturiste"]:
+                self.latexSurface = self.ObjRender.GetElement(self.infosBuild[0], 30) # on donne l'eqt
+            elif NIVEAU["Map"] == "NiveauMordor" and not INFOS["DemiNiveau"]:
                 self.latexSurface = self.ObjRender.GetElement(self.infosBuild[0], 30) # on donne l'eqt
             
 
@@ -312,7 +381,10 @@ class CreateExo:
                 if event.type == pygame.MOUSEMOTION:
                     check = False
                     self.isCrossCloseHover = self.rectCloseCross.collidepoint(local_pos)
+                    self.isBtn1Hover = self.ButtonRect1.collidepoint(local_pos)
+                    self.isBtn2Hover = self.ButtonRect2.collidepoint(local_pos)
+                    self.isBtn3Hover = self.ButtonRect3.collidepoint(local_pos)
 
-                    if self.isCrossCloseHover:
+                    if self.isCrossCloseHover or self.isBtn1Hover or self.isBtn2Hover or self.isBtn3Hover:
                         check = True
                     INFOS["Hover"] = check   

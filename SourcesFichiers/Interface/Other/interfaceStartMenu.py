@@ -78,7 +78,6 @@ class HomeInterface(object):
 
         textAllNiveau = [TEXTE["Elements"]["HomeInterface"]["Niveau"]["Seconde"],
                          TEXTE["Elements"]["HomeInterface"]["Niveau"]["Premiere"],
-                         TEXTE["Elements"]["HomeInterface"]["Niveau"]["Terminale"],
                          TEXTE["Elements"]["HomeInterface"]["Niveau"]["All"],]
         # Affichage des boutons radio
         for i, option in enumerate(textAllNiveau):
@@ -227,15 +226,15 @@ class HomeInterface(object):
                         match self.selectedOptionNiveau:
                             case 0:
                                 NIVEAU["Niveau"] = "Seconde"
+                                NIVEAU["Map"] = "NiveauPlaineRiviere"
                                 NIVEAU["All"] = False
                             case 1:
                                 NIVEAU["Niveau"] = "Premiere"
+                                NIVEAU["Map"] = "NiveauMedievale"
                                 NIVEAU["All"] = False
                             case 2:
-                                NIVEAU["Niveau"] = "Terminale"
-                                NIVEAU["All"] = False
-                            case 3:
                                 NIVEAU["Niveau"] = "Seconde"
+                                NIVEAU["Map"] = "NiveauPlaineRiviere"
                                 NIVEAU["All"] = True
 
                 # difficulte

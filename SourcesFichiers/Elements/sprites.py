@@ -41,7 +41,7 @@ class CollisionSprites(pygame.sprite.Sprite):
             self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-66))
         elif typeCollision == "Pont1" or typeCollision == "Pont2":
             self.rect = self.image.get_frect(topleft=(pos[0]-33, pos[1]))
-        elif typeCollision in["WallAngularNE", "WallAngularNW"] and (not INFOS["DemiNiveau"]) and NIVEAU["Map"] == "NiveauMedievale":
+        elif typeCollision in["WallAngularNE", "WallAngularNW"] and (not INFOS["DemiNiveau"]) and NIVEAU["Map"] in ["NiveauMedievale", "NiveauMordor"]:
             self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-64))
         elif typeCollision == "Pilier":
             self.rect = self.image.get_frect(topleft=(pos[0], pos[1]-56))
@@ -80,11 +80,11 @@ class CollisionSprites(pygame.sprite.Sprite):
             case "Champs":
                 self.hitbox = self.rect.inflate(0,0)
             case "House":
-                self.hitbox = self.rect.inflate(-20,-60)
+                self.hitbox = self.rect.inflate(-20,-120)
             case "Well":
                 self.hitbox = self.rect.inflate(-20,-60)
             case "Chateau":
-                self.hitbox = self.rect.inflate(0, -30)
+                self.hitbox = self.rect.inflate(-20, -70)
             case "TableCraft":
                 self.hitbox = self.rect.inflate(0,0)
             case "Boat":
@@ -96,7 +96,7 @@ class CollisionSprites(pygame.sprite.Sprite):
             case "DoorMuraille":
                 self.hitbox = self.rect.inflate(0, -60)
             case "DoorChateau":
-                self.hitbox = self.rect.inflate(0, -60)
+                self.hitbox = self.rect.inflate(-20, -70)
             case "DoorChateauInterieur":
                 self.hitbox = self.rect.inflate(0, -60)
             case "ReactorBloc":

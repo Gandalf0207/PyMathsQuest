@@ -1,6 +1,6 @@
 from settings import *
 
-class Player(pygame.sprite.Sprite):
+class Houmous(pygame.sprite.Sprite):  # player : private joke
 
     def __init__(self, pos : tuple, groups : any, collision_sprites : any) -> None:
         """Méthode initialisation gestion player.

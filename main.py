@@ -138,7 +138,7 @@ class Game(object):
             self.cinematique = True # player apparait par le portail
             INFOS["HidePlayer"] = True
 
-        self.player = Player(((playerPosSpawn[0] + 1 )*CASEMAP,(playerPosSpawn[1] + 0.5 )*CASEMAP), self.allSprites, self.collisionSprites) 
+        self.player = Houmous(((playerPosSpawn[0] + 1 )*CASEMAP,(playerPosSpawn[1] + 0.5 )*CASEMAP), self.allSprites, self.collisionSprites) 
         self.checkLoadingDone = True
 
         
@@ -155,8 +155,8 @@ class Game(object):
     def StartMap(self):
         
         # Affichage initial de l'écran de chargement
-        threading.Thread(target=self.SetupAllMap).start()
         self.GameTool.SetInfosLevel()
+        threading.Thread(target=self.SetupAllMap).start()
 
         if NIVEAU["Niveau"] == "Seconde":
             if NIVEAU["Map"] == "NiveauPlaineRiviere":
@@ -680,9 +680,6 @@ class GameToolBox(object):
                                 NIVEAU["Niveau"] = "Premiere"
                                 NIVEAU["Map"] = "NiveauMedievale"
                             case "Premiere":
-                                NIVEAU["Niveau"] = "Terminale"
-                                NIVEAU["Map"] = "NiveauMedievale"
-                            case "Terminale":
                                 pass
 
 
@@ -698,7 +695,7 @@ class GameToolBox(object):
         INFOS["AdminReset"] = False
         INFOS["EndPhase"] = False
         INFOS["BoolDoubleCheck"] = False
-        INFOS["CinematiqueEndAct"] = True
+        INFOS["CinematiqueEndAct"] = False
         # reset demi niveau (chateau)
         INFOS["DemiNiveau"] = False 
         self.gestionnaire.demiNiveau = False

@@ -96,7 +96,6 @@ class LoadMapGestion():
 
             self.well = pygame.image.load(join("Image", "Structure", "Medievale", "Puits.png")).convert_alpha()
             self.tableCraft = pygame.image.load(join("Image", "Obstacle", "TableCraft.png")).convert_alpha()
-            self.boat = pygame.image.load(join("Image", "Item", "BoatObj.png")).convert_alpha()
             self.DoorMuraille = pygame.image.load(join("Image", "Obstacle", "Door", "DoorMuraille.png")).convert_alpha()
             self.DoorChateau =  pygame.image.load(join("Image", "Obstacle", "Door", "DoorChateau.png")).convert_alpha()
         except:
@@ -202,16 +201,16 @@ class LoadMapGestion():
             self.solV2 = pygame.image.load(join("Image", "Sol", "SolMordorV2.png")).convert_alpha()
             self.sol2V2 = pygame.image.load(join("Image", "Sol", "MordorSol2V2.png")).convert_alpha()
             self.sol3V2 = pygame.image.load(join("Image", "Sol", "MordorSol3V2.png")).convert_alpha()
-            self.montainWE = pygame.image.load(join("Image", "Mur", "Mountain", "MountainMordorStraighW-Ex128.png")).convert_alpha()
-            self.montainWE1 = pygame.image.load(join("Image", "Mur", "Mountain", "MountainMordorStraighW-Ealt1x128.png")).convert_alpha()
+            self.montainWE = pygame.image.load(join("Image", "Mur", "Mordor", "MountainStraighW-E.png")).convert_alpha()
+            self.montainWE1 = pygame.image.load(join("Image", "Mur", "Mordor", "MountainStraighW-E.png")).convert_alpha()
 
             self.MurWEHaut = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesWE.png" )).convert_alpha()
             self.MurNSGauche = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesNS.png" )).convert_alpha()
             self.MurNSDroite = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesNS.png" )).convert_alpha()
             self.MurMountain = pygame.image.load(join("Image", "Mur",  "Mordor", "Muraille", "MuraillesMountain.png" )).convert_alpha()
 
-            self.MurAngularNE = pygame.image.load(join("Image", "Mur", "Mordor", "Muraille", "WallAngularNE.png")).convert_alpha()
-            self.MurAngularNW = pygame.image.load(join("Image", "Mur", "Mordor", "Muraille", "WallAngularNW.png")).convert_alpha()
+            self.MurAngularNE = pygame.image.load(join("Image", "Mur", "Mordor", "Muraille", "MuraillesAngle.png")).convert_alpha()
+            self.MurAngularNW = pygame.image.load(join("Image", "Mur", "Mordor", "Muraille", "MuraillesAngle.png")).convert_alpha()
 
 
 
@@ -244,7 +243,7 @@ class LoadMapGestion():
             self.MurAngularNE = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
             self.MurAngularNW = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
             self.MurAngularSE = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
-            self.MurAngulaSW = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
+            self.MurAngularSW = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
 
             self.MurWEBas = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha()
             self.MurWEHaut = pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha() 
@@ -324,12 +323,7 @@ class LoadMapGestion():
                             else:
                                 Sprites(pos, self.sol3V2, "Sol3", self.allSprites, layer=0)
 
-                    if (NIVEAU["Map"] != "NiveauBaseFuturiste") or (NIVEAU["Map"] == "NiveauBaseFuturiste" and  INFOS["DemiNiveau"]):
-                        if randint(1, 10) < 7:
-                            Sprites(pos, self.sol2, "Sol2", self.allSprites, layer=0)
-                        else:
-                            Sprites(pos, self.sol3, "Sol3", self.allSprites, layer=0)
-                    else:
+                    elif NIVEAU["Map"] == "NiveauBaseFuturiste" and  INFOS["DemiNiveau"]:
                         x = randint(1, 10) 
                         if x < 6:
                             Sprites(pos, self.sol3, "Sol3", self.allSprites, layer=0)
@@ -337,6 +331,11 @@ class LoadMapGestion():
                             Sprites(pos, self.sol2, "Sol2", self.allSprites, layer=0)
                         else:
                             Sprites(pos, self.sol4, "Sol4", self.allSprites, layer=0)
+                    else:
+                        if randint(1, 10) < 7:
+                            Sprites(pos, self.sol2, "Sol2", self.allSprites, layer=0)
+                        else:
+                            Sprites(pos, self.sol3, "Sol3", self.allSprites, layer=0)
                             
                 elif self.mapBase[ordonnees][abscisses] == 1:
                     Sprites(pos, self.sol1, "Sol1", self.allSprites, layer=0)
@@ -467,55 +466,56 @@ class LoadMapGestion():
 
 
                     riverPath = ""
+                    typeRiver = "Riviere" if NIVEAU["Map"] != "NiveauMordor" else "Lave"
                     # conflif montain
                     if mountainConflict:
-                        riverPath = join("Image","Obstacle","Riviere","RiverMontainConflictx128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverMontainConflictx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
 
                     # cross    
                     elif can_build_down and can_build_left and can_build_right and can_build_up:
-                        riverPath = join("Image", "Obstacle", "Riviere", "RiverStraighE-WN-Sx128")
+                        riverPath = join("Image", "Obstacle", typeRiver, "RiverStraighE-WN-Sx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
 
                     # Tshape
                     elif can_build_right and can_build_left and can_build_up:
-                        riverPath = join("Image","Obstacle","Riviere","RiverTWN-Ex128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverTWN-Ex128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)   
                     elif can_build_right and can_build_left and can_build_down:
-                        riverPath = join("Image","Obstacle","Riviere","RiverTW-SEx128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverTW-SEx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     elif can_build_down and can_build_up and can_build_left:
-                        riverPath = join("Image","Obstacle","Riviere","RiverTWN-Sx128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverTWN-Sx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     elif can_build_down and can_build_up and can_build_right:
-                        riverPath = join("Image","Obstacle","Riviere","RiverTN-SEx128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverTN-SEx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
 
                     # angular
                     elif can_build_right and can_build_down:
-                        riverPath = join("Image","Obstacle","Riviere","RiverAngularE-Sx128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverAngularE-Sx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     elif can_build_right and can_build_up:
-                        riverPath = join("Image","Obstacle","Riviere","RiverAngularN-Ex128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverAngularN-Ex128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     elif can_build_left and can_build_down:
-                        riverPath = join("Image","Obstacle","Riviere","RiverAngularW-Sx128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverAngularW-Sx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     elif can_build_left and can_build_up:
-                        riverPath = join("Image","Obstacle","Riviere","RiverAngularN-Wx128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverAngularN-Wx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
 
                     # line
                     elif can_build_up or can_build_down:
-                        riverPath = join("Image","Obstacle","Riviere","RiverStraightN-Sx128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverStraightN-Sx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     elif can_build_right or can_build_left:
-                        riverPath = join("Image","Obstacle","Riviere","RiverStraightW-Ex128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverStraightW-Ex128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
                     
                     
                     else:
-                        riverPath = join("Image","Obstacle","Riviere","RiverStraightN-Sx128")
+                        riverPath = join("Image","Obstacle",typeRiver,"RiverStraightN-Sx128")
                         AnimatedCollisionSprites(pos, riverPath, "River", (self.allSprites, self.collisionSprites), layer=1)
 
                 # Bordure Montagne
@@ -644,7 +644,7 @@ class LoadMapGestion():
                                 CollisionSprites(pos, self.MurAngularSW2, "WallBAngularSW", (self.allSprites, self.collisionSprites))
                         
                         if NIVEAU["Map"] == "NiveauMordor":
-                            CollisionSprites(pos, self.MurAngularSW2, "WallBAngularSW", (self.allSprites, self.collisionSprites))
+                            CollisionSprites(pos, self.MurAngularSW, "WallAngularSW", (self.allSprites, self.collisionSprites))
 
                     elif wall_down and wall_left:
                         if NIVEAU["Map"] == "NiveauMedievale":
@@ -669,7 +669,8 @@ class LoadMapGestion():
 
                     # === 2. Passage avec de l'eau ===
                     elif water_passage:
-                        pathRiver = join("Image", "Obstacle", "Riviere", "CastleWallRiverx128") if NIVEAU["Map"] == "NiveauMedievale" else join("Image", "Obstacle", "Riviere", "CastleWallRiverx128")
+                        typeRiver = "Riviere" if NIVEAU["Map"] != "NiveauMordor" else "Lave"
+                        pathRiver = join("Image", "Obstacle", typeRiver, "CastleWallRiverx128")
                         AnimatedCollisionSprites(pos, pathRiver, "River", (self.allSprites, self.collisionSprites), layer=1)
 
                     # === 3. Collision montagne ===
@@ -780,6 +781,10 @@ class LoadMapGestion():
                         CollisionSprites(pos, self.house2, "House", (self.allSprites, self.collisionSprites))
                     else:
                         CollisionSprites(pos, self.house3, "House", (self.allSprites, self.collisionSprites))
+
+                # champs : 
+                elif self.map[ordonnees][abscisses] == "@":
+                    CollisionSprites(pos, self.champ, "Champs", (self.allSprites, self.collisionSprites), layer=1)
 
 
                 # element spéficique sur les maps directement
@@ -938,7 +943,8 @@ class LoadMapGestion():
     def AddBoat(self, element, coords):
         pos = [coords[0]*CASEMAP, coords[1]*CASEMAP]
         if element == "BoatObj":
-            CollisionSprites(pos, self.boat, "BoatObj", (self.allSprites, self.interactions), layer=4)
+            path = join("Image", "Obstacle", "Boat")
+            AnimatedCollisionSprites(pos, path, "BoatObj", (self.allSprites, self.interactions), layer=4)
 
     def AddCercle(self, element, coords):
         pos = [coords[0]*CASEMAP, coords[1]*CASEMAP]
@@ -949,11 +955,12 @@ class LoadMapGestion():
     
     def Update(self):
         self.LoadImagesGestion()
-        self.Setup()
-        if self.ERROR_RELANCER:
-            return None, None, self.ERROR_RELANCER
-        self.SetupPNJ()
-        self.SetupObj()
+        if not INFOS["ErrorLoadElement"]: # vérif de load
+            self.Setup()
+            if self.ERROR_RELANCER:
+                return None, None, self.ERROR_RELANCER
+            self.SetupPNJ()
+            self.SetupObj()
 
         # retour des infos de map
         return self.map, self.mapBase, self.ERROR_RELANCER
