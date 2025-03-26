@@ -187,13 +187,13 @@
                 "Nom": "Goulboum",
                 "Principal": {
                     "Dialogue1": "Mais que voit-on mon trésor, un humain tout frais ici ! Qu’à-t-il dit mon tréssssor ? Il souhaite retrouver le seigneur de ces terres ?!",
-                    "Dialogue2": "Oh oui nous avons vu mon trésor, il est rentré dans la montagne cracheuse de feu, oh oui mon trésor !"
+                    "Dialogue2": "Oh oui nous avons vu mon trésor, il est rentré dans la montagne cracheuse de feu, oh oui mon trésor !",
+                    "Dialogue3": "(Vous notez ce qui est écrit sur le pagne de la créature)"
                 },
                 "Alternatif": {
                     "Dialogue1": "L’humain est revenu mon trésor, veut-il que nous le mangions ? Oh oui mon trésor !",
                     "Dialogue2": "De l’humain tout frais, ça fait si longtemps que nous nous contentons de poissons fort peu goûtus. Comment ça ?",
-                    "Dialogue3": "Ça s'est juste trompé de chemin et ça ne veut pas être mangé. Oh non ! Peut-être la prochaine fois mon trésor.",
-                    "Dialogue4": "(Vous notez ce qui est écrit sur le pagne de la créature)"
+                    "Dialogue3": "Ça s'est juste trompé de chemin et ça ne veut pas être mangé. Oh non ! Peut-être la prochaine fois mon trésor."
                 }
             },
             "PNJ5": {
@@ -396,13 +396,13 @@
                 "Nom": "Goulboum",
                 "Principal": {
                     "Dialogue1": "But what do we see my precious, a fresh human here ! What did he say my preciousss ? He wishes to find the lord of the lands ?!",
-                    "Dialogue2": "Oh yes we saw him my precious, he went into the fire-spitting mountain, oh yes my precious !"
+                    "Dialogue2": "Oh yes we saw him my precious, he went into the fire-spitting mountain, oh yes my precious !",
+                    "Dialogue3": "(You note what is written on the creature's loincloth)"
                 },
                 "Alternatif": {
                     "Dialogue1": "The human has returned my precious, does he want us to eat him ? oh yes my precious !",
                     "Dialogue2": "Fresh human, it's been so long since we've made do with tasteless fish. What's that ?",
-                    "Dialogue3": "It just took a wrong turn and doesn't want to be eaten. Oh no ! Maybe next time my precious.",
-                    "Dialogue4": "(You note what is written on the creature's loincloth)"
+                    "Dialogue3": "It just took a wrong turn and doesn't want to be eaten. Oh no ! Maybe next time my precious."
                 }
             },
             "PNJ5": {
@@ -605,13 +605,13 @@
                 "Nom": "Goulboum",
                 "Principal": {
                     "Dialogue1": "Y qué vemos mi tesoro, ¡un humano fresquito por aquí! ¿Qué dijo mi tesoooooro? ¿¡Desea volver a encontrar el señor de esas tierras?!",
-                    "Dialogue2": "¡Oh, sí! Vimos mi tesoro, se adentró en la montaña escupidora de fuego, ¡oh sí mi tesoro!"
+                    "Dialogue2": "¡Oh, sí! Vimos mi tesoro, se adentró en la montaña escupidora de fuego, ¡oh sí mi tesoro!",
+                    "Dialogue3": "(Anotas lo que está escrito en el paño de la criatura)."
                 },
                 "Alternatif": {
                     "Dialogue1": "El humano ha vuelto mi tesoro, ¿quiere que lo comamos? ¡Oh sí mi tesoro!",
                     "Dialogue2": "Humano fresquito, hace tanto tiempo que nos conformamos con pescados muy poco sabrosos. ¿Qué pasa?",
-                    "Dialogue3": "Solo te equivocaste de camino y no quieres ser comido. ¡Oh no! Quizás la próxima vez mi tesoro.",
-                    "Dialogue4": "(Anotas lo que está escrito en el paño de la criatura)."
+                    "Dialogue3": "Solo te equivocaste de camino y no quieres ser comido. ¡Oh no! Quizás la próxima vez mi tesoro."
                 }
             },
             "PNJ5": {
