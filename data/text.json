@@ -70,7 +70,7 @@
                 "Langage": "Python",
                 "Librairies Python": "Matplotlib, pygame-ce, PyMaths"
             },
-            "Etablissement": "Lycée George Clemenceau",
+            "Etablissement": ["Lycée George Clemenceau"],
             "Remerciements spéciaux": [
                 "PINGARD Mattis",
                 "ESCOUTE Cédric",
@@ -79,6 +79,7 @@
         },
         "InterfaceEnd": {
             "PDFGeneration": "Générer le pdf de correction",
+            "PDFGenere" : "Vous avez généré le PDF",
             "Quitter": "Quitter"
         },
         "HomeInterface": {
@@ -116,12 +117,12 @@
             "Non": "Non"
         },
         "InterfaceReactor": {
-            "Title": "Réacteur nucléaire Centrale",
+            "Title": "Réacteur nucléaire Central",
             "Texte": "Appuyer pour allumer le réacteur",
             "Heure": "Heure",
             "Temperature": "Température",
             "EtatName": "Etat",
-            "StatueName": "Statue",
+            "StatueName": "Statut",
             "Etat": {
                 "Inactif": "Inactif",
                 "Actif": "Actif"
@@ -175,116 +176,116 @@
             },
             "IdeaTips": {
                 "NiveauPlaineRiviere": {
-                    "SeePNJ": "Regardez votre carte et essayez de trouver des informations utiles",
-                    "LearnCrossBridge": "Traversez par le chemin que vous a créé le bucheron",
-                    "BuildBridge": "Utilisez les planches que vous a donné le voyageur pour traverser la rivière",
-                    "CrossBridge": "Traversez le pont",
-                    "MineRock": "Trouvez la sortie, vous aurez besoin de déblayer le chemin"
+                    "SeePNJ": "Regardez votre carte et essayez de trouver des informations utiles.",
+                    "LearnCrossBridge": "Traversez par le chemin que vous a créé le bûcheron.",
+                    "BuildBridge": "Utilisez les planches que vous a donné le voyageur pour traverser la rivière.",
+                    "CrossBridge": "Traversez le pont.",
+                    "MineRock": "Trouvez la sortie, vous aurez besoin de déblayer le chemin."
                 },
                 "NiveauMedievale": {
-                    "SeePNJ": "Regardez votre carte et essayez de trouver des informations utiles",
-                    "SeePNJRoi": "Parlez au roi",
-                    "BuildBridge": "Récoltez du bois et frayez vous un chemin vers le village",
-                    "CrossBridge": "Traversez le pont",
-                    "FindWell": "Le garde ne vous laissera pas passer, vous pouvez le contourner en construisant un radeau à l'établi près du puit",
-                    "PlaceBoat": "Allez à la rivière pour positionner votre radeau",
-                    "NavigateBoat": "Utilisez votre radeau pour passer la muraille",
-                    "OpenDoor": "Rentrez dans le château",
-                    "OpenPortail": "Utilisez le cercle d'invocation à l'emplacement du portail pour pouvoir le rouvrir"
+                    "SeePNJ": "Regardez votre carte et essayez de trouver des informations utiles.",
+                    "SeePNJRoi": "Parlez au roi.",
+                    "BuildBridge": "Récoltez du bois et frayez vous un chemin vers le village.",
+                    "CrossBridge": "Traversez le pont.",
+                    "FindWell": "Le garde ne vous laissera pas passer, vous pouvez le contourner en construisant un radeau à l'établi près du puit.",
+                    "PlaceBoat": "Allez à la rivière pour positionner votre radeau.",
+                    "NavigateBoat": "Utilisez votre radeau pour passer la muraille.",
+                    "OpenDoor": "Rentrez dans le château.",
+                    "OpenPortail": "Utilisez le cercle d'invocation à l'emplacement du portail pour pouvoir le rouvrir."
                 },
                 "NiveauBaseFuturiste": {
-                    "SeePNJ": "Parlez à Michael à l'entrée de la base",
-                    "SeePNJ2": "Trouvez quelqu'un de compétent pour rallumer le réacteur",
-                    "SeePNJ3": "Maintenant que toute la base est accessible trouvez un moyen de quitter cet endroit : \n   Trouvez un pilote \n    Trouvez un vaisseau avec du carburant",
-                    "SeePNJ4": "Retrouvez Han dans la salle de lancement et préparez vous à décoller",
-                    "SeePNJ5": "Parlez à Han pour lui dire où vous souhaitez vous rendre",
-                    "SeePNJ6": "Allez voir si Han va bien",
-                    "Electricity": "Allez au panneau de contrôle du réacteur et rallumez le",
-                    "UseVent": "Il parait qu'il y a un conduit d'aération permettant d'accéder à la salle du réacteur",
-                    "EscapeVaisseau": "Han est assommé allez faire un tour pour voir si vous trouvez un moyen de repartir"
+                    "SeePNJ": "Parlez à Michael à l'entrée de la base.",
+                    "SeePNJ2": "Trouvez quelqu'un de compétent pour rallumer le réacteur.",
+                    "SeePNJ3": "Maintenant que toute la base est accessible trouvez un moyen de quitter cet endroit : Trouvez un pilote et trouvez un vaisseau avec du carburant.",
+                    "SeePNJ4": "Retrouvez Han dans la salle de lancement et préparez vous à décoller.",
+                    "SeePNJ5": "Parlez à Han pour lui dire où vous souhaitez vous rendre.",
+                    "SeePNJ6": "Allez voir si Han va bien..",
+                    "Electricity": "Allez au panneau de contrôle du réacteur et rallumez le.",
+                    "UseVent": "Il parait qu'il y a un conduit d'aération permettant d'accéder à la salle du réacteur.",
+                    "EscapeVaisseau": "Han est assommé allez faire un tour pour voir si vous trouvez un moyen de repartir."
                 },
                 "NiveauMordor": {
-                    "SeePNJ": "Regardez votre carte et essayez de trouver des informations utiles",
-                    "CrossBridge": "Continuez votre route vers l'Est",
-                    "PotParchemin": "Fouillez votre cellule pour trouver tout ce qui pourrait vous permettre de vous échapper",
-                    "OpenDoorCellule": "Trouvez un moyen de vous échapper de cette prison",
-                    "SeePNJ2avant": "Libérez l'autre prisonnier et confrontez l'orc",
-                    "OpenDoorPrison": "Vous devez ouvrir la porte du chateau pour poursuivre l'aventure",
-                    "OpenVolcan": "Allez retrouver le roi dans le volcan"
+                    "SeePNJ": "Regardez votre carte et essayez de trouver des informations utiles.",
+                    "CrossBridge": "Continuez votre route vers l'Est.",
+                    "PotParchemin": "Fouillez votre cellule pour trouver tout ce qui pourrait vous permettre de vous échapper.",
+                    "OpenDoorCellule": "Trouvez un moyen de vous échapper de cette prison.",
+                    "SeePNJ2avant": "Libérez l'autre prisonnier et confrontez l'orc.",
+                    "OpenDoorPrison": "Vous devez ouvrir la porte du chateau pour poursuivre l'aventure.",
+                    "OpenVolcan": "Allez retrouver le roi dans le volcan."
                 }
             }
         },
         "NiveauPlaineRiviere": {
             "Cinematique1End": "Le bûcheron a coupé l'arbre, vous pouvez traverser la rivière !",
-            "TraverserPont": "Vous venez de traverser le pont",
-            "BuildBridge": "Vous venez de construire le pont",
-            "BreakRock": "Vous venez de briser le rocher",
+            "TraverserPont": "Vous venez de traverser le pont.",
+            "BuildBridge": "Vous venez de construire le pont.",
+            "BreakRock": "Vous venez de briser le rocher.",
             "MakeExo": "Résolvez cet exercice pour continuer.",
             "ExoTexte": {
                 "Seconde": {
                     "Title": "Exercice équation du premier degré",
                     "DifficulteTrue": {
-                        "Consigne": "Trouver la valeur de x dans cette équation du premier degré :",
+                        "Consigne": "Trouvez la valeur de x dans cette équation du premier degré :",
                         "QCM": "Choisissez l'unique bonne réponse"
                     },
                     "DifficulteFalse": {
-                        "Consigne": "Trouver la valeur de x dans cette équation du premier degré :",
+                        "Consigne": "Trouvez la valeur de x dans cette équation du premier degré :",
                         "QCM": "Choisissez l'unique bonne réponse"
                     }
                 }
             }
         },
         "NiveauMedievale": {
-            "Cinematique1End": "Le roi s'est enfui à travers le portail, utilisez le cercle et une formule pour rouvrir le portail",
-            "TraverserPont": "Vous venez de traverser le pont",
+            "Cinematique1End": "Le roi s'est enfui à travers le portail, utilisez le cercle et une formule pour rouvrir le portail.",
+            "TraverserPont": "Vous venez de traverser le pont.",
             "CantTraverserPont": "Le garde est devant le pont, il ne vous laissera pas passer.",
-            "BuildBridge": "Vous venez de construire le pont",
-            "CutTree": "Vous venez de couper un arbre",
-            "RemoveSouche": "Vous venez de retirer une souche d'arbre",
-            "NeedPlanks": "Vous devez avoir 3 planches pour pouvoir construire le bateau",
-            "CraftBoat": "Vous avez fabriqué un bateau",
-            "PlaceBoat": "Vous avez placé le bateau sur la rivière",
+            "BuildBridge": "Vous venez de construire le pont.",
+            "CutTree": "Vous venez de couper un arbre.",
+            "RemoveSouche": "Vous venez de retirer une souche d'arbre.",
+            "NeedPlanks": "Vous devez avoir 3 planches pour pouvoir construire le radeau.",
+            "CraftBoat": "Vous avez fabriqué un radeau.",
+            "PlaceBoat": "Vous avez placé le radeau sur la rivière.",
             "UseBoat": "Vous naviguez sur la rivière et arrivez dans l'enceinte du château.",
             "UseBoat2": "Vous naviguez sur la rivière et sortez de l'enceinte du château.",
-            "GetCours": "Un parchemin était sur l'établi vous le récupérez",
-            "OpenChateau": "Vous entrez dans le château",
-            "OpenPortail": "Vous devez rouvrir le portail pour accéder à la suite",
-            "MakeExo": "Pour rouvrir le portail, vous devez résoudre cet exercice",
+            "GetCours": "Un parchemin était sur l'établi vous le récupérez.",
+            "OpenChateau": "Vous entrez dans le château.",
+            "OpenPortail": "Vous devez rouvrir le portail pour accéder à la suite.",
+            "MakeExo": "Pour rouvrir le portail, vous devez résoudre cet exercice.",
             "ExoTexte": {
                 "Seconde": {
-                    "Title": "Calculs de Volumes",
+                    "Title": "Calculs de Volumes.",
                     "DifficulteTrue": {
                         "Consigne": " A l'aide des valeurs données, veuillez calculer le volume total de la figure représentée ci-dessous.:",
                         "QCM": "Choisissez l'unique bonne réponse"
                     },
                     "DifficulteFalse": {
-                        "Consigne": "A l'aide des valeurs données, veuillez calculer le volume demandé du cube de côté c, de la sphère de rayon r et du cone de hauter h et de diametre de base d:",
+                        "Consigne": "A l'aide des valeurs données, veuillez calculer le volume demandé du cube de côté c, de la sphère de rayon r et du cône de hauteur h et de diamètre de base d:",
                         "QCM": "Choisissez l'unique bonne réponse"
                     }
                 },
                 "Premiere": {
                     "Title": "Pôlynome du second degrés",
                     "DifficulteTrue": {
-                        "Consigne": "Vous devez trouver la ou les solutions possibles de P(x) = 0 si il y en a, arrondis à deux chiffres après la virgule : ",
+                        "Consigne": "Vous devez trouver la ou les solutions possibles de P(x) = 0 si il y en a, arrondies à deux chiffres après la virgule : ",
                         "QCM": "Choisissez l'unique bonne réponse"
                     },
                     "DifficulteFalse": {
-                        "Consigne": "Vous devez trouver la ou les solutions possibles de P(x) = 0 si il y en a, arrondis à deux chiffres après la virgule : ",
+                        "Consigne": "Vous devez trouver la ou les solutions possibles de P(x) = 0 si il y en a, arrondies à deux chiffres après la virgule : ",
                         "QCM": "Choisissez l'unique bonne réponse"
                     }
                 }
             }
         },
         "NiveauBaseFuturiste": {
-            "UseVent": "Vous traversez la base dans les conduits d'aérations.",
-            "MakeExo": "Pour sortir, résolvez cet exercice",
-            "PiloteMoveCafet": "Le pilote s'est déplacé dans la salle de lancement, vous pouvez le rejoindre",
-            "VaisseauSpacial": "Vous montez dans le vaisseau",
-            "CrashVaisseau": "Le vaisseau à subi un atterrissage douteux, assurez vous qu'Han aille bien",
+            "UseVent": "Vous traversez la base dans les conduits d'aération.",
+            "MakeExo": "Pour sortir, résolvez cet exercice.",
+            "PiloteMoveCafet": "Le pilote s'est déplacé dans la salle de lancement, vous pouvez le rejoindre.",
+            "VaisseauSpacial": "Vous montez dans le vaisseau.",
+            "CrashVaisseau": "Le vaisseau à subit un atterrissage douteux, assurez vous qu'Han aille bien",
             "ExplosionReacteur": "Vous avez envoyé trop de puissance dans le réacteur, il a explosé.",
             "ExoTexte": {
                 "Seconde": {
-                    "Title": "Equation réduites de droites",
+                    "Title": "Equation réduite de droites",
                     "DifficulteTrue": {
                         "Consigne": "A l'aide des coordonnées, déterminez l'équation réduite de (AB) et (CD). Voici les coordonnées des points :",
                         "QCM": "Choisissez l'unique bonne réponse"
@@ -308,19 +309,19 @@
             }
         },
         "NiveauMordor": {
-            "KillRoi": "Vous poussez le roi dans la lave",
-            "MakeExo": "Pour vaincre le roi, résolvez cet exercice",
-            "EnterVolcan": "Vous entrez dans le volcan",
+            "KillRoi": "Vous poussez le roi dans la lave.",
+            "MakeExo": "Pour rentrer dans le volcan, résolvez cet exercice.",
+            "EnterVolcan": "Vous entrez dans le volcan.",
             "GoPrison": "L'orc ne se montre pas amical, vous finissez en prison.",
-            "Parchemin": "Vous obtenez le parchemin",
-            "ParcheminVu": "Vous avez déjà obtenu le parchemin",
-            "Key": "Vous fouillez le pot de chambre et y trouvez des clés",
-            "Key2": "Le pot ne contient plus rien d'utile",
-            "OpenDoorCellule": "Vous venez d'ouvrir la porte de la cellule",
-            "OpenDoorPrison": "Vous avez ouvert la porte",
-            "KillPNJ3": "Vous avez vaincu, vous pouvez maintenant vous enfuir",
-            "LeavePNJ2": "Votre ami continue son chemin",
-            "TraverserPont": "Vous traversez le pont",
+            "Parchemin": "Vous obtenez le parchemin.",
+            "ParcheminVu": "Vous avez déjà obtenu le parchemin.",
+            "Key": "Vous fouillez le pot de chambre et y trouvez des clés.",
+            "Key2": "Le pot ne contient plus rien d'utile.",
+            "OpenDoorCellule": "Vous venez d'ouvrir la porte de la cellule.",
+            "OpenDoorPrison": "Vous avez ouvert la porte.",
+            "KillPNJ3": "Vous avez vaincu, vous pouvez maintenant vous enfuir.",
+            "LeavePNJ2": "Votre amie continue son chemin.",
+            "TraverserPont": "Vous traversez le pont.",
             "ExoTexte": {
                 "Seconde": {
                     "DemiNiveauFalse": {
@@ -335,13 +336,13 @@
                         }
                     },
                     "DemiNiveauTrue": {
-                        "Title": "Exo boss seconde",
+                        "Title": "Exercice boss seconde",
                         "DifficulteTrue": {
-                            "Consigne": "Un voilier se trouve dans le port de Sète et avant de partir un client veut connaître le volume d’huile que le navire peut transporter sachant qu’il possède une cargaison de 85 tonneaux de longueur 'a' et de largeur 'b' (nous affirmons que les tonneaux utilisés ont des côtés totalement droit et non arrondis. Après cela le bateau prend le large et reçoit des informations sur un autre bateau naviguant à la même vitesse, déterminer si les 2 bateaux se croiseront. De plus le bateau b1 est actuellement au point A et navigue selon la direction (AB). De même le bateau b2 est actuellement au point C et navigue selon la direction (CD). Coordonnées :",
+                            "Consigne": "Un voilier se trouve dans le port de Sète et avant de partir un client veut connaître le volume d’huile que le navire peut transporter sachant qu’il possède une cargaison de 85 tonneaux de longueur 'a' et de largeur 'b' (nous affirmons que les tonneaux utilisés ont des côtés totalement droit et non arrondis. Après cela, le bateau prend le large et reçoit des informations sur un autre bateau naviguant à la même vitesse, déterminez si les 2 bateaux se croiseront. De plus, le bateau b1 est actuellement au point A et navigue selon la direction (AB). De même, le bateau b2 est actuellement au point C et navigue selon la direction (CD). Coordonnées :",
                             "QCM": "Choisissez l'unique bonne réponse"
                         },
                         "DifficulteFalse": {
-                            "Consigne": "Un voilier se trouve dans le port de Sète et avant de partir un client veut connaître le volume d’huile que le navire peut transporter sachant qu’il possède une cargaison de 85 tonneaux de longueur 'a' et de largeur 'b' (nous affirmons que les tonneaux utilisés ont des côtés totalement droit et non arrondis. Après cela le bateau prend le large et reçoit des informations sur un autre bateau naviguant à la même vitesse, déterminer si les 2 bateaux se croiseront. De plus le bateau b1 est actuellement au point A et navigue selon la direction (AB). De même le bateau b2 est actuellement au point C et navigue selon la direction (CD). Coordonnées :",
+                            "Consigne": "Un voilier se trouve dans le port de Sète et avant de partir un client veut connaître le volume d’huile que le navire peut transporter sachant qu’il possède une cargaison de 85 tonneaux de longueur 'a' et de largeur 'b' (nous affirmons que les tonneaux utilisés ont des côtés totalement droit et non arrondis. Après cela, le bateau prend le large et reçoit des informations sur un autre bateau naviguant à la même vitesse, déterminer si les 2 bateaux se croiseront. De plus, le bateau b1 est actuellement au point A et navigue selon la direction (AB). De même, le bateau b2 est actuellement au point C et navigue selon la direction (CD). Coordonnées :",
                             "QCM": "Choisissez l'unique bonne réponse"
                         }
                     }
@@ -360,13 +361,13 @@
                         }
                     },
                     "DemiNiveauTrue": {
-                        "Title": "Exo boss premiere",
+                        "Title": "Exercice boss premiere",
                         "DifficulteTrue": {
-                            "Consigne": "Un fabriquant envisage la production de briques de lait en carton. Au départ, il dispose d’une feuille carrée en carton dans laquelle on a retiré deux bandes de même largeur. Le côté de la feuille carrée 'a' et on désigne par x la largeur des bandes découpées en centimètres. Trouver le volume en litre maximal dans cette brique à lait en fonction de x. Trouver ensuite le prix de la brique au bout de n années (données ci-dessous), sachant qu'il subit une inflation de y% et que le prix d'origine était 1.20€ ",
+                            "Consigne": "Un fabriquant envisage la production de briques de lait en carton. Au départ, il dispose d’une feuille carrée en carton dans laquelle on a retiré deux bandes de même largeur. Le côté de la feuille carrée 'a' et on désigne par x la largeur des bandes découpées en centimètres. Trouvez le volume en litres maximal dans cette brique à lait en fonction de x. Trouvez ensuite le prix de la brique au bout de n années (données ci-dessous), sachant qu'il subit une inflation de y% et que le prix d'origine était 1.20€ ",
                             "QCM": "Choisissez l'unique bonne réponse"
                         },
                         "DifficulteFalse": {
-                            "Consigne": "Un fabriquant envisage la production de briques de lait en carton. Au départ, il dispose d’une feuille carrée en carton dans laquelle on a retiré deux bandes de même largeur. Le côté de la feuille carrée 'a' et on désigne par x la largeur des bandes découpées en centimètres. Trouver le volume en litre maximal dans cette brique à lait en fonction de x. Trouver ensuite le prix de la brique au bout de n années (données ci-dessous), sachant qu'il subit une inflation de y% et que le prix d'origine était 1.20€ ",
+                            "Consigne": "Un fabriquant envisage la production de briques de lait en carton. Au départ, il dispose d’une feuille carrée en carton dans laquelle on a retiré deux bandes de même largeur. Le côté de la feuille carrée 'a' et on désigne par x la largeur des bandes découpées en centimètres. Trouvez le volume en litres maximal dans cette brique à lait en fonction de x. Trouvez ensuite le prix de la brique au bout de n années (données ci-dessous), sachant qu'il subit une inflation de y% et que le prix d'origine était 1.20€ ",
                             "QCM": "Choisissez l'unique bonne réponse"
                         }
                     }

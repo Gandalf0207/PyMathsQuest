@@ -37,26 +37,26 @@
                     "1" : [true, "$ \\pi \\times \\text{rayon}^2 $"],
                     "2" : [false, "l’aire d’un triangle est :"],
                     "3" : [true, "$ \\frac{\\text{longueur} \\times \\text{largeur}}{2} $"],
-                    "4" : [false, "et celle d’un carré ou d’un rectangle est"],
+                    "4" : [false, "et celle d’un carré ou d’un rectangle est :"],
                     "5" : [true, "$ \\text{longueur} \\times \\text{largeur} $"]
                 }, 
 
                 "Cours1" : {
                     "0" : [false, "Le volume du cylindre est :"],
                     "1" : [true, "$ \\text{base} \\times \\text{hauteur} \\leftrightarrow \\pi \\times \\text{rayon}^2 \\times h $"],
-                    "2" : [false, "De manière plus générale le volume d’une multitude de solide se calcule simplement par :"],
+                    "2" : [false, "De manière plus générale le volume d’une multitude de solides se calcule simplement par :"],
                     "3" : [true, "$ \\text{base} \\times \\text{hauteur} $"]
                 }, 
 
                 "Cours2" : {
                     "0" : [false, "Le volume du cône est celui du cylindre divisé par 3 soit :"],
                     "1" : [true, "$ \\frac{\\pi \\times \\text{rayon}^2 \\times h}{3} $"],
-                    "2" : [false, "Le volume d’une pyramide est celui du prisme droit que l’on divise par 3 soit "],
+                    "2" : [false, "Le volume d’une pyramide est celui du prisme droit que l’on divise par 3 soit :"],
                     "3" : [true, "$ \\frac{\\text{Vprisme}}{3} $"]
                 }, 
 
                 "Cours3" : {
-                    "0" : [false, "La formule pour calculer le volume d’un sphère est :"],
+                    "0" : [false, "La formule pour calculer le volume d’une sphère est :"],
                     "1" : [true, "$ \\frac{4}{3} \\times \\pi \\times r^3 $"]
                 }
             }, 
@@ -65,7 +65,7 @@
                 "Cours0" : {
                     "0" : [false, "L’équation d’une droite se présente sous la forme : "],
                     "1" : [true, "$ y = mx + p $"],
-                    "2" : [false, "avec m en tant que coefficient directeur et p l’ordonné à l’origine."]
+                    "2" : [false, "avec m en tant que coefficient directeur et p l’ordonnée à l’origine."]
                 }, 
 
                 "Cours1" : {
@@ -73,16 +73,16 @@
                     "1" : [true, "$ y = mx + p $"],
                     "2" : [false, "mais ont une équation de la forme : "],
                     "3" : [true, "$ x = c $"],
-                    "4" : [false, "avec c un nombre."],
+                    "4" : [false, "avec c une constante."],
                     "5" : [false, "Par exemple : "],
                     "6" : [true, "$ x = 2 $"],
                     "7" : [false, "est une droite verticale qui passe par l’abscisse 2."]
                 }, 
 
                 "Cours2" : {
-                    "0" : [false, "Dans une équation sous forme"],
+                    "0" : [false, "Dans une équation sous forme :"],
                     "1" : [true, "$ y = mx + p $"],
-                    "2" : [false, "passant par les points A(xA;yA) et B(xB;yB), p est l’ordonnée à l’origine. Pour trouver p, on utilise les coordonnées d’un point de la droite par exemple avec le point A(xA; yA), on a"],
+                    "2" : [false, "passant par les points A(xA;yA) et B(xB;yB), p est l’ordonnée à l’origine. Pour trouver p, on utilise les coordonnées d’un point de la droite par exemple avec le point A(xA; yA), on a :"],
                     "3" : [true, "$ p = yA - m \\times xA $"],
                     "4" : [false, "et pour trouver m on a :"],
                     "5" : [true, "$ m = \\frac{yB - yA}{xB - xA} $"]
@@ -103,7 +103,7 @@
 
             "NiveauMordor" : {
                 "Cours0" : {
-                    "0" : [false, "Il y a 2 manières pour résoudre un système à doubles inconnues, la fin est la même mais la réflexion n’est pas la même, il y a donc la résolution par substitution et la résolution par combinaisons linéaires, un système à double inconnues peut permettre de trouver les coordonnées d’un point d’intersection."]
+                    "0" : [false, "Il y a 2 manières pour résoudre un système à double inconnues, la fin est identique mais la réflexion n’est pas la même, il y a donc la résolution par substitution et la résolution par combinaisons linéaires, un système à double inconnues peut permettre de trouver les coordonnées d’un point d’intersection."]
                 }, 
 
                 "Cours1" : {
@@ -125,7 +125,7 @@
                     "11" : [true, "$ x = 2  $"],
                     "12" : [false, "4. Remplacer x par 2 et trouver y :"],
                     "13" : [true, "$ y = 5 - 2 = 3  $"],
-                    "14" : [false, "Solution"],
+                    "14" : [false, "Solution :"],
                     "15" : [true, "$ x = 2, y = 3 $"]
                 }, 
                 
@@ -148,7 +148,7 @@
                     "11" : [true, "$ y = 5 - \\frac{18}{5} $"],
                     "12" : [true, "$ y = \\frac{25}{5} - \\frac{18}{5} $"],
                     "13" : [true, "$ y = \\frac{7}{5} $"],
-                    "14" : [false, "Solution"],
+                    "14" : [false, "Solution :"],
                     "15" : [true, "$ x = \\frac{9}{5} ; y = \\frac{7}{5} $"]
                 }
             }
@@ -190,7 +190,7 @@
                     "4" : [false, "il est du signe opposé à 'a' entre les racines, c'est-à-dire sur l'intervalle"],
                     "5" : [true, "$ \\left] x1, x2 \\right[ $"],
                     "6" : [false, "Lorsque delta = 0 : "],
-                    "7" : [false, "P(x)  est toujours du signe de a sur R excepté à x = alpha où il est nulle."],
+                    "7" : [false, "P(x)  est toujours du signe de a sur R excepté à x = alpha où il est nul."],
                     "8" : [false, "Lorsque delta < 0 : "],
                     "9" : [false, "P(x) est toujours du signe de a"],
                     "10" : [false, "Variations : "],
@@ -202,7 +202,7 @@
 
             "NiveauBaseFuturiste" : {
                 "Cours0" : {
-                    "0" : [false, "Le taux de variation d’une fonction f en un point a est une mesure de la rapidité avec laquelle f change près de a. On dit que f est dérivable en a si la limite suivante existe : [Remplacer x par a]"],
+                    "0" : [false, "Le taux de variation d’une fonction f en un point a est une mesure de la rapidité avec laquelle f change près de a. On dit que f est dérivable en a si la limite suivante existe : "],
                     "1" : [false, "Si cette limite existe, elle est appelée la dérivée de f en a et est notée"],
                     "2" : [true, "$ f'(a) $"]
                 }, 
@@ -228,7 +228,7 @@
                 }, 
                 
                 "Cours3" : {
-                    "0" : [false, "Une dérivée peut servir à connaître les intervalles croissant et décroissant de la courbe, lorsque f’(x) > 0 alors f(x) est croissant et lorsque f’(x) < 0 alors f(x) est décroissant."]
+                    "0" : [false, "Une dérivée peut servir à connaître les intervalles croissants et décroissants de la courbe, lorsque f’(x) > 0 alors f(x) est croissante et lorsque f’(x) < 0 alors f(x) est décroissante."]
                 }
             },
 
@@ -238,12 +238,12 @@
                 }, 
 
                 "Cours1" : {
-                    "0" : [false, "Dans une suite arithmétique le terme Un+1 se calcule à l’aide du terme précédent Un auquel on additionne ou on retranche une constante nommée raison, notée . "],
+                    "0" : [false, "Dans une suite arithmétique le terme Un+1 se calcule à l’aide du terme précédent Un auquel on additionne ou on retranche une constante nommée raison, notée r. "],
                     "1" : [false, "La relation de récurrence de la suite se note :"],
-                    "2" : [true, "$ U_{n+1} = U_{n} +  $"],
+                    "2" : [true, "$ U_{n+1} = U_{n} + r $"],
                     "3" : [false, "avec U0 le premier terme de la suite."], 
                     "4" : [false, "La formule explicite de la suite se note :"],
-                    "5" : [true, "$ U_{n} = U_{0} + n \\times  $"],
+                    "5" : [true, "$ U_{n} = U_{0} + n \\times r $"],
                     "6" : [false, "Exemple de la suite Un de premier terme U0 = 1 et de raison = 2 : "],
                     "7" : [false, "Forme de récurrence :"],
                     "8" : [true, "$ U_{n+1} = U_{n} + 2 $"],
