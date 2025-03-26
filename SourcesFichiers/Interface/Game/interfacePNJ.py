@@ -371,7 +371,7 @@ class PNJInterface(object):
         # load nom pnj + creation text du nom
         self.pnjName = TEXTE["Dialogues"][NIVEAU["Map"]][self.gestionnaire.pnjActuel]["Nom"]
         pnjName = FONT["FONT36B"].render(self.pnjName, True, (255,255,255))
-        self.interfaceSurface.blit(pnjName, (200, 400))
+        self.interfaceSurface.blit(pnjName, (200, 375))
 
         # bloc gestion texte 
         if self.pnj_index < len(self.pnj_text):
