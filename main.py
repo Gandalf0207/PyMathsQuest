@@ -491,8 +491,8 @@ class GameToolBox(object):
         """Méthode de création de toutes les fonts pour le jeu"""
         INFOS["UpdateFont"] = False
 
-        typeFont = None if not POLICEECRITURE["Dyslexique"] else join("Font", "OpenDyslexic-Regular.otf")
-        coefSize = 1 if not POLICEECRITURE["Dyslexique"] else 0.6
+        typeFont = join("Font", "Roboto-Regular.ttf") if not POLICEECRITURE["Dyslexique"] else join("Font", "OpenDyslexic-Regular.otf")
+        coefSize = 0.6 if not POLICEECRITURE["Dyslexique"] else 0.6
 
 
         # création
