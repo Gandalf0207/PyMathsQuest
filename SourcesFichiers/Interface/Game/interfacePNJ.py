@@ -461,7 +461,7 @@ class PNJInterface(object):
                 
                 elif self.gestionnaire.pnjActuel == "PNJ5" and NIVEAU["Map"] == "NiveauBaseFuturiste" and not PNJ["PNJ4"]:
                     self.CloseInterface()
-                    STATE_HELP_INFOS[0] = "SeePNJ"    
+                    STATE_HELP_INFOS[0] = "SeePNJ3"    
 
 
                 elif self.gestionnaire.pnjActuel == "PNJ3" and not PNJ["PNJ2"] and NIVEAU["Map"] == "NiveauMordor":
@@ -504,7 +504,7 @@ class PNJInterface(object):
                         self.BuildInterface()   
                 elif self.gestionnaire.pnjActuel == "PNJ5" and NIVEAU["Map"] == "NiveauBaseFuturiste" and not PNJ["PNJ4"]:
                     self.CloseInterface()
-                    STATE_HELP_INFOS[0] = "SeePNJ"    
+                    STATE_HELP_INFOS[0] = "SeePNJ3"    
 
                 elif self.gestionnaire.pnjActuel == "PNJ3" and not PNJ["PNJ2"] and NIVEAU["Map"] == "NiveauMordor":
                     self.CloseInterface()
