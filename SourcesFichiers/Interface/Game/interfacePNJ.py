@@ -191,7 +191,7 @@ class PNJInterface(object):
                                 solV2 = pygame.image.load(join("Image", "Sol", "SolMordorV2.png")).convert_alpha()
                                 sol2V2 = pygame.image.load(join("Image", "Sol", "MordorSol2V2.png")).convert_alpha()
                                 sol3V2= pygame.image.load(join("Image", "Sol", "MordorSol3V2.png")).convert_alpha()
-                                obstacle = pygame.image.load(join("Image", "Obstacle", "HugeRock.png")).convert_alpha()
+                                obstacle = pygame.image.load(join("Image", "Obstacle", "HugeRockMordor.png")).convert_alpha()
                                 solVaisseau = pygame.image.load(join("Image", "Sol", "FloorVaisseauBroken.png"))
 
                                 # sol vaisseau
