@@ -1,3 +1,6 @@
+#Projet : PyMathsQuest
+#Auteurs : LUBAN Théo & PLADEAU Quentin
+
 import pygame.locals
 from settings import * 
 

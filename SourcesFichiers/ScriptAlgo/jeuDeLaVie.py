@@ -1,3 +1,7 @@
+#Projet : PyMathsQuest
+#Auteurs : LUBAN Théo & PLADEAU Quentin
+
+
 # Script reprenant le jeu de la vie de Conway dans le but de créer une geration de cellules vivantes. 
 # Ayant comme surface la taille de la map du jeu. 
 # A la fin de la génération x, chaque cellule vivante sera implémentée sous forme de carré d'herbe haute sur la map du joueur

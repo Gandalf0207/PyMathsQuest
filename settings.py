@@ -1,3 +1,6 @@
+#Projet : PyMathsQuest
+#Auteurs : LUBAN Théo & PLADEAU Quentin
+
 from random import randint, random, choice
 from random import *
 import random

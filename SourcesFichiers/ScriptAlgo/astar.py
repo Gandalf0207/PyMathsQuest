@@ -1,4 +1,7 @@
-### Script conçu avec IA 
+#Projet : PyMathsQuest
+#Auteurs : LUBAN Théo & PLADEAU Quentin
+
+### Script conçu avec IA  : aide internet
 
 from settings import *
 

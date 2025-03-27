@@ -1,3 +1,6 @@
+#Projet : PyMathsQuest
+#Auteurs : LUBAN Théo & PLADEAU Quentin
+
 # import settings
 from SourcesFichiers.Ressources.PyMathsSources.sources.settingsPyMaths import *
 # import class des exercices eqt1deg

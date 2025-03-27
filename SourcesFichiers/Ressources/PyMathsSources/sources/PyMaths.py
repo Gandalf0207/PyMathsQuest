@@ -1,3 +1,6 @@
+#Projet : PyMathsQuest
+#Auteurs : LUBAN Théo & PLADEAU Quentin
+
 from SourcesFichiers.Ressources.PyMathsSources.sources.Eqt2IncsFolder.GestionEqt2Incs import *
 from SourcesFichiers.Ressources.PyMathsSources.sources.Eqt1degFolder.GestionEqt1deg import *
 from SourcesFichiers.Ressources.PyMathsSources.sources.Poly2defFolder.GestionPoly2deg import *

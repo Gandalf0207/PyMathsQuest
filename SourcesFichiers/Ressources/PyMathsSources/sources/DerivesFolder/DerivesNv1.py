@@ -1,3 +1,6 @@
+#Projet : PyMathsQuest
+#Auteurs : LUBAN Théo & PLADEAU Quentin
+
 from SourcesFichiers.Ressources.PyMathsSources.sources.settingsPyMaths import *
 
 class DerivesNV1(object):

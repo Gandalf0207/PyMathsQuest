@@ -1,3 +1,6 @@
+#Projet : PyMathsQuest
+#Auteurs : LUBAN Théo & PLADEAU Quentin
+
 # librairies latex
 from pylatex import *
 from pylatex.utils import *
