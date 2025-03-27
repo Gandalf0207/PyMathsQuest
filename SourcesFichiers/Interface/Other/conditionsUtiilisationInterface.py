@@ -41,7 +41,7 @@ class ConditionsUtilisationInterface(object):
         self.box_x = (WINDOW_WIDTH // 2 - self.box_width) // 2 
         self.box_y = 50
         
-        self.textConditionsSurface = pygame.Surface((self.box_width, 900), pygame.SRCALPHA)
+        self.textConditionsSurface = pygame.Surface((self.box_width, 950), pygame.SRCALPHA)
 
         self.textConditionsSurface.fill((255, 255, 255))
            

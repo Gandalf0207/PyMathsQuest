@@ -471,7 +471,7 @@ class Interactions(object):
                 self.ObjectId = Object.id
 
                 # Dessiner la boîte d'indication "Press E"
-                text_surface = FONT["FONT24"].render(TEXTE["Elements"]["Interaction"], True, (255, 255, 255))
+                text_surface = FONT["FONT24"].render(f"{TEXTE["Elements"]["Interaction"]} {pygame.key.name(KEYSBIND["action"])}", True, (255, 255, 255))
                 text_rect = text_surface.get_rect()
                 text_rect.topleft = (self.npc_screen_pos[0] - 20, self.npc_screen_pos[1] - 40)
                 

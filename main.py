@@ -216,7 +216,7 @@ class Game(object):
                             # Sauvegarde des nouvelles touches
                             pygame.event.clear([pygame.KEYDOWN, pygame.KEYUP])
 
-                            with open("keybinds.json", "w") as f:
+                            with open(join("SourcesFichiers", "Ressources", "keybinds.json"), "w") as f:
                                 json.dump(KEYSBIND, f)
                     
                     # s'il n'y a pas de cinématique en cours
