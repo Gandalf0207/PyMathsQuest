@@ -475,8 +475,8 @@ class GetExo:
 
         # values
         if delta > 0:
-            x1 = round((-self.b - sqrt(delta) )/ self.a*2, 2)
-            x2 = round((-self.b + sqrt(delta) )/ self.a*2, 2)
+            x1 = round((-self.b - sqrt(delta) )/( self.a*2), 2)
+            x2 = round((-self.b + sqrt(delta) )/( self.a*2), 2)
 
             valueError1 = round((-self.a + sqrt(self.b))/ self.c, 2)
             valueError2 = round((-self.b + self.a)/ self.b, 2)
@@ -484,15 +484,15 @@ class GetExo:
             valueError4 = round((-self.a -self.c) / self.b, 2)
 
         elif delta == 0:
-            xSimple = round((-self.b) / 2*self.a , 2)
+            xSimple = round((-self.b) / (2*self.a) , 2)
 
             valueError1 = round((self.a) / 2*self.b, 2)
-            valueError2 = round((-self.b) / self.c + 2*self.a, 2)
+            valueError2 = round((-self.b) / (self.c + 2*self.a), 2)
         
         else:
             valueError1 = round((-self.a + sqrt(self.b))/ self.c, 2)
             valueError2 = round((-self.a -self.c) / self.b, 2)
-            valueError3 = round((-self.b) / self.c + 2*self.a, 2)
+            valueError3 = round((-self.b) / (self.c + 2*self.a), 2)
 
         # réponses
         if delta > 0:
@@ -585,7 +585,7 @@ class GetExo:
         if f1 - 2 * fPrime1 < 0:    
             resultat = f"y = {fPrime1}x  {round(f1 - 2 * fPrime1, 2)}"
         else:
-            resultat = f"y = {fPrime1}x  {round(f1 - 2 * fPrime1, 2)}"
+            resultat = f"y = {fPrime1}x + {round(f1 - 2 * fPrime1, 2)}"
 
         if f1*2 + fPrime1 < 0: # valeur fausses
             resultat2 = f"y = {fPrime1/2}x {f1*2 + fPrime1}"
