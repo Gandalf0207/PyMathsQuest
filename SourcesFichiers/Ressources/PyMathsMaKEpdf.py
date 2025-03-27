@@ -77,7 +77,7 @@ class MakePDFWithPyMaths(object):
                     
                 elif self.allExoValues[exo]["Exo"] == "NiveauBaseFuturiste": # pas de niveau de difficulté
                     self.valuesExo = self.allExoValues[exo]["Values"]
-                    ex = Derives(self.doc, i, 0,0,0,0,0,0,0,0,0,0, self.valuesExo[0], self.valuesExo[1])
+                    ex = Derives(self.doc, i, 1, 0,0,0,0,0,0,0,0,0,0, self.valuesExo[0], self.valuesExo[1])
                     ex.GestionAllExoDerives()     
 
                 elif self.allExoValues[exo]["Exo"] == "NiveauMordor":

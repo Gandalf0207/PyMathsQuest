@@ -21,6 +21,8 @@ class HeaderFooter(object):
 
         # Ajout de l'en-tête à droite avec la date et l'heure actuelles
         with self.header.create(Head("R")):
+            self.header.append(NoEscape("\\vspace{5mm}"))  # Ajoute un saut de ligne
+            # add espace pour ne pas empieter sur le titre
             self.header.append(italic(NoEscape(f"{self.time}")))
 
         # Ajout des crédits en bas à gauche

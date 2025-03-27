@@ -191,9 +191,9 @@ class CorrectionsDerivesNv1(DerivesNV1):
                 self.doc.append(NoEscape(f"y = {f_prime1}(x - 2) + {f1} \\\\ "))
 
                 if f1 - f_prime1 < 0:
-                    self.doc.append(NoEscape(f"y = {f_prime1}x {f1 - f_prime1} \\\\")) # négatif
+                    self.doc.append(NoEscape(f"y = {f_prime1}x {f1 - 2 * f_prime1} \\\\")) # négatif
                 else:
-                    self.doc.append(NoEscape(f"y = {f_prime1}x + {f1 - f_prime1} \\\\"))
+                    self.doc.append(NoEscape(f"y = {f_prime1}x + {f1 - 2 * f_prime1} \\\\"))
 
 
     def EvaluerFonction(self, fonction, j, x):

@@ -598,7 +598,7 @@ class GetExo:
             resultat3 = f"y = {f1*2 + fPrime1}x + {-f1}"
 
         
-        self.stockageValues = (fonctionElement, coefElement)
+        self.stockageValues = ([fonctionElement], [coefElement]) # sous forme de list pour pymaths correction
         self.listeConstruction = [eqt, resultat, resultat2, resultat3]
 
     def ExoNv6(self) -> None:
