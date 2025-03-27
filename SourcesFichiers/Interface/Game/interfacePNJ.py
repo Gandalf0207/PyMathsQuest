@@ -37,6 +37,17 @@ class PNJInterface(object):
         self.last_click_time = 0
         self.click_delay = 500    
 
+        self.isBtnSkipHover = False
+        self.isbtnNonHover = False
+        self.isbtnOuiHover = False
+
+        try :
+            self.btnTexture = pygame.image.load(join("Image","Interface", "Button", "PNJ", "BtnText.png")).convert_alpha()
+            self.btnTextureHover = pygame.image.load(join("Image","Interface", "Button", "PNJ", "BtnTextHover.png")).convert_alpha()
+        except:
+            INFOS["ErrorLoadElement"] = True
+
+
         # chargement des éléments autre
         self.loadPNG()
 
@@ -395,8 +406,15 @@ class PNJInterface(object):
         if self.gestionnaire.pnjActuel == "PNJ3" and NIVEAU["Map"] == "NiveauMedievale" and not self.gestionnaire.pnjObj.QuestionDone:
             self.surfaceBtnOui = pygame.Surface((128,50))
             self.surfaceBtnNon = pygame.Surface((128,50))
-            self.surfaceBtnOui.fill("#ffffff")
-            self.surfaceBtnNon.fill("#ffffff")
+            if self.isbtnNonHover:
+                self.surfaceBtnNon.blit(self.btnTextureHover)
+            else:
+                self.surfaceBtnNon.blit(self.btnTexture)
+
+            if self.isbtnOuiHover:
+                self.surfaceBtnOui.blit(self.btnTextureHover)
+            else:
+                self.surfaceBtnOui.blit(self.btnTexture)
 
             self.rectBtnOui = pygame.Rect(WINDOW_WIDTH-178, 575, 128, 50)
             self.rectBtnNon = pygame.Rect(WINDOW_WIDTH-178, 650, 128, 50)
@@ -418,7 +436,11 @@ class PNJInterface(object):
             # load btn skip / lancer
             self.surfaceBtnSkip = pygame.Surface((128,50))
             self.btnRectSkip = pygame.Rect(WINDOW_WIDTH-178,600,128,50)
-            self.surfaceBtnSkip.fill((255,255,255))
+            if self.isBtnSkipHover:
+                self.surfaceBtnSkip.blit(self.btnTextureHover, (0,0))
+            else:
+                self.surfaceBtnSkip.blit(self.btnTexture, (0,0))
+
             self.textS = TEXTE["Elements"]["InterfacePNJ"]["SkipButton"]
             self.textSkip = FONT["FONT36"].render(self.textS, True, (10,10,10))
             self.surfaceBtnSkip.blit(self.textSkip, self.textSkip.get_rect(center=(self.surfaceBtnSkip.get_width()//2, self.surfaceBtnSkip.get_height()//2)))
@@ -478,13 +500,19 @@ class PNJInterface(object):
         if event.type == pygame.MOUSEMOTION:
             if self.gestionnaire.pnjActuel == "PNJ3" and NIVEAU["Map"] == "NiveauMedievale" and not self.gestionnaire.pnjObj.QuestionDone:
                 if self.rectBtnNon.collidepoint(event.pos) or self.rectBtnOui.collidepoint(event.pos):
+                    self.isbtnNonHover = self.rectBtnNon.collidepoint(event.pos)
+                    self.isbtnOuiHover = self.rectBtnOui.collidepoint(event.pos)
                     INFOS["Hover"] = True 
                 else:
+                    self.isbtnNonHover = False
+                    self.isbtnOuiHover = False
                     INFOS["Hover"] = False
             else:
                 if self.btnRectSkip.collidepoint(event.pos):
+                    self.isBtnSkipHover = True
                     INFOS["Hover"] = True 
                 else:
+                    self.isBtnSkipHover = False
                     INFOS["Hover"] = False
 
 
