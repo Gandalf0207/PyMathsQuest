@@ -1,3 +1,6 @@
+#Projet : PyMathsQuest
+#Auteurs : LUBAN Théo & PLADEAU Quentin
+
 from settings import *
 from SourcesFichiers.Interface.Game.interfaceBook import *
 from SourcesFichiers.Interface.Game.interfaceBundle import *

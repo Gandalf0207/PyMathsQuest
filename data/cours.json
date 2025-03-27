@@ -3,7 +3,7 @@
         "Seconde" : {
             "NiveauPlaineRiviere" : {
                 "Cours0" : {
-                    "0" : [false, "De façon intuitive, une égalité fonctionne un peu comme une balance à deux plateaux \\U+2696 : si on effectue une opération dans un des membres, il faut réaliser la même opération dans l’autre pour garder l'équilibre."]
+                    "0" : [false, "De façon intuitive, une égalité fonctionne un peu comme une balance à deux plateaux: si on effectue une opération dans un des membres, il faut réaliser la même opération dans l’autre pour garder l'équilibre."]
                 }, 
 
                 "Cours1" : {
@@ -289,7 +289,7 @@
                 "Cours0": {
                     "0": [
                         false,
-                        "Intuitively, an equation works a bit like a two-pan balance scale \\U+2696 : if you perform an operation on one side, you must perform the same operation on the other side to maintain the balance."
+                        "Intuitively, an equation works a bit like a two-pan balance scale : if you perform an operation on one side, you must perform the same operation on the other side to maintain the balance."
                     ]
                 },
                 "Cours1": {
@@ -1066,7 +1066,7 @@
         "Seconde" : {
             "NiveauPlaineRiviere" : {
                 "Cours0" : {
-                    "0" : [false, "De manera intuitiva, una igualdad funciona un poco como una balanza de dos platillos: si se efectúa una operación en uno de los miembros, hay que realizar la misma operación en el otro para conservar el equilibrio."]
+                    "0" : [false, "De manera intuitiva, una igualdad funciona un poco como una balanza de dos platillos : si se efectúa una operación en uno de los miembros, hay que realizar la misma operación en el otro para conservar el equilibrio."]
                 }, 
 
                 "Cours1" : {

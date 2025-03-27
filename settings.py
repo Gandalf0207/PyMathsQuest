@@ -1,3 +1,6 @@
+#Projet : PyMathsQuest
+#Auteurs : LUBAN Théo & PLADEAU Quentin
+
 from random import randint, random, choice
 from random import *
 import random
@@ -24,6 +27,8 @@ import pygame
 import tkinter as tk
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 import matplotlib.pyplot as plt
+import ctypes
+import webbrowser
 
 
 plt.rc('text', usetex=True)  # Active l'utilisation de LaTeX
@@ -168,7 +173,7 @@ NIVEAU = {
     "All" : False, 
 
     # map
-    "Map" : "NiveauPlaineRiviere",
+    "Map" : "NiveauMordor",
 }
 # box infos globales
 INFOS = {

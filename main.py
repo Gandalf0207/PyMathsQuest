@@ -1,3 +1,6 @@
+#Projet : PyMathsQuest
+#Auteurs : LUBAN Théo & PLADEAU Quentin
+
 from settings import *
 from SourcesFichiers.Personnages.player import *
 from SourcesFichiers.Elements.touche import *
@@ -178,6 +181,8 @@ class Game(object):
     def run(self):
 
         while self.running:
+
+
             
             if INFOS["UpdateFont"]:
                 self.GameTool.CreateFont()
@@ -200,7 +205,6 @@ class Game(object):
                     self.running = False
                 
                 elif INFOS["GameStart"]: # dans le jeu
-                
 
                     # rebinding keys fonctionneemnt
                     if INFOS["RebindingKey"]:
@@ -401,11 +405,6 @@ class Game(object):
                 if not self.cinematique:
                     self.gameInterfaces.Update(event)
 
- 
-                # changement cursor
-                ChangeCursor(INFOS["Hover"], "Hand")
-
-
 
                 if INFOS["Exo"]:
                     if not self.gameInterfaces.isInterfaceExoOpen:
@@ -454,9 +453,14 @@ class Game(object):
                 if not INFOS["CinematiqueEndAct"] and INFOS["BoolDoubleCheck"]: # on arrete la cinématique 
                     self.cinematique = False
             
+                # changement cursor
+                ChangeCursor(INFOS["Hover"], "Hand")
+
             elif INFOS["EndGame"]:
                 self.GestionInterfaceOther.Update(event, "End") # auto scroll (auto update)
-
+            
+                # changement cursor
+                ChangeCursor(INFOS["Hover"], "Hand")
 
             # element de gestions
             if INFOS["CrashGame"]:
@@ -469,6 +473,8 @@ class Game(object):
                 self.textScreen(text2)
                 self.running = False
 
+
+            
             # update toolBOX
             self.GameTool.Update()
             pygame.event.pump()  # 👈 Permet à Pygame de traiter les événements même sans interaction
@@ -493,8 +499,8 @@ class GameToolBox(object):
         """Méthode de création de toutes les fonts pour le jeu"""
         INFOS["UpdateFont"] = False
 
-        typeFont = None if not POLICEECRITURE["Dyslexique"] else join("Font", "OpenDyslexic-Regular.otf")
-        coefSize = 1 if not POLICEECRITURE["Dyslexique"] else 0.6
+        typeFont = join("Font", "Roboto-Regular.ttf") if not POLICEECRITURE["Dyslexique"] else join("Font", "OpenDyslexic-Regular.otf")
+        coefSize = 0.7 if not POLICEECRITURE["Dyslexique"] else 0.6
 
 
         # création

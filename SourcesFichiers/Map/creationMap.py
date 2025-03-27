@@ -1,4 +1,5 @@
-# ---------------------------------------------- PyMathsQuest ---------------------------------------------- #
+#Projet : PyMathsQuest
+#Auteurs : LUBAN Théo & PLADEAU Quentin
 
 # Import des settings
 from settings import *

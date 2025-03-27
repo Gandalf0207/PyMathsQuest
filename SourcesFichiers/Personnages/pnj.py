@@ -1,3 +1,6 @@
+#Projet : PyMathsQuest
+#Auteurs : LUBAN Théo & PLADEAU Quentin
+
 from settings import *
 from SourcesFichiers.ScriptAlgo.astar import *
 from SourcesFichiers.Elements.cinematique import *

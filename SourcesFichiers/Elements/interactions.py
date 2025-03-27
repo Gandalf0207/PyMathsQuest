@@ -1,3 +1,6 @@
+#Projet : PyMathsQuest
+#Auteurs : LUBAN Théo & PLADEAU Quentin
+
 from settings import *
 from SourcesFichiers.Elements.sprites import *
 
@@ -314,15 +317,14 @@ class Interactions(object):
                     # on donne le cours
                     self.gestionnaire.fondu_au_noir()
                     
-                    if not self.parchemin:
-                        self.parchemin = True
-                        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["Parchemin"]) # text animation
-                        INFOS["GetCours"] +=1
-                    else:
-                        self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["ParcheminVu"]) # text animation
-                    
+                    self.parchemin = True
+                    self.gestionnaire.textScreen(TEXTE["Elements"][NIVEAU["Map"]]["Parchemin"]) # text animation
+                    INFOS["GetCours"] +=1
+
                     if self.parchemin and self.pot:
                         STATE_HELP_INFOS[0] = "OpenDoorCellule"
+                    
+                    self.Obj.kill()
 
                     self.gestionnaire.ouverture_du_noir(self.player.rect.center)
 
@@ -348,7 +350,7 @@ class Interactions(object):
 
                     pos = self.Obj.pos
                     try:
-                        doorOpen = pygame.image.load(join("Image", "Obstacle", "Door", "DoorCellule.png")).convert_alpha()
+                        doorOpen = pygame.image.load(join("Image", "Obstacle", "Door", "IronBarsDoorOpen.png")).convert_alpha()
                         Sprites(pos, doorOpen, "OpenDoor", groups[0])
                     except:
                         INFOS["ErrorLoadElement"] = True
