@@ -1,3 +1,6 @@
+#Projet : PyMathsQuest
+#Auteurs : LUBAN Théo & PLADEAU Quentin
+
 from pylatex import *
 from pylatex.utils import *
 from datetime import datetime

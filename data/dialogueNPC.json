@@ -8,7 +8,7 @@
                     "Dialogue2": "Aussi prends c’te babiole ça pourrait t’aider t’sais, il y a écrit un charabia dessus j’te la laisse."
                 },
                 "Alternatif": {
-                    "Dialogue1": "Alors, fonce l’ami n’ai pas peur de l’eau sous le tronc elle te sautera pas dessus !"
+                    "Dialogue1": "Alors, fonce l’ami n’aie pas peur de l’eau sous le tronc elle te sautera pas dessus !"
                 }
             },
             "PNJ2": {
@@ -80,7 +80,7 @@
                 "Nom": "Michael",
                 "Principal": {
                     "Dialogue1": "Oulah d'où est-ce que tu viens toi ?? Ton portail à fait sauter le courant dans toute la base, il va falloir le rallumer ou tu risques pas de rentrer chez toi.",
-                    "Dialogue2": "J’irais bien allumer le réacteur mais sans courant les portes ne s’ouvriront pas il faudra trouver un autre moyen. Tenez je crois que ceci est tombé avec vous."
+                    "Dialogue2": "J’irais bien allumer le réacteur mais sans courant les portes ne s’ouvriront pas il faudra trouver un autre moyen. Tiens je crois que ceci est tombé avec toi."
                 },
                 "Alternatif": {
                     "Dialogue1": "Alors tu n’as pas encore réparé ta bêtise ? Dépêche-toi le frigo de la cafétéria contient mon déjeuner et t’as plutôt intérêt à ce qu’il soit encore bon quand j’irai le manger !"
@@ -118,7 +118,7 @@
                     "Dialogue4": "(Un bout de papier tombe de la poche de l’énergumène, vous le ramassez)"
                 },
                 "Alternatif": {
-                    "Dialogue1": "Alors dépêche toi avant que les prix augmentent ! Je sais même pas pourquoi j’dis ça on la paie pas ici."
+                    "Dialogue1": "Alors dépêche toi avant que les prix augmentent ! Je sais même pas pourquoi j’dis ça on le paie pas ici."
                 }
             },
             "PNJ5": {
@@ -145,10 +145,10 @@
             "PNJ7": {
                 "Nom": "Han",
                 "Principal": {
-                    "Dialogue1": "(Le pilote semble assommé vous le laisser pour explorez les environ mais il dispose d’un carnet avec des inscriptions, vous le récupérez)"
+                    "Dialogue1": "(Le pilote semble assommé vous le laissez pour explorer les environ mais il dispose d’un carnet avec des inscriptions, vous le récupérez)"
                 },
                 "Alternatif": {
-                    "Dialogue1": "(Le pilote semble assommé vous le laisser pour explorez les environ mais il dispose d’un carnet avec des inscriptions, vous le récupérez)"
+                    "Dialogue1": "(Le pilote semble assommé vous le laissez pour explorer les environ mais il dispose d’un carnet avec des inscriptions, vous le récupérez)"
                 }
             }
         },
@@ -170,13 +170,13 @@
                     "Dialogue2": "Tiens c’est un papier que j’ai trouvé dans mon pot de chambre mais je compte pas franchement le garder alors prends le."
                 },
                 "Alternatif": {
-                    "Dialogue1": "Échappons- nous vite de cet horrible endroit !"
+                    "Dialogue1": "Échappons-nous vite de cet horrible endroit !"
                 }
             },
             "PNJ3": {
                 "Nom": "Geôlier orc",
                 "Principal": {
-                    "Dialogue1": "(Vous ne pourrez surement pas le battre pour passer, trouvez un compagnon ou un autre moyen de vous évader.)",
+                    "Dialogue1": "(Vous ne pourrez sûrement pas le battre, pour passer, trouvez un compagnon ou un autre moyen de vous évader.)",
                     "Dialogue2": "(Vous et votre compagnon affrontez votre geôlier, pendant le combat il fait tomber un parchemin que vous ramassez, vous pouvez maintenant passer.)"
                 },
                 "Alternatif": {
@@ -187,13 +187,13 @@
                 "Nom": "Goulboum",
                 "Principal": {
                     "Dialogue1": "Mais que voit-on mon trésor, un humain tout frais ici ! Qu’à-t-il dit mon tréssssor ? Il souhaite retrouver le seigneur de ces terres ?!",
-                    "Dialogue2": "Oh oui nous avons vu mon trésor, il est rentré dans la montagne cracheuse de feu, oh oui mon trésor !"
+                    "Dialogue2": "Oh oui nous avons vu mon trésor, il est rentré dans la montagne cracheuse de feu, oh oui mon trésor !",
+                    "Dialogue3": "(Vous notez ce qui est écrit sur le pagne de la créature)"
                 },
                 "Alternatif": {
                     "Dialogue1": "L’humain est revenu mon trésor, veut-il que nous le mangions ? Oh oui mon trésor !",
                     "Dialogue2": "De l’humain tout frais, ça fait si longtemps que nous nous contentons de poissons fort peu goûtus. Comment ça ?",
-                    "Dialogue3": "Ça s'est juste trompé de chemin et ça ne veut pas être mangé. Oh non ! Peut-être la prochaine fois mon trésor.",
-                    "Dialogue4": "(Vous notez ce qui est écrit sur le pagne de la créature)"
+                    "Dialogue3": "Ça s'est juste trompé de chemin et ça ne veut pas être mangé. Oh non ! Peut-être la prochaine fois mon trésor."
                 }
             },
             "PNJ5": {
@@ -213,8 +213,8 @@
             "PNJ1": {
                 "Nom": "Lumberjack",
                 "Principal": {
-                    "Dialogue1": "Hello toué! Looks like you're hitting your Waterloo! But lâche pas la patate, I'll help you, this tree won't block your way for long tabarnak!",
-                    "Dialogue2": "Also take this trinket it could help you y'know, there's some gibberish written on it I'll leave it with you."
+                    "Dialogue1": "Hello there! Looks like you're hitting a wall, huh! But don't give up, I'll help you, this tree won't block your way for long !",
+                    "Dialogue2": "Also take this scroll it could help you y'know, there's some gibberish written on it I'll leave it with you."
                 },
                 "Alternatif": {
                     "Dialogue1": "So, go for it my friend, don't be afraid of the water under the trunk, it's not going to jump on you!"
@@ -396,13 +396,13 @@
                 "Nom": "Goulboum",
                 "Principal": {
                     "Dialogue1": "But what do we see my precious, a fresh human here ! What did he say my preciousss ? He wishes to find the lord of the lands ?!",
-                    "Dialogue2": "Oh yes we saw him my precious, he went into the fire-spitting mountain, oh yes my precious !"
+                    "Dialogue2": "Oh yes we saw him my precious, he went into the fire-spitting mountain, oh yes my precious !",
+                    "Dialogue3": "(You note what is written on the creature's loincloth)"
                 },
                 "Alternatif": {
                     "Dialogue1": "The human has returned my precious, does he want us to eat him ? oh yes my precious !",
                     "Dialogue2": "Fresh human, it's been so long since we've made do with tasteless fish. What's that ?",
-                    "Dialogue3": "It just took a wrong turn and doesn't want to be eaten. Oh no ! Maybe next time my precious.",
-                    "Dialogue4": "(You note what is written on the creature's loincloth)"
+                    "Dialogue3": "It just took a wrong turn and doesn't want to be eaten. Oh no ! Maybe next time my precious."
                 }
             },
             "PNJ5": {
@@ -605,13 +605,13 @@
                 "Nom": "Goulboum",
                 "Principal": {
                     "Dialogue1": "Y qué vemos mi tesoro, ¡un humano fresquito por aquí! ¿Qué dijo mi tesoooooro? ¿¡Desea volver a encontrar el señor de esas tierras?!",
-                    "Dialogue2": "¡Oh, sí! Vimos mi tesoro, se adentró en la montaña escupidora de fuego, ¡oh sí mi tesoro!"
+                    "Dialogue2": "¡Oh, sí! Vimos mi tesoro, se adentró en la montaña escupidora de fuego, ¡oh sí mi tesoro!",
+                    "Dialogue3": "(Anotas lo que está escrito en el paño de la criatura)."
                 },
                 "Alternatif": {
                     "Dialogue1": "El humano ha vuelto mi tesoro, ¿quiere que lo comamos? ¡Oh sí mi tesoro!",
                     "Dialogue2": "Humano fresquito, hace tanto tiempo que nos conformamos con pescados muy poco sabrosos. ¿Qué pasa?",
-                    "Dialogue3": "Solo te equivocaste de camino y no quieres ser comido. ¡Oh no! Quizás la próxima vez mi tesoro.",
-                    "Dialogue4": "(Anotas lo que está escrito en el paño de la criatura)."
+                    "Dialogue3": "Solo te equivocaste de camino y no quieres ser comido. ¡Oh no! Quizás la próxima vez mi tesoro."
                 }
             },
             "PNJ5": {

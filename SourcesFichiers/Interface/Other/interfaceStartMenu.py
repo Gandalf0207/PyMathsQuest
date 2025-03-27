@@ -1,3 +1,6 @@
+#Projet : PyMathsQuest
+#Auteurs : LUBAN Théo & PLADEAU Quentin
+
 from settings import *
 from SourcesFichiers.Interface.Other.conditionsUtiilisationInterface import *
 from SourcesFichiers.Ressources.creationTexte import *

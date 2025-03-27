@@ -1,3 +1,6 @@
+#Projet : PyMathsQuest
+#Auteurs : LUBAN Théo & PLADEAU Quentin
+
 ### FICHIER CONTENUE PAGE 1 ###
 
 # Module de création du Fichier Tex et convertion en pdf et autre

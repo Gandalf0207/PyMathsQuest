@@ -1,3 +1,6 @@
+#Projet : PyMathsQuest
+#Auteurs : LUBAN Théo & PLADEAU Quentin
+
 from settings import *
 from SourcesFichiers.Ressources.PyMathsSources.sources.PyMaths import *
 class MakePDFWithPyMaths(object):
