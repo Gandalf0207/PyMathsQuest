@@ -1,19 +1,19 @@
 # PyMathsQuest
 
 > [!IMPORTANT]
-> Pour toutes informations concernant les droits d'utilisation, veillez vous référer à la [Licence](https://github.com/Gandalf0207/PyMathsQuest?tab=License-1-ov-file)
+> Pour toute information concernant les droits d'utilisation, veuillez vous référer à la [Licence](https://github.com/Gandalf0207/PyMathsQuest?tab=License-1-ov-file)
 
 
 ## Présentation : 
 PyMathsQuest est un projet étudiant réalisé par 2 élèves en terminale NSI : LUBAN Théo & PLADEAU Quentin. Le but de ce projet est de réaliser un petit RPG autour des mathématiques grâce au langage python et à la librairie pygame. Le jeu se veut durable et unique, c'est pourquoi le point fort est l'aléatoire. En effet, que ce soit la génération de la carte ou encore les exercices mathématiques, toutes les valeurs sont aléatoires. Cela rend donc chaque partie unique ! De plus, à la fin d'une partie, les différentes exercices rencontrés sont corrigés pas à pas pour vous aider à mieux les comprendre. Cela est possible grâce à notre librairie Py-Maths qui permet la génération d'exercices corrigés.
-Ce projet est donc né de la fusion de Maths-Quest et Py-Maths deux anciens projet réalisé lors de l'année de première en NSI. 
+Ce projet est donc né de la fusion de Maths-Quest et Py-Maths, deux anciens projet réalisé lors de l'année de première en NSI. 
 
-Le projet aborde donc plusieurs notion de mathématique, les voici : 
+Le projet aborde donc plusieurs notions de mathématique, les voici : 
 |Seconde                         |Premiere                    |
 |--------------------------------|----------------------------|
 | Equation du premier degrés     | Suites |
 | Volumes                        | Pôlynome du second degrés |
-| Equation cartésienne de droite | Dérivés |
+| Equation cartésienne de droite | Dérivées |
 | Equation à 2 inconnues         | / |
 
 
@@ -23,10 +23,10 @@ Le projet aborde donc plusieurs notion de mathématique, les voici :
 #### Liste des contrôles
 - E : permet d'interagir
 - Z : Avancer
-- Q : Aller a gauche
+- Q : Aller à gauche
 - S : Reculer
-- D : Aller a droite
-#### Espace : passer les dialogues
+- D : Aller à droite
+#### Espace : Passer les dialogues
 - P : Ouvrir l'onglet paramètres
 - V : Ouvrir l'onglet volumes sonores
 - I : Ouvrir l'inventaire
@@ -34,8 +34,8 @@ Le projet aborde donc plusieurs notion de mathématique, les voici :
 - M : Cacher la hotbar
 Echap : Ouvrir le menu général / quitter un menu ouvert
 
-Au lancement initial vous devrez choisir le niveau de votre partie entre Seconde et Premiere puis votre difficulté et enfin votre langue, il suffira ensuite d'accepter la licence et d'appuyer sur commencer et le jeu se lancera.
-Au début de chaque niveau, vous apparaitrez à gauche de la carte générée, vous devrez ensuite parler à divers personnages non joueur et interagir avec plusieurs éléments pour ramasser des morceaux de cours et arriver jusqu'à l'évènement qui engendre l'exercice. Si jamais vous semblez bloqué utilisez les infobulles situés dans la hotbar. Le niveau se déroulant à l'intérieur d'un volcan signifie que vous allez affronter le problème final et que le jeu est presque fini. Une fois le problème finale résolu vous aurez la possibilité de récupérer une correction des exos auxquels vous avez été confrontés ainsi qu'une médaille indiquant votre taux de réussite.
+Au lancement initial vous devrez choisir le niveau de votre partie entre Seconde et Premiere puis votre difficulté et enfin votre langue, il suffira ensuite d'accepter la licence et d'appuyer sur Commencer et le jeu se lancera.
+Au début de chaque niveau, vous apparaîtrez à gauche de la carte générée, vous devrez ensuite parler à divers personnages non joueur et interagir avec plusieurs éléments pour ramasser des morceaux de cours et arriver jusqu'à l'événement qui engendre l'exercice. Si jamais vous semblez bloqué, utilisez les infobulles situés dans la hotbar. Le niveau se déroulant à l'intérieur d'un volcan signifie que vous allez affronter le problème final et que le jeu est presque terminé. Une fois le problème final résolu vous aurez la possibilité de récupérer une correction des exos auxquels vous avez été confrontés ainsi qu'une médaille indiquant votre taux de réussite.
 
 
 ## Installation : 
@@ -52,7 +52,7 @@ Afin de pouvoir utiliser le jeu sans soucis, nous vous demandons de bien vouloir
   - [MikTeX](https://miktex.org/download)
   - [Visual C++ x64](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
 
-  Une fois que vous avez récupéré ces 4 fichiers exécutables, executez-les dans l'ordre de téléchargement 1 par 1 et assurez vous d'accorder les droits et autorisation nécessaire à l'installation. Si possible ajoutez les éléments nécessaire au Path de votre ordinateur puis redémarez-le. 
+  Une fois que vous avez récupéré ces 4 fichiers exécutables, executez-les dans l'ordre de téléchargement 1 par 1 et assurez-vous d'accorder les droits et autorisations nécessaires à l'installation. Si possible ajoutez les éléments nécessaire au Path de votre ordinateur puis redémarrez-le. 
 
   ##### Clone du repository GitHub:
   - Veillez à redémarrer votre machine si nécessaire pour permettre à votre système de bien intégrer l'installation des logiciels précédents. Après cela, il vous faut installer différentes dépendances nécessaires au bon fonctionnement du jeu.
