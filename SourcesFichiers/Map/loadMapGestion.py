@@ -219,7 +219,7 @@ class LoadMapGestion():
 
             self.DoorCellule = pygame.image.load(join("Image", "Obstacle", "Door", "DoorCellule.png")).convert_alpha()
             self.DoorPrison = pygame.image.load(join("Image", "Obstacle","Door",  "DoorPrison.png")).convert_alpha()
-            self.DoorVolcan =pygame.image.load(join("Image", "Obstacle", "BlocVide.png")).convert_alpha() 
+            self.DoorVolcan =pygame.image.load(join("Image", "Obstacle", "Door",  "DoorVolcan.png")).convert_alpha() 
             
             self.obstacle = pygame.image.load(join("Image", "Obstacle", "HugeRockMordor.png")).convert_alpha()
 

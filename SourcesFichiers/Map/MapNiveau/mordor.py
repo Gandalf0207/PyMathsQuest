@@ -97,13 +97,13 @@ class NiveauMordor(GestionNiveauMap):
 
         # placement volcan 
         self.coordsVolcan = [randint(110, 135), randint(3, 64), "NiveauMordor", "VolcanStruc"]
-        for ordonne in range(5):
+        for ordonne in range(4):
             for abscisse in range(5):
                 self.map[self.coordsVolcan[1] + ordonne][self.coordsVolcan[0] + abscisse] = "&"
                 self.baseMap[self.coordsVolcan[1] + ordonne][self.coordsVolcan[0] + abscisse] = "-"
 
         # placement porte volcan
-        self.coordsDoorVolcan = [self.coordsVolcan[0] + 2, self.coordsVolcan[1] + 4, "NiveauMordor", "VolcanDoor"]
+        self.coordsDoorVolcan = [self.coordsVolcan[0] + 2, self.coordsVolcan[1] + 3, "NiveauMordor", "VolcanDoor"]
         self.map[self.coordsDoorVolcan[1]][self.coordsDoorPrison[0]] = "V"
         self.baseMap[self.coordsDoorVolcan[1]][self.coordsDoorPrison[0]] = "-"
 
