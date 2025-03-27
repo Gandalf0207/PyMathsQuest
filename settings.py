@@ -201,8 +201,8 @@ INFOS = {
     "HidePlayer" : False,
     "Hover" : False,
     "AdminReset" : False,
-    "ExoReussit" : 0,
-    "TotalExo" : 0,
+    "ExoReussit" : 84,
+    "TotalExo" : 100,
     "BoolDoubleCheck" : False
 }
 

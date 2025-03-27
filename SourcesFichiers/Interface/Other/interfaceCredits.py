@@ -21,7 +21,7 @@ class CreditsInterfaceGame():
         self.box_height = (WINDOW_HEIGHT ) - 150
         self.box_x = 20
         self.box_y = 80
-        heightBoxText = 2200 if not POLICEECRITURE["Dyslexique"] else 3300
+        heightBoxText = 2700 if not POLICEECRITURE["Dyslexique"] else 3800
         self.textSurface = pygame.Surface((self.box_width, heightBoxText), pygame.SRCALPHA)
         self.textSurface.fill((255, 255, 255))
         
