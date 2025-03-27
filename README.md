@@ -54,9 +54,9 @@ Afin de pouvoir utiliser le jeu sans soucis, nous vous demandons de bien vouloir
 
   Une fois que vous avez récupéré ces 4 fichiers exécutables, executez-les dans l'ordre de téléchargement 1 par 1 et assurez vous d'accorder les droits et autorisation nécessaire à l'installation. Si possible ajoutez les éléments nécessaire au Path de votre ordinateur puis redémarez-le. 
 
-  ##### Clône du repositorie GitHub:
+  ##### Clone du repository GitHub:
   - Veillez à redémarrer votre machine si nécessaire pour permettre à votre système de bien intégrer l'installation des logiciels précédents. Après cela, il vous faut installer différentes dépendances nécessaires au bon fonctionnement du jeu.
-  Après avoir installé les 4 fichiers executables, vous devez récupérer le projet. Pour ce faire, dans votre invite de commande, exécutez la commande ci-dessous :
+  Après avoir installé les 4 fichiers éxecutables, vous devez récupérer le projet. Pour ce faire, dans votre invite de commandes, éxecutez la commande ci-dessous :
 
   > Clone du dossier contenant le jeu
   ```
