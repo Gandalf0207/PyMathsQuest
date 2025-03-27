@@ -66,6 +66,14 @@ class MiniMap:
                     rect = pygame.Rect(obj[0] * CELL_SIZE , obj[1] * CELL_SIZE, CELL_SIZE*5, CELL_SIZE*5)
                     pygame.draw.rect(self.static_surface, color, rect)
 
+        if NIVEAU["Map"] == "NiveauMedievale" and not INFOS["DemiNiveau"]:
+            allObj = LoadJsonMapValue("coordsMapObject", "ObjAPlacer")
+            for obj in allObj:
+                if obj[3] in ["Chateau"]:
+                    color = color_mapping.get("H", colorSol)  # Vert foncé par défaut
+                    rect = pygame.Rect(obj[0] * CELL_SIZE , obj[1] * CELL_SIZE, CELL_SIZE*5, CELL_SIZE*5)
+                    pygame.draw.rect(self.static_surface, color, rect)
+
     def Update(self, player_pos: tuple, pnjGroup: any, interactionGroup: any) -> None:
         """Met à jour uniquement les entités mobiles sur la minimap."""
         self.MiniMapSurface.blit(self.static_surface, (0, 0))
