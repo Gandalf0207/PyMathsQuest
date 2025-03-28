@@ -920,6 +920,9 @@ class LoadMapGestion():
                         AnimatedSprites(pos, (self.allSprites, self.interactions ), "Portal", path, layer=2) # ( , ) pour pouvoir parcourir l'element
                     case "BCG":
                         Sprites(pos, self.bcgDemiNiveauVolcan, "BCGVolcanDemiNiveau", self.allSprites, layer=0)
+                    case "Fond":
+                        path = join("Image", "Sol", "Volcano")
+                        AnimatedSprites(pos, (self.allSprites, ), "Fond",path, layer=0 )
 
 
     def AddPont(self, element, coords, Interaction = True):

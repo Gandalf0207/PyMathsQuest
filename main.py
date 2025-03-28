@@ -45,7 +45,7 @@ class Game(object):
         self.checkLoadingDone = False
         self.checkCoursDone = False
  
-        # clear json stockage exos
+        # clear json stockage value exos
         fichier = join("data", "exercicesValues.json")
         # Écrire un objet JSON vide
         with open(fichier, "w") as f:
@@ -69,15 +69,19 @@ class Game(object):
 
     # méthode de call de la class tool
     def ChargementEcran(self):
+        """Chargement écran"""
         self.GameTool.ChargementEcran()
 
     def textScreen(self, text):
+        """Texte sur l'écran"""
         self.GameTool.textScreen(text)
 
     def fondu_au_noir(self):
+        """Fondu au noir screen"""
         self.GameTool.fondu_au_noir()
 
     def ouverture_du_noir(self, targetPos):
+        """Ouverture au noir screen"""
         self.GameTool.ouverture_du_noir(targetPos)
 
 
@@ -156,6 +160,7 @@ class Game(object):
 
 
     def StartMap(self):
+        """Lance la création de map / cours / infos en fonction du niveau"""
         
         # Affichage initial de l'écran de chargement
         self.GameTool.SetInfosLevel()
@@ -179,15 +184,14 @@ class Game(object):
 
 
     def run(self):
+        """Méthode main, boucle du jeu"""
 
-        while self.running:
+        while self.running: # update du jeu
 
-
-            
-            if INFOS["UpdateFont"]:
+            if INFOS["UpdateFont"]: # update font au changement
                 self.GameTool.CreateFont()
             
-            if INFOS["ErrorLoadElement"]:
+            if INFOS["ErrorLoadElement"]: # error chargement fichiers ressources (ecran)
                 self.displaySurface.fill("#000000")
                 text = TEXTE["Elements"]["ErreurLoad"]
                 self.textScreen(text)
@@ -199,6 +203,7 @@ class Game(object):
                 self.running = False
 
 
+            # get event et mise à jours des éléments pour event spécifique (clicks...)
             dt = self.clock.tick(30) / 1000
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -206,7 +211,7 @@ class Game(object):
                 
                 elif INFOS["GameStart"]: # dans le jeu
 
-                    # rebinding keys fonctionneemnt
+                    # rebinding keys fonctionnement
                     if INFOS["RebindingKey"]:
                         if event.type == pygame.KEYDOWN:
                             if not INFOS["RebindingKey"] =="echap" and event.key != pygame.K_ESCAPE: # verif
@@ -222,7 +227,7 @@ class Game(object):
                     # s'il n'y a pas de cinématique en cours
                     elif not self.cinematique:
 
-                        if event.type == pygame.KEYDOWN: # TP : ne pas oublier de retirer
+                        if event.type == pygame.KEYDOWN: 
 
                             self.gameInterfaces.GestionInterfaceGlobale(event)
 
@@ -245,12 +250,13 @@ class Game(object):
                                 INFOS["Hover"] = False
                         
 
-                        # open au clic des interface de la hotbar
+                        # open au clic des interfaces de la hotbar
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                             self.settingsAll.OpenInterfaceElementClic(event)
 
                         if event.type == pygame.MOUSEMOTION:
                             self.settingsAll.HoverElement(event)
+
                         # update pnj
                         self.cinematique, self.cinematiqueObject, self.followPlayer, self.followObject = self.pnj.update(self.player.rect.center, event) # pnj update 
                 
@@ -259,7 +265,8 @@ class Game(object):
                     self.GestionInterfaceOther.Update(event, "End") # scroll (event)
 
                 else:
-            
+
+                    # element interface game hompe menu (avant start)
                     if event.type == pygame.USEREVENT and event.animationLancement == "animation_finie":
                         self.animationLancementEnd = True
                     
