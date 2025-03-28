@@ -128,8 +128,13 @@ Si vous rencontrez des problèmes avec des éléments de l'installation, vérifi
 > [!WARNING]
 > Si vous rencontrez un problème lors de l'installation des dépendances, après l'installation des logiciels.exe, veillez à redémarrer votre machine puis à réinstaller les dépendances.
 
+<br>
 
+### Menu Administrateur
 
+> Un menu administrateur a était implémenté au sein du projet. Pour ouvrir son interface taper simplement le nom "patrick".
+> Vous aurez la possibilité de modifier de nombreux éléments, comme l'obtention des cours, le changement de niveau, l'ouverture d'exercice directement...
+> Attention, certaines modifications via le menu admin peuvent provoquer des erreurs de chargement.
 
 
 <br> </br>
