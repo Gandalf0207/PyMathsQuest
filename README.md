@@ -105,7 +105,7 @@ Afin de pouvoir utiliser le jeu sans soucis, nous vous demandons de bien vouloir
 
    ##### Téléchargement des ressources nécessaires au jeu :
   - Après avoir réalisé l'installation, téléchargez les ressources (image, sound et font) et placez ces trois dossiers dans le dossier PyMathsQuest, au même niveau que le fichier main.py.
-  - Lien de téléchargement : (Lien)[https://drive.google.com/drive/folders/1XCcF6rdsKvm3UJO9cKkHlKfWQ4sPczDr?usp=sharing]
+  - Lien de téléchargement : [Lien](https://drive.google.com/drive/folders/1XCcF6rdsKvm3UJO9cKkHlKfWQ4sPczDr?usp=sharing)
 
 <br>
 
