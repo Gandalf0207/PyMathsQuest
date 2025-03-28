@@ -7,7 +7,7 @@
         "Humour": "Humour, second degré",
         "CloseGame": "Fermeture du jeu.",
         "ErreurLoad": "Problème load fichiers ressources. ",
-        "Reussite": "Vous avez une réussite de :",
+        "Reussite": "Vous avez un taux de réussite de :",
         "AdminPanel": {
             "Title": "Administrateur",
             "TP": "TP NPC",
@@ -374,5 +374,381 @@
                 }
             }
         }
-    }
+    }, 
+
+    "ElementsEs": {
+            "GameName": "PyMathsQuest",
+            "Loading": "Cargando",
+            "Interaction": "Presionar",
+            "LevelSup": "¡Subes de nivel!",
+            "CloseGame": "Cierre del juego.",
+            "ErreurLoad": "Problema al cargar archivos de recursos.",
+            "Reussite": "Tienes una tasa de éxito de:",
+            "AdminPanel": {
+                "Title": "Administrador",
+                "TP": "TP NPC",
+                "Niveau": "Nivel",
+                "Cours": "Curso",
+                "Autre": "Otro +"
+            },
+            "Crédits": {
+                "Crédits": "PyMathsQuest",
+                "Projet": {
+                    "Nombre": "PyMathsQuest",
+                    "Creadores": "LUBAN Théo, PLADEAU Quentin",
+                    "Una idea original de": "LUBAN Théo"
+                },
+                "Rôles": {
+                    "Concepteur principal": "LUBAN Théo",
+                    "Développeur principal": "PLADEAU Quentin",
+                    "Direction Artistique": "LUBAN Théo",
+                    "Consultant fonctionnement": "PLADEAU Quentin",
+                    "Conception des Niveaux": "LUBAN Théo",
+                    "Directeur projet": "PLADEAU Quentin",
+                    "Dialogues des personnages": "LUBAN Théo"
+                },
+                "Artistes exterieurs": {
+                    "Créateur bandes son": "Nocyfer",
+                    "Pixel Art Joueur": "BARON Héloïse",
+                    "Compositeur": "Nocyfer",
+                    "Traduction Espagnol": "SAMADI Maryne",
+                    "Pixel Art Château": "FERNANDEZ Lucie"
+                },
+                "Doublage francais": {
+                    "Bûcheron": "GABRIEL Tom",
+                    "Voyageur Curieux": "CADEAU-FLAUJAT Gabriel",
+                    "Fermier": "RENAUD-JEHL Dimitri",
+                    "Garde désagréable": "ESCOUTE Cédric",
+                    "Minerva": "LAMY Mahely",
+                    "Roi": "FIEVET Joaquim",
+                    "Michael": "NGUYEN Jordan",
+                    "Ingénieure": "SALES Maureen",
+                    "Han": "KELEMEN Thomas",
+                    "Didier": "BELLEC-ESCALERA Elliot",
+                    "Garde Orc": "Nathan COURTILLAT",
+                    "Prisonnière Humaine": "PAUL-GOMEZ Mélusine",
+                    "Goulboum": "LUBAN Théo",
+                    "Narratrice": "ESCOLANO-DUPUY Léonie"
+                },
+                "Testeurs": [
+                    "PLADEAU Quentin",
+                    "LUBAN Théo",
+                    "Estudiantes de segundo curso de Digital"
+                ],
+                "Consultants": [
+                    "PINGARD Mattis",
+                    "ESCOUTE Cédric",
+                    "MARIE-JEANNE Patrice"
+                ],
+                "Technologie": {
+                    "Moteur de jeu": "Pygame",
+                    "Compilateur LaTeX": "MikTeX",
+                    "Langage": "Python",
+                    "Librairies Python": "Matplotlib, pygame-ce, PyMaths"
+                },
+                "Etablissement": ["Lycée George Clemenceau"],
+                "Remerciements spéciaux": [
+                    "PINGARD Mattis",
+                    "ESCOUTE Cédric",
+                    "MARIE-JEANNE Patrice"
+                ]
+            },
+            "InterfaceEnd": {
+                "PDFGeneration": "Generar el PDF de corrección",
+                "PDFGenere" : "Usted ha generado el PDF",
+                "Quitter": "Salir"
+            },
+            "HomeInterface": {
+                "Niveau": {
+                    "Title": "Nivel",
+                    "Consignes": "Elija un nivel",
+                    "Seconde": "Segundo",
+                    "Premiere": "Primera",
+                    "Terminale": "Curso final",
+                    "All": "Todos"
+                },
+                "Difficulte": {
+                    "Title": "Dificultad",
+                    "Consignes": "Elija un nivel",
+                    "Simple": "Simple",
+                    "Difficile": "Difícil"
+                },
+                "Langue": {
+                    "Title": "Lengua",
+                    "Consignes": "Elija un nivel",
+                    "Français": "Francés",
+                    "Anglais": "Inglés",
+                    "Espagnol": "Español"
+                },
+                "InterfaceCondition": {
+                    "ConditionsUtilisation": "1. Libertad de uso, modificación y distribución\n\n Este programa está bajo la licencia GPL v3+, lo que significa que eres libre de:\n\n - Ejecutar el software para cualquier uso (personal, educativo, comercial, etc.).\n - Estudiar, modificar y mejorar su código fuente.\n - Redistribuir copias del programa, modificadas o no, siempre que se respete la misma licencia.\n\n 2. Código fuente y contribuciones\n El código fuente del proyecto está accesible en GitHub:\n 👉 https://github.com/Gandalf0207/Py-Maths-Quest\n\n Toda contribución es bienvenida siempre que respete los términos de la GPL v3.\n\n 3. Sin garantía\n Este software se proporciona \"tal cual\", sin garantía de ningún tipo. Los autores no pueden ser responsables de posibles daños resultantes de su uso.\n\n 4. Uso de bibliotecas de código abierto\n Este proyecto utiliza bibliotecas de código abierto tales como Python, Tkinter, Matplotlib, LaTeX, etc. Respetamos y apreciamos el trabajo de sus creadores y cumplimos con las licencias respectivas de estas bibliotecas.\n\n 5. Créditos y marco de realización\n Este proyecto fue desarrollado por LUBAN Théo & PLADEAU Quentin en el marco del curso de NSI en Terminale. Un gran agradecimiento a ESCOUTE Cédric y Patrice-Florent Marie-Jeanne por su apoyo y enseñanza.\n\n 6. Actualización de las condiciones\n Estas condiciones pueden actualizarse en cualquier momento. Consulta el repositorio de GitHub para obtener información sobre la licencia y las modificaciones del proyecto.\n\n © 2025 - Py-Maths-Quest\n Publicado bajo licencia GPL v3+",
+                    "Title": "Términos y condiciones de uso"
+                },
+                "TexteConditions": "Acepto las licencias, términos y condiciones de uso.",
+                "Lancer": "Comenzar"
+            },
+            "InterfacePNJ": {
+                "SkipButton": "Siguiente",
+                "Oui": "Sí",
+                "Non": "No"
+            },
+            "InterfaceReactor": {
+                "Title": "Reactor nuclear Central",
+                "Texte": "Presiona para encender el reactor",
+                "Heure": "Hora",
+                "Temperature": "Temperatura",
+                "EtatName": "Estado",
+                "StatueName": "Estatus",
+                "Etat": {
+                    "Inactif": "Inactivo",
+                    "Actif": "Activo"
+                },
+                "Statue": {
+                    "Null": "Nulo",
+                    "Normal": "Normal",
+                    "Instable": "Inestable",
+                    "Critique": "Crítico"
+                },
+                "AddPuissance": "Aumentar la potencia"
+            },
+            "InterfaceHomeMenu": {
+                "Quitter": "Salir",
+                "Credits": "Créditos"
+            },
+            "HotBar": {
+                "Settings": {
+                    "Title": "Parámetros",
+                    "Language": "Lengua",
+                    "TypeLanguage": {
+                        "Fr": "Francés",
+                        "En": "Inglés",
+                        "Es": "Español"
+                    },
+                    "Touche": {
+                        "up": "Arriba",
+                        "down": "Bas",
+                        "left": "Abajo",
+                        "right": "Derecha",
+                        "skip": "Pasar",
+                        "inventory": "Inventario",
+                        "settings": "Parámetros",
+                        "book": "Libro",
+                        "sound": "Volumen",
+                        "action": "Acción",
+                        "echap": "Echap",
+                        "hideHotBar": "Esconder"
+                    },
+                    "PoliceEcriture": "Escritura",
+                    "TypeEcriture": {
+                        "Normal": "Normal",
+                        "Dyslexique": "Disléxico"
+                    },
+                    "Difficulte": {
+                        "Title": "Dificultad",
+                        "Simple": "Simple",
+                        "Difficile": "Difícil"
+                    },
+                    "PressKey": "Presione una tecla..."
+                },
+                "IdeaTips": {
+                    "NiveauPlaineRiviere": {
+                        "SeePNJ": "Fíjese en el mapa e intente encontrar informaciones útiles.",
+                        "LearnCrossBridge": "Cruce el camino que le creó el leñador.",
+                        "BuildBridge": "Utilice las tablas que le dio el viajero para cruzar el río.",
+                        "CrossBridge": "Cruce el puente.",
+                        "MineRock": "Encuentre la salida, tendrá que despejar el camino."
+                    },
+                    "NiveauMedievale": {
+                        "SeePNJ": "Fíjese en el mapa e intente encontrar informaciones útiles.",
+                        "SeePNJRoi": "Hable con el rey.",
+                        "BuildBridge": "Recoja madera y ábrase un camino hacia el pueblo.",
+                        "CrossBridge": "Cruce el puente.",
+                        "FindWell": "El guardia no le dejará pasar, puede evitarlo construyendo una balsa en el taller cerca del pozo.",
+                        "PlaceBoat": "Vaya al río para posicionar su balsa.",
+                        "NavigateBoat": "Utilice su balsa para pasar la muralla.",
+                        "OpenDoor": "Entre en el castillo.",
+                        "OpenPortail": "Utilice el círculo de invocación en el lugar del portal para poder abrirlo de nuevo."
+                    },
+                    "NiveauBaseFuturiste" : {
+                        "SeePNJ": "Hable con Michael en la entrada de la base.",
+                        "SeePNJ2": "Encuentre a alguien competente para volver a encender el reactor.",
+                        "SeePNJ3": "Ahora que toda la base es accesible, encuentre una manera de quitar este lugar: Encuentre a un piloto y encuentre una nave con combustible.",
+                        "SeePNJ4": "Vuelva a encontrar a Han en la sala de lanzamiento y prepárese a despegar.",
+                        "SeePNJ5": "Hable con Han para decirle donde desea dirigirs.",
+                        "SeePNJ6": "AVaya a ver si Han está bien..",
+                        "Electricity": "Vaya a la pancarta de control del reactor y vuelva a encenderlo.",
+                        "UseVent": "Parece que hay un conducto de aireación que permite acceder a la sala del reactor.",
+                        "EscapeVaisseau": "Han está noqueado, vaya a dar una vuelta a ver si encuentra una manera de irse."
+                    },
+                    "NiveauMordor": {
+                        "SeePNJ": "Fíjese en el mapa e intente encontrar informaciones útiles.",
+                        "CrossBridge": "Siga su ruta hacia el Este.",
+                        "PotParchemin": "Registre su celda para encontrar todo lo que pueda permitirle escapar.",
+                        "OpenDoorCellule": "Encuentre una manera de escapar de esta cárcel.",
+                        "SeePNJ2avant": "Libere usted al otro prisionero y enfrente al orco.",
+                        "OpenDoorPrison": "Tiene que abrir la puerta del castillo para seguir la aventura.",
+                        "OpenVolcan": "Vuelva a ver al rey en el volcán."
+                    }
+                }
+            },
+            "NiveauPlaineRiviere": {
+                "Cinematique1End": "¡El leñador cortó el árbol, puede cruzar el río!",
+                "TraverserPont": "Acaba de cruzar el puente.",
+                "BuildBridge": "Acaba de construir un puente.",
+                "BreakRock": "Acaba de romper la roca.",
+                "MakeExo": "Resuelva este ejercicio para seguir.",
+                "ExoTexte": {
+                    "Seconde": {
+                        "Title": "Ejercicio de ecuación de primer grado",
+                        "DifficulteTrue": {
+                            "Consigne": "Encuentra el valor de x en esta ecuación de primer grado :",
+                            "QCM": "Elija la única respuesta correcta"
+                        },
+                        "DifficulteFalse": {
+                            "Consigne": "Encuentra el valor de x en esta ecuación de primer grado :",
+                            "QCM": "Elija la única respuesta correcta"
+                        }
+                    }
+                }
+            },
+            "NiveauMedievale": {
+                "Cinematique1End": "El rey huyó por el portal, utilice el círculo y una fórmula para volver a abrir el portal.",
+                "TraverserPont": "Acaba de cruzar el puente.",
+                "CantTraverserPont": "El guardia está delante del puente, no le dejará pasar.",
+                "BuildBridge": "Acaba de construir el puente.",
+                "CutTree": "Acaba de cortar un árbol.",
+                "RemoveSouche": "Acaba de quitar la raíz de árbol.",
+                "NeedPlanks": "Necesita tener 3 tablas para poder construir un barco.",
+                "CraftBoat": "Fabricó un barco.",
+                "PlaceBoat": "Colocó el barco en el río.",
+                "UseBoat": "Está navegando en el río y llegando al recinto del castillo.",
+                "UseBoat2": "Están navegando en el río y saliendo del recinto del castillo.",
+                "GetCours": "Un pergamino estaba sobre la mesa de trabajo, lo recoge.",
+                "OpenChateau": "Está entrando en el castillo.",
+                "OpenPortail": "Tiene que volver a abrir el portal para acceder a la siguiente parte.",
+                "MakeExo": "Para volver a abrir el portal, tiene que resolver este ejercicio.",
+                "ExoTexte": {
+                    "Seconde": {
+                        "Title": "Cálculos de Volúmenes.",
+                        "DifficulteTrue": {
+                            "Consigne": "Con los valores dados, por favor calcule el volumen total de la figura representada a continuación.:",
+                            "QCM": "Elija la única respuesta correcta"
+                        },
+                        "DifficulteFalse": {
+                            "Consigne": "Con los valores dados, por favor calcule el volumen solicitado del cubo de lado c, de la esfera de radio r y del cono de altura h y diámetro de base d:",
+                            "QCM": "Elija la única respuesta correcta"
+                        }
+                    },
+                    "Premiere": {
+                        "Title": "Polinomio de segundo grado",
+                        "DifficulteTrue": {
+                            "Consigne": "Debes encontrar la o las soluciones posibles de P(x) = 0, si las hay, redondeadas a dos decimales : ",
+                            "QCM": "Elija la única respuesta correcta"
+                        },
+                        "DifficulteFalse": {
+                            "Consigne": "Debes encontrar la o las soluciones posibles de P(x) = 0, si las hay, redondeadas a dos cifras decimales : ",
+                            "QCM": "Elija la única respuesta correcta"
+                        }
+                    }
+                }
+            },
+            "NiveauBaseFuturiste": {
+                "UseVent": "Está cruzando la base en los conductos de aireación.",
+                "MakeExo": "Para salir, resuelva este ejercicio.",
+                "PiloteMoveCafet": "El piloto se desplazó en la sala de lanzamiento, puede unirse a él.",
+                "VaisseauSpacial": "Está subiendo en la nave.",
+                "CrashVaisseau": "La nave sufrió un aterrizaje dudoso, asegúrese que Han esté bien",
+                "ExplosionReacteur": "Mandó demasiada potencia en el reactor, explotó.",
+                "ExoTexte": {
+                    "Seconde": {
+                        "Title": "Equation réduite de droites",
+                        "DifficulteTrue": {
+                            "Consigne": "Con las coordenadas dadas, determine la ecuación reducida de (AB) y (CD). Aquí están las coordenadas de los puntos :",
+                            "QCM": "Elija la única respuesta correcta"
+                        },
+                        "DifficulteFalse": {
+                            "Consigne": "Con las coordenadas dadas, determine la ecuación reducida de (AB) y (CD). Aquí están las coordenadas de los puntos :",
+                            "QCM": "Elija la única respuesta correcta"
+                        }
+                    },
+                    "Premiere": {
+                        "Title": "Derivadas y tangentes",
+                        "DifficulteTrue": {
+                            "Consigne": "Debes determinar la tangente 'y' en el punto de abscisa x = 2:",
+                            "QCM": "Elija la única respuesta correcta"
+                        },
+                        "DifficulteFalse": {
+                            "Consigne": "Debes determinar la tangente 'y' en el punto de abscisa x = 2",
+                            "QCM": "Elija la única respuesta correcta"
+                        }
+                    }
+                }
+            },
+            "NiveauMordor": {
+                "KillRoi": "Empujando al rey a la lava.",
+                "MakeExo": "Para entrar en el volcán, resuelva este ejercicio.",
+                "EnterVolcan": "Entrada al volcán.",
+                "GoPrison": "El orco no se muestra amigable, terminas en prisión.",
+                "Parchemin": "Consigue el pergamino.",
+                "ParcheminVu": "Ya consiguió el pergamino.",
+                "Key": "Está registrando el urinario y encontrando llaves.",
+                "Key2": "El urinario ya no contiene nada útil.",
+                "OpenDoorCellule": "Acaba de abrir la puerta de la celda.",
+                "OpenDoorPrison": "Abrió la puerta.",
+                "KillPNJ3": "Venció, ahora puede huirse.",
+                "LeavePNJ2": "Su amiga sigue su camino.",
+                "TraverserPont": "Está cruzando el puente.",
+                "ExoTexte": {
+                    "Seconde": {
+                        "DemiNiveauFalse": {
+                            "Title": "Ejercicio de ecuación con 2 incógnitas",
+                            "DifficulteTrue": {
+                                "Consigne": "Debes resolver este sistema de dos incógnitas",
+                                "QCM": "Elija la única respuesta correcta"
+                            },
+                            "DifficulteFalse": {
+                                "Consigne": "Debes resolver este sistema de dos incógnitas",
+                                "QCM": "Elija la única respuesta correcta"
+                            }
+                        },
+                        "DemiNiveauTrue": {
+                            "Title": "Ejercicio jefe segundo",
+                            "DifficulteTrue": {
+                                "Consigne": "Un velero se encuentra en el puerto de Sète y, antes de partir, un cliente quiere conocer el volumen de aceite que el barco puede transportar, sabiendo que posee una carga de 85 barriles de longitud 'a' y de ancho 'b' (afirmamos que los barriles utilizados tienen lados completamente rectos y no redondeados). Después de eso, el barco se aleja y recibe información sobre otro barco que navega a la misma velocidad. Determine si los dos barcos se cruzarán. Además, el barco b1 está actualmente en el punto A y navega según la dirección (AB). De manera similar, el barco b2 está actualmente en el punto C y navega según la dirección (CD). Coordenadas :",
+                                "QCM": "Elija la única respuesta correcta"
+                            },
+                            "DifficulteFalse": {
+                                "Consigne": "Un velero se encuentra en el puerto de Sète y, antes de partir, un cliente quiere conocer el volumen de aceite que el barco puede transportar, sabiendo que posee una carga de 85 barriles de longitud 'a' y de ancho 'b' (afirmamos que los barriles utilizados tienen lados completamente rectos y no redondeados). Después de eso, el barco se aleja y recibe información sobre otro barco que navega a la misma velocidad. Determine si los dos barcos se cruzarán. Además, el barco b1 está actualmente en el punto A y navega según la dirección (AB). De igual manera, el barco b2 está actualmente en el punto C y navega según la dirección (CD). Coordenadas:" ,
+                                "QCM": "Elija la única respuesta correcta"
+                            }
+                        }
+                    },
+                    
+                    "Premiere": {
+                        "DemiNiveauFalse": {
+                            "Title": "Sucesión Aritmética y Geométrica",
+                            "DifficulteTrue": {
+                                "Consigne": "Debes encontrar la razón de esta sucesión y calcular la suma de los 'n' primeros términos.",
+                                "QCM": "Elija la única respuesta correcta"
+                            },
+                            "DifficulteFalse": {
+                                "Consigne": "Debes encontrar la razón de esta sucesión y calcular la suma de los 'n' primeros términos.",
+                                "QCM": "Elija la única respuesta correcta"
+                            }
+                        },
+                        "DemiNiveauTrue": {
+                            "Title": "Ejercicio jefe primera",
+                            "DifficulteTrue": {
+                                "Consigne": "Un fabricante está considerando la producción de bricks de leche en cartón. Al principio, dispone de una hoja cuadrada de cartón de la cual se han retirado dos bandas de igual ancho. El lado de la hoja cuadrada es 'a' y se denomina x al ancho de las bandas recortadas en centímetros. Encuentra el volumen máximo en litros de este brick de leche en función de x. Luego, encuentra el precio del brick después de n años (datos a continuación), sabiendo que sufre una inflación del y% y que el precio original era de 1,20€. ",
+                                "QCM": "Elija la única respuesta correcta"
+                            },
+                            "DifficulteFalse": {
+                                "Consigne": "Un fabricante está considerando la producción de bricks de leche en cartón. Al principio, dispone de una hoja cuadrada de cartón de la cual se han retirado dos bandas de igual ancho. El lado de la hoja cuadrada es 'a' y se denomina x al ancho de las bandas recortadas en centímetros. Encuentra el volumen máximo en litros de este brick de leche en función de x. Luego, encuentra el precio del brick después de n años (datos a continuación), sabiendo que sufre una inflación del y% y que el precio original era de 1,20€. ",
+                                "QCM": "Elija la única respuesta correcta"
+                            }
+                        }
+                    }
+                }
+            }
+        }
 }

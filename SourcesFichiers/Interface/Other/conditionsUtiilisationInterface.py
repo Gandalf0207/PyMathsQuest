@@ -45,18 +45,6 @@ class ConditionsUtilisationInterface(object):
 
         self.textConditionsSurface.fill((255, 255, 255))
            
-        textConditions = TEXTE["Elements"]["HomeInterface"]["InterfaceCondition"]["ConditionsUtilisation"]
-        max_width = self.box_width - 60  # Marge de 40px de chaque côté
-
-        wrapped_lines = wrap_text_2(textConditions, FONT["FONT20"], max_width)
-
-        line_height = FONT["FONT20"].size("Tg")[1]  # Hauteur d'une ligne
-        y_offset = 20  # Décalage du texte depuis le haut
-
-        for i, line in enumerate(wrapped_lines):
-            line_surface = FONT["FONT20"].render(line, True, (0, 0, 0))
-            self.textConditionsSurface.blit(line_surface, (20, y_offset + i * line_height))
-
         # Scroll
         self.scroll_y = 0  
         self.max_scroll = max(0, self.textConditionsSurface.get_height() - (self.box_height - 40))
@@ -76,6 +64,24 @@ class ConditionsUtilisationInterface(object):
         self.interfaceSurface.fill((255, 255, 255))
         text = FONT["FONT36"].render(TEXTE["Elements"]["HomeInterface"]["InterfaceCondition"]["Title"], True, (0,0,0))
         self.interfaceSurface.blit(text, (10,10))
+
+        # texte condition
+        self.textConditionsSurface.fill((255, 255, 255))
+        textConditions = TEXTE["Elements"]["HomeInterface"]["InterfaceCondition"]["ConditionsUtilisation"]
+        max_width = self.box_width - 60  # Marge de 40px de chaque côté
+
+        wrapped_lines = wrap_text_2(textConditions, FONT["FONT20"], max_width)
+
+        line_height = FONT["FONT20"].size("Tg")[1]  # Hauteur d'une ligne
+        y_offset = 20  # Décalage du texte depuis le haut
+
+        for i, line in enumerate(wrapped_lines):
+            line_surface = FONT["FONT20"].render(line, True, (0, 0, 0))
+            self.textConditionsSurface.blit(line_surface, (20, y_offset + i * line_height))
+
+
+
+
 
         # Affichage des conditions d'utilisation avec scrolling
         self.interfaceSurface.blit(self.textConditionsSurface, (self.box_x + 20, self.box_y + 20), (0, self.scroll_y, self.box_width - 40, self.box_height - 40))
