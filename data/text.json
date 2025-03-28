@@ -750,5 +750,382 @@
                     }
                 }
             }
+        },
+
+        "ElementsEn": {
+            "GameName": "PyMathsQuest",
+            "Loading": "Loading",
+            "Interaction": "Press",
+            "LevelSup": "You go to the next level !",
+            "CloseGame": "Closing game.",
+            "ErreurLoad": "Loading error. ",
+            "Reussite": "Your succes rate is :",
+            "AdminPanel": {
+                "Title": "Administrator",
+                "TP": "TP NPC",
+                "Niveau": "Level",
+                "Cours": "Course",
+                "Autre": "Other +"
+            },
+            "Crédits": {
+                "Crédits": "PyMathsQuest",
+                "Projet": {
+                    "Project Name": "PyMathsQuest",
+                    "Creators": "LUBAN Théo, PLADEAU Quentin",
+                    "Original Idea By": "LUBAN Théo"
+                },
+                "Rôles": {
+                    "Lead Designer": "LUBAN Théo",
+                    "Lead Developer": "PLADEAU Quentin",
+                    "Art Direction": "LUBAN Théo",
+                    "Functionality Consultant": "PLADEAU Quentin",
+                    "Level Design": "LUBAN Théo",
+                    "Project Director": "PLADEAU Quentin",
+                    "Character Dialogues": "LUBAN Théo"
+                },
+                "Artistes exterieurs": {
+                    "Soundtrack Creator": "Nocyfer",
+                    "Player Pixel Art": "BARON Héloïse",
+                    "Composer": "Nocyfer",
+                    "Spanish Translation": "SAMADI Maryne",
+                    "Castle Pixel Art": "FERNANDEZ Lucie"
+                },
+                "Doublage francais": {
+                    "Lumberjack": "GABRIEL Tom",
+                    "Curious traveller": "CADEAU-FLAUJAT Gabriel",
+                    "Farmer": "RENAUD-JEHL Dimitri",
+                    "Unpleasant Guard": "ESCOUTE Cédric",
+                    "Minerva": "LAMY Mahely",
+                    "King": "FIEVET Joaquim",
+                    "Michael": "NGUYEN Jordan",
+                    "Engineer": "SALES Maureen",
+                    "Han": "KELEMEN Thomas",
+                    "Didier": "BELLEC-ESCALERA Elliot",
+                    "Orc guard": "Nathan COURTILLAT",
+                    "Human prisoner": "PAUL-GOMEZ Mélusine",
+                    "Goulboum": "LUBAN Théo",
+                    "Narrator": "ESCOLANO-DUPUY Léonie"
+                },
+                "Testeurs": [
+                    "PLADEAU Quentin",
+                    "LUBAN Théo",
+                    "Seconde Numérique's students"
+                ],
+                "Consultants": [
+                    "PINGARD Mattis",
+                    "ESCOUTE Cédric",
+                    "MARIE-JEANNE Patrice"
+                ],
+                "Technologie": {
+                    "Game Engine": "Pygame",
+                    "LaTeX Compiler": "MikTeX",
+                    "Programming Language": "Python",
+                    "Python Libraries": "Matplotlib, pygame-ce, PyMaths"
+                },
+                "Etablissement": ["Lycée George Clemenceau"],
+                "Remerciements spéciaux": [
+                    "PINGARD Mattis",
+                    "ESCOUTE Cédric",
+                    "MARIE-JEANNE Patrice"
+                ]
+            },
+            "InterfaceEnd": {
+                "PDFGeneration": "Generate PDF file",
+                "PDFGenere" : "PDF file generated",
+                "Quitter": "Quit"
+            },
+            "HomeInterface": {
+                "Niveau": {
+                    "Title": "Level",
+                    "Consignes": "Choose a level",
+                    "Seconde": "Seconde",
+                    "Premiere": "Premiere",
+                    "Terminale": "Terminale",
+                    "All": "All"
+                },
+                "Difficulte": {
+                    "Title": "Difficulty",
+                    "Consignes": "Choose a level",
+                    "Simple": "Easy",
+                    "Difficile": "Hard"
+                },
+                "Langue": {
+                    "Title": "Langue",
+                    "Consignes": "Choose a language",
+                    "Français": "French",
+                    "Anglais": "English",
+                    "Espagnol": "Spanish"
+                },
+                "InterfaceCondition": {
+                    "ConditionsUtilisation": "1. Freedom of Use, Modification, and Distribution\n\n This program is licensed under GPL v3+, which means you are free to:\n\n - Run the software for any purpose (personal, educational, commercial, etc.).\n - Study, modify, and improve its source code.\n - Redistribute copies of the program, modified or not, provided you respect the same license.\n\n 2. Source Code and Contributions\n The project's source code is accessible on GitHub:\n https://github.com/Gandalf0207/Py-Maths-Quest/n/n Any contribution is welcome as long as it respects the terms of the GPL v3.\n\n 3. No Warranty\n This software is provided 'as is', without any kind of guarantee. The authors cannot be held responsible for any damages resulting from its use.\n\n 4. Use of Open Source Libraries\n This project uses open-source libraries such as Python, Tkinter, Matplotlib, LaTeX, etc. We respect and appreciate the work of their creators and comply with the respective licenses of these libraries.\n\n 5. Credits and Development Framework\n This project was developed by LUBAN Théo & PLADEAU Quentin as part of the Computer Science course in their final year of high school. A big thank you to ESCOUTE Cédric and Patrice-Florent Marie-Jeanne for their support and teaching.\n\n 6. Update of Conditions\n These conditions may be updated at any time. Consult the GitHub repository for any information about the license and project modifications.\n\n © 2025 - Py-Maths-Quest\n Published under GPL v3+ license",
+                    "Title": "Terms and Conditions of Use"
+    
+                },
+                "TexteConditions": "I accept terms and conditions of use.",
+                "Lancer": "Start"
+            },
+            "InterfacePNJ": {
+                "SkipButton": "Next",
+                "Oui": "Yes",
+                "Non": "No"
+            },
+            "InterfaceReactor": {
+                "Title": "Main Nuclear Reactor",
+                "Texte": "Press to turn on the reactor",
+                "Heure": "Time",
+                "Temperature": "Temperature",
+                "EtatName": "State",
+                "StatueName": "Statut",
+                "Etat": {
+                    "Inactif": "Off",
+                    "Actif": "On"
+                },
+                "Statue": {
+                    "Null": "Null",
+                    "Normal": "Normal",
+                    "Instable": "Instable",
+                    "Critique": "Critique"
+                },
+                "AddPuissance": "Add more power"
+            },
+            "InterfaceHomeMenu": {
+                "Quitter": "Quit",
+                "Credits": "Credits"
+            },
+            "HotBar": {
+                "Settings": {
+                    "Title": "Settings",
+                    "Language": "Language",
+                    "TypeLanguage": {
+                        "Fr": "French",
+                        "En": "English",
+                        "Es": "Spanish"
+                    },
+                    "Touche": {
+                        "up": "Up",
+                        "down": "Down",
+                        "left": "Left",
+                        "right": "Right",
+                        "skip": "Skip",
+                        "inventory": "Inventory",
+                        "settings": "Settings",
+                        "book": "Book",
+                        "sound": "Sound volume",
+                        "action": "Action",
+                        "echap": "Echap",
+                        "hideHotBar": "Hide"
+                    },
+                    "PoliceEcriture": "Font",
+                    "TypeEcriture": {
+                        "Normal": "Normal",
+                        "Dyslexique": "Dyslexic"
+                    },
+                    "Difficulte": {
+                        "Title": "Difficulty",
+                        "Simple": "Easy",
+                        "Difficile": "Hard"
+                    },
+                    "PressKey": "Press a key..."
+                },
+                "IdeaTips": {
+                    "NiveauPlaineRiviere": {
+                        "SeePNJ": "Look at your map and try to find usefull informations.",
+                        "LearnCrossBridge": "Go trough the way made by the Lumberjack.",
+                        "BuildBridge": "Use the planks given by the traveller to cross the river.",
+                        "CrossBridge": "Cross the bridge.",
+                        "MineRock": "Find a way out, you'll need to clean it."
+                    },
+                    "NiveauMedievale": {
+                        "SeePNJ": "Look at your map and try to find usefull informations.",
+                        "SeePNJRoi": "Speak to the king.",
+                        "BuildBridge": "Gather wood and find a way straight to the village.",
+                        "CrossBridge": "Cross the bridge.",
+                        "FindWell": "This guard won't let you go, you can still find a way in the castle by crafting a boat near the well.",
+                        "PlaceBoat": "Go to the river to place your boat.",
+                        "NavigateBoat": "Use your boat to enter in the castle.",
+                        "OpenDoor": "Get into the castle.",
+                        "OpenPortail": "Use the summoner's circle to reopen the gate."
+                    },
+                    "NiveauBaseFuturiste": {
+                        "SeePNJ": "Speak to Michael.",
+                        "SeePNJ2": "Find someone able to turn on the reactor.",
+                        "SeePNJ3": "Now that the whole base is open, find a way to leave : Find a pilot and a spaceship with fuel.",
+                        "SeePNJ4": "Find Han in the launch room and get ready for takeoff.",
+                        "SeePNJ5": "Tell Han where you wanna go.",
+                        "SeePNJ6": "Go check if Han is fine.",
+                        "Electricity": "Go to the reactor's control panel and turn it back on.",
+                        "UseVent": "It seems that there is a vent going to the reactor room.",
+                        "EscapeVaisseau": "Han is knocked down, go out and try to find a way to leave this place."
+                    },
+                    "NiveauMordor": {
+                        "SeePNJ": "Look at your map and try to find usefull informations.",
+                        "CrossBridge": "Keep travelling to East.",
+                        "PotParchemin": "Search your cell for anything that could help to escape.",
+                        "OpenDoorCellule": "Find your way out of the prison.",
+                        "SeePNJ2avant": "Free the other prisoner and take down that orc.",
+                        "OpenDoorPrison": "You need to open the castle's door.",
+                        "OpenVolcan": "Go to see the king in the volcano."
+                    }
+                }
+            },
+            "NiveauPlaineRiviere": {
+                "Cinematique1End": "The Lumberkacj has chopped down the tree, you can now cross the river !",
+                "TraverserPont": "You just crossed the bridge.",
+                "BuildBridge": "You just built a bridge.",
+                "BreakRock": "You just broke the rock.",
+                "MakeExo": "Solve that exercise to continue.",
+                "ExoTexte": {
+                    "Seconde": {
+                        "Title": "First-degree equation exercise",
+                        "DifficulteTrue": {
+                            "Consigne": "Find x's value in this first degree equation :",
+                            "QCM": "Choose the right answer"
+                        },
+                        "DifficulteFalse": {
+                            "Consigne": "Find x's value in this first degree equation :",
+                            "QCM": "Choose the right answer"
+                        }
+                    }
+                }
+            },
+            "NiveauMedievale": {
+                "Cinematique1End": "The king fleed trough the gate, use the summoner's circle and a spell to open it back.",
+                "TraverserPont": "You just crossed the bridge.",
+                "CantTraverserPont": "The guard is in front of the bridge, he won't let you go in the castle.",
+                "BuildBridge": "You just built the bridge.",
+                "CutTree": "You just chopped a tree.",
+                "RemoveSouche": "You just removed a tree stump.",
+                "NeedPlanks": "You need 3 planks to build a boat.",
+                "CraftBoat": "You just built a boat.",
+                "PlaceBoat": "You just put the boat on the river.",
+                "UseBoat": "You navigate on the river and end in the castle.",
+                "UseBoat2": "You navigate on the river and get out of the castle.",
+                "GetCours": "A scroll was on the workbench, you pick it up.",
+                "OpenChateau": "You get into the castle.",
+                "OpenPortail": "You need to reopen the gate.",
+                "MakeExo": "To reopen this gate, solve that exercise.",
+                "ExoTexte": {
+                    "Seconde": {
+                        "Title": "Volume's calculs.",
+                        "DifficulteTrue": {
+                            "Consigne": " Using the given values, please calculate the total volume of the figure shown below:",
+                            "QCM": "Choose the right answer"
+                        },
+                        "DifficulteFalse": {
+                            "Consigne": "Using the given values, please calculate the required volume of: The cube with side length c, the sphere with radius r, the cone with height h and base diameter d.",
+                            "QCM": "Choose the right answer"
+                        }
+                    },
+                    "Premiere": {
+                        "Title": "Second-degree polynomial",
+                        "DifficulteTrue": {
+                            "Consigne": "You need to find the possible solution(s) of P(x) = 0, if any, rounded to two decimal places : ",
+                            "QCM": "Choose the right answer"
+                        },
+                        "DifficulteFalse": {
+                            "Consigne": "You need to find the possible solution(s) of P(x) = 0, if any, rounded to two decimal places : ",
+                            "QCM": "Choose the right answer"
+                        }
+                    }
+                }
+            },
+            "NiveauBaseFuturiste": {
+                "UseVent": "You cross the base through the ventilation ducts.",
+                "MakeExo": "To get out, solve that exercise.",
+                "PiloteMoveCafet": "The pilot went into the launch room, you can go find him.",
+                "VaisseauSpacial": "You get into the ship.",
+                "CrashVaisseau": "The ship has crashed, check out for Han.",
+                "ExplosionReacteur": "You sent too much power in the reactor, it exploded.",
+                "ExoTexte": {
+                    "Seconde": {
+                        "Title": "Reduced equation of a line",
+                        "DifficulteTrue": {
+                            "Consigne": "Using the coordinates, determine the reduced equation of lines (AB) and (CD). Here are the coordinates of the points:",
+                            "QCM": "Choose the right answer"
+                        },
+                        "DifficulteFalse": {
+                            "Consigne": "Using the coordinates, determine the reduced equation of lines (AB) and (CD). Here are the coordinates of the points:",
+                            "QCM": "Choose the right answer"
+                        }
+                    },
+                    "Premiere": {
+                        "Title": "Derivatives and tangents",
+                        "DifficulteTrue": {
+                            "Consigne": "You need to determine the tangent 'y' at the point with abscissa x= 2:",
+                            "QCM": "Choose the right answer"
+                        },
+                        "DifficulteFalse": {
+                            "Consigne": "You need to determine the tangent 'y' at the point with abscissa x= 2:",
+                            "QCM": "Choose the right answer"
+                        }
+                    }
+                }
+            },
+            "NiveauMordor": {
+                "KillRoi": "You push the king into the lava.",
+                "MakeExo": "To go into that volcano, solve that exercise.",
+                "EnterVolcan": "You get into the volcano.",
+                "GoPrison": "The orc is not really friendly, you end up in a cell.",
+                "Parchemin": "You pick the scroll.",
+                "ParcheminVu": "You have already picked that scroll.",
+                "Key": "You search through the chamber pot and find keys.",
+                "Key2": "You search trough the chamber pot, there is nothing anymore.",
+                "OpenDoorCellule": "You just opened the cell's door.",
+                "OpenDoorPrison": "You just opened the door.",
+                "KillPNJ3": "You have won the fight, you can now go out.",
+                "LeavePNJ2": "Your friend continue by his own way.",
+                "TraverserPont": "You just crossed the bridge.",
+                "ExoTexte": {
+                    "Seconde": {
+                        "DemiNiveauFalse": {
+                            "Title": "Exercise Equation with 2 unknowns",
+                            "DifficulteTrue": {
+                                "Consigne": "You need to solve that equation with 2 unknowns",
+                                "QCM": "Choose the right answer"
+                            },
+                            "DifficulteFalse": {
+                                "Consigne": "You need to solve that equation with 2 unknowns",
+                                "QCM": "Choose the right answer"
+                            }
+                        },
+                        "DemiNiveauTrue": {
+                            "Title": "Seconde's boss exercise",
+                            "DifficulteTrue": {
+                                "Consigne": "A sailboat is in the port of Sète, and before departing, a client wants to know the volume of oil the ship can carry, given that it has a cargo of 85 barrels with length 'a' and width 'b' (we assume the barrels used have completely straight sides and are not rounded). After that, the boat sets sail and receives information about another boat traveling at the same speed. Determine if the two boats will cross paths. Furthermore, boat b1 is currently at point A and is traveling in the direction (AB). Similarly, boat b2 is currently at point C and is traveling in the direction (CD). Coordinates:",
+                                "QCM": "Choose the right answer"
+                            },
+                            "DifficulteFalse": {
+                                "Consigne": "A sailboat is in the port of Sète, and before departing, a client wants to know the volume of oil the ship can carry, given that it has a cargo of 85 barrels with length 'a' and width 'b' (we assume the barrels used have completely straight sides and are not rounded). After that, the boat sets sail and receives information about another boat traveling at the same speed. Determine if the two boats will cross paths. Furthermore, boat b1 is currently at point A and is traveling in the direction (AB). Similarly, boat b2 is currently at point C and is traveling in the direction (CD). Coordinates:",
+                                "QCM": "Choose the right answer"
+                            }
+                        }
+                    },
+                    
+                    "Premiere": {
+                        "DemiNiveauFalse": {
+                            "Title": "Arithmetic and Geometric Sequences.",
+                            "DifficulteTrue": {
+                                "Consigne": "You need to find the common ratio of this sequence and calculate the sum of the first 'n' terms.",
+                                "QCM": "Choose the right answer"
+                            },
+                            "DifficulteFalse": {
+                                "Consigne": "You need to find the common ratio of this sequence and calculate the sum of the first 'n' terms.",
+                                "QCM": "Choose the right answer"
+                            }
+                        },
+                        "DemiNiveauTrue": {
+                            "Title": "Exercice boss premiere",
+                            "DifficulteTrue": {
+                                "Consigne": "A manufacturer is considering the production of cardboard milk cartons. Initially, he has a square sheet of cardboard from which two strips of equal width have been removed. The side of the square sheet is 'a', and 'x' represents the width of the strips cut in centimeters. Find the maximum volume, in liters, of the milk carton in terms of x. Then, find the price of the carton after n years (given below), knowing that it undergoes an inflation of y%, and the original price was 1.20€.",
+                                "QCM": "Choose the right answer"
+                            },
+                            "DifficulteFalse": {
+                                "Consigne": "A manufacturer is considering the production of cardboard milk cartons. Initially, he has a square sheet of cardboard from which two strips of equal width have been removed. The side of the square sheet is 'a', and 'x' represents the width of the strips cut in centimeters. Find the maximum volume, in liters, of the milk carton in terms of x. Then, find the price of the carton after n years (given below), knowing that it undergoes an inflation of y%, and the original price was 1.20€.",
+                                "QCM": "Choose the right answer"
+                            }
+                        }
+                    }
+                }
+            }
         }
 }
