@@ -35,7 +35,7 @@
             "PNJ1": {
                 "Nom": "Fermier",
                 "Principal": {
-                    "Dialogue1": "Hé toi, t’aurais-tu pas vu mon âne ? Il s’est enfuit pas plus tard qu’hier, et j’le r’trouve plus. Tu l’as vu, dis-tu ?",
+                    "Dialogue1": "Hé toi, t’aurais-tu pas vu mon âne ? Il s’est enfui pas plus tard qu’hier, et j’le r’trouve plus. Tu l’as vu, dis-tu ?",
                     "Dialogue2": "Tu me sauves dis donc, j’te passe ce truc en remerciement, t’façon j’sais po lire et puis tu devrais t’munir d’une ou deux bûches sait-on jamais."
                 },
                 "Alternatif": {
