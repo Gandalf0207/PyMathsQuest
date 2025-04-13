@@ -885,11 +885,11 @@
                     ],
                     "3": [
                         true,
-                        "$ \text{Derivative of} \text{: If} f(x) = \frac{1}{x} \\quad \text{then} \\quad f'(x) = -\frac{1}{x^2} $"
+                        "$ \text{Derivative of} \text{: If} f(x) = \\frac{1}{x} \\quad \text{then} \\quad f'(x) = - \\frac{1}{x^2} $"
                     ],
                     "4": [
                         true,
-                        "$ \text{Derivative of} \text{: If} f(x) = \\sqrt{x} \\quad \text{then} \\quad f'(x) = \frac{1}{2 \\sqrt{x}} $"
+                        "$ \text{Derivative of} \text{: If} f(x) = \\sqrt{x} \\quad \text{then} \\quad f'(x) = \\frac{1}{2 \\sqrt{x}} $"
                     ],
                     "5": [
                         true,
@@ -905,7 +905,7 @@
                     ],
                     "8": [
                         true,
-                        "$ \text{Quotient: If} f(x) = \frac{u}{v} \\quad \text{then} \\quad f'(x) = \frac{u'v - uv'}{v^2}  $"
+                        "$ \text{Quotient: If} f(x) = \\frac{u}{v} \\quad \text{then} \\quad f'(x) = \\frac{u'v - uv'}{v^2}  $"
                     ]
                 },
                 "Cours3": {

@@ -67,8 +67,6 @@ class ConsignesVolumesNv2(VolumesNv2):
         """Méthode d'écriture du titre des consignes
         Input  : /    
         Output : /"""
-        image_path = "Images/VolumesImages/volume.png"
-
 
         with self.doc.create(Section(f"Exo Volumes n°{self.i+1}", numbering=False)): #titre de l'exo
             self.doc.append(NoEscape("Niveau 2 :\\\\"))
@@ -76,10 +74,14 @@ class ConsignesVolumesNv2(VolumesNv2):
             self.doc.append(NoEscape("\\ \\parbox{ 450pt }{ A l'aide des valeurs données, veuillez calculer le volume total de la figure représentée ci-dessous. a = %sm ; b = %sm ; c = %sm ; d = %sm ; e = %sm ; f = %sm ; r = %sm}  \\\\" % (self.a, self.b, self.c, self.d, self.e, self.f, self.r))) # consigne générale
             self.doc.append(NoEscape("\\\\"))
 
+            # error find path image 
+
             # Ajouter une image
-            with self.doc.create(Figure(position='h!')) as figure:
-                figure.add_image(image_path, width=NoEscape(r'0.8\textwidth'))  # Spécifiez le chemin et la largeur
-                figure.add_caption("Figure représentant la géométrie de l'exercice.")
+            # image_path = "Images/VolumesImages/volume.png"
+
+            # with self.doc.create(Figure(position='h!')) as figure:
+            #     figure.add_image(image_path, width=NoEscape(r'0.8\textwidth'))  # Spécifiez le chemin et la largeur
+            #     figure.add_caption("Figure représentant la géométrie de l'exercice.")
 
 
 class CorrectionVolumesNv2(VolumesNv2):
