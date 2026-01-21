@@ -8,6 +8,8 @@
 PyMathsQuest est un projet étudiant réalisé par 2 élèves en terminale NSI : LUBAN Théo & PLADEAU Quentin. Le but de ce projet est de réaliser un petit RPG autour des mathématiques grâce au langage Python et à la librairie Pygame. Le jeu se veut durable et unique, c'est pourquoi le point fort est l'aléatoire. En effet, que ce soit la génération de la carte ou encore les exercices mathématiques, toutes les valeurs sont aléatoires. Cela rend donc chaque partie unique ! De plus, à la fin d'une partie, les différentes exercices rencontrés sont corrigés pas à pas pour vous aider à mieux les comprendre. Cela est possible grâce à notre librairie Py-Maths qui permet la génération d'exercices corrigés.
 Ce projet est donc né de la fusion de Maths-Quest et Py-Maths, deux anciens projets réalisé lors de l'année de première en NSI. 
 
+> Vidéo de présentation : [Lien](https://tube-sciences-technologies.apps.education.fr/w/c1FtXNSUYeibzeNaJ65ha7)
+
 Le projet aborde donc plusieurs notions de mathématiques, les voici : 
 |Seconde                         |Premiere                    |
 |--------------------------------|----------------------------|
