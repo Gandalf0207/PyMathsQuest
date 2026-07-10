@@ -1,5 +1,8 @@
 # PyMathsQuest
 
+> [!NOTE]
+> Le projet **PyMathsQuest** a été récompensé aux trophées NSI 2025 par le prix territoriale du meilleur projet académique terminale ! [Résultats](https://trophees-nsi.fr/resultats-2025) :tada:
+
 > [!IMPORTANT]
 > Pour toute information concernant les droits d'utilisation, veuillez vous référer à la [Licence](https://github.com/Gandalf0207/PyMathsQuest?tab=License-1-ov-file)
 
